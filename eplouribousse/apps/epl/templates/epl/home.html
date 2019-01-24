@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+
+
+
+        <h1>eplouribousse : Bienvenue dans la page d'accueil.</h1>
+
+
+
+        <p>Vous êtes bien sur la page à partir de laquelle il convient de débuter !</p>
+
+
+<p></p>
+          <form method="post">
+            <p>Choisissez votre bibliothèque : {{ form.libname }}</p>
+            <p>Choisissez la fonctionnalité souhaitée : {{ form.feaname }}</p>
+            {% csrf_token %}
+            <p><input type="submit" value="Valider"></p>
+          </form>
+          <p>La requête peut prendre du temps. Veuillez patienter.</p>
+
+          <HR>
+            <p><a href="/./epl/indicators">Tableau de bord</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+    </body>
+
+</html>

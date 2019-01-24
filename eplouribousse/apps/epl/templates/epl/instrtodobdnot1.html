@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+
+      <h2>Liste des ressources à instruire pour {{ name }} (forme reliée, rang autre que le premier)</h2>
+      <p>Nombre de ressources concernées : {{ size }}</p>
+
+
+      <p></p>
+      <p>Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur.</p>
+
+      <ul>
+
+      {% for elmt in ressourcelist %}
+
+            <HR>
+      <p></p>
+          <li>Titre : {{ elmt.title }}</li>
+          <li>Cote : {{ elmt.cn }}</li>
+          <li>Identifiant de la ressource : <a href="/./epl/addinstruction/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+
+
+
+      {% endfor %}
+
+      </ul>
+
+      <HR>
+
+        <p>Menu "instructions" : <a href="/./epl/instrtodo/{{ lid }}">tout</a> - <a href="/./epl/instrtodobd1/{{ lid }}">reliés rang 1</a> - <a href="/./epl/instrtodonotbd1/{{ lid }}">non reliés rang 1</a> - <a href="/./epl/instrtodonotbdnot1/{{ lid }}">non reliés autre rang</a></p>
+
+      <HR>
+
+        <p>Menu général : <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+
+
+      <HR>
+        <p><a target="_blank" href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+    </body>
+
+</html>

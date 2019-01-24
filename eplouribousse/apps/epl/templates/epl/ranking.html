@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+
+      <h2>Positionner la collection de votre bibliothèque ({{ library.name }}) pour la ressource suivante :</h2>
+
+      <p>Titre : {{ ressource.title|truncatewords:80 }}</p>
+      <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
+       / issn : {{ ressource.issn }} / Historique de la publication : {{ ressource.pubhist }}</p>
+      <p></p>
+      {% if flag == 0 %}
+      <HR>
+      <p>Rattachements ; celui de votre bibliothèque apparaît en rouge :</p>
+      <p>(Cliquez sur le lien "identifiant" pour savoir à quelle bibliothèque celui-ci correspond)</p>
+
+      <ul>
+
+      {% for elmt in items %}
+          {% if elmt.lid == library.lid %}
+                <HR>
+          <p></p>
+             <font color= #e74c3c >
+              <li>Identifiant de la bibliothèque : <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
+              <li>Etat de collection : {{ elmt.holdstat }}</li>
+              <li>Rang courant : <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li>Exclusion ? : <font color= #3498db  >{{ elmt.excl}}</font> | Commentaire : <font color= #3498db  >{{ elmt.comm }}</font></li>
+             </font>
+          {% else %}
+                <HR>
+          <p></p>
+              <li>Identifiant de la bibliothèque : <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
+              <li>Etat de collection : {{ elmt.holdstat }}</li>
+              <li>Rang courant : <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li>Exclusion ? : <font color= #3498db  >{{ elmt.excl}}</font> | Commentaire : <font color= #3498db  >{{ elmt.comm }}</font></li>
+          {% endif %}
+      {% endfor %}
+
+
+      </ul>
+      <HR>
+
+      <form method="post">
+      <p>Le cas échéant, choisissez le motif d'exclusion : {{ form.excl }}</p>
+      <p>Sinon, prenez rang en tenant compte des états de collections ou d'autres prescriptions : {{ form.rank }}</p>
+      <p>Choisissez 1 si votre collection est celle à laquelle s'agrégeront d'autres éléments qui viendront l'enrichir, sinon 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ...</p>
+      <p>Commentaire (max. 250 caractères.) : </p>
+      <p>{{ form.comm }}</p>
+      {% csrf_token %}
+      <input type="Submit" value="Valider">
+      </form>
+      {% elif flag == 1 %}
+      <p><B><font color= #e74c3c >"Il n'est plus possible de modifier votre positionnement (l'instruction de la résultante peut déjà être engagée)."</font></B></p>
+      {% endif %}
+
+      <HR>
+
+        <p>Menu contextuel : <a href="/./epl/to_rank_list/{{ library.lid }}">Retour à la liste actualisée des positionnements</a> - <a href="/./epl/arbitration/{{ library.lid }}">Retour à la liste actualisée des arbitrages</a></p>
+
+      <HR>
+
+        <p>Menu général : <a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+
+
+      <HR>
+        <p><a target="_blank" href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+      <body>
+
+</html>

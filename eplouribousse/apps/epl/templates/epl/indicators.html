@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+          <meta charset="utf-8" />
+
+          <link rel="stylesheet" href="style.css" />
+  </head>
+<body>
+<h2>Tableau de bord : </h2>
+
+<table border="1">
+
+   <thead>
+
+       <th>Indicateur</th>
+       <th>Valeur</th>
+
+
+   </thead>
+
+   <tbody>
+
+    <tr>
+         <td>Positionnement, exclusions incluses</td>
+         <td><center>{{ rkall }}</center></td>
+    </tr>
+    <tr>
+         <td>Positionnement (hors exclusions)</td>
+         <td><center>{{ rkright }}</center></td>
+    </tr>
+    <tr>
+         <td>Exclusions (toutes)</td>
+         <td><center>{{ exclus }}</center></td>
+    </tr>
+    <tr>
+         <td>- dont exclusions pour "abonnement en cours"</td>
+         <td><center>{{ currsubs }}</center></td>
+    </tr>
+    <tr>
+         <td>- dont exclusions pour "dépôt légal"</td>
+         <td><center>{{ legald }}</center></td>
+    </tr>
+    <tr>
+         <td>- dont exclusions pour "entièrement patrimonial"</td>
+         <td><center>{{ fullpat }}</center></td>
+    </tr>
+    <tr>
+         <td>- dont exclusions pour "partie d'un PCP"</td>
+         <td><center>{{ sharedpreserv }}</center></td>
+    </tr>
+    <tr>
+         <td>- dont exclusions pour "autre à préciser"</td>
+         <td><center>{{ other }}</center></td>
+    </tr>
+    <tr>
+         <td>Ressources dont l'instruction peut débuter</td>
+         <td><center>{{ maybeg }}</center></td>
+    </tr>
+    <tr>
+         <td>Ressources dont les éléments reliés ont été instruits</td>
+         <td><center>{{ boundinstr }}</center></td>
+    </tr>
+    <tr>
+         <td>Ressources complètement instruites</td>
+         <td><center>{{ fullinstr }}</center></td>
+    </tr>
+    <tr>
+         <td>Fiches défectueuses</td>
+         <td><center>{{ fail }}</center></td>
+    </tr>
+    <tr>
+         <td>Instructions</td>
+         <td><center>{{ instr }}</center></td>
+    </tr>
+   </tbody>
+
+
+</table>
+
+<HR>
+  <p><a target="_blank" href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+
+</body>
+
+</html>

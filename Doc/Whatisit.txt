@@ -1,0 +1,44 @@
+eplouribousse est une application web pour gérer le dédoublonnement des revues dans les bibliothèques.
+
+# Objectif :
+
+eplouribousse est la forme franchouillarde de l'expression latine “e plvribvs (vnvm)” : “(Une) à partir de plusieurs.”
+
+Que ce soit pour rationaliser les espaces de stockage ou pour une meilleure lisibilité des collections de revues, eplouribousse met à votre disposition un ensemble de fonctionnalités qui vont vous permettre de reconstituer une collection unique résultant des éléments épars disponibles dans vos bibliothèques.
+
+
+# Comment nous procédons :
+
+Pour une revue donnée, l'application eplouribousse permet aux bibliothèques, chacune à son tour, d'indiquer leurs éléments reliés contribuant à la résultante, puis lors d'un deuxième cycle d'instructions indiquer selon la même logique leurs éléments non-reliés complémentaires.
+
+Nous voulons être efficaces ; nous ne cherchons pas à couper les cheveux en quatre : Relié ou non relié, oui ; mais plein cuir, demi-cuir, cartonné etc. Non, car soyez sûrs que vous n'en finirez pas.
+
+Il peut arriver, même si cela est rare, qu'un segment non-relié remplace avantageusement un segment relié en mauvais état (Le cas typique est celui où la reliure a compromis l'intégrité du contenu) Ce cas est pris en compte dans l'application eplouribousse.
+
+L'ordre de traitement est significatif : La première bibliothèque est normalement celle détenant déjà la collection la plus importante (Celle qui revendique la conservation dans l'hypothèse où la collection est finalement regroupée). C'est la même logique d'importance qui doit prévaloir normalement pour la place revendiquée par les bibliothèques suivantes. Il peut arriver qu'une bibliothèque veuille soustraire sa collection à la reconstitution de la résultante (Le cas typique est celui d'une collection du dépôt légal) Le module de positionnement de l'application eplouribousse rend cette dérogation possible.
+
+On notera que les descriptions obtenues sont celles des collections résultantes ; elles ne renseignent aucunement sur les éléments écartés ; ceux-ci se déduisent de celles-là. Les éléments qui ne participent pas à la résultante peuvent être cédés ou pilonnés. Les parties contribuant à la collection résultante peuvent être regroupées ou pas, au choix.
+
+Il faut naturellement prévoir les traitements physiques et mises à jour catalographiques.
+
+Vous êtes ok avec tout cela ? Alors eplouribousse est faite pour vous.
+
+
+# Qu'est-ce qu'eplouribousse vous propose ?
+
+eplouribousse
+
+1. calcule les candidats pour chacune des bibliothèque participantes,
+2. permet aux bibliothèques de prendre rang pour le traitement (ou d'exclure leur collection),
+3. fournit aux bibliothèques la liste des ressources pour lesquelles elles peuvent faire les instructions,
+4. permet aux bibliothèques d'être averties lorsque leur tour est venu d'instruire la résultante,
+5. fournit aux bibliothèques un formulaire d'instruction,
+6. fournit aux bibliothèques la liste des ressources dont l'édition de la résultante est possible (instruction complète de la résultante),
+7. fournit aux bibliothèques un formulaire d'édition personnalisé pour chacune des collections résultantes par lesquelles elles sont concernées,
+8. fournit un module de contrôle à la fin de chaque cycle d'instruction,
+9. gère l'ensemble de la chaîne de traitement,
+10. fournit un tableau de bord permettant de suivre l'activité.
+
+# Je suis ok et je veux eplouribousse ... Comment faire ?
+
+Tournez-vous vers votre service informatique. Indiquez l'adresse du présent site. Les informaticiens comprendront tout de suite ; vous pourrez leur préciser que l'application a été développée avec le framework Django pour orienter la demande vers le bon interlocuteur. La doc est à la racine du projet dans le dossier "Doc".

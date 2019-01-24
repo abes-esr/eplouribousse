@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+
+
+      <h2>Suppression d'une ligne d'instruction pour ma bibliothèque ({{ library.name }}) : </h2>
+
+        <p>Titre : {{ ressource.title|truncatewords:80 }}</p>
+        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / issn : {{ ressource.issn }} / Historique de la publication : {{ ressource.pubhist }}</p>
+      <p></p>
+
+      <HR>
+        {% for elmt in librarylist %}
+            | {{ elmt.name }}
+        {% endfor %}
+      <p>Les lignes en rouge ne peuvent plus être supprimées.</p>
+      <table border="1">
+
+         <thead>
+
+             <th>Ligne</th>
+             <th>Bibliothèque</th>
+             <th>Relié ?</th>
+             <th>Bibliothèque remédiée</th>
+             <th>Segment</th>
+             <th>Exception(s)</th>
+             <th>Elément(s) détérioré(s)</th>
+
+         </thead>
+
+         <tbody>
+
+           {% for elmt in instructions %}
+              {% if elmt.name == library.name and elmt.bound == expected %}
+          <tr>
+               <td><center><font color= #2ba121 >{{ elmt.line }}</font></center></td>
+               <td><font color= #2ba121 >{{ elmt.name }}</font></td>
+               <td><center><font color= #2ba121 >{{ elmt.bound }}</font></center></td>
+               <td><font color= #2ba121 >{{ elmt.oname }}</font></td>
+               <td><font color= #2ba121 >{{ elmt.descr }}</font></td>
+               <td><font color= #2ba121 >{{ elmt.exc}}</font></td>
+               <td><font color= #2ba121 >{{ elmt.degr }}</font></td>
+          </tr>
+              {% else %}
+          <tr>
+              <td><center><font color= #e32111 >{{ elmt.line }}</font></center></td>
+              <td><font color= #e32111 >{{ elmt.name }}</font></td>
+              <td><center><font color= #e32111 >{{ elmt.bound }}</font></center></td>
+              <td><font color= #e32111 >{{ elmt.oname }}</font></td>
+              <td><font color= #e32111 >{{ elmt.descr }}</font></td>
+              <td><font color= #e32111 >{{ elmt.exc}}</font></td>
+              <td><font color= #e32111 >{{ elmt.degr }}</font></td>
+
+          </tr>
+              {% endif %}
+           {% endfor %}
+         </tbody>
+
+
+      </table>
+
+      <HR>
+
+
+      <form method="post">{% csrf_token %}
+
+          <p>Vous ne pouvez supprimer une ligne que pour votre bibliothèque ({{ library.name }}) et pour la forme couramment instruite ({{ stage }})</p>
+          <p>n° de la ligne que vous souhaitez supprimer : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+      <p>Attention : La suppression est définitive. Vérifiez bien avant de valider : <input type="submit" value="Valider"></p>
+      </form>
+
+      <HR>
+
+        <p><a href="/./epl/addinstruction/{{ sid }}/{{ lid }}">Poursuivre l'instruction</a></p>
+        <p><a href="/./epl/endinstruction/{{ sid }}/{{ lid }}">J'ai fini pour la forme courante</a></p>
+      <HR>
+        <p><a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+
+    </body>
+
+</html>

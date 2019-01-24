@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+      <link rel="stylesheet" href="style.css" />
+
+
+
+    </head>
+
+
+    <body>
+      <h2>Ajouter une nouvelle ligne d'instruction pour ma bibliothèque ({{ library.name }}) :</h2>
+
+    <p>Attention : éléments {{ stage }} à ce stade.</p>
+      <HR>
+        <p>Titre : {{ ressource.title|truncatewords:80 }}</p>
+        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / issn : {{ ressource.issn }} / Historique de la publication : {{ ressource.pubhist }}</p>
+      <p></p>
+
+      <HR>
+        {% for elmt in librarylist %}
+            | {{ elmt.name }}
+        {% endfor %}
+      <p>La dernière ligne validée est mise en évidence.</p>
+      <table border="1">
+
+         <thead>
+
+             <th>Ligne</th>
+             <th>Bibliothèque</th>
+             <th>Relié ?</th>
+             <th>Bibliothèque remédiée</th>
+             <th>Segment</th>
+             <th>Exception(s)</th>
+             <th>Elément(s) détérioré(s)</th>
+
+         </thead>
+
+         <tbody>
+
+           {% for elmt in instructions %}
+              {% if elmt.name == library.name and elmt.bound == expected and elmt.pk == lastone %}
+          <tr>
+               <td><center><font color= #3364ff  >{{ elmt.line }}</font></center></td>
+               <td><font color= #3364ff >{{ elmt.name }}</font></td>
+               <td><center><font color= #3364ff >{{ elmt.bound }}</font></center></td>
+               <td><font color= #3364ff >{{ elmt.oname }}</font></td>
+               <td><font color= #3364ff >{{ elmt.descr }}</font></td>
+               <td><font color= #3364ff >{{ elmt.exc}}</font></td>
+               <td><font color= #3364ff >{{ elmt.degr }}</font></td>
+          </tr>
+              {% else %}
+          <tr>
+              <td><center>{{ elmt.line }}</center></td>
+              <td>{{ elmt.name }}</td>
+              <td><center>{{ elmt.bound }}</center></td>
+              <td>{{ elmt.oname }}</td>
+              <td>{{ elmt.descr }}</td>
+              <td>{{ elmt.exc}}</td>
+              <td>{{ elmt.degr }}</td>
+
+          </tr>
+              {% endif %}
+           {% endfor %}
+         </tbody>
+
+
+      </table>
+
+      <HR>
+
+        <form method="post">{% csrf_token %}
+        <div>
+          <p>Ligne sous laquelle vous voulez placer la vôtre : {{ form.line }} (0 pour la 1ère position)</p>
+          <p>Le cas échéant, bibliothèque ayant déclaré l'élément déficient (glissez/déposez) :
+            {% for elmt in remedied_lib_list %}
+                 <font color= #3498db >{{ elmt.name }},</font>
+            {% endfor %}
+           {{ form.oname }}</p>
+        <p>Segment* : {{ form.descr }} Exception(s)* : {{ form.exc}} Elément(s) détérioré(s) : {{ form.degr }}</p>
+        <p>* "Segment" = Suite ininterrompue chronologiquement (ou élément unique). "Exception(s)" = élément(s) manquant dans le segment pour la forme considérée.</p>
+
+        <p><a href="/./epl/addinstruction/{{ sid }}/{{ lid }}">Rafraîchir</a></p>
+
+        <p><input type="submit" value="Valider"> <B><font color= #e74c3c >{{ info }}</font></B></p>
+        </div>
+        </form>
+
+        <HR>
+        <p><a href="/./epl/delinstruction/{{ sid }}/{{ library.lid }}">Supprimer une ligne erronée</a> (Vous pourrez continuer ensuite)</p>
+        <p><a href="/./epl/endinstruction/{{ sid }}/{{ library.lid }}">J'ai fini pour la forme courante</a></p>
+        <HR>
+        <p><a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+
+
+    </body>
+
+</html>

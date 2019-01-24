@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+
+
+      <h2>Ressources dont le statut "à arbitrer" pourrait être levé par un repositionnement ({{ name }}) : </h2>
+      <p>(Ressources "à arbitrer" : Rang 1 revendiqué par plusieurs bibliothèques ou par aucune)</p>
+
+      <p>Nombre de ressources concernées : {{ size }}</p>
+
+      <p></p>
+      <p>Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur.</p>
+            <HR>
+          <p>Pour modifier votre positionnement, cliquez sur le lien "Identifiant de la ressource".</p>
+
+            <ul>
+
+              {% for elmt in ressourcelist %}
+                            <HR>
+                <p></p>
+                <li>Titre : {{ elmt.title|truncatewords:80 }}</li>
+                <li>Cote : {{ elmt.cn }}</li>
+                <li>Identifiant de la ressource : <a href="/./epl/ranking/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+
+              {% endfor %}
+
+            </ul>
+            <HR>
+            <p>Menu : <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+
+            <HR>
+              <p><a target="_blank" href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+
+    </body>
+
+</html>

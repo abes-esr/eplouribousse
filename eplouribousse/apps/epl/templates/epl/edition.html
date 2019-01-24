@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+      <h2>Edition de la résultante pour ma bibliothèque ({{ name }})</h2>
+
+        <p>Titre : {{ title|truncatewords:80 }}</p>
+        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ sid }}</a> / issn : {{ issn }} / Historique de la publication : {{ publicationhistory }}</p>
+
+      <HR>
+
+        <p>Les lignes impliquant votre bibliothèque sont mises en évidence.</p>
+        <p>Collection mère : {{ mother }}</p>
+          <table border="1">
+
+
+             <thead>
+               <th>Ligne</th>
+               <th>Bibliothèque</th>
+               <th>Relié ?</th>
+               <th>Bibliothèque remédiée</th>
+               <th>Segment</th>
+               <th>Exception(s)</th>
+               <th>Elément(s) détérioré(s)</th>
+
+             </thead>
+
+             <tbody>
+               {% for e in instructionlist %}
+                   {% if e.name == name or e.oname == name %}
+              <tr>
+                   <td><center><font color= #e74c3c >{{ e.line }}</font></center></td>
+                   <td><font color= #e74c3c >{{ e.name }}</font></td>
+                   <td><center><font color= #e74c3c >{{ e.bound }}</font></center></td>
+                   <td><font color= #e74c3c >{{ e.oname }}</font></td>
+                   <td><font color= #e74c3c >{{ e.descr }}</font></td>
+                   <td><font color= #e74c3c >{{ e.exc}}</font></td>
+                   <td><font color= #e74c3c >{{ e.degr }}</font></td>
+              </tr>
+                   {% else %}
+              <tr>
+                    <td><center>{{ e.line }}</center></td>
+                    <td>{{ e.name }}</td>
+                    <td><center>{{ e.bound }}</center></td>
+                    <td>{{ e.oname }}</td>
+                    <td>{{ e.descr }}</td>
+                    <td>{{ e.exc}}</td>
+                    <td>{{ e.degr }}</td>
+              </tr>
+                   {% endif %}
+               {% endfor %}
+             </tbody>
+
+
+          </table>
+
+
+          <HR>
+
+            <p>Menu contextuel : <a href="/./epl/pdfgen/{{ sid }}/{{ lid }}">Export pdf</a> - <a href="/./epl/to_edit_list/{{ lid }}">Retour à la liste des ressources éditables</a></p>
+
+          <HR>
+
+            <p>Menu général : <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+
+
+          <HR>
+            <p><a target="_blank" href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+
+
+
+    </body>
+
+</html>

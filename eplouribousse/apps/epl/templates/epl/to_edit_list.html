@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+
+
+    <body>
+
+      <h2>Ressources complètement instruites et pouvant donc être éditées pour votre bibliothèque ({{ name }}) : </h2>
+      <p>Nombre de ressources concernées : {{ size }}</p>
+      <p></p>
+      <p>Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur.</p>
+
+      <HR>
+    <p>Pour éditer, cliquez sur le lien "Identifiant de la ressource".</p>
+
+      <ul>
+
+       {% for elmt in ressourcelist %}
+
+             <HR>
+       <p></p>
+          <li>Titre : {{ elmt.title }}</li>
+          <li>Cote : {{ elmt.cn }}</li>
+          <li>Identifiant de la ressource : <a href="/./epl/edition/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+
+
+       {% endfor %}
+
+      </ul>
+      <HR>
+      <p>Menu :  - <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+
+      <HR>
+        <p> - <a target="_blank" href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a> - </p>
+    </body>
+
+</html>

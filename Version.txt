@@ -1,0 +1,53 @@
+***********************************************************************************
+                               eplouribousse
+                         Version : 0.1 (Let it be)
+                                 2018.12.19
+***********************************************************************************
+             Made with Python 3.5.2, Django 2.0, HTML5, CSS3
+***********************************************************************************
+eplouribousse is a webapp for managing serials deduplication in a pool of libraries.
+
+    Copyright (C) 2018  Georges Gressot
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+***********************************************************************************
+    See an implementation : https://eplouribousse-test.di.unistra.fr/
+***********************************************************************************
+    mail to : gressot@unistra.fr
+    snail mail to :
+     G. Gressot
+     Université de Strasbourg
+     Service des Bibliothèques
+     2 A rue de la Fonderie
+     CS 41037
+     FR-67070 Strasbourg Cedex
+
+***********************************************************************************
+Thanks are following :
+***********************************************************************************
+Merci à :
+
+Ceux qui m'ont supporté pendant que j'étais immergé dans l'écriture d'eplouribousse.
+
+Boris, Sylvain et Thomas sans qui eplouribousse n'aurait pas été disponible sur un 
+vrai serveur, pour leurs tuyaux, pour l'accueil qu'ils ont réservé à ce projet et 
+l'ambiance chaleureuse qu'ils ont contribué à donner à nos séances de travail.
+
+Noélie et Emma pour l'habillage aux couleurs de l'établissement.
+
+Ma hiérarchie pour m'avoir permis de me former au langage de programmation Python 
+et au framework Django.
+
+***********************************************************************************

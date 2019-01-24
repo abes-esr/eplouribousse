@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+      <link rel="stylesheet" href="style.css" />
+
+
+
+    </head>
+
+
+    <body>
+
+
+      <h2>Signalement à faire à l'administrateur de la base de données concernant des anomalies dans l'instruction de la ressource : </h2>
+
+        <p>Titre : {{ ressource.title|truncatewords:80 }}</p>
+        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / issn : {{ ressource.issn }} / Historique de la publication : {{ ressource.pubhist }}</p>
+      <p></p>
+
+      <HR>
+        {% for elmt in librarylist %}
+            | {{ elmt.name }}
+        {% endfor %}
+      <p></p>
+      <table border="1">
+
+         <thead>
+
+             <th>Ligne</th>
+             <th>Bibliothèque</th>
+             <th>Relié ?</th>
+             <th>Bibliothèque remédiée</th>
+             <th>Segment</th>
+             <th>Exception(s)</th>
+             <th>Elément(s) détérioré(s)</th>
+
+         </thead>
+
+         <tbody>
+
+           {% for elmt in instructions %}
+              {% if elmt.name == lib.name and elmt.bound == expected %}
+          <tr>
+               <td><center><font color= #e74c3c >{{ elmt.line }}</font></center></td>
+               <td><font color= #e74c3c >{{ elmt.name }}</font></td>
+               <td><center><font color= #e74c3c >{{ elmt.bound }}</font></center></td>
+               <td><font color= #e74c3c >{{ elmt.oname }}</font></td>
+               <td><font color= #e74c3c >{{ elmt.descr }}</font></td>
+               <td><font color= #e74c3c >{{ elmt.exc}}</font></td>
+               <td><font color= #e74c3c >{{ elmt.degr }}</font></td>
+          </tr>
+              {% else %}
+          <tr>
+              <td><center>{{ elmt.line }}</center></td>
+              <td>{{ elmt.name }}</td>
+              <td><center>{{ elmt.bound }}</center></td>
+              <td>{{ elmt.oname }}</td>
+              <td>{{ elmt.descr }}</td>
+              <td>{{ elmt.exc}}</td>
+              <td>{{ elmt.degr }}</td>
+
+          </tr>
+              {% endif %}
+           {% endfor %}
+         </tbody>
+
+
+      </table>
+
+
+      <HR>
+
+          <form method="post">{% csrf_token %}
+          <div>
+          <p>Après en avoir bien vérifié la nécessité, je marque cette ressource comme mal instruite et en informe l'administrateur de la base de données :  {{ checkform.flag }}</p>
+          <p><input type="submit" value="Valider"></p>
+          </div>
+          </form>
+          <HR>
+            <p><a href="/./epl/addinstruction/{{ sid }}/{{ lid }}">Revenir à l'instruction</a>
+      <HR>
+      <p><a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+
+    </body>
+
+</html>
