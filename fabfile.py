@@ -22,7 +22,7 @@ env.remote_virtualenv_root = join(env.remote_home, '.virtualenvs')  # venv root
 env.remote_virtualenv_dir = join(env.remote_virtualenv_root,
                                  env.application_name)  # venv for webapp dir
 # git repository url
-env.remote_repo_url = 'git@git.unistra.fr:gressot/fr_eplouribousse.git'
+env.remote_repo_url = 'git@git.unistra.fr:gressot/yellow.git'
 env.local_tmp_dir = '/tmp'  # tmp dir
 env.remote_static_root = '/var/www/static/'  # root of static files
 env.locale = 'fr_FR.UTF-8'  # locale to use on remote
