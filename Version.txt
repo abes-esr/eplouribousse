@@ -1,7 +1,7 @@
 ***********************************************************************************
                                eplouribousse
-                         Version : 0.1 (Let it be)
-                                 2018.12.19
+                         Version : 0.2 (Santiano)
+                                 2019.01.10
 ***********************************************************************************
              Made with Python 3.5.2, Django 2.0, HTML5, CSS3
 ***********************************************************************************
@@ -23,7 +23,7 @@ eplouribousse is a webapp for managing serials deduplication in a pool of librar
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ***********************************************************************************
-    See an implementation : https://eplouribousse-test.di.unistra.fr/
+    See an implementation : Coming next ...
 ***********************************************************************************
     mail to : gressot@unistra.fr
     snail mail to :
