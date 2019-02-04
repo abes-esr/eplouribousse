@@ -75,17 +75,54 @@
       </table>
 
       <HR>
-
-        <form method="post">{% csrf_token %}
-        <div>
-          <p>Ligne sous laquelle vous voulez placer la vôtre : {{ form.line }} (0 pour la 1ère position)</p>
-          <p>Le cas échéant, bibliothèque ayant déclaré l'élément déficient (glissez/déposez) :
+          <p>Autre(s) bibliothèque(s) rattachées :
             {% for elmt in remedied_lib_list %}
                  <font color= #3498db >{{ elmt.name }},</font>
-            {% endfor %}
-           {{ form.oname }}</p>
-        <p>Segment* : {{ form.descr }} Exception(s)* : {{ form.exc}} Elément(s) détérioré(s) : {{ form.degr }}</p>
-        <p>* "Segment" = Suite ininterrompue chronologiquement (ou élément unique). "Exception(s)" = élément(s) manquant dans le segment pour la forme considérée.</p>
+            {% endfor %}</p>
+
+        <p>"Segment" = Suite ininterrompue chronologiquement (ou élément unique).</p>
+        <p>"Exception(s)" = élément(s) manquant dans le segment pour la forme considérée.</p>
+        <form method="post">{% csrf_token %}
+
+      <table border="1">
+
+         <thead>
+
+             <td>Sous la ligne</td>
+             <td>Bibliothèque</td>
+             <td>Relié ?</td>
+             <td>Bibliothèque remédiée</td>
+             <td>Segment</td>
+             <td>Exception(s)</td>
+             <td>Elément(s) détérioré(s)</td>
+
+         </thead>
+
+         <tbody>
+
+
+          <tr>
+              <td><center>{{ form.line }}</center></td>
+              <td>{{ library.name }}</td>
+              {% if stage == "reliés" %}
+              <td><center>x</center></td>
+              {% else %}
+              <td><center> </center></td>
+              {% endif %}
+              <td>{{ form.oname }}</td>
+              <td>{{ form.descr }}</td>
+              <td>{{ form.exc}}</td>
+              <td>{{ form.degr }}</td>
+
+          </tr>
+
+         </tbody>
+
+
+      </table>
+
+
+        <div>
 
         <p><a href="/./epl/addinstruction/{{ sid }}/{{ lid }}">Rafraîchir</a></p>
 
