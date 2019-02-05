@@ -50,16 +50,19 @@ dont suite à la réunion de travail avec Emma et Noélie (le 15/11/2018)
 - Internationalisation de la documentation (anglais et éventuellement allemand)
 - Licence à préciser (?)
 - Examiner les points non résolus ci-dessous ou mal résolus et tâcher de les résoudre correctement
-- Edition des résultantes en pdf (avec ReportLab : https://docs.djangoproject.com/fr/2.0/howto/outputting-pdf/ ou sans doute bien plus simplement avec WeasyPrint : https://github.com/Kozea/WeasyPrint)
+- X_FAIT_X Edition des résultantes en pdf (avec ReportLab : https://docs.djangoproject.com/fr/2.0/howto/outputting-pdf/ ou sans doute bien plus simplement avec WeasyPrint : https://github.com/Kozea/WeasyPrint)
 - etc.
-- Faire les tests du prototype
-- Réviser la vue indicators
-- Cas particulier de l'admin dans les menus des .html
-- Mise en forme couleur à vérifier dans les .html qui en ont
+- X_FAIT_X Faire les tests du prototype
+- X_FAIT_X Réviser la vue indicators
+- X_FAIT_X Cas particulier de l'admin dans les menus des .html
+- X_FAIT_X Mise en forme couleur à vérifier dans les .html qui en ont
 - Réviser la documentation quand les choses seront un peu stabilisées ... 
 
 Idées pour faire connaître l'application à de potentiels intéressés :
 
+- Pour contribution à l'application par des développeurs --> github (anglais)
+
+- Pour les professionnels des bibliothèques :
 - ADBU Forum
 - ABES et arabesques ? Salon professionnel des Journées Abes : "Les démos des réseaux" ou "Les posters des réseaux" (voir programme des journées 2018, p. 8)
 - Code{4}lib et le journal https://journal.code4lib.org/call-for-submissions
