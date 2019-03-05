@@ -386,19 +386,20 @@ def endinstr(request, sid, lid):
                     e.save()
 
             #Message data :
-            # subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
-            # host = str(request.get_host())
-            # message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
-            # " : " + "http://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
-            # dest = nextlib.contact
-            # exp = Library.objects.get(lid ="999999999").contact
-            # send_mail(
-            #     subject,
-            #     message,
-            #     exp,
-            #     dest,
-            #     fail_silently=True,
-            # )
+            subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+            host = str(request.get_host())
+            message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
+            " : " + "http://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
+            dest = nextlib.contact
+            dest = [dest]
+            exp = Library.objects.get(lid ="999999999").contact
+            send_mail(
+                subject,
+                message,
+                exp,
+                dest,
+                fail_silently=True,
+            )
 
             do = instrtodo(request, lid)
             return do
@@ -410,20 +411,20 @@ def endinstr(request, sid, lid):
                 e.save()
 
             #Message data to the BDD administrator(s):
-            # subject = "eplouribousse : " + str(sid) + " / " + "status = 6"
-            # message = "Le statut des enregistrements est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressoucre citée en objet ; une intervention dans base est attendue de votre part. Merci !"
-            # destprov = BddAdmin.objects.all()
-            # dest =[]
-            # for d in destprov:
-            #     dest.append(d.contact)
-            # exp = Library.objects.get(lid ="999999999").contact
-            # send_mail(
-            #     subject,
-            #     message,
-            #     exp,
-            #     dest,
-            #     fail_silently=True,
-            # )
+            subject = "eplouribousse : " + str(sid) + " / " + "status = 6"
+            message = "Le statut des enregistrements est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressoucre citée en objet ; une intervention dans base est attendue de votre part. Merci !"
+            destprov = BddAdmin.objects.all()
+            dest =[]
+            for d in destprov:
+                dest.append(d.contact)
+            exp = Library.objects.get(lid ="999999999").contact
+            send_mail(
+                subject,
+                message,
+                exp,
+                dest,
+                fail_silently=True,
+            )
 
             do = instrtodo(request, lid)
             return do
@@ -469,19 +470,20 @@ def endinstr(request, sid, lid):
                         j.save()
 
             #Message data :
-            # subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
-            # host = str(request.get_host())
-            # message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
-            # " : " + "http://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
-            # dest = nextlib.contact
-            # exp = Library.objects.get(lid ="999999999").contact
-            # send_mail(
-            #     subject,
-            #     message,
-            #     exp,
-            #     dest,
-            #     fail_silently=True,
-            # )
+            subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+            host = str(request.get_host())
+            message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
+            " : " + "http://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
+            dest = nextlib.contact
+            dest = [dest]
+            exp = Library.objects.get(lid ="999999999").contact
+            send_mail(
+                subject,
+                message,
+                exp,
+                dest,
+                fail_silently=True,
+            )
 
             do = instrtodo(request, lid)
             return do
