@@ -430,16 +430,16 @@ def endinstr(request, sid, lid):
             return do
 
     else: #lid !="999999999"
-        if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).order_by('rank', 'pk').exists():
-            nextlid = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).order_by('rank', 'pk')[0].lid
+        if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
+            nextlid = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0].lid
             nextlib = Library.objects.get(lid =nextlid)
         else:
             nextlid = Library.objects.get(lid ="999999999").lid
             nextlib = Library.objects.get(lid =nextlid)
         if z.is_valid() and y.flag ==True:
             if len(Instruction.objects.filter(sid =sid, name ='admin')) ==0:
-                if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).order_by('rank', 'pk').exists():
-                    nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).order_by('rank', 'pk')[0]
+                if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
+                    nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
                     j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
                     if j.status !=2:
@@ -454,8 +454,8 @@ def endinstr(request, sid, lid):
                         j.save()
 
             elif len(Instruction.objects.filter(sid =sid, name ='admin')) ==1:
-                if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).order_by('rank', 'pk').exists():
-                    nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).order_by('rank', 'pk')[0]
+                if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
+                    nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
                     j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
                     if j.status !=4:
