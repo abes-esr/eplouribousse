@@ -153,13 +153,16 @@ def notintime(request, sid, lid):
 def addinstr(request, sid, lid):
 
     #Control (addinstr only if it must be)
-    if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==2 \
-    or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0 \
-    and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-    or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1 \
-    and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
-        do = notintime(request, sid, lid)
-        return do
+    try:
+        if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==2 \
+        or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0 \
+        and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
+        or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1 \
+        and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
+            do = notintime(request, sid, lid)
+            return do
+    except:
+        z =1 #This is just to continue
 
     #Ressource data :
     itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
