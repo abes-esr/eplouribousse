@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('ranking/<str:sid>/<str:lid>', views.takerank, name='ranking'),
+    path('notintime/<str:sid>/<str:lid>', views.notintime, name='not in time'),
     path('addinstruction/<str:sid>/<str:lid>', views.addinstr, name='add instruction'),
     path('delinstruction/<str:sid>/<str:lid>', views.delinstr, name='delete instruction'),
     path('endinstruction/<str:sid>/<str:lid>', views.endinstr, name='end of instruction'),

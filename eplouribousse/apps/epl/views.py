@@ -143,7 +143,23 @@ def takerank(request, sid, lid):
      'library' : lib, 'form' : f, 'lid' : lid, 'flag' : flag, })
 
 
+def notintime(request, sid, lid):
+
+    lib = Library.objects.get(lid = lid)
+    ress = ItemRecord.objects.get(sid =sid, lid =lid).title
+    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
+
+
 def addinstr(request, sid, lid):
+
+    #Control (addinstr only if it must be)
+    if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==2 \
+    or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0 \
+    and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
+    or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1 \
+    and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
+        do = notintime(request, sid, lid)
+        return do
 
     #Ressource data :
     itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
@@ -174,8 +190,6 @@ def addinstr(request, sid, lid):
         bd ='reliés'
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1:
         bd ='non reliés'
-    else:   # (==2)
-        bd = "XXXXX (instructions terminées)"
 
     if lid =="999999999":
         do = endinstr(request, sid, lid)
