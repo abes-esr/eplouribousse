@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<link rel="stylesheet" href="home_fichiers/style.html">
-<link rel="stylesheet" href="home_fichiers/style.css">
-</head>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="style.css" />
+
+
+    </head>
 
 
     <body>
-        
-        <div id="logo"><img src="home_fichiers/signature_eplouribousse.svg"></div>
-        
-        <h1>Édition de la résultante pour ma bibliothèque ({{ name }})</h1>
-        
-        <div id="content">
+      <h2>Edition de la résultante pour ma bibliothèque ({{ name }})</h2>
 
-        <p><b>Titre :</b> {{ title|truncatewords:80 }}</p>
-        <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ sid }}</a> / issn : {{ issn }} / <b>Historique de la publication :</b> {{ publicationhistory }}</p>
+        <p>Titre : {{ title|truncatewords:80 }}</p>
+        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ sid }}</a> / issn : {{ issn }} / Historique de la publication : {{ publicationhistory }}</p>
 
-        <p><i>Les lignes impliquant votre bibliothèque sont mises en évidence.</i></p>
-        <p><b>Collection mère :</b> {{ mother }}</p>
+      <HR>
+
+        <p>Les lignes impliquant votre bibliothèque sont mises en évidence.</p>
+        <p>Collection mère : {{ mother }}</p>
           <table border="1">
 
+
              <thead>
-               <tr><th>Ligne</th>
+               <th>Ligne</th>
                <th>Bibliothèque</th>
                <th>Relié ?</th>
                <th>Bibliothèque remédiée</th>
                <th>Segment</th>
                <th>Exception(s)</th>
                <th>Elément(s) détérioré(s)</th>
-             </tr></thead>
+
+             </thead>
 
              <tbody>
                {% for e in instructionlist %}
@@ -58,25 +62,25 @@
                    {% endif %}
                {% endfor %}
              </tbody>
+
+
           </table>
-        </div>
 
-        <div id="menucontextuel">
-            <p><b>Menu contextuel :</b> <a href="/./epl/pdfgen/135946069/680662302">Export pdf</a> - <a href="/./epl/to_edit_list/680662302">Retour à la liste des ressources éditables</a></p>
-        </div>
-        
-        <div id="menugeneral">
-            <p><b>Menu général :</b> <a href="/./epl/to_rank_list/680662302">Positionnements</a> - <a href="/./epl/arbitration/680662302">Arbitrages</a> - <a href="/./epl/instrtodo/680662302">Instructions</a></p>
-        </div>
-        
-        <div id="footer">
+
+          <HR>
+
+            <p>Menu contextuel : <a href="/./epl/pdfgen/{{ sid }}/{{ lid }}">Export pdf</a> - <a href="/./epl/to_edit_list/{{ lid }}">Retour à la liste des ressources éditables</a></p>
+
+          <HR>
+
+            <p>Menu général : <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+
+
+          <HR>
             <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
-        </div>
-        
-        <div id="credits">
-            <p>Cette application est développée par Georges Gressot, responsable de la conservation et de la valorisation des collections · Service des bibliothèques de l'Université de Strasbourg.</p>
-        </div>
 
-</body>
+
+
+    </body>
 
 </html>
