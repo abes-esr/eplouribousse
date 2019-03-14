@@ -6,35 +6,45 @@
 
         <meta charset="utf-8" />
 
-        <link rel="stylesheet" href="style.css" />
-
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
     </head>
 
 
     <body>
 
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
 
       <h2>Tentative d'intervention hors délai pour la bibliothèque {{ library }}: </h2>
+        <div id="content">
 
       <p></p>
-      <p>Ressource concernée : {{ title }} (identifiant : {{ sid }})</p>
+      <p><b>Ressource concernée :</b> {{ title }} (<b>identifiant :</b> {{ sid }})</p>
       <p></p>
       <p>Vous avez été redirigé ici pour l'une des raisons suivantes : </p>
       <ul>
 
 
-          <li>Ce n'est pas à votre tour d'instruire la fiche.</li>
-          <li>La fiche est déjà complètement instruite et ne peut plus être modifiée.</li>
+          <li>- Ce n'est pas à votre tour d'instruire la fiche.</li>
+          <li>- La fiche est déjà complètement instruite et ne peut plus être modifiée.</li>
 
 
       </ul>
       <p>(Dans ce dernier cas, la ressource doit apparaître dans votre liste des <a href="/./epl/to_edit_list/{{ lid }}">ressources éditables</a>)</p>
-      <HR>
+      
+        </div>
+        <div id="menugeneral">
       <p>Menu : <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+        </div>
 
-      <HR>
+        <div id="footer">
         <p> - <a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a> - </p>
+        </div>
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
     </body>
 
 </html>

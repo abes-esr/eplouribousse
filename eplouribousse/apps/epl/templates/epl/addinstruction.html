@@ -7,7 +7,8 @@
 
       <meta charset="utf-8" />
 
-      <link rel="stylesheet" href="style.css" />
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
 
 
@@ -15,13 +16,16 @@
 
 
     <body>
+      <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+
       <h2>Ajouter une nouvelle ligne d'instruction pour ma bibliothèque ({{ library.name }}) :</h2>
+      <div id="content">
 
     <p>Attention : éléments {{ stage }} à ce stade.</p>
       <HR>
-        <p>Titre : {{ ressource.title|truncatewords:80 }}</p>
-        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ ressource.sid }}</a> / issn : {{ ressource.issn }} / Historique de la publication : {{ ressource.pubhist }}</p>
+        <p><b>Titre :</b> {{ ressource.title|truncatewords:80 }}</p>
+        <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>Historique de la publication :</b> {{ ressource.pubhist }}</p>
       <p></p>
 
       <HR>
@@ -97,7 +101,7 @@
              <td>Elément(s) détérioré(s)</td>
 
          </thead>
-
+        </div>
          <tbody>
 
 
@@ -130,13 +134,19 @@
         </div>
         </form>
 
-        <HR>
+        <div id="menucontextuel">
         <p><a href="/./epl/delinstruction/{{ sid }}/{{ library.lid }}">Supprimer une ligne erronée</a> (Vous pourrez continuer ensuite)</p>
         <p><a href="/./epl/endinstruction/{{ sid }}/{{ library.lid }}">J'ai fini pour la forme courante</a></p>
-        <HR>
+        </div>
+        
+        <div id="footer">
         <p><a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+        </div>
 
-
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
     </body>
 
 </html>

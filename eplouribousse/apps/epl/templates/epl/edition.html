@@ -6,23 +6,29 @@
 
         <meta charset="utf-8" />
 
-        <link rel="stylesheet" href="style.css" />
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
 
     </head>
 
 
     <body>
-      <h2>Edition de la résultante pour ma bibliothèque ({{ name }})</h2>
+		
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+        
+        <h1>Edition de la résultante pour ma bibliothèque ({{ name }})</h1>
 
-        <p>Titre : {{ title|truncatewords:80 }}</p>
-        <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ sid }}</a> / issn : {{ issn }} / Historique de la publication : {{ publicationhistory }}</p>
 
-      <HR>
+        <div id="content">
 
-        <p>Les lignes impliquant votre bibliothèque sont mises en évidence.</p>
-        <p>Collection mère : {{ mother }}</p>
+        <p><b>Titre :</b> {{ title|truncatewords:80 }}</p>
+        <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>Historique de la publication :</b> {{ publicationhistory }}</p>
+
+
+        <p><i>Les lignes impliquant votre bibliothèque sont mises en évidence.</i></p>
+        <p><b>Collection mère :</b> {{ mother }}</p>
           <table border="1">
 
 
@@ -65,21 +71,24 @@
 
 
           </table>
+        </div>
 
-
-          <HR>
-
-            <p>Menu contextuel : <a href="/./epl/pdfgen/{{ sid }}/{{ lid }}">Export pdf</a> - <a href="/./epl/to_edit_list/{{ lid }}">Retour à la liste des ressources éditables</a></p>
-
-          <HR>
-
-            <p>Menu général : <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
-
-
-          <HR>
+        <div id="menucontextuel">
+            <p><b>Menu contextuel :</b> <a href="/./epl/pdfgen/{{ sid }}/{{ lid }}">Export pdf</a> - <a href="/./epl/to_edit_list/{{ lid }}">Retour à la liste des ressources éditables</a></p>
+        </div>
+        
+        <div id="menugeneral">
+            <p><b>Menu général :</b> <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+        </div>
+        
+        <div id="footer">
             <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
-
-
+        </div>
+        
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
 
     </body>
 

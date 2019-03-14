@@ -6,23 +6,25 @@
 
         <meta charset="utf-8" />
 
-        <link rel="stylesheet" href="style.css" />
-
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
     </head>
 
 
     <body>
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
 
       <h2>Positionner la collection de votre bibliothèque ({{ library.name }}) pour la ressource suivante :</h2>
+        <div id="content">
 
-      <p>Titre : {{ ressource.title|truncatewords:80 }}</p>
-      <p>Identifiant de la ressource : <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
-       / issn : {{ ressource.issn }} / Historique de la publication : {{ ressource.pubhist }}</p>
+      <p><b>Titre :</b> {{ ressource.title|truncatewords:80 }}</p>
+      <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
+       / <b>issn :</b> {{ ressource.issn }} / <b>Historique de la publication :</b> {{ ressource.pubhist }}</p>
       <p></p>
       {% if flag == 0 %}
-      <HR>
-      <p>Rattachements ; celui de votre bibliothèque apparaît en rouge :</p>
+
+      <p><i>Rattachements ; celui de votre bibliothèque apparaît en rouge :</i></p>
       <p>(Cliquez sur le lien "identifiant" pour savoir à quelle bibliothèque celui-ci correspond)</p>
 
       <ul>
@@ -32,18 +34,18 @@
                 <HR>
           <p></p>
              <font color= #e74c3c >
-              <li>Identifiant de la bibliothèque : <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
-              <li>Etat de collection : {{ elmt.holdstat }}</li>
-              <li>Rang courant : <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li>Exclusion ? : <font color= #3498db  >{{ elmt.excl}}</font> | Commentaire : <font color= #3498db  >{{ elmt.comm }}</font></li>
+              <li><b>Identifiant de la bibliothèque :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
+              <li><b>Etat de collection :</b> {{ elmt.holdstat }}</li>
+              <li><b>Rang courant :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li><b>Exclusion ? :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>Commentaire :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
              </font>
           {% else %}
                 <HR>
           <p></p>
-              <li>Identifiant de la bibliothèque : <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
-              <li>Etat de collection : {{ elmt.holdstat }}</li>
-              <li>Rang courant : <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li>Exclusion ? : <font color= #3498db  >{{ elmt.excl}}</font> | Commentaire : <font color= #3498db  >{{ elmt.comm }}</font></li>
+              <li><b>Identifiant de la bibliothèque :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
+              <li><b>Etat de collection :</b> {{ elmt.holdstat }}</li>
+              <li><b>Rang courant :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li><b>Exclusion ? :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>Commentaire :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
           {% endif %}
       {% endfor %}
 
@@ -64,17 +66,27 @@
       <p><B><font color= #e74c3c >"Il n'est plus possible de modifier votre positionnement (l'instruction de la résultante peut déjà être engagée)."</font></B></p>
       {% endif %}
 
+        </div>
       <HR>
+      
+        <div id="menucontextuel">
 
         <p>Menu contextuel : <a href="/./epl/to_rank_list/{{ library.lid }}">Retour à la liste actualisée des positionnements</a> - <a href="/./epl/arbitration/{{ library.lid }}">Retour à la liste actualisée des arbitrages</a></p>
+        </div>
 
-      <HR>
+        <div id="menugeneral">
 
         <p>Menu général : <a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+        </div>
 
 
-      <HR>
+        <div id="footer">
         <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+        </div>
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
       <body>
 
 </html>

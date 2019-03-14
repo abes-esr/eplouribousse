@@ -1,0 +1,140 @@
+@font-face {
+    font-family: "Unistra B";
+    src: url("/fonts/UnistraB-Regular.ttf") format("ttf"),
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    background-color: #ffffff;
+    font-family: "Unistra B", sans-serif;
+    font-size: 22px;
+    line-height: 1.22222;
+    color: #000000;
+}
+
+select {
+    font-family: "Unistra B", sans-serif;
+    font-size: 22px;
+    line-height: 1.22222;
+    color: #000000;
+}
+
+#logo {
+    width: 22%;
+    margin: 0 auto;
+    padding: 2% 0% 1% 0%;
+}
+
+a {
+    color: #ff1d44;
+}
+
+h1 {
+    font-size: 40px;
+    color: #ff1d44;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding-top: 5px;
+}
+
+h2 {
+    font-size: 40px;
+    color: #ff1d44;
+    font-weight: normal;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#content {
+    background-color: #ffffff;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#content p {
+    text-align: left;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+#content ul {
+    list-style: none;
+    margin-left: 10%;
+}
+
+#content input {
+    background-color: #ff1d44;
+    font-family: "Unistra B", sans-serif;
+    font-size: 22px;
+    color: #ffffff;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+#footer {
+    background-color: #f1f1f2;
+    text-align: center;
+    color: #ff1d44;
+}
+
+#footer a {
+    color: #ff1d44;
+}
+
+#credits {
+    background-color: #808285;
+}
+
+#credits p {
+    font-size: 20px;
+    width: 40%;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+thead {
+    background-color: #ff1d44;
+}
+
+th {
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table, th, td {
+    border: 1px solid black;
+    vertical-align: middle;
+}
+
+#menucontextuel {
+    color: #ff1d44;
+    text-align: center;
+}
+
+#menucontextuel a {
+    color: #ff1d44;
+}
+
+#menugeneral {
+    color: #ff1d44;
+    text-align: center;
+}
+
+#menugeneral a {
+    color: #ff1d44;
+}

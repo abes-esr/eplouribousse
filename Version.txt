@@ -1,11 +1,12 @@
-***********************************************************************************
+****************************************************************************
                                eplouribousse
                          Version : 0.2 (Santiano)
-                                 2019.01.10
-***********************************************************************************
+                                 2019.03.25
+****************************************************************************
              Made with Python 3.5.2, Django 2.0, HTML5, CSS3
-***********************************************************************************
-eplouribousse is a webapp for managing serials deduplication in a pool of libraries.
+****************************************************************************
+                        eplouribousse is a webapp
+        for managing serials deduplication in a pool of libraries.
 
     Copyright (C) 2018  Georges Gressot
 
@@ -22,9 +23,16 @@ eplouribousse is a webapp for managing serials deduplication in a pool of librar
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-***********************************************************************************
-    See an implementation : Coming next ...
-***********************************************************************************
+****************************************************************************
+Contributions (UdS = Université de Strasbourg) :
+
+Thomas Baguet, UdS, Direction du Numérique         : Deployment
+Emma Donnart, UdS, Service des bibliothèques       : Graphics
+Georges Gressot, UdS, Service des bibliothèques    : Development
+Sylvain Joncourt, UdS, Direction du Numérique      : Tricks
+Boris Musilek, UdS, Direction du Numérique         : System
+
+****************************************************************************
     mail to : gressot@unistra.fr
     snail mail to :
      G. Gressot
@@ -34,20 +42,4 @@ eplouribousse is a webapp for managing serials deduplication in a pool of librar
      CS 41037
      FR-67070 Strasbourg Cedex
 
-***********************************************************************************
-Thanks are following :
-***********************************************************************************
-Merci à :
-
-Ceux qui m'ont supporté pendant que j'étais immergé dans l'écriture d'eplouribousse.
-
-Boris, Sylvain et Thomas sans qui eplouribousse n'aurait pas été disponible sur un 
-vrai serveur, pour leurs tuyaux, pour l'accueil qu'ils ont réservé à ce projet et 
-l'ambiance chaleureuse qu'ils ont contribué à donner à nos séances de travail.
-
-Noélie et Emma pour l'habillage aux couleurs de l'établissement.
-
-Ma hiérarchie pour m'avoir permis de me former au langage de programmation Python 
-et au framework Django.
-
-***********************************************************************************
+****************************************************************************
