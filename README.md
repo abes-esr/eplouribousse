@@ -37,5 +37,5 @@ Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a trois poss
 
 # Contact :
 
-Indiqué en https://github.com/GGre/eplouribousse/blob/master/Version.txt
+Indiqué en https://github.com/GGre/eplouribounistra/blob/master/Version.txt
 
