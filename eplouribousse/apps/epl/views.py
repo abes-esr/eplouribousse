@@ -406,7 +406,7 @@ def endinstr(request, sid, lid):
                     dest = [dest]
                     exp = Library.objects.get(lid ="999999999").contact
                     send_mail(subject, message, exp, dest, fail_silently=True, )
-		            
+
             if len(Instruction.objects.filter(sid =sid, name ='admin')) ==2:
                 for e in ItemRecord.objects.filter(status =4):
                     e.status = 5
@@ -429,13 +429,7 @@ def endinstr(request, sid, lid):
             for d in destprov:
                 dest.append(d.contact)
             exp = Library.objects.get(lid ="999999999").contact
-            send_mail(
-                subject,
-                message,
-                exp,
-                dest,
-                fail_silently=True,
-            )
+            send_mail(subject, message, exp, dest, fail_silently=True, )
 
             do = instrtodo(request, lid)
             return do
@@ -480,15 +474,15 @@ def endinstr(request, sid, lid):
                         j.status = 4
                         j.save()
 
-			#Message data :
-			subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
-			host = str(request.get_host())
-			message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
-			" : " + "https://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
-			dest = nextlib.contact
-			dest = [dest]
-			exp = Library.objects.get(lid ="999999999").contact
-			send_mail(subject, message, exp, dest, fail_silently=True, )
+            #Message data :
+            subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+            host = str(request.get_host())
+            message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
+            " : " + "https://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
+            dest = nextlib.contact
+            dest = [dest]
+            exp = Library.objects.get(lid ="999999999").contact
+            send_mail(subject, message, exp, dest, fail_silently=True, )
 
             do = instrtodo(request, lid)
             return do
