@@ -146,7 +146,7 @@ def takerank(request, sid, lid):
 def notintime(request, sid, lid):
 
     lib = Library.objects.get(lid = lid)
-    ress = ItemRecord.objects.get(sid =sid, lid =lid).title
+    ress = ItemRecord.objects.get(sid =sid, rank =1).title
     return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
 
 
