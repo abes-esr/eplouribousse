@@ -6,8 +6,9 @@
 
         <meta charset="utf-8" />
 
-        <link rel="stylesheet" href="style.css" />
-
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
 
     </head>
 
@@ -15,11 +16,12 @@
     <body>
 
       <h2>Ressources complètement instruites et pouvant donc être éditées pour votre bibliothèque ({{ name }}) : </h2>
+        <div id="content">
+
       <p>Nombre de ressources concernées : {{ size }}</p>
       <p></p>
       <p>Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur.</p>
 
-      <HR>
     <p>Pour éditer, cliquez sur le lien "Identifiant de la ressource".</p>
 
       <ul>
@@ -28,19 +30,28 @@
 
              <HR>
        <p></p>
-          <li>Titre : {{ elmt.title }}</li>
-          <li>Cote : {{ elmt.cn }}</li>
-          <li>Identifiant de la ressource : <a href="/./epl/edition/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+          <li><b>Titre :</b> {{ elmt.title }}</li>
+          <li><b>Cote :</b> {{ elmt.cn }}</li>
+          <li><b>Identifiant de la ressource :</b> <a href="/./epl/edition/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
 
 
        {% endfor %}
 
       </ul>
-      <HR>
-      <p>Menu :  - <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+        </div>
+        <div id="menugeneral">
+      <p><b>Menu : </b><a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+        </div>
 
-      <HR>
-        <p> - <a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a> - </p>
+        <div id="footer">
+            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+        </div>
+        
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
+            
     </body>
 
 </html>

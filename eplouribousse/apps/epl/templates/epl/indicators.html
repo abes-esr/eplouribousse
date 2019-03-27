@@ -5,10 +5,17 @@
 
           <meta charset="utf-8" />
 
-          <link rel="stylesheet" href="style.css" />
-  </head>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
+
+</head>
+    
 <body>
-<h2>Tableau de bord : </h2>
+			<h2>Tableau de bord : </h2>
+			
+	        <div id="content">
+
 
 <table border="1">
 
@@ -78,10 +85,15 @@
 
 
 </table>
-
-<HR>
-  <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
-
+        </div>
+        <div id="footer">
+            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+        </div>
+        
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
 </body>
 
 </html>

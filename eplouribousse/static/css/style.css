@@ -13,14 +13,14 @@ body {
     width: 100%;
     background-color: #ffffff;
     font-family: "Unistra B", sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1.22222;
     color: #000000;
 }
 
 select {
     font-family: "Unistra B", sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1.22222;
     color: #000000;
 }
@@ -35,51 +35,69 @@ a {
     color: #ff1d44;
 }
 
+a:hover {
+    font-weight: 600;
+}
+
 h1 {
-    font-size: 40px;
+    font-size: 30px;
     color: #ff1d44;
     font-weight: bold;
     text-align: center;
-    margin: 0;
+    margin: 0 auto;
     padding-top: 5px;
+    max-width: 80%;
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 30px;
     color: #ff1d44;
-    font-weight: normal;
+    font-weight: bold;
     text-align: center;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    max-width: 80%;
 }
 
 #content {
     background-color: #ffffff;
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
 }
 
 #content p {
     text-align: left;
-    margin-right: 10%;
-    margin-left: 10%;
 }
 
 #content ul {
     list-style: none;
-    margin-left: 10%;
 }
 
-#content input {
+#content input[type="submit"] {
+    border-color: #ff1d44;
+    border-style: solid;
+    border-width: 2px;
+    background-color: #ffffff;
+    font-family: "Unistra B", sans-serif;
+    font-size: 18px;
+    color: #ff1d44;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+#content input[type="submit"]:hover {
     background-color: #ff1d44;
     font-family: "Unistra B", sans-serif;
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: 600;
     color: #ffffff;
     padding-left: 1%;
     padding-right: 1%;
 }
 
 #footer {
+    padding-top: 5px;
+    padding-bottom: 5px;
     background-color: #f1f1f2;
     text-align: center;
     color: #ff1d44;
@@ -90,12 +108,14 @@ h2 {
 }
 
 #credits {
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #808285;
 }
 
 #credits p {
-    font-size: 20px;
-    width: 40%;
+    font-size: 18px;
+    width: 80%;
     color: #ffffff;
     text-align: center;
     margin: 0 auto;
@@ -122,6 +142,32 @@ table, th, td {
     vertical-align: middle;
 }
 
+form table {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+form thead {
+    background-color: #ff1d44;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+form th {
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+form table, th, td {
+    border: 1px solid black;
+    vertical-align: middle;
+}
+
 #menucontextuel {
     color: #ff1d44;
     text-align: center;
@@ -138,4 +184,8 @@ table, th, td {
 
 #menugeneral a {
     color: #ff1d44;
+}
+
+#credits a {
+    color: #ffffff;
 }

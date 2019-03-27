@@ -6,7 +6,9 @@
 
         <meta charset="utf-8" />
 
-        <link rel="stylesheet" href="style.css" />
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
 
 
     </head>
@@ -15,6 +17,9 @@
     <body>
 
       <h2>Liste des ressources à instruire pour {{ name }} (forme reliée, rang 1)</h2>
+      
+       <div id="content">
+
       <p>Nombre de ressources concernées : {{ size }}</p>
 
 
@@ -27,27 +32,38 @@
 
             <HR>
       <p></p>
-          <li>Titre : {{ elmt.title }}</li>
-          <li>Cote : {{ elmt.cn }}</li>
-          <li>Identifiant de la ressource : <a href="/./epl/addinstruction/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+          <li><b>Titre :</b> {{ elmt.title }}</li>
+          <li><b>Cote :</b> {{ elmt.cn }}</li>
+          <li><b>Identifiant de la ressource :</b> <a href="/./epl/addinstruction/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
 
 
 
       {% endfor %}
 
       </ul>
+      
+      </div>
 
-      <HR>
+        <div id="menucontextuel">
 
-      <p>Menu "instructions" : <a href="/./epl/instrtodo/{{ lid }}">tout</a> - <a href="/./epl/instrtodobdnot1/{{ lid }}">reliés autre rang</a> - <a href="/./epl/instrtodonotbd1/{{ lid }}">non reliés rang 1</a> - <a href="/./epl/instrtodonotbdnot1/{{ lid }}">non reliés autre rang</a></p>
+      <p><b>Menu "instructions" : </b><a href="/./epl/instrtodo/{{ lid }}">tout</a> - <a href="/./epl/instrtodobdnot1/{{ lid }}">reliés autre rang</a> - <a href="/./epl/instrtodonotbd1/{{ lid }}">non reliés rang 1</a> - <a href="/./epl/instrtodonotbdnot1/{{ lid }}">non reliés autre rang</a></p>
+        </div>
 
-      <HR>
+        <div id="menugeneral">
 
-      <p>Menu général : <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+      <p><b>Menu général : </b><a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+        </div>
 
 
-      <HR>
-        <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+        <div id="footer">
+            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+        </div>
+        
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+        </div>
+           
     </body>
 
 </html>
