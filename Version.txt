@@ -3,7 +3,7 @@
                          Version : 0.2 (Santiano)
                                  2019.03.25
 ****************************************************************************
-             Made with Python 3.5.2, Django 2.0, HTML5, CSS3
+             Brewed with Python 3.5.2, Django 2.0, HTML5, CSS3
 ****************************************************************************
                         eplouribousse is a webapp
         for managing serials deduplication in a pool of libraries.
