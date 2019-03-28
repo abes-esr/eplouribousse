@@ -25,7 +25,7 @@ SITE_NAME = basename(BASE_DIR)
 SECRET_KEY = '()1bdh=2vyryvvuzh%kp!ovheq2)495vql^l&lc@$(h78#00wj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = []

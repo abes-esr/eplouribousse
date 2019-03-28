@@ -358,7 +358,7 @@ def endinstr(request, sid, lid):
     answer = ""
 
     y = Flag()
-    z = CheckForm(request.POST, instance =y)
+    z = CheckForm(request.POST or None, instance =y)
 
     t = Check()
     u = AdminCheckForm(request.POST or None, instance =t)
@@ -488,7 +488,7 @@ def endinstr(request, sid, lid):
             return do
 
         if z.is_valid() and y.flag ==False:
-            info ="N'avez-vous pas oublié de cocher ?"
+            info ="N'oubliez pas de cocher avant de valider :"
 
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
@@ -638,7 +638,7 @@ def tobeedited(request, lid):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'admin' :
 
-    l = ItemRecord.objects.filter(lid =lid)
+    l = ItemRecord.objects.filter(lid =lid).exclude(rank =0)
 
     #Initializing a list of ressources to edit :
     resslist = []

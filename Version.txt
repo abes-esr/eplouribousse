@@ -1,12 +1,11 @@
-****************************************************************************
+************************************************************************
                                eplouribousse
                          Version : 0.2 (Santiano)
                                  2019.03.25
-****************************************************************************
-             Brewed with Python 3.5.2, Django 2.0, HTML5, CSS3
-****************************************************************************
-                        eplouribousse is a webapp
-        for managing serials deduplication in a pool of libraries.
+************************************************************************
+             Crafted with Python 3.5.2, Django 2.0, HTML5, CSS3
+************************************************************************
+    eplouribousse : webapp to manage serials deduplication in libraries.
 
     Copyright (C) 2018  Georges Gressot
 
@@ -21,9 +20,9 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-****************************************************************************
+************************************************************************
 Contributions (UdS = Université de Strasbourg) :
 
 Thomas Baguet, UdS, Direction du Numérique         : Deployment
@@ -32,7 +31,7 @@ Georges Gressot, UdS, Service des bibliothèques    : Development
 Sylvain Joncourt, UdS, Direction du Numérique      : Tricks
 Boris Musilek, UdS, Direction du Numérique         : System
 
-****************************************************************************
+************************************************************************
     mail to : gressot@unistra.fr
     snail mail to :
      G. Gressot
@@ -42,4 +41,4 @@ Boris Musilek, UdS, Direction du Numérique         : System
      CS 41037
      FR-67070 Strasbourg Cedex
 
-****************************************************************************
+************************************************************************
