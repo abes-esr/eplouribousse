@@ -423,7 +423,7 @@ def endinstr(request, sid, lid):
 
             #Message data to the BDD administrator(s):
             subject = "eplouribousse : " + str(sid) + " / " + "status = 6"
-            message = "Le statut des enregistrements est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressource citée en objet ; une intervention dans la base de données est attendue de votre part. Merci !"
+            message = "Le statut est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressource citée en objet ; une intervention dans la base de données est attendue de votre part. Merci !"
             destprov = BddAdmin.objects.all()
             dest =[]
             for d in destprov:
