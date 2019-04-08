@@ -105,6 +105,14 @@ def ranktotake(request, lid):
 
 def takerank(request, sid, lid):
 
+    #Control (takerank only if still possible)
+    try:
+        if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0))):
+            do = notintime(request, sid, lid)
+            return do
+    except:
+        z =1 #This is just to continue
+
     # For position form :
     i = ItemRecord.objects.get(sid = sid, lid = lid)
     f = PositionForm(request.POST, instance=i)
@@ -146,7 +154,7 @@ def takerank(request, sid, lid):
 def notintime(request, sid, lid):
 
     lib = Library.objects.get(lid = lid)
-    ress = ItemRecord.objects.get(sid =sid, rank =1).title
+    ress = ItemRecord.objects.get(sid =sid, lid =lid).title
     return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
 
 
@@ -662,26 +670,32 @@ def edition(request, sid, lid):
 
     #edition of the resulting collection for the considered sid and lid :
 
-    #Getting an item record from which we can obtain ressource data :
-    issn = ItemRecord.objects.get(sid =sid, lid =lid, status =5).issn
-    title = ItemRecord.objects.get(sid =sid, lid =lid, status =5).title
-    pubhist = ItemRecord.objects.get(sid =sid, lid =lid, status =5).pubhist
+    #Control (edition only if yet possible)
+    if len(Instruction.objects.filter(sid =sid, name ="admin")) ==2:
+        #Getting an item record from which we can obtain ressource data :
+        issn = ItemRecord.objects.get(sid =sid, lid =lid, status =5).issn
+        title = ItemRecord.objects.get(sid =sid, lid =lid, status =5).title
+        pubhist = ItemRecord.objects.get(sid =sid, lid =lid, status =5).pubhist
 
 
-    #Getting instructions for the considered ressource :
-    instrlist = Instruction.objects.filter(sid =sid).order_by('line')
-    l = list(instrlist)
+        #Getting instructions for the considered ressource :
+        instrlist = Instruction.objects.filter(sid =sid).order_by('line')
+        l = list(instrlist)
 
-    #Getting library name for the considered library (will be used to
-    #highlight the instruction of the considered library) :
-    name = (Library.objects.get(lid =lid)).name
+        #Getting library name for the considered library (will be used to
+        #highlight the instruction of the considered library) :
+        name = (Library.objects.get(lid =lid)).name
 
-    mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
+        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
-    return render(request, 'epl/edition.html',\
-             { 'instructionlist' : l, 'sid' : sid, 'issn' : issn, \
-             'title' : title, 'publicationhistory' : pubhist, 'lid' : lid, \
-             'name' : name, 'mother' :mothercollection,})
+        return render(request, 'epl/edition.html',\
+                 { 'instructionlist' : l, 'sid' : sid, 'issn' : issn, \
+                 'title' : title, 'publicationhistory' : pubhist, 'lid' : lid, \
+                 'name' : name, 'mother' :mothercollection,})
+
+    else:
+        do = notintime(request, sid, lid)
+        return do
 
 
 def indicators(request):

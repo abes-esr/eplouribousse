@@ -28,7 +28,7 @@ SECRET_KEY = '()1bdh=2vyryvvuzh%kp!ovheq2)495vql^l&lc@$(h78#00wj'
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://cas.unistra.fr']
 
 
 # Application definition
