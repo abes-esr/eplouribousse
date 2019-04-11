@@ -56,7 +56,7 @@ def pdfedition(request, sid, lid):
     p.drawString(200, 700, ':')
     p.drawString(210, 700, mothercollection)
 
-    data = [['#', 'bibliothèque', 'relié ?', 'bib. remédiée', 'segment', 'exception', 'dégradé' ]]
+    data = [['#', 'bibliothèque', 'relié ?', 'bib. remédiée', 'segment', 'exception', 'améliorable' ]]
     Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1,repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
     for i in instructions:
         data.append([i.line, i.name, i.bound, i.oname, i.descr, i.exc, i.degr])
