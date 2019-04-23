@@ -75,6 +75,7 @@ class Instruction(models.Model):
     exc = models.CharField('exception', max_length=250, blank=True)
     degr = models.CharField('enhanceable elements'\
     , max_length=250, blank=True)
+    time = models.CharField('time', max_length=250, blank=True)
     def __str__(self):
 
         if self.bound ==" ":
@@ -82,7 +83,7 @@ class Instruction(models.Model):
         else:
             b = "bound"
 
-        info = str(self.pk) + ' | ' + str(self.sid) + ' | ' + str(self.line) \
+        info = str(self.time) + ' | ' + str(self.pk) + ' | ' + str(self.sid) + ' | ' + str(self.line) \
         + ' | ' + str(self.name + ' | ' + self.oname + ' | ' + self.descr) \
         + ' | ' + b
         return info

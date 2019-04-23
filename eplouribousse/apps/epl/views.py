@@ -212,7 +212,6 @@ def addinstr(request, sid, lid):
         f = InstructionForm(request.POST, instance =i)
         q = "x"
         if f.is_valid():
-            i.line +=1
             if len(list((Instruction.objects.filter(sid =sid)).\
             filter(name ='admin'))):
                 q =" "
@@ -221,6 +220,8 @@ def addinstr(request, sid, lid):
             i.bound =q
             #A line may only be registered once :
             if not len(Instruction.objects.filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
+                i.line +=1
+                i.time =Now()
                 f.save()
             else:
                 info = "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
