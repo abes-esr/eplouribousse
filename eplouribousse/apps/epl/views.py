@@ -52,6 +52,7 @@ def pdfedition(request, sid, lid):
     p.drawString(50, 720, 'Historique de la publication')
     p.drawString(200, 720, ':')
     p.drawString(210, 720, pubhist)
+    p.setFillColorRGB(255,0,0)
     p.drawString(50, 700, 'Collection mère')
     p.drawString(200, 700, ':')
     p.drawString(210, 700, mothercollection)
