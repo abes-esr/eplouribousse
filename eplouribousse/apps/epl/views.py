@@ -15,6 +15,9 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, inch
 from reportlab.platypus import Table, TableStyle
 
+from django.contrib.auth.decorators import login_required
+
+
 def pdfedition(request, sid, lid):
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
@@ -103,7 +106,7 @@ def ranktotake(request, lid):
     return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
     'lid' : lid, 'name' : libname, 'size' : l})
 
-
+@login_required
 def takerank(request, sid, lid):
 
     #Control (takerank only if still possible)
@@ -158,7 +161,7 @@ def notintime(request, sid, lid):
     ress = ItemRecord.objects.get(sid =sid, lid =lid).title
     return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
 
-
+@login_required
 def addinstr(request, sid, lid):
 
     #Control (addinstr only if it must be)
@@ -250,7 +253,7 @@ def addinstr(request, sid, lid):
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
     'lid' : lid, 'expected' : q, 'lastone' : pklastone,})
 
-
+@login_required
 def delinstr(request, sid, lid):
 
     #Ressource data :
@@ -325,7 +328,7 @@ def delinstr(request, sid, lid):
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
     'lid' : lid, 'expected' : expected, 'answer' : answer,})
 
-
+@login_required
 def endinstr(request, sid, lid):
 
     #Ressource data :
@@ -748,7 +751,6 @@ def indicators(request):
     'fullpat' : fullpat, 'sharedpreserv' : sharedpreserv, 'other' : other, \
     'maybeg' : maybeg, 'boundinstr' : boundinstr, 'fullinstr' : fullinstr, \
     'fail' : fail, 'instr' : instr,})
-
 
 def home(request):
 
