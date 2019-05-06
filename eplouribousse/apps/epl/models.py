@@ -33,6 +33,7 @@ class ItemRecord(models.Model):
             blank=True)
     lid = models.CharField('library ID', max_length=16, blank =False)
     holdstat = models.TextField('holdings statement', blank=True)
+    missing = models.TextField('gap', blank=True)
     cn = models.CharField('call number', max_length=50, blank=True)
     rank = models.PositiveSmallIntegerField('ranking', default=99, choices=RANKING_CHOICES, null =False)
     #Ranking is used to order the libraries for treatment based on holdings
