@@ -1,8 +1,47 @@
 <!-- templates/registration/login.html -->
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
-<h2>Close your browser to logout (fermez votre navigateur pour vous désauthentifier)</h2>
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+
+          <h2>Authentification</h2>
+
+
+        <div id="content">
+
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+          </form>
+<p></p>
+<p></p>
+          Plusieurs raisons peuvent vous avoir conduit à cette page (dans l'ordre décroissant de fréquence) :
+<p></p>
+
+          <li>L'action que vous requérez exige l'authentification</li>
+          <li>Vous venez de cliquer sur le lien "M'authentifier" situé en page d'accueil</li>
+          <li>Vous venez de cliquer sur le lien "Changer mon mot de passe" situé en page d'accueil, mais vous n'étiez pas encore authentifié (authentifiez vous d'abord avec votre mot de passe actuel)</li>
+
+          <h5>(Le déconnnexion est automatique à la fermeture du navigateur)</h5>
+        </div>
+
+    </body>
+
+</html>
