@@ -13,19 +13,18 @@ from .libchoices import LIBRARY_CHOICES
 
 #Reasons to exclude an item record (see under ; class : ItemRecord,
 #field : excl) :
-EXCLUSION_CHOICES = (
-    ('Abonnement en cours', 'Abonnement en cours'),
-    ('Dépôt légal', 'Dépôt légal'),
-    ('Entièrement patrimonial', 'Entièrement patrimonial'),
-    ("Fait partie d'un plan de conservation partagée", "Fait partie d'un plan de conservation partagée"),
-    ("Autre (Commenter)", "Autre (Commenter)"),
-)
+class Exclusion(models.Model):
+    """Model for exclusion choices"""
+    label = models.CharField('label', max_length=50, unique=True)
+    value = models.CharField('value', max_length=50, unique=True)
+
+from .excluchoices import EXCLUSION_CHOICES
 
 #Ranking choices :
 RANKING_CHOICES = ((4, 4), (3, 3), (2, 2), (1, 1),)
 
 class ItemRecord(models.Model):
-    """Model for the item records."""
+    """Model for item records."""
     sid = models.CharField('serial ID', max_length=16, blank =False)
     issn = models.CharField('issn', max_length=9, blank=True)
     title = models.TextField('title', max_length=100)

@@ -14,31 +14,14 @@ Valorisation de l'application (passe par l'internationalisation)
 
 Améliorations :
 --------------------------------------------------------------------------------------------------
-Raccourcir l'url de base comme me le suggère Thomas Baguet (voir les implications que cela a) :
-******
-Salut Georges, 
-
-J'ai deployé la version de prod ici : 
-https://eplouribousse.di.unistra.fr/epl/home
-
-c'est tout bon, bravo pour la partie authentification, tu as bien bossé
-! Le seul truc qu'il faudrait faire à mon avis c'est une route à la
-racine un / qui va vers epl/home ou changer le epl/home pour pointer
-vers / c'est un peu contraignant de devoir tapper
-eplouribousseXXXX/epl/home à chaque fois si tu veux aller sur l'appli.
-
-En tout cas bonne fin de semaine à toi et à bientôt ! Tu verifies juste
-que tout marche tu reviens vers moi si tu rencontres un soucis.
-
-a+
-******
---------------------------------------------------------------------------------------------------
 Motifs d'exclusion et nombre de rangs maximum paramétrables en tout début d'opération.
+Objectif : Autonomie d'administration (rôles : Instructeurs, contrôleurs, administrateurs)
 --------------------------------------------------------------------------------------------------
 - Lisibilité et assainissement du code
 - Ergonomie
-- Internationalisation (documentation incluse)
+- Internationalisation (documentation incluse) : Anglais et allemand au moins.
 - Enrichissement des commentaires du code
 - Documentation de l'application à peaufiner
 - Licence ?
+--------------------------------------------------------------------------------------------------
 
