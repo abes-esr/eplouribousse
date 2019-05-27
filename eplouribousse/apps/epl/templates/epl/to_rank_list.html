@@ -32,7 +32,7 @@
        <p></p>
           <li><b>Titre :</b> {{ elmt.title }}</li>
           <li><b>Cote :</b> {{ elmt.cn }}</li>
-          <li><b>Identifiant de la ressource :</b> <a href="/./epl/ranking/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+          <li><b>Identifiant de la ressource :</b> <a href="rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
 
 
        {% endfor %}
@@ -40,11 +40,11 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>Menu : </b><a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+      <p><b>Menu : </b><a href="arb/{{ lid }}">Arbitrages</a> - <a href="allinstr/{{ lid }}">Instructions</a> - <a href="edlist/{{ lid }}">Edition des résultantes</a></p>
         </div>
 
         <div id="footer">
-            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
         </div>
         
         <div id="credits">

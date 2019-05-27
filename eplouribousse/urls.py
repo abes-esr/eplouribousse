@@ -18,7 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     #path('', include(('eplouribousse.apps.epl.urls', 'epl'), namespace='epl')),
-    path('epl/', include('eplouribousse.apps.epl.urls')),
+    path('', include('eplouribousse.apps.epl.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

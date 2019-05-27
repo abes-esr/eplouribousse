@@ -414,7 +414,7 @@ def endinstr(request, sid, lid):
                     subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
-                    " : " + "https://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
+                    " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = nextlib.contact
                     dest = [dest]
                     exp = Library.objects.get(lid ="999999999").contact
@@ -491,7 +491,7 @@ def endinstr(request, sid, lid):
             subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
             message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
-            " : " + "https://" + host + "/epl/addinstruction/" + str(sid) + '/' + str(nextlid)
+            " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
             dest = nextlib.contact
             dest = [dest]
             exp = Library.objects.get(lid ="999999999").contact
