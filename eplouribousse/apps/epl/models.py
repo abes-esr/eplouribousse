@@ -16,7 +16,8 @@ from .libchoices import LIBRARY_CHOICES
 class Exclusion(models.Model):
     """Model for exclusion choices"""
     label = models.CharField('label', max_length=50, unique=True)
-    value = models.CharField('value', max_length=50, unique=True)
+    def __str__(self):
+        return self.label
 
 from .excluchoices import EXCLUSION_CHOICES
 
@@ -45,15 +46,15 @@ class ItemRecord(models.Model):
     comm = models.CharField('comment', max_length=250, blank=True)
     #For any comment (optional)
     status = models.PositiveSmallIntegerField('status', default=0, null =False)
-    # Number of admin control(s) i.e. instruction(s) --> used for selections (lists)
+    # Number of checker control(s) i.e. instruction(s) --> used for selections (lists)
     # It informs on treatment stage :
     # 0 : initial state, item can still be ranked (default value)
     # 1 : all libraries have taken rank and the publication must be instructed (bound elements) in the lid identified library
     # 2 : bound elements completed in the lid identified library
     # 3 : not-bound elements must be instructed (bound elements) in the lid identified library
     # 4 : publication has just been completely instructed by the lid identified library
-    # 5 : visa is ok for the whole treatment by admin
-    # 6 : error in instructing the resulting collection (doesn't affect ItemRecord with rank =0) to inform the bbd admin and to retire provisionally the ressource
+    # 5 : visa is ok for the whole treatment by checker
+    # 6 : error in instructing the resulting collection (doesn't affect ItemRecord with rank =0) to inform the bdd admin and to retire provisionally the ressource
     def __str__(self):
         r = str(self.rank)
         s = str(self.status)
@@ -108,7 +109,7 @@ class Feature(models.Model):
 
 class BddAdmin(models.Model):
     """Model for BDD administrator(s)"""
-    name = models.CharField('library name', max_length=30, unique=True)
+    name = models.CharField('name', max_length=30, unique=True)
     contact = models.EmailField('email')
     def __str__(self):
         return self.name
@@ -117,7 +118,7 @@ class BddAdmin(models.Model):
 CHECKING_CHOICES = (('Visa', "Visa OK (La fiche est conforme)"), ('Notify', "Anomalie (L'administrateur de la base sera informé)"),)
 
 class Check(models.Model):
-    """Model for admin checking"""
+    """Model for checker checking"""
     checkin = models.CharField('Visa de conformité', max_length=120, default ="Visa", blank=False, choices =CHECKING_CHOICES)
     def __str__(self):
         return self.checkin

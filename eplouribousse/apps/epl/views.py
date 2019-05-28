@@ -39,8 +39,8 @@ def pdfedition(request, sid, lid):
     properinstructions = Instruction.objects.filter(sid =sid, name =libname)
     otherinstructions = Instruction.objects.filter(sid =sid, oname =libname)
     libinstructions = properinstructions.union(otherinstructions).order_by('line')
-    controlbd = Instruction.objects.get(sid =sid, bound ='x', name ='admin').descr
-    controlnotbd = Instruction.objects.get(sid =sid, bound =' ', name ='admin').descr
+    controlbd = Instruction.objects.get(sid =sid, bound ='x', name ='checker').descr
+    controlnotbd = Instruction.objects.get(sid =sid, bound =' ', name ='checker').descr
     mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
     p.drawString(50, 780, 'Bibliothèque')
@@ -166,10 +166,10 @@ def addinstr(request, sid, lid):
 
     #Control (addinstr only if it must be)
     try:
-        if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==2 \
-        or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0 \
+        if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
+        or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
         and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-        or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1 \
+        or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
         and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
             do = notintime(request, sid, lid)
             return do
@@ -183,27 +183,27 @@ def addinstr(request, sid, lid):
     #Library data :
     lib = Library.objects.get(lid = lid)
 
-    # Library list ordered by 'rank' (except "admin" which must be the last one)
+    # Library list ordered by 'rank' (except "checker" which must be the last one)
     # to get from the precedent item list above :
     liblist = []
     for e in itemlist:
         liblist.append(Library.objects.get(lid = e.lid))
-    liblist.append(Library.objects.get(name = 'admin'))
+    liblist.append(Library.objects.get(name = 'checker'))
 
     #Remedied library list :
     remliblist = []
     for e in itemlist:
         remliblist.append(Library.objects.get(lid = e.lid))
-    if (Library.objects.get(lid =lid)).name != 'admin':
+    if (Library.objects.get(lid =lid)).name != 'checker':
         remliblist.remove(Library.objects.get(name = lib.name))
 
     #Info :
     info =""
 
     #Stage (bound or not bound) :
-    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0:
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
         bd ='reliés'
-    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1:
+    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
         bd ='non reliés'
 
     if lid =="999999999":
@@ -217,7 +217,7 @@ def addinstr(request, sid, lid):
         q = "x"
         if f.is_valid():
             if len(list((Instruction.objects.filter(sid =sid)).\
-            filter(name ='admin'))):
+            filter(name ='checker'))):
                 q =" "
             else:
                 q ="x"
@@ -263,29 +263,29 @@ def delinstr(request, sid, lid):
     #Library data :
     lib = Library.objects.get(lid = lid)
 
-    # Library list ordered by 'rank' (except "admin" which must be the last one)
+    # Library list ordered by 'rank' (except "checker" which must be the last one)
     # to get from the precedent item list above :
     liblist = []
     for e in itemlist:
         liblist.append(Library.objects.get(lid = e.lid))
-    liblist.append(Library.objects.get(name = 'admin'))
+    liblist.append(Library.objects.get(name = 'checker'))
 
     #Remedied library list :
     remliblist = []
     for e in itemlist:
         remliblist.append(Library.objects.get(lid = e.lid))
-    if (Library.objects.get(lid =lid)).name != 'admin':
+    if (Library.objects.get(lid =lid)).name != 'checker':
         remliblist.remove(Library.objects.get(name = lib.name))
 
     #Info :
     info =""
 
     #Stage (bound or not bound) :
-    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0:
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
         bd ='reliés'
         # ress_stage ='reliés'
         expected = "x"
-    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1:
+    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
         bd ='non reliés'
         # ress_stage ='non reliés'
         expected = " "
@@ -321,7 +321,7 @@ def delinstr(request, sid, lid):
     liblist = []
     for e in itemlist:
         liblist.append(Library.objects.get(lid = e.lid))
-    liblist.append(Library.objects.get(name = 'admin'))
+    liblist.append(Library.objects.get(name = 'checker'))
 
     return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
@@ -338,29 +338,29 @@ def endinstr(request, sid, lid):
     #Library data :
     lib = Library.objects.get(lid = lid)
 
-    # Library list ordered by 'rank' (except "admin" which must be the last one)
+    # Library list ordered by 'rank' (except "checker" which must be the last one)
     # to get from the precedent item list above :
     liblist = []
     for e in itemlist:
         liblist.append(Library.objects.get(lid = e.lid))
-    liblist.append(Library.objects.get(name = 'admin'))
+    liblist.append(Library.objects.get(name = 'checker'))
 
     #Remedied library list :
     remliblist = []
     for e in itemlist:
         remliblist.append(Library.objects.get(lid = e.lid))
-    if (Library.objects.get(lid =lid)).name != 'admin':
+    if (Library.objects.get(lid =lid)).name != 'checker':
         remliblist.remove(Library.objects.get(name = lib.name))
 
     #Info :
     info =""
 
     #Stage (bound or not bound) :
-    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0:
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
         bd ='reliés'
         # ress_stage ='reliés'
         expected = "x"
-    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1:
+    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
         bd ='non reliés'
         # ress_stage ='non reliés'
         expected = " "
@@ -381,14 +381,14 @@ def endinstr(request, sid, lid):
         nextlib = liblist[0]
         nextlid = nextlib.lid
         if u.is_valid() and t.checkin =="Visa":
-            admininstruction = Instruction(sid =sid, name ="admin")
-            admininstruction.line =0
-            if len(Instruction.objects.filter(sid =sid, name ='admin')) ==0:
-                admininstruction.bound ="x"
-            if len(Instruction.objects.filter(sid =sid, name ='admin')) ==1:
-                admininstruction.bound =" "
-            admininstruction.descr =Now()
-            admininstruction.save()
+            checkerinstruction = Instruction(sid =sid, name ="checker")
+            checkerinstruction.line =0
+            if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
+                checkerinstruction.bound ="x"
+            if len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
+                checkerinstruction.bound =" "
+            checkerinstruction.descr =Now()
+            checkerinstruction.save()
 
             #Renumbering instruction lines :
             try:
@@ -406,7 +406,7 @@ def endinstr(request, sid, lid):
 
             #Status changing :
             j = ItemRecord.objects.get(sid =sid, rank =1)
-            if len(Instruction.objects.filter(sid =sid, name ='admin')) ==1:
+            if len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
                 if j.status !=3:
                     j.status = 3
                     j.save()
@@ -420,7 +420,7 @@ def endinstr(request, sid, lid):
                     exp = Library.objects.get(lid ="999999999").contact
                     send_mail(subject, message, exp, dest, fail_silently=True, )
 
-            if len(Instruction.objects.filter(sid =sid, name ='admin')) ==2:
+            if len(Instruction.objects.filter(sid =sid, name ='checker')) ==2:
                 for e in ItemRecord.objects.filter(status =4):
                     e.status = 5
                     e.save()
@@ -455,7 +455,7 @@ def endinstr(request, sid, lid):
             nextlid = Library.objects.get(lid ="999999999").lid
             nextlib = Library.objects.get(lid =nextlid)
         if z.is_valid() and y.flag ==True:
-            if len(Instruction.objects.filter(sid =sid, name ='admin')) ==0:
+            if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
                 if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
@@ -471,7 +471,7 @@ def endinstr(request, sid, lid):
                         j.status = 2
                         j.save()
 
-            elif len(Instruction.objects.filter(sid =sid, name ='admin')) ==1:
+            elif len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
                 if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
@@ -508,7 +508,7 @@ def endinstr(request, sid, lid):
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'checkform' : z, 'admincheckform' : u, 'expected' : expected,})
+    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected,})
 
 
 def instrtodo(request, lid):
@@ -522,11 +522,11 @@ def instrtodo(request, lid):
         l = []
 
         for e in ItemRecord.objects.filter(status =2, rank =1):
-            if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "admin")) ==0:
+            if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
                 l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
 
         for e in ItemRecord.objects.filter(status =4, rank =1):
-            if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "admin")) ==1:
+            if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
                 l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
 
     size = len(l)
@@ -534,10 +534,10 @@ def instrtodo(request, lid):
     #Getting library name :
     libname = Library.objects.get(lid =lid).name
 
-    lidadmin = "999999999"
+    lidchecker = "999999999"
 
     return render(request, 'epl/instrtodo.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidadmin' : lidadmin, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, })
 
 
 def instroneb(request, lid):
@@ -649,7 +649,7 @@ def tobeedited(request, lid):
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
-    #Trick : These ressources have two instructions with name = 'admin' :
+    #Trick : These ressources have two instructions with name = 'checker' :
 
     l = ItemRecord.objects.filter(lid =lid).exclude(rank =0)
 
@@ -658,7 +658,7 @@ def tobeedited(request, lid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "admin")
+        k = nl.filter(name = "checker")
         if len(k) ==2:
             resslist.append(e)
 
@@ -676,7 +676,7 @@ def edition(request, sid, lid):
     #edition of the resulting collection for the considered sid and lid :
 
     #Control (edition only if yet possible)
-    if len(Instruction.objects.filter(sid =sid, name ="admin")) ==2:
+    if len(Instruction.objects.filter(sid =sid, name ="checker")) ==2:
         #Getting an item record from which we can obtain ressource data :
         issn = ItemRecord.objects.get(sid =sid, lid =lid, status =5).issn
         title = ItemRecord.objects.get(sid =sid, lid =lid, status =5).title
@@ -716,21 +716,6 @@ def indicators(request):
     #Number of exclusions :
     exclus = len(ItemRecord.objects.filter(rank =0))
 
-    #Number of exclusions by 'Abonnement en cours' :
-    currsubs = len(ItemRecord.objects.filter(rank =0, excl ='Abonnement en cours'))
-
-    #Number of exclusions by 'Dépôt légal' :
-    legald = len(ItemRecord.objects.filter(rank =0, excl ='Dépôt légal'))
-
-    #Number of exclusions by 'Entièrement patrimonial' :
-    fullpat = len(ItemRecord.objects.filter(rank =0, excl ='Entièrement patrimonial'))
-
-    #Number of exclusions by 'Fait partie d'un PCP (Plan de conservation partagée)' :
-    sharedpreserv = len(ItemRecord.objects.filter(rank =0, excl ="Fait partie d'un plan de conservation partagée"))
-
-    #Number of exclusions by 'Autre' :
-    other = len(ItemRecord.objects.filter(rank =0, excl ="Autre (Commenter)"))
-
     #Number of ressources whose instruction may begin :
     maybeg = len(ItemRecord.objects.filter(rank =1, status =1))
 
@@ -747,9 +732,7 @@ def indicators(request):
     instr = len(Instruction.objects.all())
 
     return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
-    rkright, 'exclus' : exclus, 'currsubs' : currsubs, 'legald' : legald, \
-    'fullpat' : fullpat, 'sharedpreserv' : sharedpreserv, 'other' : other, \
-    'maybeg' : maybeg, 'boundinstr' : boundinstr, 'fullinstr' : fullinstr, \
+    rkright, 'exclus' : exclus, 'maybeg' : maybeg, 'boundinstr' : boundinstr, 'fullinstr' : fullinstr, \
     'fail' : fail, 'instr' : instr,})
 
 def home(request):

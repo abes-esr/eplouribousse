@@ -14,8 +14,9 @@ Valorisation de l'application (passe par l'internationalisation)
 
 Améliorations :
 --------------------------------------------------------------------------------------------------
-Motifs d'exclusion et nombre de rangs maximum paramétrables en tout début d'opération.
-Objectif : Autonomie d'administration (rôles : Instructeurs, contrôleurs, administrateurs)
+FAIT : Motifs d'exclusion et nombre de rangs maximum paramétrables en tout début d'opération.
+FAIT : Objectif : Autonomie d'administration (rôles : Instructeurs, contrôleurs, administrateurs)
+FAIT : Raccourcissement des url (comme suggéré par Thomas Baguet) 
 --------------------------------------------------------------------------------------------------
 - Lisibilité et assainissement du code
 - Ergonomie
