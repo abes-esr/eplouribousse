@@ -14,15 +14,16 @@ Valorisation de l'application (passe par l'internationalisation)
 
 Améliorations :
 --------------------------------------------------------------------------------------------------
-FAIT : Motifs d'exclusion et nombre de rangs maximum paramétrables en tout début d'opération.
-FAIT : Objectif : Autonomie d'administration (rôles : Instructeurs, contrôleurs, administrateurs)
-FAIT : Raccourcissement des url (comme suggéré par Thomas Baguet) 
+FAIT : Motifs d'exclusion paramétrables par le groupe "administrators". Objectif : Autonomie d'administration
+FAIT : Raccourcissement des urls (comme suggéré par Thomas Baguet)
+Login/logout (sur tous les templates)
 --------------------------------------------------------------------------------------------------
+- Internationalisation (documentation incluse) : Anglais et allemand au moins (+ es, it si possible)
 - Lisibilité et assainissement du code
 - Ergonomie
-- Internationalisation (documentation incluse) : Anglais et allemand au moins.
 - Enrichissement des commentaires du code
-- Documentation de l'application à peaufiner
+- Documentation de l'application à mettre à jour, à peaufiner et à traduire (en, de, es, it)
+- Mise à jour du Readme
 - Licence ?
 --------------------------------------------------------------------------------------------------
 

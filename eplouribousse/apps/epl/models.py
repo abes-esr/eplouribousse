@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class Library(models.Model):
@@ -92,10 +93,10 @@ class Instruction(models.Model):
 
 #Feature choices :
 FEATURE_CHOICES = (
-    ('ranking', "1. Positionnement"),
-    ('arbitration', "2. Arbitrages"),
-    ('instrtodo', "3. Instruction"),
-    ('edition', "4. Résultantes"),
+    ('ranking', _("1. Positionnement")),
+    ('arbitration', _("2. Arbitrages")),
+    ('instrtodo', _("3. Instruction")),
+    ('edition', _("4. Résultantes")),
 )
 
 
@@ -115,7 +116,7 @@ class BddAdmin(models.Model):
         return self.name
 
 #Checking choices :
-CHECKING_CHOICES = (('Visa', "Visa OK (La fiche est conforme)"), ('Notify', "Anomalie (L'administrateur de la base sera informé)"),)
+CHECKING_CHOICES = (('Visa', _("Visa OK (La fiche est conforme)")), ('Notify', _("Anomalie (L'administrateur de la base sera informé)")),)
 
 class Check(models.Model):
     """Model for checker checking"""

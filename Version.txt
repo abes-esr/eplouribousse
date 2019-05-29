@@ -1,9 +1,9 @@
 ************************************************************************
                                eplouribousse
-                         Version : 0.1 (Santiano)
-                                 2019.03.25
+                         Version : 0.2 (Let it be)
+                            (date to be coming)
 ************************************************************************
-             Crafted with Python 3.5.2, Django 2.0, HTML5, CSS3
+   Crafted with Python 3.5.2, Django 2.0, HTML5, CSS3, gettext 0.19.7
 ************************************************************************
     eplouribousse : webapp to manage serials deduplication in libraries.
 

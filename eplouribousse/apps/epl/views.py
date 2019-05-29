@@ -17,6 +17,10 @@ from reportlab.platypus import Table, TableStyle
 
 from django.contrib.auth.decorators import login_required
 
+from django.utils.translation import ugettext as _
+
+def lang(request):
+    return render(request, 'epl/language.html', {})    
 
 def pdfedition(request, sid, lid):
     # Create the HttpResponse object with the appropriate PDF headers.
@@ -43,24 +47,24 @@ def pdfedition(request, sid, lid):
     controlnotbd = Instruction.objects.get(sid =sid, bound =' ', name ='checker').descr
     mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
-    p.drawString(50, 780, 'Bibliothèque')
+    p.drawString(50, 780, _('Bibliothèque'))
     p.drawString(200, 780, ':')
     p.drawString(210, 780, libname)
-    p.drawString(50, 760, 'Titre de la ressource')
+    p.drawString(50, 760, _('Titre de la ressource'))
     p.drawString(200, 760, ':')
     p.drawString(210, 760, title)
     p.drawString(50, 740, sid)
-    p.drawString(130, 740, ' <--- ppn / issn ---> ')
+    p.drawString(130, 740, _(' <--- ppn / issn ---> '))
     p.drawString(250, 740, issn)
-    p.drawString(50, 720, 'Historique de la publication')
+    p.drawString(50, 720, _('Historique de la publication'))
     p.drawString(200, 720, ':')
     p.drawString(210, 720, pubhist)
     p.setFillColorRGB(255,0,0)
-    p.drawString(50, 700, 'Collection mère')
+    p.drawString(50, 700, _('Collection mère'))
     p.drawString(200, 700, ':')
     p.drawString(210, 700, mothercollection)
 
-    data = [['#', 'bibliothèque', 'relié ?', 'bib. remédiée', 'segment', 'exception', 'améliorable' ]]
+    data = [['#', _('bibliothèque'), _('relié ?'), _('bib. remédiée'), _('segment'), _('exception'), _('améliorable') ]]
     Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1,repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
     for i in instructions:
         data.append([i.line, i.name, i.bound, i.oname, i.descr, i.exc, i.degr])
@@ -202,9 +206,9 @@ def addinstr(request, sid, lid):
 
     #Stage (bound or not bound) :
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
-        bd ='reliés'
+        bd =_('reliés')
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
-        bd ='non reliés'
+        bd =_('non reliés')
 
     if lid =="999999999":
         do = endinstr(request, sid, lid)
@@ -228,7 +232,7 @@ def addinstr(request, sid, lid):
                 i.time =Now()
                 f.save()
             else:
-                info = "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
+                info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
 
         #Renumbering instruction lines :
         try:
@@ -282,15 +286,15 @@ def delinstr(request, sid, lid):
 
     #Stage (bound or not bound) :
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
-        bd ='reliés'
+        bd =_('reliés')
         # ress_stage ='reliés'
         expected = "x"
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
-        bd ='non reliés'
+        bd =_('non reliés')
         # ress_stage ='non reliés'
         expected = " "
     else:   # (==2)
-        bd = "XXXXX (instructions terminées)"
+        bd = _("XXXXX (instructions terminées)")
 
     answer = ""
 
@@ -301,7 +305,7 @@ def delinstr(request, sid, lid):
             j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =i.line)
             j.delete()
         except:
-            answer = " <=== Suppression non permise (vérifiez les conditions requises) "
+            answer = _(" <=== Suppression non permise (vérifiez les conditions requises) ")
 
     #Renumbering instruction lines :
     try:
@@ -357,16 +361,16 @@ def endinstr(request, sid, lid):
 
     #Stage (bound or not bound) :
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
-        bd ='reliés'
+        bd =_('reliés')
         # ress_stage ='reliés'
         expected = "x"
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
-        bd ='non reliés'
+        bd =_('non reliés')
         # ress_stage ='non reliés'
         expected = " "
     else:   # (==2)
-        bd = "XXXXX (instructions terminées)"
-        expected = "ni relié, ni non reliés"
+        bd = _("XXXXX (instructions terminées)")
+        expected = _("ni relié, ni non reliés")
 
     answer = ""
 
@@ -413,7 +417,7 @@ def endinstr(request, sid, lid):
                     #Message data :
                     subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
-                    message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
+                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                     " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = nextlib.contact
                     dest = [dest]
@@ -436,7 +440,7 @@ def endinstr(request, sid, lid):
 
             #Message data to the BDD administrator(s):
             subject = "eplouribousse : " + str(sid) + " / " + "status = 6"
-            message = "Le statut est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressource citée en objet ; une intervention dans la base de données est attendue de votre part. Merci !"
+            message = _("Le statut est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressource citée en objet ; une intervention dans la base de données est attendue de votre part. Merci !")
             destprov = BddAdmin.objects.all()
             dest =[]
             for d in destprov:
@@ -490,7 +494,7 @@ def endinstr(request, sid, lid):
             #Message data :
             subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
-            message = "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn " + str(sid) +\
+            message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
             " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
             dest = nextlib.contact
             dest = [dest]
@@ -501,7 +505,7 @@ def endinstr(request, sid, lid):
             return do
 
         if z.is_valid() and y.flag ==False:
-            info ="N'oubliez pas de cocher avant de valider :"
+            info =_("N'oubliez pas de cocher avant de valider :")
 
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 

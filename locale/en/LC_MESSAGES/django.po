@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-29 10:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: eplouribousse/apps/epl/excluchoices.py:7
+msgid "Autre (Commenter)"
+msgstr "Other (comment)"
+
+#: eplouribousse/apps/epl/models.py:96
+msgid "1. Positionnement"
+msgstr "1. Ranking"
+
+#: eplouribousse/apps/epl/models.py:97
+msgid "2. Arbitrages"
+msgstr "2. Arbitration"
+
+#: eplouribousse/apps/epl/models.py:98
+msgid "3. Instruction"
+msgstr "3. Instruction"
+
+#: eplouribousse/apps/epl/models.py:99
+msgid "4. Résultantes"
+msgstr "4. Resulting collections"
+
+#: eplouribousse/apps/epl/models.py:119
+msgid "Visa OK (La fiche est conforme)"
+msgstr "All is OK"
+
+#: eplouribousse/apps/epl/models.py:119
+msgid "Anomalie (L'administrateur de la base sera informé)"
+msgstr "Something is wrong (The database admin will be informed)"
+
+#: eplouribousse/apps/epl/views.py:48
+msgid "Bibliothèque"
+msgstr "Library"
+
+#: eplouribousse/apps/epl/views.py:51
+msgid "Titre de la ressource"
+msgstr "Title"
+
+#: eplouribousse/apps/epl/views.py:55
+msgid " <--- ppn / issn ---> "
+msgstr " <--- sid / issn ---> "
+
+#: eplouribousse/apps/epl/views.py:57
+msgid "Historique de la publication"
+msgstr "Publication history"
+
+#: eplouribousse/apps/epl/views.py:61
+msgid "Collection mère"
+msgstr "Mother collection"
+
+#: eplouribousse/apps/epl/views.py:65
+msgid "bibliothèque"
+msgstr "library"
+
+#: eplouribousse/apps/epl/views.py:65
+msgid "relié ?"
+msgstr "bound ?"
+
+#: eplouribousse/apps/epl/views.py:65
+msgid "bib. remédiée"
+msgstr "enhanced library"
+
+#: eplouribousse/apps/epl/views.py:65
+msgid "segment"
+msgstr "segment"
+
+#: eplouribousse/apps/epl/views.py:65
+msgid "exception"
+msgstr "exception"
+
+#: eplouribousse/apps/epl/views.py:65
+msgid "améliorable"
+msgstr "enhanceable"
+
+#: eplouribousse/apps/epl/views.py:207 eplouribousse/apps/epl/views.py:287
+#: eplouribousse/apps/epl/views.py:362
+msgid "reliés"
+msgstr "bound"
+
+#: eplouribousse/apps/epl/views.py:209 eplouribousse/apps/epl/views.py:291
+#: eplouribousse/apps/epl/views.py:366
+msgid "non reliés"
+msgstr "not bound"
+
+#: eplouribousse/apps/epl/views.py:233
+msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
+msgstr "You may not valid twice the same data"
+
+#: eplouribousse/apps/epl/views.py:295 eplouribousse/apps/epl/views.py:370
+msgid "XXXXX (instructions terminées)"
+msgstr "XXXXX (instructions closed)"
+
+#: eplouribousse/apps/epl/views.py:306
+msgid " <=== Suppression non permise (vérifiez les conditions requises) "
+msgstr " <=== Deletion not allowed (verify conditions) "
+
+#: eplouribousse/apps/epl/views.py:371
+msgid "ni relié, ni non reliés"
+msgstr "Not bound nor not bound"
+
+#: eplouribousse/apps/epl/views.py:418 eplouribousse/apps/epl/views.py:495
+msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
+msgstr "It's up to you for the sid "
+
+#: eplouribousse/apps/epl/views.py:441
+msgid ""
+"Le statut est passé à 6 pour les enregistrements des bibliothèques "
+"participant à la résultante de la ressource citée en objet ; une "
+"intervention dans la base de données est attendue de votre part. Merci !"
+msgstr ""
+"Some or all item records changed state to 6 for this serial. "
+"Please look what you can do to let things going on right. "
+"Thanks !"
+
+#: eplouribousse/apps/epl/views.py:506
+msgid "N'oubliez pas de cocher avant de valider :"
+msgstr "Don't forget to tick the box before to validate"
+
+#: eplouribousse/settings/base.py:129
+msgid "French"
+msgstr "French"
+
+#: eplouribousse/settings/base.py:130
+msgid "English"
+msgstr "English"
