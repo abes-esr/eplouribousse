@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-03 11:26+0200\n"
+"POT-Creation-Date: 2019-06-03 11:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,58 +20,56 @@ msgstr ""
 
 #: eplouribousse/apps/epl/excluchoices.py:7
 msgid "Autre (Commenter)"
-msgstr "Other (comment)"
+msgstr "Sonstiges (Kommentar)"
 
 #: eplouribousse/apps/epl/models.py:96
 msgid "1. Positionnement"
-msgstr "1. Ranking"
+msgstr "1. Rang nehmen"
 
 #: eplouribousse/apps/epl/models.py:97
 msgid "2. Arbitrages"
-msgstr "2. Arbitration"
+msgstr "2. Schiedsverfahren"
 
 #: eplouribousse/apps/epl/models.py:98
 msgid "3. Instruction"
-msgstr "3. Instruction"
+msgstr "3. Ausfüllen"
 
 #: eplouribousse/apps/epl/models.py:99
 msgid "4. Résultantes"
-msgstr "4. Resulting collections"
+msgstr "4. Vollständige Aufzeichnungen"
 
 #: eplouribousse/apps/epl/models.py:119
 msgid "Visa OK (La fiche est conforme)"
-msgstr "All is OK"
+msgstr ""
 
 #: eplouribousse/apps/epl/models.py:119
 msgid "Anomalie (L'administrateur de la base sera informé)"
-msgstr "Something is wrong (The database admin will be informed)"
+msgstr "Anomalie (Der Datenbankadministrator wird informiert)"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:22
 msgid "Page d'accueil"
-msgstr "Homepage"
+msgstr "Startseite"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:29
 msgid ""
 "Vous êtes bien sur la page à partir de laquelle il convient de débuter !"
-msgstr "You are on the page from which you should start !"
+msgstr "Sie befinden sich auf der Seite, von der aus Sie beginnen sollten."
 
 #: eplouribousse/apps/epl/templates/epl/home.html:34
-#, fuzzy
-#| msgid "bibliothèque"
 msgid "Choisissez votre bibliothèque"
-msgstr "Select your library"
+msgstr "Wählen Sie Ihre Bibliothek"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:35
 msgid "Choisissez la fonctionnalité souhaitée"
-msgstr "Choose the desired feature"
+msgstr "Wählen Sie die gewünschte Funktion"
 
 #: eplouribousse/apps/epl/views.py:50
 msgid "Bibliothèque"
-msgstr "Library"
+msgstr "Bibliothek"
 
 #: eplouribousse/apps/epl/views.py:53
 msgid "Titre de la ressource"
-msgstr "Title"
+msgstr "Titel"
 
 #: eplouribousse/apps/epl/views.py:57
 msgid " <--- ppn / issn ---> "
@@ -79,65 +77,67 @@ msgstr " <--- sid / issn ---> "
 
 #: eplouribousse/apps/epl/views.py:59
 msgid "Historique de la publication"
-msgstr "Publication history"
+msgstr "Ersch.-verlauf"
 
 #: eplouribousse/apps/epl/views.py:63
 msgid "Collection mère"
-msgstr "Mother collection"
+msgstr "Mutter Sammlung"
 
 #: eplouribousse/apps/epl/views.py:67
 msgid "bibliothèque"
-msgstr "library"
+msgstr "Bibliothek"
 
 #: eplouribousse/apps/epl/views.py:67
 msgid "relié ?"
-msgstr "bound ?"
+msgstr "verbunden ?"
 
 #: eplouribousse/apps/epl/views.py:67
 msgid "bib. remédiée"
-msgstr "enhanced library"
+msgstr "verbesserte Bibliothek"
 
 #: eplouribousse/apps/epl/views.py:67
 msgid "segment"
-msgstr "segment"
+msgstr "Segment"
 
 #: eplouribousse/apps/epl/views.py:67
 msgid "exception"
-msgstr "exception"
+msgstr "Ausnahme"
 
 #: eplouribousse/apps/epl/views.py:67
 msgid "améliorable"
-msgstr "enhanceable"
+msgstr "erweiterbar"
 
 #: eplouribousse/apps/epl/views.py:209 eplouribousse/apps/epl/views.py:289
 #: eplouribousse/apps/epl/views.py:364
 msgid "reliés"
-msgstr "bound"
+msgstr "verbunden"
 
 #: eplouribousse/apps/epl/views.py:211 eplouribousse/apps/epl/views.py:293
 #: eplouribousse/apps/epl/views.py:368
 msgid "non reliés"
-msgstr "not bound"
+msgstr "nicht verbunden"
 
 #: eplouribousse/apps/epl/views.py:235
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
-msgstr "You may not valid twice the same data"
+msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
 #: eplouribousse/apps/epl/views.py:297 eplouribousse/apps/epl/views.py:372
 msgid "XXXXX (instructions terminées)"
-msgstr "XXXXX (instructions closed)"
+msgstr "XXXXX (Ausfüllung schon fertig)"
 
 #: eplouribousse/apps/epl/views.py:308
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
-msgstr " <=== Deletion not allowed (verify conditions) "
+msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 
 #: eplouribousse/apps/epl/views.py:373
 msgid "ni relié, ni non reliés"
-msgstr "Not bound nor not bound"
+msgstr "Nicht verbunden weder nicht"
 
 #: eplouribousse/apps/epl/views.py:420 eplouribousse/apps/epl/views.py:497
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
-msgstr "It's up to you for the sid "
+msgstr ""
+"Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
+"anzuweisen : "
 
 #: eplouribousse/apps/epl/views.py:443
 msgid ""
@@ -145,16 +145,17 @@ msgid ""
 "participant à la résultante de la ressource citée en objet ; une "
 "intervention dans la base de données est attendue de votre part. Merci !"
 msgstr ""
-"Some or all item records changed state to 6 for this serial. Please look "
-"what you can do to let things going on right. Thanks !"
+"Der Status wurde für die Datensätze der Bibliotheken, die am Ergebnis der im "
+"Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
+"in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
 #: eplouribousse/apps/epl/views.py:508
 msgid "N'oubliez pas de cocher avant de valider :"
-msgstr "Don't forget to tick the box before to validate"
+msgstr "Vergessen Sie nicht zu überprüfen"
 
 #: eplouribousse/settings/base.py:129
 msgid "Français"
-msgstr ""
+msgstr "French"
 
 #: eplouribousse/settings/base.py:130
 msgid "English"
@@ -162,7 +163,4 @@ msgstr "English"
 
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
-msgstr ""
-
-#~ msgid "French"
-#~ msgstr "French"
+msgstr "German"

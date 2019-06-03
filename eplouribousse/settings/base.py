@@ -126,15 +126,16 @@ USE_L10N = True
 
 gettext = lambda x: x
 LANGUAGES = (
-   ('fr', gettext('French')),
+   ('fr', gettext('Français')),
    ('en', gettext('English')),
+   ('de', gettext('Deutsch')),
 )
 
 USE_TZ = True
 
-#LOCALE_PATHS = (
-#   os.path.join(BASE_DIR, '/locale/'),
-#)
+LOCALE_PATHS = (
+    'locale',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
