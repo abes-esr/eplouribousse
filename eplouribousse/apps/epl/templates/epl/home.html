@@ -35,20 +35,20 @@
             <p>{% trans "Choisissez votre bibliothèque" %} : {{ form.libname }}</p>
             <p>{% trans "Choisissez la fonctionnalité souhaitée" %} : {{ form.feaname }}</p>
             {% csrf_token %}
-            <p><input type="submit" value="Valider"></p>
+            <p><input type="submit" value="OK"></p>
           </form>
         </div>
 
         <div id="footer">
 
-            <p><a href="dashboard">Tableau de bord</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a> - <a href="/./accounts/login">M'authentifier</a> - <a href="/./admin/logout">Me déconnecter</a> - <a href="/./accounts/password_change">Changer mon mot de passe</a> - [<a href="/./admin">Administration (réservé)</a>] - <a href="/./lang">Change language</a></p>
+            <p><a href="dashboard">{% trans "Tableau de bord" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a> - <a href="/./accounts/login">{% trans "M'authentifier" %}</a> - <a href="/./admin/logout">{% trans "Me déconnecter" %}</a> - <a href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./admin">{% trans "Administration (réservé)" %}</a>] - <a href="/./lang">{% trans "Change language" %}</a></p>
 
         </div>
 
         <div id="credits">
 
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
 		</div>
 
     </body>

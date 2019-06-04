@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-03 11:26+0200\n"
+"POT-Creation-Date: 2019-06-03 16:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,24 +46,56 @@ msgstr "All is OK"
 msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Something is wrong (The database admin will be informed)"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:22
+#: eplouribousse/apps/epl/templates/epl/home.html:23
 msgid "Page d'accueil"
 msgstr "Homepage"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:29
+#: eplouribousse/apps/epl/templates/epl/home.html:30
 msgid ""
 "Vous êtes bien sur la page à partir de laquelle il convient de débuter !"
 msgstr "You are on the page from which you should start !"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:34
+#: eplouribousse/apps/epl/templates/epl/home.html:35
 #, fuzzy
 #| msgid "bibliothèque"
 msgid "Choisissez votre bibliothèque"
 msgstr "Select your library"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:35
+#: eplouribousse/apps/epl/templates/epl/home.html:36
 msgid "Choisissez la fonctionnalité souhaitée"
 msgstr "Choose the desired feature"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "Tableau de bord"
+msgstr "Dashboard"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "Manuel de l'utilisateur"
+msgstr "User manual"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "M'authentifier"
+msgstr "Login"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "Me déconnecter"
+msgstr "Logout"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "Changer mon mot de passe"
+msgstr "Change password"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "Administration (réservé)"
+msgstr "Admin (reserved)"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:44
+msgid "Change language"
+msgstr ""
+
+#: eplouribousse/apps/epl/templates/epl/home.html:51
+msgid "A propos"
+msgstr "About"
 
 #: eplouribousse/apps/epl/views.py:50
 msgid "Bibliothèque"

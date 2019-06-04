@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 
 def lang(request):
-    return render(request, 'epl/language.html', {})    
+    return render(request, 'epl/language.html', {})
 
 def pdfedition(request, sid, lid):
     # Create the HttpResponse object with the appropriate PDF headers.
@@ -162,7 +162,7 @@ def takerank(request, sid, lid):
 def notintime(request, sid, lid):
 
     lib = Library.objects.get(lid = lid)
-    ress = ItemRecord.objects.get(sid =sid, lid =lid).title
+    ress = ItemRecord.objects.get(sid =sid, rank =1).title
     return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
 
 @login_required
@@ -170,13 +170,19 @@ def addinstr(request, sid, lid):
 
     #Control (addinstr only if it must be)
     try:
-        if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
-        or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
-        and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-        or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
-        and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
-            do = notintime(request, sid, lid)
-            return do
+        if lid !="999999999":
+            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
+            or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
+            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
+            or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
+            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
+                do = notintime(request, sid, lid)
+                return do
+
+        else: # lid =="999999999"
+            if ItemRecord.objects.get(sid =sid, status =3):
+                do = notintime(request, sid, lid)
+                return do
     except:
         z =1 #This is just to continue
 
