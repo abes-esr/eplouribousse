@@ -164,17 +164,24 @@ def notintime(request, sid, lid):
 @login_required
 def addinstr(request, sid, lid):
 
-    #Control (addinstr only if it must be)
+    #Control (addinstr only if it's up to the considered library)
     try:
-        if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==2 \
-        or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==0 \
-        and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-        or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='admin'))) ==1 \
-        and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
-            do = notintime(request, sid, lid)
-            return do
+        if lid !="999999999":
+            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
+            or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
+            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
+            or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
+            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
+                do = notintime(request, sid, lid)
+                return do
+
+        else: # lid =="999999999"
+            if ItemRecord.objects.get(sid =sid, status =3):
+                do = notintime(request, sid, lid)
+                return do
     except:
         z =1 #This is just to continue
+
 
     #Ressource data :
     itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
@@ -255,6 +262,19 @@ def addinstr(request, sid, lid):
 
 @login_required
 def delinstr(request, sid, lid):
+
+    #Control (delinstr only if it's up to the considered library == same conditions as for addinstr)
+    try:
+        if lid !="999999999":
+            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
+            or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
+            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
+            or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
+            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
+                do = notintime(request, sid, lid)
+                return do
+    except:
+        z =1 #This is just to continue
 
     #Ressource data :
     itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
