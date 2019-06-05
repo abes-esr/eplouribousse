@@ -32,9 +32,9 @@
           <li><b>Titre :</b> {{ elmt.title }}</li>
           <li><b>Cote :</b> {{ elmt.cn }}</li>
           {% if elmt.lid != lid %}
-          <li><b>Identifiant de la ressource :</b> <a href="add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+          <li><b>Identifiant de la ressource :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
           {% else %}
-          <li><b>Identifiant de la ressource :</b> <a href="add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+          <li><b>Identifiant de la ressource :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
           {% endif %}
 
 
@@ -46,11 +46,11 @@
 
         </div>
         <div id="menucontextuel">
-        <p><b>Menu "instructions" : </b><a href="bd1/{{ lid }}">reliés rang 1</a> - <a href="bdnot1/{{ lid }}">reliés autre rang</a> - <a href="notbd1/{{ lid }}">non reliés rang 1</a> - <a href="notbdnot1/{{ lid }}">non reliés autre rang</a></p>
+        <p><b>Menu "instructions" : </b><a href="/bd1/{{ lid }}">reliés rang 1</a> - <a href="/bdnot1/{{ lid }}">reliés autre rang</a> - <a href="/notbd1/{{ lid }}">non reliés rang 1</a> - <a href="/notbdnot1/{{ lid }}">non reliés autre rang</a></p>
         </div>
 
         <div id="menugeneral">
-        <p><b>Menu général : </b><a href="rklist/{{ lid }}">Positionnements</a> - <a href="arb/{{ lid }}">Arbitrages</a> - <a href="edlist/{{ lid }}">Edition des résultantes</a></p>
+        <p><b>Menu général : </b><a href="/rklist/{{ lid }}">Positionnements</a> - <a href="/arb/{{ lid }}">Arbitrages</a> - <a href="/edlist/{{ lid }}">Edition des résultantes</a></p>
         </div>
 
       {% endif %}

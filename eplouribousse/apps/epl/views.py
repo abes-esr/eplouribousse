@@ -727,10 +727,10 @@ def indicators(request):
     exclus = len(ItemRecord.objects.filter(rank =0))
 
     #Number of ressources whose instruction may begin :
-    maybeg = len(ItemRecord.objects.filter(rank =1, status =1))
+    bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
 
-    #Number of ressources whose bound elements have been completely instructed :
-    boundinstr = len(ItemRecord.objects.filter(rank =1, status =3))
+    #Number of ressources whose instruction of not bound elements may begin :
+    notbdmaymeg = len(ItemRecord.objects.filter(rank =1, status =3))
 
     #Number of ressources completely instructed :
     fullinstr = len(ItemRecord.objects.filter(rank =1, status =5))
@@ -742,7 +742,7 @@ def indicators(request):
     instr = len(Instruction.objects.all())
 
     return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
-    rkright, 'exclus' : exclus, 'maybeg' : maybeg, 'boundinstr' : boundinstr, 'fullinstr' : fullinstr, \
+    rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaymeg' : notbdmaymeg, 'fullinstr' : fullinstr, \
     'fail' : fail, 'instr' : instr,})
 
 def home(request):

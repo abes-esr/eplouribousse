@@ -32,7 +32,7 @@
        <p></p>
           <li><b>Titre :</b> {{ elmt.title }}</li>
           <li><b>Cote :</b> {{ elmt.cn }}</li>
-          <li><b>Identifiant de la ressource :</b> <a href="ed/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+          <li><b>Identifiant de la ressource :</b> <a href="/ed/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
 
 
        {% endfor %}
@@ -40,18 +40,18 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>Menu : </b><a href="rklist/{{ lid }}">Positionnements</a> - <a href="arb/{{ lid }}">Arbitrages</a> - <a href="allinstr/{{ lid }}">Instructions</a></p>
+      <p><b>Menu : </b><a href="/rklist/{{ lid }}">Positionnements</a> - <a href="/arb/{{ lid }}">Arbitrages</a> - <a href="/allinstr/{{ lid }}">Instructions</a></p>
         </div>
 
         <div id="footer">
             <p><a href="/">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
         </div>
-        
+
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
 			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
         </div>
-            
+
     </body>
 
 </html>
