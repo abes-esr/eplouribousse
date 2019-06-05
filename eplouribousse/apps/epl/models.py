@@ -30,7 +30,7 @@ class ItemRecord(models.Model):
     sid = models.CharField('serial ID', max_length=16, blank =False)
     issn = models.CharField('issn', max_length=9, blank=True)
     title = models.TextField('title', max_length=100)
-    pubhist = models.CharField('publication history', max_length=25, \
+    pubhist = models.CharField('publication history', max_length=100, \
             blank=True)
     lid = models.CharField('library ID', max_length=16, blank =False)
     holdstat = models.TextField('holdings statement', blank=True)
