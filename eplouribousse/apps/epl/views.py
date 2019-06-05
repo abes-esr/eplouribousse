@@ -752,11 +752,17 @@ def indicators(request):
     #Number of exclusions :
     exclus = len(ItemRecord.objects.filter(rank =0))
 
-    #Number of ressources whose instruction may begin :
+    #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
+
+    #Number of ressources whose bound elements are currently instructed  :
+    bdonway = len(ItemRecord.objects.filter(status =1))
 
     #Number of ressources whose instruction of not bound elements may begin :
     notbdmaymeg = len(ItemRecord.objects.filter(rank =1, status =3))
+
+    #Number of ressources whose not bound elements are currently instructed  :
+    notbdonway = len(ItemRecord.objects.filter(status =3))
 
     #Number of ressources completely instructed :
     fullinstr = len(ItemRecord.objects.filter(rank =1, status =5))
@@ -769,7 +775,7 @@ def indicators(request):
 
     return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
     rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaymeg' : notbdmaymeg, 'fullinstr' : fullinstr, \
-    'fail' : fail, 'instr' : instr,})
+    'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, })
 
 def home(request):
 
