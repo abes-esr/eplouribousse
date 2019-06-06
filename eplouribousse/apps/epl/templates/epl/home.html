@@ -35,7 +35,7 @@
             <p>{% trans "Choisissez votre bibliothèque" %} : {{ form.libname }}</p>
             <p>{% trans "Choisissez la fonctionnalité souhaitée" %} : {{ form.feaname }}</p>
             {% csrf_token %}
-            <p><input type="submit" value="OK"></p>
+            <p><input type="submit" value="{% trans "Valider" %}"></p>
           </form>
         </div>
 

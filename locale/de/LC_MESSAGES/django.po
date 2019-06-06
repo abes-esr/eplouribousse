@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-03 16:21+0200\n"
+"POT-Creation-Date: 2019-06-06 11:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,6 +62,10 @@ msgstr "Wählen Sie Ihre Bibliothek"
 #: eplouribousse/apps/epl/templates/epl/home.html:36
 msgid "Choisissez la fonctionnalité souhaitée"
 msgstr "Wählen Sie die gewünschte Funktion"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:38
+msgid "Valider"
+msgstr "Bestätigen"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:44
 msgid "Tableau de bord"
@@ -139,39 +143,39 @@ msgstr "Ausnahme"
 msgid "améliorable"
 msgstr "erweiterbar"
 
-#: eplouribousse/apps/epl/views.py:209 eplouribousse/apps/epl/views.py:289
-#: eplouribousse/apps/epl/views.py:364
+#: eplouribousse/apps/epl/views.py:215 eplouribousse/apps/epl/views.py:308
+#: eplouribousse/apps/epl/views.py:396
 msgid "reliés"
 msgstr "verbunden"
 
-#: eplouribousse/apps/epl/views.py:211 eplouribousse/apps/epl/views.py:293
-#: eplouribousse/apps/epl/views.py:368
+#: eplouribousse/apps/epl/views.py:217 eplouribousse/apps/epl/views.py:312
+#: eplouribousse/apps/epl/views.py:400
 msgid "non reliés"
 msgstr "nicht verbunden"
 
-#: eplouribousse/apps/epl/views.py:235
+#: eplouribousse/apps/epl/views.py:241
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
-#: eplouribousse/apps/epl/views.py:297 eplouribousse/apps/epl/views.py:372
+#: eplouribousse/apps/epl/views.py:316 eplouribousse/apps/epl/views.py:404
 msgid "XXXXX (instructions terminées)"
 msgstr "XXXXX (Ausfüllung schon fertig)"
 
-#: eplouribousse/apps/epl/views.py:308
+#: eplouribousse/apps/epl/views.py:327
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 
-#: eplouribousse/apps/epl/views.py:373
+#: eplouribousse/apps/epl/views.py:405
 msgid "ni relié, ni non reliés"
 msgstr "Nicht verbunden weder nicht"
 
-#: eplouribousse/apps/epl/views.py:420 eplouribousse/apps/epl/views.py:497
+#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:529
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr ""
 "Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
 "anzuweisen : "
 
-#: eplouribousse/apps/epl/views.py:443
+#: eplouribousse/apps/epl/views.py:475
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -181,7 +185,7 @@ msgstr ""
 "Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
 "in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
-#: eplouribousse/apps/epl/views.py:508
+#: eplouribousse/apps/epl/views.py:540
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Vergessen Sie nicht zu überprüfen"
 
