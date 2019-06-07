@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -15,15 +16,15 @@
 
     <body>
 
-      <h2>Liste des ressources à instruire pour {{ name }} (forme reliée, rang autre que le premier)</h2>
+      <h2>{% trans "Liste des ressources à instruire pour" %} {{ name }} ({% trans "forme reliée, rang autre que le premier" %})</h2>
 
         <div id="content">
 
-      <p>Nombre de ressources concernées : {{ size }}</p>
+      <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
 
 
       <p></p>
-      <p>Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur.</p>
+      <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur" %}.</p>
 
       <ul>
 
@@ -31,9 +32,9 @@
 
             <HR>
       <p></p>
-          <li><b>Titre :</b> {{ elmt.title }}</li>
-          <li><b>Cote :</b> {{ elmt.cn }}</li>
-          <li><b>Identifiant de la ressource :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
 
 
 
@@ -43,20 +44,20 @@
         </div>
         <div id="menucontextuel">
 
-        <p><b>Menu "instructions" : </b><a href="/allinstr/{{ lid }}">tout</a> - <a href="/bd1/{{ lid }}">reliés rang 1</a> - <a href="/notbd1/{{ lid }}">non reliés rang 1</a> - <a href="/notbdnot1/{{ lid }}">non reliés autre rang</a></p>
+        <p><b>{% trans "Menu [instructions]" %} : </b><a href="/allinstr/{{ lid }}">{% trans "tout" %}</a> - <a href="/bd1/{{ lid }}">{% trans "reliés rang 1" %}</a> - <a href="/notbd1/{{ lid }}">{% trans "non reliés rang 1" %}</a> - <a href="/notbdnot1/{{ lid }}">{% trans "non reliés autre rang" %}</a></p>
 
         <div id="menugeneral">
 
-        <p><b>Menu général : </b><a href="/rklist/{{ lid }}">Positionnements</a> - <a href="/arb/{{ lid }}">Arbitrages</a> - <a href="/edlist/{{ lid }}">Edition des résultantes</a></p>
+        <p><b>{% trans "Menu général" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnements" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
 
 
         <div id="footer">
-            <p><a href="/">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
 
     </body>

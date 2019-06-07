@@ -1,5 +1,5 @@
 <!-- templates/registration/login.html -->
-
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -20,7 +20,7 @@
 
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
 
-          <h2>Authentification</h2>
+          <h2>{% trans "Authentification" %}</h2>
 
 
         <div id="content">
@@ -32,14 +32,14 @@
           </form>
 <p></p>
 <p></p>
-          Plusieurs raisons peuvent vous avoir conduit à cette page (dans l'ordre décroissant de fréquence) :
+          {% trans "Plusieurs raisons peuvent vous avoir conduit à cette page (dans l'ordre décroissant de fréquence) :" %}
 <p></p>
 
-          <li>L'action que vous requérez exige l'authentification</li>
-          <li>Vous venez de cliquer sur le lien "M'authentifier" situé en page d'accueil</li>
-          <li>Vous venez de cliquer sur le lien "Changer mon mot de passe" situé en page d'accueil, mais vous n'étiez pas encore authentifié (authentifiez vous d'abord avec votre mot de passe actuel)</li>
+          <li>{% trans "L'action que vous requérez exige l'authentification" %}</li>
+          <li>{% trans "Vous venez de cliquer sur le lien [M'authentifier] situé en page d'accueil" %}</li>
+          <li>{% trans "Vous venez de cliquer sur le lien [Changer mon mot de passe] situé en page d'accueil, mais vous n'étiez pas encore authentifié (authentifiez vous d'abord avec votre mot de passe actuel)" %}</li>
 
-          <h5>Déconnexion : Elle n'est normalement pas nécessaire. C'est toutefois possible depuis la page d'accueil.</h5>
+          <h5>{% trans "Déconnexion : Elle n'est normalement pas nécessaire. C'est toutefois possible depuis la page d'accueil." %}</h5>
         </div>
 
     </body>

@@ -212,9 +212,9 @@ def addinstr(request, sid, lid):
 
     #Stage (bound or not bound) :
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
-        bd =_('reliés')
+        bd =_('éléments reliés')
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
-        bd =_('non reliés')
+        bd =_('éléments non reliés')
 
     if lid =="999999999":
         do = endinstr(request, sid, lid)
@@ -305,15 +305,15 @@ def delinstr(request, sid, lid):
 
     #Stage (bound or not bound) :
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
-        bd =_('reliés')
+        bd =_('éléments reliés')
         # ress_stage ='reliés'
         expected = "x"
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
-        bd =_('non reliés')
+        bd =_('éléments non reliés')
         # ress_stage ='non reliés'
         expected = " "
     else:   # (==2)
-        bd = _("XXXXX (instructions terminées)")
+        bd = _("instructions terminées")
 
     answer = ""
 
@@ -393,15 +393,15 @@ def endinstr(request, sid, lid):
 
     #Stage (bound or not bound) :
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
-        bd =_('reliés')
+        bd =_('éléments reliés')
         # ress_stage ='reliés'
         expected = "x"
     elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
-        bd =_('non reliés')
+        bd =_('éléments non reliés')
         # ress_stage ='non reliés'
         expected = " "
     else:   # (==2)
-        bd = _("XXXXX (instructions terminées)")
+        bd = _("instructions terminées")
         expected = _("ni relié, ni non reliés")
 
     answer = ""

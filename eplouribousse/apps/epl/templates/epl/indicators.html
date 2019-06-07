@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -12,7 +13,7 @@
 </head>
 
 <body>
-			<h2>Tableau de bord : </h2>
+			<h2>{% trans "Tableau de bord" %} : </h2>
 
 	        <div id="content">
 
@@ -21,8 +22,8 @@
 
    <thead>
 
-       <th>Indicateur</th>
-       <th>Valeur</th>
+       <th>{% trans "Indicateur" %}</th>
+       <th>{% trans "Valeur" %}</th>
 
 
    </thead>
@@ -30,43 +31,43 @@
    <tbody>
 
     <tr>
-         <td>Positionnement, exclusions incluses</td>
+         <td>{% trans "Positionnement, exclusions incluses" %}</td>
          <td><center>{{ rkall }}</center></td>
     </tr>
     <tr>
-         <td>Positionnement (hors exclusions)</td>
+         <td>{% trans "Positionnement (hors exclusions)" %}</td>
          <td><center>{{ rkright }}</center></td>
     </tr>
     <tr>
-         <td>Exclusions</td>
+         <td>{% trans "Exclusions" %}</td>
          <td><center>{{ exclus }}</center></td>
     </tr>
     <tr>
-         <td>Ressources dont l'instruction des éléments reliés peut débuter</td>
+         <td>{% trans "Ressources dont l'instruction des éléments reliés peut débuter" %}</td>
          <td><center>{{ bdmaybeg }}</center></td>
     </tr>
     <tr>
-         <td>Ressources dont l'instruction des éléments reliés est en cours</td>
+         <td>{% trans "Ressources dont l'instruction des éléments reliés est en cours" %}</td>
          <td><center>{{ bdonway }}</center></td>
     </tr>
     <tr>
-         <td>Ressources dont l'instruction des éléments non reliés peut débuter</td>
+         <td>{% trans "Ressources dont l'instruction des éléments non reliés peut débuter" %}</td>
          <td><center>{{ notbdmaymeg }}</center></td>
     </tr>
     <tr>
-         <td>Ressources dont l'instruction des éléments non reliés est en cours</td>
+         <td>{% trans "Ressources dont l'instruction des éléments non reliés est en cours" %}</td>
          <td><center>{{ notbdonway }}</center></td>
     </tr>
     <tr>
-         <td>Ressources complètement instruites</td>
+         <td>{% trans "Ressources complètement instruites" %}</td>
          <td><center>{{ fullinstr }}</center></td>
     </tr>
     <tr>
-         <td>Fiches défectueuses</td>
+         <td>{% trans "Fiches défectueuses" %}</td>
          <td><center>{{ fail }}</center></td>
     </tr>
     <tr>
-         <td>Instructions</td>
+         <td>{% trans "Instructions" %}</td>
          <td><center>{{ instr }}</center></td>
     </tr>
    </tbody>
@@ -75,12 +76,12 @@
 </table>
         </div>
         <div id="footer">
-            <p><a href="/">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
 </body>
 

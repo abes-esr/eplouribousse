@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -15,36 +16,36 @@
 
     <body>
 
-      <h2>Tentative d'intervention hors délai pour la bibliothèque {{ library }} : </h2>
+      <h2>{% trans "Tentative d'intervention hors délai pour la bibliothèque" %} {{ library }} : </h2>
         <div id="content">
 
       <p></p>
-      <p><b>Ressource concernée :</b> {{ title }} (<b>identifiant :</b> {{ sid }})</p>
+      <p><b>{% trans "Ressource concernée" %} :</b> {{ title }} (<b>identifiant :</b> {{ sid }})</p>
       <p></p>
-      <p>Vous avez été redirigé ici pour l'une des raisons suivantes : </p>
+      <p>{% trans "Vous avez été redirigé ici pour l'une des raisons suivantes" %} : </p>
       <ul>
 
-          <li>- Le positionnement n'est plus possible (les instructions ont déjà commencé ou la ressource n'est plus candidate)</li>
-          <li>- Ce n'est pas à votre tour d'instruire la fiche.</li>
-          <li>- La fiche n'est pas encore éditable.</li>
-          <li>- La fiche est déjà complètement instruite et ne peut plus être modifiée.</li>
+          <li>- {% trans "Le positionnement n'est plus possible (les instructions ont déjà commencé ou la ressource n'est plus candidate" %})</li>
+          <li>- {% trans "Ce n'est pas à votre tour d'instruire la fiche" %}.</li>
+          <li>- {% trans "La fiche n'est pas encore éditable" %}.</li>
+          <li>- {% trans "La fiche est déjà complètement instruite et ne peut plus être modifiée" %}.</li>
 
 
       </ul>
-      <p>(Dans ce dernier cas, la ressource doit apparaître dans votre liste des <a href="/edlist/{{ lid }}">ressources éditables</a>)</p>
+      <p>({% trans "Dans ce dernier cas, la ressource doit apparaître dans votre liste des" %} <a href="/edlist/{{ lid }}">{% trans "ressources éditables" %}</a>)</p>
 
         </div>
         <div id="menugeneral">
-      <p><b>Menu : </b><a href="/arb/{{ lid }}">Arbitrages</a> - <a href="/allinstr/{{ lid }}">Instructions</a> - <a href="/edlist/{{ lid }}">Edition des résultantes</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
         </div>
 
         <div id="footer">
-            <p><a href="/">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
 
     </body>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -20,8 +21,7 @@
 
         <div id="content">
 
-          {% load i18n %}
-          <h1>Changer la langue</h1>
+          <h1>Change language</h1>
 
           <form action="/i18n/setlang/" method="post">
               {% csrf_token %}
@@ -43,14 +43,14 @@
 
         <div id="footer">
 
-            <p><a href="/dashboard">Tableau de bord</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a> - <a href="/./accounts/login">M'authentifier</a> - <a href="/./admin/logout">Me déconnecter</a> - <a href="/./accounts/password_change">Changer mon mot de passe</a> - [<a href="/./admin">Administration (réservé)</a>]</p>
+            <p><a href="/dashboard">{% trans "Tableau de bord" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a> - <a href="/./accounts/login">{% trans "M'authentifier" %}</a> - <a href="/./admin/logout">{% trans "Me déconnecter" %}</a> - <a href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./admin">{% trans "Administration (réservé)" %}</a>]</p>
 
         </div>
 
         <div id="credits">
 
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
 		</div>
 
     </body>
