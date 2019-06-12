@@ -484,17 +484,12 @@ def endinstr(request, sid, lid):
             return do
 
     else: #lid !="999999999"
-        if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
-            nextlid = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0].lid
-            nextlib = Library.objects.get(lid =nextlid)
-        else:
-            nextlid = Library.objects.get(lid ="999999999").lid
-            nextlib = Library.objects.get(lid =nextlid)
         if z.is_valid() and y.flag ==True:
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
-                if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
+                if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
+                    nextlib = Library.objects.get(lid =nextlid)
                     j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
                     if j.status !=2:
                         j.status, k.status = 2, 1
@@ -502,13 +497,15 @@ def endinstr(request, sid, lid):
                         k.save()
                 else:
                     #(No nextitem, the whole pool of libraries finished instructing the current form, i.e. bound or not bound.)
+                    nextlid = Library.objects.get(lid ="999999999").lid
+                    nextlib = Library.objects.get(lid =nextlid)
                     j = ItemRecord.objects.get(sid =sid, lid =lid)
                     if j.status !=2:
                         j.status = 2
                         j.save()
 
             elif len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
-                if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk').exists():
+                if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
                     j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
@@ -518,6 +515,8 @@ def endinstr(request, sid, lid):
                         k.save()
                 else:
                     #(No nextitem, the whole pool of libraries finished instructing the current form, i.e. bound or not bound.)
+                    nextlid = Library.objects.get(lid ="999999999").lid
+                    nextlib = Library.objects.get(lid =nextlid)
                     j = ItemRecord.objects.get(sid =sid, lid =lid)
                     if j.status !=4:
                         j.status = 4

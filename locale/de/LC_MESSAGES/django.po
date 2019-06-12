@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 08:15+0200\n"
+"POT-Creation-Date: 2019-06-12 15:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -897,7 +897,7 @@ msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 msgid "ni relié, ni non reliés"
 msgstr "Nicht verbunden weder nicht"
 
-#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:529
+#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:528
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr ""
 "Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
@@ -913,7 +913,7 @@ msgstr ""
 "Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
 "in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
-#: eplouribousse/apps/epl/views.py:540
+#: eplouribousse/apps/epl/views.py:539
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Vergessen Sie nicht zu überprüfen"
 

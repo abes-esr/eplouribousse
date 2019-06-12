@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-11 08:15+0200\n"
+"POT-Creation-Date: 2019-06-12 15:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,15 +256,13 @@ msgid ""
 "Ressources dont le statut [à arbitrer] pourrait être levé par un "
 "repositionnement"
 msgstr ""
-"Serial whose state [to be arbitrated] could be cleared up "
-"by a new ranking"
+"Serial whose state [to be arbitrated] could be cleared up by a new ranking"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:22
 msgid ""
 "(Ressources [à arbitrer] : Rang 1 revendiqué par plusieurs bibliothèques ou "
 "par aucune)"
-msgstr ""
-"(Arbitration : Several or no libraries clamed rank 1)"
+msgstr "(Arbitration : Several or no libraries clamed rank 1)"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:24
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:24
@@ -280,15 +278,13 @@ msgstr "Number of involved serials"
 msgid ""
 "Pour chercher une occurence dans cette liste, veuillez utiliser la "
 "fonctionnalité de recherche du navigateur."
-msgstr ""
-"Use browser search feature to find an occurrence"
+msgstr "Use browser search feature to find an occurrence"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:29
 msgid ""
 "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la "
 "ressource]"
-msgstr ""
-"Click on [Serial id] link to modify your rank"
+msgstr "Click on [Serial id] link to modify your rank"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:37
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:37
@@ -363,8 +359,7 @@ msgstr "row number you want to delete"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:82
 msgid ""
 "Attention : La suppression est définitive. Vérifiez bien avant de valider"
-msgstr ""
-"Pay attention before confirming deletion"
+msgstr "Pay attention before confirming deletion"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:86
 msgid "Poursuivre l'instruction"
@@ -428,8 +423,7 @@ msgstr "the end of my instructions for the current shape"
 msgid ""
 "Les dernières lignes validées par votre bibliothèque pour la forme "
 "considérée sont mises en évidence."
-msgstr ""
-"Last validated rows are highlighted."
+msgstr "Last validated rows are highlighted."
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:90
 msgid "Je confirme que j'ai fini pour la forme courante"
@@ -450,8 +444,7 @@ msgstr "Homepage"
 #: eplouribousse/apps/epl/templates/epl/home.html:30
 msgid ""
 "Vous êtes bien sur la page à partir de laquelle il convient de débuter !"
-msgstr ""
-"You are on the page from which you should start !"
+msgstr "You are on the page from which you should start !"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:35
 msgid "Choisissez votre bibliothèque"
@@ -576,7 +569,6 @@ msgstr "not bound shape, 1st rank"
 msgid "non reliés autre rang"
 msgstr "not bound shape, other ranks"
 
-
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:19
 msgid "forme reliée, rang autre que le premier"
 msgstr "bound shape, other rank than 1st"
@@ -587,8 +579,7 @@ msgstr "bound shape, other rank than 1st"
 msgid ""
 "Pour chercher une occurence dans cette liste, veuillez utiliser la "
 "fonctionnalité de recherche du navigateur"
-msgstr ""
-"Use browser search feature to find an occurrence"
+msgstr "Use browser search feature to find an occurrence"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
@@ -605,8 +596,7 @@ msgstr "not bound 1st rank"
 msgid ""
 "Pour chercher n'importe quelle occurence dans cette liste, veuillez utiliser "
 "la fonctionnalité de recherche du navigateur"
-msgstr ""
-"Use browser search feature to find an occurrence"
+msgstr "Use browser search feature to find an occurrence"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
@@ -637,8 +627,7 @@ msgstr "You've been redirected here for one of the following reasons"
 msgid ""
 "Le positionnement n'est plus possible (les instructions ont déjà commencé ou "
 "la ressource n'est plus candidate"
-msgstr ""
-"Ranking no more allowed"
+msgstr "Ranking no more allowed"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:29
 msgid "Ce n'est pas à votre tour d'instruire la fiche"
@@ -676,8 +665,7 @@ msgstr "Attachment ; yours is highlighted"
 msgid ""
 "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci "
 "correspond)"
-msgstr ""
-"Click on ID to know which library it is"
+msgstr "Click on ID to know which library it is"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:38
 #: eplouribousse/apps/epl/templates/epl/ranking.html:47
@@ -717,16 +705,14 @@ msgstr "If so, select a reason"
 msgid ""
 "Sinon, prenez rang en tenant compte des états de collections ou d'autres "
 "prescriptions"
-msgstr ""
-"If no, take rank considering all hold statements or other prescription"
+msgstr "If no, take rank considering all hold statements or other prescription"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:62
 msgid ""
 "Choisissez 1 si votre collection est celle à laquelle s'agrégeront d'autres "
 "éléments qui viendront l'enrichir, sinon 2, 3 ou 4 selon l'importance de "
 "votre collection ou d'autres raisons ..."
-msgstr ""
-"Choose 1 if your collection is the best one, 4 if the worst one"
+msgstr "Choose 1 if your collection is the best one, 4 if the worst one"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:63
 msgid "Commentaire (max. 250 caractères.)"
@@ -736,8 +722,7 @@ msgstr "Comment (250 characters max)"
 msgid ""
 "Il n'est plus possible de modifier votre positionnement (l'instruction de la "
 "résultante peut déjà être engagée)"
-msgstr ""
-"Modifying your rank is no more allowed"
+msgstr "Modifying your rank is no more allowed"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
 msgid "Retour à la liste actualisée des positionnements"
@@ -751,8 +736,7 @@ msgstr "Back to arbitration list"
 msgid ""
 "Ressources complètement instruites et pouvant donc être éditées pour votre "
 "bibliothèque"
-msgstr ""
-"Serials to be edited for your library"
+msgstr "Serials to be edited for your library"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:26
 msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
@@ -765,8 +749,7 @@ msgstr "To be ranked by your library"
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:26
 msgid ""
 "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]"
-msgstr ""
-"Click on [Serial id] link to take rank"
+msgstr "Click on [Serial id] link to take rank"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:23
 msgid "Authentification"
@@ -776,8 +759,7 @@ msgstr "Login"
 msgid ""
 "Plusieurs raisons peuvent vous avoir conduit à cette page (dans l'ordre "
 "décroissant de fréquence) :"
-msgstr ""
-"You may be redirected here for one of the following reasons :"
+msgstr "You may be redirected here for one of the following reasons :"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:38
 msgid "L'action que vous requérez exige l'authentification"
@@ -786,8 +768,7 @@ msgstr "Feature you required needs authentication"
 #: eplouribousse/apps/epl/templates/registration/login.html:39
 msgid ""
 "Vous venez de cliquer sur le lien [M'authentifier] situé en page d'accueil"
-msgstr ""
-"You just click on [Authentication] link in homepage"
+msgstr "You just click on [Authentication] link in homepage"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:40
 msgid ""
@@ -795,15 +776,14 @@ msgid ""
 "d'accueil, mais vous n'étiez pas encore authentifié (authentifiez vous "
 "d'abord avec votre mot de passe actuel)"
 msgstr ""
-"You just click on [Modify password] link in homepage without being authenticated "
-"(You need to authenticate with your current password first)"
+"You just click on [Modify password] link in homepage without being "
+"authenticated (You need to authenticate with your current password first)"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:42
 msgid ""
 "Déconnexion : Elle n'est normalement pas nécessaire. C'est toutefois "
 "possible depuis la page d'accueil."
-msgstr ""
-"Logout : Always possible from the homepage"
+msgstr "Logout : Always possible from the homepage"
 
 #: eplouribousse/apps/epl/views.py:53
 msgid "Titre de la ressource"
@@ -863,7 +843,7 @@ msgstr ""
 msgid "ni relié, ni non reliés"
 msgstr " <=== Deletion not allowed (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:529
+#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:528
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
@@ -876,7 +856,7 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:540
+#: eplouribousse/apps/epl/views.py:539
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Don't forget to tick the box before to validate"
 
