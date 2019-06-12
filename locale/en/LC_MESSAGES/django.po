@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-07 09:30+0200\n"
+"POT-Creation-Date: 2019-06-11 08:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Something is wrong (The database admin will be informed)"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:21
 msgid "Ajouter une nouvelle ligne d'instruction pour ma bibliothèque"
-msgstr ""
+msgstr "Add a new row for my library"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:24
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:36
@@ -63,7 +63,7 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:34
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:34
 msgid "Titre"
-msgstr ""
+msgstr "Title"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:24
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:38
@@ -77,10 +77,8 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/ranking.html:23
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:36
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:36
-#, fuzzy
-#| msgid "Titre de la ressource"
 msgid "Identifiant de la ressource"
-msgstr "Title"
+msgstr "Serial ID"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:25
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:24
@@ -93,18 +91,18 @@ msgstr "Publication history"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:25
 msgid "Ordre de traitement"
-msgstr ""
+msgstr "Processing order"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:28
 msgid "(Autre(s) bibliothèque(s) rattachée(s)"
-msgstr ""
+msgstr "Other attached libraries"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:38
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:35
 #: eplouribousse/apps/epl/templates/epl/edition.html:36
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:38
 msgid "Ligne"
-msgstr ""
+msgstr "Row"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:39
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:89
@@ -120,8 +118,6 @@ msgstr "Library"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:37
 #: eplouribousse/apps/epl/templates/epl/edition.html:38
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:40
-#, fuzzy
-#| msgid "relié ?"
 msgid "Relié ?"
 msgstr "bound ?"
 
@@ -130,18 +126,14 @@ msgstr "bound ?"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:38
 #: eplouribousse/apps/epl/templates/epl/edition.html:39
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:41
-#, fuzzy
-#| msgid "Bibliothèque"
 msgid "Bibliothèque remédiée"
-msgstr "Library"
+msgstr "Enhanceable library"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:42
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:92
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:39
 #: eplouribousse/apps/epl/templates/epl/edition.html:40
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:42
-#, fuzzy
-#| msgid "segment"
 msgid "Segment"
 msgstr "segment"
 
@@ -150,8 +142,6 @@ msgstr "segment"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:40
 #: eplouribousse/apps/epl/templates/epl/edition.html:41
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:43
-#, fuzzy
-#| msgid "exception"
 msgid "Exception(s)"
 msgstr "exception"
 
@@ -160,19 +150,17 @@ msgstr "exception"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:41
 #: eplouribousse/apps/epl/templates/epl/edition.html:42
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:44
-#, fuzzy
-#| msgid "améliorable"
 msgid "Elément(s) améliorable(s)"
-msgstr "enhanceable"
+msgstr "enhanceable elements"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:78
 msgid "La dernière ligne validée est mise en évidence (Cycle courant :"
-msgstr "Last line is highlighted (current cycle :"
+msgstr "Last row is highlighted (current cycle :"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:78
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:96
 msgid "Supprimer une ligne erronée"
-msgstr "Cancel a line"
+msgstr "Cancel a row"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:78
 msgid "Vous pourrez continuer ensuite"
@@ -192,7 +180,7 @@ msgstr "Clean form below"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:88
 msgid "Sous la ligne"
-msgstr "line under"
+msgstr "underneath row n° ?"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:124
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:82
@@ -201,12 +189,12 @@ msgstr "line under"
 #: eplouribousse/apps/epl/templates/epl/home.html:38
 #: eplouribousse/apps/epl/templates/epl/ranking.html:66
 msgid "Valider"
-msgstr "OK"
+msgstr "ok"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:129
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:87
 msgid "J'ai fini pour la forme courante"
-msgstr ""
+msgstr "I've finished for the current shape"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:52
@@ -223,7 +211,7 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:48
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:48
 msgid "Accueil"
-msgstr ""
+msgstr "Home"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:52
@@ -268,12 +256,15 @@ msgid ""
 "Ressources dont le statut [à arbitrer] pourrait être levé par un "
 "repositionnement"
 msgstr ""
+"Serial whose state [to be arbitrated] could be cleared up "
+"by a new ranking"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:22
 msgid ""
 "(Ressources [à arbitrer] : Rang 1 revendiqué par plusieurs bibliothèques ou "
 "par aucune)"
 msgstr ""
+"(Arbitration : Several or no libraries clamed rank 1)"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:24
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:24
@@ -283,19 +274,21 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:22
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:22
 msgid "Nombre de ressources concernées"
-msgstr ""
+msgstr "Number of involved serials"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:27
 msgid ""
 "Pour chercher une occurence dans cette liste, veuillez utiliser la "
 "fonctionnalité de recherche du navigateur."
 msgstr ""
+"Use browser search feature to find an occurrence"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:29
 msgid ""
 "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la "
 "ressource]"
 msgstr ""
+"Click on [Serial id] link to modify your rank"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:37
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:37
@@ -307,14 +300,14 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:35
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:35
 msgid "Cote"
-msgstr ""
+msgstr "Call number"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
 #: eplouribousse/apps/epl/templates/epl/notintime.html:39
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
@@ -323,10 +316,8 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
-#, fuzzy
-#| msgid "1. Positionnement"
 msgid "Positionnements"
-msgstr "1. Ranking"
+msgstr "Ranking"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
@@ -335,10 +326,8 @@ msgstr "1. Ranking"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
-#, fuzzy
-#| msgid "3. Instruction"
 msgid "Instructions"
-msgstr "3. Instruction"
+msgstr "Instruction"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
@@ -348,39 +337,38 @@ msgstr "3. Instruction"
 #: eplouribousse/apps/epl/templates/epl/notintime.html:39
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
-#, fuzzy
-#| msgid "4. Résultantes"
 msgid "Edition des résultantes"
-msgstr "4. Resulting collections"
+msgstr "Edition"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:19
 msgid "Suppression d'une ligne d'instruction pour ma bibliothèque"
-msgstr ""
+msgstr "Delete a row for my library"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:30
 msgid "Les lignes en rouge ne peuvent plus être supprimées."
-msgstr ""
+msgstr "Red rows may not be deleted"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:80
 msgid "Vous ne pouvez supprimer une ligne que pour votre bibliothèque"
-msgstr ""
+msgstr "You're allowed to delete only your rows"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:80
 msgid "et pour la forme couramment instruite"
-msgstr ""
+msgstr "for the current shape"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:81
 msgid "n° de la ligne que vous souhaitez supprimer"
-msgstr ""
+msgstr "row number you want to delete"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:82
 msgid ""
 "Attention : La suppression est définitive. Vérifiez bien avant de valider"
 msgstr ""
+"Pay attention before confirming deletion"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:86
 msgid "Poursuivre l'instruction"
-msgstr ""
+msgstr "Resume instruction"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:20
 msgid "Edition de la résultante pour ma bibliothèque"
@@ -393,12 +381,12 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/edition.html:31
 #: eplouribousse/apps/epl/views.py:63
 msgid "Collection mère"
-msgstr "Mother collection"
+msgstr ""
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
 msgid "Menu contextuel"
-msgstr ""
+msgstr "Context menu"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
 msgid "Export pdf"
@@ -415,7 +403,7 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 msgid "Menu général"
-msgstr ""
+msgstr "Main menu"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
@@ -425,38 +413,35 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/notintime.html:39
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
-#, fuzzy
-#| msgid "2. Arbitrages"
 msgid "Arbitrages"
-msgstr "2. Arbitration"
+msgstr "Arbitrations"
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:20
 msgid "Confirmer pour ma part"
-msgstr ""
+msgstr "I confirm"
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:20
 msgid "la fin des instructions pour la forme considérée"
-msgstr ""
+msgstr "the end of my instructions for the current shape"
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:27
 msgid ""
 "Les dernières lignes validées par votre bibliothèque pour la forme "
 "considérée sont mises en évidence."
 msgstr ""
+"Last validated rows are highlighted."
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:90
 msgid "Je confirme que j'ai fini pour la forme courante"
-msgstr ""
+msgstr "I confirm to have finished for the current shape"
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:91
-#, fuzzy
-#| msgid "N'oubliez pas de cocher avant de valider :"
 msgid "Vérifiez bien avant de valider"
-msgstr "Don't forget to tick the box before to validate"
+msgstr "Pay attention before validating"
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:95
 msgid "Revenir à l'instruction"
-msgstr ""
+msgstr "Back to instruction"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:23
 msgid "Page d'accueil"
@@ -465,17 +450,16 @@ msgstr "Homepage"
 #: eplouribousse/apps/epl/templates/epl/home.html:30
 msgid ""
 "Vous êtes bien sur la page à partir de laquelle il convient de débuter !"
-msgstr "You are on the page from which you should start !"
+msgstr ""
+"You are on the page from which you should start !"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:35
-#, fuzzy
-#| msgid "bibliothèque"
 msgid "Choisissez votre bibliothèque"
 msgstr "Select your library"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:36
 msgid "Choisissez la fonctionnalité souhaitée"
-msgstr "Choose the desired feature"
+msgstr "Select the desired feature"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:44
 #: eplouribousse/apps/epl/templates/epl/indicators.html:16
@@ -505,51 +489,51 @@ msgstr "Admin (reserved)"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:44
 msgid "en / de"
-msgstr ""
+msgstr "fr / de"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:25
 msgid "Indicateur"
-msgstr ""
+msgstr "Follow-up indicators"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:26
 msgid "Valeur"
-msgstr ""
+msgstr "Value"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:34
 msgid "Positionnement, exclusions incluses"
-msgstr ""
+msgstr "Ranking (exclusion included)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:38
 msgid "Positionnement (hors exclusions)"
-msgstr ""
+msgstr "Ranking (exclusion excluded)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:42
 msgid "Exclusions"
-msgstr ""
+msgstr "Exclusions"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:46
 msgid "Ressources dont l'instruction des éléments reliés peut débuter"
-msgstr ""
+msgstr "Serial whose bound shape instruction may begin"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:50
 msgid "Ressources dont l'instruction des éléments reliés est en cours"
-msgstr ""
+msgstr "Serial whose bound shape instruction is underway"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:54
 msgid "Ressources dont l'instruction des éléments non reliés peut débuter"
-msgstr ""
+msgstr "Serial whose not bound shape instruction may begin"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:58
 msgid "Ressources dont l'instruction des éléments non reliés est en cours"
-msgstr ""
+msgstr "Serial whose not bound shape instruction is underway"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:62
 msgid "Ressources complètement instruites"
-msgstr ""
+msgstr "Serial whose instruction is over"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:66
 msgid "Fiches défectueuses"
-msgstr ""
+msgstr "Faulty sheets"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:19
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:20
@@ -557,46 +541,45 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:19
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:19
 msgid "Liste des ressources à instruire pour"
-msgstr ""
+msgstr "Serials to be instructed for"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:20
 msgid "forme reliée, rang 1"
-msgstr ""
+msgstr "bound shape, 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-#, fuzzy
-#| msgid "3. Instruction"
 msgid "Menu [instructions]"
-msgstr "3. Instruction"
+msgstr "Menu [instructions]"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
 msgid "tout"
-msgstr ""
+msgstr "all"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
 msgid "reliés autre rang"
-msgstr ""
+msgstr "bound shape, other ranks"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
 msgid "non reliés rang 1"
-msgstr ""
+msgstr "not bound shape, 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 msgid "non reliés autre rang"
-msgstr ""
+msgstr "not bound shape, other ranks"
+
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:19
 msgid "forme reliée, rang autre que le premier"
-msgstr ""
+msgstr "bound shape, other rank than 1st"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:27
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:24
@@ -605,18 +588,17 @@ msgid ""
 "Pour chercher une occurence dans cette liste, veuillez utiliser la "
 "fonctionnalité de recherche du navigateur"
 msgstr ""
+"Use browser search feature to find an occurrence"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-#, fuzzy
-#| msgid "reliés"
 msgid "reliés rang 1"
-msgstr "bound"
+msgstr "bound 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:19
 msgid "forme non reliée, rang 1"
-msgstr ""
+msgstr "not bound 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:26
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:25
@@ -624,119 +606,119 @@ msgid ""
 "Pour chercher n'importe quelle occurence dans cette liste, veuillez utiliser "
 "la fonctionnalité de recherche du navigateur"
 msgstr ""
+"Use browser search feature to find an occurrence"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
 msgid "reliés autres rangs"
-msgstr ""
+msgstr "bound other rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 msgid "non reliés autres rangs"
-msgstr ""
+msgstr "not bound other rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:19
 msgid "forme non reliée, rang autre que le premier"
-msgstr ""
+msgstr "not bound shape, not 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:19
 msgid "Tentative d'intervention hors délai pour la bibliothèque"
-msgstr ""
+msgstr "Out of time feature for your library"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:23
 msgid "Ressource concernée"
-msgstr ""
+msgstr "Involved serial"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:25
 msgid "Vous avez été redirigé ici pour l'une des raisons suivantes"
-msgstr ""
+msgstr "You've been redirected here for one of the following reasons"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:28
 msgid ""
 "Le positionnement n'est plus possible (les instructions ont déjà commencé ou "
 "la ressource n'est plus candidate"
 msgstr ""
+"Ranking no more allowed"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:29
 msgid "Ce n'est pas à votre tour d'instruire la fiche"
-msgstr ""
+msgstr "It's not up to you"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:30
 msgid "La fiche n'est pas encore éditable"
-msgstr ""
+msgstr "Edition isn't yet allowed"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:31
 msgid "La fiche est déjà complètement instruite et ne peut plus être modifiée"
-msgstr ""
+msgstr "Instruction is over, modifying not allowed"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:35
 msgid "Dans ce dernier cas, la ressource doit apparaître dans votre liste des"
-msgstr ""
+msgstr "In this case, look your list of"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:35
 msgid "ressources éditables"
-msgstr ""
+msgstr "editable serials"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:19
-#, fuzzy
-#| msgid "bibliothèque"
 msgid "Positionnez la collection de votre bibliothèque"
-msgstr "Select your library"
+msgstr "Rank your collection"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:19
 msgid "pour la ressource suivante"
-msgstr ""
+msgstr "for the following serial"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:28
 msgid "Rattachements ; celui de votre bibliothèque apparaît en rouge"
-msgstr ""
+msgstr "Attachment ; yours is highlighted"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:29
 msgid ""
 "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci "
 "correspond)"
 msgstr ""
+"Click on ID to know which library it is"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:38
 #: eplouribousse/apps/epl/templates/epl/ranking.html:47
-#, fuzzy
-#| msgid "Titre de la ressource"
 msgid "Identifiant de la bibliothèque"
-msgstr "Title"
+msgstr "Library ID"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:39
 #: eplouribousse/apps/epl/templates/epl/ranking.html:48
 msgid "Etat de collection"
-msgstr ""
+msgstr "Holad statement"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:49
 msgid "Lacunes"
-msgstr ""
+msgstr "Gaps"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:41
 #: eplouribousse/apps/epl/templates/epl/ranking.html:50
 msgid "Rang courant"
-msgstr ""
+msgstr "Current rank"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:42
 #: eplouribousse/apps/epl/templates/epl/ranking.html:51
 msgid "Exclusion ?"
-msgstr ""
+msgstr "Exclusion ?"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:42
 #: eplouribousse/apps/epl/templates/epl/ranking.html:51
 msgid "Commentaire"
-msgstr ""
+msgstr "Comment"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:60
 msgid "Le cas échéant, choisissez le motif d'exclusion"
-msgstr ""
+msgstr "If so, select a reason"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:61
 msgid ""
 "Sinon, prenez rang en tenant compte des états de collections ou d'autres "
 "prescriptions"
 msgstr ""
+"If no, take rank considering all hold statements or other prescription"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:62
 msgid ""
@@ -744,49 +726,49 @@ msgid ""
 "éléments qui viendront l'enrichir, sinon 2, 3 ou 4 selon l'importance de "
 "votre collection ou d'autres raisons ..."
 msgstr ""
+"Choose 1 if your collection is the best one, 4 if the worst one"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:63
 msgid "Commentaire (max. 250 caractères.)"
-msgstr ""
+msgstr "Comment (250 characters max)"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:69
 msgid ""
 "Il n'est plus possible de modifier votre positionnement (l'instruction de la "
 "résultante peut déjà être engagée)"
 msgstr ""
+"Modifying your rank is no more allowed"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
 msgid "Retour à la liste actualisée des positionnements"
-msgstr ""
+msgstr "Back to ranking list"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
 msgid "Retour à la liste actualisée des arbitrages"
-msgstr ""
+msgstr "Back to arbitration list"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
 msgid ""
 "Ressources complètement instruites et pouvant donc être éditées pour votre "
 "bibliothèque"
 msgstr ""
+"Serials to be edited for your library"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:26
-#, fuzzy
-#| msgid "Titre de la ressource"
 msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
-msgstr "Title"
+msgstr "Click on [Serial id] link to edit"
 
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:19
 msgid "Ressources en attente du positionnement de votre bibliothèque"
-msgstr ""
+msgstr "To be ranked by your library"
 
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:26
 msgid ""
 "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]"
 msgstr ""
+"Click on [Serial id] link to take rank"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:23
-#, fuzzy
-#| msgid "M'authentifier"
 msgid "Authentification"
 msgstr "Login"
 
@@ -795,15 +777,17 @@ msgid ""
 "Plusieurs raisons peuvent vous avoir conduit à cette page (dans l'ordre "
 "décroissant de fréquence) :"
 msgstr ""
+"You may be redirected here for one of the following reasons :"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:38
 msgid "L'action que vous requérez exige l'authentification"
-msgstr ""
+msgstr "Feature you required needs authentication"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:39
 msgid ""
 "Vous venez de cliquer sur le lien [M'authentifier] situé en page d'accueil"
 msgstr ""
+"You just click on [Authentication] link in homepage"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:40
 msgid ""
@@ -811,12 +795,15 @@ msgid ""
 "d'accueil, mais vous n'étiez pas encore authentifié (authentifiez vous "
 "d'abord avec votre mot de passe actuel)"
 msgstr ""
+"You just click on [Modify password] link in homepage without being authenticated "
+"(You need to authenticate with your current password first)"
 
 #: eplouribousse/apps/epl/templates/registration/login.html:42
 msgid ""
 "Déconnexion : Elle n'est normalement pas nécessaire. C'est toutefois "
 "possible depuis la page d'accueil."
 msgstr ""
+"Logout : Always possible from the homepage"
 
 #: eplouribousse/apps/epl/views.py:53
 msgid "Titre de la ressource"
@@ -852,39 +839,33 @@ msgstr "enhanceable"
 
 #: eplouribousse/apps/epl/views.py:215 eplouribousse/apps/epl/views.py:308
 #: eplouribousse/apps/epl/views.py:396
-#, fuzzy
-#| msgid "non reliés"
 msgid "éléments reliés"
-msgstr "not bound"
+msgstr "bound elements"
 
 #: eplouribousse/apps/epl/views.py:217 eplouribousse/apps/epl/views.py:312
 #: eplouribousse/apps/epl/views.py:400
-#, fuzzy
-#| msgid "ni relié, ni non reliés"
 msgid "éléments non reliés"
-msgstr "Not bound nor not bound"
+msgstr "not bound elements"
 
 #: eplouribousse/apps/epl/views.py:241
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
 #: eplouribousse/apps/epl/views.py:316 eplouribousse/apps/epl/views.py:404
-#, fuzzy
-#| msgid "XXXXX (instructions terminées)"
 msgid "instructions terminées"
-msgstr "XXXXX (instructions closed)"
+msgstr "instructions are over"
 
 #: eplouribousse/apps/epl/views.py:327
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
-msgstr " <=== Deletion not allowed (verify conditions) "
+msgstr ""
 
 #: eplouribousse/apps/epl/views.py:405
 msgid "ni relié, ni non reliés"
-msgstr "Not bound nor not bound"
+msgstr " <=== Deletion not allowed (verify conditions) "
 
 #: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:529
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
-msgstr "It's up to you for the sid "
+msgstr "It's up to you for the serial ID"
 
 #: eplouribousse/apps/epl/views.py:475
 msgid ""
@@ -893,7 +874,7 @@ msgid ""
 "intervention dans la base de données est attendue de votre part. Merci !"
 msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
-"what you can do to let things going on right. Thanks !"
+"what you can do to let things be resumed right. Thanks !"
 
 #: eplouribousse/apps/epl/views.py:540
 msgid "N'oubliez pas de cocher avant de valider :"
@@ -905,11 +886,8 @@ msgstr ""
 
 #: eplouribousse/settings/base.py:130
 msgid "English"
-msgstr "English"
+msgstr ""
 
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
-
-#~ msgid "French"
-#~ msgstr "French"
