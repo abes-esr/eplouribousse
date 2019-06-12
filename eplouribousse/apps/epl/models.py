@@ -73,10 +73,10 @@ class Instruction(models.Model):
     oname = models.CharField('name of the other library on the instruction \
     of which an enhance is made or an exception is replaced', max_length=30, \
     blank=True)
-    descr = models.CharField('segment description', max_length=250, blank=True, help_text='Choisissez votre bibliothèque')
-    exc = models.CharField('exception', max_length=250, blank=True)
+    descr = models.CharField('segment description', max_length=300, blank=True, help_text='Choisissez votre bibliothèque')
+    exc = models.CharField('exception', max_length=300, blank=True)
     degr = models.CharField('enhanceable elements'\
-    , max_length=250, blank=True)
+    , max_length=300, blank=True)
     time = models.CharField('time', max_length=250, blank=True)
     def __str__(self):
 
