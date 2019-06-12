@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 15:18+0200\n"
+"POT-Creation-Date: 2019-06-12 16:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,6 +55,7 @@ msgstr "Add a new row for my library"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:22
 #: eplouribousse/apps/epl/templates/epl/edition.html:25
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:23
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:33
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:36
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:35
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:34
@@ -70,6 +71,8 @@ msgstr "Title"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:23
 #: eplouribousse/apps/epl/templates/epl/edition.html:26
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:24
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:36
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:38
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:38
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:37
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:36
@@ -202,6 +205,7 @@ msgstr "I've finished for the current shape"
 #: eplouribousse/apps/epl/templates/epl/edition.html:85
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:100
 #: eplouribousse/apps/epl/templates/epl/indicators.html:79
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
@@ -220,6 +224,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:100
 #: eplouribousse/apps/epl/templates/epl/home.html:44
 #: eplouribousse/apps/epl/templates/epl/indicators.html:79
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
@@ -239,6 +244,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:105
 #: eplouribousse/apps/epl/templates/epl/home.html:51
 #: eplouribousse/apps/epl/templates/epl/indicators.html:84
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:65
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:59
@@ -265,6 +271,7 @@ msgid ""
 msgstr "(Arbitration : Several or no libraries clamed rank 1)"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:24
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:22
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:24
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:23
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:23
@@ -287,6 +294,7 @@ msgid ""
 msgstr "Click on [Serial id] link to modify your rank"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:37
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:34
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:37
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:36
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:35
@@ -307,6 +315,7 @@ msgstr "Menu"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
@@ -326,6 +335,7 @@ msgid "Instructions"
 msgstr "Instruction"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
@@ -367,16 +377,16 @@ msgstr "Resume instruction"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:20
 msgid "Edition de la résultante pour ma bibliothèque"
-msgstr ""
+msgstr "edition"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:30
 msgid "Les lignes impliquant votre bibliothèque sont mises en évidence."
-msgstr ""
+msgstr "rows involving your libary are highlighted"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:31
 #: eplouribousse/apps/epl/views.py:63
 msgid "Collection mère"
-msgstr ""
+msgstr "Mother collection"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
@@ -385,13 +395,14 @@ msgstr "Context menu"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
 msgid "Export pdf"
-msgstr ""
+msgstr "pdf export"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
 msgid "Retour à la liste des ressources éditables"
-msgstr ""
+msgstr "Back to edition"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
@@ -401,6 +412,7 @@ msgid "Menu général"
 msgstr "Main menu"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
@@ -536,43 +548,12 @@ msgstr "Faulty sheets"
 msgid "Liste des ressources à instruire pour"
 msgstr "Serials to be instructed for"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:20
-msgid "forme reliée, rang 1"
-msgstr "bound shape, 1st rank"
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:19
+msgid "toutes formes, tous rangs"
+msgstr ""
 
-#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
-#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
-#: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
-#: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-msgid "Menu [instructions]"
-msgstr "Menu [instructions]"
-
-#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
-#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
-#: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
-#: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-msgid "tout"
-msgstr "all"
-
-#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
-msgid "reliés autre rang"
-msgstr "bound shape, other ranks"
-
-#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
-#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
-#: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-msgid "non reliés rang 1"
-msgstr "not bound shape, 1st rank"
-
-#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
-#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
-msgid "non reliés autre rang"
-msgstr "not bound shape, other ranks"
-
-#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:19
-msgid "forme reliée, rang autre que le premier"
-msgstr "bound shape, other rank than 1st"
-
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:25
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:28
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:27
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:24
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:24
@@ -581,11 +562,53 @@ msgid ""
 "fonctionnalité de recherche du navigateur"
 msgstr "Use browser search feature to find an occurrence"
 
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
+#: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
+#: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
+msgid "Menu [instructions]"
+msgstr "Menu [instructions]"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
 msgid "reliés rang 1"
 msgstr "bound 1st rank"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
+msgid "reliés autre rang"
+msgstr "bound shape, other ranks"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
+#: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
+msgid "non reliés rang 1"
+msgstr "not bound shape, 1st rank"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
+msgid "non reliés autre rang"
+msgstr "not bound shape, other ranks"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:20
+msgid "forme reliée, rang 1"
+msgstr "bound shape, 1st rank"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:50
+#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
+#: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
+#: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
+msgid "tout"
+msgstr "all"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:19
+msgid "forme reliée, rang autre que le premier"
+msgstr "bound shape, other rank than 1st"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:19
 msgid "forme non reliée, rang 1"
