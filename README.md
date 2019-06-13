@@ -12,13 +12,13 @@ The sheets obtained describe the resulting collection ; the eliminated elements 
 
 # Features:
 
-01. edition of the candidates for each participating library,
-02. positioning form (including (or derogations),
-03. edition of the resources whose instruction of the resultant can begin,
-04. alert when its turn came to continue the instruction of the resultant,
+01. edition of the candidates for each taking part library,
+02. positioning form (including derogations),
+03. edition of the resources whose instruction of the resulting collection may begin,
+04. alert when its turn came to continue the instruction of the resulting collection,
 05. instruction forms (add, delete, end),
 06. differentiated edition of the results,
-07. conformity check at the end of each training cycle,
+07. conformity check at the end of each process cycle,
 08. full support of the processing chain,
 09. activity tracking chart,
 10. user and group management,
