@@ -1,41 +1,44 @@
-# AppliWeb pour gérer le dédoublonnement des revues.
+# Collaborative WebApp to manage serials deduplication in libraries.
 
-Gagnez de l'espace en éliminant vos doublons, offrez une meilleure lisibilité de vos ressources en reconstituant pour chacune d'elles une collection unique la plus intègre possible résultant de l'agrégation des éléments épars disponibles dans vos bibliothèques.
+Save space by eliminating duplicates, provide better readability of your collections by restoring for each of them a unique collection as clean as possible resulting from the aggregation of scattered items available in your libraries.
 
-# Méthode :
+# Method:
 
-Pour une ressource donnée (Unité catalographique sans les filiations), l'application eplouribousse permet aux bibliothèques, chacune à son tour, d'indiquer ses éléments reliés contribuant à la résultante, puis lors d'un deuxième cycle d'instructions et selon la même logique, ses éléments non-reliés complémentaires.
+For a given resource (Catalog Unit without filiations), "eplouribousse" allows libraries, each in turn, to indicate its bound elements contributing to the resulting collection, then in a second cycle of instructions and according to the same logic, its not bound complementary elements.
 
-L'ordre de traitement est significatif : La première bibliothèque est normalement celle détenant déjà la collection la plus importante (Celle qui revendique la conservation dans l'hypothèse où la collection est finalement regroupée). C'est la même logique d'importance qui doit prévaloir normalement pour la place revendiquée par les bibliothèques suivantes. Il peut arriver qu'une bibliothèque veuille soustraire sa collection à la reconstitution de la résultante (Le cas typique est celui d'une collection du dépôt légal) Le module de positionnement de l'application eplouribousse rend cette dérogation possible.
+The order of processing is significant: The first library is normally the one already holding the most important collection (the one that claims conservation in the event that the collection is finally grouped). It is the same logic of importance that must prevail normally for the place claimed by the following libraries. It may happen that a library wants to subtract its collection to the reconstitution of the resultant (The typical case is that of a collection of the legal deposit) The positioning module of "eplouribousse" makes this derogation possible.
 
-Les fiches obtenues décrivent les résultantes ; les éléments écartés s'en déduisent. Les parties contribuant à la collection résultante peuvent être regroupées ou pas, au choix. Les traitements physiques et mises à jour catalographiques sont à prévoir.
+The sheets obtained describe the resulting collection ; the eliminated elements are deduced from this description (all that doesn't contribute to the resulting collection) The elements which contributes to the resulting collection may be grouped together or not, as desired. Physical treatments and catalog updates are expected.
 
-# Fonctionnalités :
+# Features:
 
-1. édition des candidats pour chaque bibliothèque participante,
-2. formulaire de positionnement (ou de dérogation),
-3. édition des ressources dont l'instruction de la résultante peut débuter,
-4. alerte quand son tour est venu de poursuivre l'instruction de la résultante,
-5. formulaires d'instruction (ajout, suppression, fin),
-6. édition différenciée des résultantes,
-7. contrôle de conformité à la fin de chaque cycle d'instruction,
-8. prise en charge complète de la chaîne de traitement,
-9. tableau de suivi d'activité.
+01. edition of the candidates for each taking part library,
+02. positioning form (including derogations),
+03. edition of the resources whose instruction of the resulting collection may begin,
+04. alert when its turn came to continue the instruction of the resulting collection,
+05. instruction forms (add, delete, end),
+06. differentiated edition of the results,
+07. conformity check at the end of each process cycle,
+08. full support of the processing chain,
+09. activity tracking chart,
+10. user and group management,
+11. parameterization of derogation reasons,
+12. administration of faulty card cases,
+12. multilingual support (French, English, German, extensible to other languages)
 
-# Plus d'info :
+# More information :
 
-Voir le manuel de l'appli en https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
+See the app manual in https://seafile.unistra.fr/e/a998b238a22b4c13baf5/
 
-# Comment obtenir eplouribousse ?
+# How to get eplouribousse?
 
-Nous conseillons d'abord de vous rapprocher de votre équipe informatique pour une installation de test.
+We recommend that you first approach your IT team for a test installation.
 
-Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a trois possibilités :
-- Confier le déploiement à votre service informatique en indiquant l'adresse du présent site
-- Confier le déploiement à un hébergeur en indiquant l'adresse du présent site
-- Nous confier le déploiement (après accord et convention)
+If you want to use eplouribousse for a firm project, there are three possibilities:
+- Entrust the deployment to your IT department by indicating the address of this site
+- Entrust the deployment to a host indicating the address of this site
+- We entrust the deployment (after agreement and convention)
 
 # Contact :
 
-Indiqué en https://github.com/GGre/eplouribounistra/blob/master/Version.txt
-
+Indicated in https://github.com/GGre/eplouribounistra/blob/master/Version.txt
