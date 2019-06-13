@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -15,17 +16,17 @@
 
     <body>
 
-      <h2>Positionnez la collection de votre bibliothèque ({{ library.name }}) pour la ressource suivante :</h2>
+      <h2>{% trans "Positionnez la collection de votre bibliothèque" %} ({{ library.name }}) {% trans "pour la ressource suivante" %} :</h2>
         <div id="content">
 
-      <p><b>Titre :</b> {{ ressource.title|truncatewords:80 }}</p>
-      <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
-       / <b>issn :</b> {{ ressource.issn }} / <b>Historique de la publication :</b> {{ ressource.pubhist }}</p>
+      <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
+      <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
+       / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
       <p></p>
       {% if flag == 0 %}
 
-      <p><i>Rattachements ; celui de votre bibliothèque apparaît en rouge :</i></p>
-      <p>(Cliquez sur le lien "identifiant" pour savoir à quelle bibliothèque celui-ci correspond)</p>
+      <p><i>{% trans "Rattachements ; celui de votre bibliothèque apparaît en rouge" %} :</i></p>
+      <p>({% trans "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci correspond)" %})</p>
 
       <ul>
 
@@ -34,20 +35,20 @@
                 <HR>
           <p></p>
              <font color= #e74c3c >
-              <li><b>Identifiant de la bibliothèque :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
-              <li><b>Etat de collection :</b> {{ elmt.holdstat }}</li>
-              <li><b>Lacunes :</b> {{ elmt.missing }}</li>
-              <li><b>Rang courant :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li><b>Exclusion ? :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>Commentaire :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
+              <li><b>{% trans "Identifiant de la bibliothèque" %} :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | {% trans "Cote" %} : {{ elmt.cn }}</li>
+              <li><b>{% trans "Etat de collection" %} :</b> {{ elmt.holdstat }}</li>
+              <li><b>{% trans "Lacunes" %} :</b> {{ elmt.missing }}</li>
+              <li><b>{% trans "Rang courant" %} :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li><b>{% trans "Exclusion ?" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
              </font>
           {% else %}
                 <HR>
           <p></p>
-              <li><b>Identifiant de la bibliothèque :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | Cote : {{ elmt.cn }}</li>
-              <li><b>Etat de collection :</b> {{ elmt.holdstat }}</li>
-              <li><b>Lacunes :</b> {{ elmt.missing }}</li>
-              <li><b>Rang courant :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li><b>Exclusion ? :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>Commentaire :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
+              <li><b>{% trans "Identifiant de la bibliothèque" %} :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | {% trans "Cote" %} : {{ elmt.cn }}</li>
+              <li><b>{% trans "Etat de collection" %} :</b> {{ elmt.holdstat }}</li>
+              <li><b>{% trans "Lacunes" %} :</b> {{ elmt.missing }}</li>
+              <li><b>{% trans "Rang courant" %} :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li><b>{% trans "Exclusion ?" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
           {% endif %}
       {% endfor %}
 
@@ -56,16 +57,16 @@
       <HR>
 
       <form method="post">
-      <p>Le cas échéant, choisissez le motif d'exclusion : {{ form.excl }}</p>
-      <p>Sinon, prenez rang en tenant compte des états de collections ou d'autres prescriptions : {{ form.rank }}</p>
-      <p>Choisissez 1 si votre collection est celle à laquelle s'agrégeront d'autres éléments qui viendront l'enrichir, sinon 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ...</p>
-      <p>Commentaire (max. 250 caractères.) : </p>
+      <p>{% trans "Le cas échéant, choisissez le motif d'exclusion" %} : {{ form.excl }}</p>
+      <p>{% trans "Sinon, prenez rang en tenant compte des états de collections ou d'autres prescriptions" %} : {{ form.rank }}</p>
+      <p>{% trans "Choisissez 1 si votre collection est celle à laquelle s'agrégeront d'autres éléments qui viendront l'enrichir, sinon 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}</p>
+      <p>{% trans "Commentaire (max. 250 caractères.)" %} : </p>
       <p>{{ form.comm }}</p>
       {% csrf_token %}
-      <input type="Submit" value="Valider">
+      <input type="Submit" value="{% trans "Valider" %}">
       </form>
       {% elif flag == 1 %}
-      <p><B><font color= #e74c3c >"Il n'est plus possible de modifier votre positionnement (l'instruction de la résultante peut déjà être engagée)."</font></B></p>
+      <p><B><font color= #e74c3c >{% trans "Il n'est plus possible de modifier votre positionnement (l'instruction de la résultante peut déjà être engagée)" %}.</font></B></p>
       {% endif %}
 
         </div>
@@ -73,22 +74,22 @@
 
         <div id="menucontextuel">
 
-        <p><b>Menu contextuel : </b><a href="/./epl/to_rank_list/{{ library.lid }}">Retour à la liste actualisée des positionnements</a> - <a href="/./epl/arbitration/{{ library.lid }}">Retour à la liste actualisée des arbitrages</a></p>
+        <p><b>{% trans "Menu contextuel" %} : </b><a href="/rklist/{{ library.lid }}">{% trans "Retour à la liste actualisée des positionnements" %}</a> - <a href="/arb/{{ library.lid }}">{% trans "Retour à la liste actualisée des arbitrages" %}</a></p>
         </div>
 
         <div id="menugeneral">
 
-        <p><b>Menu général : </b><a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+        <p><b>{% trans "Menu général" %} : </b><a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
         </div>
 
 
         <div id="footer">
-            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
 
       <body>

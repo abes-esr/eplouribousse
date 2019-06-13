@@ -1,76 +1,30 @@
-Now:
-Les render à corriger avec <lid> etc.
-Cas de admin pour end avec un véritable Radiobutton ...(Fait)
+
+Valorisation de l'application (passe par l'internationalisation)
+
+--Promotion auprès des utilisateurs potentiels :
+---CTLes et ABES : Présentation aux prochaines journées (mai 2020)
+---Articles dans la presse professionnelle (BBF, Arabesques, Code4Lib Journal (C4LJ))
+---Code{4}lib (voir ligne ci-dessus)
+---Code2bib
+
+--Partage du code :
+---GitHub et GitLab Unistra (bien indexer et documenter)
+---Forge Renater : Plateforme web de gestion de projets à destination de l'Enseignement Supérieur et des laboratoires de Recherche Français (https://sourcesup.renater.fr/)
 
 
-
-
-ABSOLUMENT NECESSAIRE DES LA VERSION 0.1 :
-- X_FAIT_MAIS A VERIFIER_X : Articulations Instructions / suppression / fin
-- X_FAIT_MAIS A TESTER_X : Instructions regroupées pour l'admin avec les 3 déclinaisons (tout, reliés, non reliés)
-- X_FAIT_X : Cas de admin dans toutes les vues, en particulier les suppressions de lignes d'instruction
-- X_FAIT_X : Contrôles contre les usages intempestifs (avec re-orientations vers les bonnes pages, peut-être toujours la page home)
-- X_FAIT_X : Vérifier et compléter le cas échéant les liens des menus dans les templates
-- X_NON DECIDEMENT_X : Essayer tout de même de remplacer rcr par nom dans le module de positionnement
-- X_NON_BESOIN_DISTINCT()_POSTGRESQL_X : Arbitrages : étendus à tous les rangs, in [1-4] In liste non pas si simple ... à moins que la situation actuelle soit satisfaisante ce qui paraît être possible
-- X_NON : CECI DANS LES INDICATEURS_X : Vue pour les exclus y compris regroupés si admin et nbr de cand tombés de ce fait
-- X_FAIT_X : épurer mes .html (habillage par .css)
-
-Idées l'ergonomie :
-dont suite à la réunion de travail avec Emma et Noélie (le 15/11/2018)
-- X_FAIT_X : Développer le sigle PCP dans les exclusions.
-- X_FAIT_X : Pour le motif d'exclusion autre, mettre "autre (préciser dans l'encadré ci-dessous)".
-- X_FAIT_X : "Submit" à remplacer par "Valider".
-- X_FAIT_X : Ne pas ouvrir un nouvel onglet pour prendre rang, mais en contrepartie prévoir un bouton "retour à la liste actualisée des candidats"
-- X_FAIT_X : Point précédent réalisé également pour les autres modules (arbitrages, instruction et édition)
-- X_FAIT_X : Dans le module "instruction" prévoir un message si une ligne est saisie à l'identique.
-- X_FAIT_MAIS_A_TESTER_X : TRèS IMPORTANT : Modifier l'adresse serveur dans les mails (si possible applicable généralement sans intervention à chaque instanciation).
-- X_FAIT_X : IMPORTANT : Mise en forme conditionnelle (rouge) dans les formulaires d'édition.
-- X_FAIT_X : Features sous forme de boutons au lieu du menu déroulant.
-- X_FAIT_X : Par contre la demande d'Emma et de Noélie d'utiliser 1 au lieu de 0 pour la première ligne ne tient pas puisque ensuite on est amené à intercaler (noté ici pour mémoire) (à moins que ...)
-- X_FAIT_REMPLACE_PAR_MENU_EN_CONTEXTE_X : Intégrer un fil d'ariane.
-- X_IMPLIQUE_UN_USAGE_PROSCRIT_X : Contrôle empêchant l'ajout ou la suppression d'instructions quand on n'est plus autorisé à en faire ??(après envoi du mail notamment)
-- X_IMPLIQUE_UN_USAGE_PROSCRIT_X : Prévoir un message en cas de demande d'édition pour 999999999.
-- X_FAIT_X_ASTUCE_REGROUPEMENT_SOUS_999999999_X : Prévoir de pouvoir éditer les arbitrages de manière regroupée.
-- X_FAIT_X_CF_POINT_SUIVANT : Envoi direct du mail (ça paraît assez complexe ; le point suivant peut nous en dispenser)
-- X_FAIT_X : Instructions : Liste non limitée au tout début d'instruction + possibilité de filtrer : tout début, reliés, non reliés.
-- X_FAIT_X : Idem pour l'admin
-- X_PAS_A_MA_PORTEE_X : Remplacer rcr par intitulé bib dans les pages ranking (et peut-être ailleurs).
-- X_FAIT_X : home.html Diriger directement vers la bonne page lors de la validation (peut-être aussi à faire pour les retours aux listes, cf. plus bas)
-
-- Vérification et assainissement du code
-- Amélioration de l'ergonomie des pages (notamment la suppression d'une ligne d'instruction erronée, élargissement des zones de saisie, prévisualisation des réponses aux formulaires, visualisation plus immédiate dans d'autres cas etc.)
-- Contrôle des accès (sécurisation)
-- Contrôle des saisies faites dans les formulaires --> Routage vers des pages d'erreur ad hoc (création de celles-ci)
-- Internationalisation vraie
+Améliorations :
+--------------------------------------------------------------------------------------------------
+FAIT : Motifs d'exclusion paramétrables par le groupe "administrators". Objectif : Autonomie d'administration
+FAIT : Raccourcissement des urls (comme suggéré par Thomas Baguet)
+FAIT : Contrôles sur toutes les requêtes intempestives nuisibles.
+Login/logout (sur tous les templates ou plutôt seulement logout si l'usager est authentifié) ?
+--------------------------------------------------------------------------------------------------
+- Internationalisation (documentation incluse) : Anglais et allemand au moins (+ es, it si possible)
+- Lisibilité et assainissement du code
+- Ergonomie
 - Enrichissement des commentaires du code
-- Autres langues (anglais et éventuellement allemand)
-- Mise à jour des pages html selon html5 et css3
-- Documentation de l'application à peaufiner
-- Internationalisation de la documentation (anglais et éventuellement allemand)
-- Licence à préciser (?)
-- Examiner les points non résolus ci-dessous ou mal résolus et tâcher de les résoudre correctement
-- X_FAIT_X Edition des résultantes en pdf (avec ReportLab : https://docs.djangoproject.com/fr/2.0/howto/outputting-pdf/ ou sans doute bien plus simplement avec WeasyPrint : https://github.com/Kozea/WeasyPrint)
-- etc.
-- X_FAIT_X Faire les tests du prototype
-- X_FAIT_X Réviser la vue indicators
-- X_FAIT_X Cas particulier de l'admin dans les menus des .html
-- X_FAIT_X Mise en forme couleur à vérifier dans les .html qui en ont
-- Réviser la documentation quand les choses seront un peu stabilisées ... 
+- Documentation de l'application à mettre à jour, à peaufiner et à traduire (en, de, es, it)
+- Mise à jour du Readme
+- Licence ?
+--------------------------------------------------------------------------------------------------
 
-Idées pour faire connaître l'application à de potentiels intéressés :
-
-- Pour contribution à l'application par des développeurs --> github (anglais)
-
-- Pour les professionnels des bibliothèques :
-- ADBU Forum
-- ABES et arabesques ? Salon professionnel des Journées Abes : "Les démos des réseaux" ou "Les posters des réseaux" (voir programme des journées 2018, p. 8)
-- Code{4}lib et le journal https://journal.code4lib.org/call-for-submissions
-- Code2bib (équivalent francophone du précédent, mais beaucoup moins actif)
-- GitHub (déjà fait, bien indexer) et GitLab Unistra
-- Eucor (la revue n'existe plus)
-- Réseau LIBER
-- https://sourcesup.renater.fr/ (La forge Enseignement supérieur et Recherche ; plateforme web de gestion de projets à destination de l'Enseignement Supérieur et des laboratoires de Recherche Français)
-- Présentation lors de journées d'études, de rencontres professionelles ou dans le cadre de programmes de formation (Médial, enssib ...)
-
-(évidemment pas tout en même temps et même sans doute pas tout au bout du compte)

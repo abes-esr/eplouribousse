@@ -1,0 +1,58 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+
+        <div id="content">
+
+          <h1>Change language</h1>
+
+          <form action="/i18n/setlang/" method="post">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{% url 'home' %}" />
+
+              <select name="language">
+              {% for lang in LANGUAGES %}
+                  <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+              {% endfor %}
+              </select>
+
+              <input type="submit" />
+          </form>
+
+
+<p></p>
+
+        </div>
+
+        <div id="footer">
+
+            <p><a href="/dashboard">{% trans "Tableau de bord" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a> - <a href="/./accounts/login">{% trans "M'authentifier" %}</a> - <a href="/./admin/logout">{% trans "Me déconnecter" %}</a> - <a href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./admin">{% trans "Administration (réservé)" %}</a>]</p>
+
+        </div>
+
+        <div id="credits">
+
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
+		</div>
+
+    </body>
+
+</html>

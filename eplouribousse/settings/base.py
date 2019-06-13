@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'eplouribousse.urls'
@@ -115,16 +116,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-en'
+LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'Europe/Paris'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
+gettext = lambda x: x
+LANGUAGES = (
+   ('fr', gettext('Français')),
+   ('en', gettext('English')),
+   ('de', gettext('Deutsch')),
+)
+
 USE_TZ = True
 
+LOCALE_PATHS = (
+    'locale',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -145,4 +156,4 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-LOGIN_REDIRECT_URL = '/epl/home'
+LOGIN_REDIRECT_URL = '/'
