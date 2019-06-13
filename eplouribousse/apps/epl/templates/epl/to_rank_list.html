@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -15,14 +16,14 @@
 
     <body>
 
-      <h2>Ressources en attente du positionnement de votre bibliothèque ({{ name }}) : </h2>
+      <h2>{% trans "Ressources en attente du positionnement de votre bibliothèque" %} ({{ name }}) : </h2>
         <div id="content">
 
-      <p><b>Nombre de ressources concernées :</b> {{ size }}</p>
+      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
       <p></p>
-      <p>Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur.</p>
+      <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur" %}.</p>
 
-    <p>Pour vous positionner, cliquez sur le lien "Identifiant de la ressource".</p>
+    <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
       <ul>
 
@@ -30,9 +31,9 @@
 
              <HR>
        <p></p>
-          <li><b>Titre :</b> {{ elmt.title }}</li>
-          <li><b>Cote :</b> {{ elmt.cn }}</li>
-          <li><b>Identifiant de la ressource :</b> <a href="/./epl/ranking/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
 
 
        {% endfor %}
@@ -40,18 +41,18 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>Menu : </b><a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a> - <a href="/./epl/to_edit_list/{{ lid }}">Edition des résultantes</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
         </div>
 
         <div id="footer">
-            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
-        
+
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
-            
+
     </body>
 
 </html>

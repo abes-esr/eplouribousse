@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -15,30 +16,30 @@
 
 
     <body>
-		
-        <h1>Edition de la résultante pour ma bibliothèque ({{ name }})</h1>
+
+        <h1>{% trans "Edition de la résultante pour ma bibliothèque" %} ({{ name }})</h1>
 
 
         <div id="content">
 
-        <p><b>Titre :</b> {{ title|truncatewords:80 }}</p>
-        <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>Historique de la publication :</b> {{ publicationhistory }}</p>
+        <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
+        <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ publicationhistory }}</p>
 
 
-        <p><i>Les lignes impliquant votre bibliothèque sont mises en évidence.</i></p>
-        <p><b>Collection mère :</b><font color= #e74c3c > {{ mother }}</font></p>
+        <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence." %}</i></p>
+        <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mother }}</font></p>
           <table border="1">
 
 
              <thead>
-               <th>Ligne</th>
-               <th>Bibliothèque</th>
-               <th>Relié ?</th>
-               <th>Bibliothèque remédiée</th>
-               <th>Segment</th>
-               <th>Exception(s)</th>
-               <th>Elément(s) améliorable(s)</th>
+               <th>{% trans "Ligne" %}</th>
+               <th>{% trans "Bibliothèque" %}</th>
+               <th>{% trans "Relié ?" %}</th>
+               <th>{% trans "Bibliothèque remédiée" %}</th>
+               <th>{% trans "Segment" %}</th>
+               <th>{% trans "Exception(s)" %}</th>
+               <th>{% trans "Elément(s) améliorable(s)" %}</th>
 
              </thead>
 
@@ -73,20 +74,20 @@
         </div>
 
         <div id="menucontextuel">
-            <p><b>Menu contextuel :</b> <a href="/./epl/pdfgen/{{ sid }}/{{ lid }}">Export pdf</a> - <a href="/./epl/to_edit_list/{{ lid }}">Retour à la liste des ressources éditables</a></p>
+            <p><b>{% trans "Menu contextuel" %} :</b> <a href="/pdf/{{ sid }}/{{ lid }}">{% trans "Export pdf" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Retour à la liste des ressources éditables" %}</a></p>
         </div>
-        
+
         <div id="menugeneral">
-            <p><b>Menu général :</b> <a href="/./epl/to_rank_list/{{ lid }}">Positionnements</a> - <a href="/./epl/arbitration/{{ lid }}">Arbitrages</a> - <a href="/./epl/instrtodo/{{ lid }}">Instructions</a></p>
+            <p><b>{% trans "Menu général" %} :</b> <a href="/rklist/{{ lid }}">{% trans "Positionnements" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a></p>
         </div>
-        
+
         <div id="footer">
-            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
-        
+
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
 
     </body>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 
 <html>
@@ -15,29 +16,29 @@
 
     <body>
 
-      <h2>Suppression d'une ligne d'instruction pour ma bibliothèque ({{ library.name }}) : </h2>
+      <h2>{% trans "Suppression d'une ligne d'instruction pour ma bibliothèque" %} ({{ library.name }}) : </h2>
       <div id="content">
 
-        <p><b>Titre :</b> {{ ressource.title|truncatewords:80 }}</p>
-        <p><b>Identifiant de la ressource :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>Historique de la publication :</b> {{ ressource.pubhist }}</p>
+        <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
+        <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
       <p></p>
 
         {% for elmt in librarylist %}
             | {{ elmt.name }}
         {% endfor %}
-      <p><i></i>Les lignes en rouge ne peuvent plus être supprimées.</i></p>
+      <p><i></i>{% trans "Les lignes en rouge ne peuvent plus être supprimées." %}</i></p>
       <table border="1">
 
          <thead>
 
-             <th>Ligne</th>
-             <th>Bibliothèque</th>
-             <th>Relié ?</th>
-             <th>Bibliothèque remédiée</th>
-             <th>Segment</th>
-             <th>Exception(s)</th>
-             <th>Elément(s) améliorable(s)</th>
+             <th>{% trans "Ligne" %}</th>
+             <th>{% trans "Bibliothèque" %}</th>
+             <th>{% trans "Relié ?" %}</th>
+             <th>{% trans "Bibliothèque remédiée" %}</th>
+             <th>{% trans "Segment" %}</th>
+             <th>{% trans "Exception(s)" %}</th>
+             <th>{% trans "Elément(s) améliorable(s)" %}</th>
 
          </thead>
 
@@ -76,24 +77,24 @@
 
       <form method="post">{% csrf_token %}
 
-          <p>Vous ne pouvez supprimer une ligne que pour votre bibliothèque ({{ library.name }}) et pour la forme couramment instruite ({{ stage }})</p>
-          <p>n° de la ligne que vous souhaitez supprimer : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
-      <p>Attention : La suppression est définitive. Vérifiez bien avant de valider : <input type="submit" value="Valider"></p>
+          <p>{% trans "Vous ne pouvez supprimer une ligne que pour votre bibliothèque" %} ({{ library.name }}) {% trans "et pour la forme couramment instruite" %} ({{ stage }})</p>
+          <p>{% trans "n° de la ligne que vous souhaitez supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+      <p>{% trans "Attention : La suppression est définitive. Vérifiez bien avant de valider" %} : <input type="submit" value="{% trans "Valider" %}"></p>
       </form>
 
 
-        <p><a href="/./epl/addinstruction/{{ sid }}/{{ lid }}">Poursuivre l'instruction</a></p>
-        <p><a href="/./epl/endinstruction/{{ sid }}/{{ lid }}">J'ai fini pour la forme courante</a></p>
-    
+        <p><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></p>
+        <p><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a></p>
+
 </div>
 
         <div id="footer">
-            <p><a href="/./epl/home">Accueil</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">Manuel de l'utilisateur</a></p>
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
-        
+
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
-			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">A propos</a></p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
         </div>
 
     </body>
