@@ -49,7 +49,7 @@ class ItemRecord(models.Model):
     status = models.PositiveSmallIntegerField('status', default=0, null =False)
     # Number of checker control(s) i.e. instruction(s) --> used for selections (lists)
     # It informs on treatment stage :
-    # 0 : initial state, item can still be ranked (default value)
+    # 0 : initial state (default value)
     # 1 : all libraries have taken rank and the publication must be instructed (bound elements) in the lid identified library
     # 2 : bound elements completed in the lid identified library
     # 3 : not-bound elements must be instructed (bound elements) in the lid identified library
