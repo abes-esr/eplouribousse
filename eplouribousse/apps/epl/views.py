@@ -180,7 +180,8 @@ def addinstr(request, sid, lid):
                 return do
 
         else: # lid =="999999999"
-            if ItemRecord.objects.get(sid =sid, status =3):
+            if (len(list(ItemRecord.objects.get(sid =sid, status =3))) >=1) or \
+            (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2):
                 do = notintime(request, sid, lid)
                 return do
     except:
