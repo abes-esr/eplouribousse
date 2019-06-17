@@ -180,7 +180,10 @@ def addinstr(request, sid, lid):
                 return do
 
         else: # lid =="999999999"
-            if (len(list(ItemRecord.objects.get(sid =sid, status =3))) >=1) or \
+            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 and \
+            len(list(ItemRecord.objects.get(sid =sid, status =1))) ==1) or \
+            (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 and \
+            len(list(ItemRecord.objects.get(sid =sid, status =3))) ==1) or \
             (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2):
                 do = notintime(request, sid, lid)
                 return do
@@ -458,7 +461,7 @@ def endinstr(request, sid, lid):
                     send_mail(subject, message, exp, dest, fail_silently=True, )
 
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==2:
-                for e in ItemRecord.objects.filter(status =4):
+                for e in ItemRecord.objects.filter(sid =sid, status =4):
                     e.status = 5
                     e.save()
 
