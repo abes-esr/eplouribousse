@@ -6,6 +6,8 @@ from .models import *
 
 from .forms import *
 
+from .excluchoices import EXCLUSION_CHOICES
+
 from django.core.mail import send_mail
 
 from django.db.models.functions import Now
@@ -756,6 +758,31 @@ def indicators(request):
     #Number of exclusions :
     exclus = len(ItemRecord.objects.filter(rank =0))
 
+    #Exclusions details
+    dict ={}
+    for e in EXCLUSION_CHOICES:
+        exclusion =str(e[0])
+        value =len(ItemRecord.objects.filter(excl =e[0]))
+        dict[exclusion] =value
+
+    #Collections involved in arbitration for claiming 1st rank and number of serials concerned
+    c1st, s1st =0,0
+    for i in ItemRecord.objects.filter(rank =1, status =0):
+        if len(ItemRecord.objects.filter(sid =i.sid)) >1:
+            c1st +=1
+            s1st +=1/len(ItemRecord.objects.filter(sid =i.sid))
+
+    #Collections involved in arbitration for 1st rank not claimed by any of the libraries
+    cnone, snone =0,0
+    for i in ItemRecord.objects.filter(status =0).exclude(rank =1):
+        if len(ItemRecord.objects.filter(sid =i.sid)) ==len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =99)):
+            cnone +=1
+            snone +=1/len(ItemRecord.objects.filter(sid =i.sid))
+
+    #Collections involved in arbitration for any of the two reasons and number of serials concerned
+    ctotal = c1st + cnone
+    stotal = s1st + snone
+
     #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
 
@@ -779,7 +806,8 @@ def indicators(request):
 
     return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
     rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaymeg' : notbdmaymeg, 'fullinstr' : fullinstr, \
-    'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, })
+    'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
+    's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, })
 
 def home(request):
 
