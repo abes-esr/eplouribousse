@@ -31,16 +31,49 @@
    <tbody>
 
     <tr>
-         <td>{% trans "Positionnement, exclusions incluses" %}</td>
+         <td>{% trans "Collections positionnées (exclusions incluses)" %}</td>
          <td><center>{{ rkall }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Positionnement (hors exclusions)" %}</td>
+         <td>{% trans "Collections positionnées (hors exclusions)" %}</td>
          <td><center>{{ rkright }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Exclusions" %}</td>
+         <td>{% trans "Collections exclues" %}</td>
          <td><center>{{ exclus }}</center></td>
+    </tr>
+
+
+    {% for e, v in dict.items %}
+         <tr>
+         <td>{% trans "dont : " %}{% trans e %}</td>
+         <td><center>{{ v }}</center></td>
+         </tr>
+    {% endfor %}</p>
+
+    <tr>
+         <td>{% trans "Collections impliquées dans un arbitrage quelconque" %}</td>
+         <td><center>{{ ctotal }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources impliquées dans un arbitrage quelconque" %}</td>
+         <td><center>{{ stotal }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Collections impliquées dans un arbitrage de 1ère place" %}</td>
+         <td><center>{{ c1st }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources impliquées dans un arbitrage de 1ère place" %}</td>
+         <td><center>{{ s1st }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Collections impliquées dans un arbitrage faute de 1ère place" %}</td>
+         <td><center>{{ cnone }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources impliquées dans un arbitrage faute de 1ère place" %}</td>
+         <td><center>{{ snone }}</center></td>
     </tr>
     <tr>
          <td>{% trans "Ressources dont l'instruction des éléments reliés peut débuter" %}</td>
