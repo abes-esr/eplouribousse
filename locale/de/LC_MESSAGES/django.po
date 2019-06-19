@@ -47,8 +47,6 @@ msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Anomalie (Der Datenbankadministrator wird informiert)"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:21
-#, fuzzy
-#| msgid "Ajouter une nouvelle ligne d'instruction pour ma bibliothèque"
 msgid "Ajouter une nouvelle ligne d'instruction pour"
 msgstr "Fügen Sie eine neue Anweisungszeile hinzu für"
 
@@ -82,8 +80,6 @@ msgstr "Titel"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:23
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:36
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:36
-#, fuzzy
-#| msgid "Titre de la ressource"
 msgid "Identifiant de la ressource"
 msgstr "Zeitschrift ID"
 
@@ -125,8 +121,6 @@ msgstr "Bibliothek"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:37
 #: eplouribousse/apps/epl/templates/epl/edition.html:38
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:40
-#, fuzzy
-#| msgid "relié ?"
 msgid "Relié ?"
 msgstr "verbunden ?"
 
@@ -135,8 +129,6 @@ msgstr "verbunden ?"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:38
 #: eplouribousse/apps/epl/templates/epl/edition.html:39
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:41
-#, fuzzy
-#| msgid "Bibliothèque"
 msgid "Bibliothèque remédiée"
 msgstr "Verbesserte Sammlung"
 
@@ -145,8 +137,6 @@ msgstr "Verbesserte Sammlung"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:39
 #: eplouribousse/apps/epl/templates/epl/edition.html:40
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:42
-#, fuzzy
-#| msgid "segment"
 msgid "Segment"
 msgstr "Segment"
 
@@ -155,8 +145,6 @@ msgstr "Segment"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:40
 #: eplouribousse/apps/epl/templates/epl/edition.html:41
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:43
-#, fuzzy
-#| msgid "exception"
 msgid "Exception(s)"
 msgstr "Ausnahme(n)"
 
@@ -165,8 +153,6 @@ msgstr "Ausnahme(n)"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:41
 #: eplouribousse/apps/epl/templates/epl/edition.html:42
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:44
-#, fuzzy
-#| msgid "améliorable"
 msgid "Elément(s) améliorable(s)"
 msgstr "erweiterbar"
 
@@ -337,8 +323,6 @@ msgstr "Menü"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
-#, fuzzy
-#| msgid "1. Positionnement"
 msgid "Positionnements"
 msgstr "Rang nehmen"
 
@@ -349,8 +333,6 @@ msgstr "Rang nehmen"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
-#, fuzzy
-#| msgid "3. Instruction"
 msgid "Instructions"
 msgstr "Ausfüllen"
 
@@ -363,14 +345,10 @@ msgstr "Ausfüllen"
 #: eplouribousse/apps/epl/templates/epl/notintime.html:39
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
-#, fuzzy
-#| msgid "4. Résultantes"
 msgid "Edition des résultantes"
 msgstr "Vollständige Aufzeichnungen"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:19
-#, fuzzy
-#| msgid "Suppression d'une ligne d'instruction pour ma bibliothèque"
 msgid "Suppression d'une ligne d'instruction pour"
 msgstr "Eine Anweisungszeile löschen für"
 
@@ -379,8 +357,6 @@ msgid "Les lignes en rouge ne peuvent plus être supprimées."
 msgstr "Rote Zeilen können nicht mehr gelöscht werden"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:80
-#, fuzzy
-#| msgid "Vous ne pouvez supprimer une ligne que pour votre bibliothèque"
 msgid "Vous ne pouvez supprimer une ligne que pour"
 msgstr "Sie können nur Zeilen löschen für"
 
@@ -403,8 +379,6 @@ msgid "Poursuivre l'instruction"
 msgstr "Setzen Sie die Anweisung fort"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:20
-#, fuzzy
-#| msgid "4. Résultantes"
 msgid "Edition de la résultante pour"
 msgstr "Vollständige Aufzeichnungen"
 
@@ -449,8 +423,6 @@ msgstr "Allgemeines Menü"
 #: eplouribousse/apps/epl/templates/epl/notintime.html:39
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
-#, fuzzy
-#| msgid "2. Arbitrages"
 msgid "Arbitrages"
 msgstr "Schiedsverfahren"
 
@@ -475,8 +447,6 @@ msgid "Je confirme que j'ai fini pour la forme courante"
 msgstr "Ich bestätige, dass ich mit der aktuellen Form fertig bin"
 
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:91
-#, fuzzy
-#| msgid "N'oubliez pas de cocher avant de valider :"
 msgid "Vérifiez bien avant de valider"
 msgstr "Vergessen Sie nicht zu überprüfen"
 
@@ -540,20 +510,14 @@ msgid "Valeur"
 msgstr "Anzahl"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:34
-#, fuzzy
-#| msgid "Positionnement, exclusions incluses"
 msgid "Collections positionnées (exclusions incluses)"
 msgstr "Rang genommen (inkl. Ausnahmen)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:38
-#, fuzzy
-#| msgid "Positionnement (hors exclusions)"
 msgid "Collections positionnées (hors exclusions)"
 msgstr "Rang genommen (Ausnahmen ausgenommen)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:42
-#, fuzzy
-#| msgid "Collection mère"
 msgid "Collections exclues"
 msgstr "Mutter Sammlung"
 
@@ -638,8 +602,6 @@ msgstr "Verwenden Sie Ihren Webbrowser, um ein Begriff zu finden"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-#, fuzzy
-#| msgid "3. Instruction"
 msgid "Menu [instructions]"
 msgstr "Ausfüllen Menü"
 
@@ -647,8 +609,6 @@ msgstr "Ausfüllen Menü"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:47
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:46
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:48
-#, fuzzy
-#| msgid "reliés"
 msgid "reliés rang 1"
 msgstr "verbundene Form, rang 1"
 
@@ -710,8 +670,6 @@ msgid "forme non reliée, rang autre que le premier"
 msgstr "Nicht verbundene Form, nicht rang 1"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:19
-#, fuzzy
-#| msgid "Tentative d'intervention hors délai pour la bibliothèque"
 msgid "Tentative d'intervention hors délai pour "
 msgstr "Ausser-Zeit Eingriff für "
 
@@ -750,8 +708,6 @@ msgid "ressources éditables"
 msgstr "erschienbar"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:19
-#, fuzzy
-#| msgid "Choisissez votre bibliothèque"
 msgid "Positionnez la collection de "
 msgstr "Nehmen Sie Rang für die Sammlung von"
 
@@ -773,8 +729,6 @@ msgstr ""
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:38
 #: eplouribousse/apps/epl/templates/epl/ranking.html:47
-#, fuzzy
-#| msgid "Titre de la ressource"
 msgid "Identifiant de la bibliothèque"
 msgstr "Bibliothek ID"
 
@@ -843,20 +797,14 @@ msgid "Retour à la liste actualisée des arbitrages"
 msgstr "Zurück zum Schiedsverfahren"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
-#, fuzzy
-#| msgid "ressources éditables"
 msgid "Ressources éditables pour"
-msgstr "erschienbar"
+msgstr "erschienbar für"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:26
-#, fuzzy
-#| msgid "Titre de la ressource"
 msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
 msgstr "zum Bearbeiten,klicken Sie auf den Link [Zeitschrift ID]"
 
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:19
-#, fuzzy
-#| msgid "Ressources en attente du positionnement de votre bibliothèque"
 msgid "Ressources en attente du positionnement de la collection de "
 msgstr "Zeitschriften, die auf die Positionierung warten für "
 
@@ -938,15 +886,11 @@ msgstr "erweiterbar"
 
 #: eplouribousse/apps/epl/views.py:221 eplouribousse/apps/epl/views.py:314
 #: eplouribousse/apps/epl/views.py:402
-#, fuzzy
-#| msgid "non reliés"
 msgid "éléments reliés"
 msgstr "verbundene elemente"
 
 #: eplouribousse/apps/epl/views.py:223 eplouribousse/apps/epl/views.py:318
 #: eplouribousse/apps/epl/views.py:406
-#, fuzzy
-#| msgid "ni relié, ni non reliés"
 msgid "éléments non reliés"
 msgstr "Nicht verbundene elemente"
 
@@ -955,8 +899,6 @@ msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
 #: eplouribousse/apps/epl/views.py:322 eplouribousse/apps/epl/views.py:410
-#, fuzzy
-#| msgid "XXXXX (instructions terminées)"
 msgid "instructions terminées"
 msgstr "XXXXX (Ausfüllung schon fertig)"
 

@@ -47,8 +47,6 @@ msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Something is wrong (The database admin will be informed)"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:21
-#, fuzzy
-#| msgid "Ajouter une nouvelle ligne d'instruction pour ma bibliothèque"
 msgid "Ajouter une nouvelle ligne d'instruction pour"
 msgstr "Add a new row for"
 
@@ -349,8 +347,6 @@ msgid "Edition des résultantes"
 msgstr "Edition"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:19
-#, fuzzy
-#| msgid "Suppression d'une ligne d'instruction pour ma bibliothèque"
 msgid "Suppression d'une ligne d'instruction pour"
 msgstr "Delete a row for"
 
@@ -359,8 +355,6 @@ msgid "Les lignes en rouge ne peuvent plus être supprimées."
 msgstr "Red rows may not be deleted"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:80
-#, fuzzy
-#| msgid "Vous ne pouvez supprimer une ligne que pour votre bibliothèque"
 msgid "Vous ne pouvez supprimer une ligne que pour"
 msgstr "You're allowed to delete only rows for"
 
@@ -382,8 +376,6 @@ msgid "Poursuivre l'instruction"
 msgstr "Resume instruction"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:20
-#, fuzzy
-#| msgid "Edition des résultantes"
 msgid "Edition de la résultante pour"
 msgstr "Edition for"
 
@@ -513,20 +505,14 @@ msgid "Valeur"
 msgstr "Value"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:34
-#, fuzzy
-#| msgid "Positionnement, exclusions incluses"
 msgid "Collections positionnées (exclusions incluses)"
 msgstr "Ranking (exclusion included)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:38
-#, fuzzy
-#| msgid "Positionnement (hors exclusions)"
 msgid "Collections positionnées (hors exclusions)"
 msgstr "Ranking (exclusion excluded)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:42
-#, fuzzy
-#| msgid "Collection mère"
 msgid "Collections exclues"
 msgstr "Mother collection"
 
@@ -677,8 +663,6 @@ msgid "forme non reliée, rang autre que le premier"
 msgstr "not bound shape, not 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:19
-#, fuzzy
-#| msgid "Tentative d'intervention hors délai pour la bibliothèque"
 msgid "Tentative d'intervention hors délai pour "
 msgstr "Out of time feature for "
 
@@ -717,8 +701,6 @@ msgid "ressources éditables"
 msgstr "editable serials"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:19
-#, fuzzy
-#| msgid "Positionnez la collection de votre bibliothèque"
 msgid "Positionnez la collection de "
 msgstr "Rank the collection for "
 
@@ -802,8 +784,6 @@ msgid "Retour à la liste actualisée des arbitrages"
 msgstr "Back to arbitration list"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
-#, fuzzy
-#| msgid "ressources éditables"
 msgid "Ressources éditables pour"
 msgstr "editable serials"
 
@@ -812,8 +792,6 @@ msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
 msgstr "Click on [Serial id] link to edit"
 
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:19
-#, fuzzy
-#| msgid "Ressources en attente du positionnement de votre bibliothèque"
 msgid "Ressources en attente du positionnement de la collection de "
 msgstr "To be ranked by "
 
