@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Suppression d'une ligne d'instruction pour ma bibliothèque" %} ({{ library.name }}) : </h2>
+      <h2>{% trans "Suppression d'une ligne d'instruction pour" %} {{ library.name }} : </h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
@@ -77,7 +77,7 @@
 
       <form method="post">{% csrf_token %}
 
-          <p>{% trans "Vous ne pouvez supprimer une ligne que pour votre bibliothèque" %} ({{ library.name }}) {% trans "et pour la forme couramment instruite" %} ({{ stage }})</p>
+          <p>{% trans "Vous ne pouvez supprimer une ligne que pour" %} {{ library.name }} {% trans "et pour la forme couramment instruite" %} ({{ stage }})</p>
           <p>{% trans "n° de la ligne que vous souhaitez supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
       <p>{% trans "Attention : La suppression est définitive. Vérifiez bien avant de valider" %} : <input type="submit" value="{% trans "Valider" %}"></p>
       </form>

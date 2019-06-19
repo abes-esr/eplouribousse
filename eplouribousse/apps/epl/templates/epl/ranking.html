@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Positionnez la collection de votre bibliothèque" %} ({{ library.name }}) {% trans "pour la ressource suivante" %} :</h2>
+      <h2>{% trans "Positionnez la collection de " %} {{ library.name }} {% trans "pour la ressource suivante" %} :</h2>
         <div id="content">
 
       <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
