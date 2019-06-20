@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Tentative d'intervention hors délai pour " %} {{ library }} : </h2>
+      <h2>{% trans "Tentative d'intervention hors délai" %} ({{ library }}) : </h2>
         <div id="content">
 
       <p></p>
@@ -25,18 +25,18 @@
       <p>{% trans "Vous avez été redirigé ici pour l'une des raisons suivantes" %} : </p>
       <ul>
 
-          <li>- {% trans "Le positionnement n'est plus possible (les instructions ont déjà commencé ou la ressource n'est plus candidate" %})</li>
+          <li>- {% trans "Le positionnement n'est plus possible %} ({% trans "Les instructions ont déjà commencé ou la ressource n'est plus candidate" %})</li>
           <li>- {% trans "Ce n'est pas à votre tour d'instruire la fiche" %}.</li>
           <li>- {% trans "La fiche n'est pas encore éditable" %}.</li>
           <li>- {% trans "La fiche est déjà complètement instruite et ne peut plus être modifiée" %}.</li>
 
 
       </ul>
-      <p>({% trans "Dans ce dernier cas, la ressource doit apparaître dans votre liste des" %} <a href="/edlist/{{ lid }}">{% trans "ressources éditables" %}</a>)</p>
+      <p>({% trans "Dans ce dernier cas, voir : " %} <a href="/edlist/{{ lid }}">{% trans "ressources éditables" %}</a>)</p>
 
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
 
         <div id="footer">

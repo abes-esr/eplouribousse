@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Positionnez la collection de " %} {{ library.name }} {% trans "pour la ressource suivante" %} :</h2>
+      <h2>{% trans "Positionnement" %} ({{ library.name }})</h2>
         <div id="content">
 
       <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
@@ -25,7 +25,7 @@
       <p></p>
       {% if flag == 0 %}
 
-      <p><i>{% trans "Rattachements ; celui de votre bibliothèque apparaît en rouge" %} :</i></p>
+      <p><i>{% trans "Votre rattachements apparaît en rouge" %} :</i></p>
       <p>({% trans "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci correspond)" %})</p>
 
       <ul>
@@ -39,7 +39,7 @@
               <li><b>{% trans "Etat de collection" %} :</b> {{ elmt.holdstat }}</li>
               <li><b>{% trans "Lacunes" %} :</b> {{ elmt.missing }}</li>
               <li><b>{% trans "Rang courant" %} :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li><b>{% trans "Exclusion ?" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
+              <li><b>{% trans "Exclusion" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
              </font>
           {% else %}
                 <HR>
@@ -48,7 +48,7 @@
               <li><b>{% trans "Etat de collection" %} :</b> {{ elmt.holdstat }}</li>
               <li><b>{% trans "Lacunes" %} :</b> {{ elmt.missing }}</li>
               <li><b>{% trans "Rang courant" %} :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li><b>{% trans "Exclusion ?" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
+              <li><b>{% trans "Exclusion" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
           {% endif %}
       {% endfor %}
 
@@ -57,16 +57,16 @@
       <HR>
 
       <form method="post">
-      <p>{% trans "Le cas échéant, choisissez le motif d'exclusion" %} : {{ form.excl }}</p>
-      <p>{% trans "Sinon, prenez rang en tenant compte des états de collections ou d'autres prescriptions" %} : {{ form.rank }}</p>
-      <p>{% trans "Choisissez 1 si votre collection est celle à laquelle s'agrégeront d'autres éléments qui viendront l'enrichir, sinon 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}</p>
+      <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ form.excl }}</p>
+      <p>{% trans "Sinon, rang de votre collection" %} : {{ form.rank }}</p>
+      <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}</p>
       <p>{% trans "Commentaire (max. 250 caractères.)" %} : </p>
       <p>{{ form.comm }}</p>
       {% csrf_token %}
       <input type="Submit" value="{% trans "Valider" %}">
       </form>
       {% elif flag == 1 %}
-      <p><B><font color= #e74c3c >{% trans "Il n'est plus possible de modifier votre positionnement (l'instruction de la résultante peut déjà être engagée)" %}.</font></B></p>
+      <p><B><font color= #e74c3c >{% trans "Il n'est plus possible de modifier votre positionnement" %}.</font></B></p>
       {% endif %}
 
         </div>
@@ -74,12 +74,12 @@
 
         <div id="menucontextuel">
 
-        <p><b>{% trans "Menu contextuel" %} : </b><a href="/rklist/{{ library.lid }}">{% trans "Retour à la liste actualisée des positionnements" %}</a> - <a href="/arb/{{ library.lid }}">{% trans "Retour à la liste actualisée des arbitrages" %}</a></p>
+        <p><b>{% trans "Menu contextuel" %} : </b><a href="/rklist/{{ library.lid }}">{% trans "Positionnements" %}</a> - <a href="/arb/{{ library.lid }}">{% trans "Arbitrages" %}</a></p>
         </div>
 
         <div id="menugeneral">
 
-        <p><b>{% trans "Menu général" %} : </b><a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
+        <p><b>{% trans "Menu général" %} : </b><a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
 
 

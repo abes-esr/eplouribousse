@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Ressources en attente du positionnement de la collection de " %} {{ name }} : </h2>
+      <h2>{% trans "Ressources en attente du positionnement" %} ; collection : {{ name }}</h2>
         <div id="content">
 
       <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
@@ -41,7 +41,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
 
         <div id="footer">

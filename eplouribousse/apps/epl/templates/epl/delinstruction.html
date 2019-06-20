@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Suppression d'une ligne d'instruction pour" %} {{ library.name }} : </h2>
+      <h2>{% trans "Suppression d'une ligne" %} (){{ library.name }}) : </h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
@@ -27,18 +27,18 @@
         {% for elmt in librarylist %}
             | {{ elmt.name }}
         {% endfor %}
-      <p><i></i>{% trans "Les lignes en rouge ne peuvent plus être supprimées." %}</i></p>
+      <p><i></i>{% trans "Les lignes en rouge ne peuvent plus être supprimées" %}</i></p>
       <table border="1">
 
          <thead>
 
              <th>{% trans "Ligne" %}</th>
              <th>{% trans "Bibliothèque" %}</th>
-             <th>{% trans "Relié ?" %}</th>
+             <th>{% trans "Forme reliée" %}</th>
              <th>{% trans "Bibliothèque remédiée" %}</th>
              <th>{% trans "Segment" %}</th>
-             <th>{% trans "Exception(s)" %}</th>
-             <th>{% trans "Elément(s) améliorable(s)" %}</th>
+             <th>{% trans "Exceptions" %}</th>
+             <th>{% trans "Eléments améliorables" %}</th>
 
          </thead>
 
@@ -76,10 +76,8 @@
 
 
       <form method="post">{% csrf_token %}
-
-          <p>{% trans "Vous ne pouvez supprimer une ligne que pour" %} {{ library.name }} {% trans "et pour la forme couramment instruite" %} ({{ stage }})</p>
-          <p>{% trans "n° de la ligne que vous souhaitez supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
-      <p>{% trans "Attention : La suppression est définitive. Vérifiez bien avant de valider" %} : <input type="submit" value="{% trans "Valider" %}"></p>
+          <p>{% trans "Ligne à supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+          <p><input type="submit" value="{% trans "Valider" %}"></p>
       </form>
 
 

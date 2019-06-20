@@ -17,7 +17,7 @@
 
     <body>
 
-        <h1>{% trans "Edition de la résultante pour" %} {{ name }}</h1>
+        <h1>{% trans "Edition" %} (){{ name }})</h1>
 
 
         <div id="content">
@@ -27,7 +27,7 @@
           {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ publicationhistory }}</p>
 
 
-        <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence." %}</i></p>
+        <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}</i></p>
         <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mother }}</font></p>
           <table border="1">
 
@@ -35,11 +35,11 @@
              <thead>
                <th>{% trans "Ligne" %}</th>
                <th>{% trans "Bibliothèque" %}</th>
-               <th>{% trans "Relié ?" %}</th>
+               <th>{% trans "Forme reliée" %}</th>
                <th>{% trans "Bibliothèque remédiée" %}</th>
                <th>{% trans "Segment" %}</th>
-               <th>{% trans "Exception(s)" %}</th>
-               <th>{% trans "Elément(s) améliorable(s)" %}</th>
+               <th>{% trans "Exceptions" %}</th>
+               <th>{% trans "Eléments améliorables" %}</th>
 
              </thead>
 

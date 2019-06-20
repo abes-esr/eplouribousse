@@ -17,14 +17,14 @@
 
     <body>
 
-      <h2>{% trans "Confirmer pour ma part" %} ({{ library.name }}) {% trans "la fin des instructions pour la forme considérée" %} ({{ stage }}) : </h2>
+      <h2>{{ library.name }} {% trans "Fin des instructions pour la forme considérée" %} ({{ stage }})</h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
         <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
           {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
         {% if lid != '999999999' %}
-      <p><i>{% trans "Les dernières lignes validées par votre bibliothèque pour la forme considérée sont mises en évidence." %}</i></p>
+      <p><i>{% trans "Les dernières lignes validées sont mises en évidence" %}</i></p>
         {% endif %}
 
         {% for elmt in librarylist %}
@@ -37,11 +37,11 @@
 
              <th>{% trans "Ligne" %}</th>
              <th>{% trans "Bibliothèque" %}</th>
-             <th>{% trans "Relié ?" %}</th>
+             <th>{% trans "Forme reliée" %}</th>
              <th>{% trans "Bibliothèque remédiée" %}</th>
              <th>{% trans "Segment" %}</th>
-             <th>{% trans "Exception(s)" %}</th>
-             <th>{% trans "Elément(s) améliorable(s)" %}</th>
+             <th>{% trans "Exceptions" %}</th>
+             <th>{% trans "Eléments améliorables" %}</th>
 
          </thead>
 
@@ -87,13 +87,13 @@
         {% else %}
           <form method="post">{% csrf_token %}
           <div>
-          <p>{% trans "Je confirme que j'ai fini pour la forme courante" %} :  {{ checkform.flag }}</p>
+          <p>{% trans "J'ai fini pour la forme courante" %} :  {{ checkform.flag }}</p>
           <p>{% trans "Vérifiez bien avant de valider" %}.</p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
           </form>
-            <p><a href="/add/{{ sid }}/{{ lid }}">{% trans "Revenir à l'instruction" %}</a>
-            <p><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></p>
+            <p><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a>
+            <p><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne" %}</a></p>
         {% endif %}
 </div>
         <div id="footer">

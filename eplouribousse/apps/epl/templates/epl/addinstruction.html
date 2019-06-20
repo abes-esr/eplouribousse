@@ -18,17 +18,14 @@
 
     <body>
 
-      <h2>{% trans "Ajouter une nouvelle ligne d'instruction pour" %} {{ library.name }} :</h2>
+      <h2>{% trans "Instruction" %} ({{ library.name }}, {% trans "forme courante" %} : {{ stage }})) :</h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
           {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / {% trans "Ordre de traitement" %} :
             {% for elmt in librarylist %}
                 {{ elmt.name }} |
-            {% endfor %} {% trans "(Autre(s) bibliothèque(s) rattachée(s)" %} :
-            {% for elmt in remedied_lib_list %}
-                <font color= #3498db >{{ elmt.name }},</font>
-            {% endfor %})</p>
+            {% endfor %}
 
 
       <table border="1">
@@ -37,11 +34,11 @@
 
              <th>{% trans "Ligne" %}</th>
              <th>{% trans "Bibliothèque" %}</th>
-             <th>{% trans "Relié ?" %}</th>
+             <th>{% trans "Forme reliée" %}</th>
              <th>{% trans "Bibliothèque remédiée" %}</th>
              <th>{% trans "Segment" %}</th>
-             <th>{% trans "Exception(s)" %}</th>
-             <th>{% trans "Elément(s) améliorable(s)" %}</th>
+             <th>{% trans "Exceptions" %}</th>
+             <th>{% trans "Eléments améliorables" %}</th>
 
          </thead>
 
@@ -75,8 +72,9 @@
 
 
       </table>
-      <p>{% trans "La dernière ligne validée est mise en évidence (Cycle courant :" %} {{ stage }}) - <a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a> ({% trans "Vous pourrez continuer ensuite" %})</p>
-      <p>{% trans "[Segment] = Suite ininterrompue chronologiquement - [Exception(s)] = élément(s) manquant dans le segment pour la forme considérée." %}</p>
+
+      <p>{% trans "La dernière ligne validée est mise en évidence" %} - <a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a> ({% trans "Vous pourrez continuer ensuite" %})</p>
+      <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}</p>
       <p><a href="/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></p>
 
         <form method="post">{% csrf_token %}
@@ -87,11 +85,11 @@
 
              <td>{% trans "Sous la ligne" %}</td>
              <td>{% trans "Bibliothèque" %}</td>
-             <td>{% trans "Relié ?" %}</td>
+             <td>{% trans "Forme reliée" %}</td>
              <td>{% trans "Bibliothèque remédiée" %}</td>
              <td>{% trans "Segment" %}</td>
-             <td>{% trans "Exception(s)" %}</td>
-             <td>{% trans "Elément(s) améliorable(s)" %}</td>
+             <td>{% trans "Exceptions" %}</td>
+             <td>{% trans "Eléments améliorables" %}</td>
 
          </thead>
 

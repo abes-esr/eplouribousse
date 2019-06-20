@@ -16,10 +16,8 @@
 
     <body>
 
-      <h2>{% trans "Ressources dont le statut [à arbitrer] pourrait être levé par un repositionnement" %} ({{ name }}) : </h2>
+      <h2>{% trans "Arbitrages" %} ({{ name }}) : </h2>
       <div id="content">
-
-      <p>{% trans "(Ressources [à arbitrer] : Rang 1 revendiqué par plusieurs bibliothèques ou par aucune)" %}</p>
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
 
@@ -44,7 +42,7 @@
 
         <div id="menugeneral">
 
-            <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnements" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition des résultantes" %}</a></p>
+            <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnements" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
 
         </div>
 
