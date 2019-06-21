@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Suppression d'une ligne" %} (){{ library.name }}) : </h2>
+      <h2>{{ library.name }} - {% trans "Suppression d'une ligne" %}</h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>

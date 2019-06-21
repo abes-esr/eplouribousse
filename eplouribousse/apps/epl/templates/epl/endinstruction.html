@@ -17,7 +17,7 @@
 
     <body>
 
-      <h2>{{ library.name }} {% trans "Fin des instructions pour la forme considérée" %} ({{ stage }})</h2>
+      <h2>{{ library.name }} - {% trans "Fin des instructions" %} - {{ stage }}</h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>

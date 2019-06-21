@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Arbitrages" %} ({{ name }}) : </h2>
+      <h2>{{ name }} - {% trans "Arbitrages" %}</h2>
       <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
@@ -42,7 +42,7 @@
 
         <div id="menugeneral">
 
-            <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnements" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+            <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
 
         </div>
 

@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Positionnement" %} ({{ library.name }})</h2>
+      <h2>{{ library.name }} - {% trans "Positionnement" %}</h2>
         <div id="content">
 
       <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
@@ -74,12 +74,12 @@
 
         <div id="menucontextuel">
 
-        <p><b>{% trans "Menu contextuel" %} : </b><a href="/rklist/{{ library.lid }}">{% trans "Positionnements" %}</a> - <a href="/arb/{{ library.lid }}">{% trans "Arbitrages" %}</a></p>
+        <p><b>{% trans "Menu contextuel" %} : </b><a href="/rklist/{{ library.lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ library.lid }}">{% trans "Arbitrages" %}</a></p>
         </div>
 
         <div id="menugeneral">
 
-        <p><b>{% trans "Menu général" %} : </b><a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+        <p><b>{% trans "Menu général" %} : </b><a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
 
 

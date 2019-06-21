@@ -515,6 +515,7 @@ def endinstr(request, sid, lid):
                 if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
+                    nextlib = Library.objects.get(lid =nextlid)
                     j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
                     if j.status !=4:
                         j.status, k.status = 4, 3
@@ -564,11 +565,11 @@ def instrtodo(request, lid):
         l = []
 
         for e in ItemRecord.objects.filter(status =2, rank =1):
-            if (len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0))) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
+            if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
                 l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
 
         for e in ItemRecord.objects.filter(status =4, rank =1):
-            if (len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0))) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
+            if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
                 l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
 
     size = len(l)

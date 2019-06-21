@@ -16,7 +16,7 @@
 
     <body>
 
-      <h2>{% trans "Ressources éditables" %} ({{ name }}) : </h2>
+      <h2>{{ name }} - {% trans "ressources éditables" %}</h2>
         <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
@@ -41,7 +41,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnements" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a></p>
         </div>
 
         <div id="footer">
