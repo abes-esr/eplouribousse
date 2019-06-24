@@ -67,7 +67,7 @@ def pdfedition(request, sid, lid):
     p.drawString(210, 700, mothercollection)
 
     data = [['#', _('bibliothèque'), _('relié ?'), _('bib. remédiée'), _('segment'), _('exception'), _('améliorable') ]]
-    Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1,repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
+    Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1, repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
     for i in instructions:
         data.append([i.line, i.name, i.bound, i.oname, i.descr, i.exc, i.degr])
     t=Table(data)
@@ -776,10 +776,17 @@ def indicators(request):
 
     #Collections involved in arbitration for 1st rank not claimed by any of the libraries
     cnone, snone =0,0
-    for i in ItemRecord.objects.filter(status =0).exclude(rank =1):
-        if len(ItemRecord.objects.filter(sid =i.sid)) ==len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =99)):
-            cnone +=1
-            snone +=1/len(ItemRecord.objects.filter(sid =i.sid))
+    for i in ItemRecord.objects.filter(status =0).exclude(rank =1).exclude(rank =99):
+        if len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0)):
+            # inone =0
+            if len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0)) \
+            ==len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0).exclude(rank =1).exclude(rank =99)):
+                cnone +=1
+                snone +=1/len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0))
+                # inone +=1/len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0))
+            cnone = cnone - len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0))
+    # cnone = cnone
+    # snone = snone - inone
 
     #Collections involved in arbitration for any of the two reasons and number of serials concerned
     ctotal = c1st + cnone
