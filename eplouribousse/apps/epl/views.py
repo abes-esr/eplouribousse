@@ -46,7 +46,7 @@ def pdfedition(request, sid, lid):
     otherinstructions = Instruction.objects.filter(sid =sid, oname =libname)
     libinstructions = properinstructions.union(otherinstructions).order_by('line')
     controlbd = Instruction.objects.get(sid =sid, bound ='x', name ='checker').descr
-    controlnotbd = Instruction.objects.get(sid =sid, bound =' ', name ='checker').descr
+    controlnotbd = Instruction.objects.get(sid =sid, bound ='', name ='checker').descr
     mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
     p.drawString(50, 780, _('Bibliothèque'))
@@ -769,9 +769,10 @@ def indicators(request):
     #Collections involved in arbitration for claiming 1st rank and number of serials concerned
     c1st, s1st =0,0
     for i in ItemRecord.objects.filter(rank =1, status =0):
-        if len(ItemRecord.objects.filter(sid =i.sid)) >1:
+        if len(ItemRecord.objects.filter(rank =1, sid =i.sid)) >1:
             c1st +=1
-            s1st +=1/len(ItemRecord.objects.filter(sid =i.sid))
+            s1st +=1/len(ItemRecord.objects.filter(rank =1, sid =i.sid))
+    s1st = int(s1st)
 
     #Collections involved in arbitration for 1st rank not claimed by any of the libraries
     cnone, snone =0,0

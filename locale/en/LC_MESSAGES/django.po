@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 10:24+0200\n"
+"POT-Creation-Date: 2019-06-24 08:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -333,7 +333,7 @@ msgstr "Ranking"
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
 #: eplouribousse/apps/epl/templates/epl/indicators.html:103
 msgid "Instructions"
-msgstr "Instruction"
+msgstr "Instructions"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:45
 #: eplouribousse/apps/epl/templates/epl/edition.html:20
@@ -467,7 +467,7 @@ msgstr "Ranking (exclusion excluded)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:42
 msgid "Collections exclues"
-msgstr "Mother collection"
+msgstr "Excluded collections"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:49
 msgid "dont : "
