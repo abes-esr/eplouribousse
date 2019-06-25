@@ -776,17 +776,14 @@ def indicators(request):
 
     #Collections involved in arbitration for 1st rank not claimed by any of the libraries
     cnone, snone =0,0
-    for i in ItemRecord.objects.filter(status =0).exclude(rank =1).exclude(rank =99):
-        if len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0)):
-            # inone =0
-            if len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0)) \
-            ==len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0).exclude(rank =1).exclude(rank =99)):
-                cnone +=1
-                snone +=1/len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0))
-                # inone +=1/len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0))
-            cnone = cnone - len(ItemRecord.objects.filter(status =0, sid =i.sid).exclude(rank =0))
-    # cnone = cnone
-    # snone = snone - inone
+    for i in ItemRecord.objects.exclude(rank =0).exclude(rank =1).exclude(rank =99):
+        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =1).\
+        exclude(rank =99)) >1 and len(ItemRecord.objects.filter(sid =i.sid)) ==\
+        len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =1).exclude(rank =99)):
+            cnone +=1
+            snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =1).\
+            exclude(rank =99))
+    snone = int(snone)
 
     #Collections involved in arbitration for any of the two reasons and number of serials concerned
     ctotal = c1st + cnone
