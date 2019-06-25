@@ -15,7 +15,8 @@ from django.db.models.functions import Now
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, inch
-from reportlab.platypus import Table, TableStyle
+from reportlab.platypus import Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
 
 from django.contrib.auth.decorators import login_required
 
@@ -65,6 +66,8 @@ def pdfedition(request, sid, lid):
     p.drawString(50, 700, _('Collection mère'))
     p.drawString(200, 700, ':')
     p.drawString(210, 700, mothercollection)
+
+    styles = getSampleStyleSheet()
 
     data = [['#', _('bibliothèque'), _('relié ?'), _('bib. remédiée'), _('segment'), _('exception'), _('améliorable') ]]
     Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1, repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
