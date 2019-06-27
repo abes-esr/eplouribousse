@@ -14,9 +14,11 @@ from django.db.models.functions import Now
 
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4, inch
-from reportlab.platypus import Table, TableStyle, Paragraph
+from reportlab.lib.pagesizes import A3, inch, cm
+from reportlab.lib.units import inch
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
+from django.core.files.storage import FileSystemStorage
 
 from django.contrib.auth.decorators import login_required
 
@@ -26,14 +28,13 @@ def lang(request):
     return render(request, 'epl/language.html', {})
 
 def pdfedition(request, sid, lid):
-    # Create the HttpResponse object with the appropriate PDF headers.
-    response = HttpResponse(content_type='application/pdf')
-    # response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
-    filename = sid + '_' + lid + '.pdf'
-    response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
 
-    # Create the PDF object, using the response object as its "file."
-    p = canvas.Canvas(response)
+    filename = sid + '_' + lid + '.pdf'
+    dirfile = "/tmp/" + filename
+
+    styles = getSampleStyleSheet()
+    doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=A3)
+    elements = []
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
@@ -50,51 +51,40 @@ def pdfedition(request, sid, lid):
     controlnotbd = Instruction.objects.get(sid =sid, bound ='', name ='checker').descr
     mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
-    p.drawString(50, 780, _('Bibliothèque'))
-    p.drawString(200, 780, ':')
-    p.drawString(210, 780, libname)
-    p.drawString(50, 760, _('Titre de la ressource'))
-    p.drawString(200, 760, ':')
-    p.drawString(210, 760, title)
-    p.drawString(50, 740, sid)
-    p.drawString(130, 740, _(' <--- ppn / issn ---> '))
-    p.drawString(250, 740, issn)
-    p.drawString(50, 720, _('Historique de la publication'))
-    p.drawString(200, 720, ':')
-    p.drawString(210, 720, pubhist)
-    p.setFillColorRGB(255,0,0)
-    p.drawString(50, 700, _('Collection mère'))
-    p.drawString(200, 700, ':')
-    p.drawString(210, 700, mothercollection)
-
-    styles = getSampleStyleSheet()
-
-    data = [['#', _('bibliothèque'), _('relié ?'), _('bib. remédiée'), _('segment'), _('exception'), _('améliorable') ]]
+    data = [["", _('bibliothèque'), _('issn'), _('ppn'), _('historique de la publication'), _('titre'), _('collection mère')],\
+    ["", libname, issn, sid, pubhist, title, mothercollection],\
+    ["", "", "", "", "", "", ""],\
+    ['#', _('bibliothèque'), _('relié ?'), _('bib. remédiée'), _('segment'), _('exception'), _('améliorable')]]
     Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1, repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
     for i in instructions:
-        data.append([i.line, i.name, i.bound, i.oname, i.descr, i.exc, i.degr])
+        data.append([i.line, i.name, i.bound, i.oname, i.descr, Paragraph(i.exc, styles['Normal']), Paragraph(i.degr, styles['Normal'])])
+
     t=Table(data)
-    table_style = TableStyle([('ALIGN', (0, 0), (6, 0), 'CENTER'),
-    ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-    ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-    ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),])
+
+    table_style = TableStyle([('ALIGN', (0, 0), (6, 0), 'LEFT'),
+    ('INNERGRID', (0,3), (-1,-1), 0.25, colors.black),
+    ('BOX', (0,3), (-1,-1), 0.25, colors.black),
+    ('VALIGN',(0,0),(-1,-1),'MIDDLE'),])
     k =1
     for i in libinstructions:
-        row = i.line
-        k +=1 #Number of rows
+        row = i.line + 3
+        k +=1 #row number
         table_style.add('TEXTCOLOR', (0, row ), (6, row), colors.red)
     table_style.add('ALIGN', (0, 0), (0, k), 'CENTER')
     table_style.add('ALIGN', (2, 0), (2, k), 'CENTER')
+    table_style.add('TEXTCOLOR', (6, 0), (6, 1), colors.blue)
 
     t.setStyle(table_style)
 
-    width, height = A4
-    t.wrapOn(p, width, height)
-    t.drawOn(p, 0.5*inch, 4.0*inch)
+    elements.append(t)
+    doc.build(elements)
 
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
+    fs = FileSystemStorage("/tmp")
+    with fs.open(filename) as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
+        return response
+
     return response
 
 
