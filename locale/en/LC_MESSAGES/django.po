@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-27 08:45+0200\n"
+"POT-Creation-Date: 2019-06-27 11:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -376,8 +376,8 @@ msgid "Menu contextuel"
 msgstr "Context menu"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
-msgid "Export pdf (expérimental)"
-msgstr "pdf export (experimental)"
+msgid "Export pdf"
+msgstr "pdf export"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:77
 msgid "Retour à la liste des ressources éditables"
@@ -657,8 +657,6 @@ msgid "ressources éditables"
 msgstr "editable serials"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:28
-#, fuzzy
-#| msgid "Votre rattachements apparaît en rouge"
 msgid "Votre rattachement apparaît en rouge"
 msgstr "Attachment ; yours is highlighted"
 
@@ -720,6 +718,10 @@ msgstr "Comment (250 characters max)"
 msgid "Il n'est plus possible de modifier votre positionnement"
 msgstr "Modifying your rank is no more allowed"
 
+#: eplouribousse/apps/epl/templates/epl/to_edit_list.html:22
+msgid "tout exporter en pdf"
+msgstr "all to pdf"
+
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:26
 msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
 msgstr "Click on [Serial id] link to edit"
@@ -767,96 +769,82 @@ msgid ""
 "possible depuis la page d'accueil."
 msgstr "Logout : Always possible from the homepage"
 
-#: eplouribousse/apps/epl/views.py:58 eplouribousse/apps/epl/views.py:61
-#: eplouribousse/apps/epl/viewsbak.py:56 eplouribousse/apps/epl/viewsbak.py:59
+#: eplouribousse/apps/epl/views.py:54 eplouribousse/apps/epl/views.py:57
+#: eplouribousse/apps/epl/views.py:133 eplouribousse/apps/epl/views.py:136
 msgid "bibliothèque"
 msgstr "library"
 
-#: eplouribousse/apps/epl/views.py:58 eplouribousse/apps/epl/viewsbak.py:56
+#: eplouribousse/apps/epl/views.py:54 eplouribousse/apps/epl/views.py:133
 msgid "issn"
-msgstr ""
+msgstr "issn"
 
-#: eplouribousse/apps/epl/views.py:58 eplouribousse/apps/epl/viewsbak.py:56
+#: eplouribousse/apps/epl/views.py:54 eplouribousse/apps/epl/views.py:133
 msgid "ppn"
-msgstr ""
+msgstr "sid"
 
-#: eplouribousse/apps/epl/views.py:58 eplouribousse/apps/epl/viewsbak.py:56
-#, fuzzy
-#| msgid "Historique de la publication"
+#: eplouribousse/apps/epl/views.py:54 eplouribousse/apps/epl/views.py:133
 msgid "historique de la publication"
 msgstr "Publication history"
 
-#: eplouribousse/apps/epl/views.py:58 eplouribousse/apps/epl/viewsbak.py:56
-#, fuzzy
-#| msgid "Titre"
+#: eplouribousse/apps/epl/views.py:54 eplouribousse/apps/epl/views.py:133
 msgid "titre"
-msgstr "Title"
+msgstr "title"
 
-#: eplouribousse/apps/epl/views.py:58 eplouribousse/apps/epl/viewsbak.py:56
-#, fuzzy
-#| msgid "Collection mère"
+#: eplouribousse/apps/epl/views.py:54 eplouribousse/apps/epl/views.py:133
 msgid "collection mère"
-msgstr "Mother collection"
+msgstr "mother collection"
 
-#: eplouribousse/apps/epl/views.py:61 eplouribousse/apps/epl/viewsbak.py:59
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:136
 msgid "relié ?"
 msgstr "bound ?"
 
-#: eplouribousse/apps/epl/views.py:61 eplouribousse/apps/epl/viewsbak.py:59
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:136
 msgid "bib. remédiée"
 msgstr "enhanced library"
 
-#: eplouribousse/apps/epl/views.py:61 eplouribousse/apps/epl/viewsbak.py:59
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:136
 msgid "segment"
 msgstr "segment"
 
-#: eplouribousse/apps/epl/views.py:61 eplouribousse/apps/epl/viewsbak.py:59
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:136
 msgid "exception"
 msgstr "exception"
 
-#: eplouribousse/apps/epl/views.py:61 eplouribousse/apps/epl/viewsbak.py:59
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:136
 msgid "améliorable"
 msgstr "enhanceable"
 
-#: eplouribousse/apps/epl/views.py:266 eplouribousse/apps/epl/views.py:359
-#: eplouribousse/apps/epl/views.py:447 eplouribousse/apps/epl/viewsbak.py:212
-#: eplouribousse/apps/epl/viewsbak.py:305
-#: eplouribousse/apps/epl/viewsbak.py:393
+#: eplouribousse/apps/epl/views.py:294 eplouribousse/apps/epl/views.py:387
+#: eplouribousse/apps/epl/views.py:475
 msgid "éléments reliés"
 msgstr "bound elements"
 
-#: eplouribousse/apps/epl/views.py:268 eplouribousse/apps/epl/views.py:363
-#: eplouribousse/apps/epl/views.py:451 eplouribousse/apps/epl/viewsbak.py:214
-#: eplouribousse/apps/epl/viewsbak.py:309
-#: eplouribousse/apps/epl/viewsbak.py:397
+#: eplouribousse/apps/epl/views.py:296 eplouribousse/apps/epl/views.py:391
+#: eplouribousse/apps/epl/views.py:479
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
-#: eplouribousse/apps/epl/views.py:292 eplouribousse/apps/epl/viewsbak.py:238
+#: eplouribousse/apps/epl/views.py:320
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:367 eplouribousse/apps/epl/views.py:455
-#: eplouribousse/apps/epl/viewsbak.py:313
-#: eplouribousse/apps/epl/viewsbak.py:401
+#: eplouribousse/apps/epl/views.py:395 eplouribousse/apps/epl/views.py:483
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:378 eplouribousse/apps/epl/viewsbak.py:324
+#: eplouribousse/apps/epl/views.py:406
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Deletion not allowed (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:456 eplouribousse/apps/epl/viewsbak.py:402
+#: eplouribousse/apps/epl/views.py:484
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:503 eplouribousse/apps/epl/views.py:580
-#: eplouribousse/apps/epl/viewsbak.py:449
-#: eplouribousse/apps/epl/viewsbak.py:526
+#: eplouribousse/apps/epl/views.py:531 eplouribousse/apps/epl/views.py:608
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:526 eplouribousse/apps/epl/viewsbak.py:472
+#: eplouribousse/apps/epl/views.py:554
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -865,7 +853,7 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:591 eplouribousse/apps/epl/viewsbak.py:537
+#: eplouribousse/apps/epl/views.py:619
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Don't forget to tick the box before to validate"
 
@@ -881,14 +869,14 @@ msgstr ""
 msgid "Deutsch"
 msgstr ""
 
+#~ msgid "Export pdf (expérimental)"
+#~ msgstr "pdf export (experimental)"
+
 #~ msgid "Titre de la ressource"
 #~ msgstr "Title"
 
 #~ msgid " <--- ppn / issn ---> "
 #~ msgstr " <--- sid / issn ---> "
-
-#~ msgid "Export pdf"
-#~ msgstr "pdf export"
 
 #~ msgid "forme courante"
 #~ msgstr "current shape"
