@@ -12,10 +12,8 @@ from django.core.mail import send_mail
 
 from django.db.models.functions import Now
 
-from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, landscape
-from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet
 from django.core.files.storage import FileSystemStorage
@@ -157,7 +155,7 @@ def edallpdf(request, lid):
 
         elements.append(t)
         elements.append(PageBreak())
-        
+
     doc.build(elements)
 
     fs = FileSystemStorage("/tmp")
