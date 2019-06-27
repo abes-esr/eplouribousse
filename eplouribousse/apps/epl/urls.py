@@ -18,6 +18,7 @@ urlpatterns = [
     path('edlist/<str:lid>', views.tobeedited, name='to be edited list'),
     path('ed/<str:sid>/<str:lid>', views.edition, name='edition'),
     path('pdf/<str:sid>/<str:lid>', views.pdfedition, name='pdfedition'),
+    path('edallpdf/<str:lid>', views.edallpdf, name='alltopdf'),
     path('', views.home, name='home'),
     path('dashboard', views.indicators, name='indicators'),
     path('lang', views.lang, name='language'),

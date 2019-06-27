@@ -16,7 +16,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A3, inch, cm
 from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet
 from django.core.files.storage import FileSystemStorage
 
@@ -87,6 +87,85 @@ def pdfedition(request, sid, lid):
 
     return response
 
+def edallpdf(request, lid):
+
+    filename = lid + '.pdf'
+    dirfile = "/tmp/" + filename
+
+    libname = Library.objects.get(lid =lid).name
+
+    styles = getSampleStyleSheet()
+    doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=A3)
+    elements = []
+
+    #For the lid identified library, getting ressources whose the resulting \
+    #collection has been entirely completed and may consequently be edited.
+    #Trick : These ressources have two instructions with name = 'checker' :
+    #This is like "tobeedited" (see below)
+
+    l = ItemRecord.objects.filter(lid =lid).exclude(rank =0)
+
+    #Initializing a list of ressources to edit :
+    resslist = []
+
+    for e in l:
+        nl = Instruction.objects.filter(sid =e.sid)
+        k = nl.filter(name = "checker")
+        if len(k) ==2:
+            resslist.append(e)
+
+    for r in resslist:
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
+        sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
+        issn = ItemRecord.objects.get(sid =r.sid, lid =lid).issn
+        pubhist = ItemRecord.objects.get(sid =r.sid, lid =lid).pubhist
+        instructions = Instruction.objects.filter(sid =r.sid).order_by('line')
+        properinstructions = Instruction.objects.filter(sid =r.sid, name =libname)
+        otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
+        libinstructions = properinstructions.union(otherinstructions).order_by('line')
+        controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
+        controlnotbd = Instruction.objects.get(sid =r.sid, bound ='', name ='checker').descr
+        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
+
+        data = [["", _('bibliothèque'), _('issn'), _('ppn'), _('historique de la publication'), _('titre'), _('collection mère')],\
+        ["", libname, issn, sid, pubhist, title, mothercollection],\
+        ["", "", "", "", "", "", ""],\
+        ['#', _('bibliothèque'), _('relié ?'), _('bib. remédiée'), _('segment'), _('exception'), _('améliorable')]]
+        Table(data, colWidths=None, rowHeights=None, style=None, splitByRow=1, repeatRows=0, repeatCols=0, rowSplitRange=None, spaceBefore=None, spaceAfter=None)
+        for i in instructions:
+            data.append([i.line, i.name, i.bound, i.oname, i.descr, Paragraph(i.exc, styles['Normal']), Paragraph(i.degr, styles['Normal'])])
+
+        t=Table(data)
+
+        table_style = TableStyle([('ALIGN', (0, 0), (6, 0), 'LEFT'),
+        ('INNERGRID', (0,3), (-1,-1), 0.25, colors.black),
+        ('BOX', (0,3), (-1,-1), 0.25, colors.black),
+        ('VALIGN',(0,0),(-1,-1),'MIDDLE'),])
+        k =1
+        for i in libinstructions:
+            row = i.line + 3
+            k +=1 #row number
+            table_style.add('TEXTCOLOR', (0, row ), (6, row), colors.red)
+        table_style.add('ALIGN', (0, 0), (0, k), 'CENTER')
+        table_style.add('ALIGN', (2, 0), (2, k), 'CENTER')
+        table_style.add('TEXTCOLOR', (6, 0), (6, 1), colors.blue)
+
+        t.setStyle(table_style)
+
+        elements.append(t)
+        elements.append(PageBreak())
+    doc.build(elements)
+
+    fs = FileSystemStorage("/tmp")
+    with fs.open(filename) as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
+        return response
+
+    return response
 
 def ranktotake(request, lid):
 
