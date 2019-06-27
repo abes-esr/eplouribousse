@@ -730,7 +730,7 @@ msgstr "Alles zum PDF-Format"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:26
 msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
-msgstr "zum Bearbeiten,klicken Sie auf den Link [Zeitschrift ID]"
+msgstr "zum Bearbeiten, klicken Sie auf den Link [Zeitschrift ID]"
 
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:19
 msgid "collections en attente de positionnement"
