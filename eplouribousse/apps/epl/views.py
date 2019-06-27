@@ -14,7 +14,7 @@ from django.db.models.functions import Now
 
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import A3, inch, cm
+from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet
@@ -33,7 +33,7 @@ def pdfedition(request, sid, lid):
     dirfile = "/tmp/" + filename
 
     styles = getSampleStyleSheet()
-    doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=A3)
+    doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
     # Draw things on the PDF. Here's where the PDF generation happens.
@@ -95,7 +95,7 @@ def edallpdf(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     styles = getSampleStyleSheet()
-    doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=A3)
+    doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
     #For the lid identified library, getting ressources whose the resulting \
@@ -157,6 +157,7 @@ def edallpdf(request, lid):
 
         elements.append(t)
         elements.append(PageBreak())
+        
     doc.build(elements)
 
     fs = FileSystemStorage("/tmp")
