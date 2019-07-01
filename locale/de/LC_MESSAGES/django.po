@@ -448,7 +448,7 @@ msgstr "fr / en"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:25
 msgid "Indicateur"
-msgstr "Aufsicht"
+msgstr "Indikator"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:26
 msgid "Valeur"
