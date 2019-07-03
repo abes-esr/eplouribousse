@@ -31,6 +31,30 @@
    <tbody>
 
     <tr>
+          <td>{% trans "Collections" %}</td>
+          <td><center>{{ coll }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "Unicas" %}</td>
+          <td><center>{{ isol }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "Ressources potentiellement candidates" %}</td>
+          <td><center>{{ cand }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "dont doublons stricts" %}</td>
+          <td><center>{{ dupl }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "dont triplons" %}</td>
+          <td><center>{{ tripl }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "dont quadruplons" %}</td>
+          <td><center>{{ qudrpl }}</center></td>
+    </tr>
+    <tr>
          <td>{% trans "Collections positionnées (exclusions incluses)" %}</td>
          <td><center>{{ rkall }}</center></td>
     </tr>
@@ -46,10 +70,15 @@
 
     {% for e, v in dict.items %}
          <tr>
-         <td>{% trans "dont : " %}{% trans e %}</td>
+         <td>{% trans "dont : " %} {{ e }}</td>
          <td><center>{{ v }}</center></td>
          </tr>
     {% endfor %}</p>
+
+    <tr>
+         <td>{% trans "Ressources écartées par exclusion de collection" %}</td>
+         <td><center>{{ discard }}</center></td>
+    </tr>
 
     <tr>
          <td>{% trans "Collections impliquées dans un arbitrage quelconque" %}</td>

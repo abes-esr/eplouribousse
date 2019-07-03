@@ -860,6 +860,51 @@ def indicators(request):
     ctotal = c1st + cnone
     stotal = s1st + snone
 
+    #Number of collections :
+    coll = len(ItemRecord.objects.all())
+
+    #Number of potential candidates :
+    cand =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) >1:
+            cand +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    cand = int(cand)
+
+    #from which strict duplicates :
+    dupl =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==2:
+            dupl +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    dupl = int(dupl)
+
+    #triplets :
+    tripl =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==3:
+            tripl +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    tripl = int(tripl)
+
+    #quadruplets :
+    qudrpl =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==4:
+            qudrpl +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    qudrpl = int(qudrpl)
+
+    #Unicas :
+    isol =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==1:
+            isol +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    isol = int(isol)
+
+    #Number of descarded ressources for exclusion reason :
+    discard =0
+    for i in ItemRecord.objects.filter(rank =0):
+        if len(ItemRecord.objects.filter(rank =0)) ==len(ItemRecord.objects.filter(sid =i.sid)):
+            discard +=1/len(ItemRecord.objects.filter(rank =0))
+    discard = int(discard)
+
     #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
 
@@ -884,7 +929,9 @@ def indicators(request):
     return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
     rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaymeg' : notbdmaymeg, 'fullinstr' : fullinstr, \
     'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
-    's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, })
+    's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
+     'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
+     'tripl' : tripl, 'qudrpl' : qudrpl, })
 
 def home(request):
 
