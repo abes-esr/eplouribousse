@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-03 10:03+0200\n"
+"POT-Creation-Date: 2019-07-08 16:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,27 +22,27 @@ msgstr ""
 msgid "Autre (Commenter)"
 msgstr "Other (comment)"
 
-#: eplouribousse/apps/epl/models.py:96
+#: eplouribousse/apps/epl/models.py:105
 msgid "1. Positionnement"
 msgstr "1. Ranking"
 
-#: eplouribousse/apps/epl/models.py:97
+#: eplouribousse/apps/epl/models.py:106
 msgid "2. Arbitrages"
 msgstr "2. Arbitration"
 
-#: eplouribousse/apps/epl/models.py:98
+#: eplouribousse/apps/epl/models.py:107
 msgid "3. Instruction"
 msgstr "3. Instruction"
 
-#: eplouribousse/apps/epl/models.py:99
+#: eplouribousse/apps/epl/models.py:108
 msgid "4. Résultantes"
 msgstr "4. Edition"
 
-#: eplouribousse/apps/epl/models.py:119
+#: eplouribousse/apps/epl/models.py:128
 msgid "Visa OK (La fiche est conforme)"
 msgstr "All is OK"
 
-#: eplouribousse/apps/epl/models.py:119
+#: eplouribousse/apps/epl/models.py:128
 msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Something is wrong (The database admin will be informed)"
 
@@ -67,6 +67,7 @@ msgstr "Instruction"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:22
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:34
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:34
+#: eplouribousse/apps/epl/views.py:56 eplouribousse/apps/epl/views.py:189
 msgid "Titre"
 msgstr "Title"
 
@@ -205,7 +206,6 @@ msgstr "You might resume afterwards"
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:100
 #: eplouribousse/apps/epl/templates/epl/home.html:23
 #: eplouribousse/apps/epl/templates/epl/indicators.html:141
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:112
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:55
@@ -225,7 +225,6 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:100
 #: eplouribousse/apps/epl/templates/epl/home.html:39
 #: eplouribousse/apps/epl/templates/epl/indicators.html:141
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:112
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:55
@@ -246,7 +245,6 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:105
 #: eplouribousse/apps/epl/templates/epl/home.html:46
 #: eplouribousse/apps/epl/templates/epl/indicators.html:146
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:117
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:65
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:60
@@ -333,7 +331,6 @@ msgstr "Ranking"
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:45
 #: eplouribousse/apps/epl/templates/epl/edition.html:81
 #: eplouribousse/apps/epl/templates/epl/indicators.html:132
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:103
 msgid "Instructions"
 msgstr "Instructions"
 
@@ -423,7 +420,6 @@ msgstr "Feature"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:39
 #: eplouribousse/apps/epl/templates/epl/indicators.html:16
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:16
 msgid "Supervision"
 msgstr "Overview"
 
@@ -452,12 +448,10 @@ msgid "en / de"
 msgstr "fr / de"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:25
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:25
 msgid "Indicateur"
 msgstr "Follow-up indicators"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:26
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:26
 msgid "Valeur"
 msgstr "Value"
 
@@ -486,22 +480,18 @@ msgid "dont quadruplons"
 msgstr "quadruplets"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:58
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:34
 msgid "Collections positionnées (exclusions incluses)"
 msgstr "Ranking (exclusion included)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:62
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:38
 msgid "Collections positionnées (hors exclusions)"
 msgstr "Ranking (exclusion excluded)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:66
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:42
 msgid "Collections exclues"
 msgstr "Excluded collections"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:73
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:49
 msgid "dont : "
 msgstr "these includes : "
 
@@ -510,62 +500,50 @@ msgid "Ressources écartées par exclusion de collection"
 msgstr "Discarded serials for exclusion reason"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:84
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:55
 msgid "Collections impliquées dans un arbitrage quelconque"
 msgstr "Collections involved in any of the two arbitration cases"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:88
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:59
 msgid "Collections impliquées dans un arbitrage de 1ère place"
 msgstr "Collections involved in a conflict for the 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:92
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:63
 msgid "Collections impliquées dans un arbitrage faute de 1ère place"
 msgstr "Collections involved in an arbitration for 1st rank lacking"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:96
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:67
 msgid "Ressources impliquées dans un arbitrage quelconque"
 msgstr "Serials involved in any of the two arbitration cases"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:100
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:71
 msgid "Ressources impliquées dans un arbitrage de 1ère place"
 msgstr "Serials involved in a conflict for the 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:104
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:75
 msgid "Ressources impliquées dans un arbitrage faute de 1ère place"
 msgstr "Serials involved in an arbitration for 1st rank lacking"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:108
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:79
 msgid "Ressources dont l'instruction des éléments reliés peut débuter"
 msgstr "Serials whose bound shape instruction may begin"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:112
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:83
 msgid "Ressources dont l'instruction des éléments reliés est en cours"
 msgstr "Serials whose bound shape instruction is underway"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:116
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:87
 msgid "Ressources dont l'instruction des éléments non reliés peut débuter"
 msgstr "Serials whose not bound shape instruction may begin"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:120
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:91
 msgid "Ressources dont l'instruction des éléments non reliés est en cours"
 msgstr "Serials whose not bound shape instruction is underway"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:124
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:95
 msgid "Ressources complètement instruites"
 msgstr "Serials whose instruction is over"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:128
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:99
 msgid "Fiches défectueuses"
 msgstr "Faulty sheets"
 
@@ -820,103 +798,89 @@ msgid ""
 "possible depuis la page d'accueil."
 msgstr "Logout : Always possible from the homepage"
 
-#: eplouribousse/apps/epl/views.py:52 eplouribousse/apps/epl/views.py:55
-#: eplouribousse/apps/epl/views.py:131 eplouribousse/apps/epl/views.py:134
-#: eplouribousse/apps/epl/viewsbak.py:52 eplouribousse/apps/epl/viewsbak.py:55
-#: eplouribousse/apps/epl/viewsbak.py:131
-#: eplouribousse/apps/epl/viewsbak.py:134
-msgid "bibliothèque"
-msgstr "library"
+#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:188
+msgid "Projet"
+msgstr "Project"
 
-#: eplouribousse/apps/epl/views.py:52 eplouribousse/apps/epl/views.py:131
-#: eplouribousse/apps/epl/viewsbak.py:52 eplouribousse/apps/epl/viewsbak.py:131
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:190
+msgid "Collection"
+msgstr "collection"
+
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:190
+msgid "cote"
+msgstr "call number"
+
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:205
 msgid "issn"
 msgstr "issn"
 
-#: eplouribousse/apps/epl/views.py:52 eplouribousse/apps/epl/views.py:131
-#: eplouribousse/apps/epl/viewsbak.py:52 eplouribousse/apps/epl/viewsbak.py:131
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:205
 msgid "ppn"
 msgstr "sid"
 
-#: eplouribousse/apps/epl/views.py:52 eplouribousse/apps/epl/views.py:131
-#: eplouribousse/apps/epl/viewsbak.py:52 eplouribousse/apps/epl/viewsbak.py:131
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:205
 msgid "historique de la publication"
 msgstr "Publication history"
 
-#: eplouribousse/apps/epl/views.py:52 eplouribousse/apps/epl/views.py:131
-#: eplouribousse/apps/epl/viewsbak.py:52 eplouribousse/apps/epl/viewsbak.py:131
-msgid "titre"
-msgstr "title"
-
-#: eplouribousse/apps/epl/views.py:52 eplouribousse/apps/epl/views.py:131
-#: eplouribousse/apps/epl/viewsbak.py:52 eplouribousse/apps/epl/viewsbak.py:131
+#: eplouribousse/apps/epl/views.py:90 eplouribousse/apps/epl/views.py:223
 msgid "collection mère"
 msgstr "mother collection"
 
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:134
-#: eplouribousse/apps/epl/viewsbak.py:55 eplouribousse/apps/epl/viewsbak.py:134
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+msgid "bibliothèque"
+msgstr "library"
+
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
 msgid "relié ?"
 msgstr "bound ?"
 
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:134
-#: eplouribousse/apps/epl/viewsbak.py:55 eplouribousse/apps/epl/viewsbak.py:134
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
 msgid "bib. remédiée"
 msgstr "enhanced library"
 
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:134
-#: eplouribousse/apps/epl/viewsbak.py:55 eplouribousse/apps/epl/viewsbak.py:134
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
 msgid "segment"
 msgstr "segment"
 
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:134
-#: eplouribousse/apps/epl/viewsbak.py:55 eplouribousse/apps/epl/viewsbak.py:134
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
 msgid "exception"
 msgstr "exception"
 
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:134
-#: eplouribousse/apps/epl/viewsbak.py:55 eplouribousse/apps/epl/viewsbak.py:134
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
 msgid "améliorable"
 msgstr "enhanceable"
 
-#: eplouribousse/apps/epl/views.py:293 eplouribousse/apps/epl/views.py:386
-#: eplouribousse/apps/epl/views.py:474 eplouribousse/apps/epl/viewsbak.py:293
-#: eplouribousse/apps/epl/viewsbak.py:386
-#: eplouribousse/apps/epl/viewsbak.py:474
+#: eplouribousse/apps/epl/views.py:401 eplouribousse/apps/epl/views.py:494
+#: eplouribousse/apps/epl/views.py:582
 msgid "éléments reliés"
 msgstr "bound elements"
 
-#: eplouribousse/apps/epl/views.py:295 eplouribousse/apps/epl/views.py:390
-#: eplouribousse/apps/epl/views.py:478 eplouribousse/apps/epl/viewsbak.py:295
-#: eplouribousse/apps/epl/viewsbak.py:390
-#: eplouribousse/apps/epl/viewsbak.py:478
+#: eplouribousse/apps/epl/views.py:403 eplouribousse/apps/epl/views.py:498
+#: eplouribousse/apps/epl/views.py:586
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
-#: eplouribousse/apps/epl/views.py:319 eplouribousse/apps/epl/viewsbak.py:319
+#: eplouribousse/apps/epl/views.py:427
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:394 eplouribousse/apps/epl/views.py:482
-#: eplouribousse/apps/epl/viewsbak.py:394
-#: eplouribousse/apps/epl/viewsbak.py:482
+#: eplouribousse/apps/epl/views.py:502 eplouribousse/apps/epl/views.py:590
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:405 eplouribousse/apps/epl/viewsbak.py:405
+#: eplouribousse/apps/epl/views.py:513
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Deletion not allowed (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:483 eplouribousse/apps/epl/viewsbak.py:483
+#: eplouribousse/apps/epl/views.py:591
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:530 eplouribousse/apps/epl/views.py:607
-#: eplouribousse/apps/epl/viewsbak.py:530
-#: eplouribousse/apps/epl/viewsbak.py:607
+#: eplouribousse/apps/epl/views.py:638 eplouribousse/apps/epl/views.py:715
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:553 eplouribousse/apps/epl/viewsbak.py:553
+#: eplouribousse/apps/epl/views.py:661
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -925,7 +889,7 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:618 eplouribousse/apps/epl/viewsbak.py:618
+#: eplouribousse/apps/epl/views.py:726
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Don't forget to tick the box before to validate"
 
@@ -940,6 +904,9 @@ msgstr ""
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
+
+#~ msgid "titre"
+#~ msgstr "title"
 
 #~ msgid "Export pdf (expérimental)"
 #~ msgstr "pdf export (experimental)"

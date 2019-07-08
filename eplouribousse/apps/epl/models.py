@@ -2,6 +2,15 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
+class Project(models.Model):
+    """Model for project."""
+    name = models.CharField('project code name', max_length=30, blank =True)
+    descr = models.CharField('description', max_length=300, blank =True)
+    date = models.CharField('database date' , max_length=50, blank =True)
+    def __str__(self):
+        info = self.date + ' | ' + self.name + ' | ' + self.descr
+        return info
+
 class Library(models.Model):
     """Model for the libraries."""
     lid = models.CharField('library ID', max_length=16, unique=True)
@@ -29,7 +38,7 @@ class ItemRecord(models.Model):
     """Model for item records."""
     sid = models.CharField('serial ID', max_length=16, blank =False)
     issn = models.CharField('issn', max_length=9, blank=True)
-    title = models.TextField('title', max_length=100)
+    title = models.TextField('title', max_length=300)
     pubhist = models.CharField('publication history', max_length=100, \
             blank=True)
     lid = models.CharField('library ID', max_length=16, blank =False)
