@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 16:46+0200\n"
+"POT-Creation-Date: 2019-07-08 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr "Row"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:36
 #: eplouribousse/apps/epl/templates/epl/edition.html:37
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:39
-#: eplouribousse/apps/epl/templates/epl/home.html:30
+#: eplouribousse/apps/epl/templates/epl/home.html:31
 msgid "Bibliothèque"
 msgstr "Library"
 
@@ -180,7 +180,7 @@ msgstr "underneath row n° ?"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:80
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:84
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:92
-#: eplouribousse/apps/epl/templates/epl/home.html:33
+#: eplouribousse/apps/epl/templates/epl/home.html:34
 #: eplouribousse/apps/epl/templates/epl/ranking.html:66
 msgid "Valider"
 msgstr "ok"
@@ -223,7 +223,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:90
 #: eplouribousse/apps/epl/templates/epl/edition.html:85
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:100
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/indicators.html:141
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:60
@@ -243,7 +243,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:95
 #: eplouribousse/apps/epl/templates/epl/edition.html:90
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:105
-#: eplouribousse/apps/epl/templates/epl/home.html:46
+#: eplouribousse/apps/epl/templates/epl/home.html:47
 #: eplouribousse/apps/epl/templates/epl/indicators.html:146
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:65
@@ -414,36 +414,41 @@ msgstr "Back to instruction"
 msgid "Supprimer une ligne"
 msgstr "Delete a row"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:31
+#: eplouribousse/apps/epl/templates/epl/home.html:24
+#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:188
+msgid "Projet"
+msgstr "Project"
+
+#: eplouribousse/apps/epl/templates/epl/home.html:32
 msgid "Fonctionnalité"
 msgstr "Feature"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/indicators.html:16
 msgid "Supervision"
 msgstr "Overview"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/language.html:46
 msgid "M'authentifier"
 msgstr "Login"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/language.html:46
 msgid "Me déconnecter"
 msgstr "Logout"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/language.html:46
 msgid "Changer mon mot de passe"
 msgstr "Change password"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/language.html:46
 msgid "Administration (réservé)"
 msgstr "Admin (reserved)"
 
-#: eplouribousse/apps/epl/templates/epl/home.html:39
+#: eplouribousse/apps/epl/templates/epl/home.html:40
 msgid "en / de"
 msgstr "fr / de"
 
@@ -797,10 +802,6 @@ msgid ""
 "Déconnexion : Elle n'est normalement pas nécessaire. C'est toutefois "
 "possible depuis la page d'accueil."
 msgstr "Logout : Always possible from the homepage"
-
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:188
-msgid "Projet"
-msgstr "Project"
 
 #: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:190
 msgid "Collection"

@@ -1045,6 +1045,8 @@ def home(request):
 
     "Homepage"
 
+    project = Project.objects.all().order_by('pk')[0].name
+
     #Feature input :
     i = Feature()
     f = FeatureForm(request.POST, instance =i)
@@ -1067,4 +1069,4 @@ def home(request):
             do = tobeedited(request, lid)
             return do
 
-    return render(request, 'epl/home.html', {'form' : f, })
+    return render(request, 'epl/home.html', {'form' : f, 'project' : project, })
