@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 17:24+0200\n"
+"POT-Creation-Date: 2019-07-08 17:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "Instruction"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:22
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:34
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:34
-#: eplouribousse/apps/epl/views.py:56 eplouribousse/apps/epl/views.py:189
+#: eplouribousse/apps/epl/views.py:56 eplouribousse/apps/epl/views.py:191
 msgid "Titre"
 msgstr "Title"
 
@@ -415,7 +415,7 @@ msgid "Supprimer une ligne"
 msgstr "Delete a row"
 
 #: eplouribousse/apps/epl/templates/epl/home.html:24
-#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:188
+#: eplouribousse/apps/epl/views.py:55 eplouribousse/apps/epl/views.py:190
 msgid "Projet"
 msgstr "Project"
 
@@ -803,85 +803,89 @@ msgid ""
 "possible depuis la page d'accueil."
 msgstr "Logout : Always possible from the homepage"
 
-#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:190
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:192
 msgid "Collection"
 msgstr "collection"
 
-#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:190
+#: eplouribousse/apps/epl/views.py:57 eplouribousse/apps/epl/views.py:192
 msgid "cote"
 msgstr "call number"
 
-#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:205
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:207
 msgid "issn"
 msgstr "issn"
 
-#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:205
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:207
 msgid "ppn"
 msgstr "sid"
 
-#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:205
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:207
 msgid "historique de la publication"
 msgstr "Publication history"
 
-#: eplouribousse/apps/epl/views.py:90 eplouribousse/apps/epl/views.py:223
+#: eplouribousse/apps/epl/views.py:90 eplouribousse/apps/epl/views.py:225
 msgid "collection mère"
 msgstr "mother collection"
 
-#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+#: eplouribousse/apps/epl/views.py:94 eplouribousse/apps/epl/views.py:229
+msgid "a pris part"
+msgstr "has taken  part"
+
+#: eplouribousse/apps/epl/views.py:109 eplouribousse/apps/epl/views.py:244
 msgid "bibliothèque"
 msgstr "library"
 
-#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+#: eplouribousse/apps/epl/views.py:109 eplouribousse/apps/epl/views.py:244
 msgid "relié ?"
 msgstr "bound ?"
 
-#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+#: eplouribousse/apps/epl/views.py:109 eplouribousse/apps/epl/views.py:244
 msgid "bib. remédiée"
 msgstr "enhanced library"
 
-#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+#: eplouribousse/apps/epl/views.py:109 eplouribousse/apps/epl/views.py:244
 msgid "segment"
 msgstr "segment"
 
-#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+#: eplouribousse/apps/epl/views.py:109 eplouribousse/apps/epl/views.py:244
 msgid "exception"
 msgstr "exception"
 
-#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:240
+#: eplouribousse/apps/epl/views.py:109 eplouribousse/apps/epl/views.py:244
 msgid "améliorable"
 msgstr "enhanceable"
 
-#: eplouribousse/apps/epl/views.py:401 eplouribousse/apps/epl/views.py:494
-#: eplouribousse/apps/epl/views.py:582
+#: eplouribousse/apps/epl/views.py:405 eplouribousse/apps/epl/views.py:498
+#: eplouribousse/apps/epl/views.py:586
 msgid "éléments reliés"
 msgstr "bound elements"
 
-#: eplouribousse/apps/epl/views.py:403 eplouribousse/apps/epl/views.py:498
-#: eplouribousse/apps/epl/views.py:586
+#: eplouribousse/apps/epl/views.py:407 eplouribousse/apps/epl/views.py:502
+#: eplouribousse/apps/epl/views.py:590
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
-#: eplouribousse/apps/epl/views.py:427
+#: eplouribousse/apps/epl/views.py:431
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:502 eplouribousse/apps/epl/views.py:590
+#: eplouribousse/apps/epl/views.py:506 eplouribousse/apps/epl/views.py:594
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:513
+#: eplouribousse/apps/epl/views.py:517
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Deletion not allowed (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:591
+#: eplouribousse/apps/epl/views.py:595
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:638 eplouribousse/apps/epl/views.py:715
+#: eplouribousse/apps/epl/views.py:642 eplouribousse/apps/epl/views.py:719
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:661
+#: eplouribousse/apps/epl/views.py:665
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -890,7 +894,7 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:726
+#: eplouribousse/apps/epl/views.py:730
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Don't forget to tick the box before to validate"
 

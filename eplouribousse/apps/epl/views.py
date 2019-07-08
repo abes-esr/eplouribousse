@@ -88,8 +88,10 @@ def pdfedition(request, sid, lid):
     for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
         if e.rank ==1:
             datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
-        else:
+        elif e.rank ==0:
             datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+        else:
+            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
 
     tcoll=Table(datacoll)
 
@@ -221,8 +223,10 @@ def edallpdf(request, lid):
         for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
             if e.rank ==1:
                 datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
-            else:
+            elif e.rank ==0:
                 datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+            else:
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
 
         tcoll=Table(datacoll)
 
