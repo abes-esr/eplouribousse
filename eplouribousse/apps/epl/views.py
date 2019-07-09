@@ -22,6 +22,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.utils.translation import ugettext as _
 
+from django.contrib.auth.models import User
+
 def lang(request):
     return render(request, 'epl/language.html', {})
 
@@ -298,6 +300,10 @@ def ranktotake(request, lid):
 @login_required
 def takerank(request, sid, lid):
 
+    #Authentication control :
+    if not request.user.email ==Library.objects.get(lid =lid).contact:
+        return home(request)
+
     #Control (takerank only if still possible ; status still ==0 for all attached libraries)
     try:
         if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0))):
@@ -352,6 +358,10 @@ def notintime(request, sid, lid):
 
 @login_required
 def addinstr(request, sid, lid):
+
+    #Authentication control :
+    if not request.user.email ==Library.objects.get(lid =lid).contact:
+        return home(request)
 
     #Control (addinstr only if it's up to the considered library)
     try:
@@ -456,6 +466,10 @@ def addinstr(request, sid, lid):
 @login_required
 def delinstr(request, sid, lid):
 
+    #Authentication control :
+    if not request.user.email ==Library.objects.get(lid =lid).contact:
+        return home(request)
+
     #Control (delinstr only if it's up to the considered library == same conditions as for addinstr)
     try:
         if lid !="999999999":
@@ -543,6 +557,10 @@ def delinstr(request, sid, lid):
 
 @login_required
 def endinstr(request, sid, lid):
+
+    #Authentication control :
+    if not request.user.email ==Library.objects.get(lid =lid).contact:
+        return home(request)
 
     #Control (endinstr only if it's up to the considered library == same conditions as for addinstr and delinstr)
     try:
