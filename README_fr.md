@@ -17,14 +17,15 @@ Les fiches obtenues décrivent les résultantes ; les éléments écartés s'en 
 03. édition des ressources dont l'instruction de la résultante peut débuter,
 04. alerte quand son tour est venu de poursuivre l'instruction de la résultante,
 05. formulaires d'instruction (ajout, suppression, fin),
-06. édition différenciée des résultantes,
+06. édition différenciée des résultantes (rapports soignés au format pdf),
 07. contrôle de conformité à la fin de chaque cycle d'instruction,
 08. prise en charge complète de la chaîne de traitement,
 09. tableau de suivi d'activité,
 10. gestion des utilisateurs et groupes,
-11. paramétrage des motifs de dérogation,
-12. administration des cas de fiches défectueuses,
-12. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues)
+11. contrôles d'authentification,
+12. paramétrage des motifs de dérogation,
+13. administration des cas de fiches défectueuses,
+14. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues)
 
 # Plus d'info :
 
@@ -38,6 +39,8 @@ Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a trois poss
 - Confier le déploiement à votre service informatique en indiquant l'adresse du présent site
 - Confier le déploiement à un hébergeur en indiquant l'adresse du présent site
 - Nous confier le déploiement (après accord et convention)
+
+Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 
 # Contact :
 

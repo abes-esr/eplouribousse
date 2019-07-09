@@ -17,14 +17,15 @@ The sheets obtained describe the resulting collection ; the eliminated elements 
 03. edition of the resources whose instruction of the resulting collection may begin,
 04. alert when its turn came to continue the instruction of the resulting collection,
 05. instruction forms (add, delete, end),
-06. differentiated edition of the results,
+06. neat worked pdf reports,
 07. conformity check at the end of each process cycle,
 08. full support of the processing chain,
 09. activity tracking chart,
 10. user and group management,
-11. parameterization of derogation reasons,
-12. administration of faulty card cases,
-12. multilingual support (French, English, German, extensible to other languages)
+11. authentication controls,
+12. parameterization of derogation reasons,
+13. administration of faulty card cases,
+14. multilingual support (French, English, German, extensible to other languages)
 
 # More information :
 
@@ -38,6 +39,8 @@ If you want to use eplouribousse for a firm project, there are three possibiliti
 - Entrust the deployment to your IT department by indicating the address of this site
 - Entrust the deployment to a host indicating the address of this site
 - We entrust the deployment (after agreement and convention)
+
+In all cases, let us know that you're interested (see contact below)
 
 # Contact :
 
