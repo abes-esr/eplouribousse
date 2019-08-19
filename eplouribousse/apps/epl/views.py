@@ -297,6 +297,14 @@ def ranktotake(request, lid):
     return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
     'lid' : lid, 'name' : libname, 'size' : l})
 
+
+def notintime(request, sid, lid):
+
+    lib = Library.objects.get(lid = lid)
+    ress = ItemRecord.objects.get(sid =sid, rank =1).title
+    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
+
+
 @login_required
 def takerank(request, sid, lid):
 
@@ -304,9 +312,12 @@ def takerank(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
-    #Control (takerank only if still possible ; status still ==0 for all attached libraries)
+    #Control (takerank only if still possible ; status still ==0 for all attached libraries ; lid not "999999999")
     try:
         if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0))):
+            do = notintime(request, sid, lid)
+            return do
+        elif lid =="999999999":
             do = notintime(request, sid, lid)
             return do
     except:
@@ -350,12 +361,6 @@ def takerank(request, sid, lid):
      'library' : lib, 'form' : f, 'lid' : lid, 'flag' : flag, })
 
 
-def notintime(request, sid, lid):
-
-    lib = Library.objects.get(lid = lid)
-    ress = ItemRecord.objects.get(sid =sid, rank =1).title
-    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
-
 @login_required
 def addinstr(request, sid, lid):
 
@@ -363,25 +368,23 @@ def addinstr(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
+    do = notintime(request, sid, lid)
+
     #Control (addinstr only if it's up to the considered library)
     try:
         if lid !="999999999":
-            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
-            or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
-            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-            or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
-            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
-                do = notintime(request, sid, lid)
+            if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
                 return do
 
-        else: # lid =="999999999"
-            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 and \
-            len(list(ItemRecord.objects.get(sid =sid, status =1))) ==1) or \
-            (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 and \
-            len(list(ItemRecord.objects.get(sid =sid, status =3))) ==1) or \
-            (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2):
-                do = notintime(request, sid, lid)
+        else: # i.e. lid =="999999999"
+            if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2:
                 return do
+            elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
+                if len(list(ItemRecord.objects.filter(sid =sid).exclude(rank =0))) != len(list(ItemRecord.objects.filter(sid =sid, status =4))):
+                    return do
+            else: # i.e. len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0
+                if len(list(ItemRecord.objects.filter(sid =sid).exclude(rank =0))) != len(list(ItemRecord.objects.filter(sid =sid, status =2))):
+                    return do
     except:
         z =1 #This is just to continue
 
@@ -470,16 +473,15 @@ def delinstr(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
-    #Control (delinstr only if it's up to the considered library == same conditions as for addinstr)
+    #Control (delinstr only if it's up to the considered library == same conditions as for addinstr if lid not "999999999")
     try:
         if lid !="999999999":
-            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
-            or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
-            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-            or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
-            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
-                do = notintime(request, sid, lid)
+            if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
                 return do
+
+        else: # i.e. lid =="999999999"
+            return do
+
     except:
         z =1 #This is just to continue
 
@@ -562,16 +564,21 @@ def endinstr(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
-    #Control (endinstr only if it's up to the considered library == same conditions as for addinstr and delinstr)
+    #Control (endinstr only if it's up to the considered library == same conditions as for addinstr)
     try:
         if lid !="999999999":
-            if (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2 \
-            or (len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0 \
-            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==1) \
-            or ((len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1 \
-            and not ItemRecord.objects.get(sid = sid, lid =lid).status ==3))):
-                do = notintime(request, sid, lid)
+            if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
                 return do
+
+        else: # i.e. lid =="999999999"
+            if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2:
+                return do
+            elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
+                if len(list(ItemRecord.objects.filter(sid =sid).exclude(rank =0))) != len(list(ItemRecord.objects.filter(sid =sid, status =4))):
+                    return do
+            else: # i.e. len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0
+                if len(list(ItemRecord.objects.filter(sid =sid).exclude(rank =0))) != len(list(ItemRecord.objects.filter(sid =sid, status =2))):
+                    return do
     except:
         z =1 #This is just to continue
 
