@@ -312,13 +312,13 @@ def takerank(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
+    do = notintime(request, sid, lid)
+
     #Control (takerank only if still possible ; status still ==0 for all attached libraries ; lid not "999999999")
     try:
         if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0))):
-            do = notintime(request, sid, lid)
             return do
         elif lid =="999999999":
-            do = notintime(request, sid, lid)
             return do
     except:
         z =1 #This is just to continue
@@ -473,6 +473,8 @@ def delinstr(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
+    do = notintime(request, sid, lid)
+
     #Control (delinstr only if it's up to the considered library == same conditions as for addinstr if lid not "999999999")
     try:
         if lid !="999999999":
@@ -563,6 +565,8 @@ def endinstr(request, sid, lid):
     #Authentication control :
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
+
+    do = notintime(request, sid, lid)
 
     #Control (endinstr only if it's up to the considered library == same conditions as for addinstr)
     try:
