@@ -370,10 +370,10 @@ def addinstr(request, sid, lid):
 
     do = notintime(request, sid, lid)
 
-    #Control (addinstr only if it's up to the considered library)
+    #Control (addinstr only if it's up to the considered lid)
     try:
         if lid !="999999999":
-            if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
+            if ItemRecord.objects.get(sid =sid, lid =lid).status not in [1, 3]:
                 return do
 
         else: # i.e. lid =="999999999"
