@@ -50,7 +50,7 @@ def pdfedition(request, sid, lid):
     otherinstructions = Instruction.objects.filter(sid =sid, oname =libname)
     libinstructions = properinstructions.union(otherinstructions).order_by('line')
     controlbd = Instruction.objects.get(sid =sid, bound ='x', name ='checker').descr
-    controlnotbd = Instruction.objects.get(sid =sid, bound ='', name ='checker').descr
+    controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =sid, name ='checker').descr
     mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
     datap =[
@@ -185,7 +185,7 @@ def edallpdf(request, lid):
         otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
         libinstructions = properinstructions.union(otherinstructions).order_by('line')
         controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
-        controlnotbd = Instruction.objects.get(sid =r.sid, bound ='', name ='checker').descr
+        controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =r.sid, name ='checker').descr
         mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
 
         datap =[
