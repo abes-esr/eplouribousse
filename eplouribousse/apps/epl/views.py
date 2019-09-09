@@ -1042,8 +1042,8 @@ def indicators(request):
     #Number of descarded ressources for exclusion reason :
     discard =0
     for i in ItemRecord.objects.filter(rank =0):
-        if len(ItemRecord.objects.filter(rank =0)) ==len(ItemRecord.objects.filter(sid =i.sid)):
-            discard +=1/len(ItemRecord.objects.filter(rank =0))
+        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) ==1:
+            discard +=1/(len(ItemRecord.objects.filter(sid =i.sid, rank =0)))
     discard = int(discard)
 
     #Number of ressources whose instruction of bound elements may begin :
