@@ -300,8 +300,14 @@ def ranktotake(request, lid):
 
 def notintime(request, sid, lid):
 
-    lib = Library.objects.get(lid = lid)
-    ress = ItemRecord.objects.get(sid =sid, rank =1).title
+    lib = Library.objects.get(lid = lid).name
+    if lid =="999999999":
+        try:
+            ress = ItemRecord.objects.get(sid =sid, rank =1).title
+        except:
+            ress = sid
+    else:
+        ress = ItemRecord.objects.get(sid =sid, lid =lid).title
     return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
 
 

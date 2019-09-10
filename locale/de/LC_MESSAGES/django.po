@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 14:30+0200\n"
+"POT-Creation-Date: 2019-09-10 10:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Anomalie (Der Datenbankadministrator wird informiert)"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:21
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
@@ -211,7 +211,7 @@ msgstr "Sie können dann fortfahren"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
-#: eplouribousse/apps/epl/templates/epl/notintime.html:43
+#: eplouribousse/apps/epl/templates/epl/notintime.html:44
 #: eplouribousse/apps/epl/templates/epl/ranking.html:87
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:48
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:48
@@ -231,7 +231,7 @@ msgstr "Startseite"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
 #: eplouribousse/apps/epl/templates/epl/language.html:46
-#: eplouribousse/apps/epl/templates/epl/notintime.html:43
+#: eplouribousse/apps/epl/templates/epl/notintime.html:44
 #: eplouribousse/apps/epl/templates/epl/ranking.html:87
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:48
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:48
@@ -251,7 +251,7 @@ msgstr "Benutzerhandbuch"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:61
 #: eplouribousse/apps/epl/templates/epl/language.html:53
-#: eplouribousse/apps/epl/templates/epl/notintime.html:48
+#: eplouribousse/apps/epl/templates/epl/notintime.html:49
 #: eplouribousse/apps/epl/templates/epl/ranking.html:92
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:53
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:53
@@ -265,7 +265,7 @@ msgstr "Über uns"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
@@ -309,7 +309,7 @@ msgid "Cote"
 msgstr "Signatur"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:45
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
 msgid "Menu"
@@ -341,7 +341,7 @@ msgstr "Ausfüllen"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
 msgid "Edition"
@@ -668,26 +668,30 @@ msgid "Vous avez été redirigé ici pour l'une des raisons suivantes"
 msgstr "Sie wurden aus einem der folgenden Gründe hierher umgeleitet"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:28
-msgid "Les instructions ont déjà commencé ou la ressource n'est plus candidate"
+msgid "Le positionnement n'est plus possible"
 msgstr "Rang nehmen ist nicht mehr möglich"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:29
+msgid "Les instructions ont déjà commencé ou la ressource n'est plus candidate"
+msgstr "Rang nehmen ist nicht mehr möglich"
+
+#: eplouribousse/apps/epl/templates/epl/notintime.html:30
 msgid "Ce n'est pas à votre tour d'instruire la fiche"
 msgstr "Sie sind nicht an der Reihe, diese Aktion zu machen"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:30
+#: eplouribousse/apps/epl/templates/epl/notintime.html:31
 msgid "La fiche n'est pas encore éditable"
 msgstr "Die Aktion ist noch nicht möglich"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:31
+#: eplouribousse/apps/epl/templates/epl/notintime.html:32
 msgid "La fiche est déjà complètement instruite et ne peut plus être modifiée"
 msgstr "Schon vollständig, kann nicht geändert werden"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:35
+#: eplouribousse/apps/epl/templates/epl/notintime.html:36
 msgid "Dans ce dernier cas, voir : "
 msgstr "Im letzteren Fall siehe:"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:35
+#: eplouribousse/apps/epl/templates/epl/notintime.html:36
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
 msgid "ressources éditables"
 msgstr "erschienbar"
@@ -866,39 +870,39 @@ msgstr "Ausnahme"
 msgid "améliorable"
 msgstr "erweiterbar"
 
-#: eplouribousse/apps/epl/views.py:418 eplouribousse/apps/epl/views.py:516
-#: eplouribousse/apps/epl/views.py:615
+#: eplouribousse/apps/epl/views.py:424 eplouribousse/apps/epl/views.py:522
+#: eplouribousse/apps/epl/views.py:621
 msgid "éléments reliés"
 msgstr "verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:420 eplouribousse/apps/epl/views.py:520
-#: eplouribousse/apps/epl/views.py:619
+#: eplouribousse/apps/epl/views.py:426 eplouribousse/apps/epl/views.py:526
+#: eplouribousse/apps/epl/views.py:625
 msgid "éléments non reliés"
 msgstr "Nicht verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:444
+#: eplouribousse/apps/epl/views.py:450
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
-#: eplouribousse/apps/epl/views.py:524 eplouribousse/apps/epl/views.py:623
+#: eplouribousse/apps/epl/views.py:530 eplouribousse/apps/epl/views.py:629
 msgid "instructions terminées"
 msgstr "XXXXX (Ausfüllung schon fertig)"
 
-#: eplouribousse/apps/epl/views.py:535
+#: eplouribousse/apps/epl/views.py:541
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 
-#: eplouribousse/apps/epl/views.py:624
+#: eplouribousse/apps/epl/views.py:630
 msgid "ni relié, ni non reliés"
 msgstr "Nicht verbunden weder nicht"
 
-#: eplouribousse/apps/epl/views.py:671 eplouribousse/apps/epl/views.py:748
+#: eplouribousse/apps/epl/views.py:677 eplouribousse/apps/epl/views.py:754
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr ""
 "Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
 "anzuweisen : "
 
-#: eplouribousse/apps/epl/views.py:694
+#: eplouribousse/apps/epl/views.py:700
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -908,7 +912,7 @@ msgstr ""
 "Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
 "in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
-#: eplouribousse/apps/epl/views.py:759
+#: eplouribousse/apps/epl/views.py:765
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Vergessen Sie nicht zu überprüfen"
 

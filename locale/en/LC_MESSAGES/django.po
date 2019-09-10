@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 14:30+0200\n"
+"POT-Creation-Date: 2019-09-10 10:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Something is wrong (The database admin will be informed)"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:21
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
@@ -211,7 +211,7 @@ msgstr "You might resume afterwards"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
-#: eplouribousse/apps/epl/templates/epl/notintime.html:43
+#: eplouribousse/apps/epl/templates/epl/notintime.html:44
 #: eplouribousse/apps/epl/templates/epl/ranking.html:87
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:48
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:48
@@ -231,7 +231,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
 #: eplouribousse/apps/epl/templates/epl/language.html:46
-#: eplouribousse/apps/epl/templates/epl/notintime.html:43
+#: eplouribousse/apps/epl/templates/epl/notintime.html:44
 #: eplouribousse/apps/epl/templates/epl/ranking.html:87
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:48
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:48
@@ -251,7 +251,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:61
 #: eplouribousse/apps/epl/templates/epl/language.html:53
-#: eplouribousse/apps/epl/templates/epl/notintime.html:48
+#: eplouribousse/apps/epl/templates/epl/notintime.html:49
 #: eplouribousse/apps/epl/templates/epl/ranking.html:92
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:53
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:53
@@ -265,7 +265,7 @@ msgstr "About"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:77
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
@@ -309,7 +309,7 @@ msgid "Cote"
 msgstr "Call number"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:45
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:44
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
 msgid "Menu"
@@ -341,7 +341,7 @@ msgstr "Instructions"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
-#: eplouribousse/apps/epl/templates/epl/notintime.html:39
+#: eplouribousse/apps/epl/templates/epl/notintime.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
 msgid "Edition"
@@ -666,26 +666,30 @@ msgid "Vous avez été redirigé ici pour l'une des raisons suivantes"
 msgstr "You've been redirected here for one of the following reasons"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:28
+msgid "Le positionnement n'est plus possible"
+msgstr "Ranking isn't available anymore"
+
+#: eplouribousse/apps/epl/templates/epl/notintime.html:29
 msgid "Les instructions ont déjà commencé ou la ressource n'est plus candidate"
 msgstr "Instruction has began or serial is no more candidate"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:29
+#: eplouribousse/apps/epl/templates/epl/notintime.html:30
 msgid "Ce n'est pas à votre tour d'instruire la fiche"
 msgstr "It's not your turn"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:30
+#: eplouribousse/apps/epl/templates/epl/notintime.html:31
 msgid "La fiche n'est pas encore éditable"
 msgstr "Edition isn't yet allowed"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:31
+#: eplouribousse/apps/epl/templates/epl/notintime.html:32
 msgid "La fiche est déjà complètement instruite et ne peut plus être modifiée"
 msgstr "Instruction is over, modifying not allowed"
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:35
+#: eplouribousse/apps/epl/templates/epl/notintime.html:36
 msgid "Dans ce dernier cas, voir : "
 msgstr "In this case, see : "
 
-#: eplouribousse/apps/epl/templates/epl/notintime.html:35
+#: eplouribousse/apps/epl/templates/epl/notintime.html:36
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
 msgid "ressources éditables"
 msgstr "editable serials"
@@ -855,37 +859,37 @@ msgstr "exception"
 msgid "améliorable"
 msgstr "enhanceable"
 
-#: eplouribousse/apps/epl/views.py:418 eplouribousse/apps/epl/views.py:516
-#: eplouribousse/apps/epl/views.py:615
+#: eplouribousse/apps/epl/views.py:424 eplouribousse/apps/epl/views.py:522
+#: eplouribousse/apps/epl/views.py:621
 msgid "éléments reliés"
 msgstr "bound elements"
 
-#: eplouribousse/apps/epl/views.py:420 eplouribousse/apps/epl/views.py:520
-#: eplouribousse/apps/epl/views.py:619
+#: eplouribousse/apps/epl/views.py:426 eplouribousse/apps/epl/views.py:526
+#: eplouribousse/apps/epl/views.py:625
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
-#: eplouribousse/apps/epl/views.py:444
+#: eplouribousse/apps/epl/views.py:450
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:524 eplouribousse/apps/epl/views.py:623
+#: eplouribousse/apps/epl/views.py:530 eplouribousse/apps/epl/views.py:629
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:535
+#: eplouribousse/apps/epl/views.py:541
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Deletion not allowed (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:624
+#: eplouribousse/apps/epl/views.py:630
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:671 eplouribousse/apps/epl/views.py:748
+#: eplouribousse/apps/epl/views.py:677 eplouribousse/apps/epl/views.py:754
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:694
+#: eplouribousse/apps/epl/views.py:700
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -894,7 +898,7 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:759
+#: eplouribousse/apps/epl/views.py:765
 msgid "N'oubliez pas de cocher avant de valider :"
 msgstr "Don't forget to tick the box before to validate"
 
