@@ -4,8 +4,7 @@
                              (1 september 2019)
 ************************************************************************
                                Crafted with
-                         Python 3.5.2, Django 2.0,
-            HTML5, CSS3, ReportLab open-source, gettext 0.19.7
+      Python 3.5.2, Django 2.0, ReportLab open-source, HTML5, CSS3
 ************************************************************************
     eplouribousse : webapp to manage serials deduplication in libraries.
 
