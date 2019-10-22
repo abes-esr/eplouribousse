@@ -1095,7 +1095,9 @@ def home(request):
         if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
             i.save() # This will be just for information (to know if
                      # some {library, feature} has not been used yet)
-        if feature =='ranking':
+        if lid =="999999999":
+            return instrtodo(request, lid)
+        elif feature =='ranking':
             do = ranktotake(request, lid)
             return do
         elif feature =='arbitration':
