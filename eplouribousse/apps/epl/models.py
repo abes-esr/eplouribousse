@@ -19,7 +19,10 @@ class Library(models.Model):
     def __str__(self):
         return self.name
 
-from .libchoices import LIBRARY_CHOICES
+LIBRARY_CHOICES = ('checker','checker'),
+if Library.objects.all().exclude(name ='checker'):
+    for l in Library.objects.all().exclude(name ='checker').order_by('name'):
+        LIBRARY_CHOICES += (l.name, l.name),
 
 #Reasons to exclude an item record (see under ; class : ItemRecord,
 #field : excl) :
@@ -29,7 +32,9 @@ class Exclusion(models.Model):
     def __str__(self):
         return self.label
 
-from .excluchoices import EXCLUSION_CHOICES
+EXCLUSION_CHOICES = ("Autre (Commenter)", _("Autre (Commenter)")),
+for e in Exclusion.objects.all().order_by('label'):
+    EXCLUSION_CHOICES += (e.label, e.label),
 
 #Ranking choices :
 RANKING_CHOICES = ((4, 4), (3, 3), (2, 2), (1, 1),)

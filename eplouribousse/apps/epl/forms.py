@@ -1,8 +1,6 @@
 from django import forms
 
-from .models import ItemRecord, Instruction, Library, EXCLUSION_CHOICES, Feature, FEATURE_CHOICES, CHECKING_CHOICES, Check, Flag
-
-from .libchoices import LIBRARY_CHOICES
+from .models import ItemRecord, Instruction, Library, EXCLUSION_CHOICES, Feature, LIBRARY_CHOICES, FEATURE_CHOICES, CHECKING_CHOICES, Check, Flag
 
 
 class PositionForm(forms.ModelForm):

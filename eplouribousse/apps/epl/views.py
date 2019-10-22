@@ -6,8 +6,6 @@ from .models import *
 
 from .forms import *
 
-from .excluchoices import EXCLUSION_CHOICES
-
 from django.core.mail import send_mail
 
 from django.db.models.functions import Now
