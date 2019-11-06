@@ -1099,16 +1099,12 @@ def home(request):
                 return HttpResponse(_("Seule la fonctionnalité *instruction* est disponible pour le contrôleur (Reculez d'une page dans votre navigateur et choisissez *instruction*)"))
         else:
             if feature =='ranking':
-                do = ranktotake(request, lid)
-                return do
+                return ranktotake(request, lid)
             elif feature =='arbitration':
-                do = arbitration(request, lid)
-                return do
+                return arbitration(request, lid)
             elif feature =='instrtodo':
-                do = instrtodo(request, lid)
-                return do
+                return instrtodo(request, lid)
             elif feature =='edition':
-                do = tobeedited(request, lid)
-                return do
+                return tobeedited(request, lid)
 
     return render(request, 'epl/home.html', {'form' : f, 'project' : project, })
