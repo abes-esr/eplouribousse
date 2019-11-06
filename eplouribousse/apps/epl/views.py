@@ -1090,22 +1090,25 @@ def home(request):
     if f.is_valid():
         lid = Library.objects.get(name =i.libname).lid
         feature =i.feaname
-        if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
-            i.save() # This will be just for information (to know if
-                     # some {library, feature} has not been used yet)
+        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
+        i.save()
         if lid =="999999999":
-            return instrtodo(request, lid)
-        elif feature =='ranking':
-            do = ranktotake(request, lid)
-            return do
-        elif feature =='arbitration':
-            do = arbitration(request, lid)
-            return do
-        elif feature =='instrtodo':
-            do = instrtodo(request, lid)
-            return do
-        elif feature =='edition':
-            do = tobeedited(request, lid)
-            return do
+            if feature =='instrtodo':
+                return instrtodo(request, lid)
+            else:
+                return HttpResponse(_("Seule la fonctionnalité *instruction* est disponible pour le contrôleur (Reculez d'une page dans votre navigateur et choisissez *instruction*)"))
+        else:
+            if feature =='ranking':
+                do = ranktotake(request, lid)
+                return do
+            elif feature =='arbitration':
+                do = arbitration(request, lid)
+                return do
+            elif feature =='instrtodo':
+                do = instrtodo(request, lid)
+                return do
+            elif feature =='edition':
+                do = tobeedited(request, lid)
+                return do
 
     return render(request, 'epl/home.html', {'form' : f, 'project' : project, })
