@@ -1,0 +1,59 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
+
+    </head>
+
+
+    <body>
+
+      <h2>{{ name }} - {% trans "Arbitrages (Rang 1 non revendiqué)" %}</h2>
+      <div id="content">
+
+      <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
+
+      <p></p>
+
+      <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+
+          <p>{% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
+
+            <ul>
+
+              {% for elmt in ressourcelist %}
+                            <HR>
+                <p></p>
+                <li><b>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
+                <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+              {% endfor %}
+
+            </ul>
+        </div>
+
+        <div id="menugeneral">
+
+            <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+
+        </div>
+
+        <div id="footer">
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
+        </div>
+
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
+        </div>
+    </body>
+
+</html>
