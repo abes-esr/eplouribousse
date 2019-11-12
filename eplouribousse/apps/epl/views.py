@@ -1043,6 +1043,54 @@ def arbitration(request, lid):
     , 'size' : size, 'lid' : lid, 'name' : libname })
 
 
+def arbrk1(request, lid):
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslist = []
+
+    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
+        sid = e.sid
+        if ItemRecord.objects.exclude(lid =lid).filter(sid =sid, rank = 1):
+            resslist.append(e)
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+
+    return render(request, 'epl/arbrk1.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname })
+
+
+def arbnork1(request, lid):
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslist = []
+
+    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
+        sid = e.sid
+        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).exclude(rank =0).exclude(rank =99)) !=0:
+            resslist.append(e)
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+
+    return render(request, 'epl/arbnork1.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname })
+
+
 def tobeedited(request, lid):
 
     #For the lid identified library, getting ressources whose the resulting \
