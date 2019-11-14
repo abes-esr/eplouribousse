@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-14 11:30+0100\n"
+"POT-Creation-Date: 2019-11-14 15:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -651,7 +651,7 @@ msgstr "Excluded collections"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:77
 msgid "dont : "
-msgstr "these includes : "
+msgstr "including : "
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:83
 msgid "Ressources écartées par exclusion de collection"
