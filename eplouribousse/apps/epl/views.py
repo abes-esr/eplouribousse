@@ -1422,6 +1422,9 @@ def indicators(request):
             isol +=1/len(ItemRecord.objects.filter(sid =e.sid))
     isol = int(isol)
 
+    #candidate collections :
+    candcoll =coll - isol
+
     #Number of descarded ressources for exclusion reason :
     discard =0
     for i in ItemRecord.objects.filter(rank =0):
@@ -1455,7 +1458,7 @@ def indicators(request):
     'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
     's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
      'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
-     'tripl' : tripl, 'qudrpl' : qudrpl, })
+     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll,})
 
 def home(request):
 
