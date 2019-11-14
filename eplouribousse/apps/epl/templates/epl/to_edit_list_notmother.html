@@ -16,18 +16,12 @@
 
     <body>
 
-      <h2>{{ name }} - {% trans "ressources éditables" %}</h2>
+      <h2>{{ name }}</h2>
+      <h2>{% trans "Ressources éditables pour lesquelles votre collection n'est pas mère" %}</h2>
         <div id="content">
 
-      <p>{% trans "Nombre de ressources concernées" %} : {{ size }} - <a href="/edallpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a></p>
+      <p>{% trans "Nombre de ressources concernées" %} : {{ size }} - <a href="/ednotmotherpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a></p>
       <p></p>
-      <p>
-        <b><font color= #a7a7a7 >*</font></b> : {% trans "Votre collection est la collection mère" %}
-         (<a href="/edmotherlist/{{ lid }}">{% trans "Restreindre la liste à ces cas" %}</a> /
-         <a href="/ednotmotherlist/{{ lid }}">{% trans "Restreindre aux autres cas" %}</a> /
-         <a href="/filter/{{ lid }}">{% trans "Filtrer plus finement" %}</a>)
-       </p>
-
       <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur" %}.</p>
 
     <p>{% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
@@ -35,21 +29,11 @@
       <ul>
 
        {% for elmt in ressourcelist %}
-          {% if elmt.rank == 1 %}
-              <HR>
-       <p></p>
-          <li><b><font color= #a7a7a7 >*</font></b></li>
-          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/ed/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-          {% elif elmt.rank != 1 %}
               <HR>
         <p></p>
            <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
            <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
            <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/ed/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-           {% endif %}
-
        {% endfor %}
 
       </ul>

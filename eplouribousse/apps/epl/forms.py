@@ -2,6 +2,7 @@ from django import forms
 
 from .models import ItemRecord, Instruction, Library, EXCLUSION_CHOICES, Feature, LIBRARY_CHOICES, FEATURE_CHOICES, CHECKING_CHOICES, Check, Flag
 
+from django.utils.translation import ugettext_lazy as _
 
 class PositionForm(forms.ModelForm):
     class Meta:
@@ -42,3 +43,10 @@ class AdminCheckForm(forms.ModelForm):
         widgets = {
             'checkin': forms.RadioSelect(choices=CHECKING_CHOICES,),
         }
+
+
+class EditionForm(forms.Form):
+    RK_CHOICES = (("a", _("Premier Rang")), ("b", _("Autre rang")),)
+    LIB_CHOICES = LIBRARY_CHOICES[1:]
+    rank = forms.ChoiceField(required = True, widget=forms.Select, choices=RK_CHOICES, label =_("Rang des collections de la bibliothèque mentionnée dans l'entête de cette page"))
+    lib = forms.ChoiceField(required = True, widget=forms.Select, choices=LIB_CHOICES, label =_("Autre bibliothèque impliquée"))

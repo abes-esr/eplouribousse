@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+
+        <h1>{% trans "Déconnexion" %}</h1>
+        <h2>{% trans "Projet" %} : {{ project }}</h2>
+
+        <div id="content">
+
+
+<p>{% trans "Vous êtes bien déconnecté !" %}</p>
+
+
+
+        </div>
+
+        <div id="footer">
+
+            <p><a href="/">{% trans "Accueil" %}</a> - <a href="/dashboard">{% trans "Supervision" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a> - <a href="/./accounts/login">{% trans "M'authentifier" %}</a> - <a href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./admin">{% trans "Administration (réservé)" %}</a>] - <a href="/./lang">{% trans "en / de" %}</a></p>
+
+        </div>
+
+        <div id="credits">
+
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
+		</div>
+
+    </body>
+
+</html>

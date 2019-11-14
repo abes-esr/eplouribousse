@@ -22,8 +22,8 @@
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
 
       <p></p>
-      <p>(<b><font color= #e74c3c >1</font></b> : {% trans "Concurrence sur le rang 1" %} --> <a href="/arbrk1_list/{{ lid }}">{% trans "Restreindre la liste à ces cas" %}</a>)</p>
-      <p>(<b><font color= #e74c3c >ø</font></b> : {% trans "Rang 1 non revendiqué" %} --> <a href="/arbnork1_list/{{ lid }}">{% trans "Restreindre la liste à ces cas" %}</a>)</p>
+      <p><b><font color= #a7a7a7 >1</font></b> : <a href="/arbrk1_list/{{ lid }}">{% trans "Concurrence sur le rang 1" %}</a></p>
+      <p><b><font color= #a7a7a7 >ø</font></b> : <a href="/arbnork1_list/{{ lid }}">{% trans "Rang 1 non revendiqué" %}</a></p>
 
       <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
@@ -35,15 +35,13 @@
                   {% if elmt.rank == 1 %}
                             <HR>
                 <p></p>
-                <!-- <li><b><font color= #e74c3c >1</font></b></li> -->
-                <li><b><font color= #e74c3c >1 </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
+                <li><b><font color= #a7a7a7 >1 </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
                 <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
                   {% elif elmt.rank != 1 %}
                             <HR>
                 <p></p>
-                <!-- <li><b><font color= #e74c3c >ø</font></b></li> -->
-                <li><b><font color= #e74c3c >ø </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
+                <li><b><font color= #a7a7a7 >ø </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
                 <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
                   {% endif %}
