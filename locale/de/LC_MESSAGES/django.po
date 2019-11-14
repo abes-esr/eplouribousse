@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-14 10:57+0100\n"
+"POT-Creation-Date: 2019-11-14 11:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Anderer Rang"
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"
-msgstr ""
+msgstr "Rang der Sammlung für die oben genannte Bibliothek"
 
 #: eplouribousse/apps/epl/forms.py:52
 #: eplouribousse/apps/epl/templates/epl/filter.html:29
