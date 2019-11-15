@@ -34,4 +34,5 @@ urlpatterns = [
     path('dashboard', views.indicators, name='indicators'),
     path('lang', views.lang, name='language'),
     path('disconnect', views.logout_view, name='disconnection'),
+    path('999999999', views.checkinstr, name='message to checker'),
 ]

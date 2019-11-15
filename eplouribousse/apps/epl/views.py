@@ -26,7 +26,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 
 def lang(request):
-    return render(request, 'epl/language.html', {})
+    k = logstatus(request)
+    return render(request, 'epl/language.html', locals())
 
 def pdfedition(request, sid, lid):
 
@@ -557,7 +558,10 @@ def notmotherpdf(request, lid):
 
     return response
 
+
 def ranktotake(request, lid):
+
+    k = logstatus(request)
 
     #Getting ressources whose this lid must but has not yet taken rank :
     reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
@@ -572,10 +576,12 @@ def ranktotake(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l})
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, })
 
 
 def notintime(request, sid, lid):
+
+    k = logstatus(request)
 
     lib = Library.objects.get(lid = lid).name
     if lid =="999999999":
@@ -585,11 +591,13 @@ def notintime(request, sid, lid):
             ress = sid
     else:
         ress = ItemRecord.objects.get(sid =sid, lid =lid).title
-    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, })
+    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, 'k' : k, })
 
 
 @login_required
 def takerank(request, sid, lid):
+
+    k = logstatus(request)
 
     #Authentication control :
     if not request.user.email ==Library.objects.get(lid =lid).contact:
@@ -641,11 +649,13 @@ def takerank(request, sid, lid):
 
     return render(request, 'epl/ranking.html',\
      { 'ressource' : ress, 'items' : itemlist,
-     'library' : lib, 'form' : f, 'lid' : lid, 'flag' : flag, })
+     'library' : lib, 'form' : f, 'lid' : lid, 'flag' : flag, 'k' : k, })
 
 
 @login_required
 def addinstr(request, sid, lid):
+
+    k = logstatus(request)
 
     #Authentication control :
     if not request.user.email ==Library.objects.get(lid =lid).contact:
@@ -747,10 +757,12 @@ def addinstr(request, sid, lid):
     return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'lastone' : pklastone,})
+    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, })
 
 @login_required
 def delinstr(request, sid, lid):
+
+    k = logstatus(request)
 
     #Authentication control :
     if not request.user.email ==Library.objects.get(lid =lid).contact:
@@ -840,10 +852,12 @@ def delinstr(request, sid, lid):
     return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : expected, 'answer' : answer,})
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, })
 
 @login_required
 def endinstr(request, sid, lid):
+
+    k = logstatus(request)
 
     #Authentication control :
     if not request.user.email ==Library.objects.get(lid =lid).contact:
@@ -1046,10 +1060,12 @@ def endinstr(request, sid, lid):
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected,})
+    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, })
 
 
 def instrtodo(request, lid):
+
+    k = logstatus(request)
 
     if lid !="999999999":
         # Ressources whose the lid identified library has to deal with (status =1 or 3)
@@ -1080,6 +1096,8 @@ def instrtodo(request, lid):
 
 def instroneb(request, lid):
 
+    k = logstatus(request)
+
     if lid !="999999999":
         # Ressources whose the lid identified library has rank =1 and has to deal with bound elements (status =1)
         l = ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6)
@@ -1094,9 +1112,11 @@ def instroneb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodobd1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
 
 def instrotherb(request, lid):
+
+    k = logstatus(request)
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank !=1 and has to deal with bound elements (status =1)
@@ -1112,9 +1132,11 @@ def instrotherb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodobdnot1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
 
 def instronenotb(request, lid):
+
+    k = logstatus(request)
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank =1 and has to deal with not bound elements (status =3)
@@ -1130,9 +1152,11 @@ def instronenotb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodonotbd1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
 
 def instrothernotb(request, lid):
+
+    k = logstatus(request)
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank !=1 and has to deal with not bound elements (status =3)
@@ -1148,10 +1172,12 @@ def instrothernotb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodonotbdnot1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
 
 
 def arbitration(request, lid):
+
+    k = logstatus(request)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1180,10 +1206,12 @@ def arbitration(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, })
 
 
 def arbrk1(request, lid):
+
+    k = logstatus(request)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1204,10 +1232,12 @@ def arbrk1(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/arbrk1.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, })
 
 
 def arbnork1(request, lid):
+
+    k = logstatus(request)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1228,10 +1258,12 @@ def arbnork1(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/arbnork1.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, })
 
 
 def tobeedited(request, lid):
+
+    k = logstatus(request)
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -1244,8 +1276,8 @@ def tobeedited(request, lid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2:
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2:
             resslist.append(e)
 
     size = len(resslist)
@@ -1254,10 +1286,12 @@ def tobeedited(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_edit_list.html', { 'ressourcelist' : \
-    resslist, 'size' : size, 'name' : libname, 'lid' : lid })
+    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, })
 
 
 def mothered(request, lid):
+
+    k = logstatus(request)
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -1270,8 +1304,8 @@ def mothered(request, lid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2:
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2:
             resslist.append(e)
 
     size = len(resslist)
@@ -1280,10 +1314,12 @@ def mothered(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_edit_list_mother.html', { 'ressourcelist' : \
-    resslist, 'size' : size, 'name' : libname, 'lid' : lid })
+    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, })
 
 
 def notmothered(request, lid):
+
+    k = logstatus(request)
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -1296,8 +1332,8 @@ def notmothered(request, lid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2:
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2:
             resslist.append(e)
 
     size = len(resslist)
@@ -1306,10 +1342,12 @@ def notmothered(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_edit_list_notmother.html', { 'ressourcelist' : \
-    resslist, 'size' : size, 'name' : libname, 'lid' : lid })
+    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, })
 
 
 def edition(request, sid, lid):
+
+    k = logstatus(request)
 
     #edition of the resulting collection for the considered sid and lid :
 
@@ -1334,7 +1372,7 @@ def edition(request, sid, lid):
         return render(request, 'epl/edition.html',\
                  { 'instructionlist' : l, 'sid' : sid, 'issn' : issn, \
                  'title' : title, 'publicationhistory' : pubhist, 'lid' : lid, \
-                 'name' : name, 'mother' : mothercollection,})
+                 'name' : name, 'mother' : mothercollection, 'k' : k, })
 
     else:
         do = notintime(request, sid, lid)
@@ -1342,6 +1380,8 @@ def edition(request, sid, lid):
 
 
 def indicators(request):
+
+    k = logstatus(request)
 
     #Indicators :
 
@@ -1458,9 +1498,11 @@ def indicators(request):
     'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
     's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
      'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
-     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll,})
+     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, })
 
 def home(request):
+
+    k = logstatus(request)
 
     "Homepage"
 
@@ -1478,7 +1520,7 @@ def home(request):
             if feature =='instrtodo':
                 return instrtodo(request, lid)
             else:
-                return HttpResponse(_("Seule la fonctionnalité *instruction* est disponible pour le contrôleur (Reculez d'une page dans votre navigateur et choisissez *instruction*)"))
+                return checkinstr(request)
         else:
             if feature =='ranking':
                 return ranktotake(request, lid)
@@ -1489,10 +1531,20 @@ def home(request):
             elif feature =='edition':
                 return tobeedited(request, lid)
 
-    return render(request, 'epl/home.html', {'form' : f, 'project' : project, })
+    return render(request, 'epl/home.html', {'form' : f, 'project' : project, 'k' : k, })
+
+def checkinstr(request):
+
+    k = logstatus(request)
+
+    project = Project.objects.all().order_by('pk')[0].name
+
+    return render(request, 'epl/checker.html', {'project' : project, 'k' : k, })
 
 
 def filter(request, lid):
+
+    k = logstatus(request)
 
     "Filter"
 
@@ -1519,6 +1571,8 @@ def filter(request, lid):
 
 def xmothered(request, lid, xlid):
 
+    k = logstatus(request)
+
     l = ItemRecord.objects.filter(lid =lid, rank =1)
 
     #Initializing a list of ressources to edit :
@@ -1526,8 +1580,8 @@ def xmothered(request, lid, xlid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
             resslist.append(e)
 
     size = len(resslist)
@@ -1539,6 +1593,8 @@ def xmothered(request, lid, xlid):
 
 def xnotmothered(request, lid, xlid):
 
+    k = logstatus(request)
+
     l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99)
 
     #Initializing a list of ressources to edit :
@@ -1546,8 +1602,8 @@ def xnotmothered(request, lid, xlid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
             resslist.append(e)
 
     size = len(resslist)
@@ -1580,8 +1636,8 @@ def xmotherpdf(request, lid, xlid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
             resslist.append(e)
 
     for r in resslist:
@@ -1718,8 +1774,8 @@ def xnotmotherpdf(request, lid, xlid):
 
     for e in l:
         nl = Instruction.objects.filter(sid =e.sid)
-        k = nl.filter(name = "checker")
-        if len(k) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
+        kd = nl.filter(name = "checker")
+        if len(kd) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
             resslist.append(e)
 
     for r in resslist:
@@ -1838,3 +1894,11 @@ def logout_view(request):
     logout(request)
     # Redirect to a success page.
     return render(request, 'epl/disconnect.html', locals())
+
+
+def logstatus(request):
+    if request.user.is_authenticated:
+        k = request.user.get_username()
+    else:
+        k =0
+    return k
