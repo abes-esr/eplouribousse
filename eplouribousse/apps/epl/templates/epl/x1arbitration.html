@@ -23,19 +23,12 @@
       {% endif %}
       <p></p>
 
-      <h2>{{ name }} - {% trans "Arbitrages" %}</h2>
-
+      <h2>{{ name }} - {% trans "Arbitrages" %} - / {% trans "Concurrence sur le rang 1" %}</h2>
+      <h2>({% trans "Autre collection impliquée dans l'arbitrage" %} : {{ xname }})</h2>
       <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
 
-      <p></p>
-      <p><b><font color= #a7a7a7 >1</font></b> : <a href="/arbrk1_list/{{ lid }}">{% trans "Concurrence sur le rang 1" %}</a></p>
-      <p><b><font color= #a7a7a7 >ø</font></b> : <a href="/arbnork1_list/{{ lid }}">{% trans "Rang 1 non revendiqué" %}</a></p>
-      {% if nlib > 2 %}
-      <p><a href="/arbfilter/{{ lid }}">{% trans "Restreindre la liste aux arbitrages avec une autre bibliothèque" %}</a></p>
-      {% else %}
-      {% endif %}
       <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
           <p>{% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
@@ -43,19 +36,13 @@
             <ul>
 
               {% for elmt in ressourcelist %}
-                  {% if elmt.rank == 1 %}
+
                             <HR>
                 <p></p>
-                <li><b><font color= #a7a7a7 >1 </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
+                <li><b>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
                 <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-                  {% elif elmt.rank != 1 %}
-                            <HR>
-                <p></p>
-                <li><b><font color= #a7a7a7 >ø </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
-                <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-                <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-                  {% endif %}
+
               {% endfor %}
 
             </ul>

@@ -31,8 +31,8 @@
 
               {% csrf_token %}
 
-              <ul>{% trans "Rang des collections de" %} : {{ name }} {{ form.rank }}</ul>
-              <ul>{% trans "Autre bibliothèque impliquée" %} {{ form.lib }}</ul>
+              <ul>{{ name }} {{ form.rank }}</ul>
+              <ul>{% trans "Autre collection impliquée" %} {{ form.lib }}</ul>
 
               <input type="submit" value="{% trans "Valider" %}">
 

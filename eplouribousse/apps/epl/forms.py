@@ -46,7 +46,7 @@ class AdminCheckForm(forms.ModelForm):
 
 
 class EditionForm(forms.Form):
-    RK_CHOICES = (("a", _("Premier Rang")), ("b", _("Autre rang")),)
+    RK_CHOICES = (("a", _("Collection mère")), ("b", _("Collection non mère")),)
     LIB_CHOICES = LIBRARY_CHOICES[1:]
     rank = forms.ChoiceField(required = True, widget=forms.Select, choices=RK_CHOICES, label =_("Rang des collections de la bibliothèque mentionnée dans l'entête de cette page"))
     lib = forms.ChoiceField(required = True, widget=forms.Select, choices=LIB_CHOICES, label =_("Autre bibliothèque impliquée"))

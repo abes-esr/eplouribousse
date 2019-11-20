@@ -581,6 +581,121 @@ def ranktotake(request, lid):
     'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, })
 
 
+def filter_arblist(request, lid):
+
+    k = logstatus(request)
+
+    "Filter arb list"
+
+    libname = (Library.objects.get(lid =lid)).name
+
+    form = XlibForm(request.POST or None)
+    if form.is_valid():
+        xlib = form.cleaned_data['name']
+        xlid = Library.objects.get(name =xlib).lid
+        return xarbitration(request, lid, xlid)
+
+    return render(request, 'epl/filter_arblist.html', locals())
+
+
+def xarbitration(request, lid, xlid):
+
+    k = logstatus(request)
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslista = []
+    resslistb = []
+
+    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
+        sid = e.sid
+        if ItemRecord.objects.exclude(lid =lid).filter(sid =sid, rank = 1) and \
+        ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
+            resslista.append(e)
+
+    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
+        sid = e.sid
+        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).exclude(rank =0).exclude(rank =99)) !=0 and \
+        ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 99):
+            resslistb.append(e)
+
+    resslist = resslista + resslistb
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+
+    return render(request, 'epl/xarbitration.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'xlid' : xlid, })
+
+
+def x0arb(request, lid, xlid):
+
+    k = logstatus(request)
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslist = []
+
+    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
+        sid = e.sid
+        if ItemRecord.objects.exclude(lid =lid).filter(sid =sid, rank = 1) and \
+        ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
+            resslist.append(e)
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+
+    return render(request, 'epl/x0arbitration.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, })
+
+
+def x1arb(request, lid, xlid):
+
+    k = logstatus(request)
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslist = []
+
+    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
+        sid = e.sid
+        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).exclude(rank =0).exclude(rank =99)) !=0 and \
+        ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 99):
+            resslist.append(e)
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+
+    return render(request, 'epl/x1arbitration.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, })
+
+
 def filter_rklist(request, lid):
 
     k = logstatus(request)
@@ -1244,8 +1359,11 @@ def arbitration(request, lid):
     #Library name :
     libname = Library.objects.get(lid =lid).name
 
+    nlib = len(Library.objects.exclude(lid ="999999999"))
+
+
     return render(request, 'epl/arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'nlib' : nlib, })
 
 
 def arbrk1(request, lid):
