@@ -575,9 +575,48 @@ def ranktotake(request, lid):
     #Library name :
     libname = Library.objects.get(lid =lid).name
 
-    return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, })
+    nlib = len(Library.objects.exclude(lid ="999999999"))
 
+    return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, })
+
+
+def filter_rklist(request, lid):
+
+    k = logstatus(request)
+
+    "Filter rk list"
+
+    libname = (Library.objects.get(lid =lid)).name
+
+    form = XlibForm(request.POST or None)
+    if form.is_valid():
+        xlib = form.cleaned_data['name']
+        xlid = Library.objects.get(name =xlib).lid
+        return xranktotake(request, lid, xlid)
+
+    return render(request, 'epl/filter_rklist.html', locals())
+
+
+def xranktotake(request, lid, xlid):
+
+    k = logstatus(request)
+
+    #Getting ressources whose this lid must but has not yet taken rank :
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
+    resslist = []
+    for e in reclist:
+        itemlist = list(ItemRecord.objects.filter(sid = e.sid).exclude(rank =0))
+        if len(itemlist) > 1 and list(ItemRecord.objects.filter(sid = e.sid, lid = xlid).exclude(rank =0)):
+            resslist.append(e)
+    l = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+    return render(request, 'epl/xto_rank_list.html', { 'toranklist' : resslist, \
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname,})
 
 def notintime(request, sid, lid):
 
@@ -1553,8 +1592,8 @@ def filter(request, lid):
     form = EditionForm(request.POST or None)
     if form.is_valid():
         rank = form.cleaned_data['rank']
-        lib = form.cleaned_data['lib']
-        xlid = Library.objects.get(name =lib).lid
+        xlib = form.cleaned_data['lib']
+        xlid = Library.objects.get(name =xlib).lid
         if lid == xlid:
             if rank =="a":
                 return mothered(request, lid)
