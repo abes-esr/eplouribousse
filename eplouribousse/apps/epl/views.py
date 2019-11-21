@@ -1532,8 +1532,7 @@ def edition(request, sid, lid):
                  'name' : name, 'mother' : mothercollection, 'k' : k, })
 
     else:
-        do = notintime(request, sid, lid)
-        return do
+        return notintime(request, sid, lid)
 
 
 def indicators(request):
@@ -1748,6 +1747,7 @@ def xmothered(request, lid, xlid):
 
     return render(request, 'epl/xto_edit_list_mother.html', locals())
 
+
 def xnotmothered(request, lid, xlid):
 
     k = logstatus(request)
@@ -1769,6 +1769,7 @@ def xnotmothered(request, lid, xlid):
     xname = Library.objects.get(lid =xlid).name
 
     return render(request, 'epl/xto_edit_list_notmother.html', locals())
+
 
 def xmotherpdf(request, lid, xlid):
 
