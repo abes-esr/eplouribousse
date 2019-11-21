@@ -637,7 +637,7 @@ def xarbitration(request, lid, xlid):
     , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'xlid' : xlid, })
 
 
-def x0arb(request, lid, xlid):
+def x1arb(request, lid, xlid):
 
     k = logstatus(request)
 
@@ -662,11 +662,11 @@ def x0arb(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
 
-    return render(request, 'epl/x0arbitration.html', { 'ressourcelist' : resslist\
+    return render(request, 'epl/x1arbitration.html', { 'ressourcelist' : resslist\
     , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, })
 
 
-def x1arb(request, lid, xlid):
+def x0arb(request, lid, xlid):
 
     k = logstatus(request)
 
@@ -692,7 +692,7 @@ def x1arb(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
 
-    return render(request, 'epl/x1arbitration.html', { 'ressourcelist' : resslist\
+    return render(request, 'epl/x0arbitration.html', { 'ressourcelist' : resslist\
     , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, })
 
 
@@ -893,12 +893,12 @@ def addinstr(request, sid, lid):
         #Renumbering instruction lines :
         try:
             instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-            j, k =0, 1
+            j, l =0, 1
             while j <= len(instr):
-                instr[j].line = k
+                instr[j].line = l
                 instr[j].save()
                 j +=1
-                k +=1
+                l +=1
         except:
             pass
         instrlist = Instruction.objects.filter(sid = sid).order_by('line')
@@ -986,12 +986,12 @@ def delinstr(request, sid, lid):
     #Renumbering instruction lines :
     try:
         instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-        j, k =0, 1
+        j, l =0, 1
         while j <= len(instr):
-            instr[j].line = k
+            instr[j].line = l
             instr[j].save()
             j +=1
-            k +=1
+            l +=1
     except:
         pass
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
@@ -1245,7 +1245,7 @@ def instrtodo(request, lid):
     lidchecker = "999999999"
 
     return render(request, 'epl/instrtodo.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, })
 
 
 def instroneb(request, lid):
@@ -1699,7 +1699,7 @@ def checkinstr(request):
     return render(request, 'epl/checker.html', {'project' : project, 'k' : k, })
 
 
-def filter(request, lid):
+def filter_edlist(request, lid):
 
     k = logstatus(request)
 
@@ -1723,7 +1723,7 @@ def filter(request, lid):
             else:
                 return xnotmothered(request, lid, xlid)
 
-    return render(request, 'epl/filter.html', locals())
+    return render(request, 'epl/filter_edlist.html', locals())
 
 
 def xmothered(request, lid, xlid):

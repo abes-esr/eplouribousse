@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-20 14:11+0100\n"
+"POT-Creation-Date: 2019-11-21 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,6 @@ msgid "Collection mère"
 msgstr "Mother collection"
 
 #: eplouribousse/apps/epl/forms.py:49
-#| msgid "Collection mère"
 msgid "Collection non mère"
 msgstr "Non-mother collection"
 
@@ -76,8 +75,8 @@ msgstr "Something is wrong (The database admin will be informed)"
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:23
 #: eplouribousse/apps/epl/templates/epl/edition.html:20
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:20
-#: eplouribousse/apps/epl/templates/epl/filter.html:20
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:20
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:20
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:20
 #: eplouribousse/apps/epl/templates/epl/home.html:23
 #: eplouribousse/apps/epl/templates/epl/indicators.html:17
@@ -269,8 +268,8 @@ msgstr "underneath row n° ?"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:86
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:90
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:98
-#: eplouribousse/apps/epl/templates/epl/filter.html:37
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:35
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:37
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:35
 #: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/ranking.html:72
@@ -300,8 +299,8 @@ msgstr "You might resume afterwards"
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:37
 #: eplouribousse/apps/epl/templates/epl/edition.html:91
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:106
-#: eplouribousse/apps/epl/templates/epl/filter.html:47
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:45
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:47
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:45
 #: eplouribousse/apps/epl/templates/epl/home.html:29
 #: eplouribousse/apps/epl/templates/epl/indicators.html:152
@@ -334,8 +333,8 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:37
 #: eplouribousse/apps/epl/templates/epl/edition.html:91
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:106
-#: eplouribousse/apps/epl/templates/epl/filter.html:47
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:45
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:47
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:45
 #: eplouribousse/apps/epl/templates/epl/home.html:46
 #: eplouribousse/apps/epl/templates/epl/indicators.html:152
@@ -369,8 +368,8 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:44
 #: eplouribousse/apps/epl/templates/epl/edition.html:96
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:111
-#: eplouribousse/apps/epl/templates/epl/filter.html:52
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:50
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:52
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:50
 #: eplouribousse/apps/epl/templates/epl/home.html:53
 #: eplouribousse/apps/epl/templates/epl/indicators.html:157
@@ -397,7 +396,7 @@ msgstr "About"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:26
 #: eplouribousse/apps/epl/templates/epl/edition.html:87
-#: eplouribousse/apps/epl/templates/epl/filter.html:43
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:41
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:61
@@ -525,8 +524,8 @@ msgstr "Menu"
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:51
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:51
 #: eplouribousse/apps/epl/templates/epl/edition.html:87
-#: eplouribousse/apps/epl/templates/epl/filter.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:41
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:61
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:57
@@ -549,8 +548,8 @@ msgstr "Ranking"
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:51
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:51
 #: eplouribousse/apps/epl/templates/epl/edition.html:87
-#: eplouribousse/apps/epl/templates/epl/filter.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:41
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:41
 #: eplouribousse/apps/epl/templates/epl/indicators.html:143
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
@@ -670,8 +669,8 @@ msgid "Retour à la liste des ressources éditables"
 msgstr "Back to edition"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:87
-#: eplouribousse/apps/epl/templates/epl/filter.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:41
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:41
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:60
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:61
@@ -702,18 +701,7 @@ msgstr "Back to instruction"
 msgid "Supprimer une ligne"
 msgstr "Delete a row"
 
-#: eplouribousse/apps/epl/templates/epl/filter.html:26
-msgid "Filtre d'édition"
-msgstr "Edit filter"
-
-#: eplouribousse/apps/epl/templates/epl/filter.html:35
-#: eplouribousse/apps/epl/templates/epl/filter_rklist.html:33
-#| msgid "Autre collection participante"
-msgid "Autre collection impliquée"
-msgstr "Other collection involved"
-
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:26
-#| msgid "Arbitrages"
 msgid "Arbitrages / Filtre"
 msgstr "Arbitrations / Filter"
 
@@ -721,12 +709,19 @@ msgstr "Arbitrations / Filter"
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:27
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:27
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:27
-#| msgid "Collections impliquées dans un arbitrage quelconque"
 msgid "Autre collection impliquée dans l'arbitrage"
 msgstr "Other collection involved in arbitration"
 
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:26
+msgid "Filtre d'édition"
+msgstr "Edit filter"
+
+#: eplouribousse/apps/epl/templates/epl/filter_edlist.html:35
+#: eplouribousse/apps/epl/templates/epl/filter_rklist.html:33
+msgid "Autre collection impliquée"
+msgstr "Other collection involved"
+
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:26
-#| msgid "Positionnement"
 msgid "Positionnement / Filtre"
 msgstr "Ranking / Filter"
 
