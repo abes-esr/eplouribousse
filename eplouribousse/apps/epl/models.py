@@ -32,9 +32,10 @@ class Exclusion(models.Model):
     def __str__(self):
         return self.label
 
-EXCLUSION_CHOICES = ("Autre (Commenter)", _("Autre (Commenter)")),
+EXCLUSION_CHOICES = ('', ''),
 for e in Exclusion.objects.all().order_by('label'):
     EXCLUSION_CHOICES += (e.label, e.label),
+EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
 
 #Ranking choices :
 RANKING_CHOICES = ((4, 4), (3, 3), (2, 2), (1, 1),)
