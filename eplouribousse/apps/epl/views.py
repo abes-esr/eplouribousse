@@ -811,6 +811,12 @@ def addinstr(request, sid, lid):
 
     k = logstatus(request)
 
+    q = "x"
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))):
+        q =" "
+    else:
+        q ="x"
+
     #Authentication control :
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
@@ -874,13 +880,13 @@ def addinstr(request, sid, lid):
         #Instruction form instanciation and validation :
         i = Instruction(sid = sid, name = lib.name)
         f = InstructionForm(request.POST, instance =i)
-        q = "x"
+        # q = "x"
         if f.is_valid():
-            if len(list((Instruction.objects.filter(sid =sid)).\
-            filter(name ='checker'))):
-                q =" "
-            else:
-                q ="x"
+            # if len(list((Instruction.objects.filter(sid =sid)).\
+            # filter(name ='checker'))):
+            #     q =" "
+            # else:
+            #     q ="x"
             i.bound =q
             #A line may only be registered once :
             if not len(Instruction.objects.filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):

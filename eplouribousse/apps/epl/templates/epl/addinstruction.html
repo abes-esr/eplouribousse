@@ -24,7 +24,7 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      
+
       <h2>{{ library.name }} - {% trans "Instruction" %} - {{ stage }}</h2>
       <div id="content">
 
@@ -106,7 +106,7 @@
           <tr>
               <td><center>{{ form.line }}</center></td>
               <td>{{ library.name }}</td>
-              {% if stage == "éléments reliés" %}
+              {% if expected == "x" %}
               <td><center>x</center></td>
               {% else %}
               <td><center> </center></td>
