@@ -38,12 +38,12 @@ In order to have an idea of what it turns about and what it looks, we first reco
 
 It looks good ? Let's try it on your desktop with the Django development server (ensure Django is installed) ; this will allow you to test all features (except automatic mail alert which is just a convenience)
 
-Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database eplouribousse.db (url) and put it in the directory where you find manage.py
+Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database (eplouribousse.db) https://seafile.unistra.fr/f/212bc03412ee49429258/?dl=1 extract and put it in the directory where you find manage.py
 (A look into this database should allow you to know how to craft your own one)
 
-This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Carla is the checker and you're Joyce the administrator.
+This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Carla is the checker and you are Joyce the super user (including database administrator).
 
-Then you can play !
+Then you can play ! For any authentication use first name as identifier and testeplou as temporary password (the same for all identifiers)
 
 
 You're OK and you want the real one for you with all conveniences ?
