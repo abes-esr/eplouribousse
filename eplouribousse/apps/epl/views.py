@@ -1563,6 +1563,7 @@ def indicators(request):
         exclusion =str(e[0])
         value =len(ItemRecord.objects.filter(excl =e[0]))
         dict[exclusion] =value
+    del dict['']
 
     #Collections involved in arbitration for claiming 1st rank and number of serials concerned
     c1st, s1st =0,0
