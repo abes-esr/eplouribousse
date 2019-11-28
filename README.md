@@ -46,7 +46,7 @@ This is a playground with three libraries : John works for Swallow library, Susa
 Then you can play ! For any authentication use first name as identifier and testeplou as temporary password (the same for all identifiers)
 
 
-You're OK and you want the real one for you with all conveniences ?
+You're OK and you want the real one with all the conveniences ?
 We recommend that you first approach your IT team for a test installation.
 
 If you want to use eplouribousse for a firm project, there are three possibilities:
