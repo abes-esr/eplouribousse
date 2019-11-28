@@ -1,7 +1,7 @@
 ************************************************************************
                                eplouribousse
-                         Version : 0.3 (Hey Jude)
-                             (1 september 2019)
+                     Version : 0.4 (Claire Jeanne Emma)
+                             (1 december 2019)
 ************************************************************************
                                Crafted with
       Python 3.5.2, Django 2.0, ReportLab open-source, HTML5, CSS3
@@ -34,12 +34,5 @@ Boris Musilek, UdS, Direction du Numérique         : System
 
 ************************************************************************
     mail to : gressot@unistra.fr
-    snail mail to :
-     G. Gressot
-     Université de Strasbourg
-     Service des Bibliothèques
-     2 A rue de la Fonderie
-     CS 41037
-     FR-67070 Strasbourg Cedex
 
 ************************************************************************

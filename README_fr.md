@@ -33,6 +33,16 @@ Voir le manuel de l'appli en https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
 
 # Comment obtenir eplouribousse ?
 
+Commencez par visiter une instance réelle : https://eplouribousse.di.unistra.fr/
+Cela vous donnera un aperçu de l'application.
+
+Si vous voulez aller plus loin, essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (à l'exception des alertes mail qui ne sont qu'une commodité)
+Pour cela, clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données (url) et placez-la dans le répertoire qui contient le fichier manage.py
+(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+Pour ce test, nous avons trois bibliothèques : John travaille pour la bibliothèque Swallow, Susan pour la bibliothèque Magpie, Petra pour la bibliothèque Raven, Carla est le vérificateur et vous, vous êtes Joyce l'administrateur.
+Testez !
+
+Vous êtes convaincu et vous voulez mettre en oeuvre eplouribousse dans votre établissement ?
 Nous conseillons d'abord de vous rapprocher de votre équipe informatique pour une installation de test.
 
 Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a trois possibilités :

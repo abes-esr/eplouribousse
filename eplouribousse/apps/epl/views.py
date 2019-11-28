@@ -29,6 +29,7 @@ def lang(request):
     k = logstatus(request)
     return render(request, 'epl/language.html', locals())
 
+
 def pdfedition(request, sid, lid):
 
     filename = sid + '_' + lid + '.pdf'
