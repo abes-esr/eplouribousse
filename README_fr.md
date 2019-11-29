@@ -40,10 +40,13 @@ Pour avoir un aperçu de l'application, commencez par visiter une instance réel
 
 Pour cela, clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données https://seafile.unistra.fr/f/212bc03412ee49429258/?dl=1 , décompressez le fichier télécharger et placez la base de données eplouribousse.db dans le répertoire qui contient le fichier manage.py
 (Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+Dans un terminal, placez-vous dans le répertoire contenant le fichier manage.py, lancer la commande : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev puis lancer le serveur de développement : python3 manage.py runserver
 
-Pour ce test, nous avons trois bibliothèques : John travaille pour la bibliothèque Swallow, Susan pour la bibliothèque Magpie, Petra pour la bibliothèque Raven ; Carla est le vérificateur ; et vous, vous êtes Joyce le super-utilisateu (y compris administrateur de la base de données).
+Testez !
 
-Testez ! En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
+En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
+
+Pour ce test, nous avons trois bibliothèques : John travaille pour la bibliothèque Swallow, Susan pour la bibliothèque Magpie, Petra pour la bibliothèque Raven ; Carla est le vérificateur ; Flora administre la base de données, Alan administre le site et vous, vous êtes Joyce le super-utilisateur. Découvrez ce que chacun peut faire, quels sont ses droits, comment il peut interagir avec l'application.
 
 
 Vous êtes convaincu et vous voulez mettre en oeuvre eplouribousse dans votre établissement ?
