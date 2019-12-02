@@ -86,10 +86,9 @@
           <p><input type="submit" value="{% trans "Valider" %}"></p>
       </form>
 
-
-        <p><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></p>
-        <p><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a></p>
-
+      <div id="menucontextuel">
+        <button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></b></button> - <button><b><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a><b></button>
+      </div>
 </div>
 
         <div id="footer">

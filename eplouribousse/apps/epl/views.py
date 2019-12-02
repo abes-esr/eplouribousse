@@ -797,10 +797,10 @@ def takerank(request, sid, lid):
     # 0 --> 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
     # ordering by pk for identical ranks upper than 1.
     if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-        k = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
-        if k.status !=1:
-            k.status =1
-            k.save()
+        p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
+        if p.status !=1:
+            p.status =1
+            p.save()
 
     return render(request, 'epl/ranking.html',\
      { 'ressource' : ress, 'items' : itemlist,
@@ -1106,12 +1106,12 @@ def endinstr(request, sid, lid):
             #Renumbering instruction lines :
             try:
                 instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-                j, k =0, 1
+                j, g =0, 1
                 while j <= len(instr):
-                    instr[j].line = k
+                    instr[j].line = g
                     instr[j].save()
                     j +=1
-                    k +=1
+                    g +=1
             except:
                 pass
 
@@ -1167,11 +1167,11 @@ def endinstr(request, sid, lid):
                     nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
                     nextlib = Library.objects.get(lid =nextlid)
-                    j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
+                    j, g = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
                     if j.status !=2:
-                        j.status, k.status = 2, 1
+                        j.status, g.status = 2, 1
                         j.save()
-                        k.save()
+                        g.save()
                 else:
                     #(No nextitem, the whole pool of libraries finished instructing the current form, i.e. bound or not bound.)
                     nextlid = Library.objects.get(lid ="999999999").lid
@@ -1186,11 +1186,11 @@ def endinstr(request, sid, lid):
                     nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
                     nextlib = Library.objects.get(lid =nextlid)
-                    j, k = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
+                    j, g = ItemRecord.objects.get(sid =sid, lid =lid), ItemRecord.objects.get(sid =sid, lid =nextlid)
                     if j.status !=4:
-                        j.status, k.status = 4, 3
+                        j.status, g.status = 4, 3
                         j.save()
-                        k.save()
+                        g.save()
                 else:
                     #(No nextitem, the whole pool of libraries finished instructing the current form, i.e. bound or not bound.)
                     nextlid = Library.objects.get(lid ="999999999").lid
@@ -1207,14 +1207,14 @@ def endinstr(request, sid, lid):
             " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
             dest = nextlib.contact
             dest = [dest]
-            exp = Library.objects.get(lid ="999999999").contact
+            exp = BddAdmin.objects.all().order_by('pk')[0].contact
             send_mail(subject, message, exp, dest, fail_silently=True, )
 
             do = instrtodo(request, lid)
             return do
 
         if z.is_valid() and y.flag ==False:
-            info =_("N'oubliez pas de cocher avant de valider :")
+            info =_("Vous n'avez pas coché !")
 
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 

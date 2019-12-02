@@ -82,8 +82,10 @@
 
       <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
       <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}</p>
-      <p><a href="/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></p>
-
+      <div id="menucontextuel">
+      <button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></b></button>
+      </div>
+      
         <form method="post">{% csrf_token %}
 
       <table border="1">
@@ -131,7 +133,8 @@
         </form>
 
         <div id="menucontextuel">
-        <p><a href="/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a> - <a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a> ({% trans "Vous pourrez continuer ensuite" %})</p>
+
+        <button><b><a href="/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button></p>
         </div>
      </div>
 
