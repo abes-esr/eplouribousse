@@ -21,7 +21,7 @@ The sheets obtained describe the resulting collection ; the eliminated elements 
 07. conformity check at the end of each process cycle,
 08. full support of the processing chain,
 09. activity tracking chart,
-10. user and group management,
+10. users management,
 11. authentication controls,
 12. parameterization of derogation reasons,
 13. administration of faulty card cases,

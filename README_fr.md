@@ -21,7 +21,7 @@ Les fiches obtenues décrivent les résultantes ; les éléments écartés s'en 
 07. contrôle de conformité à la fin de chaque cycle d'instruction,
 08. prise en charge complète de la chaîne de traitement,
 09. tableau de suivi d'activité,
-10. gestion des utilisateurs et groupes,
+10. gestion des utilisateurs,
 11. contrôles d'authentification,
 12. paramétrage des motifs de dérogation,
 13. administration des cas de fiches défectueuses,
