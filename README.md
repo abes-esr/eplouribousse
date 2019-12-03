@@ -35,12 +35,16 @@ See the app manual in https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
 
 In order to have an idea of what it turns about and what it looks, we first recommand to take a tour on a real instance https://eplouribousse.di.unistra.fr/
 
+----------------
 
 It looks good ? Let's try it on your desktop with the Django development server (ensure Django is installed) ; this will allow you to test all features (except automatic mail alert which is just a convenience)
 
 Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database (eplouribousse.db) https://seafile.unistra.fr/f/212bc03412ee49429258/?dl=1 extract and put it in the directory where you find manage.py
 (A look into this database should allow you to know how to craft your own one)
-Open a terminal, change directory (you must go to the one containing manage.py) then write and valid the following command line : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev and run development server : python3 manage.py runserver
+
+Open a terminal, change directory (you must go to the one containing manage.py) then write and valid the following command line : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+
+and run development server : python manage.py runserver (or eventually : python3 manage.py runserver)
 
 Then you can play !
 
@@ -48,6 +52,7 @@ For any authentication use first name as identifier and testeplou as temporary p
 
 This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Carla is the checker, Flora is the database administrator, Alan is the site administrator and you are Joyce the super user. Discover what they can do, which rights they have, how they can interact with the app.
 
+----------------
 
 You're OK and you want the real one with all the conveniences ?
 We recommend that you first approach your IT team for a test installation.
