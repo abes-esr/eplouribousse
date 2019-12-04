@@ -50,7 +50,7 @@ Then you can play !
 
 For any authentication use first name as identifier and testeplou as temporary password (the same for all identifiers)
 
-This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Carla is the checker, Flora is the database administrator, Alan is the site administrator and you are Joyce the super user. Discover what they can do, which rights they have, how they can interact with the app.
+This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Clara is the checker, Flora is the database administrator, Alan is the site administrator and you are Joyce the super user. Discover what they can do, which rights they have, how they can interact with the app.
 
 ----------------
 

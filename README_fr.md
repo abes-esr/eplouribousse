@@ -52,7 +52,7 @@ Testez !
 
 En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
 
-Pour ce test, nous avons trois bibliothèques : John travaille pour la bibliothèque Swallow, Susan pour la bibliothèque Magpie, Petra pour la bibliothèque Raven ; Carla est le vérificateur ; Flora administre la base de données, Alan administre le site et vous, vous êtes Joyce le super-utilisateur. Découvrez ce que chacun peut faire, quels sont ses droits, comment il peut interagir avec l'application.
+Pour ce test, nous avons trois bibliothèques : John travaille pour la bibliothèque Swallow, Susan pour la bibliothèque Magpie, Petra pour la bibliothèque Raven ; Clara est le vérificateur ; Flora administre la base de données, Alan administre le site et vous, vous êtes Joyce le super-utilisateur. Découvrez ce que chacun peut faire, quels sont ses droits, comment il peut interagir avec l'application.
 
 ----------------
 
