@@ -10,6 +10,8 @@ L'ordre de traitement est significatif : La première bibliothèque est normalem
 
 Les fiches obtenues décrivent les résultantes ; les éléments écartés s'en déduisent. Les parties contribuant à la collection résultante peuvent être regroupées ou pas, au choix. Les traitements physiques et mises à jour catalographiques sont à prévoir.
 
+(Voir le poster réalisé pour les journées de l'ABES 2014 : https://seafile.unistra.fr/f/4d10c523dc/)
+
 # Fonctionnalités :
 
 01. édition des candidats pour chaque bibliothèque participante,
