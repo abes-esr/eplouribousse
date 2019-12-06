@@ -59,10 +59,10 @@ Pour ce test, nous avons trois bibliothèques : Jean travaille pour la biblioth�
 Vous êtes convaincu et vous voulez mettre en oeuvre eplouribousse dans votre établissement ?
 Nous conseillons d'abord de vous rapprocher de votre équipe informatique pour une installation de test.
 
-Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a trois possibilités :
+Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a actuellement trois possibilités :
 - Confier le déploiement à votre service informatique en indiquant l'adresse du présent site
 - Confier le déploiement à un hébergeur en indiquant l'adresse du présent site
-- Nous confier le déploiement (après accord et convention)
+- Nous confier le déploiement (sous réserve d'accord)
 
 Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 

@@ -57,10 +57,10 @@ This is a playground with three libraries : John works for Swallow library, Susa
 You're OK and you want the real one with all the conveniences ?
 We recommend that you first approach your IT team for a test installation.
 
-If you want to use eplouribousse for a firm project, there are three possibilities:
+If you want to use eplouribousse for a firm project, there are three possibilities at the moment :
 - Entrust the deployment to your IT department by indicating the address of this site
 - Entrust the deployment to a host indicating the address of this site
-- We entrust the deployment (after agreement and convention)
+- We entrust the deployment (subject to agreement)
 
 In all cases, let us know that you're interested (see contact below)
 
