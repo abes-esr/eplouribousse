@@ -41,7 +41,7 @@ Pour avoir un aperçu de l'application, commencez par visiter une instance réel
 
 ça vous a plu ? Allez plus loin ; essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (à l'exception des alertes mail qui ne sont qu'une commodité)
 
-Pour cela, clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données https://seafile.unistra.fr/f/82943ec7743b4069bc89/?dl=1
+Pour cela, clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données https://seafile.unistra.fr/f/c9a7a7dfa00a417ebb24/?dl=1
 
 Décompressez et placez la base de données eplouribousse.db dans le répertoire qui contient le fichier manage.py
 (Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
