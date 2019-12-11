@@ -10,6 +10,8 @@ The order of processing is significant: The first library is normally the one al
 
 The sheets obtained describe the resulting collection ; the eliminated elements are deduced from this description (all that doesn't contribute to the resulting collection) The elements which contributes to the resulting collection may be grouped together or not, as desired. Physical treatments and catalog updates are expected.
 
+See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
+
 # Features:
 
 01. edition of the candidates for each taking part library,
