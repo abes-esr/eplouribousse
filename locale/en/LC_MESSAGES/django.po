@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-12 08:54+0100\n"
+"POT-Creation-Date: 2019-12-12 13:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -469,7 +469,7 @@ msgstr "Restricted list to arbitration cases with another involved library"
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:31
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:32
 msgid ""
-"Pour chercher une occurence dans cette liste, veuillez utiliser la "
+"Pour chercher une occurrence dans cette liste, veuillez utiliser la "
 "fonctionnalité de recherche du navigateur."
 msgstr "Use browser search feature to find an occurrence."
 
