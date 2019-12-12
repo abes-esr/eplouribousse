@@ -29,7 +29,7 @@
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
 
       <p></p>
-      <p>{% trans "Pour chercher n'importe quelle occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur" %}.</p>
+      <p>{% trans "Pour chercher une occurence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
       <ul>
 
@@ -41,9 +41,8 @@
           <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
           <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
 
-
-
       {% endfor %}
+            <HR>
 
       </ul>
         </div>
