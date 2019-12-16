@@ -1,0 +1,65 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
+
+    </head>
+
+
+    <body>
+      {% if k != 0 %}
+      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
+      {% else %}
+      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+      <!-- (User : Anonymous) -->
+      {% endif %}
+
+      <p></p>
+      <h2>{% trans "Contrôle final" %}</h2>
+      <h2>{{ coll_set }} (ou)</h2>
+
+        <div id="content">
+
+      <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
+
+      <p></p>
+
+      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+
+      <ul>
+
+      {% for elmt in l %}
+
+            <HR>
+      <p></p>
+
+            <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+            <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+            <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/999999999">{{ elmt.sid }}</a></li>
+
+      {% endfor %}
+           <HR>
+
+      </ul>
+
+        </div>
+
+        <div id="footer">
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
+        </div>
+
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
+        </div>
+    </body>
+
+</html>

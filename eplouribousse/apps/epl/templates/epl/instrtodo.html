@@ -21,13 +21,19 @@
       <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
       <!-- (User : Anonymous) -->
       {% endif %}
+
       <p></p>
       <h2>{{ name }} - {% trans "ressources à instruire" %} - {% trans "toutes formes, tous rangs" %}</h2>
         <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
-
+      {% if lid == "999999999" %}
+      <b><font color= #a7a7a7 >1/2</font></b> : {% trans "Contrôle à mi-chemin" %}
       <p></p>
+      <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Contrôle final" %}
+      <p><a href="/xcheck">{% trans "Filtrer la liste" %}</a></p>
+      <p></p>
+      {% endif %}
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
       <ul>
@@ -36,11 +42,23 @@
 
             <HR>
       <p></p>
+          {% if elmt.lid != lid %}
+          <!-- it means : lid =="999999999" -->
+              {% if elmt.status == 2 %}
+              <li><b><font color= #a7a7a7 >1/2</font></b></li>
+              <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+              <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+              <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+              {% elif elmt.status == 4 %}
+              <li><b><font color= #a7a7a7 >2/2</font></b></li>
+              <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+              <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+              <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+              {% endif %}
+          {% else %}
+          <!-- it means : lid !="999999999" -->
           <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
           <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-          {% if elmt.lid != lid %}
-          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-          {% else %}
           <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
           {% endif %}
 
@@ -50,9 +68,10 @@
            <HR>
 
       </ul>
-      {% if lid != lidchecker %}
 
         </div>
+
+        {% if lid != lidchecker %}
         <div id="menucontextuel">
         <p><b>{% trans "Menu [instructions]" %} : </b><a href="/bd1/{{ lid }}">{% trans "reliés rang 1" %}</a> - <a href="/bdnot1/{{ lid }}">{% trans "reliés autre rang" %}</a> - <a href="/notbd1/{{ lid }}">{% trans "non reliés rang 1" %}</a> - <a href="/notbdnot1/{{ lid }}">{% trans "non reliés autre rang" %}</a></p>
         </div>
@@ -60,8 +79,8 @@
         <div id="menugeneral">
         <p><b>{% trans "Menu général" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
+        {% endif %}
 
-      {% endif %}
         <div id="footer">
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>

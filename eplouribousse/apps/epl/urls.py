@@ -41,4 +41,8 @@ urlpatterns = [
     path('lang', views.lang, name='language'),
     path('disconnect', views.logout_view, name='disconnection'),
     path('999999999', views.checkinstr, name='message to checker'),
+    path('xcheck', views.checkerfilter, name='checker filter'),
+    path('xckbd', views.xckbd, name='instrtodo for checker xbd'),
+    path('xcknbd', views.xcknbd, name='instrtodo for checker xnbd'),
+    path('xckall', views.xckall, name='instrtodo for checker xall'),
 ]

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import ItemRecord, Instruction, Library, EXCLUSION_CHOICES, Feature, LIBRARY_CHOICES, FEATURE_CHOICES, CHECKING_CHOICES, Check, Flag
+from .models import ItemRecord, Instruction, Library, EXCLUSION_CHOICES, Feature, LIBRARY_CHOICES, FEATURE_CHOICES, CHECKING_CHOICES, Check, Flag, PHASE_CHOICES
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -53,3 +53,7 @@ class EditionForm(forms.Form):
 
 class XlibForm(forms.Form):
     name = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES[1:], label =_("Autre bibliothèque impliquée"))
+
+class InstructionCheckerFilter(forms.Form):
+    name = forms.MultipleChoiceField(required = True, widget=forms.CheckboxSelectMultiple, choices=LIBRARY_CHOICES[1:], label =_("Bibliothèques impliquées (opérateur 'ou')"))
+    phase = forms.MultipleChoiceField(required = True, widget=forms.CheckboxSelectMultiple, choices=PHASE_CHOICES, label =_("Phase d'instruction"))

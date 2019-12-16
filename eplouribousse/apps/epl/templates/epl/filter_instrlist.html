@@ -1,0 +1,54 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
+
+
+    </head>
+
+
+    <body>
+      {% if k != 0 %}
+      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
+      {% else %}
+      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+      <!-- (User : Anonymous) -->
+      {% endif %}
+      <p></p>
+        <h2>{% trans "Filtre pour les contrôles de fin de phase" %}</h2>
+
+
+        <div id="content">
+          <form method="post">
+
+              {% csrf_token %}
+
+              <ul>{% trans "Phase" %} {{ form.phase }}</ul>
+              <ul>{% trans "Autre collection impliquée" %} {% trans "(C'est l'opérateur 'ou' qui est appliqué en cas de choix multiple)" %} {{ form.name }}</ul>
+
+              <input type="submit" value="{% trans "Valider" %}">
+
+          </form>
+        </div>
+
+
+        <div id="footer">
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
+        </div>
+
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg</p>
+			<p><a target="_blank" href="https://seafile.unistra.fr/f/a264af5a98154545b5d3/">{% trans "A propos" %}</a></p>
+        </div>
+
+    </body>
+
+</html>

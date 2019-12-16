@@ -144,3 +144,9 @@ class Flag(models.Model):
     flag = models.BooleanField('checking', default=False)
     def __str__(self):
         return str(self.flag)
+
+#Feature choices :
+PHASE_CHOICES = (
+    ('bound', _("Reliés")),
+    ('not bound', _("Non reliés")),
+)

@@ -2068,3 +2068,79 @@ def logstatus(request):
     else:
         k =0
     return k
+
+def checkerfilter(request):
+
+    k = logstatus(request)
+
+    form = InstructionCheckerFilter(request.POST or None)
+    if form.is_valid():
+        coll_set = form.cleaned_data['name']
+        phase_set = form.cleaned_data['phase']
+        l = []
+        if len(phase_set) ==2:
+            return xckall(request, coll_set)
+        elif phase_set[0] =='bound':
+            return xckbd(request, coll_set)
+        else:
+            return xcknbd(request, coll_set)
+
+    return render(request, 'epl/filter_instrlist.html', locals())
+
+
+def xckbd(request, coll_set):
+
+    k = logstatus(request)
+
+    l = []
+
+    for e in ItemRecord.objects.filter(status =2, rank =1):
+        if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
+            for coll in coll_set:
+                if ItemRecord.objects.filter(lid =Library.objects.get(name =coll).lid, sid =e.sid).exclude(rank =0):
+                    if ItemRecord.objects.get(sid =e.sid, rank =1) not in l:
+                        l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
+    size = len(l)
+
+    return render(request, 'epl/xckbd.html', locals())
+
+
+def xcknbd(request, coll_set):
+
+    k = logstatus(request)
+
+    l = []
+
+    for e in ItemRecord.objects.filter(status =4, rank =1):
+        if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
+            for coll in coll_set:
+                if ItemRecord.objects.filter(lid =Library.objects.get(name =coll).lid, sid =e.sid).exclude(rank =0):
+                    if ItemRecord.objects.get(sid =e.sid, rank =1) not in l:
+                        l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
+    size = len(l)
+
+    return render(request, 'epl/xcknbd.html', locals())
+
+
+def xckall(request, coll_set):
+
+    k = logstatus(request)
+
+    l = []
+
+    for e in ItemRecord.objects.filter(status =2, rank =1):
+        if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
+            for coll in coll_set:
+                if ItemRecord.objects.filter(lid =Library.objects.get(name =coll).lid, sid =e.sid).exclude(rank =0):
+                    if ItemRecord.objects.get(sid =e.sid, rank =1) not in l:
+                        l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
+
+    for e in ItemRecord.objects.filter(status =4, rank =1):
+        if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
+            for coll in coll_set:
+                if ItemRecord.objects.filter(lid =Library.objects.get(name =coll).lid, sid =e.sid).exclude(rank =0):
+                    if ItemRecord.objects.get(sid =e.sid, rank =1) not in l:
+                        l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
+    size = len(l)
+
+    return render(request, 'epl/xckall.html', locals())
