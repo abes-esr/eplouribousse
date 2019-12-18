@@ -24,7 +24,7 @@ checker et bddadmin à remplacer par une simple combinaison user/group
 - Lisibilité et assainissement du code
 - Ergonomie
 - Enrichissement des commentaires du code
-- Documentation de l'application à mettre à jour, à peaufiner et à traduire (en, de, es, it)
+- Documentation de l'application à mettre à jour avec copies d'écrans, à peaufiner et à traduire (en, de, es, it)
 - Mise à jour du Readme
 - Licence ?
 --------------------------------------------------------------------------------------------------
