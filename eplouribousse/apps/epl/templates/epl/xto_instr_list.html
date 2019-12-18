@@ -11,11 +11,11 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" type="text/css" href="../../../../static/css/style.css">
 
-
     </head>
 
 
     <body>
+
       {% if k != 0 %}
       <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
       {% else %}
@@ -23,22 +23,34 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-        <h2>{{ libname }} - {% trans "Instruction / Filtre" %}</h2>
-
+      <h2>{{ name }} - {% trans "collections à instruire" %}</h2>
+      <h2>({% trans "Autre collection participante" %} : {{ xname }})</h2>
         <div id="content">
-          <form method="post">
 
-              {% csrf_token %}
+      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
 
-              <ul>{% trans "Autre collection impliquée" %} {{ form.name }}</ul>
+      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
-              <input type="submit" value="{% trans "Valider" %}">
+    <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
-          </form>
+      <ul>
+
+       {% for elmt in l %}
+
+             <HR>
+       <p></p>
+          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+
+
+       {% endfor %}
+            <HR>
+
+      </ul>
         </div>
-
         <div id="menugeneral">
-            <p><b>{% trans "Menu général" %} :</b> <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
 
         <div id="footer">

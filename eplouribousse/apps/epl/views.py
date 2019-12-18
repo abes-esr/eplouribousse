@@ -25,6 +25,13 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import logout
 
+idfeature =1 #identification de la fonctionnalité (1 pour positionnement, 2 pour arbitrage, 3 pour instr et 4 pour ed)
+idview =1 #identification des fonctions de listes (voir les vues correspondantes)
+dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
+dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
+tes_lloc =Library.objects.all() # comme coll_set
+
+
 def lang(request):
     k = logstatus(request)
     return render(request, 'epl/language.html', locals())
@@ -564,6 +571,9 @@ def ranktotake(request, lid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil
+    idfeature, idview, dil =1, 0, lid
+
     #Getting ressources whose this lid must but has not yet taken rank :
     reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
     resslist = []
@@ -602,6 +612,9 @@ def filter_arblist(request, lid):
 def xarbitration(request, lid, xlid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =2, 1, lid, xlid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -642,6 +655,9 @@ def x1arb(request, lid, xlid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =2, 2, lid, xlid
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -670,6 +686,9 @@ def x1arb(request, lid, xlid):
 def x0arb(request, lid, xlid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =2, 3, lid, xlid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -717,6 +736,9 @@ def filter_rklist(request, lid):
 def xranktotake(request, lid, xlid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =1, 1, lid, xlid
 
     #Getting ressources whose this lid must but has not yet taken rank :
     reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
@@ -1024,23 +1046,21 @@ def endinstr(request, sid, lid):
     if not request.user.email ==Library.objects.get(lid =lid).contact:
         return home(request)
 
-    do = notintime(request, sid, lid)
-
     #Control (endinstr only if it's up to the considered library == same conditions as for addinstr)
     try:
         if lid !="999999999":
             if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
-                return do
+                return notintime(request, sid, lid)
 
         else: # i.e. lid =="999999999"
             if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==2:
-                return do
+                return notintime(request, sid, lid)
             elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
                 if len(list(ItemRecord.objects.filter(sid =sid).exclude(rank =0))) != len(list(ItemRecord.objects.filter(sid =sid, status =4))):
-                    return do
+                    return notintime(request, sid, lid)
             else: # i.e. len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0
                 if len(list(ItemRecord.objects.filter(sid =sid).exclude(rank =0))) != len(list(ItemRecord.objects.filter(sid =sid, status =2))):
-                    return do
+                    return notintime(request, sid, lid)
     except:
         z =1 #This is just to continue
 
@@ -1130,16 +1150,14 @@ def endinstr(request, sid, lid):
                     " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = nextlib.contact
                     dest = [dest]
-                    exp = Library.objects.get(lid ="999999999").contact
+                    exp = BddAdmin.objects.all().order_by('pk')[0].contact
                     send_mail(subject, message, exp, dest, fail_silently=True, )
 
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==2:
                 for e in ItemRecord.objects.filter(sid =sid, status =4):
                     e.status = 5
                     e.save()
-
-            do = instrtodo(request, lid)
-            return do
+            return router(request)
 
         elif u.is_valid() and t.checkin =="Notify": #In this case BDD administrator will be informed of errors in the instructions.
             # Change all ItemRecords status (except those with rank =0) for the considered sid to status =6
@@ -1156,9 +1174,7 @@ def endinstr(request, sid, lid):
                 dest.append(d.contact)
             exp = Library.objects.get(lid ="999999999").contact
             send_mail(subject, message, exp, dest, fail_silently=True, )
-
-            do = instrtodo(request, lid)
-            return do
+            return router(request)
 
     else: #lid !="999999999"
         if z.is_valid() and y.flag ==True:
@@ -1209,9 +1225,7 @@ def endinstr(request, sid, lid):
             dest = [dest]
             exp = BddAdmin.objects.all().order_by('pk')[0].contact
             send_mail(subject, message, exp, dest, fail_silently=True, )
-
-            do = instrtodo(request, lid)
-            return do
+            return router(request)
 
         if z.is_valid() and y.flag ==False:
             info =_("Vous n'avez pas coché !")
@@ -1227,6 +1241,9 @@ def endinstr(request, sid, lid):
 def instrtodo(request, lid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil
+    idfeature, idview, dil =3, 0, lid
 
     if lid !="999999999":
         # Ressources whose the lid identified library has to deal with (status =1 or 3)
@@ -1249,10 +1266,12 @@ def instrtodo(request, lid):
     #Getting library name :
     libname = Library.objects.get(lid =lid).name
 
+    nlib = len(Library.objects.exclude(lid ="999999999"))
+
     lidchecker = "999999999"
 
     return render(request, 'epl/instrtodo.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, 'nlib' : nlib, })
 
 
 def instroneb(request, lid):
@@ -1340,6 +1359,9 @@ def arbitration(request, lid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil
+    idfeature, idview, dil =2, 0, lid
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1377,6 +1399,9 @@ def arbrk1(request, lid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil
+    idfeature, idview, dil =2, 4, lid
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1403,6 +1428,9 @@ def arbnork1(request, lid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil
+    idfeature, idview, dil =2, 2, lid
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1428,6 +1456,9 @@ def arbnork1(request, lid):
 def tobeedited(request, lid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil
+    idfeature, idview, dil =4, 0, lid
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -1457,6 +1488,9 @@ def mothered(request, lid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil
+    idfeature, idview, dil =4, 1, lid
+
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
@@ -1484,6 +1518,9 @@ def mothered(request, lid):
 def notmothered(request, lid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil
+    idfeature, idview, dil =4, 2, lid
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -1737,6 +1774,9 @@ def xmothered(request, lid, xlid):
 
     k = logstatus(request)
 
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =4, 3, lid, xlid
+
     l = ItemRecord.objects.filter(lid =lid, rank =1)
 
     #Initializing a list of ressources to edit :
@@ -1759,6 +1799,9 @@ def xmothered(request, lid, xlid):
 def xnotmothered(request, lid, xlid):
 
     k = logstatus(request)
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =4, 4, lid, xlid
 
     l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99)
 
@@ -2085,12 +2128,15 @@ def checkerfilter(request):
         else:
             return xcknbd(request, coll_set)
 
-    return render(request, 'epl/filter_instrlist.html', locals())
+    return render(request, 'epl/filter_ck_instrlist.html', locals())
 
 
 def xckbd(request, coll_set):
 
     k = logstatus(request)
+
+    global idfeature, idview, tes_lloc
+    idfeature, idview, tes_lloc =3, 2, coll_set
 
     l = []
 
@@ -2109,6 +2155,9 @@ def xcknbd(request, coll_set):
 
     k = logstatus(request)
 
+    global idfeature, idview, tes_lloc
+    idfeature, idview, tes_lloc =3, 3, coll_set
+
     l = []
 
     for e in ItemRecord.objects.filter(status =4, rank =1):
@@ -2125,6 +2174,9 @@ def xcknbd(request, coll_set):
 def xckall(request, coll_set):
 
     k = logstatus(request)
+
+    global idfeature, idview, tes_lloc
+    idfeature, idview, tes_lloc =3, 4, coll_set
 
     l = []
 
@@ -2144,3 +2196,87 @@ def xckall(request, coll_set):
     size = len(l)
 
     return render(request, 'epl/xckall.html', locals())
+
+
+def router(request):
+
+    if idfeature ==1:
+        if idview ==0:
+            return ranktotake(request, dil)
+        if idview ==1:
+            return xranktotake(request, dil, dilx)
+    if idfeature ==2:
+        if idview ==0:
+            return arbitration(request, dil)
+        if idview ==1:
+            return xarbitration(request, dil, dilx)
+        if idview ==2:
+            return x1arb(request, dil, dilx)
+        if idview ==3:
+            return x0x0arb(request, dil, dilx)
+        if idview ==4:
+            return arbrk1(request, dil)
+        if idview ==5:
+            return arbnork1(request, dil)
+    if idfeature ==3:
+        if idview ==0:
+            return instrtodo(request, dil)
+        if idview ==1:
+            return xinstrlist(request, dil, dilx)
+        if idview ==2:
+            return xckbd(request, tes_lloc)
+        if idview ==3:
+            return xcknbd(request, tes_lloc)
+        if idview ==4:
+            return xckall(request, tes_lloc)
+    if idfeature ==4:
+        if idview ==0:
+            return tobeedited(request, dil)
+        if idview ==1:
+            return mothered(request, dil)
+        if idview ==2:
+            return notmothered(request, dil)
+        if idview ==3:
+            return xmothered(request, dil, dilx)
+        if idview ==4:
+            return xnotmothered(request, dil, dilx)
+
+    return render(request, 'epl/router.html', locals())
+
+
+def instrfilter(request, lid):
+
+    k = logstatus(request)
+
+    "Filter instruction list"
+
+    libname = (Library.objects.get(lid =lid)).name
+
+    form = XlibForm(request.POST or None)
+    if form.is_valid():
+        xlib = form.cleaned_data['name']
+        xlid = Library.objects.get(name =xlib).lid
+        # return xranktotake(request, lid, xlid)
+        return xinstrlist(request, lid, xlid)
+    return render(request, 'epl/filter_instrlist.html', locals())
+
+
+def xinstrlist(request, lid, xlid):
+
+    k = logstatus(request)
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =3, 1, lid, xlid
+
+    name = Library.objects.get(lid =lid).name
+    xname = Library.objects.get(lid =xlid).name
+
+    lprov = ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    l =[]
+    for e in lprov:
+        if ItemRecord.objects.filter(lid =xlid).exclude(rank =0):
+            l.append(e)
+    size = len(l)
+
+    return render(request, 'epl/xto_instr_list.html', locals())

@@ -45,4 +45,7 @@ urlpatterns = [
     path('xckbd', views.xckbd, name='instrtodo for checker xbd'),
     path('xcknbd', views.xcknbd, name='instrtodo for checker xnbd'),
     path('xckall', views.xckall, name='instrtodo for checker xall'),
+    path('router', views.router, name='route to the right list'),
+    path('instrfilter/<str:lid>', views.instrfilter, name='instrfilter'),
+    path('instrlist/<str:lid>/<str:xlid>', views.xinstrlist, name='xinstr'),
 ]

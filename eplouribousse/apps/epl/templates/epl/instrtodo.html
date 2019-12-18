@@ -34,6 +34,12 @@
       <p><a href="/xcheck">{% trans "Filtrer la liste" %}</a></p>
       <p></p>
       {% endif %}
+
+      {% if nlib > 2 %}
+      <p><a href="/instrfilter/{{ lid }}">{% trans "Restreindre la liste aux arbitrages avec une autre bibliothèque" %}</a></p>
+      {% else %}
+      {% endif %}
+      
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
       <ul>
