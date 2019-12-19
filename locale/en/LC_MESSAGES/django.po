@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 08:31+0100\n"
+"POT-Creation-Date: 2019-12-19 09:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -728,8 +728,8 @@ msgid "Poursuivre l'instruction"
 msgstr "Resume instruction"
 
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:29
-msgid "Vous êtes bien déconnecté !"
-msgstr "You are disconnected!"
+msgid "Déconnexion effectuée"
+msgstr "You're logged out"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:36
 msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
@@ -1355,6 +1355,9 @@ msgstr ""
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
+
+#~ msgid "Vous êtes bien déconnecté !"
+#~ msgstr "You are disconnected!"
 
 #~ msgid ""
 #~ "Pour chercher n'importe quelle occurence dans cette liste, veuillez "
