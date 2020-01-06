@@ -68,8 +68,8 @@ nosetests.xml
 coverage.xml
 
 # Translations
-*.mo
-*.pot
+#*.mo
+#*.pot
 
 # Sphinx documentation
 docs/_build/
@@ -88,5 +88,6 @@ migrations/
 
 .env
 db.sqlite3
-eplouribousse.db
+#eplouribousse.db
+*.db
 assets/
