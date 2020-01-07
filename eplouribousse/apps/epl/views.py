@@ -31,6 +31,10 @@ dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
 dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
 tes_lloc =Library.objects.all() # comme coll_set
 
+try:
+    replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
+except:
+    replymail =BddAdmin.objects.all().order_by('pk')[0].contact
 
 def lang(request):
     k = logstatus(request)
@@ -1150,8 +1154,7 @@ def endinstr(request, sid, lid):
                     " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = nextlib.contact
                     dest = [dest]
-                    exp = BddAdmin.objects.all().order_by('pk')[0].contact
-                    send_mail(subject, message, exp, dest, fail_silently=True, )
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==2:
                 for e in ItemRecord.objects.filter(sid =sid, status =4):
@@ -1223,8 +1226,7 @@ def endinstr(request, sid, lid):
             " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
             dest = nextlib.contact
             dest = [dest]
-            exp = BddAdmin.objects.all().order_by('pk')[0].contact
-            send_mail(subject, message, exp, dest, fail_silently=True, )
+            send_mail(subject, message, replymail, dest, fail_silently=True, )
             return router(request)
 
         if z.is_valid() and y.flag ==False:
