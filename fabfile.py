@@ -3,10 +3,10 @@
 """
 """
 
-from fabric.api import (env, roles, execute, task)
 from os.path import join
 
 import pydiploy
+from fabric.api import env, execute, roles, task
 
 # edit config here !
 
@@ -89,20 +89,19 @@ def test():
     env.backends = ['127.0.0.1']
     env.server_name = 'eplouribousse-test.di.unistra.fr'
     env.short_server_name = 'eplouribousse-test'
-    env.static_folder = '/site_media/'
-    env.server_ip = ''
+    env.static_folder = '/static/'
+    env.server_ip = '127.0.0.1'
     env.no_shared_sessions = False
     env.server_ssl_on = True
-    env.path_to_cert = '/etc/ssl/certs/multi.wildcard.unistra.fr.pem'
-    env.path_to_cert_key = '/etc/ssl/private/multi.wildcard.unistra.fr.key'
+    env.path_to_cert = '/etc/ssl/certs/mega_wildcard.pem'
+    env.path_to_cert_key = '/etc/ssl/private/mega_wildcard.key'
     env.goal = 'test'
     env.socket_port = '8020'
     env.socket_host = '127.0.0.1'
     env.map_settings = {}
     env.user = 'root'
     execute(build_env)
-
-
+    
 
 @task
 def prod():
@@ -115,14 +114,14 @@ def prod():
     env.backends = env.roledefs['web']
     env.server_name = 'eplouribousse.di.unistra.fr'
     env.short_server_name = 'eplouribousse'
-    env.static_folder = '/site_media/'
-    env.server_ip = ''
+    env.static_folder = '/static/'
+    env.server_ip = '127.0.0.1'
     env.no_shared_sessions = False
     env.server_ssl_on = True
-    env.path_to_cert = '/etc/ssl/certs/multi.wildcard.unistra.fr.pem'
-    env.path_to_cert_key = '/etc/ssl/private/multi.wildcard.unistra.fr.key'
+    env.path_to_cert = '/etc/ssl/certs/mega_wildcard.pem'
+    env.path_to_cert_key = '/etc/ssl/private/mega_wildcard.key'
     env.goal = 'prod'
-    env.socket_port = '8021'
+    env.socket_port = '8022'
     env.socket_host = '127.0.0.1'
     env.map_settings = {}
     env.user = 'root'

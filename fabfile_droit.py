@@ -116,7 +116,7 @@ def prod():
     env.server_name = 'eplouribousse-droit.di.unistra.fr'
     env.short_server_name = 'eplouribousse-droit'
     env.static_folder = '/static/'
-    env.server_ip = ''
+    env.server_ip = '127.0.0.1'
     env.no_shared_sessions = False
     env.server_ssl_on = True
     env.path_to_cert = '/etc/ssl/certs/mega_wildcard.pem'
