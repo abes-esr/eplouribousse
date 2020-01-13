@@ -15,9 +15,9 @@ class Library(models.Model):
     """Model for the libraries."""
     lid = models.CharField('library ID', max_length=16, unique=True)
     name = models.CharField('library name', max_length=30, unique=True)
-    contact = models.EmailField('email')
-    contact_bis = models.EmailField('email')
-    contact_ter = models.EmailField('email')
+    contact = models.EmailField('email 1')
+    contact_bis = models.EmailField('email 2')
+    contact_ter = models.EmailField('email 3')
     def __str__(self):
         return self.name
 
