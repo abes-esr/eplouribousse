@@ -781,7 +781,7 @@ def takerank(request, sid, lid):
     k = logstatus(request)
 
     #Authentication control :
-    if not request.user.email ==Library.objects.get(lid =lid).contact:
+    if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
         return home(request)
 
     do = notintime(request, sid, lid)
@@ -845,7 +845,7 @@ def addinstr(request, sid, lid):
         q ="x"
 
     #Authentication control :
-    if not request.user.email ==Library.objects.get(lid =lid).contact:
+    if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
         return home(request)
 
     do = notintime(request, sid, lid)
@@ -952,7 +952,7 @@ def delinstr(request, sid, lid):
     k = logstatus(request)
 
     #Authentication control :
-    if not request.user.email ==Library.objects.get(lid =lid).contact:
+    if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
         return home(request)
 
     do = notintime(request, sid, lid)
@@ -1047,7 +1047,7 @@ def endinstr(request, sid, lid):
     k = logstatus(request)
 
     #Authentication control :
-    if not request.user.email ==Library.objects.get(lid =lid).contact:
+    if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
         return home(request)
 
     #Control (endinstr only if it's up to the considered library == same conditions as for addinstr)
@@ -1152,8 +1152,7 @@ def endinstr(request, sid, lid):
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                     " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
-                    dest = nextlib.contact
-                    dest = [dest]
+                    dest = [nextlib.contact, nextlib.contact_bis, nextlib.contact_ter]
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==2:
@@ -1224,8 +1223,7 @@ def endinstr(request, sid, lid):
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
             " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
-            dest = nextlib.contact
-            dest = [dest]
+            dest = [nextlib.contact, nextlib.contact_bis, nextlib.contact_ter]
             send_mail(subject, message, replymail, dest, fail_silently=True, )
             return router(request)
 

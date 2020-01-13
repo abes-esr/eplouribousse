@@ -16,6 +16,8 @@ class Library(models.Model):
     lid = models.CharField('library ID', max_length=16, unique=True)
     name = models.CharField('library name', max_length=30, unique=True)
     contact = models.EmailField('email')
+    contact_bis = models.EmailField('email')
+    contact_ter = models.EmailField('email')
     def __str__(self):
         return self.name
 
