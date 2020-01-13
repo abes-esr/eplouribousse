@@ -13,7 +13,7 @@ from fabric.api import env, execute, roles, task
 env.remote_owner = 'django'  # remote server user
 env.remote_group = 'di'  # remote server group
 
-env.application_name = 'eplouribousse'   # name of webapp
+env.application_name = 'eplouribousse-droit'   # name of webapp
 env.root_package_name = 'eplouribousse'  # name of app in webapp
 
 env.remote_home = '/home/django'  # remote home root
@@ -90,18 +90,19 @@ def test():
     env.server_name = 'eplouribousse-test.di.unistra.fr'
     env.short_server_name = 'eplouribousse-test'
     env.static_folder = '/static/'
-    env.server_ip = '127.0.0.1'
+    env.server_ip = ''
     env.no_shared_sessions = False
     env.server_ssl_on = True
     env.path_to_cert = '/etc/ssl/certs/mega_wildcard.pem'
-    env.path_to_cert_key = '/etc/ssl/private/mega_wildcard.key'
+    env.path_to_cert_key = 'etc/ssl/private/mega_wildcard.key'
     env.goal = 'test'
     env.socket_port = '8020'
     env.socket_host = '127.0.0.1'
     env.map_settings = {}
     env.user = 'root'
     execute(build_env)
-    
+
+
 
 @task
 def prod():
@@ -112,20 +113,21 @@ def prod():
     }
     # env.user = 'root'  # user for ssh
     env.backends = env.roledefs['web']
-    env.server_name = 'eplouribousse.di.unistra.fr'
-    env.short_server_name = 'eplouribousse'
+    env.server_name = 'eplouribousse-droit.di.unistra.fr'
+    env.short_server_name = 'eplouribousse-droit'
     env.static_folder = '/static/'
     env.server_ip = '127.0.0.1'
     env.no_shared_sessions = False
     env.server_ssl_on = True
     env.path_to_cert = '/etc/ssl/certs/mega_wildcard.pem'
-    env.path_to_cert_key = '/etc/ssl/private/mega_wildcard.key'
+    env.path_to_cert_key = 'etc/ssl/private/mega_wildcard.key'
     env.goal = 'prod'
-    env.socket_port = '8022'
+    env.socket_port = '8023'
     env.socket_host = '127.0.0.1'
     env.map_settings = {}
     env.user = 'root'
     execute(build_env)
+
 
 # dont touch after that point if you don't know what you are doing !
 
