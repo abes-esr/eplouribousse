@@ -35,7 +35,7 @@ Voir le manuel de l'appli en https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
 
 # Comment obtenir eplouribousse ?
 
-Pour avoir un aperçu de l'application, commencez par visiter une instance réelle : https://eplouribousse.di.unistra.fr/
+Pour avoir un aperçu de l'application, commencez par visiter une instance réelle : https://eplouribousse-droit.di.unistra.fr/
 
 ----------------
 
