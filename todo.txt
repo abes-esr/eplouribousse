@@ -18,7 +18,11 @@ FAIT : Motifs d'exclusion paramétrables par le groupe "administrators". Objecti
 FAIT : Raccourcissement des urls (comme suggéré par Thomas Baguet)
 FAIT : Contrôles sur toutes les requêtes intempestives nuisibles.
 FAIT : Login/logout (sur tous les templates ou plutôt seulement logout si l'usager est authentifié) ?
-checker et bddadmin à remplacer par une simple combinaison user/group
+checker et bddadmin à remplacer par une simple combinaison user/group ?
+Uniformisation de l'orthographe (majuscules/minuscules etc.)
+Variables d'environnement à compléter (page de chute après échec etc.)
+Internationalisation à améliorer
+Mise à jour et amélioration du manuel et des instructions pour le déploiement
 --------------------------------------------------------------------------------------------------
 - Internationalisation (documentation incluse) : Anglais et allemand au moins (+ es, it si possible)
 - Lisibilité et assainissement du code

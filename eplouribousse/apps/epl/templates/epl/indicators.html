@@ -80,10 +80,17 @@
 
 
     {% for e, v in dict.items %}
+           {% if e == "Autre (Commenter)" %}
+         <tr>
+           <td>{% trans "dont : " %} {% trans "Autre (Commenter)" %}</td>
+           <td><center>{{ v }}</center></td>
+         </tr>
+           {% else %}
          <tr>
          <td>{% trans "dont : " %} {{ e }}</td>
          <td><center>{{ v }}</center></td>
          </tr>
+           {% endif %}
     {% endfor %}</p>
 
     <tr>
