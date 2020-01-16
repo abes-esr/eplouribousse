@@ -6,6 +6,7 @@ Valorisation de l'application (passe par l'internationalisation)
 ---Articles dans la presse professionnelle (BBF, Arabesques, Code4Lib Journal (C4LJ))
 ---Code{4}lib (voir ligne ci-dessus)
 ---Code2bib
+---Biblibre
 
 --Partage du code :
 ---GitHub et GitLab Unistra (bien indexer et documenter)
@@ -30,6 +31,5 @@ Mise à jour et amélioration du manuel et des instructions pour le déploiement
 - Enrichissement des commentaires du code
 - Documentation de l'application à mettre à jour avec copies d'écrans, à peaufiner et à traduire (en, de, es, it)
 - Mise à jour du Readme
-- Licence ?
 --------------------------------------------------------------------------------------------------
 
