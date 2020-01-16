@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-14 08:49+0100\n"
+"POT-Creation-Date: 2020-01-16 09:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,7 +99,6 @@ msgstr "Not bound"
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:20
 #: eplouribousse/apps/epl/templates/epl/home.html:23
 #: eplouribousse/apps/epl/templates/epl/indicators.html:17
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:17
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:19
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:20
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:19
@@ -338,8 +337,7 @@ msgstr "Cancel a row"
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:45
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:45
 #: eplouribousse/apps/epl/templates/epl/home.html:29
-#: eplouribousse/apps/epl/templates/epl/indicators.html:156
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:152
+#: eplouribousse/apps/epl/templates/epl/indicators.html:159
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:91
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:67
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:62
@@ -379,8 +377,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:45
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:45
 #: eplouribousse/apps/epl/templates/epl/home.html:46
-#: eplouribousse/apps/epl/templates/epl/indicators.html:156
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:152
+#: eplouribousse/apps/epl/templates/epl/indicators.html:159
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:91
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:67
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:62
@@ -421,8 +418,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:50
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:50
 #: eplouribousse/apps/epl/templates/epl/home.html:53
-#: eplouribousse/apps/epl/templates/epl/indicators.html:161
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:157
+#: eplouribousse/apps/epl/templates/epl/indicators.html:164
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:96
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:72
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:67
@@ -634,8 +630,7 @@ msgstr "Ranking"
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:41
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:41
-#: eplouribousse/apps/epl/templates/epl/indicators.html:147
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:143
+#: eplouribousse/apps/epl/templates/epl/indicators.html:150
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:62
@@ -694,7 +689,6 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:37
 #: eplouribousse/apps/epl/templates/epl/home.html:46
 #: eplouribousse/apps/epl/templates/epl/indicators.html:23
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:23
 msgid "Supervision"
 msgstr "Overview"
 
@@ -836,133 +830,107 @@ msgid "Fonctionnalité"
 msgstr "Feature"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:32
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:32
 msgid "Indicateur"
 msgstr "Follow-up indicators"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:33
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:33
 msgid "Valeur"
 msgstr "Value"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:41
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:41
 msgid "Collections"
 msgstr "collections"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:45
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:45
 msgid "Unicas"
 msgstr "Sole collection"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:49
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:49
 msgid "Collections candidates"
 msgstr "Candidate collections"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:53
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:53
 msgid "Ressources potentiellement candidates"
 msgstr "Potential entrants"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:57
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:57
 msgid "dont doublons stricts"
 msgstr "strict duplicates"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:61
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:61
 msgid "dont triplons"
 msgstr "triplets"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:65
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:65
 msgid "dont quadruplons"
 msgstr "quadruplets"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:69
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:69
 msgid "Collections positionnées (exclusions incluses)"
 msgstr "Ranking (exclusion included)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:73
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:73
 msgid "Collections positionnées (hors exclusions)"
 msgstr "Ranking (exclusion excluded)"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:77
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:77
 msgid "Collections exclues"
 msgstr "Excluded collections"
 
 #: eplouribousse/apps/epl/templates/epl/indicators.html:85
-#: eplouribousse/apps/epl/templates/epl/indicators.html:88
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:84
+#: eplouribousse/apps/epl/templates/epl/indicators.html:90
 msgid "dont : "
 msgstr "including : "
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:94
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:90
+#: eplouribousse/apps/epl/templates/epl/indicators.html:97
 msgid "Ressources écartées par exclusion de collection"
 msgstr "Discarded serials for exclusion reason"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:99
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:95
+#: eplouribousse/apps/epl/templates/epl/indicators.html:102
 msgid "Collections impliquées dans un arbitrage quelconque"
 msgstr "Collections involved in any of the two arbitration cases"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:103
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:99
+#: eplouribousse/apps/epl/templates/epl/indicators.html:106
 msgid "Collections impliquées dans un arbitrage de 1ère place"
 msgstr "Collections involved in a conflict for the 1st rank"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:107
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:103
+#: eplouribousse/apps/epl/templates/epl/indicators.html:110
 msgid "Collections impliquées dans un arbitrage faute de 1ère place"
 msgstr "Collections involved in an arbitration for 1st rank lacking"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:111
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:107
+#: eplouribousse/apps/epl/templates/epl/indicators.html:114
 msgid "Ressources impliquées dans un arbitrage quelconque"
 msgstr "Serials involved in any of the two arbitration cases"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:115
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:111
+#: eplouribousse/apps/epl/templates/epl/indicators.html:118
 msgid "Ressources impliquées dans un arbitrage de 1ère place"
 msgstr "Serials involved in a conflict for the 1st rank"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:119
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:115
+#: eplouribousse/apps/epl/templates/epl/indicators.html:122
 msgid "Ressources impliquées dans un arbitrage faute de 1ère place"
 msgstr "Serials involved in an arbitration for 1st rank lacking"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:123
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:119
+#: eplouribousse/apps/epl/templates/epl/indicators.html:126
 msgid "Ressources dont l'instruction des éléments reliés peut débuter"
 msgstr "Serials whose bound shape instruction may begin"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:127
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:123
+#: eplouribousse/apps/epl/templates/epl/indicators.html:130
 msgid "Ressources dont l'instruction des éléments reliés est en cours"
 msgstr "Serials whose bound shape instruction is underway"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:131
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:127
+#: eplouribousse/apps/epl/templates/epl/indicators.html:134
 msgid "Ressources dont l'instruction des éléments non reliés peut débuter"
 msgstr "Serials whose not bound shape instruction may begin"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:135
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:131
+#: eplouribousse/apps/epl/templates/epl/indicators.html:138
 msgid "Ressources dont l'instruction des éléments non reliés est en cours"
 msgstr "Serials whose not bound shape instruction is underway"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:139
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:135
+#: eplouribousse/apps/epl/templates/epl/indicators.html:142
 msgid "Ressources complètement instruites"
 msgstr "Serials whose instruction is over"
 
-#: eplouribousse/apps/epl/templates/epl/indicators.html:143
-#: eplouribousse/apps/epl/templates/epl/indicatorsbak.html:139
+#: eplouribousse/apps/epl/templates/epl/indicators.html:146
 msgid "Fiches défectueuses"
 msgstr "Faulty sheets"
 
@@ -1112,7 +1080,7 @@ msgstr "Attachment ; yours is highlighted"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:35
 msgid ""
 "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci "
-"correspond)"
+"correspond"
 msgstr "Click on ID to know which library it is"
 
 #: eplouribousse/apps/epl/templates/epl/ranking.html:44
