@@ -29,7 +29,6 @@
       <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
        / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
       <p></p>
-      {% if flag == 0 %}
 
       <p><i>{% trans "Votre rattachement apparaît en rouge" %} :</i></p>
       <p>({% trans "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci correspond" %})</p>
@@ -71,9 +70,8 @@
       {% csrf_token %}
       <input type="Submit" value="{% trans "Valider" %}">
       </form>
-      {% elif flag == 1 %}
-      <p><B><font color= #e74c3c >{% trans "Il n'est plus possible de modifier votre positionnement" %}.</font></B></p>
-      {% endif %}
+
+
 
         </div>
       <HR>

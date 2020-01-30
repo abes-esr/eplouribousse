@@ -30,6 +30,7 @@ idview =1 #identification des fonctions de listes (voir les vues correspondantes
 dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
 dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
 tes_lloc =Library.objects.all() # comme coll_set
+lastrked =None
 
 try:
     replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
@@ -593,7 +594,32 @@ def ranktotake(request, lid):
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
     return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, })
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, })
+
+
+def modifranklist(request, lid):
+
+    k = logstatus(request)
+
+    global idfeature, idview, dil
+    idfeature, idview, dil =1, 2, lid
+
+    #Getting ressources whose this lid must but has not yet taken rank :
+    reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
+    resslist = []
+    for e in reclist:
+        itemlist = list(ItemRecord.objects.filter(sid = e.sid, status =1))
+        if len(itemlist) ==0:
+            resslist.append(e)
+    l = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+
+    nlib = len(Library.objects.exclude(lid ="999999999"))
+
+    return render(request, 'epl/modifrklist.html', { 'toranklist' : resslist, \
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, })
 
 
 def filter_arblist(request, lid):
@@ -799,15 +825,23 @@ def takerank(request, sid, lid):
     i = ItemRecord.objects.get(sid = sid, lid = lid)
     f = PositionForm(request.POST, instance=i)
     if f.is_valid():
+        global lastrked
+        lastrked =i
         if len(ItemRecord.objects.filter(sid =sid).exclude(status =0)) ==0:
             if i.excl !='':
                 i.rank =0
             f.save()
-            flag =0
-        else:
-            flag =1
-    else:
-        flag =0
+        # Other status modification if all libraries have taken rank (as of now status =0) :
+        # 0 --> 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
+        # ordering by pk for identical ranks upper than 1.
+        if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
+            p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
+            if p.status !=1:
+                p.status =1
+                p.save()
+
+        # return ranktotake(request, lid)
+        return router(request)
 
     # Item records list :
     itemlist = ItemRecord.objects.filter(sid =  sid)
@@ -819,18 +853,9 @@ def takerank(request, sid, lid):
     # Library data :
     lib = Library.objects.get(lid = lid)
 
-    # Other status modification if all libraries have taken rank (as of now status =0) :
-    # 0 --> 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
-    # ordering by pk for identical ranks upper than 1.
-    if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-        p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
-        if p.status !=1:
-            p.status =1
-            p.save()
-
     return render(request, 'epl/ranking.html',\
      { 'ressource' : ress, 'items' : itemlist,
-     'library' : lib, 'form' : f, 'lid' : lid, 'flag' : flag, 'k' : k, })
+     'library' : lib, 'form' : f, 'lid' : lid, 'k' : k, })
 
 
 @login_required
@@ -2205,6 +2230,8 @@ def router(request):
             return ranktotake(request, dil)
         if idview ==1:
             return xranktotake(request, dil, dilx)
+        if idview ==2:
+            return modifranklist(request, dil)
     if idfeature ==2:
         if idview ==0:
             return arbitration(request, dil)

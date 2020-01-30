@@ -9,6 +9,7 @@ urlpatterns = [
     path('del/<str:sid>/<str:lid>', views.delinstr, name='delete instruction'),
     path('end/<str:sid>/<str:lid>', views.endinstr, name='end of instruction'),
     path('rklist/<str:lid>', views.ranktotake, name='to be ranked list'),
+    path('modifrklist/<str:lid>', views.modifranklist, name='modify a rank list'),
     path('allinstr/<str:lid>', views.instrtodo, name='instruction to do list, all'),
     path('bd1/<str:lid>', views.instroneb, name='instruction to do list, bound, rank 1'),
     path('bdnot1/<str:lid>', views.instrotherb, name='instruction to do list, bound, other ranks'),

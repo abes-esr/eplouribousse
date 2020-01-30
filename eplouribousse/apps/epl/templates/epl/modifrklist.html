@@ -23,23 +23,20 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ name }} - {% trans "collections en attente de positionnement" %}</h2>
+      <h2>{{ name }} - {% trans "collections dont le positionnement peut encore être modifié" %}</h2>
         <div id="content">
 
       <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
-      {% if nlib > 2 %}
-      <p><a href="/rkfilter/{{ lid }}">{% trans "Restreindre la liste aux doublons avec une autre bibliothèque" %}</a></p>
-      {% else %}
-      {% endif %}
+
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
-    <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+    <p>{% trans "Pour modifier le positionnement, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
     {% if lastrked != None %}
     <p>{% trans "Dernier positionnement enregistré" %} : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
        {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
     {% endif %}
-    <p><a href="/modifrklist/{{ lid }}">{% trans "Modifier un précédent positionnement" %}</a></p>
+    <p><a href="/rklist/{{ lid }}">{% trans "Retour à la liste des collections à positionner" %}</a></p>
 
       <ul>
 
