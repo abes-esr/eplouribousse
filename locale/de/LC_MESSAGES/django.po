@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-16 09:26+0100\n"
+"POT-Creation-Date: 2020-01-31 09:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,7 @@ msgstr "Nicht Verbunden"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:19
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:19
 #: eplouribousse/apps/epl/templates/epl/language.html:22
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:20
 #: eplouribousse/apps/epl/templates/epl/notintime.html:19
 #: eplouribousse/apps/epl/templates/epl/ranking.html:19
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
@@ -125,12 +126,13 @@ msgid "Déconnexion"
 msgstr "Ausloggen"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:28
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:58
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:88
+#: eplouribousse/apps/epl/templates/epl/ranking.html:86
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:65
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:55
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:61
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:49
 #: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:53
@@ -153,12 +155,13 @@ msgstr "Ausfüllen"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:41
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:40
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:42
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:47
 #: eplouribousse/apps/epl/templates/epl/ranking.html:28
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:48
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:54
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:40
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:40
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:44
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:50
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:42
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:42
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:45
@@ -170,9 +173,9 @@ msgstr "Ausfüllen"
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:40
 #: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:42
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:42
-#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:207
-#: eplouribousse/apps/epl/views.py:345 eplouribousse/apps/epl/views.py:483
-#: eplouribousse/apps/epl/views.py:1872 eplouribousse/apps/epl/views.py:2010
+#: eplouribousse/apps/epl/views.py:73 eplouribousse/apps/epl/views.py:208
+#: eplouribousse/apps/epl/views.py:346 eplouribousse/apps/epl/views.py:484
+#: eplouribousse/apps/epl/views.py:1897 eplouribousse/apps/epl/views.py:2035
 msgid "Titre"
 msgstr "Titel"
 
@@ -191,12 +194,13 @@ msgstr "Titel"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:43
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:44
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:49
 #: eplouribousse/apps/epl/templates/epl/ranking.html:29
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:50
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:56
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:42
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:42
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:46
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:52
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:44
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:44
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:47
@@ -309,7 +313,7 @@ msgstr "Unter die Zeile nummer"
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:35
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:35
 #: eplouribousse/apps/epl/templates/epl/home.html:40
-#: eplouribousse/apps/epl/templates/epl/ranking.html:72
+#: eplouribousse/apps/epl/templates/epl/ranking.html:71
 msgid "Valider"
 msgstr "Bestätigen"
 
@@ -343,12 +347,13 @@ msgstr "Fehlerhafte Zeile löschen"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:62
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:60
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:62
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:93
+#: eplouribousse/apps/epl/templates/epl/ranking.html:91
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:69
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:53
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:59
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:65
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:58
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:58
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:67
@@ -384,12 +389,13 @@ msgstr "Startseite"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:59
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:60
 #: eplouribousse/apps/epl/templates/epl/language.html:52
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:62
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:93
+#: eplouribousse/apps/epl/templates/epl/ranking.html:91
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:69
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:53
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:59
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:65
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:58
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:58
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:67
@@ -425,12 +431,13 @@ msgstr "Benutzerhandbuch"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:64
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:65
 #: eplouribousse/apps/epl/templates/epl/language.html:59
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:67
 #: eplouribousse/apps/epl/templates/epl/notintime.html:55
-#: eplouribousse/apps/epl/templates/epl/ranking.html:98
+#: eplouribousse/apps/epl/templates/epl/ranking.html:96
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:74
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:58
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:58
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:64
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:70
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:63
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:63
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:72
@@ -454,11 +461,12 @@ msgstr "Über uns"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:58
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:58
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:65
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:55
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:61
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:26
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:26
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:26
@@ -477,6 +485,7 @@ msgstr "Schiedsverfahren"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:29
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:29
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:28
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:29
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:28
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:29
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:29
@@ -520,6 +529,7 @@ msgstr ""
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:33
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:32
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:31
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:31
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:37
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:31
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:31
@@ -561,13 +571,14 @@ msgstr "Um Ihren Rang zu ändern, klicken Sie auf den Link [Zeitschrift ID]"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:41
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:43
-#: eplouribousse/apps/epl/templates/epl/ranking.html:44
-#: eplouribousse/apps/epl/templates/epl/ranking.html:53
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:48
+#: eplouribousse/apps/epl/templates/epl/ranking.html:43
+#: eplouribousse/apps/epl/templates/epl/ranking.html:52
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:49
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:55
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:41
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:41
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:45
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:51
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:43
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:43
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:46
@@ -585,11 +596,12 @@ msgstr "Signatur"
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:66
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:52
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:51
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:58
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:65
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:55
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:61
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:62
@@ -650,9 +662,10 @@ msgstr "Ausfüllen"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:58
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:58
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:88
-#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:55
+#: eplouribousse/apps/epl/templates/epl/ranking.html:86
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:61
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:62
@@ -672,9 +685,9 @@ msgstr "Schiedsverfahren (Wettbewerb auf Rang 1)"
 #: eplouribousse/apps/epl/templates/epl/checker.html:30
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:24
 #: eplouribousse/apps/epl/templates/epl/home.html:30
-#: eplouribousse/apps/epl/views.py:71 eplouribousse/apps/epl/views.py:206
-#: eplouribousse/apps/epl/views.py:344 eplouribousse/apps/epl/views.py:482
-#: eplouribousse/apps/epl/views.py:1871 eplouribousse/apps/epl/views.py:2009
+#: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:207
+#: eplouribousse/apps/epl/views.py:345 eplouribousse/apps/epl/views.py:483
+#: eplouribousse/apps/epl/views.py:1896 eplouribousse/apps/epl/views.py:2034
 msgid "Projet"
 msgstr "Projekt"
 
@@ -738,7 +751,7 @@ msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Zeilen, die Ihre Bibliothek betreffen, sind hervorgehoben."
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
-#: eplouribousse/apps/epl/templates/epl/ranking.html:83
+#: eplouribousse/apps/epl/templates/epl/ranking.html:81
 msgid "Menu contextuel"
 msgstr "Kontextmenü"
 
@@ -760,7 +773,7 @@ msgstr "Zurück zur Liste der bearbeitbaren Zeitschriften"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:58
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
-#: eplouribousse/apps/epl/templates/epl/ranking.html:88
+#: eplouribousse/apps/epl/templates/epl/ranking.html:86
 msgid "Menu général"
 msgstr "Allgemeines Menü"
 
@@ -1035,6 +1048,42 @@ msgstr "Nicht verbundene Form, nicht 1er rang"
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:26
+msgid "collections dont le positionnement peut encore être modifié"
+msgstr "Sammlung, die auf die Positionierung warten"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:33
+msgid ""
+"Pour modifier le positionnement, cliquez sur le lien [Identifiant de la "
+"ressource]"
+msgstr "Um Ihren Rang zu ändern, klicken Sie auf den Link [Zeitschrift ID]"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:36
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:39
+msgid "Dernier positionnement enregistré"
+msgstr "Letzter genommener Rang"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:36
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:39
+msgid "rang"
+msgstr "Rang"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:37
+#: eplouribousse/apps/epl/templates/epl/ranking.html:47
+#: eplouribousse/apps/epl/templates/epl/ranking.html:56
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:40
+msgid "Exclusion"
+msgstr "Ausnahmen"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:37
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:40
+msgid "Modifier"
+msgstr "Ändern"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:39
+msgid "Retour à la liste des collections à positionner"
+msgstr "Zurück zum [rang nehmen]"
+
 #: eplouribousse/apps/epl/templates/epl/notintime.html:25
 msgid "Tentative d'intervention hors délai"
 msgstr "Ausser-Zeit Eingriff"
@@ -1076,11 +1125,11 @@ msgstr "Im letzteren Fall siehe:"
 msgid "ressources éditables"
 msgstr "erschienbar"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:34
+#: eplouribousse/apps/epl/templates/epl/ranking.html:33
 msgid "Votre rattachement apparaît en rouge"
 msgstr "Anhänge Ihrer Bibliothek wird rot angezeigt"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:35
+#: eplouribousse/apps/epl/templates/epl/ranking.html:34
 msgid ""
 "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci "
 "correspond"
@@ -1088,45 +1137,40 @@ msgstr ""
 "Klicken Sie auf den Link [Bezeichner], um herauszufinden, welcher Bibliothek "
 "diese entspricht"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:44
-#: eplouribousse/apps/epl/templates/epl/ranking.html:53
+#: eplouribousse/apps/epl/templates/epl/ranking.html:43
+#: eplouribousse/apps/epl/templates/epl/ranking.html:52
 msgid "Identifiant de la bibliothèque"
 msgstr "Bibliothek ID"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:45
-#: eplouribousse/apps/epl/templates/epl/ranking.html:54
+#: eplouribousse/apps/epl/templates/epl/ranking.html:44
+#: eplouribousse/apps/epl/templates/epl/ranking.html:53
 msgid "Etat de collection"
 msgstr "Bestand"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:55
+#: eplouribousse/apps/epl/templates/epl/ranking.html:45
+#: eplouribousse/apps/epl/templates/epl/ranking.html:54
 msgid "Lacunes"
 msgstr "Lücken"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:47
-#: eplouribousse/apps/epl/templates/epl/ranking.html:56
+#: eplouribousse/apps/epl/templates/epl/ranking.html:46
+#: eplouribousse/apps/epl/templates/epl/ranking.html:55
 msgid "Rang courant"
 msgstr "Aktueller Rang"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:48
-#: eplouribousse/apps/epl/templates/epl/ranking.html:57
-msgid "Exclusion"
-msgstr "Ausnahmen"
-
-#: eplouribousse/apps/epl/templates/epl/ranking.html:48
-#: eplouribousse/apps/epl/templates/epl/ranking.html:57
+#: eplouribousse/apps/epl/templates/epl/ranking.html:47
+#: eplouribousse/apps/epl/templates/epl/ranking.html:56
 msgid "Commentaire"
 msgstr "Kommentar"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:66
+#: eplouribousse/apps/epl/templates/epl/ranking.html:65
 msgid "Le cas échéant, motif d'exclusion"
 msgstr "Wenn ja, Ausschlussgrund"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:67
+#: eplouribousse/apps/epl/templates/epl/ranking.html:66
 msgid "Sinon, rang de votre collection"
 msgstr "Wenn nicht, rang Ihrer Sammlung"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:68
+#: eplouribousse/apps/epl/templates/epl/ranking.html:67
 msgid ""
 "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre "
 "collection ou d'autres raisons ..."
@@ -1134,15 +1178,11 @@ msgstr ""
 "Wählen Sie 1, wenn Ihre Sammlung diejenige ist, zu der andere Elemente "
 "hinzugefügt werden ; 4 falls Ihre Sammlung ist die geringste."
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:69
+#: eplouribousse/apps/epl/templates/epl/ranking.html:68
 msgid "Commentaire (max. 250 caractères.)"
 msgstr "Kommentar (max. 250 Zeichen)"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:75
-msgid "Il n'est plus possible de modifier votre positionnement"
-msgstr "Rang nehmen ist nicht mehr möglich"
-
-#: eplouribousse/apps/epl/templates/epl/ranking.html:83
+#: eplouribousse/apps/epl/templates/epl/ranking.html:81
 msgid "Retour à la liste"
 msgstr "Zurück zur Liste"
 
@@ -1206,6 +1246,10 @@ msgid ""
 "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]"
 msgstr "zum Rang nehmen,klicken Sie auf den Link [Zeitschrift ID]"
 
+#: eplouribousse/apps/epl/templates/epl/to_rank_list.html:42
+msgid "Modifier un précédent positionnement"
+msgstr "Ein früher Rang ändern"
+
 #: eplouribousse/apps/epl/templates/epl/xckall.html:26
 msgid "Contrôle à mi-chemin ou final"
 msgstr "Halbweg- oder End- Kontroll"
@@ -1234,117 +1278,117 @@ msgstr "Auszufüllen Sammlungen"
 msgid "Authentification"
 msgstr "Login"
 
-#: eplouribousse/apps/epl/views.py:73 eplouribousse/apps/epl/views.py:208
-#: eplouribousse/apps/epl/views.py:346 eplouribousse/apps/epl/views.py:484
-#: eplouribousse/apps/epl/views.py:1873 eplouribousse/apps/epl/views.py:2011
+#: eplouribousse/apps/epl/views.py:74 eplouribousse/apps/epl/views.py:209
+#: eplouribousse/apps/epl/views.py:347 eplouribousse/apps/epl/views.py:485
+#: eplouribousse/apps/epl/views.py:1898 eplouribousse/apps/epl/views.py:2036
 msgid "Collection"
 msgstr "Sammlung"
 
-#: eplouribousse/apps/epl/views.py:73 eplouribousse/apps/epl/views.py:208
-#: eplouribousse/apps/epl/views.py:346 eplouribousse/apps/epl/views.py:484
-#: eplouribousse/apps/epl/views.py:1873 eplouribousse/apps/epl/views.py:2011
+#: eplouribousse/apps/epl/views.py:74 eplouribousse/apps/epl/views.py:209
+#: eplouribousse/apps/epl/views.py:347 eplouribousse/apps/epl/views.py:485
+#: eplouribousse/apps/epl/views.py:1898 eplouribousse/apps/epl/views.py:2036
 msgid "cote"
 msgstr "Signatur"
 
-#: eplouribousse/apps/epl/views.py:88 eplouribousse/apps/epl/views.py:223
-#: eplouribousse/apps/epl/views.py:361 eplouribousse/apps/epl/views.py:499
-#: eplouribousse/apps/epl/views.py:1888 eplouribousse/apps/epl/views.py:2026
+#: eplouribousse/apps/epl/views.py:89 eplouribousse/apps/epl/views.py:224
+#: eplouribousse/apps/epl/views.py:362 eplouribousse/apps/epl/views.py:500
+#: eplouribousse/apps/epl/views.py:1913 eplouribousse/apps/epl/views.py:2051
 msgid "issn"
 msgstr "issn"
 
-#: eplouribousse/apps/epl/views.py:88 eplouribousse/apps/epl/views.py:223
-#: eplouribousse/apps/epl/views.py:361 eplouribousse/apps/epl/views.py:499
-#: eplouribousse/apps/epl/views.py:1888 eplouribousse/apps/epl/views.py:2026
+#: eplouribousse/apps/epl/views.py:89 eplouribousse/apps/epl/views.py:224
+#: eplouribousse/apps/epl/views.py:362 eplouribousse/apps/epl/views.py:500
+#: eplouribousse/apps/epl/views.py:1913 eplouribousse/apps/epl/views.py:2051
 msgid "ppn"
 msgstr "sid"
 
-#: eplouribousse/apps/epl/views.py:88 eplouribousse/apps/epl/views.py:223
-#: eplouribousse/apps/epl/views.py:361 eplouribousse/apps/epl/views.py:499
-#: eplouribousse/apps/epl/views.py:1888 eplouribousse/apps/epl/views.py:2026
+#: eplouribousse/apps/epl/views.py:89 eplouribousse/apps/epl/views.py:224
+#: eplouribousse/apps/epl/views.py:362 eplouribousse/apps/epl/views.py:500
+#: eplouribousse/apps/epl/views.py:1913 eplouribousse/apps/epl/views.py:2051
 msgid "historique de la publication"
 msgstr "Ersch.-verlauf"
 
-#: eplouribousse/apps/epl/views.py:106 eplouribousse/apps/epl/views.py:241
-#: eplouribousse/apps/epl/views.py:379 eplouribousse/apps/epl/views.py:517
-#: eplouribousse/apps/epl/views.py:1906 eplouribousse/apps/epl/views.py:2044
+#: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:242
+#: eplouribousse/apps/epl/views.py:380 eplouribousse/apps/epl/views.py:518
+#: eplouribousse/apps/epl/views.py:1931 eplouribousse/apps/epl/views.py:2069
 msgid "collection mère"
 msgstr "Mutter Sammlung"
 
-#: eplouribousse/apps/epl/views.py:110 eplouribousse/apps/epl/views.py:245
-#: eplouribousse/apps/epl/views.py:383 eplouribousse/apps/epl/views.py:521
-#: eplouribousse/apps/epl/views.py:1910 eplouribousse/apps/epl/views.py:2048
+#: eplouribousse/apps/epl/views.py:111 eplouribousse/apps/epl/views.py:246
+#: eplouribousse/apps/epl/views.py:384 eplouribousse/apps/epl/views.py:522
+#: eplouribousse/apps/epl/views.py:1935 eplouribousse/apps/epl/views.py:2073
 msgid "a pris part"
 msgstr "hat mitgemacht"
 
-#: eplouribousse/apps/epl/views.py:125 eplouribousse/apps/epl/views.py:260
-#: eplouribousse/apps/epl/views.py:398 eplouribousse/apps/epl/views.py:536
-#: eplouribousse/apps/epl/views.py:1925 eplouribousse/apps/epl/views.py:2063
+#: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
+#: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
+#: eplouribousse/apps/epl/views.py:1950 eplouribousse/apps/epl/views.py:2088
 msgid "bibliothèque"
 msgstr "Bibliothek"
 
-#: eplouribousse/apps/epl/views.py:125 eplouribousse/apps/epl/views.py:260
-#: eplouribousse/apps/epl/views.py:398 eplouribousse/apps/epl/views.py:536
-#: eplouribousse/apps/epl/views.py:1925 eplouribousse/apps/epl/views.py:2063
+#: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
+#: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
+#: eplouribousse/apps/epl/views.py:1950 eplouribousse/apps/epl/views.py:2088
 msgid "relié ?"
 msgstr "verbunden ?"
 
-#: eplouribousse/apps/epl/views.py:125 eplouribousse/apps/epl/views.py:260
-#: eplouribousse/apps/epl/views.py:398 eplouribousse/apps/epl/views.py:536
-#: eplouribousse/apps/epl/views.py:1925 eplouribousse/apps/epl/views.py:2063
+#: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
+#: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
+#: eplouribousse/apps/epl/views.py:1950 eplouribousse/apps/epl/views.py:2088
 msgid "bib. remédiée"
 msgstr "verbesserte Bibliothek"
 
-#: eplouribousse/apps/epl/views.py:125 eplouribousse/apps/epl/views.py:260
-#: eplouribousse/apps/epl/views.py:398 eplouribousse/apps/epl/views.py:536
-#: eplouribousse/apps/epl/views.py:1925 eplouribousse/apps/epl/views.py:2063
+#: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
+#: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
+#: eplouribousse/apps/epl/views.py:1950 eplouribousse/apps/epl/views.py:2088
 msgid "segment"
 msgstr "Segment"
 
-#: eplouribousse/apps/epl/views.py:125 eplouribousse/apps/epl/views.py:260
-#: eplouribousse/apps/epl/views.py:398 eplouribousse/apps/epl/views.py:536
-#: eplouribousse/apps/epl/views.py:1925 eplouribousse/apps/epl/views.py:2063
+#: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
+#: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
+#: eplouribousse/apps/epl/views.py:1950 eplouribousse/apps/epl/views.py:2088
 msgid "exception"
 msgstr "Ausnahme"
 
-#: eplouribousse/apps/epl/views.py:125 eplouribousse/apps/epl/views.py:260
-#: eplouribousse/apps/epl/views.py:398 eplouribousse/apps/epl/views.py:536
-#: eplouribousse/apps/epl/views.py:1925 eplouribousse/apps/epl/views.py:2063
+#: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
+#: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
+#: eplouribousse/apps/epl/views.py:1950 eplouribousse/apps/epl/views.py:2088
 msgid "améliorable"
 msgstr "erweiterbar"
 
-#: eplouribousse/apps/epl/views.py:898 eplouribousse/apps/epl/views.py:998
-#: eplouribousse/apps/epl/views.py:1097
+#: eplouribousse/apps/epl/views.py:923 eplouribousse/apps/epl/views.py:1023
+#: eplouribousse/apps/epl/views.py:1122
 msgid "éléments reliés"
 msgstr "verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:900 eplouribousse/apps/epl/views.py:1002
-#: eplouribousse/apps/epl/views.py:1101
+#: eplouribousse/apps/epl/views.py:925 eplouribousse/apps/epl/views.py:1027
+#: eplouribousse/apps/epl/views.py:1126
 msgid "éléments non reliés"
 msgstr "Nicht verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:924
+#: eplouribousse/apps/epl/views.py:949
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
-#: eplouribousse/apps/epl/views.py:1006 eplouribousse/apps/epl/views.py:1105
+#: eplouribousse/apps/epl/views.py:1031 eplouribousse/apps/epl/views.py:1130
 msgid "instructions terminées"
 msgstr "XXXXX (Ausfüllung schon fertig)"
 
-#: eplouribousse/apps/epl/views.py:1017
+#: eplouribousse/apps/epl/views.py:1042
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 
-#: eplouribousse/apps/epl/views.py:1106
+#: eplouribousse/apps/epl/views.py:1131
 msgid "ni relié, ni non reliés"
 msgstr "Nicht verbunden weder nicht"
 
-#: eplouribousse/apps/epl/views.py:1153 eplouribousse/apps/epl/views.py:1224
+#: eplouribousse/apps/epl/views.py:1178 eplouribousse/apps/epl/views.py:1249
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr ""
 "Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
 "anzuweisen : "
 
-#: eplouribousse/apps/epl/views.py:1172
+#: eplouribousse/apps/epl/views.py:1197
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -1354,7 +1398,7 @@ msgstr ""
 "Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
 "in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
-#: eplouribousse/apps/epl/views.py:1231
+#: eplouribousse/apps/epl/views.py:1256
 msgid "Vous n'avez pas coché !"
 msgstr "Sie haben nicht geprüft !"
 
@@ -1370,194 +1414,3 @@ msgstr "English"
 msgid "Deutsch"
 msgstr "German"
 
-#~| msgid "Autre (Commenter)"
-#~ msgid "Autre (commenter)"
-#~ msgstr "Sonstiges (Kommentar)"
-
-#~ msgid "Vous êtes bien déconnecté !"
-#~ msgstr "Sie sind ausgeloggt !"
-
-#~ msgid ""
-#~ "Pour chercher n'importe quelle occurence dans cette liste, veuillez "
-#~ "utiliser la fonctionnalité de recherche du navigateur"
-#~ msgstr "Verwenden Sie Ihren Webbrowser, um ein Begriff zu finden"
-
-#~ msgid ""
-#~ "Pour chercher une occurence dans cette liste, veuillez utiliser la "
-#~ "fonctionnalité de recherche du navigateur"
-#~ msgstr "Verwenden Sie Ihren Webbrowser, um ein Begriff zu finden"
-
-#~ msgid "Vous pourrez continuer ensuite"
-#~ msgstr "Sie können dann fortfahren"
-
-#~ msgid "N'oubliez pas de cocher avant de valider :"
-#~ msgstr "Vergessen Sie nicht zu überprüfen"
-
-#~ msgid "Autre rang"
-#~ msgstr "Anderer Rang"
-
-#~ msgid "M'authentifier"
-#~ msgstr "Login"
-
-#~ msgid "Me déconnecter"
-#~ msgstr "Logout"
-
-#~ msgid "Rang des collections de"
-#~ msgstr "Rang der Sammlungen von"
-
-#~ msgid ""
-#~ "Plusieurs raisons peuvent vous avoir conduit à cette page (dans l'ordre "
-#~ "décroissant de fréquence) :"
-#~ msgstr ""
-#~ "Mehrere Gründe könnten Sie zu dieser Seite geführt haben (in absteigender "
-#~ "Reihenfolge der Häufigkeit) :"
-
-#~ msgid "L'action que vous requérez exige l'authentification"
-#~ msgstr "Für die gewünschte Aktion ist eine Authentifizierung erforderlich"
-
-#~ msgid ""
-#~ "Vous venez de cliquer sur le lien [M'authentifier] situé en page d'accueil"
-#~ msgstr "Sie haben gerade auf den Link [Login] auf der Startseite geklickt"
-
-#~ msgid ""
-#~ "Vous venez de cliquer sur le lien [Changer mon mot de passe] situé en "
-#~ "page d'accueil, mais vous n'étiez pas encore authentifié (authentifiez "
-#~ "vous d'abord avec votre mot de passe actuel)"
-#~ msgstr ""
-#~ "Sie haben gerade auf der Startseite auf den Link [Passwort  ändern] "
-#~ "geklickt, wurden jedoch noch nicht authentifiziert (authentifizieren Sie "
-#~ "sich zuerst mit Ihrem aktuellen Kennwort)"
-
-#~ msgid "La déconnexion se fait depuis le lien disponible en page d'accueil."
-#~ msgstr "Ausloggen : Link verfügbar auf der Homepage."
-
-#~ msgid ""
-#~ "Déconnexion : Elle n'est normalement pas nécessaire. C'est toutefois "
-#~ "possible depuis la page d'accueil."
-#~ msgstr ""
-#~ "Logout : Normalerweise ist dies nicht erforderlich. Dies ist jedoch von "
-#~ "der Startseite aus möglich"
-
-#~ msgid "titre"
-#~ msgstr "Titel"
-
-#~ msgid "Export pdf (expérimental)"
-#~ msgstr "PDF (experimentell)"
-
-#~ msgid "Titre de la ressource"
-#~ msgstr "Titel"
-
-#~ msgid " <--- ppn / issn ---> "
-#~ msgstr " <--- sid / issn ---> "
-
-#~| msgid "Rang courant"
-#~ msgid "forme courante"
-#~ msgstr "Aktueller Rang"
-
-#~| msgid "la fin des instructions pour la forme considérée"
-#~ msgid "Fin des instructions pour la forme considérée"
-#~ msgstr "bestätige Ich meinerseits das Ende der Anweisungen"
-
-#~ msgid "Positionnements"
-#~ msgstr "Rang nehmen"
-
-#~ msgid "Ajouter une nouvelle ligne d'instruction pour"
-#~ msgstr "Fügen Sie eine neue Anweisungszeile hinzu für"
-
-#~ msgid "(Autre(s) bibliothèque(s) rattachée(s)"
-#~ msgstr "Andere Bibliotheken"
-
-#~ msgid ""
-#~ "Ressources dont le statut [à arbitrer] pourrait être levé par un "
-#~ "repositionnement"
-#~ msgstr ""
-#~ "Schiedsverfahren könnte durch eine Neupositionierung Ihrer Sammlung "
-#~ "aufgehoben werden"
-
-#~ msgid ""
-#~ "(Ressources [à arbitrer] : Rang 1 revendiqué par plusieurs bibliothèques "
-#~ "ou par aucune)"
-#~ msgstr ""
-#~ "Schiedsverfahren : Rang 1 von mehreren Bibliotheken oder keinen "
-#~ "beansprucht"
-
-#~ msgid "Edition des résultantes"
-#~ msgstr "Vollständige Aufzeichnungen"
-
-#~ msgid "Vous ne pouvez supprimer une ligne que pour"
-#~ msgstr "Sie können nur Zeilen löschen für"
-
-#~ msgid "et pour la forme couramment instruite"
-#~ msgstr "und nur für die betrachtete Form"
-
-#~ msgid "n° de la ligne que vous souhaitez supprimer"
-#~ msgstr "Nr. der Zeile, die Sie löschen möchten"
-
-#~ msgid ""
-#~ "Attention : La suppression est définitive. Vérifiez bien avant de valider"
-#~ msgstr ""
-#~ "Warnung: Die Löschung ist endgültig. Überprüfen Sie dies vor der "
-#~ "Bestätigung"
-
-#~ msgid "Edition de la résultante pour"
-#~ msgstr "Vollständige Aufzeichnungen"
-
-#~ msgid "Confirmer pour ma part"
-#~ msgstr "Für die betreffende Form"
-
-#~ msgid ""
-#~ "Les dernières lignes validées par votre bibliothèque pour la forme "
-#~ "considérée sont mises en évidence."
-#~ msgstr ""
-#~ "Die letzten von Ihrer Bibliothek für das betreffende Formular validierten "
-#~ "Zeilen werden hervorgehoben"
-
-#~ msgid "Je confirme que j'ai fini pour la forme courante"
-#~ msgstr "Ich bestätige, dass ich mit der aktuellen Form fertig bin"
-
-#~ msgid "Page d'accueil"
-#~ msgstr "Startseite"
-
-#~ msgid ""
-#~ "Vous êtes bien sur la page à partir de laquelle il convient de débuter !"
-#~ msgstr "Sie befinden sich auf der Seite, von der aus Sie beginnen sollten."
-
-#~ msgid "Choisissez votre bibliothèque"
-#~ msgstr "Wählen Sie Ihre Bibliothek"
-
-#~ msgid "Choisissez la fonctionnalité souhaitée"
-#~ msgstr "Wählen Sie die gewünschte Funktion"
-
-#~ msgid ""
-#~ "Dans ce dernier cas, la ressource doit apparaître dans votre liste des"
-#~ msgstr "Im letzteren Fall wird normalerweise die resultierende Sammlung "
-
-#~ msgid "pour la ressource suivante"
-#~ msgstr "für die folgende Zeitschrift"
-
-#~ msgid "Exclusion ?"
-#~ msgstr "Ausnahme ?"
-
-#~ msgid ""
-#~ "Sinon, prenez rang en tenant compte des états de collections ou d'autres "
-#~ "prescriptions"
-#~ msgstr ""
-#~ "Andernfalls den Rang unter Berücksichtigung des Status anderer Sammlungen "
-#~ "oder anderer Anforderungen"
-
-#~ msgid "Retour à la liste actualisée des positionnements"
-#~ msgstr "Zurück zum [rang nehmen]"
-
-#~ msgid "Retour à la liste actualisée des arbitrages"
-#~ msgstr "Zurück zum Schiedsverfahren"
-
-#~ msgid "Ressources éditables pour"
-#~ msgstr "erschienbar für"
-
-#~ msgid ""
-#~ "Ressources complètement instruites et pouvant donc être éditées pour "
-#~ "votre bibliothèque"
-#~ msgstr "Vollständig, erschienbar"
-
-#~ msgid "Edition de la résultante pour ma bibliothèque"
-#~ msgstr "resultierende Sammlung"
