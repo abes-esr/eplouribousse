@@ -604,12 +604,15 @@ def modifranklist(request, lid):
     global idfeature, idview, dil
     idfeature, idview, dil =1, 2, lid
 
-    #Getting ressources whose this lid must but has not yet taken rank :
-    reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
+    # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
+    reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
+    .exclude(status =2).exclude(status =3).exclude(status =4).\
+    exclude(status =5).exclude(status =6))
     resslist = []
     for e in reclist:
-        itemlist = list(ItemRecord.objects.filter(sid = e.sid, status =1))
-        if len(itemlist) ==0:
+        if len(list(ItemRecord.objects.filter(sid = e.sid, status =1))) and not len(list(Instruction.objects.filter(sid = e.sid))):
+            resslist.append(e)
+        elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
             resslist.append(e)
     l = len(resslist)
 
@@ -810,16 +813,25 @@ def takerank(request, sid, lid):
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
         return home(request)
 
-    do = notintime(request, sid, lid)
+    #Control (takerank only if still possible ; status still ==0 for all attached libraries ;
+    #status ==1 and no instruction yet ; lid not "999999999")
 
-    #Control (takerank only if still possible ; status still ==0 for all attached libraries ; lid not "999999999")
-    try:
-        if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0))):
-            return do
-        elif lid =="999999999":
-            return do
-    except:
-        z =1 #This is just to continue
+    # reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
+    # .exclude(status =2).exclude(status =3).exclude(status =4).\
+    # exclude(status =5).exclude(status =6))
+    # resslist = []
+    # for e in reclist:
+    #     if len(list(ItemRecord.objects.filter(sid = e.sid, status =1)) and not len(list(Instruction.objects.filter(sid = e.sid))):
+    #         resslist.append(e)
+    #     elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
+    #         resslist.append(e)
+
+    if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0).exclude(status =1))):
+        return notintime(request, sid, lid)
+    elif len(list(ItemRecord.objects.filter(sid =sid, status =1))) and len(list(Instruction.objects.filter(sid = sid))):
+        return notintime(request, sid, lid)
+    elif lid =="999999999":
+        return notintime(request, sid, lid)
 
     # For position form :
     i = ItemRecord.objects.get(sid = sid, lid = lid)
@@ -827,12 +839,12 @@ def takerank(request, sid, lid):
     if f.is_valid():
         global lastrked
         lastrked =i
-        if len(ItemRecord.objects.filter(sid =sid).exclude(status =0)) ==0:
-            if i.excl !='':
-                i.rank =0
-            f.save()
-        # Other status modification if all libraries have taken rank (as of now status =0) :
-        # 0 --> 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
+        # if len(ItemRecord.objects.filter(sid =sid).exclude(status =0)) ==0:
+        if i.excl !='':
+            i.rank =0
+        f.save()
+        # Other status modification if all libraries have taken rank :
+        # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
         # ordering by pk for identical ranks upper than 1.
         if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
             p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
