@@ -816,16 +816,6 @@ def takerank(request, sid, lid):
     #Control (takerank only if still possible ; status still ==0 for all attached libraries ;
     #status ==1 and no instruction yet ; lid not "999999999")
 
-    # reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-    # .exclude(status =2).exclude(status =3).exclude(status =4).\
-    # exclude(status =5).exclude(status =6))
-    # resslist = []
-    # for e in reclist:
-    #     if len(list(ItemRecord.objects.filter(sid = e.sid, status =1)) and not len(list(Instruction.objects.filter(sid = e.sid))):
-    #         resslist.append(e)
-    #     elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
-    #         resslist.append(e)
-
     if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0).exclude(status =1))):
         return notintime(request, sid, lid)
     elif len(list(ItemRecord.objects.filter(sid =sid, status =1))) and len(list(Instruction.objects.filter(sid = sid))):
@@ -837,22 +827,26 @@ def takerank(request, sid, lid):
     i = ItemRecord.objects.get(sid = sid, lid = lid)
     f = PositionForm(request.POST, instance=i)
     if f.is_valid():
-        global lastrked
-        lastrked =i
-        # if len(ItemRecord.objects.filter(sid =sid).exclude(status =0)) ==0:
-        if i.excl !='':
-            i.rank =0
-        f.save()
-        # Other status modification if all libraries have taken rank :
-        # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
-        # ordering by pk for identical ranks upper than 1.
-        if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-            p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
-            if p.status !=1:
-                p.status =1
-                p.save()
+        #last controls before modifications :
+        if (len(list(ItemRecord.objects.filter(sid = sid, status =1))) and not len(list(Instruction.objects.filter(sid = sid)))) or\
+        len(list(ItemRecord.objects.filter(sid = sid).exclude(status =0))) ==0:
+            global lastrked
+            lastrked =i
+            # if len(ItemRecord.objects.filter(sid =sid).exclude(status =0)) ==0:
+            if i.excl !='':
+                i.rank =0
+            f.save()
+            # Other status modification if all libraries have taken rank :
+            # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
+            # ordering by pk for identical ranks upper than 1.
+            if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
+                p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
+                if p.status !=1:
+                    p.status =1
+                    p.save()
+        else:
+            return notintime(request, sid, lid)
 
-        # return ranktotake(request, lid)
         return router(request)
 
     # Item records list :
