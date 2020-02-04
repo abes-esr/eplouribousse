@@ -33,7 +33,7 @@
     <p>{% trans "Pour modifier le positionnement, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
     {% if lastrked != None %}
-    <p>{% trans "Dernier positionnement enregistré" %} : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
+    <p><b>{% trans "Dernier positionnement enregistré" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
        {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
     {% endif %}
     <p><a href="/rklist/{{ lid }}">{% trans "Retour à la liste des collections à positionner" %}</a></p>
