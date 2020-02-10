@@ -23,7 +23,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 05. instruction forms (add, delete, end),
 06. neat worked pdf reports,
 07. conformity check at the end of each process cycle,
-08. full support of the processing chain,
+08. full integrated workflow,
 09. activity tracking chart,
 10. users management,
 11. authentication controls,

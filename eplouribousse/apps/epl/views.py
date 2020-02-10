@@ -1629,6 +1629,9 @@ def indicators(request):
     #Number of exclusions :
     exclus = len(ItemRecord.objects.filter(rank =0))
 
+    #number of libraries :
+    nlib = len(Library.objects.all())
+
     #Exclusions details
     dict ={}
     for e in EXCLUSION_CHOICES:
@@ -1738,7 +1741,7 @@ def indicators(request):
     'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
     's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
      'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
-     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, })
+     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, 'nlib' : nlib, })
 
 def home(request):
 

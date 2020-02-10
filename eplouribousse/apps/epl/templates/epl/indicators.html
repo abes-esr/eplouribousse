@@ -61,10 +61,13 @@
           <td>{% trans "dont triplons" %}</td>
           <td><center>{{ tripl }}</center></td>
     </tr>
+    {% if nlib > 4 %}
+    <!-- 4 and not 3, since the checker is another library -->
     <tr>
           <td>{% trans "dont quadruplons" %}</td>
           <td><center>{{ qudrpl }}</center></td>
     </tr>
+    {% endif %}
     <tr>
          <td>{% trans "Collections positionnées (exclusions incluses)" %}</td>
          <td><center>{{ rkall }}</center></td>
