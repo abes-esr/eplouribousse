@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-10 11:10+0100\n"
+"POT-Creation-Date: 2020-02-10 13:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -759,7 +759,6 @@ msgid "Export pdf"
 msgstr "Export im PDF-Format"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
-#: eplouribousse/apps/epl/templates/epl/modifrklist.html:39
 #: eplouribousse/apps/epl/templates/epl/ranking.html:81
 msgid "Retour à la liste"
 msgstr "Zurück zur Liste"
@@ -1084,6 +1083,10 @@ msgstr "Ausnahmen"
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:40
 msgid "Modifier"
 msgstr "Ändern"
+
+#: eplouribousse/apps/epl/templates/epl/modifrklist.html:39
+msgid "Retour à la liste générale des positionnements"
+msgstr "Zurück zum [rang nehmen]"
 
 #: eplouribousse/apps/epl/templates/epl/notintime.html:25
 msgid "Tentative d'intervention hors délai"
@@ -1413,6 +1416,3 @@ msgstr "German"
 
 #~ msgid "Retour à la liste des ressources éditables"
 #~ msgstr "Zurück zur Liste der bearbeitbaren Zeitschriften"
-
-#~ msgid "Retour à la liste des collections à positionner"
-#~ msgstr "Zurück zum [rang nehmen]"
