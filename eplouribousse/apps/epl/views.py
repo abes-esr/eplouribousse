@@ -1183,7 +1183,11 @@ def endinstr(request, sid, lid):
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                     " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
-                    dest = [nextlib.contact, nextlib.contact_bis, nextlib.contact_ter]
+                    dest = [nextlib.contact]
+                    if nextlib.contact_bis:
+                        dest.append(nextlib.contact_bis)
+                    if nextlib.contact_ter:
+                        dest.append(nextlib.contact_ter)
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==2:
@@ -1254,7 +1258,11 @@ def endinstr(request, sid, lid):
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
             " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
-            dest = [nextlib.contact, nextlib.contact_bis, nextlib.contact_ter]
+            dest = [nextlib.contact]
+            if nextlib.contact_bis:
+                dest.append(nextlib.contact_bis)
+            if nextlib.contact_ter:
+                dest.append(nextlib.contact_ter)
             send_mail(subject, message, replymail, dest, fail_silently=True, )
             return router(request)
 
