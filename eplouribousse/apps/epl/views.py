@@ -1155,7 +1155,9 @@ def endinstr(request, sid, lid):
                 checkerinstruction.bound ="x"
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
                 checkerinstruction.bound =" "
-            checkerinstruction.descr =Now()
+            time =Now()
+            checkerinstruction.descr =time
+            checkerinstruction.time =time
             checkerinstruction.save()
 
             #Renumbering instruction lines :
