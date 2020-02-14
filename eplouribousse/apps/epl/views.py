@@ -1732,7 +1732,7 @@ def indicators(request):
     bdonway = len(ItemRecord.objects.filter(rank =1, status =2))
 
     #Number of ressources whose instruction of not bound elements may begin :
-    notbdmaymeg = len(ItemRecord.objects.filter(rank =1, status =3))
+    notbdmaybeg = len(ItemRecord.objects.filter(rank =1, status =3))
 
     #Number of ressources whose not bound elements are currently instructed  :
     notbdonway = len(ItemRecord.objects.filter(rank =1, status =4))
@@ -1747,7 +1747,7 @@ def indicators(request):
     instr = len(Instruction.objects.all())
 
     return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
-    rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaymeg' : notbdmaymeg, 'fullinstr' : fullinstr, \
+    rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaybeg' : notbdmaybeg, 'fullinstr' : fullinstr, \
     'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
     's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
      'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
