@@ -2264,7 +2264,7 @@ def router(request):
         if idview ==2:
             return x1arb(request, dil, dilx)
         if idview ==3:
-            return x0x0arb(request, dil, dilx)
+            return x0arb(request, dil, dilx)
         if idview ==4:
             return arbrk1(request, dil)
         if idview ==5:
