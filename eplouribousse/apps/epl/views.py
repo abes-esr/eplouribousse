@@ -665,9 +665,9 @@ def xarbitration(request, lid, xlid):
 
     for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
         sid = e.sid
-        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid, lid = xlid).exclude(rank =0).exclude(rank = 99)) !=0 and \
-        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0:
+        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
             resslistb.append(e)
 
     resslist = resslista + resslistb
@@ -731,9 +731,9 @@ def x0arb(request, lid, xlid):
 
     for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
         sid = e.sid
-        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid, lid = xlid).exclude(rank =0).exclude(rank = 99)) !=0 and \
-        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0:
+        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
             resslist.append(e)
 
     size = len(resslist)
@@ -1417,9 +1417,9 @@ def arbitration(request, lid):
 
     for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
         sid = e.sid
-        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).exclude(rank =0).exclude(rank =99)) !=0 and \
-        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0:
+        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
             resslistb.append(e)
 
     resslist = resslista + resslistb
@@ -1482,9 +1482,9 @@ def arbnork1(request, lid):
 
     for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
         sid = e.sid
-        if len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).filter(rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid).exclude(lid =lid).exclude(rank =0).exclude(rank =99)) !=0 and \
-        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0:
+        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
             resslist.append(e)
 
     size = len(resslist)
@@ -1661,7 +1661,7 @@ def indicators(request):
     for i in ItemRecord.objects.exclude(rank =0).exclude(rank =1).exclude(rank =99):
         if len(ItemRecord.objects.filter(sid =i.sid, rank =99)) ==0 and \
         len(ItemRecord.objects.filter(sid =i.sid, rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =1).exclude(rank =99)) >1:
+        len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) >1:
             cnone +=1
             snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0))
     snone = int(snone)
