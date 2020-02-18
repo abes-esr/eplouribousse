@@ -700,8 +700,7 @@ def x1arb(request, lid, xlid):
 
     for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
         sid = e.sid
-        if ItemRecord.objects.exclude(lid =lid).filter(sid =sid, rank = 1) and \
-        ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
+        if ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
             resslist.append(e)
 
     size = len(resslist)
