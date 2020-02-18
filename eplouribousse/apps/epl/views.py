@@ -1661,11 +1661,9 @@ def indicators(request):
     for i in ItemRecord.objects.exclude(rank =0).exclude(rank =1).exclude(rank =99):
         if len(ItemRecord.objects.filter(sid =i.sid, rank =99)) ==0 and \
         len(ItemRecord.objects.filter(sid =i.sid, rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =i.sid, rank =0)) ==0 and \
         len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =1).exclude(rank =99)) >1:
             cnone +=1
-            snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0).exclude(rank =1).\
-            exclude(rank =99))
+            snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)
     snone = int(snone)
 
     #Collections involved in arbitration for any of the two reasons and number of serials concerned
