@@ -27,7 +27,7 @@
 
       <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
       <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
-       / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
+       / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / <a href="{{ periscope }}" target="_blank">Périscope</a></p>
       <p></p>
 
       <p><i>{% trans "Votre rattachement apparaît en rouge" %} :</i></p>

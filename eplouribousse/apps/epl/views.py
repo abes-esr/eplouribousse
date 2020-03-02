@@ -857,9 +857,14 @@ def takerank(request, sid, lid):
     # Library data :
     lib = Library.objects.get(lid = lid)
 
+    periscope = "https://periscope.sudoc.fr/?ppnviewed=" + str(sid) + "&orderby=SORT_BY_PCP&collectionStatus=&tree="
+    for i in itemlist[:-1]:
+        periscope = periscope + i.lid + "%2C"
+    periscope = periscope + itemlist[-1].lid
+
     return render(request, 'epl/ranking.html',\
      { 'ressource' : ress, 'items' : itemlist,
-     'library' : lib, 'form' : f, 'lid' : lid, 'k' : k, })
+     'library' : lib, 'form' : f, 'lid' : lid, 'k' : k, 'periscope' : periscope, })
 
 
 @login_required
