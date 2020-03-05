@@ -27,63 +27,83 @@
         <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
-      {% if lid == "999999999" %}
-      <b><font color= #a7a7a7 >1/2</font></b> : {% trans "Contrôle à mi-chemin" %}
-      <p></p>
-      <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Contrôle final" %}
-      <p><a href="/xcheck">{% trans "Filtrer la liste" %}</a></p>
-      <p></p>
-      {% endif %}
 
       {% if nlib > 2 %}
       <p><a href="/instrfilter/{{ lid }}">{% trans "Restreindre la liste aux instructions avec une autre bibliothèque" %}</a></p>
       {% else %}
       {% endif %}
 
-      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+      {% if lid == "999999999" %}
+      <b><font color= #a7a7a7 >1/2</font></b> : {% trans "Contrôle à mi-chemin" %}
+      <p></p>
+      <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Contrôle final" %}
+      <p><a href="/xcheck">{% trans "Filtrer la liste" %}</a></p>
+      <p></p>
+      {% elif lid != "999999999" %}
+      <b><font color= #a7a7a7 >1/2(*)</font></b> : <a href="/bd1/{{ lid }}">{% trans "reliés rang 1" %}</a> - <b><font color= #a7a7a7 >2/2(*)</font></b> : <a href="/notbd1/{{ lid }}">{% trans "non reliés rang 1" %}</a>
+      <p></p>
+      <b><font color= #a7a7a7 >1/2</font></b> : <a href="/bdnot1/{{ lid }}">{% trans "reliés autre rang" %}</a> - <b><font color= #a7a7a7 >2/2</font></b> : <a href="/notbdnot1/{{ lid }}">{% trans "non reliés autre rang" %}</a>
+      <p></p>
+      {% endif %}
 
+      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+      <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
       <ul>
 
-      {% for elmt in ressourcelist %}
+
 
             <HR>
-      <p></p>
-          {% if elmt.lid != lid %}
-          <!-- it means : lid =="999999999" -->
-              {% if elmt.status == 2 %}
-              <li><b><font color= #a7a7a7 >1/2</font></b></li>
-              <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-              <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-              <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-              {% elif elmt.status == 4 %}
-              <li><b><font color= #a7a7a7 >2/2</font></b></li>
-              <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-              <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-              <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
-              {% endif %}
+          {% if lid == "999999999" %}
+              {% for elmt in ressourcelist %}
+                  {% if elmt.status == 2 %}
+                  <li><b><font color= #a7a7a7 >1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                  <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+                  {% elif elmt.status == 4 %}
+                  <li><b><font color= #a7a7a7 >2/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                  <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+                  {% endif %}
+                  <HR>
+              {% endfor %}
+
           {% else %}
           <!-- it means : lid !="999999999" -->
-          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
-          {% endif %}
+            {% for elmt in ressourcelist %}
+                {% if elmt.status == 1 %}
+                  {% if elmt.rank == 1 %}
+                  <li><b><font color= #a7a7a7 >1/2(*)</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                  <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  {% elif elmt.rank != 1 %}
+                  <li><b><font color= #a7a7a7 >1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                  <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  {% endif %}
+                {% elif elmt.status == 3 %}
+                  {% if elmt.rank == 1 %}
+                  <li><b><font color= #a7a7a7 >2/2(*)</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                  <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  {% elif elmt.rank != 1 %}
+                  <li><b><font color= #a7a7a7 >2/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                  <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  {% endif %}
+                {% endif %}
+                <HR>
+              {% endfor %}
 
-
-
-      {% endfor %}
-           <HR>
+            {% endif %}
 
       </ul>
 
         </div>
 
         {% if lid != lidchecker %}
-        <div id="menucontextuel">
-        <p><b>{% trans "Menu [instructions]" %} : </b><a href="/bd1/{{ lid }}">{% trans "reliés rang 1" %}</a> - <a href="/bdnot1/{{ lid }}">{% trans "reliés autre rang" %}</a> - <a href="/notbd1/{{ lid }}">{% trans "non reliés rang 1" %}</a> - <a href="/notbdnot1/{{ lid }}">{% trans "non reliés autre rang" %}</a></p>
-        </div>
 
         <div id="menugeneral">
-        <p><b>{% trans "Menu général" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+        <p><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
         </div>
         {% endif %}
 
