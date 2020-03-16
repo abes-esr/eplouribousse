@@ -633,6 +633,14 @@ def filter_arblist(request, lid):
 
     libname = (Library.objects.get(lid =lid)).name
 
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
+            libch += (l.name, l.name),
+
+    class XlibForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
+
     form = XlibForm(request.POST or None)
     if form.is_valid():
         xlib = form.cleaned_data['name']
@@ -754,6 +762,14 @@ def filter_rklist(request, lid):
     "Filter rk list"
 
     libname = (Library.objects.get(lid =lid)).name
+
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
+            libch += (l.name, l.name),
+
+    class XlibForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
 
     form = XlibForm(request.POST or None)
     if form.is_valid():
@@ -1801,6 +1817,16 @@ def filter_edlist(request, lid):
 
     name = (Library.objects.get(lid =lid)).name
 
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =name):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =name).order_by('name'):
+            libch += (l.name, l.name),
+
+    class EditionForm(forms.Form):
+        rk_ch = (("a", _("Collection mère")), ("b", _("Collection non mère")),)
+        rank = forms.ChoiceField(required = True, widget=forms.Select, choices=rk_ch, label =_("Rang des collections de la bibliothèque mentionnée dans l'entête de cette page"))
+        lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
+
     form = EditionForm(request.POST or None)
     if form.is_valid():
         rank = form.cleaned_data['rank']
@@ -2303,6 +2329,14 @@ def instrfilter(request, lid):
     "Filter instruction list"
 
     libname = (Library.objects.get(lid =lid)).name
+
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
+            libch += (l.name, l.name),
+
+    class XlibForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
 
     form = XlibForm(request.POST or None)
     if form.is_valid():

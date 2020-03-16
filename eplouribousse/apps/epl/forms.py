@@ -45,15 +45,6 @@ class AdminCheckForm(forms.ModelForm):
         }
 
 
-class EditionForm(forms.Form):
-    RK_CHOICES = (("a", _("Collection mère")), ("b", _("Collection non mère")),)
-    LIB_CHOICES = LIBRARY_CHOICES[1:]
-    rank = forms.ChoiceField(required = True, widget=forms.Select, choices=RK_CHOICES, label =_("Rang des collections de la bibliothèque mentionnée dans l'entête de cette page"))
-    lib = forms.ChoiceField(required = True, widget=forms.Select, choices=LIB_CHOICES, label =_("Autre bibliothèque impliquée"))
-
-class XlibForm(forms.Form):
-    name = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES[1:], label =_("Autre bibliothèque impliquée"))
-
 class InstructionCheckerFilter(forms.Form):
     name = forms.MultipleChoiceField(required = True, widget=forms.CheckboxSelectMultiple, choices=LIBRARY_CHOICES[1:], label =_("Bibliothèques impliquées (opérateur 'ou')"))
     phase = forms.MultipleChoiceField(required = True, widget=forms.CheckboxSelectMultiple, choices=PHASE_CHOICES, label =_("Phase d'instruction"))
