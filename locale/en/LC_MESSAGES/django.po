@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-05 14:29+0100\n"
+"POT-Creation-Date: 2020-04-07 09:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,30 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: eplouribousse/apps/epl/forms.py:49
-#: eplouribousse/apps/epl/templates/epl/edition.html:37
-#: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:25
-msgid "Collection mère"
-msgstr "Mother collection"
-
-#: eplouribousse/apps/epl/forms.py:49
-msgid "Collection non mère"
-msgstr "Non-mother collection"
-
-#: eplouribousse/apps/epl/forms.py:51
-msgid ""
-"Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
-"page"
-msgstr "Collection's rank for the above library"
-
-#: eplouribousse/apps/epl/forms.py:52 eplouribousse/apps/epl/forms.py:55
-msgid "Autre bibliothèque impliquée"
-msgstr "Other taking part library"
-
-#: eplouribousse/apps/epl/forms.py:58
 msgid "Bibliothèques impliquées (opérateur 'ou')"
 msgstr "Involved libraries (or operator)"
 
-#: eplouribousse/apps/epl/forms.py:59
+#: eplouribousse/apps/epl/forms.py:50
 msgid "Phase d'instruction"
 msgstr "Instruction phase"
 
@@ -135,7 +115,7 @@ msgstr "Sign Out"
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:61
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:53
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:54
 msgid "Instruction"
 msgstr "Instruction"
 
@@ -173,14 +153,14 @@ msgstr "Instruction"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:44
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:40
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:40
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:44
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:48
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:54
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:58
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:42
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:45
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:49
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:55
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:59
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:43
 #: eplouribousse/apps/epl/views.py:73 eplouribousse/apps/epl/views.py:208
 #: eplouribousse/apps/epl/views.py:346 eplouribousse/apps/epl/views.py:484
-#: eplouribousse/apps/epl/views.py:1922 eplouribousse/apps/epl/views.py:2060
+#: eplouribousse/apps/epl/views.py:1948 eplouribousse/apps/epl/views.py:2086
 msgid "Titre"
 msgstr "Title"
 
@@ -218,11 +198,11 @@ msgstr "Title"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:46
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:42
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:42
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:46
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:50
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:56
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:60
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:44
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:47
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:51
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:57
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:61
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:45
 msgid "Identifiant de la ressource"
 msgstr "Serial ID"
 
@@ -373,8 +353,8 @@ msgstr "Cancel a row"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:56
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:53
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:74
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:57
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:75
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:58
 msgid "Accueil"
 msgstr "Home"
 
@@ -415,8 +395,8 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:56
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:53
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:74
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:57
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:75
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:58
 msgid "Manuel de l'utilisateur"
 msgstr "User manual"
 
@@ -457,8 +437,8 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:61
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:58
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:58
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:79
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:62
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:80
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:63
 msgid "A propos"
 msgstr "About"
 
@@ -483,8 +463,8 @@ msgstr "About"
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:26
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:70
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:53
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:71
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:54
 msgid "Arbitrages"
 msgstr "Arbitrations"
 
@@ -509,8 +489,8 @@ msgstr "Arbitrations"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:31
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:29
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:29
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:30
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:30
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:31
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:31
 msgid "Nombre de ressources concernées"
 msgstr "Number of involved serials"
 
@@ -551,8 +531,8 @@ msgstr "Restricted list to arbitration cases with another involved library"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:35
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:31
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:31
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:34
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:32
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:35
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:33
 msgid ""
 "Pour chercher une occurrence dans cette liste, veuillez utiliser la "
 "fonctionnalité de recherche du navigateur."
@@ -600,11 +580,11 @@ msgstr "Click on [Serial id] link to modify your rank"
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:45
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:41
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:41
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:45
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:49
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:55
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:59
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:43
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:46
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:50
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:56
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:60
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:44
 msgid "Cote"
 msgstr "Call number"
 
@@ -622,8 +602,8 @@ msgstr "Call number"
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:62
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:70
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:53
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:71
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:54
 msgid "Menu"
 msgstr "Menu"
 
@@ -647,7 +627,7 @@ msgstr "Menu"
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:62
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:49
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:70
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:71
 msgid "Positionnement"
 msgstr "Ranking"
 
@@ -685,8 +665,8 @@ msgstr "Instructions"
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/xarbitration.html:62
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:70
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:53
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:71
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:54
 msgid "Edition"
 msgstr "Edition"
 
@@ -703,7 +683,7 @@ msgstr "Arbitrations (Competition on rank 1)"
 #: eplouribousse/apps/epl/templates/epl/home.html:30
 #: eplouribousse/apps/epl/views.py:72 eplouribousse/apps/epl/views.py:207
 #: eplouribousse/apps/epl/views.py:345 eplouribousse/apps/epl/views.py:483
-#: eplouribousse/apps/epl/views.py:1921 eplouribousse/apps/epl/views.py:2059
+#: eplouribousse/apps/epl/views.py:1947 eplouribousse/apps/epl/views.py:2085
 msgid "Projet"
 msgstr "Project"
 
@@ -765,6 +745,11 @@ msgstr "You're logged out"
 #: eplouribousse/apps/epl/templates/epl/edition.html:36
 msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Rows involving your libary are highlighted"
+
+#: eplouribousse/apps/epl/templates/epl/edition.html:37
+#: eplouribousse/apps/epl/views.py:1826
+msgid "Collection mère"
+msgstr "Mother collection"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
 #: eplouribousse/apps/epl/templates/epl/ranking.html:81
@@ -997,7 +982,7 @@ msgstr "Filter the list"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:51
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:31
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:32
 msgid "reliés rang 1"
 msgstr "bound 1st rank"
 
@@ -1005,20 +990,20 @@ msgstr "bound 1st rank"
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:57
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:52
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:31
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:32
 msgid "non reliés rang 1"
 msgstr "not bound shape, 1st rank"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:45
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:57
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:33
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:34
 msgid "reliés autre rang"
 msgstr "bound shape, other ranks"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:45
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:57
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:54
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:33
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:34
 msgid "non reliés autre rang"
 msgstr "not bound shape, other ranks"
 
@@ -1027,7 +1012,7 @@ msgstr "not bound shape, other ranks"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:34
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:33
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:32
-#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:36
+#: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:37
 msgid "Pour instruire, cliquez sur le lien [Identifiant de la ressource]"
 msgstr "Click on [Serial id] link to add instruction lines"
 
@@ -1260,7 +1245,7 @@ msgid "Restreindre la liste aux doublons avec une autre bibliothèque"
 msgstr "Restricted list to duplicate cases with another involved library"
 
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:36
-#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:34
+#: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:35
 msgid ""
 "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]"
 msgstr "Click on [Serial id] link to take rank"
@@ -1277,6 +1262,10 @@ msgstr "Middleway or final control"
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:24
 msgid "Ressources éditables"
 msgstr "Editable serials"
+
+#: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:25
+msgid "Collection <u>mère</u>"
+msgstr "<u>Mother</u> collection"
 
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:26
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:26
@@ -1299,113 +1288,118 @@ msgstr "Login"
 
 #: eplouribousse/apps/epl/views.py:74 eplouribousse/apps/epl/views.py:209
 #: eplouribousse/apps/epl/views.py:347 eplouribousse/apps/epl/views.py:485
-#: eplouribousse/apps/epl/views.py:1923 eplouribousse/apps/epl/views.py:2061
+#: eplouribousse/apps/epl/views.py:1949 eplouribousse/apps/epl/views.py:2087
 msgid "Collection"
 msgstr "collection"
 
 #: eplouribousse/apps/epl/views.py:74 eplouribousse/apps/epl/views.py:209
 #: eplouribousse/apps/epl/views.py:347 eplouribousse/apps/epl/views.py:485
-#: eplouribousse/apps/epl/views.py:1923 eplouribousse/apps/epl/views.py:2061
+#: eplouribousse/apps/epl/views.py:1949 eplouribousse/apps/epl/views.py:2087
 msgid "cote"
 msgstr "call number"
 
 #: eplouribousse/apps/epl/views.py:89 eplouribousse/apps/epl/views.py:224
 #: eplouribousse/apps/epl/views.py:362 eplouribousse/apps/epl/views.py:500
-#: eplouribousse/apps/epl/views.py:1938 eplouribousse/apps/epl/views.py:2076
+#: eplouribousse/apps/epl/views.py:1964 eplouribousse/apps/epl/views.py:2102
 msgid "issn"
 msgstr "issn"
 
 #: eplouribousse/apps/epl/views.py:89 eplouribousse/apps/epl/views.py:224
 #: eplouribousse/apps/epl/views.py:362 eplouribousse/apps/epl/views.py:500
-#: eplouribousse/apps/epl/views.py:1938 eplouribousse/apps/epl/views.py:2076
+#: eplouribousse/apps/epl/views.py:1964 eplouribousse/apps/epl/views.py:2102
 msgid "ppn"
 msgstr "sid"
 
 #: eplouribousse/apps/epl/views.py:89 eplouribousse/apps/epl/views.py:224
 #: eplouribousse/apps/epl/views.py:362 eplouribousse/apps/epl/views.py:500
-#: eplouribousse/apps/epl/views.py:1938 eplouribousse/apps/epl/views.py:2076
+#: eplouribousse/apps/epl/views.py:1964 eplouribousse/apps/epl/views.py:2102
 msgid "historique de la publication"
 msgstr "Publication history"
 
 #: eplouribousse/apps/epl/views.py:107 eplouribousse/apps/epl/views.py:242
 #: eplouribousse/apps/epl/views.py:380 eplouribousse/apps/epl/views.py:518
-#: eplouribousse/apps/epl/views.py:1956 eplouribousse/apps/epl/views.py:2094
+#: eplouribousse/apps/epl/views.py:1982 eplouribousse/apps/epl/views.py:2120
 msgid "collection mère"
 msgstr "mother collection"
 
 #: eplouribousse/apps/epl/views.py:111 eplouribousse/apps/epl/views.py:246
 #: eplouribousse/apps/epl/views.py:384 eplouribousse/apps/epl/views.py:522
-#: eplouribousse/apps/epl/views.py:1960 eplouribousse/apps/epl/views.py:2098
+#: eplouribousse/apps/epl/views.py:1986 eplouribousse/apps/epl/views.py:2124
 msgid "a pris part"
 msgstr "has taken  part"
 
 #: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
 #: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
-#: eplouribousse/apps/epl/views.py:1975 eplouribousse/apps/epl/views.py:2113
+#: eplouribousse/apps/epl/views.py:2001 eplouribousse/apps/epl/views.py:2139
 msgid "bibliothèque"
 msgstr "library"
 
 #: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
 #: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
-#: eplouribousse/apps/epl/views.py:1975 eplouribousse/apps/epl/views.py:2113
+#: eplouribousse/apps/epl/views.py:2001 eplouribousse/apps/epl/views.py:2139
 msgid "relié ?"
 msgstr "bound ?"
 
 #: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
 #: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
-#: eplouribousse/apps/epl/views.py:1975 eplouribousse/apps/epl/views.py:2113
+#: eplouribousse/apps/epl/views.py:2001 eplouribousse/apps/epl/views.py:2139
 msgid "bib. remédiée"
 msgstr "enhanced library"
 
 #: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
 #: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
-#: eplouribousse/apps/epl/views.py:1975 eplouribousse/apps/epl/views.py:2113
+#: eplouribousse/apps/epl/views.py:2001 eplouribousse/apps/epl/views.py:2139
 msgid "segment"
 msgstr "segment"
 
 #: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
 #: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
-#: eplouribousse/apps/epl/views.py:1975 eplouribousse/apps/epl/views.py:2113
+#: eplouribousse/apps/epl/views.py:2001 eplouribousse/apps/epl/views.py:2139
 msgid "exception"
 msgstr "exception"
 
 #: eplouribousse/apps/epl/views.py:126 eplouribousse/apps/epl/views.py:261
 #: eplouribousse/apps/epl/views.py:399 eplouribousse/apps/epl/views.py:537
-#: eplouribousse/apps/epl/views.py:1975 eplouribousse/apps/epl/views.py:2113
+#: eplouribousse/apps/epl/views.py:2001 eplouribousse/apps/epl/views.py:2139
 msgid "améliorable"
 msgstr "enhanceable"
 
-#: eplouribousse/apps/epl/views.py:932 eplouribousse/apps/epl/views.py:1032
-#: eplouribousse/apps/epl/views.py:1131
+#: eplouribousse/apps/epl/views.py:642 eplouribousse/apps/epl/views.py:772
+#: eplouribousse/apps/epl/views.py:1828 eplouribousse/apps/epl/views.py:2339
+msgid "Autre bibliothèque impliquée"
+msgstr "Other taking part library"
+
+#: eplouribousse/apps/epl/views.py:948 eplouribousse/apps/epl/views.py:1048
+#: eplouribousse/apps/epl/views.py:1147
 msgid "éléments reliés"
 msgstr "bound elements"
 
-#: eplouribousse/apps/epl/views.py:934 eplouribousse/apps/epl/views.py:1036
-#: eplouribousse/apps/epl/views.py:1135
+#: eplouribousse/apps/epl/views.py:950 eplouribousse/apps/epl/views.py:1052
+#: eplouribousse/apps/epl/views.py:1151
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
-#: eplouribousse/apps/epl/views.py:958
+#: eplouribousse/apps/epl/views.py:974
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:1040 eplouribousse/apps/epl/views.py:1139
+#: eplouribousse/apps/epl/views.py:1056 eplouribousse/apps/epl/views.py:1155
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:1051
+#: eplouribousse/apps/epl/views.py:1067
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Deletion not allowed (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:1140
+#: eplouribousse/apps/epl/views.py:1156
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:1189 eplouribousse/apps/epl/views.py:1264
+#: eplouribousse/apps/epl/views.py:1205 eplouribousse/apps/epl/views.py:1280
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:1212
+#: eplouribousse/apps/epl/views.py:1228
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -1414,9 +1408,19 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:1275
+#: eplouribousse/apps/epl/views.py:1291
 msgid "Vous n'avez pas coché !"
 msgstr "You did not check !"
+
+#: eplouribousse/apps/epl/views.py:1826
+msgid "Collection non mère"
+msgstr "Non-mother collection"
+
+#: eplouribousse/apps/epl/views.py:1827
+msgid ""
+"Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
+"page"
+msgstr "Collection's rank for the above library"
 
 #: eplouribousse/settings/base.py:129
 msgid "Français"
