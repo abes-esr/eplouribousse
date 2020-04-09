@@ -84,15 +84,20 @@
       <form method="post">{% csrf_token %}
           <p>{% trans "Ligne à supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
+      </div>
       </form>
 
       <div id="menucontextuel">
-        <button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></b></button> - <button><b><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a><b></button>
+
+        <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></b></button> - <button><b><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a><b></button> - <button><b><a href="/router">{% trans "Retour à la liste" %}</a></b></button></p>
+
       </div>
-</div>
+
 
         <div id="footer">
+
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
+
         </div>
 
         <div id="credits">

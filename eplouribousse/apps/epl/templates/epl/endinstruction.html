@@ -96,12 +96,13 @@
           <p>{{ checkform.flag }} {% trans "J'ai bien vérifié avant de valider" %}</p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
+          </div>
           </form>
             <div id="menucontextuel">
-            <button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne" %}</a></b></button>
+            <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne" %}</a></b></button> - <button><b><a href="/router">{% trans "Retour à la liste" %}</a></b></button></p>
             </div>
         {% endif %}
-          </div>
+
         <div id="footer">
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
