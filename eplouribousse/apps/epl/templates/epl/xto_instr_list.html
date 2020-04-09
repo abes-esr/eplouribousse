@@ -29,9 +29,7 @@
         <div id="content">
 
       <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
-      <b><font color= #a7a7a7 >1/2(*)</font></b> : {% trans "reliés rang 1" %} - <b><font color= #a7a7a7 >2/2(*)</font></b> : {% trans "non reliés rang 1" %}
-      <p></p>
-      <b><font color= #a7a7a7 >1/2</font></b> : {% trans "reliés autre rang" %} - <b><font color= #a7a7a7 >2/2</font></b> : {% trans "non reliés autre rang" %}
+      <p><b><font color= #a7a7a7 >1/2</font></b> ou <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Phase d'instruction courante, 1 = reliés, 2 = non reliés" %} (<b><font color= #a7a7a7 >*</font></b> = {% trans "collection mère" %})</p>
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
     <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
@@ -42,7 +40,7 @@
 
            {% if elmt.status == 1 %}
              {% if elmt.rank == 1 %}
-             <li><b><font color= #a7a7a7 >1/2(*)</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+             <li><b><font color= #a7a7a7 >*1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
              <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
              <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
              {% elif elmt.rank != 1 %}
@@ -52,7 +50,7 @@
              {% endif %}
            {% elif elmt.status == 3 %}
              {% if elmt.rank == 1 %}
-             <li><b><font color= #a7a7a7 >2/2(*)</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
+             <li><b><font color= #a7a7a7 >*2/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
              <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
              <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
              {% elif elmt.rank != 1 %}
