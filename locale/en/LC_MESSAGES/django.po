@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 15:47+0200\n"
+"POT-Creation-Date: 2020-04-14 18:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,7 +108,7 @@ msgstr "Sign Out"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:28
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:61
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:86
+#: eplouribousse/apps/epl/templates/epl/ranking.html:85
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:65
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:49
@@ -297,7 +297,7 @@ msgstr "underneath row n° ?"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:129
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:86
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:89
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:97
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:98
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:35
 #: eplouribousse/apps/epl/templates/epl/filter_ck_instrlist.html:37
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:37
@@ -319,7 +319,7 @@ msgstr "Cancel a row"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:135
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:92
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:102
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:103
 msgid "Reprendre plus tard"
 msgstr "Resume later"
 
@@ -331,7 +331,7 @@ msgstr "Resume later"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:99
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:37
 #: eplouribousse/apps/epl/templates/epl/edition.html:91
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:107
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:110
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:45
 #: eplouribousse/apps/epl/templates/epl/filter_ck_instrlist.html:44
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:47
@@ -346,7 +346,7 @@ msgstr "Resume later"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:60
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:65
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:91
+#: eplouribousse/apps/epl/templates/epl/ranking.html:90
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:69
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:53
@@ -372,7 +372,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:99
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:37
 #: eplouribousse/apps/epl/templates/epl/edition.html:91
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:107
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:110
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:45
 #: eplouribousse/apps/epl/templates/epl/filter_ck_instrlist.html:44
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:47
@@ -388,7 +388,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/language.html:52
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:65
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:91
+#: eplouribousse/apps/epl/templates/epl/ranking.html:90
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:69
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:53
@@ -414,7 +414,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:105
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:44
 #: eplouribousse/apps/epl/templates/epl/edition.html:96
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:112
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:115
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:50
 #: eplouribousse/apps/epl/templates/epl/filter_ck_instrlist.html:49
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:52
@@ -430,7 +430,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/language.html:59
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:70
 #: eplouribousse/apps/epl/templates/epl/notintime.html:55
-#: eplouribousse/apps/epl/templates/epl/ranking.html:96
+#: eplouribousse/apps/epl/templates/epl/ranking.html:95
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:74
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:58
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:58
@@ -666,7 +666,7 @@ msgstr "Instructions"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:61
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:86
+#: eplouribousse/apps/epl/templates/epl/ranking.html:85
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:64
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:53
@@ -758,7 +758,6 @@ msgid "Collection mère"
 msgstr "Mother collection"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
-#: eplouribousse/apps/epl/templates/epl/ranking.html:81
 msgid "Menu contextuel"
 msgstr "Context menu"
 
@@ -767,7 +766,7 @@ msgid "Export pdf"
 msgstr "pdf export"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
-#: eplouribousse/apps/epl/templates/epl/ranking.html:81
+#: eplouribousse/apps/epl/templates/epl/ranking.html:80
 msgid "Retour à la liste"
 msgstr "Back to the list"
 
@@ -780,7 +779,7 @@ msgstr "Back to the list"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:58
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
-#: eplouribousse/apps/epl/templates/epl/ranking.html:86
+#: eplouribousse/apps/epl/templates/epl/ranking.html:85
 msgid "Menu général"
 msgstr "Main menu"
 
@@ -792,15 +791,15 @@ msgstr "End of instructions"
 msgid "Les dernières lignes validées sont mises en évidence"
 msgstr "Last row is highlighted"
 
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:96
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:97
 msgid "J'ai bien vérifié avant de valider"
 msgstr "I have paid attention before submitting"
 
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:102
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:103
 msgid "Retour à l'instruction"
 msgstr "Back to instruction"
 
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:102
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:103
 msgid "Supprimer une ligne"
 msgstr "Delete a row"
 
