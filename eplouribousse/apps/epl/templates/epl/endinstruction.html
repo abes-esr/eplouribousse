@@ -24,13 +24,13 @@
       {% endif %}
       <p></p>
       <h2>{{ library.name }} - {% trans "Fin des instructions" %} - {{ stage }}</h2>
-      <div id="content">
+    <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
         <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
           {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
         {% if lid != '999999999' %}
-      <p><i>{% trans "Les dernières lignes validées sont mises en évidence" %}</i></p>
+          <p><i>{% trans "Les dernières lignes validées sont mises en évidence" %}</i></p>
         {% endif %}
 
         {% for elmt in librarylist %}
@@ -83,12 +83,13 @@
       </table>
 
         {% if lid == '999999999' %}
-        <form method="post">{% csrf_token %}
-        <div>
-        <p>{{ checkerform }}</p>
-        <p><input type="submit" value="{% trans "Valider" %}"></p>
-        </div>
-        </form>
+          <form method="post">{% csrf_token %}
+          <div>
+          <p>{{ checkerform }}</p>
+          <p><input type="submit" value="{% trans "Valider" %}"></p>
+          </div>
+          </form>
+          </div>
         {% else %}
           <form method="post">{% csrf_token %}
           <div>
@@ -96,12 +97,14 @@
           <p>{{ checkform.flag }} {% trans "J'ai bien vérifié avant de valider" %}</p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
-          </div>
           </form>
-            <div id="menucontextuel">
+          </div>
+          <div id="menucontextuel">
             <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
-            </div>
+          </div>
         {% endif %}
+      <!-- </div> -->
+
 
         <div id="footer">
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="https://seafile.unistra.fr/f/a998b238a22b4c13baf5/">{% trans "Manuel de l'utilisateur" %}</a></p>
