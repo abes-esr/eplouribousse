@@ -149,8 +149,8 @@ form table {
 }
 
 form thead {
-    background-color: #ff1d44;
-    color: #ffffff;
+    background-color: #f1f1f2;
+    /* color: #ffffff; */
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
@@ -188,4 +188,16 @@ form table, th, td {
 
 #credits a {
     color: #ffffff;
+}
+
+#highlight {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #f1f1f2;
+    /* text-align: center; */
+    /* color: #ff1d44; */
+}
+
+#highlight a {
+    color: #ff1d44;
 }

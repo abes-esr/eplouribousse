@@ -82,9 +82,10 @@
 
       <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
       <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}.</p>
-      <!-- <div id="menucontextuel"> -->
+
+      <div id="menucontextuel">
       <button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></b></button>
-      <!-- </div> -->
+      </div>
 
         <form method="post">{% csrf_token %}
 
