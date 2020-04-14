@@ -25,7 +25,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import logout
 
-idfeature =1 #identification de la fonctionnalité (1 pour positionnement, 2 pour arbitrage, 3 pour instr et 4 pour ed)
+idfeature =0 #identification de la fonctionnalité (0 pour accueil, 1 pour positionnement, 2 pour arbitrage, 3 pour instr et 4 pour ed)
 idview =1 #identification des fonctions de listes (voir les vues correspondantes)
 dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
 dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
@@ -601,8 +601,9 @@ def modifranklist(request, lid):
 
     k = logstatus(request)
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =1, 2, lid
+    # global idfeature, idview, dil
+    # idfeature, idview, dil =1, 2, lid
+    # cf. remarque dans la vue router(request)
 
     # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
     reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
@@ -801,7 +802,7 @@ def xranktotake(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
     return render(request, 'epl/xto_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname,})
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname, 'lastrked' : lastrked,})
 
 def notintime(request, sid, lid):
 
@@ -2276,13 +2277,18 @@ def xckall(request, coll_set):
 
 def router(request):
 
+    if idfeature ==0:
+        return home(request)
     if idfeature ==1:
         if idview ==0:
             return ranktotake(request, dil)
         if idview ==1:
             return xranktotake(request, dil, dilx)
-        if idview ==2:
-            return modifranklist(request, dil)
+        # if idview ==2:
+        #     return modifranklist(request, dil)
+        # Le choix de supprimer le bloc ci-dessus tient à ce que les modifications de rang sont normalement réalisés à l'unité ;
+        # il est donc plus intéressant de revenir à la dernière liste de positionnement. En conséquence la modification des varables
+        # globales a été annulée dans la vue modifranklist(request, dil)
     if idfeature ==2:
         if idview ==0:
             return arbitration(request, dil)
