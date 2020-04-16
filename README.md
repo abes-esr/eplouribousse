@@ -1,4 +1,4 @@
-You are more comfortable in French: go to README_en.md
+You are more comfortable in english : go to README_en.md
 
 # AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques.
 
