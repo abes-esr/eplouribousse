@@ -1,73 +1,85 @@
-Vous êtes plus à l'aise en français : rendez-vous dans le README_fr.md
+You are more comfortable in French: go to README_en.md
 
-# Collaborative WebApp to manage serials deduplication in libraries.
+# AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques.
 
-Save space by eliminating duplicates, provide better readability of your collections by restoring for each of them a unique collection as clean as possible resulting from the aggregation of scattered items available in your libraries.
+Gagnez de l'espace en éliminant vos doublons, offrez une meilleure lisibilité de vos ressources en reconstituant pour chacune d'elles une collection unique la plus intègre possible résultant de l'agrégation des éléments épars disponibles dans vos bibliothèques.
 
-# Method:
+# Méthode :
 
-For a given resource (Catalog Unit without filiations), "eplouribousse" allows libraries, each in turn, to indicate its bound elements contributing to the resulting collection, then in a second cycle of instructions and according to the same logic, its not bound complementary elements.
+Pour une ressource donnée (Unité catalographique sans les filiations), l'application eplouribousse permet aux bibliothèques, chacune à son tour, d'indiquer ses éléments reliés contribuant à la résultante, puis lors d'un deuxième cycle d'instructions et selon la même logique, ses éléments non-reliés complémentaires.
 
-The order of processing is significant: The first library is normally the one already holding the most important collection (the one that claims conservation in the event that the collection is finally grouped). It is the same logic of importance that must prevail normally for the place claimed by the following libraries. It may happen that a library wants to subtract its collection to the reconstitution of the resultant (The typical case is that of a collection of the legal deposit) The positioning module of "eplouribousse" makes this derogation possible.
+L'ordre de traitement est significatif : La première bibliothèque est normalement celle détenant déjà la collection la plus importante (Celle qui revendique la conservation dans l'hypothèse où la collection est finalement regroupée). C'est la même logique d'importance qui doit prévaloir normalement pour la place revendiquée par les bibliothèques suivantes. Il peut arriver qu'une bibliothèque veuille soustraire sa collection à la reconstitution de la résultante (Le cas typique est celui d'une collection du dépôt légal) Le module de positionnement de l'application eplouribousse rend cette dérogation possible.
 
-The sheets obtained describe the resulting collection ; the eliminated elements are deduced from this description (all that doesn't contribute to the resulting collection) The elements which contributes to the resulting collection may be grouped together or not, as desired. Physical treatments and catalog updates are expected.
+Les fiches obtenues décrivent les résultantes ; les éléments écartés s'en déduisent. Les parties contribuant à la collection résultante peuvent être regroupées ou pas, au choix. Les traitements physiques et mises à jour catalographiques sont à prévoir.
 
-See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
+Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 
-# Features:
+# Fonctionnalités :
 
-01. edition of the candidates for each taking part library,
-02. positioning form (including derogations),
-03. edition of the resources whose instruction of the resulting collection may begin,
-04. alert when its turn came to continue the instruction of the resulting collection,
-05. instruction forms (add, delete, end),
-06. neat worked pdf reports,
-07. conformity check at the end of each process cycle,
-08. full integrated workflow,
-09. activity tracking chart,
-10. users management,
-11. authentication controls,
-12. parameterization of derogation reasons,
-13. administration of faulty card cases,
-14. multilingual support (French, English, German, extensible to other languages)
+01. édition des candidats pour chaque bibliothèque participante,
+02. formulaire de positionnement (ou de dérogation),
+03. édition des ressources dont l'instruction de la résultante peut débuter,
+04. alerte quand son tour est venu de poursuivre l'instruction de la résultante,
+05. formulaires d'instruction (ajout, suppression, fin),
+06. édition différenciée des résultantes (rapports soignés au format pdf),
+07. contrôle de conformité à la fin de chaque cycle d'instruction,
+08. prise en charge complète de la chaîne de traitement,
+09. tableau de suivi d'activité,
+10. gestion des utilisateurs,
+11. contrôles d'authentification,
+12. paramétrage des motifs de dérogation,
+13. administration des cas de fiches défectueuses,
+14. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues)
 
-# More information :
+# Plus d'info :
 
-See the app manual in https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
+Voir le manuel de l'appli en https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
 
-# How to get eplouribousse?
+Visionner les vidéos de présentation : 
+01. Hypothèses et définitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/
+02. Méthode : https://seafile.unistra.fr/f/590ba4359f3e4b73b60e/
+03. Préparation de la base de données : https://seafile.unistra.fr/f/9581ffba08f24e849b08/
+04. Exemple d'un traitement de bout en bout : https://seafile.unistra.fr/f/b87faa2857ee42bab57f/
+05. Administration du site : https://seafile.unistra.fr/f/d3f6a23f94804dfabddd/
+06. Crédits : https://seafile.unistra.fr/f/579d874730604579b073/
 
-In order to have an idea of what it turns about and what it looks, we first recommand to take a tour on a real instance https://eplouribousse-droit.di.unistra.fr/
 
-----------------
+# Comment obtenir eplouribousse ?
 
-It looks good ? Let's try it on your desktop with the Django development server (ensure Django is installed) ; this will allow you to test all features (except automatic mail alert which is just a convenience)
-
-Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database (eplouribousse.db) https://seafile.unistra.fr/f/d4c87784317d47a0ae1a/?dl=1 extract and put it in the directory where you find manage.py
-(A look into this database should allow you to know how to craft your own one)
-
-Open a terminal, change directory (you must go to the one containing manage.py) then write and valid the following command line : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
-
-and run development server : python manage.py runserver (or eventually : python3 manage.py runserver)
-
-Then you can play !
-
-For any authentication use first name as identifier and testeplou as temporary password (the same for all identifiers)
-
-This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Clara is the checker, Flora is the database administrator, Alan is the site administrator and you are Joyce the super user. Discover what they can do, which rights they have, how they can interact with the app.
+Pour avoir un aperçu de l'application, commencez par visiter une instance réelle : https://eplouribousse-droit.di.unistra.fr/
 
 ----------------
 
-You're OK and you want the real one with all the conveniences ?
-We recommend that you first approach your IT team for a test installation.
+ça vous a plu ? Allez plus loin ; essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (à l'exception des alertes mail qui ne sont qu'une commodité)
 
-If you want to use eplouribousse for a firm project, there are three possibilities at the moment :
-- Entrust the deployment to your IT department by indicating the address of this site
-- Entrust the deployment to a host indicating the address of this site
-- We entrust the deployment (subject to agreement)
+Pour cela, clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
 
-In all cases, let us know that you're interested (see contact below)
+Décompressez et placez la base de données eplouribousse.db dans le répertoire qui contient le fichier manage.py
+(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+
+Dans un terminal, placez-vous dans le répertoire contenant le fichier manage.py, lancer la commande : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+
+puis lancer le serveur de développement : python manage.py runserver (ou éventuellement : python3 manage.py runserver)
+
+Testez !
+
+En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
+
+Pour ce test, nous avons trois bibliothèques : Jean travaille pour la bibliothèque "Les Jouvencelles", Suzanne pour la bibliothèque "La Combe du Lac", Pierrette pour la bibliothèque "La Serra" ; Claire est le vérificateur ; Flora administre la base de données, Alain administre le site et vous, vous êtes Jules le super-utilisateur. Découvrez ce que chacun peut faire, quels sont ses droits, comment il peut interagir avec l'application.
+
+----------------
+
+Vous êtes convaincu et vous voulez mettre en oeuvre eplouribousse dans votre établissement ?
+Nous conseillons d'abord de vous rapprocher de votre équipe informatique pour une installation de test.
+
+Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a actuellement trois possibilités :
+- Confier le déploiement à votre service informatique en indiquant l'adresse du présent site
+- Confier le déploiement à un hébergeur en indiquant l'adresse du présent site
+- Nous confier le déploiement (sous réserve d'accord)
+
+Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 
 # Contact :
 
-See https://github.com/GGre/eplouribounistra/blob/master/Version.txt
+Indiqué en https://github.com/GGre/eplouribounistra/blob/master/About.txt
+
