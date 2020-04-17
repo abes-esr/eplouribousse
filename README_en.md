@@ -33,7 +33,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 
 See the app manual in https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
 
-Videos (in french) :
+Videos (in french ; please download if you cannot fully view) :
 01. Assumptions and definitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/
 02. Méthod : https://seafile.unistra.fr/f/590ba4359f3e4b73b60e/
 03. Database preparation : https://seafile.unistra.fr/f/9581ffba08f24e849b08/

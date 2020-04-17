@@ -35,7 +35,7 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 
 Voir le manuel de l'appli en https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
 
-Visionner les vidéos de présentation : 
+Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas à visionner complètement) : 
 01. Hypothèses et définitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/
 02. Méthode : https://seafile.unistra.fr/f/590ba4359f3e4b73b60e/
 03. Préparation de la base de données : https://seafile.unistra.fr/f/9581ffba08f24e849b08/
