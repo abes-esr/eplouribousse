@@ -1,4 +1,4 @@
-epl_version ="Version : 1.1 (Basina)"
+epl_version ="Version 1.1 (Basina)"
 
 from django.shortcuts import render
 

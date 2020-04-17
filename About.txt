@@ -1,7 +1,7 @@
 ************************************************************************
                                eplouribousse
                       Most recent version : 1.1 (Basina)
-                             (15 april 2020)
+                              (April 15, 2020)
 ************************************************************************
                                Crafted with
       Python 3.5.2, Django 2.0, ReportLab open-source, HTML5, CSS3
