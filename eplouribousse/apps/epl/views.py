@@ -1,3 +1,4 @@
+epl_version ="Version : 1.1 (Basina)"
 
 from django.shortcuts import render
 
@@ -39,6 +40,7 @@ except:
 
 def lang(request):
     k = logstatus(request)
+    version =epl_version
     return render(request, 'epl/language.html', locals())
 
 
@@ -575,6 +577,7 @@ def notmotherpdf(request, lid):
 def ranktotake(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =1, 0, lid
@@ -594,12 +597,13 @@ def ranktotake(request, lid):
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
     return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, })
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, 'version' : version, })
 
 
 def modifranklist(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     # global idfeature, idview, dil
     # idfeature, idview, dil =1, 2, lid
@@ -623,12 +627,13 @@ def modifranklist(request, lid):
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
     return render(request, 'epl/modifrklist.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, })
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, 'version' : version, })
 
 
 def filter_arblist(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     "Filter arb list"
 
@@ -654,6 +659,7 @@ def filter_arblist(request, lid):
 def xarbitration(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =2, 1, lid, xlid
@@ -689,12 +695,13 @@ def xarbitration(request, lid, xlid):
 
 
     return render(request, 'epl/xarbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'xlid' : xlid, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'xlid' : xlid, 'version' : version, })
 
 
 def x1arb(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =2, 2, lid, xlid
@@ -720,12 +727,13 @@ def x1arb(request, lid, xlid):
 
 
     return render(request, 'epl/x1arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'version' : version, })
 
 
 def x0arb(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =2, 3, lid, xlid
@@ -753,12 +761,13 @@ def x0arb(request, lid, xlid):
 
 
     return render(request, 'epl/x0arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'version' : version, })
 
 
 def filter_rklist(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     "Filter rk list"
 
@@ -784,6 +793,7 @@ def filter_rklist(request, lid):
 def xranktotake(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =1, 1, lid, xlid
@@ -802,11 +812,12 @@ def xranktotake(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
     return render(request, 'epl/xto_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname, 'lastrked' : lastrked,})
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname, 'lastrked' : lastrked, 'version' : version, })
 
 def notintime(request, sid, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     lib = Library.objects.get(lid = lid).name
     if lid =="999999999":
@@ -816,13 +827,14 @@ def notintime(request, sid, lid):
             ress = sid
     else:
         ress = ItemRecord.objects.get(sid =sid, lid =lid).title
-    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, 'k' : k, })
+    return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, 'k' : k, 'version' : version, })
 
 
 @login_required
 def takerank(request, sid, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -885,13 +897,14 @@ def takerank(request, sid, lid):
 
     return render(request, 'epl/ranking.html',\
      { 'ressource' : ress, 'items' : itemlist,
-     'library' : lib, 'form' : f, 'lid' : lid, 'k' : k, 'periscope' : periscope, })
+     'library' : lib, 'form' : f, 'lid' : lid, 'k' : k, 'periscope' : periscope, 'version' : version, })
 
 
 @login_required
 def addinstr(request, sid, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     q = "x"
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))):
@@ -999,12 +1012,13 @@ def addinstr(request, sid, lid):
     return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, })
+    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, })
 
 @login_required
 def delinstr(request, sid, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -1094,12 +1108,13 @@ def delinstr(request, sid, lid):
     return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, })
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, })
 
 @login_required
 def endinstr(request, sid, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -1300,12 +1315,13 @@ def endinstr(request, sid, lid):
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, })
+    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, 'version' : version, })
 
 
 def instrtodo(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =3, 0, lid
@@ -1336,12 +1352,13 @@ def instrtodo(request, lid):
     lidchecker = "999999999"
 
     return render(request, 'epl/instrtodo.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, 'nlib' : nlib, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, 'nlib' : nlib, 'version' : version, })
 
 
 def instroneb(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank =1 and has to deal with bound elements (status =1)
@@ -1357,11 +1374,12 @@ def instroneb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodobd1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
 
 def instrotherb(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank !=1 and has to deal with bound elements (status =1)
@@ -1377,11 +1395,12 @@ def instrotherb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodobdnot1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
 
 def instronenotb(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank =1 and has to deal with not bound elements (status =3)
@@ -1397,11 +1416,12 @@ def instronenotb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodonotbd1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
 
 def instrothernotb(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     if lid !="999999999":
         # Ressources whose the lid identified library has rank !=1 and has to deal with not bound elements (status =3)
@@ -1417,12 +1437,13 @@ def instrothernotb(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/instrtodonotbdnot1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, })
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
 
 
 def arbitration(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =2, 0, lid
@@ -1459,12 +1480,13 @@ def arbitration(request, lid):
 
 
     return render(request, 'epl/arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'nlib' : nlib, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'nlib' : nlib, 'version' : version, })
 
 
 def arbrk1(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =2, 4, lid
@@ -1488,12 +1510,13 @@ def arbrk1(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/arbrk1.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'version' : version, })
 
 
 def arbnork1(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =2, 2, lid
@@ -1519,12 +1542,13 @@ def arbnork1(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/arbnork1.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, })
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'version' : version, })
 
 
 def tobeedited(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =4, 0, lid
@@ -1550,12 +1574,13 @@ def tobeedited(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_edit_list.html', { 'ressourcelist' : \
-    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, })
+    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, 'version' : version, })
 
 
 def mothered(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =4, 1, lid
@@ -1581,12 +1606,13 @@ def mothered(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_edit_list_mother.html', { 'ressourcelist' : \
-    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, })
+    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, 'version' : version, })
 
 
 def notmothered(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil
     idfeature, idview, dil =4, 2, lid
@@ -1612,12 +1638,13 @@ def notmothered(request, lid):
     libname = Library.objects.get(lid =lid).name
 
     return render(request, 'epl/to_edit_list_notmother.html', { 'ressourcelist' : \
-    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, })
+    resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, 'version' : version, })
 
 
 def edition(request, sid, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     #edition of the resulting collection for the considered sid and lid :
 
@@ -1642,7 +1669,7 @@ def edition(request, sid, lid):
         return render(request, 'epl/edition.html',\
                  { 'instructionlist' : l, 'sid' : sid, 'issn' : issn, \
                  'title' : title, 'publicationhistory' : pubhist, 'lid' : lid, \
-                 'name' : name, 'mother' : mothercollection, 'k' : k, })
+                 'name' : name, 'mother' : mothercollection, 'k' : k, 'version' : version, })
 
     else:
         return notintime(request, sid, lid)
@@ -1651,6 +1678,7 @@ def edition(request, sid, lid):
 def indicators(request):
 
     k = logstatus(request)
+    version =epl_version
 
     #Indicators :
 
@@ -1770,11 +1798,12 @@ def indicators(request):
     'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
     's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
      'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
-     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, 'nlib' : nlib, })
+     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, 'nlib' : nlib, 'version' : version, })
 
 def home(request):
 
     k = logstatus(request)
+    version =epl_version
 
     "Homepage"
 
@@ -1803,20 +1832,22 @@ def home(request):
             elif feature =='edition':
                 return tobeedited(request, lid)
 
-    return render(request, 'epl/home.html', {'form' : f, 'project' : project, 'k' : k, })
+    return render(request, 'epl/home.html', {'form' : f, 'project' : project, 'k' : k, 'version' : version, })
 
 def checkinstr(request):
 
     k = logstatus(request)
+    version =epl_version
 
     project = Project.objects.all().order_by('pk')[0].name
 
-    return render(request, 'epl/checker.html', {'project' : project, 'k' : k, })
+    return render(request, 'epl/checker.html', {'project' : project, 'k' : k, 'version' : version, })
 
 
 def filter_edlist(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     "Filter"
 
@@ -1854,6 +1885,7 @@ def filter_edlist(request, lid):
 def xmothered(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =4, 3, lid, xlid
@@ -1880,6 +1912,7 @@ def xmothered(request, lid, xlid):
 def xnotmothered(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =4, 4, lid, xlid
@@ -2180,6 +2213,7 @@ def xnotmotherpdf(request, lid, xlid):
 
 
 def logout_view(request):
+    version =epl_version
     project = Project.objects.all().order_by('pk')[0].name
     logout(request)
     # Redirect to a success page.
@@ -2196,6 +2230,7 @@ def logstatus(request):
 def checkerfilter(request):
 
     k = logstatus(request)
+    version =epl_version
 
     form = InstructionCheckerFilter(request.POST or None)
     if form.is_valid():
@@ -2215,6 +2250,7 @@ def checkerfilter(request):
 def xckbd(request, coll_set):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, tes_lloc
     idfeature, idview, tes_lloc =3, 2, coll_set
@@ -2235,6 +2271,7 @@ def xckbd(request, coll_set):
 def xcknbd(request, coll_set):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, tes_lloc
     idfeature, idview, tes_lloc =3, 3, coll_set
@@ -2255,6 +2292,7 @@ def xcknbd(request, coll_set):
 def xckall(request, coll_set):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, tes_lloc
     idfeature, idview, tes_lloc =3, 4, coll_set
@@ -2335,6 +2373,7 @@ def router(request):
 def instrfilter(request, lid):
 
     k = logstatus(request)
+    version =epl_version
 
     "Filter instruction list"
 
@@ -2360,6 +2399,7 @@ def instrfilter(request, lid):
 def xinstrlist(request, lid, xlid):
 
     k = logstatus(request)
+    version =epl_version
 
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =3, 1, lid, xlid
