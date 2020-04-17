@@ -868,6 +868,10 @@ def takerank(request, sid, lid):
     itemlist = ItemRecord.objects.filter(sid =  sid)
     itemlist = list(itemlist)
 
+    # restricted Item records list (without excluded collections) :
+    r_itemlist = ItemRecord.objects.filter(sid =  sid).exclude(rank =0)
+    r_itemlist = list(r_itemlist)
+
     # Ressource data :
     ress = itemlist[0]
 
@@ -875,9 +879,9 @@ def takerank(request, sid, lid):
     lib = Library.objects.get(lid = lid)
 
     periscope = "https://periscope.sudoc.fr/?ppnviewed=" + str(sid) + "&orderby=SORT_BY_PCP&collectionStatus=&tree="
-    for i in itemlist[:-1]:
+    for i in r_itemlist[:-1]:
         periscope = periscope + i.lid + "%2C"
-    periscope = periscope + itemlist[-1].lid
+    periscope = periscope + r_itemlist[-1].lid
 
     return render(request, 'epl/ranking.html',\
      { 'ressource' : ress, 'items' : itemlist,
