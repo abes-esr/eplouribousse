@@ -36,3 +36,8 @@ Boris Musilek, UdS, Direction du Numérique         : System
     mail to : gressot@unistra.fr
 
 ************************************************************************
+Credits : French version uses data under etalab license (Open License) 
+provided by Abes (Abes : Bibliographic Agency for Higher Education is 
+a french public institution, located in Montpellier supervised by the 
+Ministry for Higher Education Research, Innovation)
+************************************************************************

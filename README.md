@@ -79,6 +79,9 @@ Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a actuelleme
 
 Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 
+# Crédits :
+eplouribousse utilise des données sous licence ouverte etalab fournies par l'Agence bibliographique de l’Enseignement supérieur.
+
 # Contact :
 
 Indiqué en https://github.com/GGre/eplouribounistra/blob/master/About.txt

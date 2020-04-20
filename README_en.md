@@ -74,6 +74,8 @@ If you want to use eplouribousse for a firm project, there are three possibiliti
 
 In all cases, let us know that you're interested (see contact below)
 
-# Contact :
+# Credits :
+French version uses data under etalab license (Open License) provided by Abes (Abes : Bibliographic Agency for Higher Education is a french public institution, located in Montpellier supervised by the Ministry for Higher Education Research, Innovation)
 
+# Contact :
 See https://github.com/GGre/eplouribounistra/blob/master/About.txt
