@@ -2213,11 +2213,39 @@ def xnotmotherpdf(request, lid, xlid):
 
 
 def logout_view(request):
+
+    "Homepage sepcial disconnected"
+
+    logout(request)
+
     version =epl_version
     project = Project.objects.all().order_by('pk')[0].name
-    logout(request)
+
+    #Feature input :
+    i = Feature()
+    f = FeatureForm(request.POST, instance =i)
+    if f.is_valid():
+        lid = Library.objects.get(name =i.libname).lid
+        feature =i.feaname
+        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
+        i.save()
+        if lid =="999999999":
+            if feature =='instrtodo':
+                return instrtodo(request, lid)
+            else:
+                return checkinstr(request)
+        else:
+            if feature =='ranking':
+                return ranktotake(request, lid)
+            elif feature =='arbitration':
+                return arbitration(request, lid)
+            elif feature =='instrtodo':
+                return instrtodo(request, lid)
+            elif feature =='edition':
+                return tobeedited(request, lid)
+
     # Redirect to a success page.
-    return render(request, 'epl/disconnect.html', locals())
+    return render(request, 'epl/disconnect.html', {'form' : f, 'project' : project, 'version' : version, })
 
 
 def logstatus(request):
