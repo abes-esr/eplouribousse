@@ -1,35 +1,11 @@
-
-Valorisation de l'application (passe par l'internationalisation)
-
---Promotion auprès des utilisateurs potentiels :
----CTLes et ABES : Présentation aux prochaines journées (mai 2020)
----Articles dans la presse professionnelle (BBF, Arabesques, Code4Lib Journal (C4LJ))
----Code{4}lib (voir ligne ci-dessus)
----Code2bib
----Biblibre
-
---Partage du code :
----GitHub et GitLab Unistra (bien indexer et documenter)
----Forge Renater : Plateforme web de gestion de projets à destination de l'Enseignement Supérieur et des laboratoires de Recherche Français (https://sourcesup.renater.fr/)
-
-
 Améliorations :
 --------------------------------------------------------------------------------------------------
-FAIT : Motifs d'exclusion paramétrables par le groupe "administrators". Objectif : Autonomie d'administration
-FAIT : Raccourcissement des urls (comme suggéré par Thomas Baguet)
-FAIT : Contrôles sur toutes les requêtes intempestives nuisibles.
-FAIT : Login/logout (sur tous les templates ou plutôt seulement logout si l'usager est authentifié) ?
-checker et bddadmin à remplacer par une simple combinaison user/group ?
-Uniformisation de l'orthographe (majuscules/minuscules etc.)
-Variables d'environnement à compléter (page de chute après échec etc.)
-Internationalisation à améliorer
-Mise à jour et amélioration du manuel et des instructions pour le déploiement
+- Uniformisation de l'orthographe (majuscules/minuscules etc.)
+- i18n à améliorer
+- Amélioration du manuel et des instructions pour le déploiement
 --------------------------------------------------------------------------------------------------
-- Internationalisation (documentation incluse) : Anglais et allemand au moins (+ es, it si possible)
 - Lisibilité et assainissement du code
 - Ergonomie
 - Enrichissement des commentaires du code
-- Documentation de l'application à mettre à jour avec copies d'écrans, à peaufiner et à traduire (en, de, es, it)
-- Mise à jour du Readme
 --------------------------------------------------------------------------------------------------
 
