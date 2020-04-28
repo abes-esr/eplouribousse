@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import views, views_pdf
 
 urlpatterns = [
     path('rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),
@@ -20,16 +20,16 @@ urlpatterns = [
     path('arbnork1_list/<str:lid>', views.arbnork1, name='arbitration no rank 1'),
     path('edlist/<str:lid>', views.tobeedited, name='to be edited list'),
     path('ed/<str:sid>/<str:lid>', views.edition, name='edition'),
-    path('pdf/<str:sid>/<str:lid>', views.pdfedition, name='pdfedition'),
-    path('edallpdf/<str:lid>', views.edallpdf, name='alltopdf'),
+    path('pdf/<str:sid>/<str:lid>', views_pdf.pdfedition, name='pdfedition'),
+    path('edallpdf/<str:lid>', views_pdf.edallpdf, name='alltopdf'),
     path('edmotherlist/<str:lid>', views.mothered, name='to be edited mother list'),
     path('ednotmotherlist/<str:lid>', views.notmothered, name='to be edited notmother list'),
     path('edmotherlist/<str:lid>/<str:xlid>', views.xmothered, name='xto be edited mother list'),
     path('ednotmotherlist/<str:lid>/<str:xlid>', views.xnotmothered, name='xto be edited notmother list'),
-    path('edmotherpdf/<str:lid>', views.motherpdf, name='mothertopdf'),
-    path('ednotmotherpdf/<str:lid>', views.notmotherpdf, name='notmothertopdf'),
-    path('edmotherpdf/<str:lid>/<str:xlid>', views.xmotherpdf, name='xmothertopdf'),
-    path('ednotmotherpdf/<str:lid>/<str:xlid>', views.xnotmotherpdf, name='xnotmothertopdf'),
+    path('edmotherpdf/<str:lid>', views_pdf.motherpdf, name='mothertopdf'),
+    path('ednotmotherpdf/<str:lid>', views_pdf.notmotherpdf, name='notmothertopdf'),
+    path('edmotherpdf/<str:lid>/<str:xlid>', views_pdf.xmotherpdf, name='xmothertopdf'),
+    path('ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
     path('', views.home, name='home'),
     path('edfilter/<str:lid>', views.filter_edlist, name='edfilter'),
     path('rkfilter/<str:lid>', views.filter_rklist, name='rkfilter'),
