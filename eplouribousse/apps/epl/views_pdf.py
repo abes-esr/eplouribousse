@@ -12,19 +12,19 @@ from django.core.files.storage import FileSystemStorage
 
 from django.utils.translation import ugettext as _
 
+project = Project.objects.all().order_by('pk')[0].name
+styles = getSampleStyleSheet()
 
 def pdfedition(request, sid, lid):
 
     filename = sid + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
-    styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    project = Project.objects.all().order_by('pk')[0].name
     libname = Library.objects.get(lid =lid).name
     title = ItemRecord.objects.get(sid =sid, lid =lid).title
     sid = ItemRecord.objects.get(sid =sid, lid =lid).sid
@@ -136,7 +136,6 @@ def edallpdf(request, lid):
 
     libname = Library.objects.get(lid =lid).name
 
-    styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
@@ -160,7 +159,6 @@ def edallpdf(request, lid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        project = Project.objects.all().order_by('pk')[0].name
         title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
         sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
         cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
@@ -274,14 +272,13 @@ def motherpdf(request, lid):
 
     libname = Library.objects.get(lid =lid).name
 
-    styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
-    #This is like "tobeedited" (see below)
+    #This is like "tobeedited" (see below) Mother collection (rank =1)
 
     l = ItemRecord.objects.filter(lid =lid, rank =1)
 
@@ -298,7 +295,6 @@ def motherpdf(request, lid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        project = Project.objects.all().order_by('pk')[0].name
         title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
         sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
         cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
@@ -412,14 +408,13 @@ def notmotherpdf(request, lid):
 
     libname = Library.objects.get(lid =lid).name
 
-    styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
-    #This is like "tobeedited" (see below)
+    #This is like "tobeedited" (see below) Not mother collection (rank not 1)
 
     l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99)
 
@@ -436,7 +431,6 @@ def notmotherpdf(request, lid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        project = Project.objects.all().order_by('pk')[0].name
         title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
         sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
         cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
@@ -550,7 +544,6 @@ def xmotherpdf(request, lid, xlid):
 
     libname = Library.objects.get(lid =lid).name
 
-    styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
@@ -574,7 +567,6 @@ def xmotherpdf(request, lid, xlid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        project = Project.objects.all().order_by('pk')[0].name
         title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
         sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
         cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
@@ -688,7 +680,6 @@ def xnotmotherpdf(request, lid, xlid):
 
     libname = Library.objects.get(lid =lid).name
 
-    styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
 
@@ -712,7 +703,6 @@ def xnotmotherpdf(request, lid, xlid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        project = Project.objects.all().order_by('pk')[0].name
         title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
         sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
         cn = ItemRecord.objects.get(sid =sid, lid =lid).cn

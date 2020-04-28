@@ -1,4 +1,4 @@
-epl_version ="Version 1.1 (Basina)"
+epl_version ="Version 1.2 beta (~Chrodechilde)"
 
 from django.shortcuts import render
 
@@ -29,6 +29,7 @@ try:
     replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
 except:
     replymail =BddAdmin.objects.all().order_by('pk')[0].contact
+
 
 def lang(request):
     k = logstatus(request)
