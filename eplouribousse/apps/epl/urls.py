@@ -49,4 +49,5 @@ urlpatterns = [
     path('router', views.router, name='route to the right list'),
     path('instrfilter/<str:lid>', views.instrfilter, name='instrfilter'),
     path('instrlist/<str:lid>/<str:xlid>', views.xinstrlist, name='xinstr'),
+    path('about', views.about, name='about'),
 ]

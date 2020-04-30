@@ -1,4 +1,5 @@
 epl_version ="Version 1.2 beta (~Chrodechilde)"
+date_version ="April 15, 2020"
 
 from django.shortcuts import render
 
@@ -29,6 +30,12 @@ try:
     replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
 except:
     replymail =BddAdmin.objects.all().order_by('pk')[0].contact
+
+
+def about(request):
+    version =epl_version
+    date =date_version
+    return render(request, 'epl/about.html', locals())
 
 
 def lang(request):
