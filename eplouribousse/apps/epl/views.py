@@ -1,5 +1,5 @@
 epl_version ="Version 1.2 beta (~Chrodechilde)"
-date_version ="April 15, 2020"
+date_version ="April 30, 2020"
 
 from django.shortcuts import render
 
