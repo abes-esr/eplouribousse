@@ -49,25 +49,38 @@ In order to have an idea of what it turns about and what it looks, we first reco
 
 It looks good ? Let's try it on your desktop with the Django development server ; this will allow you to test all features (except automatic mail alert which is just a convenience)
 
-Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database (eplouribousse.db) https://seafile.unistra.fr/f/d4c87784317d47a0ae1a/?dl=1 extract and put it in the directory where you find manage.py
+Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database (eplouribousse.db) https://seafile.unistra.fr/f/d4c87784317d47a0ae1a/?dl=1
+
+extract and put it in the directory where you find manage.py
 (A look into this database should allow you to know how to craft your own one)
 
 With Linux (we suppose you already have Python 3.5 or most recent installed) open a terminal :
+
 Create a virtual environment (here "djangodev") in your personnal directory :
+
 $ python3 -m venv ~/.virtualenvs/djangodev
+
 activate it :
+
 $ workon djangodev
+
 (djangodev) appears now.
+
 install Django 2.2.12 (LTS) in this virtual environement :
+
 $ pip install Django==2.2.12
+
 install Reportlab (the tool to edit nice pdf reports) :
+
 $ python -m pip install reportlab
 
-Change directory (you must go to the one containing manage.py) then write and valid the following command line : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+Change directory (you must go to the one containing manage.py) then write and valid the following command line :
+
+export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
 
 and run development server : python manage.py runserver
 
-Ctrl + click on link http://127.0.0.1:8000/
+Ctrl + click on link "http://127.0.0.1:8000/"
 
 Then you can play !
 

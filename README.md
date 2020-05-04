@@ -55,28 +55,42 @@ Pour avoir un aperçu de l'application, commencez par visiter une instance réel
 Pour cela :
 
 Clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
+
 Décompressez et placez la base de données eplouribousse.db dans le répertoire qui contient le fichier manage.py
 (Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
 
 Sous Linux (en supposant que vous disposiez déjà de Python 3.5 ou plus) suivez les étapes suivantes :
+
 ouvrez un terminal,
+
 créez un environnement virtuel dans votre dossier personnel (ici djangodev) :
+
 $ python3 -m venv ~/.virtualenvs/djangodev
+
 activer l'environnement virtuel :
+
 $ workon djangodev
+
 (djangodev) précédera désormais l'invite de commande tant que cet environnement sera activé.
+
 installez Django 2.2.12 (LTS) dans cet environnement :
+
 $ pip install Django==2.2.12
+
 installez Reportlab (l'éditeur de rapports au format pdf) :
+
 $ python -m pip install reportlab
 
 Placez-vous dans le répertoire contenant le fichier manage.py, lancer la commande :
+
 export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
 
 puis lancer le serveur de développement :
+
 python manage.py runserver
 
-Ctrl + Clic sur le lien http://127.0.0.1:8000/
+Ctrl + Clic sur le lien "http://127.0.0.1:8000/"
+
 Vous y êtes ; testez !
 
 En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
