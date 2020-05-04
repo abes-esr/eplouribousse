@@ -47,20 +47,35 @@ In order to have an idea of what it turns about and what it looks, we first reco
 
 ----------------
 
-It looks good ? Let's try it on your desktop with the Django development server (ensure Django is installed) ; this will allow you to test all features (except automatic mail alert which is just a convenience)
+It looks good ? Let's try it on your desktop with the Django development server ; this will allow you to test all features (except automatic mail alert which is just a convenience)
 
 Download all the stuff here : https://github.com/GGre/eplouribounistra and put it in a directory of your own, then download this specimen database (eplouribousse.db) https://seafile.unistra.fr/f/d4c87784317d47a0ae1a/?dl=1 extract and put it in the directory where you find manage.py
 (A look into this database should allow you to know how to craft your own one)
 
-Open a terminal, change directory (you must go to the one containing manage.py) then write and valid the following command line : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+With Linux (we suppose you already have Python 3.5 or most recent installed) open a terminal :
+Create a virtual environment (here "djangodev") in your personnal directory :
+$ python3 -m venv ~/.virtualenvs/djangodev
+activate it :
+$ workon djangodev
+(djangodev) appears now.
+install Django 2.2.12 (LTS) in this virtual environement :
+$ pip install Django==2.2.12
+install Reportlab (the tool to edit nice pdf reports) :
+$ python -m pip install reportlab
 
-and run development server : python manage.py runserver (or eventually : python3 manage.py runserver)
+Change directory (you must go to the one containing manage.py) then write and valid the following command line : export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+
+and run development server : python manage.py runserver
+
+Ctrl + click on link http://127.0.0.1:8000/
 
 Then you can play !
 
 For any authentication use first name as identifier and testeplou as temporary password (the same for all identifiers)
 
 This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Clara is the checker, Flora is the database administrator, Alan is the site administrator and you are Joyce the super user. Discover what they can do, which rights they have, how they can interact with the app.
+
+At the end of the test, don't forget to deactivate the virtual environment with the command : deactivate
 
 ----------------
 
