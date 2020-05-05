@@ -1,4 +1,4 @@
-epl_version ="Version 1.3 (~Ultrogothe)"
+epl_version ="Version 1.3 beta (~Ultrogothe)"
 date_version ="September 5, 2020"
 
 from django.shortcuts import render
