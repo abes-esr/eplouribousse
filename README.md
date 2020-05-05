@@ -43,7 +43,6 @@ Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas �
 05. Administration du site : https://seafile.unistra.fr/f/d3f6a23f94804dfabddd/
 06. Crédits : https://seafile.unistra.fr/f/579d874730604579b073/
 
-
 # Comment obtenir eplouribousse ?
 
 Pour avoir un aperçu de l'application, commencez par visiter une instance réelle : https://eplouribousse-droit.di.unistra.fr/
@@ -52,52 +51,7 @@ Pour avoir un aperçu de l'application, commencez par visiter une instance réel
 
 ça vous a plu ? Allez plus loin ; essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (à l'exception des alertes mail qui ne sont qu'une commodité)
 
-Pour cela :
-
-Clonez le dépôt https://github.com/GGre/eplouribounistra dans un répertoire de votre choix, puis téléchargez le specimen de base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
-
-Décompressez et placez la base de données eplouribousse.db dans le répertoire qui contient le fichier manage.py
-(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
-
-Sous Linux (en supposant que vous disposiez déjà de Python 3.5 ou plus) suivez les étapes suivantes :
-
-ouvrez un terminal,
-
-créez un environnement virtuel dans votre dossier personnel (ici djangodev) :
-
-$ python3 -m venv ~/.virtualenvs/djangodev
-
-activer l'environnement virtuel :
-
-$ workon djangodev
-
-(djangodev) précédera désormais l'invite de commande tant que cet environnement sera activé.
-
-installez Django 2.2.12 (LTS) dans cet environnement :
-
-$ pip install Django==2.2.12
-
-installez Reportlab (l'éditeur de rapports au format pdf) :
-
-$ python -m pip install reportlab
-
-Placez-vous dans le répertoire contenant le fichier manage.py, lancer la commande :
-
-export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
-
-puis lancer le serveur de développement :
-
-python manage.py runserver
-
-Ctrl + Clic sur le lien "http://127.0.0.1:8000/"
-
-Vous y êtes ; testez !
-
-En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
-
-Pour ce test, nous avons trois bibliothèques : Jean travaille pour la bibliothèque "Les Jouvencelles", Suzanne pour la bibliothèque "La Combe du Lac", Pierrette pour la bibliothèque "La Serra" ; Claire est le vérificateur ; Flora administre la base de données, Alain administre le site et vous, vous êtes Jules le super-utilisateur. Découvrez ce que chacun peut faire, quels sont ses droits, comment il peut interagir avec l'application.
-
-N'oubliez pas de désactiver l'environnement virtuel en fin de test avec la commande : deactivate
+Pour les systèmes Linux, suivez les instructions pas à pas données dans Doc/guide.txt
 
 ----------------
 
@@ -112,6 +66,7 @@ Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a actuelleme
 Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 
 # Crédits :
+
 eplouribousse utilise des données sous licence ouverte etalab fournies par l'Agence bibliographique de l’Enseignement supérieur.
 
 # Contact :
