@@ -1,0 +1,95 @@
+Ce guide indique pas à pas comment tester l'application eplouribousse dans un environnemnt virtuel (sous Linux)
+
+NB : Les lignes de commande sont données à la suite de l'action à réaliser.
+
+Ouvrez un terminal,
+
+----------------
+
+# étape 1 : Vérifiez que vous avez une version du langage Python supérieure ou égale à la version 3.5 :
+
+$ python3
+
+Si tout va bien, vous devriez obtenir en retour quelque chose comme ça :
+
+Python 3.5.2 (default, Apr 16 2020, 17:47:17)
+
+[GCC 5.4.0 20160609] on linux
+
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>>
+
+Pour sortir l'invite de python, faites Ctrl-D
+
+----------------
+
+# étape 2 : Créez l'environnement virtuel avec lequel vous allez pouvoir travailler sans risque de perturber le système alentour (nous appellerons cet environnement virtuel djangodev) :
+
+$ python3 -m venv ~/.virtualenvs/djangodev
+
+Si cette commande échoue, c'est peut-être parce que venv n'est pas installé sur votre système ; dans ce cas, il vous faudra l'installer avec les droits d'administrateur (la commande suivante est celle correspondant à une distribution Debian) :
+
+$ sudo apt-get install python3-venv
+
+----------------
+
+# étape 3 : Activer l'environnement virtuel et installez-y ce qu'il faut, Django 2.2.12 (LTS) et Reportlab :
+
+$ workon djangodev
+
+(djangodev) précédera désormais l'invite de commande tant que cet environnement sera activé.
+
+installez Django 2.2.12 (LTS) dans cet environnement (pip est inclus dans python depuis la version 3.5 donc normalement pas de problème) :
+
+$ pip install Django==2.2.12
+
+Vous pouvez vérifier que vous avez la version attendue de Django, la 2.2.12 (LTS) :
+
+$ python -m django --version
+
+Maintenant installez Reportlab (l'éditeur de rapports soignés au format pdf) :
+
+$ python -m pip install reportlab
+
+----------------
+
+# étape 4 : Créez un dépôt complet d'eplouribousse sur votre poste :
+
+Clonez le dépôt https://git.unistra.fr/gressot/yellow dans un répertoire de votre choix,
+
+téléchargez le fichier compressé contenant la base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
+
+décompressez et placez la base de données eplouribousse.db dans le répertoire précédent (celui qui contient le fichier manage.py)
+
+(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+
+----------------
+
+# étape 5 : lancez le serveur de développement et testez :
+
+Placez-vous dans le répertoire contenant le fichier manage.py :
+
+$ cd home/chemin/vers/yellow
+
+exportez les réglages propres à la structure du dépôt :
+
+$ export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+
+puis lancez le serveur de développement :
+
+$ python manage.py runserver
+
+Ctrl + Clic sur le lien 127.0.0.1:8000/
+
+Vous y êtes ; testez !
+
+En cas de demande d'authentification, l'identifiant est le prénom et le mot de passe temporaire est testeplou (quel que soit l'identifiant)
+
+Pour ce test, nous avons trois bibliothèques : Jean travaille pour la bibliothèque "Les Jouvencelles", Suzanne pour la bibliothèque "La Combe du Lac", Pierrette pour la bibliothèque "La Serra" ; Claire est le vérificateur ; Flora administre la base de données, Alain administre le site et vous, vous êtes Jules le super-utilisateur. Découvrez ce que chacun peut faire, quels sont ses droits, comment il peut interagir avec l'application.
+
+N'oubliez pas de désactiver l'environnement virtuel en fin de test :
+
+$ deactivate
+
+----------------

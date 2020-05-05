@@ -1,0 +1,96 @@
+This is a how to do to test eplouribousse in a virtuel environment (with Linux systems)
+
+NB : command lines follows action to realize.
+
+Open a terminal,
+
+----------------
+
+# step 1 : Verify python version ; it must be at least 3.5 :
+
+$ python3
+
+If all is ok, you should see something like that :
+
+Python 3.5.2 (default, Apr 16 2020, 17:47:17)
+
+[GCC 5.4.0 20160609] on linux
+
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>>
+
+exit with Ctrl-D
+
+----------------
+
+# step 2 : Create your virtual environment to work with without any risk to go wrong with your system (let's name this virtual environment djangodev) :
+
+$ python3 -m venv ~/.virtualenvs/djangodev
+
+If it doesn't work, it's probably beacause venv has to be installed with amdin rights (the following command line is for a Debian distribution) :
+
+$ sudo apt-get install python3-venv
+
+----------------
+
+# step 3 : Activate your virtual environment, install there what is required i.e. Django 2.2.12 (LTS) and Reportlab :
+
+$ workon djangodev
+
+(djangodev) appears now.
+
+install Django 2.2.12 (LTS) (no problem since pip is included in python from version 3.5) :
+
+$ pip install Django==2.2.12
+
+you may verify you have the right version :
+
+$ python -m django --version
+
+Now install Reportlab (the tool to get nice pdf reports) :
+
+$ python -m pip install reportlab
+
+----------------
+
+# step 4 : Créez un dépôt complet d'eplouribousse sur votre poste :
+
+Clonez le dépôt https://git.unistra.fr/gressot/yellow dans un répertoire de votre choix,
+
+téléchargez le fichier compressécontenant la base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
+
+décompressez et placez la base de données eplouribousse.db dans le répertoire précédent (celui qui contient le fichier manage.py)
+
+(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+
+----------------
+
+# étape 5 : run the development server and test :
+
+Change to directory where manage.py takes place :
+
+$ cd home/path/to/yellow/
+
+export the right settings fitted to the repository structure :
+
+$ export DJANGO_SETTINGS_MODULE=eplouribousse.settings.dev
+
+then run development server :
+
+$ python manage.py runserver
+
+Ctrl + Clic on the link 127.0.0.1:8000/
+
+Then you can play !
+
+For any authentication use first name as identifier and testeplou as temporary password (the same for all identifiers)
+
+This is a playground with three libraries : John works for Swallow library, Susan for Magpie library, Petra for Raven library, Clara is the checker, Flora is the database administrator, Alan is the site administrator and you are Joyce the super user. Discover what they can do, which rights they have, how they can interact with the app.
+
+At the end of the test, don't forget to deactivate the virtual environment with the command :
+
+$ deactivate
+
+----------------
+
