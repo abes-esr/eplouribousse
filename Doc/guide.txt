@@ -20,7 +20,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 >>>
 
-Pour sortir l'invite de python, faites Ctrl-D
+Pour quitter l'invite de python, faites Ctrl-D
 
 ----------------
 
