@@ -32,10 +32,107 @@ except:
     replymail =BddAdmin.objects.all().order_by('pk')[0].contact
 
 
+def logstatus(request):
+    if request.user.is_authenticated:
+        k = request.user.get_username()
+    else:
+        k =0
+    return k
+
+
+def home(request):
+
+    k = logstatus(request)
+    version =epl_version
+
+    "Homepage"
+
+    project = Project.objects.all().order_by('pk')[0].name
+
+    #Feature input :
+    i = Feature()
+    f = FeatureForm(request.POST, instance =i)
+    if f.is_valid():
+        lid = Library.objects.get(name =i.libname).lid
+        feature =i.feaname
+        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
+        i.save()
+        if lid =="999999999":
+            if feature =='instrtodo':
+                return instrtodo(request, lid)
+            else:
+                return checkinstr(request)
+        else:
+            if feature =='ranking':
+                return ranktotake(request, lid)
+            elif feature =='arbitration':
+                return arbitration(request, lid)
+            elif feature =='instrtodo':
+                return instrtodo(request, lid)
+            elif feature =='edition':
+                return tobeedited(request, lid)
+
+    return render(request, 'epl/home.html', {'form' : f, 'project' : project, 'k' : k, 'version' : version, })
+
+
 def about(request):
     version =epl_version
     date =date_version
     return render(request, 'epl/about.html', locals())
+
+
+
+def router(request):
+
+    if idfeature ==0:
+        return home(request)
+    if idfeature ==1:
+        if idview ==0:
+            return ranktotake(request, dil)
+        if idview ==1:
+            return xranktotake(request, dil, dilx)
+        # if idview ==2:
+        #     return modifranklist(request, dil)
+        # Le choix de supprimer le bloc ci-dessus tient à ce que les modifications de rang sont normalement réalisés à l'unité ;
+        # il est donc plus intéressant de revenir à la dernière liste de positionnement. En conséquence la modification des varables
+        # globales a été annulée dans la vue modifranklist(request, dil)
+    if idfeature ==2:
+        if idview ==0:
+            return arbitration(request, dil)
+        if idview ==1:
+            return xarbitration(request, dil, dilx)
+        if idview ==2:
+            return x1arb(request, dil, dilx)
+        if idview ==3:
+            return x0arb(request, dil, dilx)
+        if idview ==4:
+            return arbrk1(request, dil)
+        if idview ==5:
+            return arbnork1(request, dil)
+    if idfeature ==3:
+        if idview ==0:
+            return instrtodo(request, dil)
+        if idview ==1:
+            return xinstrlist(request, dil, dilx)
+        if idview ==2:
+            return xckbd(request, tes_lloc)
+        if idview ==3:
+            return xcknbd(request, tes_lloc)
+        if idview ==4:
+            return xckall(request, tes_lloc)
+    if idfeature ==4:
+        if idview ==0:
+            return tobeedited(request, dil)
+        if idview ==1:
+            return mothered(request, dil)
+        if idview ==2:
+            return notmothered(request, dil)
+        if idview ==3:
+            return xmothered(request, dil, dilx)
+        if idview ==4:
+            return xnotmothered(request, dil, dilx)
+
+    return render(request, 'epl/router.html', locals())
 
 
 def lang(request):
@@ -44,245 +141,41 @@ def lang(request):
     return render(request, 'epl/language.html', locals())
 
 
-def ranktotake(request, lid):
+def logout_view(request):
 
-    k = logstatus(request)
+    "Homepage sepcial disconnected"
+
+    logout(request)
+
     version =epl_version
+    project = Project.objects.all().order_by('pk')[0].name
+
+    #Feature input :
+    i = Feature()
+    f = FeatureForm(request.POST, instance =i)
+    if f.is_valid():
+        lid = Library.objects.get(name =i.libname).lid
+        feature =i.feaname
+        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
+        i.save()
+        if lid =="999999999":
+            if feature =='instrtodo':
+                return instrtodo(request, lid)
+            else:
+                return checkinstr(request)
+        else:
+            if feature =='ranking':
+                return ranktotake(request, lid)
+            elif feature =='arbitration':
+                return arbitration(request, lid)
+            elif feature =='instrtodo':
+                return instrtodo(request, lid)
+            elif feature =='edition':
+                return tobeedited(request, lid)
+
+    # Redirect to a success page.
+    return render(request, 'epl/disconnect.html', {'form' : f, 'project' : project, 'version' : version, })
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =1, 0, lid
-
-    #Getting ressources whose this lid must but has not yet taken rank :
-    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
-    resslist = []
-    for e in reclist:
-        itemlist = list(ItemRecord.objects.filter(sid = e.sid).exclude(rank =0))
-        if len(itemlist) > 1:
-            resslist.append(e)
-    l = len(resslist)
-
-    #Library name :
-    libname = Library.objects.get(lid =lid).name
-
-    nlib = len(Library.objects.exclude(lid ="999999999"))
-
-    return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, 'version' : version, })
-
-
-def modifranklist(request, lid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    # global idfeature, idview, dil
-    # idfeature, idview, dil =1, 2, lid
-    # cf. remarque dans la vue router(request)
-
-    # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
-    reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-    .exclude(status =2).exclude(status =3).exclude(status =4).\
-    exclude(status =5).exclude(status =6))
-    resslist = []
-    for e in reclist:
-        if len(list(ItemRecord.objects.filter(sid = e.sid, status =1))) and not len(list(Instruction.objects.filter(sid = e.sid))):
-            resslist.append(e)
-        elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
-            resslist.append(e)
-    l = len(resslist)
-
-    #Library name :
-    libname = Library.objects.get(lid =lid).name
-
-    nlib = len(Library.objects.exclude(lid ="999999999"))
-
-    return render(request, 'epl/modifrklist.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, 'version' : version, })
-
-
-def filter_arblist(request, lid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    "Filter arb list"
-
-    libname = (Library.objects.get(lid =lid)).name
-
-    libch = ('checker','checker'),
-    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
-        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
-            libch += (l.name, l.name),
-
-    class XlibForm(forms.Form):
-        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
-
-    form = XlibForm(request.POST or None)
-    if form.is_valid():
-        xlib = form.cleaned_data['name']
-        xlid = Library.objects.get(name =xlib).lid
-        return xarbitration(request, lid, xlid)
-
-    return render(request, 'epl/filter_arblist.html', locals())
-
-
-def xarbitration(request, lid, xlid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =2, 1, lid, xlid
-
-    #For the lid identified library, getting ressources whose at \
-    #least 2 libraries, including the considered one, took rank =1 \
-    #(even if other libraries have not yet taken rank)
-    #or all libraries have taken rank, none of them the rank 1
-
-    #Initialization of the ressources to arbitrate :
-    resslista = []
-    resslistb = []
-
-    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
-        sid = e.sid
-        if ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
-            resslista.append(e)
-
-    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
-        sid = e.sid
-        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-            resslistb.append(e)
-
-    resslist = resslista + resslistb
-
-    size = len(resslist)
-
-    #Library name :
-    libname = Library.objects.get(lid =lid).name
-    xlibname = Library.objects.get(lid =xlid).name
-
-
-    return render(request, 'epl/xarbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'xlid' : xlid, 'version' : version, })
-
-
-def x1arb(request, lid, xlid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =2, 2, lid, xlid
-
-    #For the lid identified library, getting ressources whose at \
-    #least 2 libraries, including the considered one, took rank =1 \
-    #(even if other libraries have not yet taken rank)
-    #or all libraries have taken rank, none of them the rank 1
-
-    #Initialization of the ressources to arbitrate :
-    resslist = []
-
-    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
-        sid = e.sid
-        if ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
-            resslist.append(e)
-
-    size = len(resslist)
-
-    #Library name :
-    libname = Library.objects.get(lid =lid).name
-    xlibname = Library.objects.get(lid =xlid).name
-
-
-    return render(request, 'epl/x1arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'version' : version, })
-
-
-def x0arb(request, lid, xlid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =2, 3, lid, xlid
-
-    #For the lid identified library, getting ressources whose at \
-    #least 2 libraries, including the considered one, took rank =1 \
-    #(even if other libraries have not yet taken rank)
-    #or all libraries have taken rank, none of them the rank 1
-
-    #Initialization of the ressources to arbitrate :
-    resslist = []
-
-    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
-        sid = e.sid
-        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
-        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-            resslist.append(e)
-
-    size = len(resslist)
-
-    #Library name :
-    libname = Library.objects.get(lid =lid).name
-    xlibname = Library.objects.get(lid =xlid).name
-
-
-    return render(request, 'epl/x0arbitration.html', { 'ressourcelist' : resslist\
-    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'version' : version, })
-
-
-def filter_rklist(request, lid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    "Filter rk list"
-
-    libname = (Library.objects.get(lid =lid)).name
-
-    libch = ('checker','checker'),
-    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
-        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
-            libch += (l.name, l.name),
-
-    class XlibForm(forms.Form):
-        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
-
-    form = XlibForm(request.POST or None)
-    if form.is_valid():
-        xlib = form.cleaned_data['name']
-        xlid = Library.objects.get(name =xlib).lid
-        return xranktotake(request, lid, xlid)
-
-    return render(request, 'epl/filter_rklist.html', locals())
-
-
-def xranktotake(request, lid, xlid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =1, 1, lid, xlid
-
-    #Getting ressources whose this lid must but has not yet taken rank :
-    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
-    resslist = []
-    for e in reclist:
-        itemlist = list(ItemRecord.objects.filter(sid = e.sid).exclude(rank =0))
-        if len(itemlist) > 1 and list(ItemRecord.objects.filter(sid = e.sid, lid = xlid).exclude(rank =0)):
-            resslist.append(e)
-    l = len(resslist)
-
-    #Library name :
-    libname = Library.objects.get(lid =lid).name
-    xlibname = Library.objects.get(lid =xlid).name
-
-    return render(request, 'epl/xto_rank_list.html', { 'toranklist' : resslist, \
-    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname, 'lastrked' : lastrked, 'version' : version, })
 
 def notintime(request, sid, lid):
 
@@ -298,6 +191,132 @@ def notintime(request, sid, lid):
     else:
         ress = ItemRecord.objects.get(sid =sid, lid =lid).title
     return render(request, 'epl/notintime.html', { 'library' : lib, 'title' : ress, 'lid' : lid, 'sid' : sid, 'k' : k, 'version' : version, })
+
+
+def indicators(request):
+
+    k = logstatus(request)
+    version =epl_version
+
+    #Indicators :
+
+    #Number of rankings (exclusions included) :
+    rkall = len(ItemRecord.objects.exclude(rank =99))
+
+    #Number of rankings (exclusions excluded) :
+    rkright = len(ItemRecord.objects.exclude(rank =99).exclude(rank =0))
+
+    #Number of exclusions :
+    exclus = len(ItemRecord.objects.filter(rank =0))
+
+    #number of libraries :
+    nlib = len(Library.objects.all())
+
+    #Exclusions details
+    dict ={}
+    for e in EXCLUSION_CHOICES:
+        exclusion =str(e[0])
+        value =len(ItemRecord.objects.filter(excl =e[0]))
+        dict[exclusion] =value
+    del dict['']
+
+    #Collections involved in arbitration for claiming 1st rank and number of serials concerned
+    c1st, s1st =0,0
+    for i in ItemRecord.objects.filter(rank =1, status =0):
+        if len(ItemRecord.objects.filter(rank =1, sid =i.sid)) >1:
+            c1st +=1
+            s1st +=1/len(ItemRecord.objects.filter(rank =1, sid =i.sid))
+    s1st = int(s1st)
+
+    #Collections involved in arbitration for 1st rank not claimed by any of the libraries
+    cnone, snone =0,0
+    for i in ItemRecord.objects.exclude(rank =0).exclude(rank =1).exclude(rank =99):
+        if len(ItemRecord.objects.filter(sid =i.sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =i.sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) >1:
+            cnone +=1
+            snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0))
+    snone = int(snone)
+
+    #Collections involved in arbitration for any of the two reasons and number of serials concerned
+    ctotal = c1st + cnone
+    stotal = s1st + snone
+
+    #Number of collections :
+    coll = len(ItemRecord.objects.all())
+
+    #Number of potential candidates :
+    cand =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) >1:
+            cand +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    cand = int(cand)
+
+    #from which strict duplicates :
+    dupl =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==2:
+            dupl +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    dupl = int(dupl)
+
+    #triplets :
+    tripl =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==3:
+            tripl +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    tripl = int(tripl)
+
+    #quadruplets :
+    qudrpl =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==4:
+            qudrpl +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    qudrpl = int(qudrpl)
+
+    #Unicas :
+    isol =0
+    for e in ItemRecord.objects.all():
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==1:
+            isol +=1/len(ItemRecord.objects.filter(sid =e.sid))
+    isol = int(isol)
+
+    #candidate collections :
+    candcoll =coll - isol
+
+    #Number of descarded ressources for exclusion reason :
+    discard =0
+    for i in ItemRecord.objects.filter(rank =0):
+        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) ==1:
+            discard +=1/(len(ItemRecord.objects.filter(sid =i.sid, rank =0)))
+    discard = int(discard)
+
+    #Number of ressources whose instruction of bound elements may begin :
+    bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
+
+    #Number of ressources whose bound elements are currently instructed  :
+    bdonway = len(ItemRecord.objects.filter(rank =1, status =2))
+
+    #Number of ressources whose instruction of not bound elements may begin :
+    notbdmaybeg = len(ItemRecord.objects.filter(rank =1, status =3))
+
+    #Number of ressources whose not bound elements are currently instructed  :
+    notbdonway = len(ItemRecord.objects.filter(rank =1, status =4))
+
+    #Number of ressources completely instructed :
+    fullinstr = len(ItemRecord.objects.filter(rank =1, status =5))
+
+    #Number of failing sheets :
+    fail = len(ItemRecord.objects.filter(status =6, rank =1))
+
+    #Number of instructions :
+    instr = len(Instruction.objects.all())
+
+    return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
+    rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaybeg' : notbdmaybeg, 'fullinstr' : fullinstr, \
+    'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
+    's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
+     'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
+     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, 'nlib' : nlib, 'version' : version, })
 
 
 @login_required
@@ -788,126 +807,111 @@ def endinstr(request, sid, lid):
     'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, 'version' : version, })
 
 
-def instrtodo(request, lid):
+def ranktotake(request, lid):
 
     k = logstatus(request)
     version =epl_version
 
     global idfeature, idview, dil
-    idfeature, idview, dil =3, 0, lid
+    idfeature, idview, dil =1, 0, lid
 
-    if lid !="999999999":
-        # Ressources whose the lid identified library has to deal with (status =1 or 3)
-        l = ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+    #Getting ressources whose this lid must but has not yet taken rank :
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
+    resslist = []
+    for e in reclist:
+        itemlist = list(ItemRecord.objects.filter(sid = e.sid).exclude(rank =0))
+        if len(itemlist) > 1:
+            resslist.append(e)
+    l = len(resslist)
 
-    elif lid =="999999999":
-
-        l = []
-
-        for e in ItemRecord.objects.filter(status =2, rank =1):
-            if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
-                l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
-
-        for e in ItemRecord.objects.filter(status =4, rank =1):
-            if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
-                l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
-
-    size = len(l)
-
-    #Getting library name :
+    #Library name :
     libname = Library.objects.get(lid =lid).name
 
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
-    lidchecker = "999999999"
-
-    return render(request, 'epl/instrtodo.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, 'nlib' : nlib, 'version' : version, })
+    return render(request, 'epl/to_rank_list.html', { 'toranklist' : resslist, \
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, 'version' : version, })
 
 
-def instroneb(request, lid):
+def modifranklist(request, lid):
 
     k = logstatus(request)
     version =epl_version
 
-    if lid !="999999999":
-        # Ressources whose the lid identified library has rank =1 and has to deal with bound elements (status =1)
-        l = ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6)
+    # global idfeature, idview, dil
+    # idfeature, idview, dil =1, 2, lid
+    # cf. remarque dans la vue router(request)
 
-    elif lid =="999999999":
-        do = home(request)
-        return do
+    # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
+    reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
+    .exclude(status =2).exclude(status =3).exclude(status =4).\
+    exclude(status =5).exclude(status =6))
+    resslist = []
+    for e in reclist:
+        if len(list(ItemRecord.objects.filter(sid = e.sid, status =1))) and not len(list(Instruction.objects.filter(sid = e.sid))):
+            resslist.append(e)
+        elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
+            resslist.append(e)
+    l = len(resslist)
 
-    size = len(l)
-
-    #Getting library name :
+    #Library name :
     libname = Library.objects.get(lid =lid).name
 
-    return render(request, 'epl/instrtodobd1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+    nlib = len(Library.objects.exclude(lid ="999999999"))
 
-def instrotherb(request, lid):
+    return render(request, 'epl/modifrklist.html', { 'toranklist' : resslist, \
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'nlib' : nlib, 'lastrked' : lastrked, 'version' : version, })
+
+
+def filter_rklist(request, lid):
 
     k = logstatus(request)
     version =epl_version
 
-    if lid !="999999999":
-        # Ressources whose the lid identified library has rank !=1 and has to deal with bound elements (status =1)
-        l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6)
+    "Filter rk list"
 
-    elif lid =="999999999":
-        do = home(request)
-        return do
+    libname = (Library.objects.get(lid =lid)).name
 
-    size = len(l)
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
+            libch += (l.name, l.name),
 
-    #Getting library name :
-    libname = Library.objects.get(lid =lid).name
+    class XlibForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
 
-    return render(request, 'epl/instrtodobdnot1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+    form = XlibForm(request.POST or None)
+    if form.is_valid():
+        xlib = form.cleaned_data['name']
+        xlid = Library.objects.get(name =xlib).lid
+        return xranktotake(request, lid, xlid)
 
-def instronenotb(request, lid):
+    return render(request, 'epl/filter_rklist.html', locals())
 
-    k = logstatus(request)
-    version =epl_version
 
-    if lid !="999999999":
-        # Ressources whose the lid identified library has rank =1 and has to deal with not bound elements (status =3)
-        l = ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
-
-    elif lid =="999999999":
-        do = home(request)
-        return do
-
-    size = len(l)
-
-    #Getting library name :
-    libname = Library.objects.get(lid =lid).name
-
-    return render(request, 'epl/instrtodonotbd1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
-
-def instrothernotb(request, lid):
+def xranktotake(request, lid, xlid):
 
     k = logstatus(request)
     version =epl_version
 
-    if lid !="999999999":
-        # Ressources whose the lid identified library has rank !=1 and has to deal with not bound elements (status =3)
-        l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =1, 1, lid, xlid
 
-    elif lid =="999999999":
-        do = home(request)
-        return do
+    #Getting ressources whose this lid must but has not yet taken rank :
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99))
+    resslist = []
+    for e in reclist:
+        itemlist = list(ItemRecord.objects.filter(sid = e.sid).exclude(rank =0))
+        if len(itemlist) > 1 and list(ItemRecord.objects.filter(sid = e.sid, lid = xlid).exclude(rank =0)):
+            resslist.append(e)
+    l = len(resslist)
 
-    size = len(l)
-
-    #Getting library name :
+    #Library name :
     libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
 
-    return render(request, 'epl/instrtodonotbdnot1.html', { 'ressourcelist' : \
-    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+    return render(request, 'epl/xto_rank_list.html', { 'toranklist' : resslist, \
+    'lid' : lid, 'name' : libname, 'size' : l, 'k' : k, 'xname' : xlibname, 'lastrked' : lastrked, 'version' : version, })
 
 
 def arbitration(request, lid):
@@ -1015,6 +1019,313 @@ def arbnork1(request, lid):
     , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'version' : version, })
 
 
+def filter_arblist(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    "Filter arb list"
+
+    libname = (Library.objects.get(lid =lid)).name
+
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
+            libch += (l.name, l.name),
+
+    class XlibForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
+
+    form = XlibForm(request.POST or None)
+    if form.is_valid():
+        xlib = form.cleaned_data['name']
+        xlid = Library.objects.get(name =xlib).lid
+        return xarbitration(request, lid, xlid)
+
+    return render(request, 'epl/filter_arblist.html', locals())
+
+
+def xarbitration(request, lid, xlid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =2, 1, lid, xlid
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslista = []
+    resslistb = []
+
+    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
+        sid = e.sid
+        if ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
+            resslista.append(e)
+
+    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
+        sid = e.sid
+        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
+            resslistb.append(e)
+
+    resslist = resslista + resslistb
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+
+    return render(request, 'epl/xarbitration.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'xlid' : xlid, 'version' : version, })
+
+
+def x1arb(request, lid, xlid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =2, 2, lid, xlid
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslist = []
+
+    for e in ItemRecord.objects.filter(lid =lid, rank = 1, status =0):
+        sid = e.sid
+        if ItemRecord.objects.filter(sid =sid, lid = xlid, rank = 1):
+            resslist.append(e)
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+
+    return render(request, 'epl/x1arbitration.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'version' : version, })
+
+
+def x0arb(request, lid, xlid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =2, 3, lid, xlid
+
+    #For the lid identified library, getting ressources whose at \
+    #least 2 libraries, including the considered one, took rank =1 \
+    #(even if other libraries have not yet taken rank)
+    #or all libraries have taken rank, none of them the rank 1
+
+    #Initialization of the ressources to arbitrate :
+    resslist = []
+
+    for e in ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
+        sid = e.sid
+        if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
+        len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
+            resslist.append(e)
+
+    size = len(resslist)
+
+    #Library name :
+    libname = Library.objects.get(lid =lid).name
+    xlibname = Library.objects.get(lid =xlid).name
+
+
+    return render(request, 'epl/x0arbitration.html', { 'ressourcelist' : resslist\
+    , 'size' : size, 'lid' : lid, 'name' : libname, 'k' : k, 'xname' : xlibname, 'version' : version, })
+
+
+def instrtodo(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    global idfeature, idview, dil
+    idfeature, idview, dil =3, 0, lid
+
+    if lid !="999999999":
+        # Ressources whose the lid identified library has to deal with (status =1 or 3)
+        l = ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    elif lid =="999999999":
+
+        l = []
+
+        for e in ItemRecord.objects.filter(status =2, rank =1):
+            if len(ItemRecord.objects.filter(sid =e.sid, status =2)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==0:
+                l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
+
+        for e in ItemRecord.objects.filter(status =4, rank =1):
+            if len(ItemRecord.objects.filter(sid =e.sid, status =4)) == len(ItemRecord.objects.filter(sid =e.sid).exclude(rank =0)) and len(Instruction.objects.filter(sid =e.sid, name= "checker")) ==1:
+                l.append(ItemRecord.objects.get(sid =e.sid, rank =1)) #yehh ... rank =1 that's the trick !
+
+    size = len(l)
+
+    #Getting library name :
+    libname = Library.objects.get(lid =lid).name
+
+    nlib = len(Library.objects.exclude(lid ="999999999"))
+
+    lidchecker = "999999999"
+
+    return render(request, 'epl/instrtodo.html', { 'ressourcelist' : \
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'lidchecker' : lidchecker, 'k' : k, 'nlib' : nlib, 'version' : version, })
+
+
+def instroneb(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    if lid !="999999999":
+        # Ressources whose the lid identified library has rank =1 and has to deal with bound elements (status =1)
+        l = ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    elif lid =="999999999":
+        do = home(request)
+        return do
+
+    size = len(l)
+
+    #Getting library name :
+    libname = Library.objects.get(lid =lid).name
+
+    return render(request, 'epl/instrtodobd1.html', { 'ressourcelist' : \
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+
+
+def instrotherb(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    if lid !="999999999":
+        # Ressources whose the lid identified library has rank !=1 and has to deal with bound elements (status =1)
+        l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    elif lid =="999999999":
+        do = home(request)
+        return do
+
+    size = len(l)
+
+    #Getting library name :
+    libname = Library.objects.get(lid =lid).name
+
+    return render(request, 'epl/instrtodobdnot1.html', { 'ressourcelist' : \
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+
+
+def instronenotb(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    if lid !="999999999":
+        # Ressources whose the lid identified library has rank =1 and has to deal with not bound elements (status =3)
+        l = ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    elif lid =="999999999":
+        do = home(request)
+        return do
+
+    size = len(l)
+
+    #Getting library name :
+    libname = Library.objects.get(lid =lid).name
+
+    return render(request, 'epl/instrtodonotbd1.html', { 'ressourcelist' : \
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+
+
+def instrothernotb(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    if lid !="999999999":
+        # Ressources whose the lid identified library has rank !=1 and has to deal with not bound elements (status =3)
+        l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    elif lid =="999999999":
+        do = home(request)
+        return do
+
+    size = len(l)
+
+    #Getting library name :
+    libname = Library.objects.get(lid =lid).name
+
+    return render(request, 'epl/instrtodonotbdnot1.html', { 'ressourcelist' : \
+    l, 'lid' : lid, 'size' : size, 'name' : libname, 'k' : k, 'version' : version, })
+
+
+def instrfilter(request, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    "Filter instruction list"
+
+    libname = (Library.objects.get(lid =lid)).name
+
+    libch = ('checker','checker'),
+    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
+        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
+            libch += (l.name, l.name),
+
+    class XlibForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
+
+    form = XlibForm(request.POST or None)
+    if form.is_valid():
+        xlib = form.cleaned_data['name']
+        xlid = Library.objects.get(name =xlib).lid
+        # return xranktotake(request, lid, xlid)
+        return xinstrlist(request, lid, xlid)
+    return render(request, 'epl/filter_instrlist.html', locals())
+
+
+def xinstrlist(request, lid, xlid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    global idfeature, idview, dil, dilx
+    idfeature, idview, dil, dilx =3, 1, lid, xlid
+
+    name = Library.objects.get(lid =lid).name
+    xname = Library.objects.get(lid =xlid).name
+
+    lprov = ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
+
+    l =[]
+    for e in lprov:
+        if ItemRecord.objects.filter(lid =xlid).exclude(rank =0):
+            l.append(e)
+    size = len(l)
+
+    return render(request, 'epl/xto_instr_list.html', locals())
+
+
 def tobeedited(request, lid):
 
     k = logstatus(request)
@@ -1111,209 +1422,6 @@ def notmothered(request, lid):
     resslist, 'size' : size, 'name' : libname, 'lid' : lid, 'k' : k, 'version' : version, })
 
 
-def edition(request, sid, lid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    #edition of the resulting collection for the considered sid and lid :
-
-    #Control (edition only if yet possible)
-    if len(Instruction.objects.filter(sid =sid, name ="checker")) ==2:
-        #Getting an item record from which we can obtain ressource data :
-        issn = ItemRecord.objects.get(sid =sid, lid =lid, status =5).issn
-        title = ItemRecord.objects.get(sid =sid, lid =lid, status =5).title
-        pubhist = ItemRecord.objects.get(sid =sid, lid =lid, status =5).pubhist
-
-
-        #Getting instructions for the considered ressource :
-        instrlist = Instruction.objects.filter(sid =sid).order_by('line')
-        l = list(instrlist)
-
-        #Getting library name for the considered library (will be used to
-        #highlight the instruction of the considered library) :
-        name = (Library.objects.get(lid =lid)).name
-
-        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
-
-        return render(request, 'epl/edition.html',\
-                 { 'instructionlist' : l, 'sid' : sid, 'issn' : issn, \
-                 'title' : title, 'publicationhistory' : pubhist, 'lid' : lid, \
-                 'name' : name, 'mother' : mothercollection, 'k' : k, 'version' : version, })
-
-    else:
-        return notintime(request, sid, lid)
-
-
-def indicators(request):
-
-    k = logstatus(request)
-    version =epl_version
-
-    #Indicators :
-
-    #Number of rankings (exclusions included) :
-    rkall = len(ItemRecord.objects.exclude(rank =99))
-
-    #Number of rankings (exclusions excluded) :
-    rkright = len(ItemRecord.objects.exclude(rank =99).exclude(rank =0))
-
-    #Number of exclusions :
-    exclus = len(ItemRecord.objects.filter(rank =0))
-
-    #number of libraries :
-    nlib = len(Library.objects.all())
-
-    #Exclusions details
-    dict ={}
-    for e in EXCLUSION_CHOICES:
-        exclusion =str(e[0])
-        value =len(ItemRecord.objects.filter(excl =e[0]))
-        dict[exclusion] =value
-    del dict['']
-
-    #Collections involved in arbitration for claiming 1st rank and number of serials concerned
-    c1st, s1st =0,0
-    for i in ItemRecord.objects.filter(rank =1, status =0):
-        if len(ItemRecord.objects.filter(rank =1, sid =i.sid)) >1:
-            c1st +=1
-            s1st +=1/len(ItemRecord.objects.filter(rank =1, sid =i.sid))
-    s1st = int(s1st)
-
-    #Collections involved in arbitration for 1st rank not claimed by any of the libraries
-    cnone, snone =0,0
-    for i in ItemRecord.objects.exclude(rank =0).exclude(rank =1).exclude(rank =99):
-        if len(ItemRecord.objects.filter(sid =i.sid, rank =99)) ==0 and \
-        len(ItemRecord.objects.filter(sid =i.sid, rank =1)) ==0 and \
-        len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) >1:
-            cnone +=1
-            snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0))
-    snone = int(snone)
-
-    #Collections involved in arbitration for any of the two reasons and number of serials concerned
-    ctotal = c1st + cnone
-    stotal = s1st + snone
-
-    #Number of collections :
-    coll = len(ItemRecord.objects.all())
-
-    #Number of potential candidates :
-    cand =0
-    for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) >1:
-            cand +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    cand = int(cand)
-
-    #from which strict duplicates :
-    dupl =0
-    for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==2:
-            dupl +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    dupl = int(dupl)
-
-    #triplets :
-    tripl =0
-    for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==3:
-            tripl +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    tripl = int(tripl)
-
-    #quadruplets :
-    qudrpl =0
-    for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==4:
-            qudrpl +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    qudrpl = int(qudrpl)
-
-    #Unicas :
-    isol =0
-    for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==1:
-            isol +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    isol = int(isol)
-
-    #candidate collections :
-    candcoll =coll - isol
-
-    #Number of descarded ressources for exclusion reason :
-    discard =0
-    for i in ItemRecord.objects.filter(rank =0):
-        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) ==1:
-            discard +=1/(len(ItemRecord.objects.filter(sid =i.sid, rank =0)))
-    discard = int(discard)
-
-    #Number of ressources whose instruction of bound elements may begin :
-    bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
-
-    #Number of ressources whose bound elements are currently instructed  :
-    bdonway = len(ItemRecord.objects.filter(rank =1, status =2))
-
-    #Number of ressources whose instruction of not bound elements may begin :
-    notbdmaybeg = len(ItemRecord.objects.filter(rank =1, status =3))
-
-    #Number of ressources whose not bound elements are currently instructed  :
-    notbdonway = len(ItemRecord.objects.filter(rank =1, status =4))
-
-    #Number of ressources completely instructed :
-    fullinstr = len(ItemRecord.objects.filter(rank =1, status =5))
-
-    #Number of failing sheets :
-    fail = len(ItemRecord.objects.filter(status =6, rank =1))
-
-    #Number of instructions :
-    instr = len(Instruction.objects.all())
-
-    return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
-    rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaybeg' : notbdmaybeg, 'fullinstr' : fullinstr, \
-    'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
-    's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
-     'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
-     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, 'nlib' : nlib, 'version' : version, })
-
-def home(request):
-
-    k = logstatus(request)
-    version =epl_version
-
-    "Homepage"
-
-    project = Project.objects.all().order_by('pk')[0].name
-
-    #Feature input :
-    i = Feature()
-    f = FeatureForm(request.POST, instance =i)
-    if f.is_valid():
-        lid = Library.objects.get(name =i.libname).lid
-        feature =i.feaname
-        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
-        i.save()
-        if lid =="999999999":
-            if feature =='instrtodo':
-                return instrtodo(request, lid)
-            else:
-                return checkinstr(request)
-        else:
-            if feature =='ranking':
-                return ranktotake(request, lid)
-            elif feature =='arbitration':
-                return arbitration(request, lid)
-            elif feature =='instrtodo':
-                return instrtodo(request, lid)
-            elif feature =='edition':
-                return tobeedited(request, lid)
-
-    return render(request, 'epl/home.html', {'form' : f, 'project' : project, 'k' : k, 'version' : version, })
-
-def checkinstr(request):
-
-    k = logstatus(request)
-    version =epl_version
-
-    project = Project.objects.all().order_by('pk')[0].name
-
-    return render(request, 'epl/checker.html', {'project' : project, 'k' : k, 'version' : version, })
-
-
 def filter_edlist(request, lid):
 
     k = logstatus(request)
@@ -1406,48 +1514,49 @@ def xnotmothered(request, lid, xlid):
     return render(request, 'epl/xto_edit_list_notmother.html', locals())
 
 
-def logout_view(request):
+def edition(request, sid, lid):
 
-    "Homepage sepcial disconnected"
-
-    logout(request)
-
+    k = logstatus(request)
     version =epl_version
+
+    #edition of the resulting collection for the considered sid and lid :
+
+    #Control (edition only if yet possible)
+    if len(Instruction.objects.filter(sid =sid, name ="checker")) ==2:
+        #Getting an item record from which we can obtain ressource data :
+        issn = ItemRecord.objects.get(sid =sid, lid =lid, status =5).issn
+        title = ItemRecord.objects.get(sid =sid, lid =lid, status =5).title
+        pubhist = ItemRecord.objects.get(sid =sid, lid =lid, status =5).pubhist
+
+
+        #Getting instructions for the considered ressource :
+        instrlist = Instruction.objects.filter(sid =sid).order_by('line')
+        l = list(instrlist)
+
+        #Getting library name for the considered library (will be used to
+        #highlight the instruction of the considered library) :
+        name = (Library.objects.get(lid =lid)).name
+
+        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
+
+        return render(request, 'epl/edition.html',\
+                 { 'instructionlist' : l, 'sid' : sid, 'issn' : issn, \
+                 'title' : title, 'publicationhistory' : pubhist, 'lid' : lid, \
+                 'name' : name, 'mother' : mothercollection, 'k' : k, 'version' : version, })
+
+    else:
+        return notintime(request, sid, lid)
+
+
+def checkinstr(request):
+
+    k = logstatus(request)
+    version =epl_version
+
     project = Project.objects.all().order_by('pk')[0].name
 
-    #Feature input :
-    i = Feature()
-    f = FeatureForm(request.POST, instance =i)
-    if f.is_valid():
-        lid = Library.objects.get(name =i.libname).lid
-        feature =i.feaname
-        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
-        i.save()
-        if lid =="999999999":
-            if feature =='instrtodo':
-                return instrtodo(request, lid)
-            else:
-                return checkinstr(request)
-        else:
-            if feature =='ranking':
-                return ranktotake(request, lid)
-            elif feature =='arbitration':
-                return arbitration(request, lid)
-            elif feature =='instrtodo':
-                return instrtodo(request, lid)
-            elif feature =='edition':
-                return tobeedited(request, lid)
+    return render(request, 'epl/checker.html', {'project' : project, 'k' : k, 'version' : version, })
 
-    # Redirect to a success page.
-    return render(request, 'epl/disconnect.html', {'form' : f, 'project' : project, 'version' : version, })
-
-
-def logstatus(request):
-    if request.user.is_authenticated:
-        k = request.user.get_username()
-    else:
-        k =0
-    return k
 
 def checkerfilter(request):
 
@@ -1537,104 +1646,3 @@ def xckall(request, coll_set):
     size = len(l)
 
     return render(request, 'epl/xckall.html', locals())
-
-
-def router(request):
-
-    if idfeature ==0:
-        return home(request)
-    if idfeature ==1:
-        if idview ==0:
-            return ranktotake(request, dil)
-        if idview ==1:
-            return xranktotake(request, dil, dilx)
-        # if idview ==2:
-        #     return modifranklist(request, dil)
-        # Le choix de supprimer le bloc ci-dessus tient à ce que les modifications de rang sont normalement réalisés à l'unité ;
-        # il est donc plus intéressant de revenir à la dernière liste de positionnement. En conséquence la modification des varables
-        # globales a été annulée dans la vue modifranklist(request, dil)
-    if idfeature ==2:
-        if idview ==0:
-            return arbitration(request, dil)
-        if idview ==1:
-            return xarbitration(request, dil, dilx)
-        if idview ==2:
-            return x1arb(request, dil, dilx)
-        if idview ==3:
-            return x0arb(request, dil, dilx)
-        if idview ==4:
-            return arbrk1(request, dil)
-        if idview ==5:
-            return arbnork1(request, dil)
-    if idfeature ==3:
-        if idview ==0:
-            return instrtodo(request, dil)
-        if idview ==1:
-            return xinstrlist(request, dil, dilx)
-        if idview ==2:
-            return xckbd(request, tes_lloc)
-        if idview ==3:
-            return xcknbd(request, tes_lloc)
-        if idview ==4:
-            return xckall(request, tes_lloc)
-    if idfeature ==4:
-        if idview ==0:
-            return tobeedited(request, dil)
-        if idview ==1:
-            return mothered(request, dil)
-        if idview ==2:
-            return notmothered(request, dil)
-        if idview ==3:
-            return xmothered(request, dil, dilx)
-        if idview ==4:
-            return xnotmothered(request, dil, dilx)
-
-    return render(request, 'epl/router.html', locals())
-
-
-def instrfilter(request, lid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    "Filter instruction list"
-
-    libname = (Library.objects.get(lid =lid)).name
-
-    libch = ('checker','checker'),
-    if Library.objects.all().exclude(name ='checker').exclude(name =libname):
-        for l in Library.objects.all().exclude(name ='checker').exclude(name =libname).order_by('name'):
-            libch += (l.name, l.name),
-
-    class XlibForm(forms.Form):
-        name = forms.ChoiceField(required = True, widget=forms.Select, choices=libch[1:], label =_("Autre bibliothèque impliquée"))
-
-    form = XlibForm(request.POST or None)
-    if form.is_valid():
-        xlib = form.cleaned_data['name']
-        xlid = Library.objects.get(name =xlib).lid
-        # return xranktotake(request, lid, xlid)
-        return xinstrlist(request, lid, xlid)
-    return render(request, 'epl/filter_instrlist.html', locals())
-
-
-def xinstrlist(request, lid, xlid):
-
-    k = logstatus(request)
-    version =epl_version
-
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =3, 1, lid, xlid
-
-    name = Library.objects.get(lid =lid).name
-    xname = Library.objects.get(lid =xlid).name
-
-    lprov = ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6)
-
-    l =[]
-    for e in lprov:
-        if ItemRecord.objects.filter(lid =xlid).exclude(rank =0):
-            l.append(e)
-    size = len(l)
-
-    return render(request, 'epl/xto_instr_list.html', locals())
