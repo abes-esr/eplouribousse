@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -38,10 +38,12 @@
     <p><a href="/modifrklist/{{ lid }}">{% trans "Modifier un précédent positionnement" %}</a></p>
 
     {% if lastrked != None %}
+      {% if lastrked.lid == lid %}
     <div id="highlight">
-    <p><b>{% trans "Dernier positionnement enregistré" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
+    <p><b>{% trans "Dernier positionnement (session en cours)" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
        {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
     </div>
+      {% endif %}
     {% endif %}
 
       <ul>
