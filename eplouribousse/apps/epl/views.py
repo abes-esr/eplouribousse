@@ -1,5 +1,8 @@
-epl_version ="Version 1.3 beta (~Ultrogothe)"
-date_version ="September 5, 2020"
+epl_version ="Version 1.2.1 (Chrodechilde)"
+date_version ="May 9, 2020"
+# Mise au niveau de :
+# epl_version ="Version 1.3.0 beta (~Ultrogothe)"
+# date_version ="May 9, 2020"
 
 from django.shortcuts import render
 
@@ -79,7 +82,6 @@ def about(request):
     version =epl_version
     date =date_version
     return render(request, 'epl/about.html', locals())
-
 
 
 def router(request):
