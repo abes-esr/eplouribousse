@@ -314,12 +314,7 @@ def indicators(request):
     #Number of instructions :
     instr = len(Instruction.objects.all())
 
-    return render(request, 'epl/indicators.html', {'rkall' : rkall, 'rkright' : \
-    rkright, 'exclus' : exclus, 'bdmaybeg' : bdmaybeg, 'notbdmaybeg' : notbdmaybeg, 'fullinstr' : fullinstr, \
-    'fail' : fail, 'instr' : instr, 'bdonway' : bdonway, 'notbdonway' : notbdonway, 'dict' : dict, 'c1st' : c1st, \
-    's1st' : s1st, 'cnone' : cnone, 'snone' : snone, 'ctotal' : ctotal, 'stotal' : stotal, \
-     'coll' : coll, 'cand' : cand, 'dupl' : dupl, 'isol' : isol, 'discard' : discard, \
-     'tripl' : tripl, 'qudrpl' : qudrpl, 'candcoll' : candcoll, 'k' : k, 'nlib' : nlib, 'version' : version, })
+    return render(request, 'epl/indicators.html', locals())
 
 
 @login_required
