@@ -1,4 +1,4 @@
-Ce guide indique pas à pas comment tester l'application eplouribousse dans un environnemnt virtuel (sous Linux)
+Ce guide vous indique étape par étape comment préparer le terrain au test de l'application eplouribousse (en 4 étapes) puis comment tester celle-ci dans un environnemnt virtuel (Procédure pour les distributions Debian de Linux)
 
 NB : Les lignes de commande sont données à la suite de l'action à réaliser.
 
