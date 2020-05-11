@@ -54,15 +54,13 @@ $ python -m pip install reportlab
 
 ----------------
 
-# step 4 : Créez un dépôt complet d'eplouribousse sur votre poste :
+# step 4 : Create a repository where to settle all the stuff you need :
 
-Clonez le dépôt https://git.unistra.fr/gressot/yellow dans un répertoire de votre choix,
+Clone https://git.unistra.fr/gressot/yellow in a directory of your own,
 
-téléchargez le fichier compressécontenant la base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
+download the archive file https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
 
-décompressez et placez la base de données eplouribousse.db dans le répertoire précédent (celui qui contient le fichier manage.py)
-
-(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+uncompress and extract this file (i.e. the database : eplouribousse.db) Settle it in yellow (the directory where you can find the file manage.py)
 
 ----------------
 

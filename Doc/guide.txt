@@ -58,11 +58,9 @@ $ python -m pip install reportlab
 
 Clonez le dépôt https://git.unistra.fr/gressot/yellow dans un répertoire de votre choix,
 
-téléchargez le fichier compressé contenant la base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
+téléchargez l'archive compressé contenant la base de données https://seafile.unistra.fr/f/87c1f540667c4fcb93b7/?dl=1
 
-décompressez et placez la base de données eplouribousse.db dans le répertoire précédent (celui qui contient le fichier manage.py)
-
-(Un petit coup d'oeil sur la structure de la base vous permettra d'élaborer la vôtre)
+décompressez et extrayez la base de données eplouribousse.db dans le répertoire yellow (celui qui contient le fichier manage.py)
 
 ----------------
 
