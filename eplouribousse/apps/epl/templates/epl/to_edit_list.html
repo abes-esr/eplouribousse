@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -22,7 +22,7 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ name }} - {% trans "ressources éditables" %}</h2>
+      <h2>{{ libname }} - {% trans "ressources éditables" %}</h2>
         <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }} - <a target="_blank" href="/edallpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a></p>
@@ -40,7 +40,7 @@
 
       <ul>
 
-       {% for elmt in ressourcelist %}
+       {% for elmt in resslist %}
           {% if elmt.rank == 1 %}
               <HR>
        <p></p>

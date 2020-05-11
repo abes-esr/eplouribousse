@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -22,7 +22,7 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ name }} - {% trans "Liste des ressources à instruire" %} - {% trans "forme reliée, rang autre que 1" %}</h2>
+      <h2>{{ libname }} - {% trans "Liste des ressources à instruire" %} - {% trans "forme reliée, rang autre que 1" %}</h2>
 
         <div id="content">
 
@@ -34,7 +34,7 @@
       <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
       <ul>
 
-      {% for elmt in ressourcelist %}
+      {% for elmt in l %}
 
             <HR>
       <p></p>

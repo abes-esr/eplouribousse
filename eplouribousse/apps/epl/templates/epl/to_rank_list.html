@@ -23,10 +23,10 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ name }} - {% trans "collections en attente de positionnement" %}</h2>
+      <h2>{{ libname }} - {% trans "collections en attente de positionnement" %}</h2>
         <div id="content">
 
-      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
+      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
       {% if nlib > 2 %}
       <p><a href="/rkfilter/{{ lid }}">{% trans "Restreindre la liste aux doublons avec une autre bibliothèque" %}</a></p>
       {% else %}
@@ -48,7 +48,7 @@
 
       <ul>
 
-       {% for elmt in toranklist %}
+       {% for elmt in resslist %}
 
              <HR>
        <p></p>

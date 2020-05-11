@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -23,8 +23,8 @@
       {% endif %}
       <p></p>
 
-      <h2>{{ name }} - {% trans "Arbitrages" %}</h2>
-      <h2>({% trans "Autre collection impliquée dans l'arbitrage" %} : {{ xname }})</h2>
+      <h2>{{ libname }} - {% trans "Arbitrages" %}</h2>
+      <h2>({% trans "Autre collection impliquée dans l'arbitrage" %} : {{ xlibname }})</h2>
       <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
@@ -38,7 +38,7 @@
 
             <ul>
 
-              {% for elmt in ressourcelist %}
+              {% for elmt in resslist %}
                   {% if elmt.rank == 1 %}
                             <HR>
                 <p></p>

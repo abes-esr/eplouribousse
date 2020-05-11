@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -23,7 +23,7 @@
       {% endif %}
 
       <p></p>
-      <h2>{{ name }} - {% trans "ressources à instruire" %} - {% trans "toutes formes, tous rangs" %}</h2>
+      <h2>{{ libname }} - {% trans "ressources à instruire" %} - {% trans "toutes formes, tous rangs" %}</h2>
         <div id="content">
 
       <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
@@ -53,7 +53,7 @@
 
             <HR>
           {% if lid == "999999999" %}
-              {% for elmt in ressourcelist %}
+              {% for elmt in l %}
                   {% if elmt.status == 2 %}
                   <li><b><font color= #a7a7a7 >1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
@@ -68,7 +68,7 @@
 
           {% else %}
           <!-- it means : lid !="999999999" -->
-            {% for elmt in ressourcelist %}
+            {% for elmt in l %}
                 {% if elmt.status == 1 %}
                   {% if elmt.rank == 1 %}
                   <li><b><font color= #a7a7a7 >*1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>

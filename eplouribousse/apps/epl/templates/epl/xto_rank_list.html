@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -23,12 +23,12 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ name }} - {% trans "collections en attente de positionnement" %}</h2>
-      <h2>{% trans "Autre collection participante" %} : {{ xname }}</h2>
+      <h2>{{ libname }} - {% trans "collections en attente de positionnement" %}</h2>
+      <h2>{% trans "Autre collection participante" %} : {{ xlibname }}</h2>
 
         <div id="content">
 
-      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
+      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
 
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
@@ -45,7 +45,7 @@
 
       <ul>
 
-       {% for elmt in toranklist %}
+       {% for elmt in resslist %}
 
              <HR>
        <p></p>
