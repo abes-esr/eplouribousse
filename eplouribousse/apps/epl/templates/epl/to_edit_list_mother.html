@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -22,7 +22,7 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ name }}</h2>
+      <h2>{{ libname }}</h2>
       <h2>{% trans "Ressources éditables pour lesquelles votre collection est la collection mère" %}</h2>
         <div id="content">
 
@@ -34,7 +34,7 @@
 
       <ul>
 
-       {% for elmt in ressourcelist %}
+       {% for elmt in resslist %}
               <HR>
         <p></p>
            <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>

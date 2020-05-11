@@ -10,7 +10,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -23,20 +23,21 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ library.name }} - {% trans "Fin des instructions" %} - {{ stage }}</h2>
+      <h2>{{ lib.name }} - {% trans "Fin des instructions" %} - {{ bd }}</h2>
     <div id="content">
 
-        <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
-        <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
-        {% if lid != '999999999' %}
-          <p><i>{% trans "Les dernières lignes validées sont mises en évidence" %}</i></p>
-        {% endif %}
+        <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ress.sid }}</a> / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }}</p>
 
-        {% for elmt in librarylist %}
+        <p>{% trans "Ordre de traitement" %} :
+          {% for elmt in liblist %}
             | {{ elmt.name }}
-        {% endfor %}
-      <p></p>
+          {% endfor %}</p>
+
+          {% if lid != '999999999' %}
+            <p><i>{% trans "Les dernières lignes validées sont mises en évidence" %}.</i></p>
+          {% endif %}
+
       <table border="1">
 
          <thead>
@@ -53,8 +54,8 @@
 
          <tbody>
 
-           {% for elmt in instructions %}
-              {% if elmt.name == library.name and elmt.bound == expected %}
+           {% for elmt in instrlist %}
+              {% if elmt.name == lib.name and elmt.bound == expected %}
           <tr>
                <td><center><font color= #e74c3c >{{ elmt.line }}</font></center></td>
                <td><font color= #e74c3c >{{ elmt.name }}</font></td>
@@ -86,7 +87,7 @@
         <div id="content">
           <form method="post">{% csrf_token %}
           <div>
-          <p>{{ checkerform }}</p>
+          <p>{{ u }}</p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
           </form>
@@ -96,13 +97,13 @@
           <form method="post">{% csrf_token %}
           <div>
           <p><b><font color= #017a04 >{{ info }}</font></b></p>
-          <p>{{ checkform.flag }} {% trans "J'ai bien vérifié avant de valider" %}</p>
+          <p>{{ z.flag }} {% trans "J'ai bien vérifié avant de valider" %}</p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
           </form>
           </div>
           <div id="menucontextuel">
-            <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
+            <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ lib.lid }}">{% trans "Supprimer une ligne" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
           </div>
         {% endif %}
       <!-- </div> -->

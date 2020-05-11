@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -22,12 +22,12 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ library.name }} - {% trans "Positionnement" %}</h2>
+      <h2>{{ lib.name }} - {% trans "Positionnement" %}</h2>
         <div id="content">
 
-      <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
-      <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ressource.sid }}" target="_blank">{{ ressource.sid }}</a>
-       / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / <a href="{{ periscope }}" target="_blank">Périscope</a></p>
+      <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }}</p>
+      <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ress.sid }}" target="_blank">{{ ress.sid }}</a>
+       / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }} / <a href="{{ periscope }}" target="_blank">Périscope</a></p>
       <p></p>
 
       <p><i>{% trans "Votre rattachement apparaît en rouge" %} :</i></p>
@@ -35,17 +35,15 @@
 
       <ul>
 
-      {% for elmt in items %}
-          {% if elmt.lid == library.lid %}
+      {% for elmt in itemlist %}
+          {% if elmt.lid == lib.lid %}
                 <HR>
           <p></p>
-             <font color= #e74c3c >
-              <li><b>{% trans "Identifiant de la bibliothèque" %} :</b> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | {% trans "Cote" %} : {{ elmt.cn }}</li>
-              <li><b>{% trans "Etat de collection" %} :</b> {{ elmt.holdstat }}</li>
-              <li><b>{% trans "Lacunes" %} :</b> {{ elmt.missing }}</li>
-              <li><b>{% trans "Rang courant" %} :</b> <font color= #3498db  >{{ elmt.rank }}</font></li>
-              <li><b>{% trans "Exclusion" %} :</b> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
-             </font>
+              <li><font color= #e74c3c ><b>{% trans "Identifiant de la bibliothèque" %} :</b></font> <a href="http://www.sudoc.abes.fr//DB=2.2/SET=1/TTL=1/CMD?ACT=SRCHA&IKT=8888&SRT=RLV&TRM={{ elmt.lid }}" target="_blank">{{ elmt.lid }}</a> | {% trans "Cote" %} : {{ elmt.cn }}</li>
+              <li><font color= #e74c3c ><b>{% trans "Etat de collection" %} :</b></font> {{ elmt.holdstat }}</li>
+              <li><font color= #e74c3c ><b>{% trans "Lacunes" %} :</b></font> {{ elmt.missing }}</li>
+              <li><font color= #e74c3c ><b>{% trans "Rang courant" %} :</b></font> <font color= #3498db  >{{ elmt.rank }}</font></li>
+              <li><font color= #e74c3c ><b>{% trans "Exclusion" %} :</b></font> <font color= #3498db  >{{ elmt.excl}}</font> | <b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
           {% else %}
                 <HR>
           <p></p>
@@ -62,11 +60,11 @@
       <HR>
 
       <form method="post">
-      <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ form.excl }}</p>
-      <p>{% trans "Sinon, rang de votre collection" %} : {{ form.rank }}</p>
+      <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ f.excl }}</p>
+      <p>{% trans "Sinon, rang de votre collection" %} : {{ f.rank }}</p>
       <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}</p>
       <p>{% trans "Commentaire (max. 250 caractères.)" %} : </p>
-      <p>{{ form.comm }}</p>
+      <p>{{ f.comm }}</p>
       {% csrf_token %}
       <input type="Submit" value="{% trans "Valider" %}">
       </form>
