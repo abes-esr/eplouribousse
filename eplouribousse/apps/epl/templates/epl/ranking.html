@@ -63,7 +63,6 @@
       <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ f.excl }}</p>
       <p>{% trans "Sinon, rang de votre collection" %} : {{ f.rank }}</p>
       <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}</p>
-      <p>{% trans "Commentaire (max. 250 caractères.)" %} : </p>
       <p>{{ f.comm }}</p>
       {% csrf_token %}
       <input type="Submit" value="{% trans "Valider" %}">
