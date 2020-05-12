@@ -27,7 +27,7 @@
 
       <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }}</p>
       <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ress.sid }}" target="_blank">{{ ress.sid }}</a>
-       / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }} / <a href="{{ periscope }}" target="_blank">Périscope</a></p>
+       / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }} / <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a></p>
       <p></p>
 
       <p><i>{% trans "Votre rattachement apparaît en rouge" %} :</i></p>
