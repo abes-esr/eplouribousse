@@ -19,6 +19,8 @@ class InstructionForm(forms.ModelForm):
         model = Instruction
         exclude = ('sid', 'name', 'bound',)
         widgets = {
+            'line' : forms.TextInput(attrs={'title': _("Respectez l'ordre chronologique du champ 'Segment'")}),
+            'oname' : forms.TextInput(attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
             'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex.")}),
             'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex.")}),
             'degr' : forms.TextInput(attrs={'placeholder': _("1995(4) par ex.")}),
