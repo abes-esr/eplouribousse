@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-11 16:41+0200\n"
+"POT-Creation-Date: 2020-05-12 09:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: eplouribousse/apps/epl/forms.py:49
+#: eplouribousse/apps/epl/forms.py:13
+msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
+msgstr "Possible comment to explain your choice (max. 250 characters)"
+
+#: eplouribousse/apps/epl/forms.py:22
+msgid "1990(2)-1998(12) par ex."
+msgstr "1990(2)-1998(12) e.g."
+
+#: eplouribousse/apps/epl/forms.py:23
+msgid "1991(5) par ex."
+msgstr "1991(5) e.g."
+
+#: eplouribousse/apps/epl/forms.py:24
+msgid "1995(4) par ex."
+msgstr "1995(4) e.g."
+
+#: eplouribousse/apps/epl/forms.py:54
 msgid "Bibliothèques impliquées (opérateur 'ou')"
 msgstr "Involved libraries (or operator)"
 
-#: eplouribousse/apps/epl/forms.py:50
+#: eplouribousse/apps/epl/forms.py:55
 msgid "Phase d'instruction"
 msgstr "Instruction phase"
 
@@ -107,7 +123,7 @@ msgstr "Sign Out"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:28
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:61
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:83
+#: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:65
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:49
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:49
@@ -310,7 +326,7 @@ msgstr "underneath row n° ?"
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:35
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:35
 #: eplouribousse/apps/epl/templates/epl/home.html:40
-#: eplouribousse/apps/epl/templates/epl/ranking.html:69
+#: eplouribousse/apps/epl/templates/epl/ranking.html:68
 msgid "Valider"
 msgstr "ok"
 
@@ -353,7 +369,7 @@ msgstr "Resume later"
 #: eplouribousse/apps/epl/templates/epl/language.html:52
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:65
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:88
+#: eplouribousse/apps/epl/templates/epl/ranking.html:87
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:69
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:53
@@ -395,7 +411,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/language.html:52
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:65
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:88
+#: eplouribousse/apps/epl/templates/epl/ranking.html:87
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:69
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:53
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:53
@@ -437,7 +453,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/language.html:58
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:69
 #: eplouribousse/apps/epl/templates/epl/notintime.html:54
-#: eplouribousse/apps/epl/templates/epl/ranking.html:92
+#: eplouribousse/apps/epl/templates/epl/ranking.html:91
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:73
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:57
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:57
@@ -673,7 +689,7 @@ msgstr "Instructions"
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:61
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:83
+#: eplouribousse/apps/epl/templates/epl/ranking.html:82
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:66
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:53
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:53
@@ -781,7 +797,7 @@ msgid "Export pdf"
 msgstr "pdf export"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
-#: eplouribousse/apps/epl/templates/epl/ranking.html:78
+#: eplouribousse/apps/epl/templates/epl/ranking.html:77
 msgid "Retour à la liste"
 msgstr "Back to the list"
 
@@ -794,7 +810,7 @@ msgstr "Back to the list"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:58
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:56
-#: eplouribousse/apps/epl/templates/epl/ranking.html:83
+#: eplouribousse/apps/epl/templates/epl/ranking.html:82
 msgid "Menu général"
 msgstr "Main menu"
 
@@ -1219,10 +1235,6 @@ msgid ""
 "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre "
 "collection ou d'autres raisons ..."
 msgstr "Choose 1 if your collection is the best one, 4 if the worst one"
-
-#: eplouribousse/apps/epl/templates/epl/ranking.html:66
-msgid "Commentaire (max. 250 caractères.)"
-msgstr "Comment (250 characters max)"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:28
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:29

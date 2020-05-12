@@ -1,8 +1,8 @@
-# epl_version ="Version 1.2.1 (Chrodechilde)"
-# date_version ="May 11, 2020"
+epl_version ="Version 1.2.2 (Chrodechilde)"
+date_version ="May 12, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.3.1 beta (~Ultrogothe)"
-date_version ="May 11, 2020"
+# epl_version ="Version 1.3.2 beta (~Ultrogothe)"
+# date_version ="May 12, 2020"
 
 
 from django.shortcuts import render
