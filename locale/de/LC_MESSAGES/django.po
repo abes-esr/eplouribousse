@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 09:57+0200\n"
+"POT-Creation-Date: 2020-05-12 16:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,22 +23,33 @@ msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
 msgstr "Möglicher Kommentar zur Erläuterung Ihrer Wahl (max. 250 Zeichen)"
 
 #: eplouribousse/apps/epl/forms.py:22
+msgid "Respectez l'ordre chronologique du champ 'Segment'"
+msgstr "Beachten Sie die chronologische Reihenfolge des Felds 'Segment'"
+
+#: eplouribousse/apps/epl/forms.py:23
+msgid ""
+"Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
+"'améliorable'"
+msgstr "Bibliothek, die zuvor eine 'Ausnahme' oder "
+"etwas 'erweiterbar' ausgefüllt hat"
+
+#: eplouribousse/apps/epl/forms.py:24
 msgid "1990(2)-1998(12) par ex."
 msgstr "1990(2)-1998(12), z.B."
 
-#: eplouribousse/apps/epl/forms.py:23
+#: eplouribousse/apps/epl/forms.py:25
 msgid "1991(5) par ex."
 msgstr "1991(5), z.B."
 
-#: eplouribousse/apps/epl/forms.py:24
+#: eplouribousse/apps/epl/forms.py:26
 msgid "1995(4) par ex."
 msgstr "1995(4), z.B."
 
-#: eplouribousse/apps/epl/forms.py:54
+#: eplouribousse/apps/epl/forms.py:56
 msgid "Bibliothèques impliquées (opérateur 'ou')"
 msgstr "Teilnehmende Bibliotheken (*or* Operator)"
 
-#: eplouribousse/apps/epl/forms.py:55
+#: eplouribousse/apps/epl/forms.py:57
 msgid "Phase d'instruction"
 msgstr "Anweisung Phase"
 
@@ -785,7 +796,7 @@ msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Zeilen, die Ihre Bibliothek betreffen, sind hervorgehoben."
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:37
-#: eplouribousse/apps/epl/views.py:1377
+#: eplouribousse/apps/epl/views.py:1379
 msgid "Collection mère"
 msgstr "Mutter Sammlung"
 
@@ -1343,37 +1354,37 @@ msgstr "Auszufüllen Sammlungen"
 msgid "Authentification"
 msgstr "Login"
 
-#: eplouribousse/apps/epl/views.py:444 eplouribousse/apps/epl/views.py:613
+#: eplouribousse/apps/epl/views.py:446 eplouribousse/apps/epl/views.py:615
 msgid "éléments reliés"
 msgstr "verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:446 eplouribousse/apps/epl/views.py:617
+#: eplouribousse/apps/epl/views.py:448 eplouribousse/apps/epl/views.py:619
 msgid "éléments non reliés"
 msgstr "Nicht verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:470
+#: eplouribousse/apps/epl/views.py:472
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
-#: eplouribousse/apps/epl/views.py:542
+#: eplouribousse/apps/epl/views.py:544
 msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 
-#: eplouribousse/apps/epl/views.py:621
+#: eplouribousse/apps/epl/views.py:623
 msgid "instructions terminées"
 msgstr "XXXXX (Ausfüllung schon fertig)"
 
-#: eplouribousse/apps/epl/views.py:622
+#: eplouribousse/apps/epl/views.py:624
 msgid "ni relié, ni non reliés"
 msgstr "Nicht verbunden weder nicht"
 
-#: eplouribousse/apps/epl/views.py:671 eplouribousse/apps/epl/views.py:746
+#: eplouribousse/apps/epl/views.py:673 eplouribousse/apps/epl/views.py:748
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr ""
 "Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
 "anzuweisen : "
 
-#: eplouribousse/apps/epl/views.py:694
+#: eplouribousse/apps/epl/views.py:696
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -1383,20 +1394,20 @@ msgstr ""
 "Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
 "in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
-#: eplouribousse/apps/epl/views.py:757
+#: eplouribousse/apps/epl/views.py:759
 msgid "Vous n'avez pas coché !"
 msgstr "Sie haben nicht geprüft !"
 
-#: eplouribousse/apps/epl/views.py:833 eplouribousse/apps/epl/views.py:985
-#: eplouribousse/apps/epl/views.py:1236 eplouribousse/apps/epl/views.py:1379
+#: eplouribousse/apps/epl/views.py:835 eplouribousse/apps/epl/views.py:987
+#: eplouribousse/apps/epl/views.py:1238 eplouribousse/apps/epl/views.py:1381
 msgid "Autre bibliothèque impliquée"
 msgstr "Andere teilnehmende Bibliothek"
 
-#: eplouribousse/apps/epl/views.py:1377
+#: eplouribousse/apps/epl/views.py:1379
 msgid "Collection non mère"
 msgstr "Nicht Mutter Sammlung"
 
-#: eplouribousse/apps/epl/views.py:1378
+#: eplouribousse/apps/epl/views.py:1380
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"

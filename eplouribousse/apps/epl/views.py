@@ -1,8 +1,8 @@
-# epl_version ="Version 1.2.3 (Chrodechilde)"
-# date_version ="May 12, 2020"
-# Mise au niveau de :
-epl_version ="Version 1.3.3 beta (~Ultrogothe)"
+epl_version ="Version 1.2.4 (Chrodechilde)"
 date_version ="May 12, 2020"
+# Mise au niveau de :
+# epl_version ="Version 1.3.4 beta (~Ultrogothe)"
+# date_version ="May 12, 2020"
 
 
 from django.shortcuts import render
@@ -141,6 +141,7 @@ def router(request):
 def lang(request):
     k = logstatus(request)
     version =epl_version
+
     return render(request, 'epl/language.html', locals())
 
 
@@ -149,6 +150,8 @@ def logout_view(request):
     "Homepage sepcial disconnected"
 
     logout(request)
+
+    # Redirect to a success page.
 
     version =epl_version
     project = Project.objects.all().order_by('pk')[0].name
@@ -176,7 +179,6 @@ def logout_view(request):
             elif feature =='edition':
                 return tobeedited(request, lid)
 
-    # Redirect to a success page.
     return render(request, 'epl/disconnect.html', locals())
 
 
