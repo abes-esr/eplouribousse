@@ -305,7 +305,7 @@ msgid ""
 "manquant dans le segment pour la forme considérée"
 msgstr ""
 "[Segment] = chronologisch ununterbrochen segment - [Ausnahmen] = Fehlende "
-"elemente für die betrachteten Segment und Form."
+"elemente für die betrachteten Segment und Form"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:87
 msgid "Vider le formulaire ci-dessous"
