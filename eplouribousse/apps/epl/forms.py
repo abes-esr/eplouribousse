@@ -9,8 +9,8 @@ class PositionForm(forms.ModelForm):
         model = ItemRecord
         fields = ('rank', 'excl', 'comm',)
         widgets = {
-            'excl': forms.Select(choices=EXCLUSION_CHOICES),
-            'comm' : forms.Textarea,
+            'excl' : forms.Select(choices=EXCLUSION_CHOICES),
+            'comm' : forms.Textarea(attrs={'placeholder': _("Commentaire éventuel pour expliquer votre choix (max. 250 caractères)")}),
         }
 
 
@@ -18,6 +18,11 @@ class InstructionForm(forms.ModelForm):
     class Meta:
         model = Instruction
         exclude = ('sid', 'name', 'bound',)
+        widgets = {
+            'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex.")}),
+            'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex.")}),
+            'degr' : forms.TextInput(attrs={'placeholder': _("1995(4) par ex.")}),
+        }
 
 
 class FeatureForm(forms.ModelForm):
@@ -25,8 +30,8 @@ class FeatureForm(forms.ModelForm):
         model = Feature
         fields = ('libname', 'feaname',)
         widgets = {
-            'libname': forms.Select(choices=LIBRARY_CHOICES),
-            'feaname': forms.RadioSelect(choices=FEATURE_CHOICES),
+            'libname' : forms.Select(choices=LIBRARY_CHOICES),
+            'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
         }
 
 
@@ -41,7 +46,7 @@ class AdminCheckForm(forms.ModelForm):
         model = Check
         fields = ('checkin',)
         widgets = {
-            'checkin': forms.RadioSelect(choices=CHECKING_CHOICES,),
+            'checkin' : forms.RadioSelect(choices=CHECKING_CHOICES,),
         }
 
 
