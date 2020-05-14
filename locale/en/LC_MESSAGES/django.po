@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 16:33+0200\n"
+"POT-Creation-Date: 2020-05-14 10:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,37 +18,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: eplouribousse/apps/epl/forms.py:13
+#: eplouribousse/apps/epl/forms.py:12
+#: eplouribousse/apps/epl/templates/epl/ranking.html:65
+msgid ""
+"Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre "
+"collection ou d'autres raisons ..."
+msgstr "Choose 1 if your collection is the best one, 4 if the worst one"
+
+#: eplouribousse/apps/epl/forms.py:14
 msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
 msgstr "Possible comment to explain your choice (max. 250 characters)"
 
-#: eplouribousse/apps/epl/forms.py:22
+#: eplouribousse/apps/epl/forms.py:23
 msgid "Respectez l'ordre chronologique du champ 'Segment'"
 msgstr "Arrange chronologically following field 'Segment'"
 
-#: eplouribousse/apps/epl/forms.py:23
+#: eplouribousse/apps/epl/forms.py:24
 msgid ""
 "Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
 "'améliorable'"
 msgstr "Library that previously declared an 'exception' or an 'upgradeable'"
 
-#: eplouribousse/apps/epl/forms.py:24
+#: eplouribousse/apps/epl/forms.py:25
 msgid "1990(2)-1998(12) par ex."
 msgstr "1990(2)-1998(12) e.g."
 
 #: eplouribousse/apps/epl/forms.py:25
+msgid "Suite ininterrompue chronologiquement"
+msgstr "Continued chronologically"
+
+#: eplouribousse/apps/epl/forms.py:26
 msgid "1991(5) par ex."
 msgstr "1991(5) e.g."
 
-#: eplouribousse/apps/epl/forms.py:26
+#: eplouribousse/apps/epl/forms.py:27
+msgid ""
+"éléments manquants dans le segment pour la forme considérée (pas forcément "
+"des lacunes si l'on considère la forme reliée)"
+msgstr "missing elements in the segment for the considered form (not necessarily "
+"gaps considering the bound form)"
+
+#: eplouribousse/apps/epl/forms.py:28
 msgid "1995(4) par ex."
 msgstr "1995(4) e.g."
 
-#: eplouribousse/apps/epl/forms.py:56
+#: eplouribousse/apps/epl/forms.py:29
+msgid ""
+"éléments dégradé (un volume relié dégradé peut être remplacé par les "
+"fascicules correspondants en bon état)"
+msgstr "degraded elements (a degraded bound volume can be replaced by the "
+"corresponding booklets in good condition)"
+
+#: eplouribousse/apps/epl/forms.py:59
 msgid "Bibliothèques impliquées (opérateur 'ou')"
 msgstr "Involved libraries (or operator)"
 
-#: eplouribousse/apps/epl/forms.py:57
+#: eplouribousse/apps/epl/forms.py:60
 msgid "Phase d'instruction"
 msgstr "Instruction phase"
 
@@ -1239,12 +1264,6 @@ msgstr "If so, select a reason"
 #: eplouribousse/apps/epl/templates/epl/ranking.html:64
 msgid "Sinon, rang de votre collection"
 msgstr "If no, rank clamed for your collection"
-
-#: eplouribousse/apps/epl/templates/epl/ranking.html:65
-msgid ""
-"Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre "
-"collection ou d'autres raisons ..."
-msgstr "Choose 1 if your collection is the best one, 4 if the worst one"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:28
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:29
