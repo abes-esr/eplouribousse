@@ -1,6 +1,6 @@
 epl_version ="Version 1.2.7 (Chrodechilde)"
 date_version ="May 14, 2020"
-Mise au niveau de :
+# Mise au niveau de :
 epl_version ="Version 1.3.7 beta (~Ultrogothe)"
 date_version ="May 14, 2020"
 
