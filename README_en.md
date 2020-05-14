@@ -69,4 +69,4 @@ French version uses data under etalab license (Open License) provided by Abes (A
 
 # Contact :
 
-See https://github.com/GGre/eplouribounistra/blob/master/About.txt
+See https://github.com/GGre/eplouribounistra/blob/master/contact.txt

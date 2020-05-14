@@ -71,5 +71,5 @@ eplouribousse utilise des données sous licence ouverte etalab fournies par l'Ag
 
 # Contact :
 
-Indiqué en https://github.com/GGre/eplouribounistra/blob/master/About.txt
+Indiqué en https://github.com/GGre/eplouribounistra/blob/master/contact.txt
 
