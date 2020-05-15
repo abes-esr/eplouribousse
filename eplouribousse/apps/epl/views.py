@@ -1,8 +1,8 @@
 epl_version ="Version 1.2.10 (Chrodechilde)"
 date_version ="May 14, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.3.10 beta (~Ultrogothe)"
-date_version ="May 14, 2020"
+# epl_version ="Version 1.3.10 beta (~Ultrogothe)"
+# date_version ="May 14, 2020"
 
 
 from django.shortcuts import render
@@ -785,7 +785,9 @@ def ranktotake(request, lid):
 
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
-    return render(request, 'epl/to_rank_list.html', locals())
+    return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
+        'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
+        'lastrked' : lastrked, 'version' : version, })
 
 
 def modifranklist(request, lid):
@@ -814,7 +816,9 @@ def modifranklist(request, lid):
 
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
-    return render(request, 'epl/modifrklist.html', locals())
+    return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
+    'lastrked' : lastrked, 'version' : version, })
 
 
 def filter_rklist(request, lid):
@@ -864,7 +868,9 @@ def xranktotake(request, lid, xlid):
     libname = Library.objects.get(lid =lid).name
     xlibname = Library.objects.get(lid =xlid).name
 
-    return render(request, 'epl/xto_rank_list.html', locals())
+    return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
+    'lastrked' : lastrked, 'version' : version, })
 
 
 def arbitration(request, lid):
