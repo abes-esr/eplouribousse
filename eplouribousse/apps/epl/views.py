@@ -1,7 +1,7 @@
-epl_version ="Version 1.2.11 (Chrodechilde)"
+epl_version ="Version 1.2.12 (Chrodechilde)"
 date_version ="May 14, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.3.11 beta (~Ultrogothe)"
+# epl_version ="Version 1.3.12 beta (~Ultrogothe)"
 # date_version ="May 14, 2020"
 
 
@@ -438,6 +438,13 @@ def addinstr(request, sid, lid):
         liblist.append(Library.objects.get(lid = e.lid))
     liblist.append(Library.objects.get(name = 'checker'))
 
+    #Remedied library list :
+    remliblist = []
+    for e in itemlist:
+        remliblist.append(Library.objects.get(lid = e.lid))
+    if (Library.objects.get(lid =lid)).name != 'checker':
+        remliblist.remove(Library.objects.get(name = lib.name))
+
     #Info :
     info =""
 
@@ -489,7 +496,11 @@ def addinstr(request, sid, lid):
         except:
             pklastone =0
 
-    return render(request, 'epl/addinstruction.html', locals())
+    return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
+    'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
+    liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
+    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, })
+
 
 @login_required
 def delinstr(request, sid, lid):
@@ -529,8 +540,27 @@ def delinstr(request, sid, lid):
         liblist.append(Library.objects.get(lid = e.lid))
     liblist.append(Library.objects.get(name = 'checker'))
 
+    #Remedied library list :
+    remliblist = []
+    for e in itemlist:
+        remliblist.append(Library.objects.get(lid = e.lid))
+    if (Library.objects.get(lid =lid)).name != 'checker':
+        remliblist.remove(Library.objects.get(name = lib.name))
+
     #Info :
     info =""
+
+    #Stage (bound or not bound) :
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
+        bd =_('éléments reliés')
+        # ress_stage ='reliés'
+        expected = "x"
+    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
+        bd =_('éléments non reliés')
+        # ress_stage ='non reliés'
+        expected = " "
+    else:   # (==2)
+        bd = _("instructions terminées")
 
     answer = ""
 
@@ -541,7 +571,7 @@ def delinstr(request, sid, lid):
             j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =i.line)
             j.delete()
         except:
-            answer = _(" <=== Suppression non permise (vérifiez les conditions requises) ")
+            answer = _(" <=== Vous ne pouvez supprimer une instruction que pour votre collection et pour la forme courante ")
 
     #Renumbering instruction lines :
     try:
@@ -563,7 +593,11 @@ def delinstr(request, sid, lid):
         liblist.append(Library.objects.get(lid = e.lid))
     liblist.append(Library.objects.get(name = 'checker'))
 
-    return render(request, 'epl/delinstruction.html', locals())
+    return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
+    'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
+    liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, })
+
 
 @login_required
 def endinstr(request, sid, lid):
@@ -606,6 +640,13 @@ def endinstr(request, sid, lid):
     for e in itemlist:
         liblist.append(Library.objects.get(lid = e.lid))
     liblist.append(Library.objects.get(name = 'checker'))
+
+    #Remedied library list :
+    remliblist = []
+    for e in itemlist:
+        remliblist.append(Library.objects.get(lid = e.lid))
+    if (Library.objects.get(lid =lid)).name != 'checker':
+        remliblist.remove(Library.objects.get(name = lib.name))
 
     #Info :
     info =""
@@ -760,7 +801,10 @@ def endinstr(request, sid, lid):
 
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
-    return render(request, 'epl/endinstruction.html', locals())
+    return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
+    'library' : lib, 'instructions' : instrlist , 'librarylist' : \
+    liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
+    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, 'version' : version, })
 
 
 def ranktotake(request, lid):
@@ -912,7 +956,9 @@ def arbitration(request, lid):
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
 
-    return render(request, 'epl/arbitration.html', locals())
+    return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
+    'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, })
 
 
 def arbrk1(request, lid):
@@ -941,7 +987,9 @@ def arbrk1(request, lid):
     #Library name :
     libname = Library.objects.get(lid =lid).name
 
-    return render(request, 'epl/arbrk1.html', locals())
+    return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
+    'lastrked' : lastrked, 'version' : version, })
 
 
 def arbnork1(request, lid):
@@ -972,7 +1020,9 @@ def arbnork1(request, lid):
     #Library name :
     libname = Library.objects.get(lid =lid).name
 
-    return render(request, 'epl/arbnork1.html', locals())
+    return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
+    'lastrked' : lastrked, 'version' : version, })
 
 
 def filter_arblist(request, lid):
@@ -1039,7 +1089,9 @@ def xarbitration(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
 
-    return render(request, 'epl/xarbitration.html', locals())
+    return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
+    'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, })
 
 
 def x1arb(request, lid, xlid):
@@ -1070,7 +1122,9 @@ def x1arb(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
 
-    return render(request, 'epl/x1arbitration.html', locals())
+    return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
+    'lastrked' : lastrked, 'version' : version, })
 
 
 def x0arb(request, lid, xlid):
@@ -1103,7 +1157,9 @@ def x0arb(request, lid, xlid):
     xlibname = Library.objects.get(lid =xlid).name
 
 
-    return render(request, 'epl/x0arbitration.html', locals())
+    return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
+    'lastrked' : lastrked, 'version' : version, })
 
 
 def instrtodo(request, lid):
