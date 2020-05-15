@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 10:18+0200\n"
+"POT-Creation-Date: 2020-05-15 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,51 +32,52 @@ msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
 msgstr "Möglicher Kommentar zur Erläuterung Ihrer Wahl (max. 250 Zeichen)"
 
 #: eplouribousse/apps/epl/forms.py:23
-msgid "Respectez l'ordre chronologique du champ 'Segment'"
-msgstr "Beachten Sie die chronologische Reihenfolge des Felds 'Segment'"
-
-#: eplouribousse/apps/epl/forms.py:24
 msgid ""
 "Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
 "'améliorable'"
 msgstr ""
 "Bibliothek, die zuvor eine 'Ausnahme' oder etwas 'erweiterbar' ausgefüllt hat"
 
-#: eplouribousse/apps/epl/forms.py:25
+#: eplouribousse/apps/epl/forms.py:24
 msgid "1990(2)-1998(12) par ex."
 msgstr "1990(2)-1998(12), z.B."
 
-#: eplouribousse/apps/epl/forms.py:25
-msgid "Suite ininterrompue chronologiquement"
-msgstr "Chronologisch fortgesetzt"
+#: eplouribousse/apps/epl/forms.py:24
+msgid ""
+"Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer "
+"selon l'ordre chronologique de ce champ"
+msgstr "Fortsetzung chronologisch; die Zeilennummer ist zu bestimmen "
+"in chronologischer Reihenfolge dieses Feldes"
 
-#: eplouribousse/apps/epl/forms.py:26
+#: eplouribousse/apps/epl/forms.py:25
 msgid "1991(5) par ex."
 msgstr "1991(5), z.B."
 
-#: eplouribousse/apps/epl/forms.py:27
+#: eplouribousse/apps/epl/forms.py:26
 msgid ""
 "éléments manquants dans le segment pour la forme considérée (pas forcément "
 "des lacunes si l'on considère la forme reliée)"
-msgstr "fehlende Elemente im Segment für das betrachtete Formular (nicht unbedingt "
+msgstr ""
+"fehlende Elemente im Segment für das betrachtete Formular (nicht unbedingt "
 "Lücken unter Berücksichtigung der verbundenen Form)"
 
-#: eplouribousse/apps/epl/forms.py:28
+#: eplouribousse/apps/epl/forms.py:27
 msgid "1995(4) par ex."
 msgstr "1995(4), z.B."
 
-#: eplouribousse/apps/epl/forms.py:29
+#: eplouribousse/apps/epl/forms.py:28
 msgid ""
 "éléments dégradé (un volume relié dégradé peut être remplacé par les "
 "fascicules correspondants en bon état)"
-msgstr "verschlechterte Elemente (ein verschlechtertes gebundenes Volumen kann durch das "
-"entsprechende Broschüren in gutem Zustand)"
+msgstr ""
+"verschlechterte Elemente (ein verschlechtertes gebundenes Volumen kann durch "
+"das entsprechende Broschüren in gutem Zustand)"
 
-#: eplouribousse/apps/epl/forms.py:59
+#: eplouribousse/apps/epl/forms.py:58
 msgid "Bibliothèques impliquées (opérateur 'ou')"
 msgstr "Teilnehmende Bibliotheken (*or* Operator)"
 
-#: eplouribousse/apps/epl/forms.py:60
+#: eplouribousse/apps/epl/forms.py:59
 msgid "Phase d'instruction"
 msgstr "Anweisung Phase"
 
@@ -823,7 +824,7 @@ msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Zeilen, die Ihre Bibliothek betreffen, sind hervorgehoben."
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:37
-#: eplouribousse/apps/epl/views.py:1379
+#: eplouribousse/apps/epl/views.py:1385
 msgid "Collection mère"
 msgstr "Mutter Sammlung"
 
@@ -1417,16 +1418,16 @@ msgstr ""
 msgid "Vous n'avez pas coché !"
 msgstr "Sie haben nicht geprüft !"
 
-#: eplouribousse/apps/epl/views.py:835 eplouribousse/apps/epl/views.py:987
-#: eplouribousse/apps/epl/views.py:1238 eplouribousse/apps/epl/views.py:1381
+#: eplouribousse/apps/epl/views.py:839 eplouribousse/apps/epl/views.py:993
+#: eplouribousse/apps/epl/views.py:1244 eplouribousse/apps/epl/views.py:1387
 msgid "Autre bibliothèque impliquée"
 msgstr "Andere teilnehmende Bibliothek"
 
-#: eplouribousse/apps/epl/views.py:1379
+#: eplouribousse/apps/epl/views.py:1385
 msgid "Collection non mère"
 msgstr "Nicht Mutter Sammlung"
 
-#: eplouribousse/apps/epl/views.py:1380
+#: eplouribousse/apps/epl/views.py:1386
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"
@@ -1551,6 +1552,12 @@ msgstr "English"
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr "German"
+
+#~ msgid "Respectez l'ordre chronologique du champ 'Segment'"
+#~ msgstr "Beachten Sie die chronologische Reihenfolge des Felds 'Segment'"
+
+#~ msgid "Suite ininterrompue chronologiquement"
+#~ msgstr "Chronologisch fortgesetzt"
 
 #~ msgid "Retour à la liste générale des positionnements"
 #~ msgstr "Zurück zum [rang nehmen]"

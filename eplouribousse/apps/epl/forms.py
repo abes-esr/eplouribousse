@@ -20,9 +20,8 @@ class InstructionForm(forms.ModelForm):
         model = Instruction
         exclude = ('sid', 'name', 'bound',)
         widgets = {
-            'line' : forms.TextInput(attrs={'title': _("Respectez l'ordre chronologique du champ 'Segment'")}),
             'oname' : forms.TextInput(attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
-            'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex."), 'title': _("Suite ininterrompue chronologiquement")}),
+            'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex."), 'title': _("Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer selon l'ordre chronologique de ce champ")}),
             'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex."), 'title': \
             _("éléments manquants dans le segment pour la forme considérée (pas forcément des lacunes si l'on considère la forme reliée)")}),
             'degr' : forms.TextInput(attrs={'placeholder': _("1995(4) par ex."), 'title': \

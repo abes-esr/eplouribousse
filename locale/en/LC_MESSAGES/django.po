@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 10:18+0200\n"
+"POT-Creation-Date: 2020-05-15 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,50 +30,51 @@ msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
 msgstr "Possible comment to explain your choice (max. 250 characters)"
 
 #: eplouribousse/apps/epl/forms.py:23
-msgid "Respectez l'ordre chronologique du champ 'Segment'"
-msgstr "Arrange chronologically following field 'Segment'"
-
-#: eplouribousse/apps/epl/forms.py:24
 msgid ""
 "Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
 "'améliorable'"
 msgstr "Library that previously declared an 'exception' or an 'upgradeable'"
 
-#: eplouribousse/apps/epl/forms.py:25
+#: eplouribousse/apps/epl/forms.py:24
 msgid "1990(2)-1998(12) par ex."
 msgstr "1990(2)-1998(12) e.g."
 
-#: eplouribousse/apps/epl/forms.py:25
-msgid "Suite ininterrompue chronologiquement"
-msgstr "Continued chronologically"
+#: eplouribousse/apps/epl/forms.py:24
+msgid ""
+"Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer "
+"selon l'ordre chronologique de ce champ"
+msgstr "Continued chronologically; the line number is to be determined "
+"in chronological order of this field"
 
-#: eplouribousse/apps/epl/forms.py:26
+#: eplouribousse/apps/epl/forms.py:25
 msgid "1991(5) par ex."
 msgstr "1991(5) e.g."
 
-#: eplouribousse/apps/epl/forms.py:27
+#: eplouribousse/apps/epl/forms.py:26
 msgid ""
 "éléments manquants dans le segment pour la forme considérée (pas forcément "
 "des lacunes si l'on considère la forme reliée)"
-msgstr "missing elements in the segment for the considered form (not necessarily "
+msgstr ""
+"missing elements in the segment for the considered form (not necessarily "
 "gaps considering the bound form)"
 
-#: eplouribousse/apps/epl/forms.py:28
+#: eplouribousse/apps/epl/forms.py:27
 msgid "1995(4) par ex."
 msgstr "1995(4) e.g."
 
-#: eplouribousse/apps/epl/forms.py:29
+#: eplouribousse/apps/epl/forms.py:28
 msgid ""
 "éléments dégradé (un volume relié dégradé peut être remplacé par les "
 "fascicules correspondants en bon état)"
-msgstr "degraded elements (a degraded bound volume can be replaced by the "
+msgstr ""
+"degraded elements (a degraded bound volume can be replaced by the "
 "corresponding booklets in good condition)"
 
-#: eplouribousse/apps/epl/forms.py:59
+#: eplouribousse/apps/epl/forms.py:58
 msgid "Bibliothèques impliquées (opérateur 'ou')"
 msgstr "Involved libraries (or operator)"
 
-#: eplouribousse/apps/epl/forms.py:60
+#: eplouribousse/apps/epl/forms.py:59
 msgid "Phase d'instruction"
 msgstr "Instruction phase"
 
@@ -819,7 +820,7 @@ msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Rows involving your libary are highlighted"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:37
-#: eplouribousse/apps/epl/views.py:1379
+#: eplouribousse/apps/epl/views.py:1385
 msgid "Collection mère"
 msgstr "Mother collection"
 
@@ -1404,16 +1405,16 @@ msgstr ""
 msgid "Vous n'avez pas coché !"
 msgstr "You did not check !"
 
-#: eplouribousse/apps/epl/views.py:835 eplouribousse/apps/epl/views.py:987
-#: eplouribousse/apps/epl/views.py:1238 eplouribousse/apps/epl/views.py:1381
+#: eplouribousse/apps/epl/views.py:839 eplouribousse/apps/epl/views.py:993
+#: eplouribousse/apps/epl/views.py:1244 eplouribousse/apps/epl/views.py:1387
 msgid "Autre bibliothèque impliquée"
 msgstr "Other taking part library"
 
-#: eplouribousse/apps/epl/views.py:1379
+#: eplouribousse/apps/epl/views.py:1385
 msgid "Collection non mère"
 msgstr "Non-mother collection"
 
-#: eplouribousse/apps/epl/views.py:1380
+#: eplouribousse/apps/epl/views.py:1386
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"
@@ -1538,6 +1539,12 @@ msgstr ""
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
+
+#~ msgid "Respectez l'ordre chronologique du champ 'Segment'"
+#~ msgstr "Arrange chronologically following field 'Segment'"
+
+#~ msgid "Suite ininterrompue chronologiquement"
+#~ msgstr "Continued chronologically"
 
 #~ msgid "Retour à la liste générale des positionnements"
 #~ msgstr "Back to general ranking list"
