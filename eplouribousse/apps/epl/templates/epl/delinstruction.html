@@ -22,18 +22,18 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ lib.name }} - {% trans "Suppression d'une ligne" %}</h2>
+      <h2>{{ library.name }} - {% trans "Suppression d'une ligne" %}</h2>
       <div id="content">
 
-        <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ ress.sid }}</a> / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }}</p>
-        <p>{% trans "Ordre de traitement" %} :
-            {% for elmt in liblist %}
-                {{ elmt.name }} |
-            {% endfor %}</p>
+        <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
+        <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
+      <p></p>
 
-      <p><i>{% trans "Les lignes en rouge ne peuvent plus être supprimées" %} :</i></p>
-
+        {% for elmt in librarylist %}
+            | {{ elmt.name }}
+        {% endfor %}
+      <p><i></i>{% trans "Les lignes en rouge ne peuvent plus être supprimées" %}</i></p>
       <table border="1">
 
          <thead>
@@ -50,8 +50,8 @@
 
          <tbody>
 
-           {% for elmt in instrlist %}
-              {% if elmt.name == lib.name and elmt.bound == expected %}
+           {% for elmt in instructions %}
+              {% if elmt.name == library.name and elmt.bound == expected %}
           <tr>
                <td><center><font color= #2ba121 >{{ elmt.line }}</font></center></td>
                <td><font color= #2ba121 >{{ elmt.name }}</font></td>
@@ -82,7 +82,7 @@
 
 
       <form method="post">{% csrf_token %}
-          <p>{% trans "Ligne à supprimer" %} : {{ f.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+          <p>{% trans "Ligne à supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
       </div>
       </form>

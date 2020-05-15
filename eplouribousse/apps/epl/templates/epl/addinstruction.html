@@ -25,15 +25,15 @@
       {% endif %}
       <p></p>
 
-      <h2>{{ lib.name }} - {% trans "Instruction" %} - {{ bd }}</h2>
+      <h2>{{ library.name }} - {% trans "Instruction" %} - {{ stage }}</h2>
       <div id="content">
 
-        <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ ress.sid }}</a> / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }}</p>
-        <p>{% trans "Ordre de traitement" %} :
-            {% for elmt in liblist %}
+        <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / {% trans "Ordre de traitement" %} :
+            {% for elmt in librarylist %}
                 {{ elmt.name }} |
-            {% endfor %}</p>
+            {% endfor %}
+
 
       <table border="1">
 
@@ -52,7 +52,7 @@
          <tbody>
 
            {% for elmt in instructions %}
-              {% if elmt.name == lib.name and elmt.bound == q and elmt.pk == pklastone %}
+              {% if elmt.name == library.name and elmt.bound == expected and elmt.pk == lastone %}
           <tr>
                <td><center><font color= #3364ff  >{{ elmt.line }}</font></center></td>
                <td><font color= #3364ff >{{ elmt.name }}</font></td>
@@ -80,7 +80,7 @@
 
       </table>
 
-      <p>{% trans "La dernière ligne validée est mise en évidence" %}.</p>
+      <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
       <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}.</p>
 
       <div id="menucontextuel">
@@ -107,17 +107,17 @@
 
 
           <tr>
-              <td><center>{{ f.line }}</center></td>
-              <td>{{ lib.name }}</td>
-              {% if q == "x" %}
+              <td><center>{{ form.line }}</center></td>
+              <td>{{ library.name }}</td>
+              {% if expected == "x" %}
               <td><center>x</center></td>
               {% else %}
               <td><center> </center></td>
               {% endif %}
-              <td>{{ f.oname }}</td>
-              <td>{{ f.descr }}</td>
-              <td>{{ f.exc }}</td>
-              <td>{{ f.degr }}</td>
+              <td>{{ form.oname }}</td>
+              <td>{{ form.descr }}</td>
+              <td>{{ form.exc }}</td>
+              <td>{{ form.degr }}</td>
 
           </tr>
 
@@ -132,7 +132,7 @@
 
         <div id="menucontextuel">
 
-        <p><button><b><a href="/end/{{ sid }}/{{ lib.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ lib.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
+        <p><button><b><a href="/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
         </div>
 
 
