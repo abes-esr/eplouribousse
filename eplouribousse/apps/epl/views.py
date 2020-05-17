@@ -82,6 +82,7 @@ def home(request):
 def about(request):
     version =epl_version
     date =date_version
+    host = str(request.get_host())
     return render(request, 'epl/about.html', locals())
 
 
