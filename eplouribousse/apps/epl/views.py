@@ -1,8 +1,8 @@
 epl_version ="Version 1.2.14 (Chrodechilde)"
 date_version ="May 17, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.3.14 beta (~Ultrogothe)"
-date_version ="May 17, 2020"
+# epl_version ="Version 1.3.14 beta (~Ultrogothe)"
+# date_version ="May 17, 2020"
 
 
 from django.shortcuts import render
