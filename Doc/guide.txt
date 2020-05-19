@@ -1,4 +1,4 @@
-Ce guide vous indique étape par étape comment préparer le terrain au test de l'application eplouribousse (en 4 étapes) puis comment tester celle-ci dans un environnemnt virtuel (Procédure pour les distributions Debian de Linux)
+Ce guide vous indique comment préparer le terrain au test de l'application eplouribousse puis comment tester celle-ci dans un environnemnt virtuel (Procédure pour les distributions Debian de Linux)
 
 NB : Les lignes de commande sont données à la suite de l'action à réaliser.
 
@@ -10,7 +10,7 @@ Ouvrez un terminal,
 
 $ python3
 
-Si tout va bien, vous devriez obtenir en retour quelque chose comme ça :
+Si tout va bien, vous devriez obtenir en retour quelque chose comme ça * :
 
 Python 3.5.2 (default, Apr 16 2020, 17:47:17)
 
@@ -22,6 +22,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Pour quitter l'invite de python, faites Ctrl-D
 
+(*) Sinon tournez-vous vers un informaticien qui vous l'installera proprement.
 ----------------
 
 # étape 2 : Créez l'environnement virtuel avec lequel vous allez pouvoir travailler sans risque de perturber le système alentour (nous appellerons cet environnement virtuel djangodev) :
@@ -34,7 +35,7 @@ $ sudo apt-get install python3-venv
 
 ----------------
 
-# étape 3 : Activer l'environnement virtuel et installez-y ce qu'il faut, Django 2.2.12 (LTS) et Reportlab :
+# étape 3 : Activer l'environnement virtuel et installez-y ce qu'il faut, Django 2.2.12 (c'est une version LTS) et Reportlab :
 
 $ workon djangodev
 
@@ -44,9 +45,10 @@ installez Django 2.2.12 (LTS) dans cet environnement (pip est inclus dans python
 
 $ pip install Django==2.2.12
 
-Vous pouvez vérifier que vous avez la version attendue de Django, la 2.2.12 (LTS) :
+Vous pouvez vérifier que vous avez la version attendue de Django, la 2.2.12 :
 
 $ python -m django --version
+ 
 
 Maintenant installez Reportlab (l'éditeur de rapports soignés au format pdf) :
 

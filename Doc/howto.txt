@@ -10,7 +10,7 @@ Open a terminal,
 
 $ python3
 
-If all is ok, you should see something like that :
+If all is ok, you should see something like that * :
 
 Python 3.5.2 (default, Apr 16 2020, 17:47:17)
 
@@ -22,6 +22,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 exit with Ctrl-D
 
+(*) If not, contact a computer scientist.
 ----------------
 
 # step 2 : Create your virtual environment to work with without any risk to go wrong with your system (let's name this virtual environment djangodev) :
@@ -34,7 +35,7 @@ $ sudo apt-get install python3-venv
 
 ----------------
 
-# step 3 : Activate your virtual environment, install there what is required i.e. Django 2.2.12 (LTS) and Reportlab :
+# step 3 : Activate your virtual environment, install there what is required i.e. Django 2.2.12 (it's a LTS version) and Reportlab :
 
 $ workon djangodev
 
