@@ -1435,6 +1435,9 @@ def xinstrlist(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
+    if lid =="999999999":
+        return notintime(request, "-?-", lid)
+
     global idfeature, idview, dil, dilx
     idfeature, idview, dil, dilx =3, 1, lid, xlid
 
@@ -1455,6 +1458,7 @@ def xinstrlist(request, lid, xlid, sort):
     for e in lprov:
         if ItemRecord.objects.filter(lid =xlid).exclude(rank =0):
             l.append(e)
+
     size = len(l)
 
     return render(request, 'epl/xto_instr_list.html', locals())
