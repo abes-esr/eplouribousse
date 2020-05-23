@@ -29,14 +29,23 @@
       <p></p>
       <p>
         <b><font color= #a7a7a7 >*</font></b> : {% trans "Votre collection est la collection mère" %}
-         (<a href="/edmotherlist/{{ lid }}">{% trans "Restreindre la liste à ces cas" %}</a> /
-         <a href="/ednotmotherlist/{{ lid }}">{% trans "Restreindre aux autres cas" %}</a> /
+         (<a href="/edmotherlist/{{ lid }}/title">{% trans "Restreindre la liste à ces cas" %}</a> /
+         <a href="/ednotmotherlist/{{ lid }}/title">{% trans "Restreindre aux autres cas" %}</a> /
          <a href="/edfilter/{{ lid }}">{% trans "Filtrer plus finement" %}</a>)
        </p>
 
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
     <p>{% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+
+        {% if sort == 'title' %}
+        <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/edlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+         / <a href="/edlist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+         {% elif sort == 'cn' %}
+         <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/edlist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/edlist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+          {% elif sort == 'sid' %}
+          <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/edlist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/edlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+        {% endif %}
 
       <ul>
 
@@ -62,7 +71,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instruction" %}</a></p>
         </div>
 
         <div id="footer">
