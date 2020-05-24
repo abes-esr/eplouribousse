@@ -1,8 +1,8 @@
 epl_version ="Version 1.4.0 (Ingonde)"
 date_version ="May 24, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.5.0 beta (~Chunsine)"
-# date_version ="May 24, 2020"
+epl_version ="Version 1.5.0 beta (~Chunsine)"
+date_version ="May 24, 2020"
 
 
 from django.shortcuts import render
