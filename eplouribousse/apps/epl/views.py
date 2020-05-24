@@ -1,8 +1,8 @@
-epl_version ="Version 1.4.0 (Ingonde)"
+epl_version ="Version 1.4.1 (Ingonde)"
 date_version ="May 24, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.5.0 beta (~Chunsine)"
-date_version ="May 24, 2020"
+# epl_version ="Version 1.5.1 beta (~Chunsine)"
+# date_version ="May 24, 2020"
 
 
 from django.shortcuts import render
@@ -365,17 +365,19 @@ def takerank(request, sid, lid):
             # Other status modification if all libraries have taken rank :
             # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
             # ordering by pk for identical ranks upper than 1.
-            if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 \
-            and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-                p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
-                if p.status !=1:
-                    p.status =1
-                    p.save()
-            else: # (When modifying a rank)
-                for elmt in ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99):
+
+            if len(ItemRecord.objects.filter(sid =sid, status =1)): #Since it's possible when modifying
+                for elmt in ItemRecord.objects.filter(sid =sid).exclude(rank =99):
                     if elmt.status !=0:
                         elmt.status =0
                         elmt.save()
+
+            if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 \
+            and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
+                p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
+                p.status =1
+                p.save()
+
         else:
             return notintime(request, sid, lid)
 
