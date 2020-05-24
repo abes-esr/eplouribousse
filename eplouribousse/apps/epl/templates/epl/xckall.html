@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -42,7 +42,7 @@
       <p></p>
 
             <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-            <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+            <!-- <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li> -->
             <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/999999999">{{ elmt.sid }}</a></li>
 
       {% endfor %}

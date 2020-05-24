@@ -32,6 +32,15 @@
 
     <p>{% trans "Pour modifier le positionnement, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
+        {% if sort == 'title' %}
+        <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/modifrklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+         / <a href="/modifrklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+         {% elif sort == 'cn' %}
+         <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/modifrklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/modifrklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+          {% elif sort == 'sid' %}
+          <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/modifrklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/modifrklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+        {% endif %}
+
     {% if lastrked != None %}
     <div id="highlight">
     <p><b>{% trans "Dernier positionnement enregistré" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
@@ -58,7 +67,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
         </div>
 
         <div id="footer">

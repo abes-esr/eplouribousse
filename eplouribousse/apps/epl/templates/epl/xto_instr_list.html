@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
     </head>
 
@@ -33,6 +33,15 @@
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
     <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+
+        {% if sort == 'title' %}
+        <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/instrlist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
+         / <a href="/instrlist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+         {% elif sort == 'cn' %}
+         <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/instrlist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/instrlist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+          {% elif sort == 'sid' %}
+          <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/instrlist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/instrlist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)</p>
+        {% endif %}
 
       <ul>
             <HR>
@@ -66,7 +75,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
         </div>
 
         <div id="footer">

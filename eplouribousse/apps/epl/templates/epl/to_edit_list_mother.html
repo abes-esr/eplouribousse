@@ -32,6 +32,15 @@
 
     <p>{% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
+        {% if sort == 'title' %}
+        <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/edmotherlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+         / <a href="/edmotherlist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+         {% elif sort == 'cn' %}
+         <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/edmotherlist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/edmotherlist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+          {% elif sort == 'sid' %}
+          <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/edmotherlist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/edmotherlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+        {% endif %}
+
       <ul>
 
        {% for elmt in resslist %}
@@ -46,7 +55,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instruction" %}</a></p>
         </div>
 
         <div id="footer">

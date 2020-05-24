@@ -32,6 +32,17 @@
       <p></p>
       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
       <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+
+
+          {% if sort == 'title' %}
+          <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/bdnot1/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+           / <a href="/bdnot1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+           {% elif sort == 'cn' %}
+           <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/bdnot1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/bdnot1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+            {% elif sort == 'sid' %}
+            <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/bdnot1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/bdnot1/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+          {% endif %}
+
       <ul>
 
       {% for elmt in l %}
@@ -51,11 +62,11 @@
         </div>
         <div id="menucontextuel">
 
-        <p><b>{% trans "Menu [instructions]" %} : </b><a href="/allinstr/{{ lid }}">{% trans "tout" %}</a> - <a href="/bd1/{{ lid }}">{% trans "reliés rang 1" %}</a> - <a href="/notbd1/{{ lid }}">{% trans "non reliés rang 1" %}</a> - <a href="/notbdnot1/{{ lid }}">{% trans "non reliés autre rang" %}</a></p>
+        <p><b>{% trans "Menu [instructions]" %} : </b><a href="/allinstr/{{ lid }}/title">{% trans "tout" %}</a> - <a href="/bd1/{{ lid }}/title">{% trans "reliés rang 1" %}</a> - <a href="/notbd1/{{ lid }}/title">{% trans "non reliés rang 1" %}</a> - <a href="/notbdnot1/{{ lid }}/title">{% trans "non reliés autre rang" %}</a></p>
 
         <div id="menugeneral">
 
-        <p><b>{% trans "Menu général" %} : </b><a href="/rklist/{{ lid }}">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+        <p><b>{% trans "Menu général" %} : </b><a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
 
 
         <div id="footer">

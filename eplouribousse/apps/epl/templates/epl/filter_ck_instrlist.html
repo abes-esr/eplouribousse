@@ -9,7 +9,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
 
     </head>
@@ -32,7 +32,7 @@
               {% csrf_token %}
 
               <ul>{% trans "Phase" %} {{ form.phase }}</ul>
-              <ul>{% trans "Autre collection impliquée" %} {% trans "(C'est l'opérateur 'ou' qui est appliqué en cas de choix multiple)" %} {{ form.name }}</ul>
+              <ul>{% trans "Collection impliquée" %} {% trans "(C'est l'opérateur 'ou' qui est appliqué en cas de choix multiple)" %} {{ form.name }}</ul>
 
               <input type="submit" value="{% trans "Valider" %}">
 

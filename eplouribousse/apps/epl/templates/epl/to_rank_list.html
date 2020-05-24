@@ -25,7 +25,6 @@
       <p></p>
       <h2>{{ libname }} - {% trans "collections en attente de positionnement" %}</h2>
         <div id="content">
-
       <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
       {% if nlib > 2 %}
       <p><a href="/rkfilter/{{ lid }}">{% trans "Restreindre la liste aux doublons avec une autre bibliothèque" %}</a></p>
@@ -35,7 +34,16 @@
 
     <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
-    <p><a href="/modifrklist/{{ lid }}">{% trans "Modifier un précédent positionnement" %}</a></p>
+    <p><a href="/modifrklist/{{ lid }}/title">{% trans "Modifier un précédent positionnement" %}</a></p>
+
+    {% if sort == 'title' %}
+    <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+     / <a href="/rklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+     {% elif sort == 'cn' %}
+     <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/rklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+      {% elif sort == 'sid' %}
+      <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/rklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+    {% endif %}
 
     {% if lastrked != None %}
       {% if lastrked.lid == lid %}
@@ -63,7 +71,7 @@
       </ul>
         </div>
         <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}">{% trans "Edition" %}</a></p>
+      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
         </div>
 
         <div id="footer">
