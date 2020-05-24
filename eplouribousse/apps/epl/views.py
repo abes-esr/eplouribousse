@@ -1,8 +1,8 @@
-epl_version ="Version 1.2.15 (Chrodechilde)"
-date_version ="May 19, 2020"
+epl_version ="Version 1.4.0 (Ingonde)"
+date_version ="May 24, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.3.15 beta (~Ultrogothe)"
-date_version ="May 19, 2020"
+epl_version ="Version 1.5.0 beta (~Chunsine)"
+date_version ="May 24, 2020"
 
 
 from django.shortcuts import render
@@ -340,7 +340,7 @@ def takerank(request, sid, lid):
         return home(request)
 
     #Control (takerank only if still possible ; status still ==0 for all attached libraries ;
-    #status ==1 and no instruction yet ; lid not "999999999")
+    #or status ==1 but no instruction yet ; lid not "999999999")
 
     if len(list(ItemRecord.objects.filter(sid =sid).exclude(status =0).exclude(status =1))):
         return notintime(request, sid, lid)
@@ -365,11 +365,17 @@ def takerank(request, sid, lid):
             # Other status modification if all libraries have taken rank :
             # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
             # ordering by pk for identical ranks upper than 1.
-            if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
+            if len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and len(ItemRecord.objects.filter(sid =sid, rank =1)) ==1 \
+            and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
                 p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
                 if p.status !=1:
                     p.status =1
                     p.save()
+            else: # (When modifying a rank)
+                for elmt in ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99):
+                    if elmt.status !=0:
+                        elmt.status =0
+                        elmt.save()
         else:
             return notintime(request, sid, lid)
 
