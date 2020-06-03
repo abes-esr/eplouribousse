@@ -10,6 +10,8 @@ urlpatterns = [
     path('disconnect', views.logout_view, name='disconnection'),
     path('timeout/<str:sid>/<str:lid>', views.notintime, name='not in time'),
     path('dashboard', views.indicators, name='indicators'),
+    path('search', views.search, name='searching a serial'),
+
 
     path('rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),
 
