@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-23 23:01+0200\n"
+"POT-Creation-Date: 2020-06-08 10:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: eplouribousse/apps/epl/forms.py:12
-#: eplouribousse/apps/epl/templates/epl/ranking.html:65
+#: eplouribousse/apps/epl/templates/epl/ranking.html:83
 msgid ""
 "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre "
 "collection ou d'autres raisons ..."
@@ -140,6 +140,7 @@ msgstr "Not bound"
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:20
 #: eplouribousse/apps/epl/templates/epl/notintime.html:19
 #: eplouribousse/apps/epl/templates/epl/ranking.html:19
+#: eplouribousse/apps/epl/templates/epl/search.html:21
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:19
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:19
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:19
@@ -160,7 +161,7 @@ msgstr "Sign Out"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:28
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:70
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:82
+#: eplouribousse/apps/epl/templates/epl/ranking.html:101
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:74
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:58
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:58
@@ -168,6 +169,7 @@ msgstr "Sign Out"
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:58
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:58
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:75
+#: eplouribousse/apps/epl/views.py:388 eplouribousse/apps/epl/views.py:399
 msgid "Instruction"
 msgstr "Instruction"
 
@@ -179,12 +181,12 @@ msgstr "Instruction"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:28
 #: eplouribousse/apps/epl/templates/epl/edition.html:31
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:29
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:81
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:85
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:97
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:101
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:107
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:111
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:82
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:86
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:98
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:102
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:108
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:112
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:53
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:52
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:52
@@ -227,12 +229,12 @@ msgstr "Title"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:29
 #: eplouribousse/apps/epl/templates/epl/edition.html:32
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:30
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:83
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:87
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:99
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:103
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:109
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:113
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:84
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:88
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:100
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:104
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:110
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:114
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:55
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:54
@@ -361,7 +363,8 @@ msgstr "underneath row n° ?"
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:35
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:35
 #: eplouribousse/apps/epl/templates/epl/home.html:40
-#: eplouribousse/apps/epl/templates/epl/ranking.html:68
+#: eplouribousse/apps/epl/templates/epl/ranking.html:87
+#: eplouribousse/apps/epl/templates/epl/search.html:32
 msgid "Valider"
 msgstr "ok"
 
@@ -396,7 +399,7 @@ msgstr "Resume later"
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:45
 #: eplouribousse/apps/epl/templates/epl/home.html:29
 #: eplouribousse/apps/epl/templates/epl/indicators.html:162
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:133
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:134
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:78
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:73
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:71
@@ -404,7 +407,8 @@ msgstr "Resume later"
 #: eplouribousse/apps/epl/templates/epl/language.html:52
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:74
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:87
+#: eplouribousse/apps/epl/templates/epl/ranking.html:106
+#: eplouribousse/apps/epl/templates/epl/search.html:136
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:78
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:62
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:62
@@ -438,7 +442,7 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:45
 #: eplouribousse/apps/epl/templates/epl/home.html:46
 #: eplouribousse/apps/epl/templates/epl/indicators.html:162
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:133
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:134
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:78
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:73
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:71
@@ -446,7 +450,8 @@ msgstr "Home"
 #: eplouribousse/apps/epl/templates/epl/language.html:52
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:74
 #: eplouribousse/apps/epl/templates/epl/notintime.html:50
-#: eplouribousse/apps/epl/templates/epl/ranking.html:87
+#: eplouribousse/apps/epl/templates/epl/ranking.html:106
+#: eplouribousse/apps/epl/templates/epl/search.html:136
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:78
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:62
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:62
@@ -480,7 +485,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:49
 #: eplouribousse/apps/epl/templates/epl/home.html:51
 #: eplouribousse/apps/epl/templates/epl/indicators.html:166
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:137
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:138
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:82
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:77
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:75
@@ -488,7 +493,8 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/language.html:58
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:78
 #: eplouribousse/apps/epl/templates/epl/notintime.html:54
-#: eplouribousse/apps/epl/templates/epl/ranking.html:91
+#: eplouribousse/apps/epl/templates/epl/ranking.html:110
+#: eplouribousse/apps/epl/templates/epl/search.html:140
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:82
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:66
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:66
@@ -511,7 +517,7 @@ msgstr "About"
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:41
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:41
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:128
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:129
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:73
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:67
@@ -577,7 +583,7 @@ msgstr "Restricted list to arbitration cases with another involved library"
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:39
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:32
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:32
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:48
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:49
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:34
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:33
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:32
@@ -622,11 +628,11 @@ msgstr "Click on [Serial id] link to modify your rank"
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:37
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:40
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:42
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:56
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:63
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:66
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:68
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:55
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:57
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:67
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:39
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:44
@@ -687,11 +693,11 @@ msgstr "Sorted by"
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:37
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:40
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:42
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:56
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:63
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:66
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:68
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:55
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:57
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:67
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:39
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:44
@@ -752,11 +758,11 @@ msgstr "title"
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:37
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:40
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:42
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:56
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:63
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:66
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:68
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:55
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:57
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:67
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:39
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:44
@@ -814,8 +820,8 @@ msgstr "sort by"
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:43
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:37
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:42
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:63
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:68
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:39
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:44
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:38
@@ -860,11 +866,11 @@ msgstr "call number and title"
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:38
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:40
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:42
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:54
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:56
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:64
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:66
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:68
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:55
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:57
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:65
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:67
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:40
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:44
@@ -880,6 +886,9 @@ msgstr "call number and title"
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:37
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:39
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:41
+#: eplouribousse/apps/epl/templates/epl/search.html:31
+#: eplouribousse/apps/epl/templates/epl/search.html:46
+#: eplouribousse/apps/epl/templates/epl/search.html:57
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:43
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:45
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:47
@@ -913,7 +922,7 @@ msgstr "call number and title"
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:42
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:45
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:47
-#: eplouribousse/apps/epl/views_pdf.py:60
+#: eplouribousse/apps/epl/views.py:342 eplouribousse/apps/epl/views_pdf.py:60
 #: eplouribousse/apps/epl/views_pdf.py:193
 #: eplouribousse/apps/epl/views_pdf.py:329
 #: eplouribousse/apps/epl/views_pdf.py:465
@@ -925,7 +934,7 @@ msgstr "Serial ID"
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:47
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:41
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:40
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:66
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:67
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:42
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:41
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:40
@@ -977,8 +986,8 @@ msgstr "rank"
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:51
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:49
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:47
-#: eplouribousse/apps/epl/templates/epl/ranking.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:54
+#: eplouribousse/apps/epl/templates/epl/ranking.html:51
+#: eplouribousse/apps/epl/templates/epl/ranking.html:68
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:52
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:51
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:49
@@ -1003,19 +1012,20 @@ msgstr "Modify"
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:75
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:62
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:60
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:82
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:86
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:98
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:102
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:108
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:112
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:83
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:87
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:99
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:103
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:109
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:113
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:54
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:53
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:53
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:51
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:60
-#: eplouribousse/apps/epl/templates/epl/ranking.html:42
-#: eplouribousse/apps/epl/templates/epl/ranking.html:50
+#: eplouribousse/apps/epl/templates/epl/ranking.html:43
+#: eplouribousse/apps/epl/templates/epl/ranking.html:60
+#: eplouribousse/apps/epl/templates/epl/search.html:60
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:58
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:64
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:50
@@ -1063,7 +1073,7 @@ msgstr "Menu"
 #: eplouribousse/apps/epl/templates/epl/edition.html:87
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:41
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:128
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:129
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:73
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:67
@@ -1078,12 +1088,14 @@ msgstr "Menu"
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:58
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:58
 #: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:78
+#: eplouribousse/apps/epl/views.py:455
 msgid "Positionnement"
 msgstr "Ranking"
 
 #: eplouribousse/apps/epl/templates/epl/arbitration.html:86
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:72
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:69
+#: eplouribousse/apps/epl/templates/epl/checker.html:35
 #: eplouribousse/apps/epl/templates/epl/edition.html:87
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:41
 #: eplouribousse/apps/epl/templates/epl/filter_edlist.html:43
@@ -1103,14 +1115,14 @@ msgstr "Instructions"
 #: eplouribousse/apps/epl/templates/epl/filter_arblist.html:41
 #: eplouribousse/apps/epl/templates/epl/filter_instrlist.html:41
 #: eplouribousse/apps/epl/templates/epl/filter_rklist.html:41
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:128
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:129
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:73
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:67
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:64
 #: eplouribousse/apps/epl/templates/epl/modifrklist.html:70
 #: eplouribousse/apps/epl/templates/epl/notintime.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:82
+#: eplouribousse/apps/epl/templates/epl/ranking.html:101
 #: eplouribousse/apps/epl/templates/epl/to_rank_list.html:74
 #: eplouribousse/apps/epl/templates/epl/x0arbitration.html:73
 #: eplouribousse/apps/epl/templates/epl/x1arbitration.html:71
@@ -1141,12 +1153,14 @@ msgid "Projet"
 msgstr "Project"
 
 #: eplouribousse/apps/epl/templates/epl/checker.html:35
-msgid ""
-"Seule la fonctionnalité *instruction* est disponible pour le contrôleur "
-"(Reculez d'une page dans votre navigateur et choisissez *instruction*)"
-msgstr ""
-"Only the * instruction * feature is available for the checker (Go back one "
-"page in your browser and choose * instruction *)"
+msgid "Intervention possible pour le contrôleur"
+msgstr "Possible action for checker"
+
+#: eplouribousse/apps/epl/templates/epl/checker.html:41
+#: eplouribousse/apps/epl/templates/epl/disconnect.html:46
+#: eplouribousse/apps/epl/templates/epl/home.html:46
+msgid "Recherche (bêta)"
+msgstr "Search (beta)"
 
 #: eplouribousse/apps/epl/templates/epl/checker.html:41
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:46
@@ -1205,7 +1219,7 @@ msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Rows involving your libary are highlighted"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:37
-#: eplouribousse/apps/epl/views.py:1586
+#: eplouribousse/apps/epl/views.py:1729
 msgid "Collection mère"
 msgstr "Mother collection"
 
@@ -1218,7 +1232,7 @@ msgid "Export pdf"
 msgstr "pdf export"
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:83
-#: eplouribousse/apps/epl/templates/epl/ranking.html:77
+#: eplouribousse/apps/epl/templates/epl/ranking.html:96
 msgid "Retour à la liste"
 msgstr "Back to the list"
 
@@ -1231,7 +1245,7 @@ msgstr "Back to the list"
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:69
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:67
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbdnot1.html:64
-#: eplouribousse/apps/epl/templates/epl/ranking.html:82
+#: eplouribousse/apps/epl/templates/epl/ranking.html:101
 msgid "Menu général"
 msgstr "Main menu"
 
@@ -1417,29 +1431,29 @@ msgid "toutes formes, tous rangs"
 msgstr "all shapes, all ranks"
 
 #: eplouribousse/apps/epl/templates/epl/instrtodo.html:32
-msgid "Restreindre la liste aux instructions avec une autre bibliothèque"
-msgstr "Restricted list to instructions with another involved library"
-
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:37
 #: eplouribousse/apps/epl/templates/epl/xckbd.html:26
 msgid "Contrôle à mi-chemin"
 msgstr "Middleway control"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:39
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:34
 #: eplouribousse/apps/epl/templates/epl/xcknbd.html:26
 msgid "Contrôle final"
 msgstr "Final control"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:40
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:35
 msgid "Filtrer la liste"
 msgstr "Filter the list"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:43
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:40
+msgid "Restreindre la liste aux instructions avec une autre bibliothèque"
+msgstr "Restricted list to instructions with another involved library"
+
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:44
 #: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:32
 msgid "Phase d'instruction courante, 1 = reliés, 2 = non reliés"
 msgstr "Current phase, 1 for bound, 2 for not bound"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:43
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:44
 #: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:32
 #: eplouribousse/apps/epl/views_pdf.py:78
 #: eplouribousse/apps/epl/views_pdf.py:211
@@ -1450,11 +1464,11 @@ msgstr "Current phase, 1 for bound, 2 for not bound"
 msgid "collection mère"
 msgstr "mother collection"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:44
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:45
 msgid "liste"
 msgstr "filter"
 
-#: eplouribousse/apps/epl/templates/epl/instrtodo.html:49
+#: eplouribousse/apps/epl/templates/epl/instrtodo.html:50
 #: eplouribousse/apps/epl/templates/epl/instrtodobd1.html:35
 #: eplouribousse/apps/epl/templates/epl/instrtodobdnot1.html:34
 #: eplouribousse/apps/epl/templates/epl/instrtodonotbd1.html:33
@@ -1601,38 +1615,134 @@ msgid ""
 "correspond"
 msgstr "Click on ID to know which library it is"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:42
-#: eplouribousse/apps/epl/templates/epl/ranking.html:50
-msgid "Identifiant de la bibliothèque"
-msgstr "Library ID"
-
-#: eplouribousse/apps/epl/templates/epl/ranking.html:43
-#: eplouribousse/apps/epl/templates/epl/ranking.html:51
+#: eplouribousse/apps/epl/templates/epl/ranking.html:44
+#: eplouribousse/apps/epl/templates/epl/ranking.html:61
 msgid "Etat de collection"
 msgstr "Hold statement"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:44
-#: eplouribousse/apps/epl/templates/epl/ranking.html:52
+#: eplouribousse/apps/epl/templates/epl/ranking.html:46
+#: eplouribousse/apps/epl/templates/epl/ranking.html:63
 msgid "Lacunes"
 msgstr "Gaps"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:45
-#: eplouribousse/apps/epl/templates/epl/ranking.html:53
+#: eplouribousse/apps/epl/templates/epl/ranking.html:49
+#: eplouribousse/apps/epl/templates/epl/ranking.html:66
 msgid "Rang courant"
 msgstr "Current rank"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:46
-#: eplouribousse/apps/epl/templates/epl/ranking.html:54
+#: eplouribousse/apps/epl/templates/epl/ranking.html:53
+#: eplouribousse/apps/epl/templates/epl/ranking.html:70
 msgid "Commentaire"
 msgstr "Comment"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:63
+#: eplouribousse/apps/epl/templates/epl/ranking.html:81
 msgid "Le cas échéant, motif d'exclusion"
 msgstr "If so, select a reason"
 
-#: eplouribousse/apps/epl/templates/epl/ranking.html:64
+#: eplouribousse/apps/epl/templates/epl/ranking.html:82
 msgid "Sinon, rang de votre collection"
 msgstr "If no, rank clamed for your collection"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:28
+msgid "Recherche unitaire"
+msgstr "Unit search"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:28
+msgid "fonctionnalité bêta"
+msgstr "beta feature"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:31
+#: eplouribousse/apps/epl/views.py:343
+msgid "Votre bibliothèque"
+msgstr "Your library"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:31
+msgid "Réinitialiser"
+msgstr "Set to zero"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:38
+msgid "Ce ppn est absent du projet"
+msgstr "No such SID in the project"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:38
+msgid "Vérifier dans le Sudoc"
+msgstr "Verify in Sudoc"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:39
+msgid "(Si cette vérification n'aboutit pas, vérifiez la saisie du ppn)"
+msgstr "(If it doesn't work, verify the input)"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:44
+#: eplouribousse/apps/epl/templates/epl/search.html:55
+msgid "Données bibliographiques"
+msgstr "Bibliographic data"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:46
+#: eplouribousse/apps/epl/templates/epl/search.html:57
+#: eplouribousse/apps/epl/views_pdf.py:60
+#: eplouribousse/apps/epl/views_pdf.py:193
+#: eplouribousse/apps/epl/views_pdf.py:329
+#: eplouribousse/apps/epl/views_pdf.py:465
+#: eplouribousse/apps/epl/views_pdf.py:601
+#: eplouribousse/apps/epl/views_pdf.py:737
+msgid "issn"
+msgstr "issn"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:46
+#: eplouribousse/apps/epl/templates/epl/search.html:57
+msgid "Période de publication"
+msgstr "Publication history"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:48
+msgid "Pas d'autre collection que la vôtre"
+msgstr "No other collection than yours"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:50
+msgid "Une seule bibliothèque rattachée"
+msgstr "Only one library atteched"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:59
+msgid "Données de rattachement"
+msgstr "Item data"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:61
+msgid "état de collection"
+msgstr "Hold statement"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:63
+msgid "lacunes"
+msgstr "gaps"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:76
+msgid "Avancement"
+msgstr "Progress"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:82
+msgid "Nombre de rattachements"
+msgstr "Number of attachments"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:88
+msgid "Statut"
+msgstr "Status"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:89
+msgid "Votre bibliothèque n'est pas rattachée"
+msgstr "Your library isn't attached"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:97
+#: eplouribousse/apps/epl/templates/epl/search.html:100
+#: eplouribousse/apps/epl/templates/epl/search.html:105
+#: eplouribousse/apps/epl/templates/epl/search.html:108
+msgid "Positionnement pour"
+msgstr "Ranking for"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:117
+msgid "Action attendue"
+msgstr "Wished action"
+
+#: eplouribousse/apps/epl/templates/epl/search.html:124
+msgid "Action encore possible"
+msgstr "Still possible action"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:28
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:29
@@ -1728,25 +1838,112 @@ msgstr "collections to instruct"
 msgid "Authentification"
 msgstr "Login"
 
-#: eplouribousse/apps/epl/views.py:463 eplouribousse/apps/epl/views.py:565
-#: eplouribousse/apps/epl/views.py:666
+#: eplouribousse/apps/epl/views.py:375
+msgid "Une anomalie a été constatée au cours de l'instruction de la résultante"
+msgstr "An anomaly has been noted during instruction"
+
+#: eplouribousse/apps/epl/views.py:377 eplouribousse/apps/epl/views.py:427
+msgid "Instruction achevée"
+msgstr "Instruction done"
+
+#: eplouribousse/apps/epl/views.py:379
+msgid "Edition de la fiche de résultante"
+msgstr "Sheet edition"
+
+#: eplouribousse/apps/epl/views.py:383 eplouribousse/apps/epl/views.py:435
+#: eplouribousse/apps/epl/views.py:438
+msgid "Instruction des éléments non reliés de la collection"
+msgstr "Not bound shape instruction is underway"
+
+#: eplouribousse/apps/epl/views.py:385
+msgid "En attente de validation finale par le contrôleur"
+msgstr "Waiting for final validation by the checker"
+
+#: eplouribousse/apps/epl/views.py:387
+msgid "Instruction des éléments non reliés de votre collection"
+msgstr "Not bound shape instruction is underway in your library"
+
+#: eplouribousse/apps/epl/views.py:392 eplouribousse/apps/epl/views.py:405
+#: eplouribousse/apps/epl/views.py:445 eplouribousse/apps/epl/views.py:448
+msgid "Instruction des éléments reliés de la collection"
+msgstr "bound shape instruction is underway"
+
+#: eplouribousse/apps/epl/views.py:395
+msgid "En attente de validation intermédiaire par le contrôleur"
+msgstr "Waiting for intermediate validation by the checker"
+
+#: eplouribousse/apps/epl/views.py:398
+msgid "Instruction des éléments reliés de votre collection"
+msgstr "Bound shape instruction is underway in your library"
+
+#: eplouribousse/apps/epl/views.py:401 eplouribousse/apps/epl/views.py:411
+#: eplouribousse/apps/epl/views.py:420 eplouribousse/apps/epl/views.py:423
+msgid "Modification du rang de votre collection"
+msgstr "Modify rank for your collection"
+
+#: eplouribousse/apps/epl/views.py:410 eplouribousse/apps/epl/views.py:451
+msgid "Concurrence rang 1"
+msgstr "Competition on rank 1"
+
+#: eplouribousse/apps/epl/views.py:413 eplouribousse/apps/epl/views.py:453
+msgid "Ressource non candidate du fait d'exclusion"
+msgstr "No more candidate for exclusion reason"
+
+#: eplouribousse/apps/epl/views.py:416
+msgid "Vous devez positionnez votre collection"
+msgstr "You must rank your collection"
+
+#: eplouribousse/apps/epl/views.py:417
+msgid "Positionnement de votre collection"
+msgstr "Rank your collection"
+
+#: eplouribousse/apps/epl/views.py:419
+msgid "Votre collection est déjà positionnée ; modification encore possible"
+msgstr "Your collection has been ranked, you may still modify"
+
+#: eplouribousse/apps/epl/views.py:422 eplouribousse/apps/epl/views.py:457
+msgid "Absence de rang 1"
+msgstr "No rank 1"
+
+#: eplouribousse/apps/epl/views.py:428
+msgid "Edition des résultantes par bibliothèque"
+msgstr "Edition for each library"
+
+#: eplouribousse/apps/epl/views.py:431
+msgid "Validation finale"
+msgstr "Final validation"
+
+#: eplouribousse/apps/epl/views.py:432
+msgid "Vérification finale"
+msgstr "Final verification"
+
+#: eplouribousse/apps/epl/views.py:441
+msgid "Validation intermédiaire"
+msgstr "Intremediate validation"
+
+#: eplouribousse/apps/epl/views.py:442
+msgid "Vérification intermédiaire"
+msgstr "Intermediate verification"
+
+#: eplouribousse/apps/epl/views.py:602 eplouribousse/apps/epl/views.py:704
+#: eplouribousse/apps/epl/views.py:805
 msgid "éléments reliés"
 msgstr "bound elements"
 
-#: eplouribousse/apps/epl/views.py:465 eplouribousse/apps/epl/views.py:569
-#: eplouribousse/apps/epl/views.py:670
+#: eplouribousse/apps/epl/views.py:604 eplouribousse/apps/epl/views.py:708
+#: eplouribousse/apps/epl/views.py:809
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
-#: eplouribousse/apps/epl/views.py:489
+#: eplouribousse/apps/epl/views.py:628
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:573 eplouribousse/apps/epl/views.py:674
+#: eplouribousse/apps/epl/views.py:712 eplouribousse/apps/epl/views.py:813
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:584
+#: eplouribousse/apps/epl/views.py:723
 msgid ""
 " <=== Vous ne pouvez supprimer une instruction que pour votre collection et "
 "pour la forme courante "
@@ -1754,15 +1951,15 @@ msgstr ""
 " <=== You may cancel a line only for your collection and for the current "
 "form "
 
-#: eplouribousse/apps/epl/views.py:675
+#: eplouribousse/apps/epl/views.py:814
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:724 eplouribousse/apps/epl/views.py:799
+#: eplouribousse/apps/epl/views.py:863 eplouribousse/apps/epl/views.py:938
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:747
+#: eplouribousse/apps/epl/views.py:886
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -1771,20 +1968,20 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:810
+#: eplouribousse/apps/epl/views.py:949
 msgid "Vous n'avez pas coché !"
 msgstr "You did not check !"
 
-#: eplouribousse/apps/epl/views.py:908 eplouribousse/apps/epl/views.py:1095
-#: eplouribousse/apps/epl/views.py:1423 eplouribousse/apps/epl/views.py:1588
+#: eplouribousse/apps/epl/views.py:1047 eplouribousse/apps/epl/views.py:1234
+#: eplouribousse/apps/epl/views.py:1562 eplouribousse/apps/epl/views.py:1731
 msgid "Autre bibliothèque impliquée"
 msgstr "Other taking part library"
 
-#: eplouribousse/apps/epl/views.py:1586
+#: eplouribousse/apps/epl/views.py:1729
 msgid "Collection non mère"
 msgstr "Non-mother collection"
 
-#: eplouribousse/apps/epl/views.py:1587
+#: eplouribousse/apps/epl/views.py:1730
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"
@@ -1798,15 +1995,6 @@ msgstr "Collection's rank for the above library"
 #: eplouribousse/apps/epl/views_pdf.py:722
 msgid "Collection"
 msgstr "collection"
-
-#: eplouribousse/apps/epl/views_pdf.py:60
-#: eplouribousse/apps/epl/views_pdf.py:193
-#: eplouribousse/apps/epl/views_pdf.py:329
-#: eplouribousse/apps/epl/views_pdf.py:465
-#: eplouribousse/apps/epl/views_pdf.py:601
-#: eplouribousse/apps/epl/views_pdf.py:737
-msgid "issn"
-msgstr "issn"
 
 #: eplouribousse/apps/epl/views_pdf.py:60
 #: eplouribousse/apps/epl/views_pdf.py:193
@@ -1891,6 +2079,13 @@ msgstr ""
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
+
+#~ msgid ""
+#~ "Seule la fonctionnalité *instruction* est disponible pour le contrôleur "
+#~ "(Reculez d'une page dans votre navigateur et choisissez *instruction*)"
+#~ msgstr ""
+#~ "Only the * instruction * feature is available for the checker (Go back "
+#~ "one page in your browser and choose * instruction *)"
 
 #~ msgid " <=== Suppression non permise (vérifiez les conditions requises) "
 #~ msgstr " <=== Deletion not allowed (verify conditions) "
