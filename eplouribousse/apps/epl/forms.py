@@ -25,7 +25,7 @@ class InstructionForm(forms.ModelForm):
             'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex."), 'title': \
             _("éléments manquants dans le segment pour la forme considérée (pas forcément des lacunes si l'on considère la forme reliée)")}),
             'degr' : forms.TextInput(attrs={'placeholder': _("1995(4) par ex."), 'title': \
-            _("éléments dégradé (un volume relié dégradé peut être remplacé par les fascicules correspondants en bon état)")}),
+            _("éléments dégradés (un volume relié dégradé peut être remplacé par les fascicules correspondants en bon état)")}),
         }
 
 

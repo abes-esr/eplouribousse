@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-08 10:45+0200\n"
+"POT-Creation-Date: 2020-06-16 16:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr "1995(4), z.B."
 
 #: eplouribousse/apps/epl/forms.py:28
 msgid ""
-"éléments dégradé (un volume relié dégradé peut être remplacé par les "
+"éléments dégradés (un volume relié dégradé peut être remplacé par les "
 "fascicules correspondants en bon état)"
 msgstr ""
 "verschlechterte Elemente (ein verschlechtertes gebundenes Volumen kann durch "
@@ -1678,7 +1678,9 @@ msgstr "Checken Sie in Sudoc ein"
 
 #: eplouribousse/apps/epl/templates/epl/search.html:39
 msgid "(Si cette vérification n'aboutit pas, vérifiez la saisie du ppn)"
-msgstr "(Wenn diese Prüfung nicht erfolgreich ist, überprüfen Sie den Eintrag des SID)"
+msgstr ""
+"(Wenn diese Prüfung nicht erfolgreich ist, überprüfen Sie den Eintrag des "
+"SID)"
 
 #: eplouribousse/apps/epl/templates/epl/search.html:44
 #: eplouribousse/apps/epl/templates/epl/search.html:55
