@@ -98,7 +98,11 @@
                   <td><font color= #e74c3c ><b>{{ e.0.excl }}</b></font></td>
                 {% else %}
                   <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ e.1 }}</b></font></td>
+                  {% if e.0.rank == 99 %}
+                  <td><font color= #e74c3c ><b>{% trans "Pas encore pris" %}</b></font></td>
+                  {% else %}
                   <td><font color= #e74c3c ><b>{{ e.0.rank }}</b></font></td>
+                  {% endif %}
                 {% endif %}
             {% elif e.1 != lib %}
                 {% if e.0.rank == 0 %}
@@ -106,7 +110,11 @@
                   <td>{{ e.0.excl }}</td>
                 {% else %}
                   <td>{% trans "Positionnement pour" %} : {{ e.1 }}</td>
+                  {% if e.0.rank == 99 %}
+                  <td>{% trans "Pas encore pris" %}</td>
+                  {% else %}
                   <td>{{ e.0.rank }}</td>
+                  {% endif %}                  
                 {% endif %}
             {% endif %}
         </tr>

@@ -1,8 +1,8 @@
-epl_version ="Version 1.4.6 (Ingonde)"
-date_version ="June 17, 2020"
+epl_version ="Version 1.6.0 (Gondioque)"
+date_version ="July 1, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.5.6 beta (~Chunsine)"
-# date_version ="June 17, 2020"
+# epl_version ="Version 1.7.0 beta (~Arégonde)"
+# date_version ="July 1, 2020"
 
 
 from django.shortcuts import render
@@ -403,6 +403,8 @@ def search(request):
                 try:
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
                     progress =_("Instruction des éléments reliés de la collection")
+                    if not Instruction.objects.filter(sid =sid):
+                        alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
                     return render(request, 'epl/search.html', locals())
                 except:
                     if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
