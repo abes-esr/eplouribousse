@@ -403,6 +403,8 @@ def search(request):
                 try:
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
                     progress =_("Instruction des éléments reliés de la collection")
+                    if not Instruction.objects.filter(sid =sid):
+                        alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
                     return render(request, 'epl/search.html', locals())
                 except:
                     if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
