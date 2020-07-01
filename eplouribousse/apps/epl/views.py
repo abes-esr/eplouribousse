@@ -1,7 +1,7 @@
-epl_version ="Version 1.6.0 (Gondioque)"
+epl_version ="Version 1.6.1 (Gondioque)"
 date_version ="July 1, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.7.0 beta (~Arégonde)"
+# epl_version ="Version 1.7.1 beta (~Arégonde)"
 # date_version ="July 1, 2020"
 
 
