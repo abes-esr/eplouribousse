@@ -408,9 +408,8 @@ def search(request):
                     return render(request, 'epl/search.html', locals())
                 except:
                     if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
-                        if ItemRecord.objects.get(sid =sid, lid = lid, rank =1):
-                            progress =_("Concurrence rang 1")
-                            action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                        progress =_("Concurrence rang 1")
+                        action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
                     elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
                         progress =_("Ressource non candidate du fait d'exclusion")
                     elif ItemRecord.objects.filter(sid =sid, rank =99):
