@@ -117,17 +117,17 @@ def contact(request):
         recipient_confirm = form.cleaned_data['email_confirm']
         subject = form.cleaned_data['object']
         if subject =="a":
-            subject =_("Information request")
+            subject ="Information request"
         if subject =="b":
-            subject =_("Bug")
+            subject ="Bug"
         if subject =="c":
-            subject =_("Reclamation")
+            subject ="Reclamation"
         if subject =="d":
-            subject =_("Suggestion")
+            subject ="Suggestion"
         if subject =="e":
-            subject =_("Comments")
+            subject ="Comments"
         if subject =="f":
-            subject =_("Other")
+            subject ="Other"
         body = form.cleaned_data['content']
         if recipient ==recipient_confirm:
             subject = "eplouribousse" + " / " + subject + " / " + host
