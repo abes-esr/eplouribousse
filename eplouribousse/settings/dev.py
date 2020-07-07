@@ -14,3 +14,5 @@ ALLOWED_HOSTS = [
 
 DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 DATABASES['default']['NAME'] = environ.get('DEFAULT_DB_NAME', 'eplouribousse.db')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

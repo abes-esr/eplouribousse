@@ -19,7 +19,13 @@
     <body>
 
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
-
+        {% if k != 0 %}
+        <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
+        {% else %}
+        <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+        <!-- (User : Anonymous) -->
+        {% endif %}
+        <p></p>
           <p>{{ version }}</p>
           <p>{{ date }}</p>
           <p>Licence : GPLv3 (voir <a target="_blank" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>)</p>
@@ -28,8 +34,7 @@
           <p>Développée avec Django 2.2.12 (LTS) et Python 3.5.2, ReportLab open-source [3.5.42], HTML5, CSS3. Code en accès libre sur le <a target="_blank" href="https://git.unistra.fr/gressot/yellow">GitLab</a> de l'Université de Strasbourg ou sur <a target="_blank" href="https://github.com/GGre/eplouribounistra">GitHub</a>.</p>
           <p>Merci à mes collègues de l'Université de Strasbourg : Thomas B. de la Direction du Numérique pour le déploiement, Emma D. du Service des bibliothèques
             pour l'habillage, Sylvain J. de la Direction du Numérique pour ses tuyaux et pour m'avoir fait entrer en contact avec les bonnes personnes et Boris M. de la Direction du Numérique pour la préparation des ressources système.</p>
-          <p>Pour tout avis ou suggestion, demande d'information ou réclamation, contactez le concepteur de l'application : <a href="mailto:eplouribousse@gmail.com?subject=[eplouribousse] - {{ version }} - {{ host }}&body=--- Faites part ici de tout avis ou suggestion, demande d'information ou réclamation concernant l'application eplouribousse ---%0D%0A--- Veillez à ne pas modifier le sujet du présent message ---">Contact</a></p>
-          <p><a href="mailto:eplouribousse@gmail.com?subject=[Bug] - [eplouribousse] - {{ version }} - {{ host }}&body=--- Donnez le maximum d'informations sur le problème rencontré ---%0D%0A--- Veillez à ne pas modifier le sujet du présent message ---">Signaler un bug</a>.</p>
+          <p>Pour demander une information, signaler un bug, faire une réclamation, faire une suggestion, donner un avis ou pour toute autre raison, <a href="/contact">contactez le concepteur de l'application</a>.</p>
           <p>Copyright (C) 2018-{% now 'Y' %} : Georges Gressot, Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg.</p>
 
 
