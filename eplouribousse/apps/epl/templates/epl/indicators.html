@@ -8,7 +8,7 @@
 
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-        
+
 
 </head>
 
@@ -46,7 +46,7 @@
           <td><center>{{ isol }}</center></td>
     </tr>
     <tr>
-          <td>{% trans "Collections candidates" %}</td>
+          <td>{% trans "Collections candidates au départ" %}</td>
           <td><center>{{ candcoll }}</center></td>
     </tr>
     <tr>
@@ -101,6 +101,15 @@
          <td><center>{{ discard }}</center></td>
     </tr>
 
+    <tr>
+         <td>{% trans "Collections effectivement candidates" %}</td>
+         <td><center>{{ realcandcoll }}</center></td>
+    </tr>
+
+    <tr>
+         <td>{% trans "Ressources effectivement candidates" %}</td>
+         <td><center>{{ realcand }}</center></td>
+    </tr>
     <tr>
          <td>{% trans "Collections impliquées dans un arbitrage quelconque" %}</td>
          <td><center>{{ ctotal }}</center></td>

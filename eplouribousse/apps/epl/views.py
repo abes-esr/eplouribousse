@@ -363,6 +363,12 @@ def indicators(request):
             discard +=1/(len(ItemRecord.objects.filter(sid =i.sid, rank =0)))
     discard = int(discard)
 
+    #Number of real candidates (collections)
+    realcandcoll =candcoll - exclus
+
+    #Number of real candidates (ressources)
+    realcand =cand - discard
+
     #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
 
