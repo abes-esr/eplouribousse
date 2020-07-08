@@ -1,8 +1,8 @@
 epl_version ="Version 1.6.2 (Gondioque)"
 date_version ="July 1, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.7.2 beta (~Arégonde)"
-date_version ="July 1, 2020"
+# epl_version ="Version 1.7.2 beta (~Arégonde)"
+# date_version ="July 1, 2020"
 
 
 from django.shortcuts import render
@@ -119,12 +119,13 @@ def contact(request):
         subject2 = form.cleaned_data['object']
         body = form.cleaned_data['content']
         if recipient ==recipient_confirm:
-            subject1 = "[eplouribousse]" + " - " + subject2 + " - " + version + " - " + host
-            message1 = subject1 + " :\n" + " :\n" + body
+            subject2 = "[eplouribousse]" + " - " + subject2
+            subject1 = subject2 + " - " + version + " - " + host
+            message1 = subject1 + " :\n" + "\n" + body
             message2 = "Votre message a bien été envoyé au développeur de l'application"\
              + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
              "Rappel de l'objet de votre message" + " : " + subject2 + \
-             "\n" + "Rappel de votre message" + " :\n" + body
+             "\n" + "Rappel de votre message" + " :\n" + "\n" + body
             dest1 = ["eplouribousse@gmail.com"]
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
