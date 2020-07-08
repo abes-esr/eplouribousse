@@ -105,7 +105,8 @@ def contact(request):
     host = str(request.get_host())
 
     class ContactForm(forms.Form):
-        object_list = (("a", _("Demande d'information")), ("b", _("Bug")), ("c", _("Réclamation")), ("d", _("Suggestion")), ("e", _("Avis")),  ("f", _("Autre")))
+        object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+         ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
         object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
         email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
         email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
@@ -115,29 +116,19 @@ def contact(request):
     if form.is_valid():
         recipient = form.cleaned_data['email']
         recipient_confirm = form.cleaned_data['email_confirm']
-        subject = form.cleaned_data['object']
-        if subject =="a":
-            subject ="Information request"
-        if subject =="b":
-            subject ="Bug"
-        if subject =="c":
-            subject ="Reclamation"
-        if subject =="d":
-            subject ="Suggestion"
-        if subject =="e":
-            subject ="Comments"
-        if subject =="f":
-            subject ="Other"
+        subject2 = form.cleaned_data['object']
         body = form.cleaned_data['content']
         if recipient ==recipient_confirm:
-            subject = "eplouribousse" + " / " + subject + " / " + host
-            message1 = body
+            subject1 = "[eplouribousse]" + " - " + subject2 + " - " + version + " - " + host
+            message1 = subject1 + " :\n" + " :\n" + body
             message2 = "Votre message a bien été envoyé au développeur de l'application"\
-             + ". " + "Ne répondez pas au présent message s'il vous plaît" + ". " + "Rappel de votre message" + " : " + body
+             + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
+             "Rappel de l'objet de votre message" + " : " + subject2 + \
+             "\n" + "Rappel de votre message" + " :\n" + body
             dest1 = ["eplouribousse@gmail.com"]
             dest2 = [recipient]
-            send_mail(subject, message1, recipient, dest1, fail_silently=True, )
-            send_mail(subject, message2, replymail, dest2, fail_silently=True, )
+            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
+            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
             return render(request, 'epl/confirmation.html', locals())
         else:
             info =_("Attention : Les adresses doivent être identiques")
