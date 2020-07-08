@@ -1,7 +1,7 @@
-epl_version ="Version 1.6.3 (Gondioque)"
+epl_version ="Version 1.6.4 (Gondioque)"
 date_version ="July 1, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.7.3 beta (~Arégonde)"
+# epl_version ="Version 1.7.4 beta (~Arégonde)"
 # date_version ="July 8, 2020"
 
 
@@ -918,7 +918,7 @@ def endinstr(request, sid, lid):
                     subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                    " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+                    " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = [nextlib.contact]
                     if nextlib.contact_bis:
                         dest.append(nextlib.contact_bis)
@@ -993,7 +993,7 @@ def endinstr(request, sid, lid):
             subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-            " : " + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+            " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
             dest = [nextlib.contact]
             if nextlib.contact_bis:
                 dest.append(nextlib.contact_bis)
