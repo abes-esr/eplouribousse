@@ -25,11 +25,12 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 07. contrôle de conformité à la fin de chaque cycle d'instruction,
 08. prise en charge complète de la chaîne de traitement,
 09. tableau de suivi d'activité,
-10. gestion des utilisateurs,
-11. contrôles d'authentification,
-12. paramétrage des motifs de dérogation,
-13. administration des cas de fiches défectueuses,
-14. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues)
+10. recherche unitaire (par ressource et bibliothèque)
+11. gestion des utilisateurs,
+12. contrôles d'authentification,
+13. paramétrage des motifs de dérogation,
+14. administration des cas de fiches défectueuses,
+15. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues)
 
 # Plus d'info :
 
