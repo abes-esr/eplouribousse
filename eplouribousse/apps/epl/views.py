@@ -1,7 +1,7 @@
-epl_version ="Version 1.6.1 (Gondioque)"
+epl_version ="Version 1.6.2 (Gondioque)"
 date_version ="July 1, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.7.1 beta (~Arégonde)"
+# epl_version ="Version 1.7.2 beta (~Arégonde)"
 # date_version ="July 1, 2020"
 
 
@@ -89,10 +89,60 @@ def home(request):
 
 
 def about(request):
+
+    k = logstatus(request)
     version =epl_version
     date =date_version
     host = str(request.get_host())
     return render(request, 'epl/about.html', locals())
+
+
+def contact(request):
+
+    k = logstatus(request)
+    version =epl_version
+    date =date_version
+    host = str(request.get_host())
+
+    class ContactForm(forms.Form):
+        object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+         ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+        object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+        email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+        email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+        content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        recipient = form.cleaned_data['email']
+        recipient_confirm = form.cleaned_data['email_confirm']
+        subject2 = form.cleaned_data['object']
+        body = form.cleaned_data['content']
+        if recipient ==recipient_confirm:
+            subject2 = "[eplouribousse]" + " - " + subject2
+            subject1 = subject2 + " - " + version + " - " + host
+            message1 = subject1 + " :\n" + "\n" + body
+            message2 = "Votre message a bien été envoyé au développeur de l'application"\
+             + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
+             "Rappel de l'objet de votre message" + " : " + subject2 + \
+             "\n" + "Rappel de votre message" + " :\n" + "\n" + body
+            dest1 = ["eplouribousse@gmail.com"]
+            dest2 = [recipient]
+            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
+            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
+            return render(request, 'epl/confirmation.html', locals())
+        else:
+            info =_("Attention : Les adresses doivent être identiques")
+
+    return render(request, 'epl/contact.html', locals())
+
+
+def confirm(request):
+
+    k = logstatus(request)
+    version =epl_version
+
+    return render(request, 'epl/confirmation.html', locals())
 
 
 def router(request):
@@ -305,6 +355,12 @@ def indicators(request):
             discard +=1/(len(ItemRecord.objects.filter(sid =i.sid, rank =0)))
     discard = int(discard)
 
+    #Number of real candidates (collections)
+    realcandcoll =candcoll - exclus
+
+    #Number of real candidates (ressources)
+    realcand =cand - discard
+
     #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
 
@@ -408,9 +464,8 @@ def search(request):
                     return render(request, 'epl/search.html', locals())
                 except:
                     if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
-                        if ItemRecord.objects.get(sid =sid, lid = lid, rank =1):
-                            progress =_("Concurrence rang 1")
-                            action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                        progress =_("Concurrence rang 1")
+                        action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
                     elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
                         progress =_("Ressource non candidate du fait d'exclusion")
                     elif ItemRecord.objects.filter(sid =sid, rank =99):
