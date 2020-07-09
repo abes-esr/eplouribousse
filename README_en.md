@@ -48,7 +48,7 @@ In order to have an idea of what it turns about and what it looks, we first reco
 
 ----------------
 
-It looks good ? Let's try it on your desktop with the Django development server ; this will allow you to test all features (except automatic mail alert which is just a convenience)
+It looks good ? Let's try it on your desktop with the Django development server ; this will allow you to test all features (Mail alerts will be edited in the console).
 
 Debian Linux users : follow the step-by-step instructions in Doc/howto.txt
 

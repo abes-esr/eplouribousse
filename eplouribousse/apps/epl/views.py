@@ -1,7 +1,7 @@
-epl_version ="Version 1.6.4 (Gondioque)"
+epl_version ="Version 1.6.5 (Gondioque)"
 date_version ="July 1, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.7.4 beta (~Arégonde)"
+# epl_version ="Version 1.7.5 beta (~Arégonde)"
 # date_version ="July 8, 2020"
 
 
@@ -125,14 +125,18 @@ def contact(request):
             message2 = "Votre message a bien été envoyé au développeur de l'application"\
              + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
              "Rappel de l'objet de votre message" + " : " + subject2 + \
-             "\n" + "Rappel de votre message" + " :\n" + "\n" + body
+             "\n" + "Rappel de votre message" + " :\n" + "\n" + \
+             _("***** Début *****") + "\n" + body + "\n" + _("*****  Fin  *****")
             dest1 = ["eplouribousse@gmail.com"]
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
             send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
             return render(request, 'epl/confirmation.html', locals())
         else:
-            info =_("Attention : Les adresses doivent être identiques")
+            info =_("Attention : Les adresses doivent être identiques") + "."
+    else:
+        if request.method =="POST":
+            info =_("Vérifier que les adresses sont correctes") + "."
 
     return render(request, 'epl/contact.html', locals())
 
