@@ -50,7 +50,7 @@ Pour avoir un aperçu de l'application, commencez par visiter une instance réel
 
 ----------------
 
-ça vous a plu ? Allez plus loin ; essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (à l'exception des alertes mail qui ne sont qu'une commodité)
+ça vous a plu ? Allez plus loin ; essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (Les alertes mail seront éditées dans le terminal).
 
 Pour les distributions Debian de Linux (Ubuntu, LinuxMint etc.), suivez les instructions pas à pas données dans Doc/guide.txt
 
