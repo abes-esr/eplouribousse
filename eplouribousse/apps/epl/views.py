@@ -1,8 +1,8 @@
-epl_version ="Version 1.6.7 (Gondioque)"
+epl_version ="Version 1.6.8 (Gondioque)"
 date_version ="July 1, 2020"
 # Mise au niveau de :
-# epl_version ="Version 1.7.7 beta (~Arégonde)"
-# date_version ="July 8, 2020"
+epl_version ="Version 1.7.8 beta (~Arégonde)"
+date_version ="July 10, 2020"
 
 
 from django.shortcuts import render
