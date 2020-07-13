@@ -17,10 +17,14 @@ class PositionForm(forms.ModelForm):
 
 class InstructionForm(forms.ModelForm):
     class Meta:
+        REM_CHOICES =('',''),
+        if Library.objects.all().exclude(name ='checker'):
+            for l in Library.objects.all().exclude(name ='checker').order_by('name'):
+                REM_CHOICES += (l.name, l.name),
         model = Instruction
         exclude = ('sid', 'name', 'bound',)
         widgets = {
-            'oname' : forms.TextInput(attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
+            'oname' : forms.Select(choices=REM_CHOICES, attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
             'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex."), 'title': _("Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer selon l'ordre chronologique de ce champ")}),
             'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex."), 'title': \
             _("éléments manquants dans le segment pour la forme considérée (pas forcément des lacunes si l'on considère la forme reliée)")}),
