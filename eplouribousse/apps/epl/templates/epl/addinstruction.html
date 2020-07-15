@@ -114,7 +114,11 @@
               {% else %}
               <td><center> </center></td>
               {% endif %}
-              <td>{{ form.oname }}</td>
+              {% if l != 0 %}
+              <td>{{ foname.oname }}</td>
+              {% else %}
+              <td></td>
+              {% endif %}
               <td>{{ form.descr }}</td>
               <td>{{ form.exc }}</td>
               <td>{{ form.degr }}</td>

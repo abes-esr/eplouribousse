@@ -602,6 +602,7 @@ def addinstr(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    length =0
 
     q = "x"
     if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))):
@@ -672,13 +673,26 @@ def addinstr(request, sid, lid):
         #Instruction form instanciation and validation :
         i = Instruction(sid = sid, name = lib.name)
         f = InstructionForm(request.POST, instance =i)
-        # q = "x"
+
+        REM_CHOICES =('',''),
+        bibliolist =[]
+        if Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
+            for e in Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
+                if (e.exc or e.degr) and Library.objects.order_by('name').get(name =e.name).name not in bibliolist:
+                    bibliolist.append(Library.objects.get(name =e.name).name)
+            length =len(bibliolist)
+        if length:
+            for l in bibliolist:
+                REM_CHOICES += (l, l),
+
+        class Instr_Form(forms.Form):
+            oname = forms.ChoiceField(required = False, widget=forms.Select(attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}), choices=REM_CHOICES, label =_("Bibliothèque remédiée"),)
+
+        foname = Instr_Form(request.POST or None)
+
         if f.is_valid():
-            # if len(list((Instruction.objects.filter(sid =sid)).\
-            # filter(name ='checker'))):
-            #     q =" "
-            # else:
-            #     q ="x"
+            if foname.is_valid():
+                i.oname = foname.cleaned_data['oname']
             i.bound =q
             #A line may only be registered once :
             if not len(Instruction.objects.filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
@@ -707,9 +721,9 @@ def addinstr(request, sid, lid):
             pklastone =0
 
     return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
-    'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
+    'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, })
+    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, 'l' : length, })
 
 
 @login_required
