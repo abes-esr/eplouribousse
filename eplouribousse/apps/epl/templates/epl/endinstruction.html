@@ -30,7 +30,7 @@
         <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
           {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}</p>
         {% if lid != '999999999' %}
-          <p><i>{% trans "Les dernières lignes validées sont mises en évidence" %}</i></p>
+          <p><i>{% trans "Les lignes saisies pour la forme courante sont mises en évidence" %}</i></p>
         {% endif %}
 
         {% for elmt in librarylist %}
@@ -102,7 +102,7 @@
           </form>
           </div>
           <div id="menucontextuel">
-            <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
+            <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Retour à l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> - <button><b><a href="/sel/{{ sid }}/{{ library.lid }}">{% trans "Modifier une ligne erronée" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
           </div>
         {% endif %}
       <!-- </div> -->

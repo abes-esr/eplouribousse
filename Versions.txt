@@ -11,6 +11,9 @@ Version 1.4 (Ingonde)                       2020.05.24
 Version 1.5 (~Chunsine)                     beta
 Version 1.6 (Gondioque)                     2020.07.01
 Version 1.7 (~Arégonde)                     beta
+Version 1.8 (Radegonde)                     2020.09.02
+Version 1.9 (~Walderade)                    beta
+
 
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)

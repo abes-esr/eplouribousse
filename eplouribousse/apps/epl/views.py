@@ -1,8 +1,8 @@
-epl_version ="Version 1.6.8 (Gondioque)"
-date_version ="July 1, 2020"
+epl_version ="Version 1.8.0 (Radegonde)"
+date_version ="September 2, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.7.8 beta (~Arégonde)"
-date_version ="July 10, 2020"
+# epl_version ="Version 1.9.0 beta (~Walderade)"
+# date_version ="September 2, 2020"
 
 
 from django.shortcuts import render
@@ -23,12 +23,15 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import logout
 
+from django.http import HttpResponseRedirect
+
 idfeature =0 #identification de la fonctionnalité (0 pour accueil, 1 pour positionnement, 2 pour arbitrage, 3 pour instr et 4 pour ed)
 idview =1 #identification des fonctions de listes (voir les vues correspondantes)
 dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
 dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
 tes_lloc =Library.objects.all() # comme coll_set
 lastrked =None
+
 def serial_title(e):
     """sorting by title"""
     return e.title
@@ -678,8 +681,9 @@ def addinstr(request, sid, lid):
         bibliolist =[]
         if Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
             for e in Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
-                if (e.exc or e.degr) and Library.objects.order_by('name').get(name =e.name).name not in bibliolist:
+                if (e.exc or e.degr) and Library.objects.get(name =e.name).name not in bibliolist:
                     bibliolist.append(Library.objects.get(name =e.name).name)
+            bibliolist.sort()
             length =len(bibliolist)
         if length:
             for l in bibliolist:
@@ -699,6 +703,8 @@ def addinstr(request, sid, lid):
                 i.line +=1
                 i.time =Now()
                 f.save()
+                url ="/add/" + str(sid) + "/" + str(lid)
+                return HttpResponseRedirect(url)
             else:
                 info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
 
@@ -724,6 +730,267 @@ def addinstr(request, sid, lid):
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
     'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, 'l' : length, })
+
+@login_required
+def selinstr(request, sid, lid):
+
+    k = logstatus(request)
+    version =epl_version
+
+    #Authentication control :
+    if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
+        return home(request)
+
+    do = notintime(request, sid, lid)
+
+    #Control (delinstr only if it's up to the considered library == same conditions as for addinstr if lid not "999999999")
+    try:
+        if lid !="999999999":
+            if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
+                return do
+
+        else: # i.e. lid =="999999999"
+            return do
+
+    except:
+        z =1 #This is just to continue
+
+    #Ressource data :
+    itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
+    ress = itemlist[0]
+
+    #Library data :
+    lib = Library.objects.get(lid = lid)
+
+    # Library list ordered by 'rank' (except "checker" which must be the last one)
+    # to get from the precedent item list above :
+    liblist = []
+    for e in itemlist:
+        liblist.append(Library.objects.get(lid = e.lid))
+    liblist.append(Library.objects.get(name = 'checker'))
+
+    #Remedied library list :
+    remliblist = []
+    for e in itemlist:
+        remliblist.append(Library.objects.get(lid = e.lid))
+    if (Library.objects.get(lid =lid)).name != 'checker':
+        remliblist.remove(Library.objects.get(name = lib.name))
+
+    #Info :
+    info =""
+
+    #Stage (bound or not bound) :
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
+        bd =_('éléments reliés')
+        # ress_stage ='reliés'
+        expected = "x"
+    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
+        bd =_('éléments non reliés')
+        # ress_stage ='non reliés'
+        expected = " "
+    else:   # (==2)
+        bd = _("instructions terminées")
+
+    answer = ""
+
+    i = Instruction(sid = sid, name = lib.name)
+    f = InstructionForm(request.POST, instance=i) # for selection of an instruction line
+    if f.is_valid():
+        try:
+            j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =i.line)
+            url ="/mod/" + str(sid) + "/" + str(lid) + "/" + str(i.line)
+            return HttpResponseRedirect(url)
+        except:
+            answer = _(" <=== Donnée invalide ")
+    #Renumbering instruction lines :
+    try:
+        instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
+        j, l =0, 1
+        while j <= len(instr):
+            instr[j].line = l
+            instr[j].save()
+            j +=1
+            l +=1
+    except:
+        pass
+    instrlist = Instruction.objects.filter(sid = sid).order_by('line')
+
+
+    #Library list ordered by 'rank' to get from the precedent item list above :
+    liblist = []
+    for e in itemlist:
+        liblist.append(Library.objects.get(lid = e.lid))
+    liblist.append(Library.objects.get(name = 'checker'))
+
+    return render(request, 'epl/selinstruction.html', { 'ressource' : ress, \
+    'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
+    liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, })
+
+
+@login_required
+def modinstr(request, sid, lid, linetomodify):
+
+    k = logstatus(request)
+    version =epl_version
+    length =0
+
+    q = "x"
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))):
+        q =" "
+    else:
+        q ="x"
+
+    #Library data :
+    lib = Library.objects.get(lid = lid)
+
+    #Authentication control :
+    if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
+        return home(request)
+
+    do = notintime(request, sid, lid)
+
+    #Control (modinstr only if possible)
+    try:
+        if lid !="999999999":
+            if ItemRecord.objects.get(sid =sid, lid =lid).status not in [1, 3]:
+                return do
+            if Instruction.objects.get(sid =sid, line =linetomodify).name !=lib.name:
+                return do
+            if Instruction.objects.get(sid =sid, line =linetomodify).bound !=q:
+                return do
+
+        else: # i.e. lid =="999999999"
+            return do
+    except:
+        z =1 #This is just to continue
+
+
+    #Ressource data :
+    itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
+    ress = itemlist[0]
+
+    # Library list ordered by 'rank' (except "checker" which must be the last one)
+    # to get from the precedent item list above :
+    liblist = []
+    for e in itemlist:
+        liblist.append(Library.objects.get(lid = e.lid))
+    liblist.append(Library.objects.get(name = 'checker'))
+
+    #Remedied library list :
+    remliblist = []
+    for e in itemlist:
+        remliblist.append(Library.objects.get(lid = e.lid))
+    if (Library.objects.get(lid =lid)).name != 'checker':
+        remliblist.remove(Library.objects.get(name = lib.name))
+
+    #Info :
+    info =""
+
+    #Stage (bound or not bound) :
+    if len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==0:
+        bd =_('éléments reliés')
+    elif len(list((Instruction.objects.filter(sid =sid)).filter(name ='checker'))) ==1:
+        bd =_('éléments non reliés')
+
+    if lid =="999999999":
+        do = endinstr(request, sid, lid)
+        return do
+
+    else:
+        i = Instruction(sid = sid, name = lib.name)
+        if request.method == 'POST':
+            f = InstructionForm(request.POST, instance =i)
+
+            REM_CHOICES =('',''),
+            bibliolist =[]
+            if Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
+                for e in Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
+                    if (e.exc or e.degr) and Library.objects.get(name =e.name).name not in bibliolist:
+                        bibliolist.append(Library.objects.get(name =e.name).name)
+                bibliolist.sort()
+                length =len(bibliolist)
+            if length:
+                for l in bibliolist:
+                    REM_CHOICES += (l, l),
+
+            class Instr_Form(forms.Form):
+                oname = forms.ChoiceField(required = False, widget=forms.Select\
+                (attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")})\
+                , choices=REM_CHOICES, initial =Instruction.objects.get(sid =sid, line =linetomodify).\
+                oname, label =_("Bibliothèque remédiée"),)
+
+            foname = Instr_Form(request.POST or None)
+
+            if f.is_valid():
+                if foname.is_valid():
+                    i.oname = foname.cleaned_data['oname']
+                i.bound =q
+                #A line may only be registered once :
+                if not len(Instruction.objects.filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
+                    Instruction.objects.get(sid =sid, name =lib.name, line =linetomodify).delete()
+                    i.line +=1
+                    i.time =Now()
+                    i.save()
+                else:
+                    info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
+
+            #Renumbering instruction lines :
+            try:
+                instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
+                j, l =0, 1
+                while j <= len(instr):
+                    instr[j].line = l
+                    instr[j].save()
+                    j +=1
+                    l +=1
+            except:
+                pass
+            instrlist = Instruction.objects.filter(sid = sid).order_by('line')
+
+            try:
+                pklastone = Instruction.objects.filter(sid = sid).latest('pk').pk
+            except:
+                pklastone =0
+            if info !="Vous ne pouvez pas valider deux fois la même ligne d'instruction.":
+                url ="/add/" + str(sid) + "/" + str(lid)
+                return HttpResponseRedirect(url)
+        else:
+            #Instruction form instanciation and validation :
+            f = InstructionForm(instance =i, initial = {
+            'line' : Instruction.objects.get(sid =sid, line =linetomodify).line - 1,
+            # 'oname' : Instruction.objects.get(sid =sid, line =linetomodify).oname,
+            'descr' : Instruction.objects.get(sid =sid, line =linetomodify).descr,
+            'exc' : Instruction.objects.get(sid =sid, line =linetomodify).exc,
+            'degr' : Instruction.objects.get(sid =sid, line =linetomodify).degr,
+            })
+
+            REM_CHOICES =('',''),
+            bibliolist =[]
+            if Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
+                for e in Instruction.objects.filter(sid =sid).exclude(name =Library.objects.get(lid =lid).name).exclude(name ='checker'):
+                    if (e.exc or e.degr) and Library.objects.get(name =e.name).name not in bibliolist:
+                        bibliolist.append(Library.objects.get(name =e.name).name)
+                bibliolist.sort()
+                length =len(bibliolist)
+            if length:
+                for l in bibliolist:
+                    REM_CHOICES += (l, l),
+
+            class Instr_Form(forms.Form):
+                oname = forms.ChoiceField(required = False, widget=forms.Select\
+                (attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")})\
+                , choices=REM_CHOICES, initial =Instruction.objects.get(sid =sid, line =linetomodify).\
+                oname, label =_("Bibliothèque remédiée"),)
+
+            foname = Instr_Form()
+
+            instrlist = Instruction.objects.filter(sid = sid).order_by('line')
+
+    return render(request, 'epl/modinstruction.html', { 'ressource' : ress, \
+    'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
+    liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
+    'lid' : lid, 'expected' : q, 'k' : k, 'version' : version, 'l' : length, 'line' : linetomodify, })
 
 
 @login_required
@@ -794,8 +1061,10 @@ def delinstr(request, sid, lid):
         try:
             j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =i.line)
             j.delete()
+            url ="/add/" + str(sid) + "/" + str(lid)
+            return HttpResponseRedirect(url)
         except:
-            answer = _(" <=== Vous ne pouvez supprimer une instruction que pour votre collection et pour la forme courante ")
+            answer = _(" <=== Donnée invalide ")
 
     #Renumbering instruction lines :
     try:
