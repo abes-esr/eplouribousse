@@ -18,6 +18,8 @@ urlpatterns = [
     path('rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),
 
     path('add/<str:sid>/<str:lid>', views.addinstr, name='add instruction'),
+    path('sel/<str:sid>/<str:lid>', views.selinstr, name='select instruction to modify'),
+    path('mod/<str:sid>/<str:lid>/<int:linetomodify>', views.modinstr, name='modify instruction'),
     path('del/<str:sid>/<str:lid>', views.delinstr, name='delete instruction'),
     path('end/<str:sid>/<str:lid>', views.endinstr, name='end of instruction'),
 

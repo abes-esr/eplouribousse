@@ -25,7 +25,7 @@
       {% endif %}
       <p></p>
 
-      <h2>{{ library.name }} - {% trans "Instruction" %} - {{ stage }}</h2>
+      <h2>{{ library.name }} - {% trans "Modification d'une ligne d'instruction" %} - {{ stage }}</h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
@@ -52,15 +52,25 @@
          <tbody>
 
            {% for elmt in instructions %}
-              {% if elmt.name == library.name and elmt.bound == expected and elmt.pk == lastone %}
+              {% if elmt.line == line %}
           <tr>
-               <td><center><font color= #3364ff  >{{ elmt.line }}</font></center></td>
-               <td><font color= #3364ff >{{ elmt.name }}</font></td>
-               <td><center><font color= #3364ff >{{ elmt.bound }}</font></center></td>
-               <td><font color= #3364ff >{{ elmt.oname }}</font></td>
-               <td><font color= #3364ff >{{ elmt.descr }}</font></td>
-               <td><font color= #3364ff >{{ elmt.exc}}</font></td>
-               <td><font color= #3364ff >{{ elmt.degr }}</font></td>
+               <td><center><font color= #999999  >#</font></center></td>
+               <td><font color= #999999 >{{ elmt.name }}</font></td>
+               <td><center><font color= #999999 >{{ elmt.bound }}</font></center></td>
+               <td><font color= #999999 >{{ elmt.oname }}</font></td>
+               <td><font color= #999999 >{{ elmt.descr }}</font></td>
+               <td><font color= #999999 >{{ elmt.exc}}</font></td>
+               <td><font color= #999999 >{{ elmt.degr }}</font></td>
+          </tr>
+              {% elif elmt.line > line %}
+          <tr>
+              <td><center>{{ elmt.line|add:"-1" }}</center></td>
+              <td>{{ elmt.name }}</td>
+              <td><center>{{ elmt.bound }}</center></td>
+              <td>{{ elmt.oname }}</td>
+              <td>{{ elmt.descr }}</td>
+              <td>{{ elmt.exc}}</td>
+              <td>{{ elmt.degr }}</td>
           </tr>
               {% else %}
           <tr>
@@ -80,7 +90,6 @@
 
       </table>
 
-      <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
       <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}.</p>
 
       <div id="menucontextuel">
@@ -105,7 +114,6 @@
 
          <tbody>
 
-
           <tr>
               <td><center>{{ form.line }}</center></td>
               <td>{{ library.name }}</td>
@@ -129,14 +137,16 @@
 
 
       </table>
-
         <p><input type="submit" value="{% trans "Valider" %}"> <B><font color= #3364ff >{{ info }}</font></B></p>
         </div>
         </form>
 
         <div id="menucontextuel">
 
-        <p><button><b><a href="/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> - <button><b><a href="/sel/{{ sid }}/{{ library.lid }}">{% trans "Modifier une ligne erronée" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
+        <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></b></button> -
+          <button><b><a href="/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> -
+          <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> -
+          <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
         </div>
 
 

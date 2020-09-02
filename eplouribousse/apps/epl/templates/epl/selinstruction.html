@@ -22,7 +22,7 @@
       <!-- (User : Anonymous) -->
       {% endif %}
       <p></p>
-      <h2>{{ library.name }} - {% trans "Suppression d'une ligne" %} - {{ stage }}</h2>
+      <h2>{{ library.name }} - {% trans "Sélection de la ligne à modifier" %} - {{ stage }}</h2>
       <div id="content">
 
         <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
@@ -33,7 +33,7 @@
         {% for elmt in librarylist %}
             | {{ elmt.name }}
         {% endfor %}
-      <p><i></i>{% trans "Les lignes en rouge ne peuvent plus être supprimées" %}</i></p>
+      <p><i></i>{% trans "Les lignes en rouge ne peuvent plus être modifiées" %}</i></p>
       <table border="1">
 
          <thead>
@@ -82,14 +82,14 @@
 
 
       <form method="post">{% csrf_token %}
-          <p>{% trans "Ligne à supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+          <p>{% trans "Ligne à modifier" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
       </div>
       </form>
 
       <div id="menucontextuel">
 
-        <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></b></button> - <button><b><a href="/sel/{{ sid }}/{{ library.lid }}">{% trans "Modifier une ligne erronée" %}</a></b></button> - <button><b><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a><b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
+        <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Poursuivre l'instruction" %}</a></b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> - <button><b><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a><b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
 
       </div>
 
