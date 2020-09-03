@@ -743,7 +743,7 @@ def selinstr(request, sid, lid):
 
     do = notintime(request, sid, lid)
 
-    #Control (delinstr only if it's up to the considered library == same conditions as for addinstr if lid not "999999999")
+    #Control (selinstr only if it's up to the considered library == same conditions as for addinstr if lid not "999999999")
     try:
         if lid !="999999999":
             if ItemRecord.objects.get(sid = sid, lid =lid).status not in [1, 3]:
@@ -793,28 +793,21 @@ def selinstr(request, sid, lid):
 
     answer = ""
 
-    i = Instruction(sid = sid, name = lib.name)
-    f = InstructionForm(request.POST, instance=i) # for selection of an instruction line
-    if f.is_valid():
-        try:
-            j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =i.line)
-            url ="/mod/" + str(sid) + "/" + str(lid) + "/" + str(i.line)
-            return HttpResponseRedirect(url)
-        except:
-            answer = _(" <=== Donnée invalide ")
-    #Renumbering instruction lines :
-    try:
-        instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-        j, l =0, 1
-        while j <= len(instr):
-            instr[j].line = l
-            instr[j].save()
-            j +=1
-            l +=1
-    except:
-        pass
-    instrlist = Instruction.objects.filter(sid = sid).order_by('line')
+    LINE_CHOICES =('',''),
+    for elmt in Instruction.objects.filter(sid =sid, name =lib.name):
+        if elmt.bound ==expected:
+            LINE_CHOICES += (elmt.line, elmt.line),
 
+    class Line_Form(forms.Form):
+        row = forms.ChoiceField(required = True, widget=forms.Select, choices=LINE_CHOICES[1:])
+    f = Line_Form(request.POST or None)
+
+    if f.is_valid():
+        linetomodify = f.cleaned_data['row']
+        url ="/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
+        return HttpResponseRedirect(url)
+
+    instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
     #Library list ordered by 'rank' to get from the precedent item list above :
     liblist = []
@@ -927,32 +920,26 @@ def modinstr(request, sid, lid, linetomodify):
                     i.oname = foname.cleaned_data['oname']
                 i.bound =q
                 #A line may only be registered once :
-                if not len(Instruction.objects.filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
-                    Instruction.objects.get(sid =sid, name =lib.name, line =linetomodify).delete()
-                    i.line +=1
-                    i.time =Now()
-                    i.save()
+                if len(Instruction.objects.exclude(line =linetomodify).filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
+                    info = _("Une autre ligne contient déjà les mêmes données.")
                 else:
-                    info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
+                    Instruction.objects.get(sid =sid, name =lib.name, line =linetomodify).delete()
+                    if i.line <linetomodify:
+                        i.line +=1
+                        i.time =Now()
+                        i.save()
+                    else:
+                        i.line +=2
+                        i.time =Now()
+                        i.save()
 
-            #Renumbering instruction lines :
-            try:
-                instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-                j, l =0, 1
-                while j <= len(instr):
-                    instr[j].line = l
-                    instr[j].save()
-                    j +=1
-                    l +=1
-            except:
-                pass
             instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
             try:
                 pklastone = Instruction.objects.filter(sid = sid).latest('pk').pk
             except:
                 pklastone =0
-            if info !="Vous ne pouvez pas valider deux fois la même ligne d'instruction.":
+            if info =="":
                 url ="/add/" + str(sid) + "/" + str(lid)
                 return HttpResponseRedirect(url)
         else:
