@@ -35,7 +35,7 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 
 # Plus d'info :
 
-Voir le manuel de l'appli en https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
+Voir le manuel de l'appli dans le dossier Doc
 
 Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas à visionner complètement) : 
 01. Hypothèses et définitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/

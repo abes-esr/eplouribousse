@@ -33,7 +33,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 
 # More information :
 
-See the app manual in https://seafile.unistra.fr/f/a998b238a22b4c13baf5/
+See the app manual in Doc repertory
 
 Videos (in french ; please download if you cannot fully view) :
 01. Assumptions and definitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/
