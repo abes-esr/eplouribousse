@@ -82,7 +82,7 @@
 
 
       <form method="post">{% csrf_token %}
-          <p>{% trans "Ligne à supprimer" %} : {{ form.line }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+          <p>{% trans "Ligne(s) à supprimer" %} : {{ form.rows }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
       </div>
       </form>
