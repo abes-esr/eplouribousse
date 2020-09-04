@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-02 15:13+0200\n"
+"POT-Creation-Date: 2020-09-04 09:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
 msgstr "Möglicher Kommentar zur Erläuterung Ihrer Wahl (max. 250 Zeichen)"
 
 #: eplouribousse/apps/epl/forms.py:27 eplouribousse/apps/epl/views.py:693
-#: eplouribousse/apps/epl/views.py:919 eplouribousse/apps/epl/views.py:982
+#: eplouribousse/apps/epl/views.py:912 eplouribousse/apps/epl/views.py:969
 msgid ""
 "Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
 "'améliorable'"
@@ -332,8 +332,8 @@ msgstr "verbundene Form"
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:45
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:108
 #: eplouribousse/apps/epl/templates/epl/selinstruction.html:44
-#: eplouribousse/apps/epl/views.py:693 eplouribousse/apps/epl/views.py:921
-#: eplouribousse/apps/epl/views.py:984
+#: eplouribousse/apps/epl/views.py:693 eplouribousse/apps/epl/views.py:914
+#: eplouribousse/apps/epl/views.py:971
 msgid "Bibliothèque remédiée"
 msgstr "Verbesserte Sammlung"
 
@@ -1307,8 +1307,8 @@ msgid "Les lignes en rouge ne peuvent plus être supprimées"
 msgstr "Rote Zeilen können nicht mehr gelöscht werden"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:85
-msgid "Ligne à supprimer"
-msgstr "Zeile zu löschen"
+msgid "Ligne(s) à supprimer"
+msgstr "Zeile(n) zu löschen"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:92
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:146
@@ -1330,7 +1330,7 @@ msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Zeilen, die Ihre Bibliothek betreffen, sind hervorgehoben."
 
 #: eplouribousse/apps/epl/templates/epl/edition.html:37
-#: eplouribousse/apps/epl/views.py:2073
+#: eplouribousse/apps/epl/views.py:2065
 msgid "Collection mère"
 msgstr "Mutter Sammlung"
 
@@ -2111,41 +2111,49 @@ msgid "Vérification intermédiaire"
 msgstr "Zwischenüberprüfung"
 
 #: eplouribousse/apps/epl/views.py:667 eplouribousse/apps/epl/views.py:784
-#: eplouribousse/apps/epl/views.py:892 eplouribousse/apps/epl/views.py:1046
-#: eplouribousse/apps/epl/views.py:1149
+#: eplouribousse/apps/epl/views.py:885 eplouribousse/apps/epl/views.py:1033
+#: eplouribousse/apps/epl/views.py:1141
 msgid "éléments reliés"
 msgstr "verbundene elemente"
 
 #: eplouribousse/apps/epl/views.py:669 eplouribousse/apps/epl/views.py:788
-#: eplouribousse/apps/epl/views.py:894 eplouribousse/apps/epl/views.py:1050
-#: eplouribousse/apps/epl/views.py:1153
+#: eplouribousse/apps/epl/views.py:887 eplouribousse/apps/epl/views.py:1037
+#: eplouribousse/apps/epl/views.py:1145
 msgid "éléments non reliés"
 msgstr "Nicht verbundene elemente"
 
-#: eplouribousse/apps/epl/views.py:709 eplouribousse/apps/epl/views.py:936
+#: eplouribousse/apps/epl/views.py:709
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
 
-#: eplouribousse/apps/epl/views.py:792 eplouribousse/apps/epl/views.py:1054
-#: eplouribousse/apps/epl/views.py:1157
+#: eplouribousse/apps/epl/views.py:792 eplouribousse/apps/epl/views.py:1041
+#: eplouribousse/apps/epl/views.py:1149
 msgid "instructions terminées"
 msgstr "XXXXX (Ausfüllung schon fertig)"
 
-#: eplouribousse/apps/epl/views.py:804 eplouribousse/apps/epl/views.py:1067
-msgid " <=== Donnée invalide "
-msgstr " <=== Ungültige Daten "
+#: eplouribousse/apps/epl/views.py:924
+msgid "Une autre ligne contient déjà les mêmes données."
+msgstr "Eine andere Zeile enthält bereits dieselben Daten."
 
-#: eplouribousse/apps/epl/views.py:1158
+#: eplouribousse/apps/epl/views.py:1047
+msgid "Par exemple : 5, 8-12, 14 pour supprimer les lignes 5, 8 à 12 et 14."
+msgstr "Zum Beispiel: 5, 8-12, 14, um die Zeilen 5, 8 bis 12 und 14 zu löschen."
+
+#: eplouribousse/apps/epl/views.py:1066
+msgid " <=== Expression invalide (vérifiez les conditions indiquées) "
+msgstr " <=== Ungültiger Ausdruck (überprüfen Sie die angegebenen Bedingungen)"
+
+#: eplouribousse/apps/epl/views.py:1150
 msgid "ni relié, ni non reliés"
 msgstr "Nicht verbunden weder nicht"
 
-#: eplouribousse/apps/epl/views.py:1207 eplouribousse/apps/epl/views.py:1282
+#: eplouribousse/apps/epl/views.py:1199 eplouribousse/apps/epl/views.py:1274
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr ""
 "Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
 "anzuweisen : "
 
-#: eplouribousse/apps/epl/views.py:1230
+#: eplouribousse/apps/epl/views.py:1222
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -2155,20 +2163,20 @@ msgstr ""
 "Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein Eingriff "
 "in die Datenbank wird von Ihnen erwartet. Vielen Dank"
 
-#: eplouribousse/apps/epl/views.py:1293
+#: eplouribousse/apps/epl/views.py:1285
 msgid "Vous n'avez pas coché !"
 msgstr "Sie haben nicht geprüft !"
 
-#: eplouribousse/apps/epl/views.py:1391 eplouribousse/apps/epl/views.py:1578
-#: eplouribousse/apps/epl/views.py:1906 eplouribousse/apps/epl/views.py:2075
+#: eplouribousse/apps/epl/views.py:1383 eplouribousse/apps/epl/views.py:1570
+#: eplouribousse/apps/epl/views.py:1898 eplouribousse/apps/epl/views.py:2067
 msgid "Autre bibliothèque impliquée"
 msgstr "Andere teilnehmende Bibliothek"
 
-#: eplouribousse/apps/epl/views.py:2073
+#: eplouribousse/apps/epl/views.py:2065
 msgid "Collection non mère"
 msgstr "Nicht Mutter Sammlung"
 
-#: eplouribousse/apps/epl/views.py:2074
+#: eplouribousse/apps/epl/views.py:2066
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"
@@ -2267,6 +2275,9 @@ msgstr ""
 msgid "Deutsch"
 msgstr ""
 
+#~ msgid " <=== Donnée invalide "
+#~ msgstr " <=== Ungültige Daten "
+
 #~ msgid "Les dernières lignes validées sont mises en évidence"
 #~ msgstr "Die zuletzt bestätigte Zeile wird hervorgehoben"
 
@@ -2297,9 +2308,6 @@ msgstr ""
 #~ "Für den Kontrolleur steht nur die Funktion * Ausfüllen * zur Verfügung "
 #~ "(Gehen Sie eine Seite in Ihrem Browser zurück und wählen Sie * Ausfüllen "
 #~ "*)"
-
-#~ msgid " <=== Suppression non permise (vérifiez les conditions requises) "
-#~ msgstr " <=== Löschen nicht erlaubt (überprüfen Sie die Anforderungen)"
 
 #~ msgid "Respectez l'ordre chronologique du champ 'Segment'"
 #~ msgstr "Beachten Sie die chronologische Reihenfolge des Felds 'Segment'"

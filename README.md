@@ -20,7 +20,7 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 02. formulaire de positionnement (ou de dérogation),
 03. édition des ressources dont l'instruction de la résultante peut débuter,
 04. alerte quand son tour est venu de poursuivre l'instruction de la résultante,
-05. formulaires d'instruction (ajout, suppression, fin),
+05. formulaires d'instruction (ajout, suppression, modification, fin),
 06. édition différenciée des résultantes (rapports soignés au format pdf),
 07. contrôle de conformité à la fin de chaque cycle d'instruction,
 08. prise en charge complète de la chaîne de traitement,
@@ -31,6 +31,7 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 13. paramétrage des motifs de dérogation,
 14. administration des cas de fiches défectueuses,
 15. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues)
+16. recherche croisée par ressource et bibliothèque
 
 # Plus d'info :
 

@@ -18,7 +18,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 02. positioning form (including derogations),
 03. edition of the resources whose instruction of the resulting collection may begin,
 04. alert when its turn came to continue the instruction of the resulting collection,
-05. instruction forms (add, delete, end),
+05. instruction forms (add, delete, modify, end),
 06. neat worked pdf reports,
 07. conformity check at the end of each process cycle,
 08. full integrated workflow,
@@ -29,6 +29,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 13. parameterization of derogation reasons,
 14. administration of faulty card cases,
 15. multilingual support (French, English, German, extensible to other languages)
+16. cross-search by serial and library
 
 # More information :
 

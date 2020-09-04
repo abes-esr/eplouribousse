@@ -1,0 +1,8 @@
+Choses à faire après avoir modifier le code :
+
+- Vérifier s'il y a lieu de mettre à jour les fichiers .po et .mo (i18n)
+- Vérifier s'il y a lieu de mettre à jour l'entête de views.py (mentions de versions)
+- Mettre à jour le fichier version.txt
+- Vérifier s'il y a lieu de mettre à jour la documentation
+- Vérifier s'il y a lieu de mettre à jour les Readme(s)
+- Faire ce qu'il faut avec git (...)

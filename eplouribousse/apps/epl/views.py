@@ -1,8 +1,8 @@
-epl_version ="Version 1.8.0 (Radegonde)"
-date_version ="September 2, 2020"
+epl_version ="Version 1.8.1 (Radegonde)"
+date_version ="September 3, 2020"
 # Mise au niveau de :
-epl_version ="Version 1.9.0 beta (~Walderade)"
-date_version ="September 2, 2020"
+# epl_version ="Version 1.9.1 beta (~Walderade)"
+# date_version ="September 3, 2020"
 
 
 from django.shortcuts import render
@@ -794,7 +794,7 @@ def selinstr(request, sid, lid):
     answer = ""
 
     LINE_CHOICES =('',''),
-    for elmt in Instruction.objects.filter(sid =sid, name =lib.name):
+    for elmt in Instruction.objects.filter(sid =sid, name =lib.name).order_by('line'):
         if elmt.bound ==expected:
             LINE_CHOICES += (elmt.line, elmt.line),
 
@@ -941,7 +941,7 @@ def modinstr(request, sid, lid, linetomodify):
                 pklastone =0
             if info =="":
                 url ="/add/" + str(sid) + "/" + str(lid)
-                return HttpResponseRedirect(url)
+                return HttpResponseRedirect(url) # Renumbering shall be done there.
         else:
             #Instruction form instanciation and validation :
             f = InstructionForm(instance =i, initial = {
@@ -1042,30 +1042,35 @@ def delinstr(request, sid, lid):
 
     answer = ""
 
-    i = Instruction(sid = sid, name = lib.name)
-    f = InstructionForm(request.POST, instance=i) # for deletion of an instruction line
+    class Lines_Form(forms.Form):
+        rows = forms.CharField(required = True, widget=forms.TextInput(attrs={'placeholder'\
+        : "5, 8-12, 14", 'title': _("Par exemple : 5, 8-12, 14 pour supprimer les lignes 5, 8 à 12 et 14.")}))
+    f = Lines_Form(request.POST or None)
     if f.is_valid():
-        try:
-            j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =i.line)
-            j.delete()
+        toparse = f.cleaned_data['rows'] # is a string
+        toparse =toparse.replace(' ', '')
+        toparse =toparse.split(',')
+        linestodel =[]
+        for elmt in toparse:
+            try:
+                linestodel.append(int(elmt))
+            except:
+                elmt =elmt.split('-')
+                begin, end =int(elmt[0]), int(elmt[1])+1
+                for subelmt in range(begin, end):
+                    linestodel.append(subelmt)
+        for todel in linestodel:
+            try:
+                j = Instruction.objects.get(sid =sid, bound = expected, name =lib.name, line =todel)
+            except:
+                answer = _(" <=== Expression invalide (vérifiez les conditions indiquées) ")
+        if answer == "":
+            for todel in linestodel:
+                Instruction.objects.get(sid =sid, name =lib.name, line =todel).delete()
             url ="/add/" + str(sid) + "/" + str(lid)
-            return HttpResponseRedirect(url)
-        except:
-            answer = _(" <=== Donnée invalide ")
+            return HttpResponseRedirect(url) # Renumbering shall be done there.
 
-    #Renumbering instruction lines :
-    try:
-        instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-        j, l =0, 1
-        while j <= len(instr):
-            instr[j].line = l
-            instr[j].save()
-            j +=1
-            l +=1
-    except:
-        pass
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
-
 
     #Library list ordered by 'rank' to get from the precedent item list above :
     liblist = []
