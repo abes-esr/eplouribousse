@@ -15,7 +15,6 @@
 
     </head>
 
-
     <body>
       {% if k != 0 %}
       <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
@@ -30,7 +29,7 @@
         <form method="post">{% csrf_token %}
             <p>{% trans "ppn" %} : {{ form.sid }} {% trans "Votre bibliothèque" %} :  {{ form.lib }} <button><b><a href="/search">{% trans "Réinitialiser" %}</a></b></button></p>
         <p><input type="submit" value="{% trans "Valider" %}"></p>
-        </div>
+        <!-- </div> -->
         </form>
 
 
@@ -114,7 +113,7 @@
                   <td>{% trans "Pas encore pris" %}</td>
                   {% else %}
                   <td>{{ e.0.rank }}</td>
-                  {% endif %}                  
+                  {% endif %}
                 {% endif %}
             {% endif %}
         </tr>
@@ -140,6 +139,76 @@
 
     {% endif %}
 
+<!-- ######################### -->
+<center><button><b><a href="/search">{% trans "Rafraîchir" %}</a></b></button></center>
+<table border="1">
+
+   <thead>
+
+       <th>{% trans "Bibliothèque" %}</th>
+       <th>{% trans "Statut" %}</th>
+
+   </thead>
+
+   <tbody>
+
+     {% for elmt in attlist %}
+    <tr>
+        <td>{{ elmt.1 }}</td>
+        <td>{{ elmt.0.status }}</td>
+    </tr>
+     {% endfor %}
+   </tbody>
+
+</table>
+
+<table border="1">
+
+   <thead>
+
+       <th>{% trans "Ligne" %}</th>
+       <th>{% trans "Bibliothèque" %}</th>
+       <th>{% trans "Forme reliée" %}</th>
+       <th>{% trans "Bibliothèque remédiée" %}</th>
+       <th>{% trans "Segment" %}</th>
+       <th>{% trans "Exceptions" %}</th>
+       <th>{% trans "Eléments améliorables" %}</th>
+
+   </thead>
+
+   <tbody>
+
+     {% for elmt in instrlist %}
+        {% if elmt.pk == pklastone %}
+    <tr>
+         <td><center><font color= #3364ff  >{{ elmt.line }}</font></center></td>
+         <td><font color= #3364ff >{{ elmt.name }}</font></td>
+         <td><center><font color= #3364ff >{{ elmt.bound }}</font></center></td>
+         <td><font color= #3364ff >{{ elmt.oname }}</font></td>
+         <td><font color= #3364ff >{{ elmt.descr }}</font></td>
+         <td><font color= #3364ff >{{ elmt.exc}}</font></td>
+         <td><font color= #3364ff >{{ elmt.degr }}</font></td>
+    </tr>
+        {% else %}
+    <tr>
+        <td><center>{{ elmt.line }}</center></td>
+        <td>{{ elmt.name }}</td>
+        <td><center>{{ elmt.bound }}</center></td>
+        <td>{{ elmt.oname }}</td>
+        <td>{{ elmt.descr }}</td>
+        <td>{{ elmt.exc}}</td>
+        <td>{{ elmt.degr }}</td>
+
+    </tr>
+        {% endif %}
+     {% endfor %}
+   </tbody>
+
+
+</table>
+
+<p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
+<!-- ######################### -->
         <div id="footer">
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
