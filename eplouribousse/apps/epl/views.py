@@ -1,7 +1,7 @@
-epl_version ="v1.8.2 (Radegonde)"
+epl_version ="v1.8.3 (Radegonde)"
 date_version ="September 3, 2020"
 # Mise au niveau de :
-# epl_version ="v1.9-beta.2 (~Walderade)"
+# epl_version ="v1.9-beta.3 (~Walderade)"
 # date_version ="September 9, 2020"
 
 
@@ -432,6 +432,18 @@ def search(request):
             bil =Library.objects.get(lid =ItemRecord.objects.get(sid =sid).lid).name
 
         elif n >1:
+            #Getting instructions for the considered ressource :
+            instrlist = Instruction.objects.filter(sid = sid).order_by('line')
+
+            try:
+                pklastone = Instruction.objects.filter(sid = sid).latest('pk').pk
+            except:
+                pklastone =0
+
+            #Attachements :
+            attchmt =ItemRecord.objects.filter(sid =sid).order_by('-status')
+            attlist = [(Library.objects.get(lid =element.lid).name, element) for element in attchmt]
+
             rklist = ItemRecord.objects.filter(sid =sid).order_by('rank', 'lid')
             ranklist = [(element, Library.objects.get(lid =element.lid).name) for element in rklist]
             if ItemRecord.objects.filter(sid =sid, status =6):
@@ -519,18 +531,6 @@ def search(request):
                         progress =_("Positionnement")
                     else: # Arbitration, no rank =1
                         progress =_("Absence de rang 1")
-
-        #Getting instructions for the considered ressource :
-        instrlist = Instruction.objects.filter(sid = sid).order_by('line')
-
-        try:
-            pklastone = Instruction.objects.filter(sid = sid).latest('pk').pk
-        except:
-            pklastone =0
-
-        #Attachements :
-        attchmt =ItemRecord.objects.filter(sid =sid).order_by('-status')
-        attlist = [(element, Library.objects.get(lid =element.lid).name) for element in attchmt]
 
     return render(request, 'epl/search.html', locals())
 
