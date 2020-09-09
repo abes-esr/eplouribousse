@@ -140,7 +140,7 @@
     {% endif %}
 
 <!-- ######################### -->
-<center><button><b><a href="/search">{% trans "Rafraîchir" %}</a></b></button></center>
+{% if n > 1 %}
 <table border="1">
 
    <thead>
@@ -154,14 +154,14 @@
 
      {% for elmt in attlist %}
     <tr>
-        <td>{{ elmt.1 }}</td>
-        <td>{{ elmt.0.status }}</td>
+        <td>{{ elmt.0 }}</td>
+        <td>{{ elmt.1.status }}</td>
     </tr>
      {% endfor %}
    </tbody>
 
 </table>
-
+<center><button onclick="javascript:location.reload();">Actualiser</button></center>
 <table border="1">
 
    <thead>
@@ -208,6 +208,7 @@
 </table>
 
 <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
+{% endif %}
 <!-- ######################### -->
         <div id="footer">
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
