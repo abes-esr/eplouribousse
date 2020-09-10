@@ -24,7 +24,7 @@
       {% endif %}
       <p></p>
 
-      <h2>{% trans "Recherche unitaire" %} {{ sid }} {{ lib }} ({% trans "fonctionnalité bêta" %})</h2>
+      <h2>{{ lib }} - {{ sid }} : {% trans "Statut courant" %}</h2>
 
         <form method="post">{% csrf_token %}
             <p>{% trans "ppn" %} : {{ form.sid }} {% trans "Votre bibliothèque" %} :  {{ form.lib }} <button><b><a href="/search">{% trans "Réinitialiser" %}</a></b></button></p>
@@ -135,7 +135,6 @@
    </tbody>
 
 </table>
-        </div>
 
     {% endif %}
 
@@ -147,6 +146,7 @@
 
        <th>{% trans "Bibliothèque" %}</th>
        <th>{% trans "Statut" %}</th>
+       <th>{% trans "Administration" %}</th>
 
    </thead>
 
@@ -156,6 +156,7 @@
     <tr>
         <td>{{ elmt.0 }}</td>
         <td>{{ elmt.1.status }}</td>
+        <td><a target="_blank" href="admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td>
     </tr>
      {% endfor %}
    </tbody>
@@ -173,6 +174,7 @@
        <th>{% trans "Segment" %}</th>
        <th>{% trans "Exceptions" %}</th>
        <th>{% trans "Eléments améliorables" %}</th>
+       <th>{% trans "Administration" %}</th>
 
    </thead>
 
@@ -188,6 +190,7 @@
          <td><font color= #3364ff >{{ elmt.descr }}</font></td>
          <td><font color= #3364ff >{{ elmt.exc}}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
+         <td><a target="_blank" href="admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
     </tr>
         {% else %}
     <tr>
@@ -198,7 +201,7 @@
         <td>{{ elmt.descr }}</td>
         <td>{{ elmt.exc}}</td>
         <td>{{ elmt.degr }}</td>
-
+        <td><a target="_blank" href="admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
     </tr>
         {% endif %}
      {% endfor %}
@@ -209,15 +212,16 @@
 
 <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
 {% endif %}
+        </div>
 <!-- ######################### -->
         <div id="footer">
             <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · {{ version }} · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
-
-<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'Agence bibliographique de l’Enseignement supérieur.</p>
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
+            <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'Agence bibliographique de l’Enseignement supérieur.</p>
+            <p>Version : {{ version }}</p>
 
         </div>
 
