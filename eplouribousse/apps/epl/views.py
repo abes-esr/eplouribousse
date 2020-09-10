@@ -1,7 +1,7 @@
-epl_version ="v1.8.3 (Radegonde)"
+epl_version ="v1.8.4 (Radegonde)"
 date_version ="September 3, 2020"
 # Mise au niveau de :
-# epl_version ="v1.9-beta.3 (~Walderade)"
+# epl_version ="v1.9-beta.4 (~Walderade)"
 # date_version ="September 9, 2020"
 
 
