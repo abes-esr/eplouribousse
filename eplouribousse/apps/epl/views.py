@@ -1,8 +1,8 @@
 epl_version ="v1.8.4 (Radegonde)"
 date_version ="September 3, 2020"
 # Mise au niveau de :
-epl_version ="v1.9-beta.4 (~Walderade)"
-date_version ="September 10, 2020"
+# epl_version ="v1.9-beta.4 (~Walderade)"
+# date_version ="September 10, 2020"
 
 
 from django.shortcuts import render
