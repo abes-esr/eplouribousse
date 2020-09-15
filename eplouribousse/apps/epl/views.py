@@ -1,8 +1,8 @@
-epl_version ="v1.8.4 (Radegonde)"
+epl_version ="v1.8.5 (Radegonde)"
 date_version ="September 3, 2020"
 # Mise au niveau de :
-epl_version ="v1.9-beta.4 (~Walderade)"
-date_version ="September 10, 2020"
+# epl_version ="v1.9-beta.5 (~Walderade)"
+# date_version ="September 15, 2020"
 
 
 from django.shortcuts import render
@@ -25,6 +25,8 @@ from django.contrib.auth import logout
 
 from django.http import HttpResponseRedirect
 
+
+client_ip ='127.0.0.1'
 idfeature =0 #identification de la fonctionnalité (0 pour accueil, 1 pour positionnement, 2 pour arbitrage, 3 pour instr et 4 pour ed)
 idview =1 #identification des fonctions de listes (voir les vues correspondantes)
 dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
@@ -154,53 +156,56 @@ def confirm(request):
 
 def router(request):
 
-    if idfeature ==0:
+    if not client_ip ==request.META['REMOTE_ADDR']:
         return home(request)
-    if idfeature ==1:
-        if idview ==0:
-            return ranktotake(request, dil, 'title')
-        if idview ==1:
-            return xranktotake(request, dil, dilx, 'title')
-        # if idview ==2:
-        #     return modifranklist(request, dil)
-        # Le choix de supprimer le bloc ci-dessus tient à ce que les modifications de rang sont normalement réalisés à l'unité ;
-        # il est donc plus intéressant de revenir à la dernière liste de positionnement. En conséquence la modification des varables
-        # globales a été annulée dans la vue modifranklist(request, dil)
-    if idfeature ==2:
-        if idview ==0:
-            return arbitration(request, dil, 'title')
-        if idview ==1:
-            return xarbitration(request, dil, dilx, 'title')
-        if idview ==2:
-            return x1arb(request, dil, dilx, 'title')
-        if idview ==3:
-            return x0arb(request, dil, dilx, 'title')
-        if idview ==4:
-            return arbrk1(request, dil, 'title')
-        if idview ==5:
-            return arbnork1(request, dil, 'title')
-    if idfeature ==3:
-        if idview ==0:
-            return instrtodo(request, dil, 'title')
-        if idview ==1:
-            return xinstrlist(request, dil, dilx, 'title')
-        if idview ==2:
-            return xckbd(request, tes_lloc)
-        if idview ==3:
-            return xcknbd(request, tes_lloc)
-        if idview ==4:
-            return xckall(request, tes_lloc)
-    if idfeature ==4:
-        if idview ==0:
-            return tobeedited(request, dil, 'title')
-        if idview ==1:
-            return mothered(request, dil, 'title')
-        if idview ==2:
-            return notmothered(request, dil, 'title')
-        if idview ==3:
-            return xmothered(request, dil, dilx, 'title')
-        if idview ==4:
-            return xnotmothered(request, dil, dilx, 'title')
+    else:
+        if idfeature ==0:
+            return home(request)
+        if idfeature ==1:
+            if idview ==0:
+                return ranktotake(request, dil, 'title')
+            if idview ==1:
+                return xranktotake(request, dil, dilx, 'title')
+            # if idview ==2:
+            #     return modifranklist(request, dil)
+            # Le choix de supprimer le bloc ci-dessus tient à ce que les modifications de rang sont normalement réalisés à l'unité ;
+            # il est donc plus intéressant de revenir à la dernière liste de positionnement. En conséquence la modification des varables
+            # globales a été annulée dans la vue modifranklist(request, dil)
+        if idfeature ==2:
+            if idview ==0:
+                return arbitration(request, dil, 'title')
+            if idview ==1:
+                return xarbitration(request, dil, dilx, 'title')
+            if idview ==2:
+                return x1arb(request, dil, dilx, 'title')
+            if idview ==3:
+                return x0arb(request, dil, dilx, 'title')
+            if idview ==4:
+                return arbrk1(request, dil, 'title')
+            if idview ==5:
+                return arbnork1(request, dil, 'title')
+        if idfeature ==3:
+            if idview ==0:
+                return instrtodo(request, dil, 'title')
+            if idview ==1:
+                return xinstrlist(request, dil, dilx, 'title')
+            if idview ==2:
+                return xckbd(request, tes_lloc)
+            if idview ==3:
+                return xcknbd(request, tes_lloc)
+            if idview ==4:
+                return xckall(request, tes_lloc)
+        if idfeature ==4:
+            if idview ==0:
+                return tobeedited(request, dil, 'title')
+            if idview ==1:
+                return mothered(request, dil, 'title')
+            if idview ==2:
+                return notmothered(request, dil, 'title')
+            if idview ==3:
+                return xmothered(request, dil, dilx, 'title')
+            if idview ==4:
+                return xnotmothered(request, dil, dilx, 'title')
 
     return render(request, 'epl/router.html', locals())
 
@@ -1309,8 +1314,8 @@ def ranktotake(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =1, 0, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 0, lid
 
     if sort =='sid':
         reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('sid'))
@@ -1341,8 +1346,8 @@ def modifranklist(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    # global idfeature, idview, dil
-    # idfeature, idview, dil =1, 2, lid
+    # global client_ip, idfeature, idview, dil
+    # client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
     # cf. remarque dans la vue router(request)
 
     # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
@@ -1408,8 +1413,8 @@ def xranktotake(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =1, 1, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 1, 1, lid, xlid
 
     #Getting ressources whose this lid must but has not yet taken rank :
     if sort =='sid':
@@ -1440,8 +1445,8 @@ def arbitration(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =2, 0, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 0, lid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1491,8 +1496,8 @@ def arbrk1(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =2, 4, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 4, lid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1529,8 +1534,8 @@ def arbnork1(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =2, 2, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 2, lid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1595,8 +1600,8 @@ def xarbitration(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =2, 1, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 1, lid, xlid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1645,8 +1650,8 @@ def x1arb(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =2, 2, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 2, lid, xlid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1685,8 +1690,8 @@ def x0arb(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =2, 3, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 3, lid, xlid
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1727,8 +1732,8 @@ def instrtodo(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =3, 0, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 3, 0, lid
 
     if lid !="999999999":
         # Ressources whose the lid identified library has to deal with (status =1 or 3)
@@ -1925,8 +1930,8 @@ def xinstrlist(request, lid, xlid, sort):
     if lid =="999999999":
         return notintime(request, "-?-", lid)
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =3, 1, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 3, 1, lid, xlid
 
     name = Library.objects.get(lid =lid).name
     xname = Library.objects.get(lid =xlid).name
@@ -1956,8 +1961,8 @@ def tobeedited(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =4, 0, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 0, lid
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -1992,8 +1997,8 @@ def mothered(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =4, 1, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 1, lid
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -2028,8 +2033,8 @@ def notmothered(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil
-    idfeature, idview, dil =4, 2, lid
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 2, lid
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -2102,8 +2107,8 @@ def xmothered(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =4, 3, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 3, lid, xlid
 
     if sort =='sid':
         l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('sid'))
@@ -2134,8 +2139,8 @@ def xnotmothered(request, lid, xlid, sort):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, dil, dilx
-    idfeature, idview, dil, dilx =4, 4, lid, xlid
+    global client_ip, idfeature, idview, dil, dilx
+    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 4, lid, xlid
 
     if sort =='sid':
         l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
@@ -2227,8 +2232,8 @@ def xckbd(request, coll_set):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, tes_lloc
-    idfeature, idview, tes_lloc =3, 2, coll_set
+    global client_ip, idfeature, idview, tes_lloc
+    client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 2, coll_set
 
     l = []
 
@@ -2251,8 +2256,8 @@ def xcknbd(request, coll_set):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, tes_lloc
-    idfeature, idview, tes_lloc =3, 3, coll_set
+    global client_ip, idfeature, idview, tes_lloc
+    client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 3, coll_set
 
     l = []
 
@@ -2275,8 +2280,8 @@ def xckall(request, coll_set):
     k = logstatus(request)
     version =epl_version
 
-    global idfeature, idview, tes_lloc
-    idfeature, idview, tes_lloc =3, 4, coll_set
+    global client_ip, idfeature, idview, tes_lloc
+    client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 4, coll_set
 
     l = []
 
