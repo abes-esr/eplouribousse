@@ -39,7 +39,7 @@
           {% if elmt.0.lid == lib.lid %}
                 <HR>
           <p></p>
-              <li><font color= #e74c3c ><b>{{ elmt.1 }} :</b></font></li>
+              <li><font color= #e74c3c ><b>{{ elmt.1 }}</b></font></li>
               <li>{% trans "Cote" %} : {{ elmt.0.cn }}</li>
               <li>{% trans "Etat de collection" %} : {{ elmt.0.holdstat }}</li>
               {% if elmt.0.missing != '' %}
@@ -56,7 +56,7 @@
           {% else %}
                 <HR>
           <p></p>
-              <li>{{ elmt.1 }} :</li>
+              <li><b>{{ elmt.1 }}</b></li>
               <li>{% trans "Cote" %} : {{ elmt.0.cn }}</li>
               <li>{% trans "Etat de collection" %} : {{ elmt.0.holdstat }}</li>
               {% if elmt.0.missing != '' %}
