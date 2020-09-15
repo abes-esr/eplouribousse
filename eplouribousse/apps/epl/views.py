@@ -166,8 +166,8 @@ def router(request):
                 return ranktotake(request, dil, 'title')
             if idview ==1:
                 return xranktotake(request, dil, dilx, 'title')
-            # if idview ==2:
-            #     return modifranklist(request, dil)
+            if idview ==2:
+                return modifranklist(request, dil, 'title')
             # Le choix de supprimer le bloc ci-dessus tient à ce que les modifications de rang sont normalement réalisés à l'unité ;
             # il est donc plus intéressant de revenir à la dernière liste de positionnement. En conséquence la modification des varables
             # globales a été annulée dans la vue modifranklist(request, dil)
@@ -592,7 +592,15 @@ def takerank(request, sid, lid):
         else:
             return notintime(request, sid, lid)
 
-        return router(request)
+        if idview ==0 and client_ip ==request.META['REMOTE_ADDR']:
+            return ranktotake(request, dil, 'title')
+        elif idview ==1 and client_ip ==request.META['REMOTE_ADDR']:
+            return xranktotake(request, dil, dilx, 'title')
+        elif idview ==2 and client_ip ==request.META['REMOTE_ADDR']:
+            return modifranklist(request, dil, 'title')
+        else:
+            return ranktotake(request, lid, 'title')
+        # return router(request)
 
     # Item records list :
     itlist = ItemRecord.objects.filter(sid =  sid)
@@ -1346,9 +1354,8 @@ def modifranklist(request, lid, sort):
     k = logstatus(request)
     version =epl_version
 
-    # global client_ip, idfeature, idview, dil
-    # client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
-    # cf. remarque dans la vue router(request)
+    global client_ip, idfeature, idview, dil
+    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
 
     # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
     if sort =='sid':
