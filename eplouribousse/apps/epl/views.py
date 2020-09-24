@@ -1,7 +1,7 @@
 epl_version ="v1.10.0 (Ingeberge)"
 date_version ="September 24, 2020"
 # Mise au niveau de :
-# epl_version ="v1.10-beta.0 (~Merofledis)"
+# epl_version ="v1.11-beta.0 (~Merofledis)"
 # date_version ="September 24, 2020"
 
 
