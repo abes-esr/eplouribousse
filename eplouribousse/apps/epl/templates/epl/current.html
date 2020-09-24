@@ -26,12 +26,6 @@
 
       <h2>{{ lib }} - {{ sid }} : {% trans "Statut courant" %}</h2>
 
-        <form method="post">{% csrf_token %}
-            <p>{% trans "ppn" %} : {{ form.sid }} {% trans "Votre bibliothèque" %} :  {{ form.lib }} <button><b><a href="/search">{% trans "Réinitialiser" %}</a></b></button></p>
-        <p><input type="submit" value="{% trans "Valider" %}"></p>
-        <!-- </div> -->
-        </form>
-
 
         {% if n == 0 %}
         <p>{% trans "Ce ppn est absent du projet" %} : <a target="_blank" href="http://www.sudoc.fr/{{ sid }}">{% trans "Vérifier dans le Sudoc" %}</a></p>
@@ -162,7 +156,7 @@
    </tbody>
 
 </table>
-<center><button onclick="javascript:location.reload();">Actualiser</button></center>
+<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> <button onclick="history.back()">{% trans "Revenir à la liste" %}</button></center>
 <table border="1">
 
    <thead>

@@ -27,6 +27,8 @@ urlpatterns = [
     path('modifrklist/<str:lid>/<str:sort>', views.modifranklist, name='modify a rank list'),
     path('rkfilter/<str:lid>', views.filter_rklist, name='rkfilter'),
     path('rklist/<str:lid>/<str:xlid>/<str:sort>', views.xranktotake, name='xto be ranked list'),
+    path('excl', views.excllist, name='exclusions'),
+    path('faulty', views.faulty, name='faulty'),
 
     path('arb/<str:lid>/<str:sort>', views.arbitration, name='arbitration'),
     path('arbrk1_list/<str:lid>/<str:sort>', views.arbrk1, name='arbitration rank 1'),
@@ -51,6 +53,7 @@ urlpatterns = [
     path('edmotherlist/<str:lid>/<str:xlid>/<str:sort>', views.xmothered, name='xto be edited mother list'),
     path('ednotmotherlist/<str:lid>/<str:xlid>/<str:sort>', views.xnotmothered, name='xto be edited notmother list'),
     path('ed/<str:sid>/<str:lid>', views.edition, name='edition'),
+    path('current_status/<str:sid>/<str:lid>', views.current_status, name='current status'),
 
     path('999999999', views.checkinstr, name='message to checker'),
     path('xcheck', views.checkerfilter, name='checker filter'),

@@ -1,0 +1,76 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+
+    </head>
+
+    <body>
+      {% if k != 0 %}
+      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
+      {% else %}
+      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+      <!-- (User : Anonymous) -->
+      {% endif %}
+      <p></p>
+
+      <h2>{% trans "Collections exclues" %} : {{ name }}</h2>
+
+        <form method="post">{% csrf_token %}
+            <p>{% trans "Votre bibliothèque" %} :  {{ form.lib }}
+              {% trans "Critère de tri" %} :  {{ form.sortingby }} <button><b><a href="/excl">{% trans "Réinitialiser" %}</a></b></button></p>
+        <p><input type="submit" value="{% trans "Valider" %}"></p>
+        <!-- </div> -->
+        </form>
+
+	        <div id="content">
+            {% if l == 1 %}
+            <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }}</p>
+            <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+            <p>{% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+
+            <ul>
+
+             {% for elmt in excl_list %}
+
+                   <HR>
+             <p></p>
+                <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+                <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+                <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/current_status/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+                <li><b>{% trans "Motif d'exclusion" %} :</b> <font color= #3498db  >{{ elmt.excl }}</font></li>
+                {% if elmt.comm != "" %}
+                <li><b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
+                {% endif %}
+
+             {% endfor %}
+                  <HR>
+
+            </ul>
+            {% endif %}
+          </div>
+
+        <div id="footer">
+            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
+        </div>
+
+        <div id="credits">
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
+            <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'Agence bibliographique de l’Enseignement supérieur.</p>
+            <p>Version : {{ version }}</p>
+
+        </div>
+
+    </body>
+
+</html>
