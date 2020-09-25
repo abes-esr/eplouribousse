@@ -28,7 +28,10 @@
 
         <form method="post">{% csrf_token %}
             <p>{% trans "Votre bibliothèque" %} :  {{ form.lib }}
-              {% trans "Critère de tri" %} :  {{ form.sortingby }} <button><b><a href="/excl">{% trans "Réinitialiser" %}</a></b></button></p>
+              {% trans "Critère de tri" %} :  {{ form.sortingby }}
+              {% trans "Motif d'exclusion" %} :  {{ form.exclreason }}
+              {% trans "Modifiable ?" %} :  {{ form.stillmod }}
+               <button><b><a href="/excl">{% trans "Réinitialiser" %}</a></b></button></p>
         <p><input type="submit" value="{% trans "Valider" %}"></p>
         <!-- </div> -->
         </form>
