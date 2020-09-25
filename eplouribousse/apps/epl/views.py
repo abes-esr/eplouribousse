@@ -1321,12 +1321,7 @@ def ranktotake(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 0, lid
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by(sort))
 
     resslist = []
     for e in reclist:
@@ -1353,19 +1348,9 @@ def modifranklist(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
 
-    # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-        .exclude(status =2).exclude(status =3).exclude(status =4).\
-        exclude(status =5).exclude(status =6).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-        .exclude(status =2).exclude(status =3).exclude(status =4).\
-        exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-        .exclude(status =2).exclude(status =3).exclude(status =4).\
-        exclude(status =5).exclude(status =6).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
+    .exclude(status =2).exclude(status =3).exclude(status =4).\
+    exclude(status =5).exclude(status =6).order_by(sort))
 
     resslist = []
     for e in reclist:
@@ -1420,12 +1405,7 @@ def xranktotake(request, lid, xlid, sort):
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 1, 1, lid, xlid
 
     #Getting ressources whose this lid must but has not yet taken rank :
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by(sort))
 
     resslist = []
     for e in reclist:
@@ -1467,15 +1447,7 @@ def excllist(request):
         lid = Library.objects.get(name =lib).lid
         name = lib
 
-        #Getting ressources whose this lid must but has not yet taken rank :
-        if sort =='excl':
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('excl')
-        elif sort =='sid':
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('sid')
-        elif sort =='cn':
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('cn', 'title')
-        else:
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('title')
+        excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by(sort)
 
         length =len(excl_list)
 
@@ -1506,17 +1478,9 @@ def faulty(request):
         lid = Library.objects.get(name =lib).lid
         name = lib
 
-        #Getting ressources whose this lid must but has not yet taken rank :
-        if sort =='excl':
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('excl')
-        elif sort =='sid':
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('sid')
-        elif sort =='cn':
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('cn', 'title')
-        else:
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('title')
+        faulty_list =ItemRecord.objects.filter(lid =lid, status =6).order_by(sort)
 
-        length =len(excl_list)
+        length =len(faulty_list)
 
     return render(request, 'epl/faulty.html', locals())
 
@@ -1589,12 +1553,7 @@ def arbrk1(request, lid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1627,12 +1586,7 @@ def arbnork1(request, lid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1743,12 +1697,7 @@ def x1arb(request, lid, xlid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1783,12 +1732,7 @@ def x0arb(request, lid, xlid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1818,16 +1762,8 @@ def instrtodo(request, lid, sort):
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 3, 0, lid
 
     if lid !="999999999":
-        # Ressources whose the lid identified library has to deal with (status =1 or 3)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-            exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-            exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-            exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
+        l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
+        exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
 
     elif lid =="999999999":
 
@@ -1866,16 +1802,9 @@ def instroneb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
+        .exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank =1 and has to deal with bound elements (status =1)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
-            .exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
-            .exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
-            .exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -1895,19 +1824,10 @@ def instrotherb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
+        exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
+        .exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank !=1 and has to deal with bound elements (status =1)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
-            exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
-            .exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
-            exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
-            .exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
-            exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
-            .exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -1927,16 +1847,9 @@ def instronenotb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
+        exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank =1 and has to deal with not bound elements (status =3)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -1956,16 +1869,9 @@ def instrothernotb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
+        exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank !=1 and has to deal with not bound elements (status =3)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -2018,15 +1924,8 @@ def xinstrlist(request, lid, xlid, sort):
     name = Library.objects.get(lid =lid).name
     xname = Library.objects.get(lid =xlid).name
 
-    if sort =='sid':
-        lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-        exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-    elif sort =='cn':
-        lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-        exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-    else:
-        lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-        exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
+    lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
+    exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
 
     l =[]
     for e in lprov:
@@ -2050,12 +1949,7 @@ def tobeedited(request, lid, sort):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2086,12 +1980,7 @@ def mothered(request, lid, sort):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2122,12 +2011,7 @@ def notmothered(request, lid, sort):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2192,12 +2076,7 @@ def xmothered(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 3, lid, xlid
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2224,12 +2103,7 @@ def xnotmothered(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 4, lid, xlid
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
