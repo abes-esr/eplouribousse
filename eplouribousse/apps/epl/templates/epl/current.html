@@ -26,36 +26,17 @@
 
       <h2>{{ lib }} - {{ sid }} : {% trans "Statut courant" %}</h2>
 
-
-        {% if n == 0 %}
-        <p>{% trans "Ce ppn est absent du projet" %} : <a target="_blank" href="http://www.sudoc.fr/{{ sid }}">{% trans "Vérifier dans le Sudoc" %}</a></p>
-        <p>{% trans "(Si cette vérification n'aboutit pas, vérifiez la saisie du ppn)" %}</p>
-
-        {% endif %}
-
-        {% if n == 1 %}
         <!-- <h5>{% trans "Données bibliographiques" %} :</h5> -->
         <p>{{ title }}</p>
         <p>{% trans "ppn" %} : {{ sid }} | {% trans "issn" %} : {{ issn }} | {% trans "Période de publication" %} : {{ pubhist }}</p>
-          {% if bil == lib %}
-          <p>{% trans "Pas d'autre collection que la vôtre" %}</p>
-          {% else %}
-          <p>{% trans "Une seule bibliothèque rattachée" %} : {{ bil }}</p>
-          {% endif %}
-        {% endif %}
 
-        {% if n > 1 %}
-        <!-- <h5>{% trans "Données bibliographiques" %} :</h5> -->
-        <p>{{ title }}</p>
-        <p>{% trans "ppn" %} : {{ sid }} | {% trans "issn" %} : {{ issn }} | {% trans "Période de publication" %} : {{ pubhist }}</p>
-          {% if l == 1 %}
           <!-- <h5>{% trans "Données de rattachement" %} :</h5> -->
           <p>{% trans "Cote" %} : {{ cn }}</p>
           <p>{% trans "état de collection" %} : {{ holdstat }}</p>
             {% if missing != '' %}
             <p>{% trans "lacunes" %} : {{ missing }}</p>
             {% endif %}
-          {% endif %}
+
 
 
 	        <div id="content">
@@ -76,12 +57,6 @@
           <td>{{ n }}</td>
     </tr>
 
-        {% if l == 0 and lid != "999999999" %}
-    <tr>
-          <td>{% trans "Statut" %}</td>
-          <td><font color= #e74c3c ><b>{% trans "Votre bibliothèque n'est pas rattachée" %}</b></font></td>
-    </tr>
-        {% endif %}
 
         {% for e in ranklist %}
         <tr>
@@ -130,10 +105,10 @@
 
 </table>
 
-    {% endif %}
+
 
 <!-- ######################### -->
-{% if n > 1 %}
+
 <table border="1">
 
    <thead>
@@ -205,7 +180,7 @@
 </table>
 
 <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
-{% endif %}
+
         </div>
 <!-- ######################### -->
         <div id="footer">

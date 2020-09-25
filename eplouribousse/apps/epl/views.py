@@ -1,8 +1,13 @@
-epl_version ="v1.10.0 (Ingeberge)"
+epl_version ="v1.10.1 (Ingeberge)"
 date_version ="September 24, 2020"
 # Mise au niveau de :
+<<<<<<< HEAD
 # epl_version ="v1.11-beta.0 (~Merofledis)"
-# date_version ="September 24, 2020"
+# date_version ="September 25, 2020"
+=======
+# epl_version ="v1.11-beta.1 (~Merofledis)"
+# date_version ="September 25, 2020"
+>>>>>>> dev
 
 
 from django.shortcuts import render
@@ -452,7 +457,7 @@ def search(request):
             elif ItemRecord.objects.filter(sid =sid, status =5):
                 progress =_("Instruction achevée")
                 if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
-                    action, laction =_("Edition de la fiche de résultante"), "ed/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
             elif ItemRecord.objects.filter(sid =sid, lid = lid, status =4):
                 if len(ItemRecord.objects.get(sid =sid, status =3)):
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
@@ -461,7 +466,7 @@ def search(request):
                     progress =_("En attente de validation finale par le contrôleur")
             elif ItemRecord.objects.filter(sid =sid, lid = lid, status =3):
                 progress =_("Instruction des éléments non reliés de votre collection")
-                action, laction =_("Instruction"), "add/" + str(sid) + "/" + str(lid)
+                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
             elif ItemRecord.objects.filter(sid =sid, lid = lid, status =2):
                 try:
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
@@ -472,41 +477,41 @@ def search(request):
                     return render(request, 'epl/search.html', locals())
             elif ItemRecord.objects.filter(sid =sid, lid = lid, status =1):
                 progress =_("Instruction des éléments reliés de votre collection")
-                action, laction =_("Instruction"), "add/" + str(sid) + "/" + str(lid)
+                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
                 if not Instruction.objects.filter(sid =sid):
-                    alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                    alteraction, lalteraction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
             elif ItemRecord.objects.filter(sid =sid, lid = lid, status =0):
                 try:
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
                     progress =_("Instruction des éléments reliés de la collection")
                     if not Instruction.objects.filter(sid =sid):
-                        alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                        alteraction, lalteraction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                     return render(request, 'epl/search.html', locals())
                 except:
                     if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
                         progress =_("Concurrence rang 1")
-                        action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                     elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
                         progress =_("Ressource non candidate du fait d'exclusion")
                     elif ItemRecord.objects.filter(sid =sid, rank =99):
                         if ItemRecord.objects.filter(sid =sid, lid =lid, rank =99):
                             progress =_("Vous devez positionnez votre collection")
-                            action, laction =_("Positionnement de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                            action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                         else:
                             progress =_("Votre collection est déjà positionnée ; modification encore possible")
-                            alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                            alteraction, lalteraction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                     else: # Arbitration, no rank =1
                         progress =_("Absence de rang 1")
-                        action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                     return render(request, 'epl/search.html', locals())
             else: #lid ="999999999"
                 if ItemRecord.objects.filter(sid =sid, status =5):
                     progress =_("Instruction achevée")
-                    alteraction, lalteraction =_("Edition des résultantes par bibliothèque"), "home/"
+                    alteraction, lalteraction =_("Edition des résultantes par bibliothèque"), "/home/"
                 elif ItemRecord.objects.filter(sid =sid, status =4):
                     if not ItemRecord.objects.filter(sid =sid, status =3):
                         progress =_("Validation finale")
-                        action, laction =_("Vérification finale"), "add/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Vérification finale"), "/add/" + str(sid) + "/" + str(lid)
                     else:
                         xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                         progress =_("Instruction des éléments non reliés de la collection")
@@ -516,7 +521,7 @@ def search(request):
                 elif ItemRecord.objects.filter(sid =sid, status =2):
                     if not ItemRecord.objects.filter(sid =sid, status =1):
                         progress =_("Validation intermédiaire")
-                        action, laction =_("Vérification intermédiaire"), "add/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Vérification intermédiaire"), "/add/" + str(sid) + "/" + str(lid)
                     else:
                         xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
                         progress =_("Instruction des éléments reliés de la collection")
@@ -1321,12 +1326,7 @@ def ranktotake(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 0, lid
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by(sort))
 
     resslist = []
     for e in reclist:
@@ -1353,26 +1353,19 @@ def modifranklist(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
 
-    # reclist = list(ItemRecord.objects.filter(lid = lid, status =0).exclude(rank = 99))
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-        .exclude(status =2).exclude(status =3).exclude(status =4).\
-        exclude(status =5).exclude(status =6).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-        .exclude(status =2).exclude(status =3).exclude(status =4).\
-        exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
-        .exclude(status =2).exclude(status =3).exclude(status =4).\
-        exclude(status =5).exclude(status =6).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
+    .exclude(status =2).exclude(status =3).exclude(status =4).\
+    exclude(status =5).exclude(status =6).order_by(sort))
 
     resslist = []
     for e in reclist:
-        if len(list(ItemRecord.objects.filter(sid = e.sid, status =1))) and not len(list(Instruction.objects.filter(sid = e.sid))):
+        if not len(list(Instruction.objects.filter(sid = e.sid))):
             resslist.append(e)
-        elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
-            resslist.append(e)
+            # Voici ce qu'il y avait auparavant comme traitement :
+        # if len(list(ItemRecord.objects.filter(sid = e.sid, status =1))) and not len(list(Instruction.objects.filter(sid = e.sid))):
+        #     resslist.append(e)
+        # elif len(list(ItemRecord.objects.filter(sid = e.sid).exclude(status =0))) ==0:
+        #     resslist.append(e)
     l = len(resslist)
 
     #Library name :
@@ -1420,12 +1413,7 @@ def xranktotake(request, lid, xlid, sort):
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 1, 1, lid, xlid
 
     #Getting ressources whose this lid must but has not yet taken rank :
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by(sort))
 
     resslist = []
     for e in reclist:
@@ -1454,28 +1442,54 @@ def excllist(request):
     for l in Library.objects.all().exclude(name ='checker').order_by('name'):
         libch += (l.name, l.name),
 
-    sortch =('excl',_("motif d'exclusion")), ('titre',_('titre')), ('cn',_('cote et titre')), ('sid',_('ppn')),
+    sortch = ('title',_('titre')), ('excl',_("motif d'exclusion")), ('cn',_('cote et titre')), ('sid',_('ppn')),
+
+    stillmodch = ('',''), ('oui',_('oui')), ('non',_('non')),
 
     class Lib_Form(forms.Form):
         lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch, label =_("Votre bibliothèque"))
         sortingby = forms.ChoiceField(required = True, widget=forms.Select, choices=sortch, label =_("Critère de tri"))
+        exclreason = forms.ChoiceField(required = False, widget=forms.Select, choices=EXCLUSION_CHOICES, label =_("Motif d'exclusion"))
+        stillmod = forms.ChoiceField(required = False, widget=forms.Select, choices=stillmodch, label =_("Modifiable ?"))
     form = Lib_Form(request.POST or None)
     if form.is_valid():
         l =1
         lib = form.cleaned_data['lib']
         sort = form.cleaned_data['sortingby']
+        exclreason = form.cleaned_data['exclreason']
+        stillmod = form.cleaned_data['stillmod']
+
         lid = Library.objects.get(name =lib).lid
         name = lib
 
-        #Getting ressources whose this lid must but has not yet taken rank :
-        if sort =='excl':
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('excl')
-        elif sort =='sid':
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('sid')
-        elif sort =='cn':
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('cn', 'title')
-        else:
-            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by('title')
+        if exclreason and stillmod:
+            excl_list = []
+            if stillmod =="oui":
+                for elmt in ItemRecord.objects.filter(lid =lid, rank =0, excl =exclreason).order_by(sort):
+                    if not Instruction.objects.filter(sid =elmt.sid):
+                        if not elmt in excl_list:
+                            excl_list.append(elmt)
+            elif stillmod =="non":
+                for elmt in ItemRecord.objects.filter(lid =lid, rank =0, excl =exclreason).order_by(sort):
+                    if Instruction.objects.filter(sid =elmt.sid):
+                        if not elmt in excl_list:
+                            excl_list.append(elmt)
+        elif exclreason and not stillmod:
+            excl_list =ItemRecord.objects.filter(lid =lid, rank =0, excl =exclreason).order_by(sort)
+        elif stillmod and not exclreason:
+            excl_list = []
+            if stillmod =="oui":
+                for elmt in ItemRecord.objects.filter(lid =lid, rank =0).order_by(sort):
+                    if not Instruction.objects.filter(sid =elmt.sid):
+                        if not elmt in excl_list:
+                            excl_list.append(elmt)
+            if stillmod =="non":
+                for elmt in ItemRecord.objects.filter(lid =lid, rank =0).order_by(sort):
+                    if Instruction.objects.filter(sid =elmt.sid):
+                        if not elmt in excl_list:
+                            excl_list.append(elmt)
+        elif not stillmod and not exclreason:
+            excl_list =ItemRecord.objects.filter(lid =lid, rank =0).order_by(sort)
 
         length =len(excl_list)
 
@@ -1506,17 +1520,9 @@ def faulty(request):
         lid = Library.objects.get(name =lib).lid
         name = lib
 
-        #Getting ressources whose this lid must but has not yet taken rank :
-        if sort =='excl':
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('excl')
-        elif sort =='sid':
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('sid')
-        elif sort =='cn':
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('cn', 'title')
-        else:
-            excl_list =ItemRecord.objects.filter(lid =lid, status =6).order_by('title')
+        faulty_list =ItemRecord.objects.filter(lid =lid, status =6).order_by(sort)
 
-        length =len(excl_list)
+        length =len(faulty_list)
 
     return render(request, 'epl/faulty.html', locals())
 
@@ -1589,12 +1595,7 @@ def arbrk1(request, lid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1627,12 +1628,7 @@ def arbnork1(request, lid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1743,12 +1739,7 @@ def x1arb(request, lid, xlid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, rank = 1, status =0).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1783,12 +1774,7 @@ def x0arb(request, lid, xlid, sort):
     #Initialization of the ressources to arbitrate :
     resslist = []
 
-    if sort =='sid':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    reclist = list(ItemRecord.objects.filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     for e in reclist:
         sid = e.sid
@@ -1818,16 +1804,8 @@ def instrtodo(request, lid, sort):
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 3, 0, lid
 
     if lid !="999999999":
-        # Ressources whose the lid identified library has to deal with (status =1 or 3)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-            exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-            exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-            exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
+        l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
+        exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
 
     elif lid =="999999999":
 
@@ -1866,16 +1844,9 @@ def instroneb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
+        .exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank =1 and has to deal with bound elements (status =1)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
-            .exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
-            .exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
-            .exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -1895,19 +1866,10 @@ def instrotherb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
+        exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
+        .exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank !=1 and has to deal with bound elements (status =1)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
-            exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
-            .exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
-            exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
-            .exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
-            exclude(status =0).exclude(status =2).exclude(status =3).exclude(status =4)\
-            .exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -1927,16 +1889,9 @@ def instronenotb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
+        exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank =1 and has to deal with not bound elements (status =3)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -1956,16 +1911,9 @@ def instrothernotb(request, lid, sort):
     version =epl_version
 
     if lid !="999999999":
+        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
+        exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
         # Ressources whose the lid identified library has rank !=1 and has to deal with not bound elements (status =3)
-        if sort =='sid':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-        elif sort =='cn':
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-        else:
-            l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
-            exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
 
     elif lid =="999999999":
         do = home(request)
@@ -2018,15 +1966,8 @@ def xinstrlist(request, lid, xlid, sort):
     name = Library.objects.get(lid =lid).name
     xname = Library.objects.get(lid =xlid).name
 
-    if sort =='sid':
-        lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-        exclude(status =4).exclude(status =5).exclude(status =6).order_by('sid'))
-    elif sort =='cn':
-        lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-        exclude(status =4).exclude(status =5).exclude(status =6).order_by('cn', 'title'))
-    else:
-        lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
-        exclude(status =4).exclude(status =5).exclude(status =6).order_by('title'))
+    lprov = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
+    exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
 
     l =[]
     for e in lprov:
@@ -2050,12 +1991,7 @@ def tobeedited(request, lid, sort):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =0).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2086,12 +2022,7 @@ def mothered(request, lid, sort):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2122,12 +2053,7 @@ def notmothered(request, lid, sort):
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2192,12 +2118,7 @@ def xmothered(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 3, lid, xlid
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2224,12 +2145,7 @@ def xnotmothered(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 4, lid, xlid
 
-    if sort =='sid':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('sid'))
-    elif sort =='cn':
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('cn', 'title'))
-    else:
-        l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by('title'))
+    l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
     #Initializing a list of ressources to edit :
     resslist = []
@@ -2284,140 +2200,124 @@ def current_status(request, sid, lid):
     k = logstatus(request)
     version =epl_version
 
-    libch = ('checker','checker'),
-    for l in Library.objects.all().exclude(name ='checker').order_by('name'):
-        libch += (l.name, l.name),
-
-    class SearchForm(forms.Form):
-        sid = forms.CharField(required = True, label =_("ppn"))
-        lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch, label =_("Votre bibliothèque"))
-
     l =0
-# form = SearchForm(request.POST or None)
-# if form.is_valid():
-    # sid = form.cleaned_data['sid']
+
     lib = Library.objects.get(lid =lid).name
-    # lid = Library.objects.get(name =lib).lid
     n = len(ItemRecord.objects.filter(sid =sid))
     ranklist =[] # if n==0
     progress =0
     action, laction =0,0
     alteraction, lalteraction =0,0
-    if ItemRecord.objects.filter(sid =sid):
-        # Bibliographic data :
-        title = ItemRecord.objects.filter(sid =sid)[0].title
-        issn = ItemRecord.objects.filter(sid =sid)[0].issn
-        pubhist = ItemRecord.objects.filter(sid =sid)[0].pubhist
-    if ItemRecord.objects.filter(sid =sid, lid =lid):
-        l =1
-        # ItemRecord data :
-        holdstat = ItemRecord.objects.get(sid =sid, lid = lid).holdstat
-        missing = ItemRecord.objects.get(sid =sid, lid = lid).missing
-        cn = ItemRecord.objects.get(sid =sid, lid = lid).cn
+    # Bibliographic data :
+    title = ItemRecord.objects.filter(sid =sid)[0].title
+    issn = ItemRecord.objects.filter(sid =sid)[0].issn
+    pubhist = ItemRecord.objects.filter(sid =sid)[0].pubhist
 
-    if n ==1:
-        bil =Library.objects.get(lid =ItemRecord.objects.get(sid =sid).lid).name
+    l =1
+    # ItemRecord data :
+    holdstat = ItemRecord.objects.get(sid =sid, lid = lid).holdstat
+    missing = ItemRecord.objects.get(sid =sid, lid = lid).missing
+    cn = ItemRecord.objects.get(sid =sid, lid = lid).cn
 
-    elif n >1:
-        #Getting instructions for the considered ressource :
-        instrlist = Instruction.objects.filter(sid = sid).order_by('line')
+    #Getting instructions for the considered ressource :
+    instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
+    try:
+        pklastone = Instruction.objects.filter(sid = sid).latest('pk').pk
+    except:
+        pklastone =0
+
+    #Attachements :
+    attchmt =ItemRecord.objects.filter(sid =sid).order_by('-status')
+    attlist = [(Library.objects.get(lid =element.lid).name, element) for element in attchmt]
+
+    rklist = ItemRecord.objects.filter(sid =sid).order_by('rank', 'lid')
+    ranklist = [(element, Library.objects.get(lid =element.lid).name) for element in rklist]
+    if ItemRecord.objects.filter(sid =sid, status =6):
+        progress =_("Une anomalie a été constatée au cours de l'instruction de la résultante")
+    elif ItemRecord.objects.filter(sid =sid, status =5):
+        progress =_("Instruction achevée")
+        if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
+            action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
+    elif ItemRecord.objects.filter(sid =sid, lid = lid, status =4):
+        if len(ItemRecord.objects.get(sid =sid, status =3)):
+            xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
+            progress =_("Instruction des éléments non reliés de la collection")
+        else: # tous les enregistrements sont au statut 4
+            progress =_("En attente de validation finale par le contrôleur")
+    elif ItemRecord.objects.filter(sid =sid, lid = lid, status =3):
+        progress =_("Instruction des éléments non reliés de votre collection")
+        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+    elif ItemRecord.objects.filter(sid =sid, lid = lid, status =2):
         try:
-            pklastone = Instruction.objects.filter(sid = sid).latest('pk').pk
-        except:
-            pklastone =0
-
-        #Attachements :
-        attchmt =ItemRecord.objects.filter(sid =sid).order_by('-status')
-        attlist = [(Library.objects.get(lid =element.lid).name, element) for element in attchmt]
-
-        rklist = ItemRecord.objects.filter(sid =sid).order_by('rank', 'lid')
-        ranklist = [(element, Library.objects.get(lid =element.lid).name) for element in rklist]
-        if ItemRecord.objects.filter(sid =sid, status =6):
-            progress =_("Une anomalie a été constatée au cours de l'instruction de la résultante")
-        elif ItemRecord.objects.filter(sid =sid, status =5):
-            progress =_("Instruction achevée")
-            if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
-                action, laction =_("Edition de la fiche de résultante"), "ed/" + str(sid) + "/" + str(lid)
-        elif ItemRecord.objects.filter(sid =sid, lid = lid, status =4):
-            if len(ItemRecord.objects.get(sid =sid, status =3)):
-                xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
-                progress =_("Instruction des éléments non reliés de la collection")
-            else: # tous les enregistrements sont au statut 4
-                progress =_("En attente de validation finale par le contrôleur")
-        elif ItemRecord.objects.filter(sid =sid, lid = lid, status =3):
-            progress =_("Instruction des éléments non reliés de votre collection")
-            action, laction =_("Instruction"), "add/" + str(sid) + "/" + str(lid)
-        elif ItemRecord.objects.filter(sid =sid, lid = lid, status =2):
-            try:
-                xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                progress =_("Instruction des éléments reliés de la collection")
-                return render(request, 'epl/search.html', locals())
-            except: # tous les enregistrements sont au statut 2
-                progress =_("En attente de validation intermédiaire par le contrôleur")
-                return render(request, 'epl/search.html', locals())
-        elif ItemRecord.objects.filter(sid =sid, lid = lid, status =1):
-            progress =_("Instruction des éléments reliés de votre collection")
-            action, laction =_("Instruction"), "add/" + str(sid) + "/" + str(lid)
+            xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
+            progress =_("Instruction des éléments reliés de la collection")
+            return render(request, '/epl/current.html', locals())
+        except: # tous les enregistrements sont au statut 2
+            progress =_("En attente de validation intermédiaire par le contrôleur")
+            return render(request, '/epl/current.html', locals())
+    elif ItemRecord.objects.filter(sid =sid, lid = lid, status =1):
+        progress =_("Instruction des éléments reliés de votre collection")
+        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+        if not Instruction.objects.filter(sid =sid):
+            alteraction, lalteraction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+    elif ItemRecord.objects.filter(sid =sid, lid = lid, status =0):
+        try:
+            xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
+            progress =_("Instruction des éléments reliés de la collection")
             if not Instruction.objects.filter(sid =sid):
-                alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
-        elif ItemRecord.objects.filter(sid =sid, lid = lid, status =0):
-            try:
-                xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                progress =_("Instruction des éléments reliés de la collection")
-                if not Instruction.objects.filter(sid =sid):
-                    alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
-                return render(request, 'epl/search.html', locals())
-            except:
-                if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
-                    progress =_("Concurrence rang 1")
-                    action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
-                elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
-                    progress =_("Ressource non candidate du fait d'exclusion")
-                elif ItemRecord.objects.filter(sid =sid, rank =99):
-                    if ItemRecord.objects.filter(sid =sid, lid =lid, rank =99):
-                        progress =_("Vous devez positionnez votre collection")
-                        action, laction =_("Positionnement de votre collection"), "rk/" + str(sid) + "/" + str(lid)
-                    else:
-                        progress =_("Votre collection est déjà positionnée ; modification encore possible")
-                        alteraction, lalteraction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
-                else: # Arbitration, no rank =1
-                    progress =_("Absence de rang 1")
-                    action, laction =_("Modification du rang de votre collection"), "rk/" + str(sid) + "/" + str(lid)
-                return render(request, 'epl/search.html', locals())
-        else: #lid ="999999999"
-            if ItemRecord.objects.filter(sid =sid, status =5):
-                progress =_("Instruction achevée")
-                alteraction, lalteraction =_("Edition des résultantes par bibliothèque"), "home/"
-            elif ItemRecord.objects.filter(sid =sid, status =4):
-                if not ItemRecord.objects.filter(sid =sid, status =3):
-                    progress =_("Validation finale")
-                    action, laction =_("Vérification finale"), "add/" + str(sid) + "/" + str(lid)
+                alteraction, lalteraction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+            return render(request, 'epl/current.html', locals())
+        except:
+            if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
+                progress =_("Concurrence rang 1")
+                action, laction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+            elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
+                progress =_("Ressource non candidate du fait d'exclusion")
+            elif ItemRecord.objects.filter(sid =sid, rank =99):
+                if ItemRecord.objects.filter(sid =sid, lid =lid, rank =99):
+                    progress =_("Vous devez positionnez votre collection")
+                    action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                 else:
-                    xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
-                    progress =_("Instruction des éléments non reliés de la collection")
-            elif ItemRecord.objects.filter(sid =sid, status =3):
+                    progress =_("Votre collection est déjà positionnée ; modification encore possible")
+                    alteraction, lalteraction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+            else: # Arbitration, no rank =1
+                progress =_("Absence de rang 1")
+                action, laction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+            return render(request, 'epl/current.html', locals())
+    else: #lid ="999999999"
+        if ItemRecord.objects.filter(sid =sid, status =5):
+            progress =_("Instruction achevée")
+            alteraction, lalteraction =_("Edition des résultantes par bibliothèque"), "/home/"
+        elif ItemRecord.objects.filter(sid =sid, status =4):
+            if not ItemRecord.objects.filter(sid =sid, status =3):
+                progress =_("Validation finale")
+                action, laction =_("Vérification finale"), "/add/" + str(sid) + "/" + str(lid)
+            else:
                 xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                 progress =_("Instruction des éléments non reliés de la collection")
-            elif ItemRecord.objects.filter(sid =sid, status =2):
-                if not ItemRecord.objects.filter(sid =sid, status =1):
-                    progress =_("Validation intermédiaire")
-                    action, laction =_("Vérification intermédiaire"), "add/" + str(sid) + "/" + str(lid)
-                else:
-                    xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                    progress =_("Instruction des éléments reliés de la collection")
-            elif ItemRecord.objects.filter(sid =sid, status =1):
+        elif ItemRecord.objects.filter(sid =sid, status =3):
+            xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
+            progress =_("Instruction des éléments non reliés de la collection")
+        elif ItemRecord.objects.filter(sid =sid, status =2):
+            if not ItemRecord.objects.filter(sid =sid, status =1):
+                progress =_("Validation intermédiaire")
+                action, laction =_("Vérification intermédiaire"), "/add/" + str(sid) + "/" + str(lid)
+            else:
                 xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
                 progress =_("Instruction des éléments reliés de la collection")
-            else: # tous les enregistrements ont le statut =0
-                if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
-                    progress =_("Concurrence rang 1")
-                elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
-                    progress =_("Ressource non candidate du fait d'exclusion")
-                elif ItemRecord.objects.filter(sid =sid, rank =99):
-                    progress =_("Positionnement")
-                else: # Arbitration, no rank =1
-                    progress =_("Absence de rang 1")
+        elif ItemRecord.objects.filter(sid =sid, status =1):
+            xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
+            progress =_("Instruction des éléments reliés de la collection")
+        else: # tous les enregistrements ont le statut =0
+            if len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
+                progress =_("Concurrence rang 1")
+            elif len(ItemRecord.objects.filter(sid =sid).exclude(rank=0)) <2:
+                progress =_("Ressource non candidate du fait d'exclusion")
+            elif ItemRecord.objects.filter(sid =sid, rank =99):
+                progress =_("Positionnement")
+            else: # Arbitration, no rank =1
+                progress =_("Absence de rang 1")
 
     return render(request, 'epl/current.html', locals())
 
