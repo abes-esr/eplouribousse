@@ -1502,7 +1502,7 @@ def faulty(request):
     for l in Library.objects.all().exclude(name ='checker').order_by('name'):
         libch += (l.name, l.name),
 
-    sortch =('titre',_('titre')), ('cn',_('cote et titre')), ('sid',_('ppn')),
+    sortch =('title',_('titre')), ('cn',_('cote et titre')), ('sid',_('ppn')),
 
     class Lib_Form(forms.Form):
         lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch, label =_("Votre bibliothèque"))
