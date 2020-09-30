@@ -1,8 +1,8 @@
-epl_version ="v1.10.2 (Ingeberge)"
+epl_version ="v1.10.3 (Ingeberge)"
 date_version ="September 24, 2020"
 # Mise au niveau de :
-epl_version ="v1.11-beta.2 (~Merofledis)"
-date_version ="September 29, 2020"
+# epl_version ="v1.11-beta.3 (~Merofledis)"
+# date_version ="September 30, 2020"
 
 
 from django.shortcuts import render
@@ -1696,7 +1696,8 @@ def xarbitration(request, lid, xlid, sort):
         if len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0 and \
         len(ItemRecord.objects.filter(sid =sid, rank =99)) ==0 and \
         len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-            resslistb.append(e)
+            if ItemRecord.objects.filter(sid =sid, lid = xlid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
+                resslistb.append(e)
 
     l = resslista + resslistb
 
