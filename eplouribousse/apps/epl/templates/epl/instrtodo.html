@@ -12,70 +12,80 @@
 
 
     </head>
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/contact">{% trans "Contact" %}</a>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+          <h2>{{ libname }} - {% trans "ressources à instruire" %} - {% trans "toutes formes, tous rangs" %}</h2>
+
+          <p>{% trans "Nombre de ressources concernées" %} : {{ size }}
+          {% if lid != "999999999" %}
+          {% if nlib > 2 %}
+            ~  <a href="/instrfilter/{{ lid }}">{% trans "Restreindre la liste aux instructions avec une autre bibliothèque" %}</a>
+          {% else %}
+          {% endif %}
+          {% endif %}
+          </p>
+
+          {% if lid == "999999999" %}
+          <b><font color= #a7a7a7 >1/2</font></b> : {% trans "Contrôle à mi-chemin" %}  ~  <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Contrôle final" %}
+          ==> <a href="/xcheck">{% trans "Filtrer la liste" %}</a>
+          <p></p>
+          {% elif lid != "999999999" %}
+
+          <p>
+          <b><font color= #a7a7a7 >1/2</font></b> ou <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Phase d'instruction courante, 1 = reliés, 2 = non reliés" %} (<b><font color= #a7a7a7 >*</font></b> = {% trans "collection mère" %})
+            ==>  <b><font color= #a7a7a7 >*1/2</font></b> : <a href="/bd1/{{ lid }}/title">{% trans "liste" %}</a> - <b><font color= #a7a7a7 >*2/2</font></b> : <a href="/notbd1/{{ lid }}/title">{% trans "liste" %}</a> - <b><font color= #a7a7a7 >1/2</font></b> : <a href="/bdnot1/{{ lid }}/title">{% trans "liste" %}</a> - <b><font color= #a7a7a7 >2/2</font></b> : <a href="/notbdnot1/{{ lid }}/title">{% trans "liste" %}</a>
+          </p>
+          <p></p>
+          {% endif %}
+
+          <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+          <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+
+          {% if lid == "999999999" %}
+
+              {% if sort == 'title' %}
+              <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+                {% elif sort == 'sid' %}
+                <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/title">{% trans "titre" %}</a>)</p>
+              {% endif %}
+
+
+          {% elif lid != "999999999" %}
+
+              {% if sort == 'title' %}
+              <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+               / <a href="/allinstr/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+               {% elif sort == 'cn' %}
+               <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/allinstr/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+                {% elif sort == 'sid' %}
+                <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/allinstr/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+              {% endif %}
+
+          {% endif %}
+
+
+        <HR>
+      </div>
 
 
     <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
 
-      <p></p>
-      <h2>{{ libname }} - {% trans "ressources à instruire" %} - {% trans "toutes formes, tous rangs" %}</h2>
-        <div id="content">
-
-      <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
-
-      {% if lid == "999999999" %}
-      <b><font color= #a7a7a7 >1/2</font></b> : {% trans "Contrôle à mi-chemin" %}
-      <p></p>
-      <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Contrôle final" %}
-      <p><a href="/xcheck">{% trans "Filtrer la liste" %}</a></p>
-      <p></p>
-      {% elif lid != "999999999" %}
-
-        {% if nlib > 2 %}
-        <p><a href="/instrfilter/{{ lid }}">{% trans "Restreindre la liste aux instructions avec une autre bibliothèque" %}</a></p>
-        {% else %}
-        {% endif %}
-
-      <p><b><font color= #a7a7a7 >1/2</font></b> ou <b><font color= #a7a7a7 >2/2</font></b> : {% trans "Phase d'instruction courante, 1 = reliés, 2 = non reliés" %} (<b><font color= #a7a7a7 >*</font></b> = {% trans "collection mère" %})</p>
-      <b><font color= #a7a7a7 >*1/2</font></b> : <a href="/bd1/{{ lid }}/title">{% trans "liste" %}</a> - <b><font color= #a7a7a7 >*2/2</font></b> : <a href="/notbd1/{{ lid }}/title">{% trans "liste" %}</a> - <b><font color= #a7a7a7 >1/2</font></b> : <a href="/bdnot1/{{ lid }}/title">{% trans "liste" %}</a> - <b><font color= #a7a7a7 >2/2</font></b> : <a href="/notbdnot1/{{ lid }}/title">{% trans "liste" %}</a>
-      <p></p>
-      {% endif %}
-
-      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-      <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
-
-      {% if lid == "999999999" %}
-
-          {% if sort == 'title' %}
-          <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-            {% elif sort == 'sid' %}
-            <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/title">{% trans "titre" %}</a>)</p>
-          {% endif %}
-
-
-      {% elif lid != "999999999" %}
-
-          {% if sort == 'title' %}
-          <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/cn">{% trans "cote et titre" %}</a>
-           / <a href="/allinstr/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-           {% elif sort == 'cn' %}
-           <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/allinstr/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-            {% elif sort == 'sid' %}
-            <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/allinstr/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/allinstr/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
-          {% endif %}
-
-      {% endif %}
-
+      <div id="content">
       <ul>
 
-
-
-            <HR>
+            <!-- <HR> -->
           {% if lid == "999999999" %}
               {% for elmt in l %}
                   {% if elmt.status == 2 %}
@@ -121,17 +131,6 @@
 
       </ul>
 
-        </div>
-
-        {% if lid != lidchecker %}
-
-        <div id="menugeneral">
-        <p><a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
-        </div>
-        {% endif %}
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">

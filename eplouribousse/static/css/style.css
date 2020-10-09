@@ -108,6 +108,9 @@ h2 {
 }
 
 #credits {
+    position: sticky;
+    bottom: 0;
+    left: 0;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #808285;
@@ -200,4 +203,32 @@ form table, th, td {
 
 #highlight a {
     color: #ff1d44;
+}
+
+/* [STICKY MENU] */
+/* Merci à W.S. Toh : https://code-boxx.com/simple-sticky-menu-css/ */
+#sticky-menu {
+  /* position: sticky; */
+  top: 0;
+  left: 0;
+  /* width: 0 auto; */
+  background: #ff1d44;
+  margin: 0 auto;
+}
+
+#sticky-menu a {
+  display: inline-block;
+  color: #fff;
+  padding: 10px 15px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#sticky-section {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 80%;
+  background: #ffffff;
+  margin: 0 auto;
 }

@@ -14,7 +14,6 @@ urlpatterns = [
     path('dashboard', views.indicators, name='indicators'),
     path('search', views.search, name='searching a serial'),
 
-
     path('rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),
 
     path('add/<str:sid>/<str:lid>', views.addinstr, name='add instruction'),
