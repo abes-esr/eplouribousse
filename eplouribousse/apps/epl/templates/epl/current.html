@@ -15,21 +15,33 @@
 
     </head>
 
+
+            <div id="sticky-section">
+              <nav id="sticky-menu">
+                  <a href="/">{% trans "Accueil" %}</a>
+                  <a href="/dashboard">{% trans "Supervision" %}</a>
+                  <a href="/search">{% trans "Recherche (bêta)" %}</a>
+                  <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+                  <a target="_blank" href="/about">{% trans "A propos" %}</a>
+              </nav>
+                  {% if k != 0 %}
+                  <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+                  {% else %}
+                  <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+                  <!-- (User : Anonymous) -->
+                  {% endif %}
+                  <h2>{{ lib }} - {{ sid }} : {% trans "Statut courant" %}</h2>
+
+                    <!-- <h5>{% trans "Données bibliographiques" %} :</h5> -->
+                    <p>{{ title }}</p>
+                    <p>{% trans "ppn" %} : {{ sid }} | {% trans "issn" %} : {{ issn }} | {% trans "Période de publication" %} : {{ pubhist }}</p>
+
+                <HR>
+              </div>
+
     <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
 
-      <h2>{{ lib }} - {{ sid }} : {% trans "Statut courant" %}</h2>
-
-        <!-- <h5>{% trans "Données bibliographiques" %} :</h5> -->
-        <p>{{ title }}</p>
-        <p>{% trans "ppn" %} : {{ sid }} | {% trans "issn" %} : {{ issn }} | {% trans "Période de publication" %} : {{ pubhist }}</p>
-
+	        <div id="content">
           <!-- <h5>{% trans "Données de rattachement" %} :</h5> -->
           <p>{% trans "Cote" %} : {{ cn }}</p>
           <p>{% trans "état de collection" %} : {{ holdstat }}</p>
@@ -39,7 +51,7 @@
 
 
 
-	        <div id="content">
+
 
 <table border="1">
 
@@ -183,9 +195,7 @@
 
         </div>
 <!-- ######################### -->
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
-        </div>
+
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
