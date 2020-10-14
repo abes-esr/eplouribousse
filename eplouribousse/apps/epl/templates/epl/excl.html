@@ -15,38 +15,50 @@
 
     </head>
 
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+
+                <h2>{% trans "Collections exclues" %} : {{ name }}</h2>
+
+                  <form method="post">{% csrf_token %}
+                      <p>{% trans "Votre bibliothèque" %} :  {{ form.lib }}
+                        {% trans "Critère de tri" %} :  {{ form.sortingby }}
+                        {% trans "Motif d'exclusion" %} :  {{ form.exclreason }}
+                        {% trans "Modifiable ?" %} :  {{ form.stillmod }}</p>
+                  <p><input type="submit" value="{% trans "Valider" %}"> <button><b><a href="/excl">{% trans "Réinitialiser" %}</a></b></button></p>
+                  <!-- </div> -->
+                  </form>
+
+
+                      {% if l == 1 %}
+                      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }} ~ {% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+                      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+
+        <HR>
+      </div>
+
     <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
 
-      <h2>{% trans "Collections exclues" %} : {{ name }}</h2>
-
-        <form method="post">{% csrf_token %}
-            <p>{% trans "Votre bibliothèque" %} :  {{ form.lib }}
-              {% trans "Critère de tri" %} :  {{ form.sortingby }}
-              {% trans "Motif d'exclusion" %} :  {{ form.exclreason }}
-              {% trans "Modifiable ?" %} :  {{ form.stillmod }}
-               <button><b><a href="/excl">{% trans "Réinitialiser" %}</a></b></button></p>
-        <p><input type="submit" value="{% trans "Valider" %}"></p>
-        <!-- </div> -->
-        </form>
 
 	        <div id="content">
-            {% if l == 1 %}
-            <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }}</p>
-            <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-            <p>{% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
-
             <ul>
 
              {% for elmt in excl_list %}
 
-                   <HR>
+                   <!-- <HR> -->
              <p></p>
                 <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
@@ -55,17 +67,14 @@
                 {% if elmt.comm != "" %}
                 <li><b>{% trans "Commentaire" %} :</b> <font color= #3498db  >{{ elmt.comm }}</font></li>
                 {% endif %}
-
-             {% endfor %}
                   <HR>
+             {% endfor %}
+
 
             </ul>
             {% endif %}
           </div>
 
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
-        </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
