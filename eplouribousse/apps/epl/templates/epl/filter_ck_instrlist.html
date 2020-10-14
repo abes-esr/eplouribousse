@@ -14,35 +14,38 @@
 
     </head>
 
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+      </nav>
+
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+          <h2>{% trans "Filtre pour les contrôles de fin de phase" %}</h2>
+
+
+
+            <form method="post">
+
+                {% csrf_token %}
+        <div id="content">
+                <ul>{% trans "Phase" %} {{ form.phase }}</ul>
+                <ul>{% trans "Collection impliquée" %} {% trans "(C'est l'opérateur 'ou' qui est appliqué en cas de choix multiple)" %} {{ form.name }}</ul>
+                <ul><input type="submit" value="{% trans "Valider" %}"></ul>
+        </div>
+            </form>
+      </div>
 
     <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
-        <h2>{% trans "Filtre pour les contrôles de fin de phase" %}</h2>
 
-
-        <div id="content">
-          <form method="post">
-
-              {% csrf_token %}
-
-              <ul>{% trans "Phase" %} {{ form.phase }}</ul>
-              <ul>{% trans "Collection impliquée" %} {% trans "(C'est l'opérateur 'ou' qui est appliqué en cas de choix multiple)" %} {{ form.name }}</ul>
-
-              <input type="submit" value="{% trans "Valider" %}">
-
-          </form>
-        </div>
-
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
-        </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>

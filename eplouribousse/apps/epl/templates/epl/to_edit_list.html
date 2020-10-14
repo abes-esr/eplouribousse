@@ -28,7 +28,7 @@
           {% endif %}
           <h2>{{ libname }} - {% trans "ressources éditables" %}</h2>
 
-          <p>{% trans "Nombre de ressources concernées" %} : {{ size }} ~ <a target="_blank" href="/edallpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a></p>
+          <p>{% trans "Nombre de ressources concernées" %} : {{ size }} ~ <a target="_blank" href="/edallpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a> ~ {% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
           <p></p>
           <p>
             <b><font color= #a7a7a7 >*</font></b> : {% trans "Votre collection est la collection mère" %}
@@ -39,7 +39,6 @@
 
           <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
-        <p>{% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
             {% if sort == 'title' %}
             <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/edlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
