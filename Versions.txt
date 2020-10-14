@@ -15,6 +15,9 @@ Version 1.8 (Radegonde)                     2020.09.02
 Version 1.9 (~Walderade)                    beta
 Version 1.10 (Ingeberge)                    2020.09.24
 Version 1.11 (~Merofledis)                  beta
+Version 1.10 (Audovera)                     2020.10.14
+Version 1.11 (~Galswinthe)                  beta
+
 
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)

@@ -13,79 +13,80 @@
 
     </head>
 
-
-    <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
-
-      <h2>{{ libname }} - {% trans "Arbitrages" %}</h2>
-      <h2>({% trans "Autre collection impliquée dans l'arbitrage" %} : {{ xlibname }})</h2>
-      <div id="content">
-
-      <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
-
-      <p><b><font color= #a7a7a7 >1</font></b> : <a href="/arb1list/{{ lid }}/{{ xlid }}/title">{% trans "Concurrence sur le rang 1" %}</a></p>
-      <p><b><font color= #a7a7a7 >ø</font></b> : <a href="/arb0list/{{ lid }}/{{ xlid }}/title">{% trans "Rang 1 non revendiqué" %}</a></p>
-
-      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-
-          <p>{% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
-
-
-              {% if sort == 'title' %}
-              <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/arblist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
-               / <a href="/arblist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
-               {% elif sort == 'cn' %}
-               <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/arblist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/arblist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
-                {% elif sort == 'sid' %}
-                <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/arblist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/arblist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)</p>
-              {% endif %}
-
-
-          {% if lastrked != None %}
-            {% if lastrked.lid == lid %}
-          <div id="highlight">
-          <p><b>{% trans "Dernier positionnement (session en cours)" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
-             {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
-          </div>
-            {% endif %}
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
           {% endif %}
 
+
+
+
+                <h2>{{ libname }} (& {{ xlibname }}) - {% trans "Arbitrages" %}</h2>
+
+                <p>{% trans "Nombre de ressources concernées" %} : {{ size }} ~ {% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
+
+                <p>[<b><font color= #a7a7a7 >1</font></b> : <a href="/arb1list/{{ lid }}/{{ xlid }}/title">{% trans "Concurrence sur le rang 1" %}</a>] ~ [<b><font color= #a7a7a7 >ø</font></b> : <a href="/arb0list/{{ lid }}/{{ xlid }}/title">{% trans "Rang 1 non revendiqué" %}</a>]</p>
+
+                <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+
+
+                        {% if sort == 'title' %}
+                        <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/arblist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
+                         / <a href="/arblist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+                         {% elif sort == 'cn' %}
+                         <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/arblist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/arblist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+                          {% elif sort == 'sid' %}
+                          <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/arblist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/arblist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)</p>
+                        {% endif %}
+
+
+                    {% if lastrked != None %}
+                      {% if lastrked.lid == lid %}
+                    <div id="highlight">
+                    <p><b>{% trans "Dernier positionnement (session en cours)" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
+                       {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
+                    </div>
+                      {% endif %}
+                    {% endif %}
+
+        <HR>
+      </div>
+
+    <body>
+
+      <div id="content">
             <ul>
 
               {% for elmt in resslist %}
                   {% if elmt.rank == 1 %}
-                            <HR>
+                            <!-- <HR> -->
                 <p></p>
                 <li><b><font color= #a7a7a7 >1 </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
                 <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
                   {% elif elmt.rank != 1 %}
-                            <HR>
+                            <!-- <HR> -->
                 <p></p>
                 <li><b><font color= #a7a7a7 >ø </font>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
                 <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
                   {% endif %}
+                  <HR>
+
               {% endfor %}
-                            <HR>
             </ul>
         </div>
 
-        <div id="menugeneral">
-
-            <p><b>{% trans "Menu" %} : </b><a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instructions" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
-
-        </div>
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
-        </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>

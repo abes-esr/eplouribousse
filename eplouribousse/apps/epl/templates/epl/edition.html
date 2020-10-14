@@ -14,27 +14,41 @@
 
     </head>
 
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+      </nav>
+      <nav id="sticky-menu">
+        {% trans "Instructions" %} :
+        <a target="_blank" href="/pdf/{{ sid }}/{{ lid }}">{% trans "Export pdf" %}</a>
+        <a href="/router">{% trans "Retour à la liste" %}</a></p>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+          <h2>{{ name }} - {% trans "Edition" %}</h2>
+
+
+          <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
+          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+            {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}</p>
+
+
+          <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}.</i></p>
+          <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font></p>
+      </div>
 
     <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
-        <h2>{{ name }} - {% trans "Edition" %}</h2>
 
 
         <div id="content">
-
-        <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
-        <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-          {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}</p>
-
-
-        <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}.</i></p>
-        <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font></p>
           <table border="1">
 
 
@@ -77,18 +91,6 @@
 
 
           </table>
-        </div>
-
-        <div id="menucontextuel">
-            <p><b>{% trans "Menu contextuel" %} :</b> <a target="_blank" href="/pdf/{{ sid }}/{{ lid }}">{% trans "Export pdf" %}</a> - <a href="/router">{% trans "Retour à la liste" %}</a></p>
-        </div>
-
-        <div id="menugeneral">
-            <p><b>{% trans "Menu général" %} :</b> <a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instructions" %}</a></p>
-        </div>
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">

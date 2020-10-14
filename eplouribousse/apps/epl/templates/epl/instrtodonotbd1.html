@@ -12,64 +12,69 @@
 
 
     </head>
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+      </nav>
+      <nav id="sticky-menu">
+        {% trans "Instructions" %} :
+        <a href="/bd1/{{ lid }}/title">{% trans "reliés rang 1" %}</a>
+        <a href="/bdnot1/{{ lid }}/title">{% trans "reliés autres rangs" %}</a>
+        <a href="/notbdnot1/{{ lid }}/title">{% trans "non reliés autres rangs" %}</a>
+        <a href="/allinstr/{{ lid }}/title">{% trans "tout" %}</a>
+      </nav>
 
 
-    <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
-      <h2>{{ libname }} - {% trans "ressources à instruire" %} - {% trans "forme non reliée, rang 1" %}</h2>
-
-		<div id="content">
-
-      <p>{% trans "Nombre de ressources concernées" %} : {{ size }}</p>
-
-      <p></p>
-      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-      <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
-
-
-          {% if sort == 'title' %}
-          <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/notbd1/{{ lid }}/cn">{% trans "cote et titre" %}</a>
-           / <a href="/notbd1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-           {% elif sort == 'cn' %}
-           <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/notbd1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/notbd1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-            {% elif sort == 'sid' %}
-            <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/notbd1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/notbd1/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
           {% endif %}
 
 
+          <h2>{{ libname }} - {% trans "Instructions" %} - {% trans "non reliés, rang 1" %}</h2>
+
+          <p>{% trans "Nombre de ressources concernées" %} : {{ size }} ~ {% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+
+          <p></p>
+          <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+
+
+              {% if sort == 'title' %}
+              <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/notbd1/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+               / <a href="/notbd1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+               {% elif sort == 'cn' %}
+               <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/notbd1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/notbd1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+                {% elif sort == 'sid' %}
+                <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/notbd1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/notbd1/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+              {% endif %}
+        <HR>
+      </div>
+
+    <body>
+
+		<div id="content">
       <ul>
 
       {% for elmt in l %}
 
-            <HR>
+            <!-- <HR> -->
       <p></p>
           <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
           <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
           <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
-
-      {% endfor %}
             <HR>
+      {% endfor %}
+
 
       </ul>
         </div>
-        <div id="menucontextuel">
 
-        <p><b>{% trans "Menu [instructions]" %} : </b><a href="/allinstr/{{ lid }}/title">{% trans "tout" %}</a> - <a href="/bd1/{{ lid }}/title">{% trans "reliés rang 1" %}</a> - <a href="/bdnot1/{{ lid }}/title">{% trans "reliés autres rangs" %}</a> - <a href="/notbdnot1/{{ lid }}/title">{% trans "non reliés autres rangs" %}</a></p>
-
-        <div id="menugeneral">
-
-        <p><b>{% trans "Menu général" %} : </b><a href="/rklist/{{ lid }}/title">{% trans "Positionnement" %}</a> - <a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
-
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
-        </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>

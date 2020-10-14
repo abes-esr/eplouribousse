@@ -13,31 +13,41 @@
 
     </head>
 
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/router">{% trans "Retour à la liste" %}</a>
+          <a href="/">{% trans "Accueil" %}</a>
+          <a href="/dashboard">{% trans "Supervision" %}</a>
+          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+      </nav>
+
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+          <h2>{{ lib.name }} - {% trans "Positionnement" %}</h2>
+
+
+          <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }}</p>
+          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ress.sid }}" target="_blank">{{ ress.sid }}</a>
+           / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }}</p>
+        <HR>
+      </div>
 
     <body>
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
-      <h2>{{ lib.name }} - {% trans "Positionnement" %}</h2>
+
+
         <div id="content">
-
-      <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }}</p>
-      <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ress.sid }}" target="_blank">{{ ress.sid }}</a>
-       / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }}</p>
-      <p></p>
-
-      <p><i>{% trans "Votre rattachement apparaît en rouge" %} :</i></p>
-      <p>({% trans "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-ci correspond" %})</p>
-
       <ul>
 
       {% for elmt in itemlist %}
           {% if elmt.0.lid == lib.lid %}
-                <HR>
+                <!-- <HR> -->
           <p></p>
               <li><font color= #e74c3c ><b>{{ elmt.1 }}</b></font></li>
               <li>{% trans "Cote" %} : {{ elmt.0.cn }}</li>
@@ -54,7 +64,7 @@
                 {% endif %}
               {% endif %}
           {% else %}
-                <HR>
+                <!-- <HR> -->
           <p></p>
               <li><b>{{ elmt.1 }}</b></li>
               <li>{% trans "Cote" %} : {{ elmt.0.cn }}</li>
@@ -71,40 +81,26 @@
                 {% endif %}
               {% endif %}
           {% endif %}
+          <HR>
       {% endfor %}
 
 
       </ul>
-      <HR>
+      <!-- <HR> -->
 
       <form method="post">
       <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ f.excl }}</p>
       <p>{% trans "Sinon, rang de votre collection" %} : {{ f.rank }}</p>
       <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}
         <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a></p>
-      <p>{{ f.comm }}</p>
+      <p>{{ f.comm }} <input type="Submit" value="{% trans "Valider" %}"></p>
       {% csrf_token %}
-      <input type="Submit" value="{% trans "Valider" %}">
       </form>
 
 
 
         </div>
 
-        <div id="menucontextuel">
-
-        <p><a href="/router">{% trans "Retour à la liste" %}</a></p>
-        </div>
-
-        <div id="menugeneral">
-
-        <p><b>{% trans "Menu général" %} : </b><a href="/allinstr/{{ lid }}/title">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
-        </div>
-
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
-        </div>
 
         <div id="credits">
             <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>

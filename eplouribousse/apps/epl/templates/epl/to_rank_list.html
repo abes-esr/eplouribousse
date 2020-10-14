@@ -14,68 +14,69 @@
     </head>
 
 
+        <div id="sticky-section">
+          <nav id="sticky-menu">
+              <a href="/">{% trans "Accueil" %}</a>
+              <a href="/dashboard">{% trans "Supervision" %}</a>
+              <a href="/search">{% trans "Recherche (bêta)" %}</a>
+              <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+              <a target="_blank" href="/about">{% trans "A propos" %}</a>
+          </nav>
+              {% if k != 0 %}
+              <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+              {% else %}
+              <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+              <!-- (User : Anonymous) -->
+              {% endif %}
+              <h2>{{ libname }} - {% trans "positionnement" %}</h2>
+                <!-- <div id="content"> -->
+              <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}
+              {% if nlib > 2 %}
+                ~  <a href="/rkfilter/{{ lid }}">{% trans "Restreindre la liste aux doublons avec une autre bibliothèque" %}</a>
+              {% else %}
+              {% endif %}</p>
+              <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+
+            <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %}  ~  <a href="/modifrklist/{{ lid }}/title">{% trans "Modifier un précédent positionnement" %}</a></p>
+
+            {% if sort == 'title' %}
+            <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+             / <a href="/rklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+             {% elif sort == 'cn' %}
+             <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/rklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+              {% elif sort == 'sid' %}
+              <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/rklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+            {% endif %}
+
+            {% if lastrked != None %}
+              {% if lastrked.lid == lid %}
+            <div id="highlight">
+            <p><b>{% trans "Dernier positionnement (session en cours)" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
+               {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
+            </div>
+              {% endif %}
+            {% endif %}
+            <HR>
+          </div>
     <body>
 
-      {% if k != 0 %}
-      <b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)
-      {% else %}
-      <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
-      <!-- (User : Anonymous) -->
-      {% endif %}
-      <p></p>
-      <h2>{{ libname }} - {% trans "collections en attente de positionnement" %}</h2>
-        <div id="content">
-      <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
-      {% if nlib > 2 %}
-      <p><a href="/rkfilter/{{ lid }}">{% trans "Restreindre la liste aux doublons avec une autre bibliothèque" %}</a></p>
-      {% else %}
-      {% endif %}
-      <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-
-    <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
-
-    <p><a href="/modifrklist/{{ lid }}/title">{% trans "Modifier un précédent positionnement" %}</a></p>
-
-    {% if sort == 'title' %}
-    <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
-     / <a href="/rklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-     {% elif sort == 'cn' %}
-     <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/rklist/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
-      {% elif sort == 'sid' %}
-      <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/rklist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
-    {% endif %}
-
-    {% if lastrked != None %}
-      {% if lastrked.lid == lid %}
-    <div id="highlight">
-    <p><b>{% trans "Dernier positionnement (session en cours)" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
-       {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
-    </div>
-      {% endif %}
-    {% endif %}
-
+    <div id="content">
       <ul>
 
        {% for elmt in resslist %}
 
-             <HR>
+             <!-- <HR> -->
        <p></p>
           <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
           <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
           <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
 
+          <HR>
 
        {% endfor %}
-            <HR>
+            <!-- <HR> -->
 
       </ul>
-        </div>
-        <div id="menugeneral">
-      <p><b>{% trans "Menu" %} : </b><a href="/arb/{{ lid }}/title">{% trans "Arbitrages" %}</a> - <a href="/allinstr/{{ lid }}/title">{% trans "Instruction" %}</a> - <a href="/edlist/{{ lid }}/title">{% trans "Edition" %}</a></p>
-        </div>
-
-        <div id="footer">
-            <p><a href="/">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
         </div>
 
         <div id="credits">
