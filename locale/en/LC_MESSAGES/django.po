@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-14 16:34+0200\n"
+"POT-Creation-Date: 2020-10-15 11:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
 msgstr "Possible comment to explain your choice (max. 250 characters)"
 
 #: eplouribousse/apps/epl/forms.py:27 eplouribousse/apps/epl/views.py:715
-#: eplouribousse/apps/epl/views.py:934 eplouribousse/apps/epl/views.py:991
+#: eplouribousse/apps/epl/views.py:937 eplouribousse/apps/epl/views.py:994
 msgid ""
 "Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
 "'améliorable'"
@@ -383,7 +383,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/current.html:25
 #: eplouribousse/apps/epl/templates/epl/current.html:201
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:22
-#: eplouribousse/apps/epl/templates/epl/delinstruction.html:110
+#: eplouribousse/apps/epl/templates/epl/delinstruction.html:113
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:51
 #: eplouribousse/apps/epl/templates/epl/edition.html:23
 #: eplouribousse/apps/epl/templates/epl/edition.html:97
@@ -428,7 +428,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/search.html:24
 #: eplouribousse/apps/epl/templates/epl/search.html:232
 #: eplouribousse/apps/epl/templates/epl/selinstruction.html:23
-#: eplouribousse/apps/epl/templates/epl/selinstruction.html:107
+#: eplouribousse/apps/epl/templates/epl/selinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:21
 #: eplouribousse/apps/epl/templates/epl/to_edit_list.html:83
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:22
@@ -462,7 +462,7 @@ msgstr "About"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:34
 #: eplouribousse/apps/epl/views.py:465 eplouribousse/apps/epl/views.py:476
-#: eplouribousse/apps/epl/views.py:2245 eplouribousse/apps/epl/views.py:2256
+#: eplouribousse/apps/epl/views.py:2256 eplouribousse/apps/epl/views.py:2267
 msgid "Instruction"
 msgstr "Instruction"
 
@@ -630,8 +630,8 @@ msgstr "bound shape"
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:119
 #: eplouribousse/apps/epl/templates/epl/search.html:185
 #: eplouribousse/apps/epl/templates/epl/selinstruction.html:59
-#: eplouribousse/apps/epl/views.py:715 eplouribousse/apps/epl/views.py:936
-#: eplouribousse/apps/epl/views.py:993
+#: eplouribousse/apps/epl/views.py:715 eplouribousse/apps/epl/views.py:939
+#: eplouribousse/apps/epl/views.py:996
 msgid "Bibliothèque remédiée"
 msgstr "Enhanceable library"
 
@@ -721,27 +721,30 @@ msgid "Valider"
 msgstr "ok"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:148
-#: eplouribousse/apps/epl/templates/epl/delinstruction.html:104
+#: eplouribousse/apps/epl/templates/epl/delinstruction.html:108
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:158
+#: eplouribousse/apps/epl/templates/epl/selinstruction.html:112
 msgid "J'ai fini pour la forme courante"
 msgstr "I've finished for the current shape"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:148
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:159
+#: eplouribousse/apps/epl/templates/epl/selinstruction.html:112
 msgid "Supprimer une ligne erronée"
 msgstr "Cancel a row"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:148
-#: eplouribousse/apps/epl/templates/epl/delinstruction.html:104
+#: eplouribousse/apps/epl/templates/epl/delinstruction.html:108
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:118
 msgid "Modifier une ligne erronée"
 msgstr "Modify a row"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:148
-#: eplouribousse/apps/epl/templates/epl/delinstruction.html:104
+#: eplouribousse/apps/epl/templates/epl/delinstruction.html:108
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:160
+#: eplouribousse/apps/epl/templates/epl/selinstruction.html:112
 msgid "Reprendre plus tard"
 msgstr "Resume later"
 
@@ -960,7 +963,7 @@ msgstr "Sorted by"
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:39
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:42
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:45
-#: eplouribousse/apps/epl/views.py:1441 eplouribousse/apps/epl/views.py:1506
+#: eplouribousse/apps/epl/views.py:1452 eplouribousse/apps/epl/views.py:1517
 msgid "titre"
 msgstr "title"
 
@@ -1069,7 +1072,7 @@ msgstr "sort by"
 #: eplouribousse/apps/epl/templates/epl/xto_instr_list.html:45
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:39
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:46
-#: eplouribousse/apps/epl/views.py:1441 eplouribousse/apps/epl/views.py:1506
+#: eplouribousse/apps/epl/views.py:1452 eplouribousse/apps/epl/views.py:1517
 msgid "cote et titre"
 msgstr "call number and title"
 
@@ -1139,8 +1142,8 @@ msgstr "call number and title"
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:40
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:43
 #: eplouribousse/apps/epl/templates/epl/xto_rank_list.html:45
-#: eplouribousse/apps/epl/views.py:406 eplouribousse/apps/epl/views.py:1441
-#: eplouribousse/apps/epl/views.py:1506 eplouribousse/apps/epl/views_pdf.py:60
+#: eplouribousse/apps/epl/views.py:406 eplouribousse/apps/epl/views.py:1452
+#: eplouribousse/apps/epl/views.py:1517 eplouribousse/apps/epl/views_pdf.py:60
 #: eplouribousse/apps/epl/views_pdf.py:193
 #: eplouribousse/apps/epl/views_pdf.py:329
 #: eplouribousse/apps/epl/views_pdf.py:465
@@ -1481,10 +1484,16 @@ msgstr "Red rows may not be deleted"
 msgid "Ligne(s) à supprimer"
 msgstr "Row(s) to delete"
 
-#: eplouribousse/apps/epl/templates/epl/delinstruction.html:104
+#: eplouribousse/apps/epl/templates/epl/delinstruction.html:100
+msgid "Aucune ligne ne peut être supprimée"
+msgstr "No row may be deleted"
+
+#: eplouribousse/apps/epl/templates/epl/delinstruction.html:108
+#: eplouribousse/apps/epl/templates/epl/endinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:157
-msgid "Poursuivre l'instruction"
-msgstr "Resume instruction"
+#: eplouribousse/apps/epl/templates/epl/selinstruction.html:112
+msgid "Revenir à l'instruction"
+msgstr "Back to instruction"
 
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:23
 msgid "Déconnexion effectuée"
@@ -1510,7 +1519,7 @@ msgstr "Rows involving your libary are highlighted"
 #: eplouribousse/apps/epl/templates/epl/edition.html:45
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:30
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:29
-#: eplouribousse/apps/epl/views.py:2087
+#: eplouribousse/apps/epl/views.py:2098
 msgid "Collection mère"
 msgstr "Mother collection"
 
@@ -1526,10 +1535,6 @@ msgstr "Your rows for current shape are highlighted"
 msgid "J'ai bien vérifié avant de valider"
 msgstr "I have paid attention before submitting"
 
-#: eplouribousse/apps/epl/templates/epl/endinstruction.html:118
-msgid "Retour à l'instruction"
-msgstr "Back to instruction"
-
 #: eplouribousse/apps/epl/templates/epl/excl.html:34
 #: eplouribousse/apps/epl/templates/epl/indicators.html:93
 msgid "Collections exclues"
@@ -1538,25 +1543,25 @@ msgstr "Excluded collections"
 #: eplouribousse/apps/epl/templates/epl/excl.html:37
 #: eplouribousse/apps/epl/templates/epl/faulty.html:38
 #: eplouribousse/apps/epl/templates/epl/search.html:36
-#: eplouribousse/apps/epl/views.py:407 eplouribousse/apps/epl/views.py:1446
-#: eplouribousse/apps/epl/views.py:1509
+#: eplouribousse/apps/epl/views.py:407 eplouribousse/apps/epl/views.py:1457
+#: eplouribousse/apps/epl/views.py:1520
 msgid "Votre bibliothèque"
 msgstr "Your library"
 
 #: eplouribousse/apps/epl/templates/epl/excl.html:38
 #: eplouribousse/apps/epl/templates/epl/faulty.html:39
-#: eplouribousse/apps/epl/views.py:1447 eplouribousse/apps/epl/views.py:1510
+#: eplouribousse/apps/epl/views.py:1458 eplouribousse/apps/epl/views.py:1521
 msgid "Critère de tri"
 msgstr "Sort by"
 
 #: eplouribousse/apps/epl/templates/epl/excl.html:39
 #: eplouribousse/apps/epl/templates/epl/excl.html:66
-#: eplouribousse/apps/epl/views.py:1448
+#: eplouribousse/apps/epl/views.py:1459
 msgid "Motif d'exclusion"
 msgstr "Exclusion reason"
 
 #: eplouribousse/apps/epl/templates/epl/excl.html:40
-#: eplouribousse/apps/epl/views.py:1449
+#: eplouribousse/apps/epl/views.py:1460
 msgid "Modifiable ?"
 msgstr "May be still modified ?"
 
@@ -1979,7 +1984,7 @@ msgstr "Resulting collections"
 
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_notmother.html:29
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_notmother.html:29
-#: eplouribousse/apps/epl/views.py:2087
+#: eplouribousse/apps/epl/views.py:2098
 msgid "Collection non mère"
 msgstr "Non-mother collection"
 
@@ -2063,78 +2068,78 @@ msgstr "Attention please : The addresses must be identical"
 msgid "Vérifier que les adresses sont correctes"
 msgstr "Check that the addresses are correct"
 
-#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:2232
+#: eplouribousse/apps/epl/views.py:452 eplouribousse/apps/epl/views.py:2243
 msgid "Une anomalie a été constatée au cours de l'instruction de la résultante"
 msgstr "An anomaly has been noted during instruction"
 
 #: eplouribousse/apps/epl/views.py:454 eplouribousse/apps/epl/views.py:505
-#: eplouribousse/apps/epl/views.py:2234
+#: eplouribousse/apps/epl/views.py:2245
 msgid "Instruction achevée"
 msgstr "Instruction done"
 
-#: eplouribousse/apps/epl/views.py:456 eplouribousse/apps/epl/views.py:2236
+#: eplouribousse/apps/epl/views.py:456 eplouribousse/apps/epl/views.py:2247
 msgid "Edition de la fiche de résultante"
 msgstr "Sheet edition"
 
 #: eplouribousse/apps/epl/views.py:460 eplouribousse/apps/epl/views.py:513
-#: eplouribousse/apps/epl/views.py:516 eplouribousse/apps/epl/views.py:2240
+#: eplouribousse/apps/epl/views.py:516 eplouribousse/apps/epl/views.py:2251
 msgid "Instruction des éléments non reliés de la collection"
 msgstr "Not bound shape instruction is underway"
 
-#: eplouribousse/apps/epl/views.py:462 eplouribousse/apps/epl/views.py:2242
+#: eplouribousse/apps/epl/views.py:462 eplouribousse/apps/epl/views.py:2253
 msgid "En attente de validation finale par le contrôleur"
 msgstr "Waiting for final validation by the checker"
 
-#: eplouribousse/apps/epl/views.py:464 eplouribousse/apps/epl/views.py:2244
+#: eplouribousse/apps/epl/views.py:464 eplouribousse/apps/epl/views.py:2255
 msgid "Instruction des éléments non reliés de votre collection"
 msgstr "Not bound shape instruction is underway in your library"
 
 #: eplouribousse/apps/epl/views.py:469 eplouribousse/apps/epl/views.py:482
 #: eplouribousse/apps/epl/views.py:523 eplouribousse/apps/epl/views.py:526
-#: eplouribousse/apps/epl/views.py:2249 eplouribousse/apps/epl/views.py:2262
+#: eplouribousse/apps/epl/views.py:2260 eplouribousse/apps/epl/views.py:2273
 msgid "Instruction des éléments reliés de la collection"
 msgstr "bound shape instruction is underway"
 
-#: eplouribousse/apps/epl/views.py:472 eplouribousse/apps/epl/views.py:2252
+#: eplouribousse/apps/epl/views.py:472 eplouribousse/apps/epl/views.py:2263
 msgid "En attente de validation intermédiaire par le contrôleur"
 msgstr "Waiting for intermediate validation by the checker"
 
-#: eplouribousse/apps/epl/views.py:475 eplouribousse/apps/epl/views.py:2255
+#: eplouribousse/apps/epl/views.py:475 eplouribousse/apps/epl/views.py:2266
 msgid "Instruction des éléments reliés de votre collection"
 msgstr "Bound shape instruction is underway in your library"
 
 #: eplouribousse/apps/epl/views.py:478 eplouribousse/apps/epl/views.py:484
 #: eplouribousse/apps/epl/views.py:489 eplouribousse/apps/epl/views.py:498
-#: eplouribousse/apps/epl/views.py:501 eplouribousse/apps/epl/views.py:2258
-#: eplouribousse/apps/epl/views.py:2264 eplouribousse/apps/epl/views.py:2269
-#: eplouribousse/apps/epl/views.py:2278 eplouribousse/apps/epl/views.py:2281
+#: eplouribousse/apps/epl/views.py:501 eplouribousse/apps/epl/views.py:2269
+#: eplouribousse/apps/epl/views.py:2275 eplouribousse/apps/epl/views.py:2280
+#: eplouribousse/apps/epl/views.py:2289 eplouribousse/apps/epl/views.py:2292
 msgid "Modification du rang de votre collection"
 msgstr "Modify rank for your collection"
 
 #: eplouribousse/apps/epl/views.py:488 eplouribousse/apps/epl/views.py:529
-#: eplouribousse/apps/epl/views.py:2268
+#: eplouribousse/apps/epl/views.py:2279
 msgid "Concurrence rang 1"
 msgstr "Competition on rank 1"
 
 #: eplouribousse/apps/epl/views.py:491 eplouribousse/apps/epl/views.py:531
-#: eplouribousse/apps/epl/views.py:2271
+#: eplouribousse/apps/epl/views.py:2282
 msgid "Ressource non candidate du fait d'exclusion"
 msgstr "No more candidate for exclusion reason"
 
-#: eplouribousse/apps/epl/views.py:494 eplouribousse/apps/epl/views.py:2274
+#: eplouribousse/apps/epl/views.py:494 eplouribousse/apps/epl/views.py:2285
 msgid "Vous devez positionnez votre collection"
 msgstr "You must rank your collection"
 
-#: eplouribousse/apps/epl/views.py:495 eplouribousse/apps/epl/views.py:2275
+#: eplouribousse/apps/epl/views.py:495 eplouribousse/apps/epl/views.py:2286
 msgid "Positionnement de votre collection"
 msgstr "Rank your collection"
 
-#: eplouribousse/apps/epl/views.py:497 eplouribousse/apps/epl/views.py:2277
+#: eplouribousse/apps/epl/views.py:497 eplouribousse/apps/epl/views.py:2288
 msgid "Votre collection est déjà positionnée ; modification encore possible"
 msgstr "Your collection has been ranked, you may still modify"
 
 #: eplouribousse/apps/epl/views.py:500 eplouribousse/apps/epl/views.py:535
-#: eplouribousse/apps/epl/views.py:2280
+#: eplouribousse/apps/epl/views.py:2291
 msgid "Absence de rang 1"
 msgstr "No rank 1"
 
@@ -2159,14 +2164,14 @@ msgid "Vérification intermédiaire"
 msgstr "Intermediate verification"
 
 #: eplouribousse/apps/epl/views.py:689 eplouribousse/apps/epl/views.py:806
-#: eplouribousse/apps/epl/views.py:907 eplouribousse/apps/epl/views.py:1055
-#: eplouribousse/apps/epl/views.py:1163
+#: eplouribousse/apps/epl/views.py:910 eplouribousse/apps/epl/views.py:1058
+#: eplouribousse/apps/epl/views.py:1174
 msgid "éléments reliés"
 msgstr "bound elements"
 
 #: eplouribousse/apps/epl/views.py:691 eplouribousse/apps/epl/views.py:810
-#: eplouribousse/apps/epl/views.py:909 eplouribousse/apps/epl/views.py:1059
-#: eplouribousse/apps/epl/views.py:1167
+#: eplouribousse/apps/epl/views.py:912 eplouribousse/apps/epl/views.py:1062
+#: eplouribousse/apps/epl/views.py:1178
 msgid "éléments non reliés"
 msgstr "not bound elements"
 
@@ -2174,32 +2179,36 @@ msgstr "not bound elements"
 msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
 msgstr "You may not valid twice the same data"
 
-#: eplouribousse/apps/epl/views.py:814 eplouribousse/apps/epl/views.py:1063
-#: eplouribousse/apps/epl/views.py:1171
+#: eplouribousse/apps/epl/views.py:814 eplouribousse/apps/epl/views.py:1066
+#: eplouribousse/apps/epl/views.py:1182
 msgid "instructions terminées"
 msgstr "instructions are over"
 
-#: eplouribousse/apps/epl/views.py:946
+#: eplouribousse/apps/epl/views.py:824
+msgid "Aucune ligne ne peut être modifiée"
+msgstr "No row may be modified"
+
+#: eplouribousse/apps/epl/views.py:949
 msgid "Une autre ligne contient déjà les mêmes données."
 msgstr "Another row already contains the same data."
 
-#: eplouribousse/apps/epl/views.py:1069
+#: eplouribousse/apps/epl/views.py:1080
 msgid "Par exemple : 5, 8-12, 14 pour supprimer les lignes 5, 8 à 12 et 14."
 msgstr "For instance : 5, 8-12, 14 to delete lines 5, 8 to 12 and 14."
 
-#: eplouribousse/apps/epl/views.py:1088
+#: eplouribousse/apps/epl/views.py:1099
 msgid " <=== Expression invalide (vérifiez les conditions indiquées) "
 msgstr " <=== Unvalid expression (verify conditions) "
 
-#: eplouribousse/apps/epl/views.py:1172
+#: eplouribousse/apps/epl/views.py:1183
 msgid "ni relié, ni non reliés"
 msgstr "not bound neither not bound"
 
-#: eplouribousse/apps/epl/views.py:1221 eplouribousse/apps/epl/views.py:1296
+#: eplouribousse/apps/epl/views.py:1232 eplouribousse/apps/epl/views.py:1307
 msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
 msgstr "It's up to you for the serial ID"
 
-#: eplouribousse/apps/epl/views.py:1244
+#: eplouribousse/apps/epl/views.py:1255
 msgid ""
 "Le statut est passé à 6 pour les enregistrements des bibliothèques "
 "participant à la résultante de la ressource citée en objet ; une "
@@ -2208,28 +2217,28 @@ msgstr ""
 "Some or all item records changed state to 6 for this serial. Please look "
 "what you can do to let things be resumed right. Thanks !"
 
-#: eplouribousse/apps/epl/views.py:1307
+#: eplouribousse/apps/epl/views.py:1318
 msgid "Vous n'avez pas coché !"
 msgstr "You did not check !"
 
-#: eplouribousse/apps/epl/views.py:1392 eplouribousse/apps/epl/views.py:1661
-#: eplouribousse/apps/epl/views.py:1942 eplouribousse/apps/epl/views.py:2089
+#: eplouribousse/apps/epl/views.py:1403 eplouribousse/apps/epl/views.py:1672
+#: eplouribousse/apps/epl/views.py:1953 eplouribousse/apps/epl/views.py:2100
 msgid "Autre bibliothèque impliquée"
 msgstr "Other taking part library"
 
-#: eplouribousse/apps/epl/views.py:1441
+#: eplouribousse/apps/epl/views.py:1452
 msgid "motif d'exclusion"
 msgstr "exclusion reason"
 
-#: eplouribousse/apps/epl/views.py:1443
+#: eplouribousse/apps/epl/views.py:1454
 msgid "oui"
 msgstr "yes"
 
-#: eplouribousse/apps/epl/views.py:1443
+#: eplouribousse/apps/epl/views.py:1454
 msgid "non"
 msgstr "no"
 
-#: eplouribousse/apps/epl/views.py:2088
+#: eplouribousse/apps/epl/views.py:2099
 msgid ""
 "Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
 "page"
@@ -2327,6 +2336,12 @@ msgstr ""
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
+
+#~ msgid "Poursuivre l'instruction"
+#~ msgstr "Resume instruction"
+
+#~ msgid "Retour à l'instruction"
+#~ msgstr "Back to instruction"
 
 #~ msgid "Menu"
 #~ msgstr "Menu"

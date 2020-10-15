@@ -1,8 +1,8 @@
-epl_version ="v1.12.0 (Audovera)"
+epl_version ="v1.12.1 (Audovera)"
 date_version ="October 14, 2020"
 # Mise au niveau de :
-# epl_version ="v1.13-beta.0 (~Galswinthe)"
-# date_version ="October 14, 2020"
+# epl_version ="v1.13-beta.1 (~Galswinthe)"
+# date_version ="October 15, 2020"
 
 
 from django.shortcuts import render
@@ -820,6 +820,9 @@ def selinstr(request, sid, lid):
         if elmt.bound ==expected:
             LINE_CHOICES += (elmt.line, elmt.line),
 
+    if LINE_CHOICES ==(('',''),):
+        answer =_("Aucune ligne ne peut être modifiée")
+
     class Line_Form(forms.Form):
         row = forms.ChoiceField(required = True, widget=forms.Select, choices=LINE_CHOICES[1:])
     f = Line_Form(request.POST or None)
@@ -1063,6 +1066,14 @@ def delinstr(request, sid, lid):
         bd = _("instructions terminées")
 
     answer = ""
+
+    LINE_CHOICES =('',''),
+    for elmt in Instruction.objects.filter(sid =sid, name =lib.name).order_by('line'):
+        if elmt.bound ==expected:
+            LINE_CHOICES += (elmt.line, elmt.line),
+
+    if LINE_CHOICES ==(('',''),):
+        answer =1
 
     class Lines_Form(forms.Form):
         rows = forms.CharField(required = True, widget=forms.TextInput(attrs={'placeholder'\
