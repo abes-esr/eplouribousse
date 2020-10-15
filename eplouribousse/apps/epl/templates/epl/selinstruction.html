@@ -94,23 +94,34 @@
 
       </table>
 
-
+      {% if answer == "" %}
 
       <form method="post">{% csrf_token %}
           <p>{% trans "Ligne à modifier" %} : {{ form.row }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
           <p><input type="submit" value="{% trans "Valider" %}"></p>
-      </div>
+
       </form>
 
+      {% else %}
+        <p><B><font color= #3364ff >{{ answer }}.</font></B></p>
+      {% endif %}
+      </div>
 
-        <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
+      <div id="menucontextuel">
+
+        <p><button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Revenir à l'instruction" %}</a></b></button> - <button><b><a href="/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a><b></button> - <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> - <button><b><a href="/router">{% trans "Reprendre plus tard" %}</a></b></button></p>
+
+      </div>
+
+
+      <div id="credits">
+          <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
 
 <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'Agence bibliographique de l’Enseignement supérieur.</p>
 <p>Version : {{ version }}</p>
 
-        </div>
+      </div>
 
-    </body>
+  </body>
 
 </html>
