@@ -23,13 +23,12 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 07. conformity check at the end of each process cycle,
 08. full integrated workflow,
 09. activity tracking chart,
-10. cross search (serial x library)
+10. cross-search by serial and library
 11. users management,
 12. authentication controls,
 13. parameterization of derogation reasons,
 14. administration of faulty card cases,
 15. multilingual support (French, English, German, extensible to other languages)
-16. cross-search by serial and library
 
 # More information :
 
