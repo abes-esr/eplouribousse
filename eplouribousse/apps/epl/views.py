@@ -1,9 +1,8 @@
-epl_version ="v1.12.3 (Audovera)"
+epl_version ="v1.12.4 (Audovera)"
 date_version ="October 14, 2020"
 # Mise au niveau de :
-epl_version ="v1.13-beta.3 (~Galswinthe)"
-date_version ="October 23, 2020"
-
+# epl_version ="v1.13-beta.4 (~Galswinthe)"
+# date_version ="October 27, 2020"
 
 from django.shortcuts import render
 
@@ -1347,6 +1346,10 @@ def ranktotake(request, lid, sort):
 
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
+
     return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, })
@@ -1379,6 +1382,10 @@ def modifranklist(request, lid, sort):
     libname = Library.objects.get(lid =lid).name
 
     nlib = len(Library.objects.exclude(lid ="999999999"))
+
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
@@ -1432,6 +1439,10 @@ def xranktotake(request, lid, xlid, sort):
     #Library name :
     libname = Library.objects.get(lid =lid).name
     xlibname = Library.objects.get(lid =xlid).name
+
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
@@ -1580,6 +1591,9 @@ def arbitration(request, lid, sort):
 
     nlib = len(Library.objects.exclude(lid ="999999999"))
 
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
@@ -1613,6 +1627,10 @@ def arbrk1(request, lid, sort):
 
     #Library name :
     libname = Library.objects.get(lid =lid).name
+
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
@@ -1648,6 +1666,10 @@ def arbnork1(request, lid, sort):
 
     #Library name :
     libname = Library.objects.get(lid =lid).name
+
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
@@ -1725,6 +1747,9 @@ def xarbitration(request, lid, xlid, sort):
     libname = Library.objects.get(lid =lid).name
     xlibname = Library.objects.get(lid =xlid).name
 
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
@@ -1760,6 +1785,9 @@ def x1arb(request, lid, xlid, sort):
     libname = Library.objects.get(lid =lid).name
     xlibname = Library.objects.get(lid =xlid).name
 
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
@@ -1797,6 +1825,9 @@ def x0arb(request, lid, xlid, sort):
     libname = Library.objects.get(lid =lid).name
     xlibname = Library.objects.get(lid =xlid).name
 
+    global lastrked
+    if lastrked !=None and not lastrked.lid ==lid:
+        lastrked =None
 
     return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
