@@ -137,7 +137,7 @@ CHECKING_CHOICES = (('Visa', _("Visa OK (La fiche est conforme)")), ('Notify', _
 
 class Check(models.Model):
     """Model for checker checking"""
-    checkin = models.CharField('Visa de conformité', max_length=120, default ="Visa", blank=False, choices =CHECKING_CHOICES)
+    checkin = models.CharField(_('Visa de conformité'), max_length=120, default ="Visa", blank=False, choices =CHECKING_CHOICES)
     def __str__(self):
         return self.checkin
 

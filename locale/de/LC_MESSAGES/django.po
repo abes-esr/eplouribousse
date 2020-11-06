@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-27 10:56+0100\n"
+"POT-Creation-Date: 2020-11-06 09:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,10 @@ msgstr "Alles richtig"
 #: eplouribousse/apps/epl/models.py:136
 msgid "Anomalie (L'administrateur de la base sera informé)"
 msgstr "Anomalie (Der Datenbankadministrator wird informiert)"
+
+#: eplouribousse/apps/epl/models.py:140
+msgid "Visa de conformité"
+msgstr "Compliance-Visum"
 
 #: eplouribousse/apps/epl/models.py:152
 msgid "Reliés"
