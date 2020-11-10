@@ -46,7 +46,10 @@ Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas �
 
 # Comment obtenir eplouribousse ?
 
-Pour avoir un aperçu de l'application, commencez par visiter une instance réelle : https://eplouribousse-droit.di.unistra.fr/
+Pour avoir un aperçu de l'application, commencez par visiter une instance réelle parmi les suivantes :
+01. https://eplouribousse1.di.unistra.fr/
+02. https://eplouribousse2.di.unistra.fr/
+03. https://eplouribousse3.di.unistra.fr/
 
 ----------------
 

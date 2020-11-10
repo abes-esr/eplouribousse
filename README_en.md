@@ -44,7 +44,10 @@ Videos (in french ; please download if you cannot fully view) :
 
 # How to get eplouribousse?
 
-In order to have an idea of what it turns about and what it looks, we first recommand to take a tour on a real instance https://eplouribousse-droit.di.unistra.fr/
+In order to have an idea of what it turns about and what it looks, we first recommand to take a tour on one of these real instances :
+01. https://eplouribousse1.di.unistra.fr/
+02. https://eplouribousse2.di.unistra.fr/
+03. https://eplouribousse3.di.unistra.fr/
 
 ----------------
 
