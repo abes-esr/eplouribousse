@@ -15,8 +15,8 @@ Version 1.8 (Radegonde)                     2020.09.02
 Version 1.9 (~Walderade)                    beta
 Version 1.10 (Ingeberge)                    2020.09.24
 Version 1.11 (~Merofledis)                  beta
-Version 1.10 (Audovera)                     2020.10.14
-Version 1.11 (~Galswinthe)                  beta
+Version 1.12 (Audovera)                     2020.10.14
+Version 1.13 (~Galswinthe)                  beta
 
 
 
