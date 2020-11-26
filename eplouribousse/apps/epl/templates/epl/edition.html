@@ -38,7 +38,7 @@
 
           <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
           <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-            {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}</p>
+            {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}{% if itrec.cn != "" %} / <b>{% trans "Cote" %} :</b> {{ itrec.cn }} {% endif %}</p>
 
 
           <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}.</i></p>
@@ -94,7 +94,7 @@
         </div>
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a></p>
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a>{% if webmaster != "" %} · <a href="mailto:{{ webmaster }}?subject=[webmaster - eplouribousse]&body=--- Donnez le maximum d'informations sur le problème rencontré ---%0D%0A--- Veillez à ne pas modifier le sujet du présent message ---">webmaster</a>{% endif %}</p>
 
 <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'Agence bibliographique de l’Enseignement supérieur.</p>
 <p>Version : {{ version }}</p>

@@ -1,7 +1,7 @@
-epl_version ="v1.12.7 (Audovera)"
+epl_version ="v1.12.8 (Audovera)"
 date_version ="October 14, 2020"
 # Mise au niveau de :
-epl_version ="v1.13-beta.7 (~Galswinthe)"
+epl_version ="v1.13-beta.8 (~Galswinthe)"
 date_version ="November 10, 2020"
 
 from django.shortcuts import render
@@ -31,6 +31,12 @@ dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
 dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
 tes_lloc =Library.objects.all() # comme coll_set
 lastrked =None
+wbmstr =""
+try:
+    wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
+    zz =1
+except:
+    pass
 
 def serial_title(e):
     """sorting by title"""
@@ -60,6 +66,7 @@ def home(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     "Homepage"
 
@@ -95,6 +102,7 @@ def about(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
     date =date_version
     host = str(request.get_host())
     return render(request, 'epl/about.html', locals())
@@ -104,6 +112,7 @@ def contact(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
     date =date_version
     host = str(request.get_host())
 
@@ -148,6 +157,7 @@ def confirm(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     return render(request, 'epl/confirmation.html', locals())
 
@@ -208,6 +218,7 @@ def router(request):
 def lang(request):
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     return render(request, 'epl/language.html', locals())
 
@@ -221,6 +232,7 @@ def logout_view(request):
     # Redirect to a success page.
 
     version =epl_version
+    webmaster =wbmstr
     project = Project.objects.all().order_by('pk')[0].name
 
     #Feature input :
@@ -253,6 +265,7 @@ def notintime(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     library = Library.objects.get(lid = lid).name
     if lid =="999999999":
@@ -269,6 +282,7 @@ def indicators(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     #Indicators :
 
@@ -396,6 +410,7 @@ def search(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     libch = ('checker','checker'),
     for l in Library.objects.all().exclude(name ='checker').order_by('name'):
@@ -541,6 +556,7 @@ def takerank(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -626,6 +642,7 @@ def addinstr(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
     length =0
 
     q = "x"
@@ -747,16 +764,22 @@ def addinstr(request, sid, lid):
         except:
             pklastone =0
 
+    try:
+        itrec =ItemRecord.objects.get(sid =sid, lid =lid)
+    except:
+        pass
+
     return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, 'l' : length, })
+    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, 'l' : length, 'itrec' : itrec, 'webmaster' : webmaster, })
 
 @login_required
 def selinstr(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -839,10 +862,15 @@ def selinstr(request, sid, lid):
         liblist.append(Library.objects.get(lid = e.lid))
     liblist.append(Library.objects.get(name = 'checker'))
 
+    try:
+        itrec =ItemRecord.objects.get(sid =sid, lid =lid)
+    except:
+        pass
+
     return render(request, 'epl/selinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, })
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, })
 
 
 @login_required
@@ -850,6 +878,7 @@ def modinstr(request, sid, lid, linetomodify):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
     length =0
 
     q = "x"
@@ -998,10 +1027,15 @@ def modinstr(request, sid, lid, linetomodify):
 
             instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
+    try:
+        itrec =ItemRecord.objects.get(sid =sid, lid =lid)
+    except:
+        pass
+
     return render(request, 'epl/modinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'k' : k, 'version' : version, 'l' : length, 'line' : linetomodify, })
+    'lid' : lid, 'expected' : q, 'k' : k, 'version' : version, 'l' : length, 'line' : linetomodify, 'itrec' : itrec, 'webmaster' : webmaster, })
 
 
 @login_required
@@ -1009,6 +1043,7 @@ def delinstr(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -1110,10 +1145,15 @@ def delinstr(request, sid, lid):
         liblist.append(Library.objects.get(lid = e.lid))
     liblist.append(Library.objects.get(name = 'checker'))
 
+    try:
+        itrec =ItemRecord.objects.get(sid =sid, lid =lid)
+    except:
+        pass
+
     return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, })
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, })
 
 
 @login_required
@@ -1121,6 +1161,7 @@ def endinstr(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     #Authentication control :
     if not request.user.email in [Library.objects.get(lid =lid).contact, Library.objects.get(lid =lid).contact_bis, Library.objects.get(lid =lid).contact_ter]:
@@ -1318,16 +1359,22 @@ def endinstr(request, sid, lid):
 
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
 
+    try:
+        itrec =ItemRecord.objects.get(sid =sid, lid =lid)
+    except:
+        pass
+
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, 'version' : version, })
+    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, })
 
 
 def ranktotake(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 0, lid
@@ -1352,13 +1399,14 @@ def ranktotake(request, lid, sort):
 
     return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
 
 
 def modifranklist(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
@@ -1389,13 +1437,14 @@ def modifranklist(request, lid, sort):
 
     return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
 
 
 def filter_rklist(request, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     "Filter rk list"
 
@@ -1422,6 +1471,7 @@ def xranktotake(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 1, 1, lid, xlid
@@ -1446,13 +1496,14 @@ def xranktotake(request, lid, xlid, sort):
 
     return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, })
 
 
 def excllist(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     l =0
 
@@ -1518,6 +1569,7 @@ def faulty(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     l =0
 
@@ -1550,6 +1602,7 @@ def arbitration(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 0, lid
@@ -1597,13 +1650,14 @@ def arbitration(request, lid, sort):
 
     return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
-    'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, })
+    'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, 'webmaster' : webmaster, })
 
 
 def arbrk1(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 4, lid
@@ -1634,13 +1688,14 @@ def arbrk1(request, lid, sort):
 
     return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
 
 
 def arbnork1(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 2, lid
@@ -1673,13 +1728,14 @@ def arbnork1(request, lid, sort):
 
     return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
 
 
 def filter_arblist(request, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     "Filter arb list"
 
@@ -1706,6 +1762,7 @@ def xarbitration(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 1, lid, xlid
@@ -1753,13 +1810,14 @@ def xarbitration(request, lid, xlid, sort):
 
     return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
-    'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, })
+    'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
 
 
 def x1arb(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 2, lid, xlid
@@ -1791,13 +1849,14 @@ def x1arb(request, lid, xlid, sort):
 
     return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, })
 
 
 def x0arb(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 3, lid, xlid
@@ -1831,13 +1890,14 @@ def x0arb(request, lid, xlid, sort):
 
     return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, })
 
 
 def instrtodo(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 3, 0, lid
@@ -1881,6 +1941,7 @@ def instroneb(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
@@ -1903,6 +1964,7 @@ def instrotherb(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
@@ -1926,6 +1988,7 @@ def instronenotb(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
@@ -1948,6 +2011,7 @@ def instrothernotb(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\
@@ -1970,6 +2034,7 @@ def instrfilter(request, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     "Filter instruction list"
 
@@ -1995,6 +2060,7 @@ def xinstrlist(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     if lid =="999999999":
         return notintime(request, "-?-", lid)
@@ -2022,6 +2088,7 @@ def tobeedited(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 0, lid
@@ -2053,6 +2120,7 @@ def mothered(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 1, lid
@@ -2084,6 +2152,7 @@ def notmothered(request, lid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 2, lid
@@ -2115,6 +2184,7 @@ def filter_edlist(request, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     "Filter"
 
@@ -2153,6 +2223,7 @@ def xmothered(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 3, lid, xlid
@@ -2180,6 +2251,7 @@ def xnotmothered(request, lid, xlid, sort):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 4, lid, xlid
@@ -2207,6 +2279,7 @@ def edition(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     #edition of the resulting collection for the considered sid and lid :
 
@@ -2228,6 +2301,11 @@ def edition(request, sid, lid):
 
         mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
 
+        try:
+            itrec =ItemRecord.objects.get(sid =sid, lid =lid)
+        except:
+            pass
+
         return render(request, 'epl/edition.html', locals())
 
     else:
@@ -2238,6 +2316,7 @@ def current_status(request, sid, lid):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     l =1
     lib = Library.objects.get(lid =lid).name
@@ -2330,6 +2409,7 @@ def checkinstr(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     project = Project.objects.all().order_by('pk')[0].name
 
@@ -2340,6 +2420,7 @@ def checkerfilter(request):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     form = InstructionCheckerFilter(request.POST or None)
     if form.is_valid():
@@ -2360,6 +2441,7 @@ def xckbd(request, coll_set):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, tes_lloc
     client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 2, coll_set
@@ -2384,6 +2466,7 @@ def xcknbd(request, coll_set):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, tes_lloc
     client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 3, coll_set
@@ -2408,6 +2491,7 @@ def xckall(request, coll_set):
 
     k = logstatus(request)
     version =epl_version
+    webmaster =wbmstr
 
     global client_ip, idfeature, idview, tes_lloc
     client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 4, coll_set
