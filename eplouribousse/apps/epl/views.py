@@ -1,8 +1,8 @@
 epl_version ="v1.12.8 (Audovera)"
 date_version ="October 14, 2020"
 # Mise au niveau de :
-epl_version ="v1.13-beta.8 (~Galswinthe)"
-date_version ="November 10, 2020"
+# epl_version ="v1.13-beta.8 (~Galswinthe)"
+# date_version ="November 26, 2020"
 
 from django.shortcuts import render
 
@@ -767,7 +767,7 @@ def addinstr(request, sid, lid):
     try:
         itrec =ItemRecord.objects.get(sid =sid, lid =lid)
     except:
-        pass
+        itrec =""
 
     return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
@@ -865,7 +865,7 @@ def selinstr(request, sid, lid):
     try:
         itrec =ItemRecord.objects.get(sid =sid, lid =lid)
     except:
-        pass
+        itrec =""
 
     return render(request, 'epl/selinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
@@ -1030,7 +1030,7 @@ def modinstr(request, sid, lid, linetomodify):
     try:
         itrec =ItemRecord.objects.get(sid =sid, lid =lid)
     except:
-        pass
+        itrec =""
 
     return render(request, 'epl/modinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
@@ -1148,7 +1148,7 @@ def delinstr(request, sid, lid):
     try:
         itrec =ItemRecord.objects.get(sid =sid, lid =lid)
     except:
-        pass
+        itrec =""
 
     return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
@@ -1362,7 +1362,7 @@ def endinstr(request, sid, lid):
     try:
         itrec =ItemRecord.objects.get(sid =sid, lid =lid)
     except:
-        pass
+        itrec =""
 
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
@@ -2304,7 +2304,7 @@ def edition(request, sid, lid):
         try:
             itrec =ItemRecord.objects.get(sid =sid, lid =lid)
         except:
-            pass
+            itrec =""
 
         return render(request, 'epl/edition.html', locals())
 

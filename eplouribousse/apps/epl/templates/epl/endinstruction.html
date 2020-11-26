@@ -39,9 +39,12 @@
             {% for elmt in librarylist %}
                 | {{ elmt.name }}
             {% endfor %}
+            
+            {% if lid != '999999999' %}
             {% if itrec.cn != "" %} / <b>{% trans "Cote" %} :</b> {{ itrec.cn }}{% endif %}
             {% if itrec.holdstat != "" %} / <b>{% trans "Etat de collection" %} :</b> {{ itrec.holdstat }} {% endif %}
             {% if itrec.missing != "" %} / <b>{% trans "Lacunes" %} :</b> {{ itrec.missing }}{% endif %}</p>
+            {% endif %}
 
             {% if lid != '999999999' %}
               <p><i>{% trans "Les lignes saisies pour la forme courante sont mises en évidence" %}</i></p>
