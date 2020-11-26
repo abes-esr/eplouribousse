@@ -1,5 +1,5 @@
-epl_version ="v1.12.8 (Audovera)"
-date_version ="October 14, 2020"
+# epl_version ="v1.12.8 (Audovera)"
+# date_version ="October 14, 2020"
 # Mise au niveau de :
 epl_version ="v1.13-beta.8 (~Galswinthe)"
 date_version ="November 10, 2020"
