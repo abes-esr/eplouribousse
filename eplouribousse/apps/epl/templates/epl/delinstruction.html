@@ -33,12 +33,12 @@
 
             <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
             <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
-              {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }}
+              {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / <b>{% trans "Ordre de traitement" %} :</b>
 
             {% for elmt in librarylist %}
-                | {{ elmt.name }}
+                {{ elmt.name }} |
             {% endfor %}
-            {% if itrec.cn != "" %} / <b>{% trans "Cote" %} :</b> {{ itrec.cn }}{% endif %}
+            {% if itrec.cn != "" %} <b>{% trans "Cote" %} :</b> {{ itrec.cn }}{% endif %}
             {% if itrec.holdstat != "" %} / <b>{% trans "Etat de collection" %} :</b> {{ itrec.holdstat }} {% endif %}
             {% if itrec.missing != "" %} / <b>{% trans "Lacunes" %} :</b> {{ itrec.missing }}{% endif %}</p>
 
