@@ -1,8 +1,8 @@
-epl_version ="v1.12.12 (Audovera)"
+epl_version ="v1.12.13 (Audovera)"
 date_version ="October 14, 2020"
 # Mise au niveau de :
-epl_version ="v1.13-beta.12 (~Galswinthe)"
-date_version ="December 02, 2020"
+# epl_version ="v1.13-beta.13 (~Galswinthe)"
+# date_version ="December 07, 2020"
 
 from django.shortcuts import render
 
@@ -151,6 +151,53 @@ def contact(request):
             info =_("Vérifier que les adresses sont correctes") + "."
 
     return render(request, 'epl/contact.html', locals())
+
+
+
+
+def webmstr(request):
+
+    k = logstatus(request)
+    version =epl_version
+    webmaster =wbmstr
+    date =date_version
+    host = str(request.get_host())
+
+    class ContactForm(forms.Form):
+        object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+         ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+        object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+        email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+        email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+        content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        recipient = form.cleaned_data['email']
+        recipient_confirm = form.cleaned_data['email_confirm']
+        subject2 = form.cleaned_data['object']
+        body = form.cleaned_data['content']
+        if recipient ==recipient_confirm:
+            subject2 = "[eplouribousse]" + " - " + subject2
+            subject1 = subject2 + " - " + version + " - " + host
+            message1 = subject1 + " :\n" + "\n" + body
+            message2 = "Votre message a bien été envoyé au webmaster"\
+             + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
+             "Rappel de l'objet de votre message" + " : " + subject2 + \
+             "\n" + "Rappel de votre message" + " :\n" + "\n" + \
+             _("***** Début *****") + "\n" + body + "\n" + _("*****  Fin  *****")
+            dest1 = [wbmstr]
+            dest2 = [recipient]
+            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
+            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
+            return render(request, 'epl/confirmation.html', locals())
+        else:
+            info =_("Attention : Les adresses doivent être identiques") + "."
+    else:
+        if request.method =="POST":
+            info =_("Vérifier que les adresses sont correctes") + "."
+
+    return render(request, 'epl/webmaster.html', locals())
 
 
 def confirm(request):
