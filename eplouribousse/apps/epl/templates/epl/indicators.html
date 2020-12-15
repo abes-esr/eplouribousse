@@ -50,6 +50,14 @@
 
    <tbody>
 
+     <tr>
+           <td>{% trans "Réalisation relative (ressources traitées/ressources effectivement candidates)" %}</td>
+           <td><center>{{ relative_real }} %</center></td>
+     </tr>
+     <tr>
+           <td>{% trans "Réalisation absolue (ressources n'étant plus à traiter/ressources potentiellement candidates)" %}</td>
+           <td><center>{{ absolute_real }} %</center></td>
+     </tr>
     <tr>
           <td>{% trans "Collections" %}</td>
           <td><center>{{ coll }}</center></td>

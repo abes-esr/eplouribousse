@@ -28,8 +28,10 @@
           <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Login</button>
+            <button type="submit">{% trans "Me connecter" %}</button>
           </form>
+          <p></p>
+          <a href="/accounts/password_reset">{% trans "Mot de passe perdu" %}</a> ?
 <p></p>
 
         </div>

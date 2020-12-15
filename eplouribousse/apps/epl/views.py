@@ -1,8 +1,8 @@
-epl_version ="v1.14.1 (Fredegunda)"
+epl_version ="v1.14.2 (Fredegunda)"
 date_version ="December 11, 2020"
 # Mise au niveau de :
-epl_version ="v1.15-beta.1 (~Haldetrude)"
-date_version ="December 11, 2020"
+# epl_version ="v1.15-beta.2 (~Haldetrude)"
+# date_version ="December 15, 2020"
 
 from django.shortcuts import render
 
@@ -450,6 +450,12 @@ def indicators(request):
     #Number of instructions :
     instr = len(Instruction.objects.all())
 
+    #Absolute achievement :
+    absolute_real = round(10000*(fullinstr + discard)/cand)/100
+
+    #Relative achievement :
+    relative_real = round(10000*fullinstr/realcand)/100
+
     return render(request, 'epl/indicators.html', locals())
 
 
@@ -552,7 +558,7 @@ def search(request):
                             progress =_("Ressource non candidate du fait d'exclusion")
                         elif ItemRecord.objects.filter(sid =sid, rank =99):
                             if ItemRecord.objects.filter(sid =sid, lid =lid, rank =99):
-                                progress =_("Vous devez positionnez votre collection")
+                                progress =_("Vous devez positionner votre collection")
                                 action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                             else:
                                 progress =_("Votre collection est déjà positionnée ; modification encore possible")
@@ -2439,7 +2445,7 @@ def current_status(request, sid, lid):
                 progress =_("Ressource non candidate du fait d'exclusion")
             elif ItemRecord.objects.filter(sid =sid, rank =99):
                 if ItemRecord.objects.filter(sid =sid, lid =lid, rank =99):
-                    progress =_("Vous devez positionnez votre collection")
+                    progress =_("Vous devez positionner votre collection")
                     action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                 else:
                     progress =_("Votre collection est déjà positionnée ; modification encore possible")
