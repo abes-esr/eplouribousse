@@ -31,7 +31,8 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 13. paramétrage des motifs de dérogation,
 14. administration des cas de fiches défectueuses,
 15. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues),
-16. formulaires de contact de l'administrateur de l'instance et du développeur.
+16. formulaires de contact de l'administrateur de l'instance et du développeur,
+17. gestion autonome du mot de passe.
 
 # Plus d'info :
 
