@@ -78,8 +78,8 @@ def home(request):
     if form.is_valid():
         lid = Library.objects.get(name =i.libname).lid
         feature =i.feaname
-        # if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
-        i.save()
+        if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
+            i.save()
         if lid =="999999999":
             if feature =='instrtodo':
                 return instrtodo(request, lid, 'title')
@@ -209,55 +209,51 @@ def confirm(request):
     return render(request, 'epl/confirmation.html', locals())
 
 
-def router(request):
+def router(request, lid):
 
-    if not client_ip ==request.META['REMOTE_ADDR']:
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         return home(request)
     else:
-        if idfeature ==0:
-            return home(request)
-        if idfeature ==1:
-            if idview ==0:
-                return ranktotake(request, dil, 'title')
-            if idview ==1:
-                return xranktotake(request, dil, dilx, 'title')
-            if idview ==2:
-                return modifranklist(request, dil, 'title')
-        if idfeature ==2:
-            if idview ==0:
-                return arbitration(request, dil, 'title')
-            if idview ==1:
-                return xarbitration(request, dil, dilx, 'title')
-            if idview ==2:
-                return x1arb(request, dil, dilx, 'title')
-            if idview ==3:
-                return x0arb(request, dil, dilx, 'title')
-            if idview ==4:
-                return arbrk1(request, dil, 'title')
-            if idview ==5:
-                return arbnork1(request, dil, 'title')
-        if idfeature ==3:
-            if idview ==0:
-                return instrtodo(request, dil, 'title')
-            if idview ==1:
-                return xinstrlist(request, dil, dilx, 'title')
-            if idview ==2:
-                return xckbd(request, tes_lloc)
-            if idview ==3:
-                return xcknbd(request, tes_lloc)
-            if idview ==4:
-                return xckall(request, tes_lloc)
-        if idfeature ==4:
-            if idview ==0:
-                return tobeedited(request, dil, 'title')
-            if idview ==1:
-                return mothered(request, dil, 'title')
-            if idview ==2:
-                return notmothered(request, dil, 'title')
-            if idview ==3:
-                return xmothered(request, dil, dilx, 'title')
-            if idview ==4:
-                return xnotmothered(request, dil, dilx, 'title')
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        key =newestfeature.feaname.split(',')
+        if key[0] =="10":
+            return ranktotake(request, lid, 'title')
+        elif key[0] =="11":
+            return xranktotake(request, lid, key[1], 'title')
+        elif key[0] =="12":
+            return modifranklist(request, lid, 'title')
+        elif key[0] =="20":
+            return arbitration(request, lid, 'title')
+        elif key[0] =="21":
+            return xarbitration(request, lid, key[1], 'title')
+        elif key[0] =="22":
+            return x1arb(request, lid, key[1], 'title')
+        elif key[0] =="23":
+            return x0arb(request, lid, key[1], 'title')
+        elif key[0] =="24":
+            return arbrk1(request, lid, 'title')
+        elif key[0] =="25":
+            return arbnork1(request, lid, 'title')
+        elif key[0] =="30":
+            return instrtodo(request, lid, 'title')
+        elif key[0] =="31":
+            return xinstrlist(request, lid, key[1], 'title')
+        elif key[0] =="32":
+            return xckbd(request, key[1])
+        elif key[0] =="33":
+            return xcknbd(request, key[1])
+        elif key[0] =="34":
+            return xckall(request, key[1])
+        elif key[0] =="40":
+            return tobeedited(request, lid, 'title')
+        elif key[0] =="41":
+            return mothered(request, lid, 'title')
+        elif key[0] =="42":
+            return notmothered(request, lid, 'title')
+        elif key[0] =="43":
+            return xmothered(request, lid, key[1], 'title')
+        elif key[0] =="44":
+            return xnotmothered(request, lid, key[1], 'title')
 
     return render(request, 'epl/router.html', locals())
 
@@ -665,7 +661,7 @@ def takerank(request, sid, lid):
             return modifranklist(request, dil, 'title')
         else:
             return ranktotake(request, lid, 'title')
-        # return router(request)
+        # return router(request, lid)
 
     # Item records list :
     itlist = ItemRecord.objects.filter(sid =  sid)
@@ -1335,7 +1331,7 @@ def endinstr(request, sid, lid):
                 for e in ItemRecord.objects.filter(sid =sid, status =4):
                     e.status = 5
                     e.save()
-            return router(request)
+            return router(request, lid)
 
         elif u.is_valid() and t.checkin =="Notify": #In this case BDD administrator will be informed of errors in the instructions.
             # Change all ItemRecords status (except those with rank =0) for the considered sid to status =6
@@ -1352,7 +1348,7 @@ def endinstr(request, sid, lid):
                 dest.append(d.contact)
             exp = Library.objects.get(lid ="999999999").contact
             send_mail(subject, message, exp, dest, fail_silently=True, )
-            return router(request)
+            return router(request, lid)
 
     else: #lid !="999999999"
         if z.is_valid() and y.flag ==True:
@@ -1405,7 +1401,7 @@ def endinstr(request, sid, lid):
             if nextlib.contact_ter:
                 dest.append(nextlib.contact_ter)
             send_mail(subject, message, replymail, dest, fail_silently=True, )
-            return router(request)
+            return router(request, lid)
 
         if z.is_valid() and y.flag ==False:
             info =_("Vous n'avez pas coché !")
@@ -1431,6 +1427,16 @@ def ranktotake(request, lid, sort):
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 0, lid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="10"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="10"
+        newestfeature.save()
 
     reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by(sort))
 
@@ -1463,6 +1469,16 @@ def modifranklist(request, lid, sort):
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="12"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="12"
+        newestfeature.save()
 
     reclist = list(ItemRecord.objects.filter(lid = lid).exclude(rank = 99)\
     .exclude(status =2).exclude(status =3).exclude(status =4).\
@@ -1528,6 +1544,16 @@ def xranktotake(request, lid, xlid, sort):
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 1, 1, lid, xlid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="11," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="11," + str(xlid)
+        newestfeature.save()
 
     #Getting ressources whose this lid must but has not yet taken rank :
     reclist = list(ItemRecord.objects.filter(lid = lid, rank = 99).order_by(sort))
@@ -1660,6 +1686,16 @@ def arbitration(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 0, lid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="20"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="20"
+        newestfeature.save()
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1715,6 +1751,16 @@ def arbrk1(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 4, lid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="24"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="24"
+        newestfeature.save()
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1752,6 +1798,16 @@ def arbnork1(request, lid, sort):
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 2, lid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="22"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="22"
+        newestfeature.save()
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1820,6 +1876,16 @@ def xarbitration(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 1, lid, xlid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="21," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="21," + str(xlid)
+        newestfeature.save()
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1875,6 +1941,16 @@ def x1arb(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 2, lid, xlid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="22," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="22," + str(xlid)
+        newestfeature.save()
+
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -1913,6 +1989,16 @@ def x0arb(request, lid, xlid, sort):
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 3, lid, xlid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="23," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="23," + str(xlid)
+        newestfeature.save()
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -1954,6 +2040,16 @@ def instrtodo(request, lid, sort):
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 3, 0, lid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="30"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="30"
+        newestfeature.save()
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid).exclude(status =0).exclude(status =2).\
@@ -2121,6 +2217,16 @@ def xinstrlist(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 3, 1, lid, xlid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="31," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="31," + str(xlid)
+        newestfeature.save()
+
     name = Library.objects.get(lid =lid).name
     xname = Library.objects.get(lid =xlid).name
 
@@ -2145,6 +2251,16 @@ def tobeedited(request, lid, sort):
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 0, lid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="40"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="40"
+        newestfeature.save()
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -2178,6 +2294,16 @@ def mothered(request, lid, sort):
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 1, lid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="41"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="41"
+        newestfeature.save()
+
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
     #Trick : These ressources have two instructions with name = 'checker' :
@@ -2209,6 +2335,16 @@ def notmothered(request, lid, sort):
 
     global client_ip, idfeature, idview, dil
     client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 2, lid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="42"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="42"
+        newestfeature.save()
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -2281,6 +2417,16 @@ def xmothered(request, lid, xlid, sort):
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 3, lid, xlid
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="43," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="43," + str(xlid)
+        newestfeature.save()
+
     l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by(sort))
 
     #Initializing a list of ressources to edit :
@@ -2308,6 +2454,16 @@ def xnotmothered(request, lid, xlid, sort):
 
     global client_ip, idfeature, idview, dil, dilx
     client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 4, lid, xlid
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="44," + str(xlid)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="44," + str(xlid)
+        newestfeature.save()
 
     l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
@@ -2499,6 +2655,16 @@ def xckbd(request, coll_set):
     global client_ip, idfeature, idview, tes_lloc
     client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 2, coll_set
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="32," + str(coll_set)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="32," + str(coll_set)
+        newestfeature.save()
+
     l = []
 
     reclist = list(ItemRecord.objects.filter(status =2, rank =1).order_by('title'))
@@ -2524,6 +2690,16 @@ def xcknbd(request, coll_set):
     global client_ip, idfeature, idview, tes_lloc
     client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 3, coll_set
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="33," + str(coll_set)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="33," + str(coll_set)
+        newestfeature.save()
+
     l = []
 
     reclist = list(ItemRecord.objects.filter(status =4, rank =1).order_by('title'))
@@ -2548,6 +2724,16 @@ def xckall(request, coll_set):
 
     global client_ip, idfeature, idview, tes_lloc
     client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 4, coll_set
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="34," + str(coll_set)
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="34," + str(coll_set)
+        newestfeature.save()
 
     l = []
 
