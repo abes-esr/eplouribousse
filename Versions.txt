@@ -19,6 +19,8 @@ Version 1.12 (Audovera)                     2020.10.14
 Version 1.13 (~Galswinthe)                  beta
 Version 1.14 (Fredegunda)                   2020.12.11
 Version 1.15 (~Haldetrude)                  beta
+Version 1.16 (Bertrude)                     2021.01.05
+Version 1.17 (~Sichilde)                    beta
 
 
 

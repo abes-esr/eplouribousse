@@ -74,6 +74,7 @@
           <td>{% trans "Ressources potentiellement candidates" %}</td>
           <td><center>{{ cand }}</center></td>
     </tr>
+    {% if nlib > 3 %}
     <tr>
           <td>{% trans "dont doublons stricts" %}</td>
           <td><center>{{ dupl }}</center></td>
@@ -82,6 +83,7 @@
           <td>{% trans "dont triplons" %}</td>
           <td><center>{{ tripl }}</center></td>
     </tr>
+    {% endif %}
     {% if nlib > 4 %}
     <!-- 4 and not 3, since the checker is another library -->
     <tr>

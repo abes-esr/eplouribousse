@@ -1,8 +1,8 @@
-epl_version ="v1.14.4 (Fredegunda)"
-date_version ="December 11, 2020"
+epl_version ="v1.16.0 (Bertrude)"
+date_version ="January 05, 2021"
 # Mise au niveau de :
-epl_version ="v1.15-beta.4 (~Haldetrude)"
-date_version ="December 16, 2020"
+# epl_version ="v1.17-beta.0 (~Sichilde)"
+# date_version ="January 05, 2021"
 
 from django.shortcuts import render
 
@@ -24,12 +24,6 @@ from django.contrib.auth import logout
 
 from django.http import HttpResponseRedirect
 
-client_ip ='127.0.0.1'
-idfeature =0 #identification de la fonctionnalité (0 pour accueil, 1 pour positionnement, 2 pour arbitrage, 3 pour instr et 4 pour ed)
-idview =1 #identification des fonctions de listes (voir les vues correspondantes)
-dil =Library.objects.exclude(lid ="999999999")[0].lid # comme lid
-dilx =Library.objects.exclude(lid ="999999999")[1].lid # comme xlid
-tes_lloc =Library.objects.all() # comme coll_set
 lastrked =None
 wbmstr =""
 try:
@@ -78,8 +72,9 @@ def home(request):
     if form.is_valid():
         lid = Library.objects.get(name =i.libname).lid
         feature =i.feaname
-        if not Feature.objects.filter(feaname = i.feaname, libname =i.libname):
+        if not Feature.objects.filter(feaname =feature, libname =i.libname):
             i.save()
+
         if lid =="999999999":
             if feature =='instrtodo':
                 return instrtodo(request, lid, 'title')
@@ -215,7 +210,7 @@ def router(request, lid):
         return home(request)
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        key =newestfeature.feaname.split(',')
+        key =newestfeature.feaname.split('$')
         if key[0] =="10":
             return ranktotake(request, lid, 'title')
         elif key[0] =="11":
@@ -239,11 +234,11 @@ def router(request, lid):
         elif key[0] =="31":
             return xinstrlist(request, lid, key[1], 'title')
         elif key[0] =="32":
-            return xckbd(request, key[1])
+            return xckbd(request, eval(key[1]))
         elif key[0] =="33":
-            return xcknbd(request, key[1])
+            return xcknbd(request, eval(key[1]))
         elif key[0] =="34":
-            return xckall(request, key[1])
+            return xckall(request, eval(key[1]))
         elif key[0] =="40":
             return tobeedited(request, lid, 'title')
         elif key[0] =="41":
@@ -653,15 +648,7 @@ def takerank(request, sid, lid):
         else:
             return notintime(request, sid, lid)
 
-        if idview ==0 and client_ip ==request.META['REMOTE_ADDR']:
-            return ranktotake(request, dil, 'title')
-        elif idview ==1 and client_ip ==request.META['REMOTE_ADDR']:
-            return xranktotake(request, dil, dilx, 'title')
-        elif idview ==2 and client_ip ==request.META['REMOTE_ADDR']:
-            return modifranklist(request, dil, 'title')
-        else:
-            return ranktotake(request, lid, 'title')
-        # return router(request, lid)
+        return router(request, lid)
 
     # Item records list :
     itlist = ItemRecord.objects.filter(sid =  sid)
@@ -1425,9 +1412,6 @@ def ranktotake(request, lid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 0, lid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
@@ -1466,9 +1450,6 @@ def modifranklist(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
-
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 1, 2, lid
 
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -1542,17 +1523,14 @@ def xranktotake(request, lid, xlid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 1, 1, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="11," + str(xlid)
+        newestfeature.feaname ="11$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="11," + str(xlid)
+        newestfeature.feaname ="11$" + str(xlid)
         newestfeature.save()
 
     #Getting ressources whose this lid must but has not yet taken rank :
@@ -1683,9 +1661,6 @@ def arbitration(request, lid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 0, lid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
@@ -1748,9 +1723,6 @@ def arbrk1(request, lid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 4, lid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
@@ -1795,9 +1767,6 @@ def arbnork1(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
-
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 2, 2, lid
 
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -1873,17 +1842,14 @@ def xarbitration(request, lid, xlid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 1, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="21," + str(xlid)
+        newestfeature.feaname ="21$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="21," + str(xlid)
+        newestfeature.feaname ="21$" + str(xlid)
         newestfeature.save()
 
     #For the lid identified library, getting ressources whose at \
@@ -1938,17 +1904,14 @@ def x1arb(request, lid, xlid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 2, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="22," + str(xlid)
+        newestfeature.feaname ="22$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="22," + str(xlid)
+        newestfeature.feaname ="22$" + str(xlid)
         newestfeature.save()
 
     #For the lid identified library, getting ressources whose at \
@@ -1987,17 +1950,14 @@ def x0arb(request, lid, xlid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 2, 3, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="23," + str(xlid)
+        newestfeature.feaname ="23$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="23," + str(xlid)
+        newestfeature.feaname ="23$" + str(xlid)
         newestfeature.save()
 
     #For the lid identified library, getting ressources whose at \
@@ -2037,9 +1997,6 @@ def instrtodo(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
-
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 3, 0, lid
 
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2214,17 +2171,14 @@ def xinstrlist(request, lid, xlid, sort):
     if lid =="999999999":
         return notintime(request, "-?-", lid)
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 3, 1, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="31," + str(xlid)
+        newestfeature.feaname ="31$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="31," + str(xlid)
+        newestfeature.feaname ="31$" + str(xlid)
         newestfeature.save()
 
     name = Library.objects.get(lid =lid).name
@@ -2235,7 +2189,7 @@ def xinstrlist(request, lid, xlid, sort):
 
     l =[]
     for e in lprov:
-        if ItemRecord.objects.filter(lid =xlid).exclude(rank =0):
+        if ItemRecord.objects.filter(lid =xlid, sid =e.sid).exclude(rank =0):
             l.append(e)
 
     size = len(l)
@@ -2248,9 +2202,6 @@ def tobeedited(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
-
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 0, lid
 
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2291,9 +2242,6 @@ def mothered(request, lid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 1, lid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
@@ -2332,9 +2280,6 @@ def notmothered(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
-
-    global client_ip, idfeature, idview, dil
-    client_ip, idfeature, idview, dil =request.META['REMOTE_ADDR'], 4, 2, lid
 
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2414,17 +2359,14 @@ def xmothered(request, lid, xlid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 3, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="43," + str(xlid)
+        newestfeature.feaname ="43$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="43," + str(xlid)
+        newestfeature.feaname ="43$" + str(xlid)
         newestfeature.save()
 
     l = list(ItemRecord.objects.filter(lid =lid, rank =1).order_by(sort))
@@ -2452,17 +2394,14 @@ def xnotmothered(request, lid, xlid, sort):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, dil, dilx
-    client_ip, idfeature, idview, dil, dilx =request.META['REMOTE_ADDR'], 4, 4, lid, xlid
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="44," + str(xlid)
+        newestfeature.feaname ="44$" + str(xlid)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="44," + str(xlid)
+        newestfeature.feaname ="44$" + str(xlid)
         newestfeature.save()
 
     l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
@@ -2652,17 +2591,14 @@ def xckbd(request, coll_set):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, tes_lloc
-    client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 2, coll_set
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="32," + str(coll_set)
+        newestfeature.feaname ="32$" + str(coll_set)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="32," + str(coll_set)
+        newestfeature.feaname ="32$" + str(coll_set)
         newestfeature.save()
 
     l = []
@@ -2687,17 +2623,14 @@ def xcknbd(request, coll_set):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, tes_lloc
-    client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 3, coll_set
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="33," + str(coll_set)
+        newestfeature.feaname ="33$" + str(coll_set)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="33," + str(coll_set)
+        newestfeature.feaname ="33$" + str(coll_set)
         newestfeature.save()
 
     l = []
@@ -2722,17 +2655,14 @@ def xckall(request, coll_set):
     version =epl_version
     webmaster =wbmstr
 
-    global client_ip, idfeature, idview, tes_lloc
-    client_ip, idfeature, idview, tes_lloc =request.META['REMOTE_ADDR'], 3, 4, coll_set
-
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="34," + str(coll_set)
+        newestfeature.feaname ="34$" + str(coll_set)
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="34," + str(coll_set)
+        newestfeature.feaname ="34$" + str(coll_set)
         newestfeature.save()
 
     l = []
