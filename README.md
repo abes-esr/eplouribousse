@@ -73,9 +73,10 @@ Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 
 # Instructions pour le déploiement :
 
-- Le déploiement se fait avec l'outil pydiploy <https://pypi.org/project/pydiploy/> (installation avec la commande pip install pydiploy)
-- L'usage de pydiploy implique la création d'un fabfile ad-hoc sur le modèle de ceux fournis dans le dépôt (exemple <https://github.com/GGre/eplouribounistra/blob/master/fabfile_eplouribousse1.py>)
-- Il faut également prévoir l'installation de reportlab open source <https://pypi.org/project/reportlab/> (pour la génération de fichiers pdf)
+- L'outil de déploiement ayant été codé en python 2.7, il conviendra d'abord de créer un environnement virtuel sous lequel on installera cette version de python,
+- Le déploiement se fait avec l'outil pydiploy <https://pypi.org/project/pydiploy/> (installation avec la commande 'pip install pydiploy', dans l'environnement virtuel précédemment créé),
+- L'usage de pydiploy implique la création d'un fabfile ad-hoc sur le modèle de ceux fournis dans le dépôt (exemple <https://github.com/GGre/eplouribounistra/blob/master/fabfile_eplouribousse1.py>),
+- Il faut également prévoir l'installation de reportlab open source <https://pypi.org/project/reportlab/> (pour la génération de fichiers pdf).
 
 # Crédits :
 
