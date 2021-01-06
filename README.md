@@ -71,6 +71,12 @@ Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a actuelleme
 
 Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
 
+# Instruction pour le déploiement :
+
+Le déploiement se fait avec l'outil `pydiploy <https://pypi.org/project/pydiploy/>` (installation avec la commande pip install pydiploy)
+L'usage de pydiploy implique la création d'un fabfile ad-hoc sur le modèle de ceux fournis dans le dépôt (`exemple <https://github.com/GGre/eplouribounistra/blob/master/fabfile_eplouribousse1.py>`)
+Il faut également prévoir l'installation de `reportlab open source <https://pypi.org/project/reportlab/>` (pour la génération de fichiers pdf)
+
 # Crédits :
 
 eplouribousse utilise des données sous licence ouverte etalab fournies par l'Agence bibliographique de l’Enseignement supérieur.
