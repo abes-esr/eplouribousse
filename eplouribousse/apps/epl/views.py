@@ -1,8 +1,8 @@
-epl_version ="v1.16.0 (Bertrude)"
+epl_version ="v1.16.1 (Bertrude)"
 date_version ="January 05, 2021"
 # Mise au niveau de :
-epl_version ="v1.17-beta.0 (~Sichilde)"
-date_version ="January 05, 2021"
+# epl_version ="v1.17-beta.1 (~Sichilde)"
+# date_version ="January 07, 2021"
 
 from django.shortcuts import render
 
@@ -513,7 +513,7 @@ def search(request):
                     if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
                         action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
                 elif ItemRecord.objects.filter(sid =sid, lid = lid, status =4):
-                    if len(ItemRecord.objects.get(sid =sid, status =3)):
+                    if len(ItemRecord.objects.filter(sid =sid, status =3)):
                         xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                         progress =_("Instruction des éléments non reliés de la collection")
                     else: # tous les enregistrements sont au statut 4
@@ -2504,7 +2504,7 @@ def current_status(request, sid, lid):
         if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
             action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
     elif ItemRecord.objects.filter(sid =sid, lid = lid, status =4):
-        if len(ItemRecord.objects.get(sid =sid, status =3)):
+        if len(ItemRecord.objects.filter(sid =sid, status =3)):
             xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
             progress =_("Instruction des éléments non reliés de la collection")
         else: # tous les enregistrements sont au statut 4
