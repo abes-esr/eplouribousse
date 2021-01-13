@@ -1,8 +1,8 @@
-epl_version ="v1.16.1 (Bertrude)"
+epl_version ="v1.16.2 (Bertrude)"
 date_version ="January 05, 2021"
 # Mise au niveau de :
-epl_version ="v1.17-beta.1 (~Sichilde)"
-date_version ="January 07, 2021"
+# epl_version ="v1.17-beta.2 (~Sichilde)"
+# date_version ="January 13, 2021"
 
 from django.shortcuts import render
 
@@ -1328,7 +1328,11 @@ def endinstr(request, sid, lid):
 
             #Message data to the BDD administrator(s):
             subject = "eplouribousse : " + str(sid) + " / " + "status = 6"
-            message = _("Le statut est passé à 6 pour les enregistrements des bibliothèques participant à la résultante de la ressource citée en objet ; une intervention dans la base de données est attendue de votre part. Merci !")
+            host = str(request.get_host())
+            message = _("Fiche défectueuse signalée par le contrôleur pour le ppn ") + str(sid) +\
+            "\n" + _("Une intervention est attendue de la part d'un des administrateurs de la base") +\
+            " :\n" + "https://" + host + "/current_status/" + str(sid) + '/' + str(lid) + \
+            "\n" + _("Merci !")
             destprov = BddAdmin.objects.all()
             dest =[]
             for d in destprov:
@@ -2516,10 +2520,10 @@ def current_status(request, sid, lid):
         try:
             xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
             progress =_("Instruction des éléments reliés de la collection")
-            return render(request, '/epl/current.html', locals())
+            return render(request, 'epl/current.html', locals())
         except: # tous les enregistrements sont au statut 2
             progress =_("En attente de validation intermédiaire par le contrôleur")
-            return render(request, '/epl/current.html', locals())
+            return render(request, 'epl/current.html', locals())
     elif ItemRecord.objects.filter(sid =sid, lid = lid, status =1):
         progress =_("Instruction des éléments reliés de votre collection")
         action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
