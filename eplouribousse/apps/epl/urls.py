@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views, views_pdf
+from . import views, views_pdf, views_csv
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -67,4 +67,11 @@ urlpatterns = [
     path('ednotmotherpdf/<str:lid>', views_pdf.notmotherpdf, name='notmothertopdf'),
     path('edmotherpdf/<str:lid>/<str:xlid>', views_pdf.xmotherpdf, name='xmothertopdf'),
     path('ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
+
+    path('csv/<str:sid>/<str:lid>', views_csv.some_view, name='kfùùz'),
+    # path('edallpdf/<str:lid>', views_pdf.edallpdf, name='alltopdf'),
+    # path('edmotherpdf/<str:lid>', views_pdf.motherpdf, name='mothertopdf'),
+    # path('ednotmotherpdf/<str:lid>', views_pdf.notmotherpdf, name='notmothertopdf'),
+    # path('edmotherpdf/<str:lid>/<str:xlid>', views_pdf.xmotherpdf, name='xmothertopdf'),
+    # path('ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
 ]

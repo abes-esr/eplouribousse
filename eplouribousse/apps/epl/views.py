@@ -559,7 +559,9 @@ def search(request):
                             action, laction =_("Modification du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                         return render(request, 'epl/search.html', locals())
             else: #lid ="999999999"
-                if ItemRecord.objects.filter(sid =sid, status =5):
+                if ItemRecord.objects.filter(sid =sid, status =6):
+                    progress =_("Une anomalie a été constatée au cours de l'instruction de la résultante")
+                elif ItemRecord.objects.filter(sid =sid, status =5):
                     progress =_("Instruction achevée")
                     alteraction, lalteraction =_("Edition des résultantes par bibliothèque"), "/"
                 elif ItemRecord.objects.filter(sid =sid, status =4):
@@ -2465,6 +2467,9 @@ def edition(request, sid, lid):
 
 
 def current_status(request, sid, lid):
+
+    if lid =="999999999":
+        return notintime(request, sid, lid)
 
     k = logstatus(request)
     version =epl_version
