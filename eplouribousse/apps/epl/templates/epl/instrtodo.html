@@ -28,7 +28,7 @@
           {% endif %}
           <h2>{{ libname }} - {% trans "Instructions" %} - {% trans "toutes formes, tous rangs" %}</h2>
 
-          <p>{% trans "Nombre de ressources concernées" %} : {{ size }}
+          <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}
           {% if lid != "999999999" %}
           {% if nlib > 2 %}
             ~  <a href="/instrfilter/{{ lid }}">{% trans "Restreindre la liste aux instructions avec une autre bibliothèque" %}</a>

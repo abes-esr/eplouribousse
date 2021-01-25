@@ -239,6 +239,14 @@ def router(request, lid):
             return xcknbd(request, eval(key[1]))
         elif key[0] =="34":
             return xckall(request, eval(key[1]))
+        elif key[0] =="35":
+            return instroneb(request, lid, 'title')
+        elif key[0] =="36":
+            return instrotherb(request, lid, 'title')
+        elif key[0] =="37":
+            return instronenotb(request, lid, 'title')
+        elif key[0] =="38":
+            return instrothernotb(request, lid, 'title')
         elif key[0] =="40":
             return tobeedited(request, lid, 'title')
         elif key[0] =="41":
@@ -1223,6 +1231,42 @@ def endinstr(request, sid, lid):
     except:
         z =1 #This is just to continue
 
+    # Self instruction if no instruction
+    if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
+        if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name):
+            blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
+            .name, bound ="x", descr =_("-- Néant --"), \
+            exc =_("-- Néant --"), degr =_("-- Néant --"))
+            blankinst.save()
+            #Renumbering instruction lines :
+            try:
+                instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
+                j, l =0, 1
+                while j <= len(instr):
+                    instr[j].line = l
+                    instr[j].save()
+                    j +=1
+                    l +=1
+            except:
+                pass
+    elif len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
+        if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name, bound =" "):
+            blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
+            .name, bound =" ", descr =_("-- Néant --"), \
+            exc =_("-- Néant --"), degr =_("-- Néant --"))
+            blankinst.save()
+            #Renumbering instruction lines :
+            try:
+                instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
+                j, l =0, 1
+                while j <= len(instr):
+                    instr[j].line = l
+                    instr[j].save()
+                    j +=1
+                    l +=1
+            except:
+                pass
+
     #Ressource data :
     itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
     ress = itemlist[0]
@@ -1345,7 +1389,9 @@ def endinstr(request, sid, lid):
 
     else: #lid !="999999999"
         if z.is_valid() and y.flag ==True:
+
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
+
                 if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
@@ -1777,11 +1823,11 @@ def arbnork1(request, lid, sort):
     newestfeature =Feature()
     if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.get(lid =lid).name
-        newestfeature.feaname ="22"
+        newestfeature.feaname ="25"
         newestfeature.save()
     else:
         newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="22"
+        newestfeature.feaname ="25"
         newestfeature.save()
 
     #For the lid identified library, getting ressources whose at \
@@ -2055,6 +2101,16 @@ def instroneb(request, lid, sort):
     version =epl_version
     webmaster =wbmstr
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="35"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="35"
+        newestfeature.save()
+
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
         .exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
@@ -2077,6 +2133,16 @@ def instrotherb(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="36"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="36"
+        newestfeature.save()
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).\
@@ -2102,6 +2168,16 @@ def instronenotb(request, lid, sort):
     version =epl_version
     webmaster =wbmstr
 
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="37"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="37"
+        newestfeature.save()
+
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid, rank =1).exclude(status =0).\
         exclude(status =1).exclude(status =2).exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
@@ -2124,6 +2200,16 @@ def instrothernotb(request, lid, sort):
     k = logstatus(request)
     version =epl_version
     webmaster =wbmstr
+
+    newestfeature =Feature()
+    if not Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
+        newestfeature.libname =Library.objects.get(lid =lid).name
+        newestfeature.feaname ="38"
+        newestfeature.save()
+    else:
+        newestfeature =Feature.objects.filter(libname =Library.objects.get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+        newestfeature.feaname ="38"
+        newestfeature.save()
 
     if lid !="999999999":
         l = list(ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(status =0).\

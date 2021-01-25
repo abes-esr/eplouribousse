@@ -57,9 +57,9 @@ urlpatterns = [
 
     path('999999999', views.checkinstr, name='message to checker'),
     path('xcheck', views.checkerfilter, name='checker filter'),
-    path('xckbd/', views.xckbd, name='instrtodo for checker xbd'),
-    path('xcknbd/', views.xcknbd, name='instrtodo for checker xnbd'),
-    path('xckall/', views.xckall, name='instrtodo for checker xall'),
+    path('xckbd', views.xckbd, name='instrtodo for checker xbd'),
+    path('xcknbd', views.xcknbd, name='instrtodo for checker xnbd'),
+    path('xckall', views.xckall, name='instrtodo for checker xall'),
 
     path('pdf/<str:sid>/<str:lid>', views_pdf.pdfedition, name='pdfedition'),
     path('edallpdf/<str:lid>', views_pdf.edallpdf, name='alltopdf'),
@@ -68,10 +68,5 @@ urlpatterns = [
     path('edmotherpdf/<str:lid>/<str:xlid>', views_pdf.xmotherpdf, name='xmothertopdf'),
     path('ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
 
-    path('csv/<str:sid>/<str:lid>', views_csv.some_view, name='kfùùz'),
-    # path('edallpdf/<str:lid>', views_pdf.edallpdf, name='alltopdf'),
-    # path('edmotherpdf/<str:lid>', views_pdf.motherpdf, name='mothertopdf'),
-    # path('ednotmotherpdf/<str:lid>', views_pdf.notmotherpdf, name='notmothertopdf'),
-    # path('edmotherpdf/<str:lid>/<str:xlid>', views_pdf.xmotherpdf, name='xmothertopdf'),
-    # path('ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
+    path('csv/<str:lid>/<str:xlid>/<path:recset>/<str:what>', views_csv.simple_csv, name='csv export'),
 ]
