@@ -30,7 +30,7 @@
                   {% endif %}
                   <h2>{{ libname }} - {% trans "Positionnement modifiable" %}</h2>
 
-                  <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
+                  <p><button><b><a href="/csv/{{ lid }}/None/{{ resslist }}/12" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
 
                   <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 

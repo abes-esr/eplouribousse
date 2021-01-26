@@ -30,7 +30,8 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 14. administration of faulty card cases,
 15. multilingual support (French, English, German, extensible to other languages),
 16. contact forms : to contact either the webmaster(s) or the developer(s),
-17. autonomous password management.
+17. csv export for the main lists,
+18. autonomous password management.
 
 # More information :
 

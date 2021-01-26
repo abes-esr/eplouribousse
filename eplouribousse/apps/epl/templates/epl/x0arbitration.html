@@ -30,7 +30,7 @@
 
           <h2>{{ libname }} (& {{ xlibname }}) - {% trans "Arbitrages faute de rang 1" %}</h2>
 
-          <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ {% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
+          <p><button><b><a href="/csv/{{ lid }}/{{ xlid }}/{{ resslist }}/23" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ {% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
 
           <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 

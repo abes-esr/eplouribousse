@@ -10,29 +10,52 @@ def simple_csv(request, lid, xlid, recset, what):
     fea =""
     parsed =recset.split("<ItemRecord: ")
 
-    feat =""
     if what =="10":
         fea ="rk"
+    elif what =="11":
+        fea ="xrk"
     elif what =="12":
         fea ="mrk"
     elif what =="20":
         fea ="arb"
+    elif what =="21":
+        fea ="xarb"
+    elif what =="22":
+        fea ="x1arb"
+    elif what =="23":
+        fea ="x0arb"
     elif what =="24":
         fea ="arb1"
     elif what =="25":
         fea ="arb0"
     elif what =="30":
         fea ="instr"
+    elif what =="31":
+        fea ="xinstr"
+    elif what =="35":
+        fea ="instr1b"
+    elif what =="36":
+        fea ="instrxb"
+    elif what =="37":
+        fea ="instr1nb"
+    elif what =="38":
+        fea ="instrxnb"
     elif what =="40":
         fea ="res"
     elif what =="41":
         fea ="resm"
     elif what =="42":
         fea ="resnm"
+    elif what =="43":
+        fea ="xmoth"
+    elif what =="44":
+        fea ="xnomoth"
     elif what =="50":
+        fea ="excl"
+    elif what =="60":
         fea ="faulty"
 
-    filename = fea + '_' + lid + '.csv'
+    filename = fea + '_' + lid + '_' + xlid + '.csv'
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
@@ -67,7 +90,9 @@ def simple_csv(request, lid, xlid, recset, what):
                     k.comm, Library.objects.get(lid =k.lid).name, k.cn, k.title, \
                     k.pubhist, k.holdstat, k.missing, k.status])
             c +=1
+        if c ==1:
+            writer.writerow([_("(Aucun enregistrement)")])
     except:
-        writer.writerow([_("(Aucun enregistrement)"), z])
+        writer.writerow([_("(Aucun enregistrement)")])
 
     return response

@@ -1,8 +1,8 @@
-epl_version ="v1.16.2 (Bertrude)"
-date_version ="January 05, 2021"
+epl_version ="v1.18.0 (Gomatrude)"
+date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.17-beta.2 (~Sichilde)"
-date_version ="January 13, 2021"
+epl_version ="v1.19-beta.0 (~Nantechilde )"
+date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -1704,7 +1704,6 @@ def faulty(request):
         length =len(faulty_list)
 
     return render(request, 'epl/faulty.html', locals())
-
 
 
 def arbitration(request, lid, sort):
