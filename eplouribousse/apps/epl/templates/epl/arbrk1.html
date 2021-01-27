@@ -31,7 +31,7 @@
                 <h2>{{ libname }} - {% trans "Arbitrages (Concurrence sur le rang 1)" %}</h2>
                 <!-- <div id="content"> -->
 
-                <p><button><b><a href="/csv/{{ lid }}/None/{{ resslist }}/24" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
+                <p><button><b><a href="/csv/{{ lid }}/None/{{ resslist }}/24/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
 
                 <p></p>
 
@@ -79,7 +79,7 @@
 
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a> . <a target="_blank" href="/mailinglist">{% trans "Me tenir au courant" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
 
 <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'Agence bibliographique de l’Enseignement supérieur.</p><p>Version : {{ version }}</p>
 

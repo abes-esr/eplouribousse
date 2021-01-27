@@ -28,13 +28,20 @@
         {% endif %}
         </div>
         <p></p>
-        <h2>{% trans "Confirmation de l'envoi" %}</h2>
+        <h2>{% trans "Abonnement aux listes de diffusion eplouribousse" %}</h2>
         <div id="content">
 
 
-          <p>{% trans "Votre message a bien été envoyé" %}.</p>
-          <p>{% trans "Un message de confirmation vous a été adressé à l'adresse de messagerie indiquée" %}.</p>
+<p></p>
+          <form method="post">
+            <p>{% trans "Choix de la liste" %} : {{ form.object }}</p>
+            <p>{% trans "Votre adresse mail de contact" %} : {{ form.email }}</p>
+            <p><b>{{ info }}</b></p>
+            <p>{% trans "Confirmation de l'adresse mail" %} : {{ form.email_confirm }}</p>
 
+            {% csrf_token %}
+            <p><input type="submit" value="{% trans "Valider" %}"></p>
+          </form>
         </div>
 
 
