@@ -35,6 +35,8 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 17. possibilité d'exporter les principales listes au format csv,
 18. gestion autonome du mot de passe.
 
+eplouribousse s'adosse à un outil de traçage des bugs et offre la possibilité de s'abonner à deux listes de diffusions (infos importantes / toutes infos)
+
 # Plus d'info :
 
 Voir le manuel de l'appli dans le dossier Doc

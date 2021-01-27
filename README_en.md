@@ -33,6 +33,8 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 17. csv export for the main lists,
 18. autonomous password management.
 
+eplouribousse uses a bug tracking tool and offers the possibility of subscribing to two mailing lists (important infos / all infos)
+
 # More information :
 
 See the app manual in Doc repertory
