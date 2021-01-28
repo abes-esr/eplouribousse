@@ -143,7 +143,9 @@
    </tbody>
 
 </table>
-<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> <button onclick="history.back()">{% trans "Revenir à la liste" %}</button></center>
+
+<center><button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Actualiser" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button onclick="history.back()">{% trans "Retour à la liste" %}</button></center>
+
 <table border="1">
 
    <thead>

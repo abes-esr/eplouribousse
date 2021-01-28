@@ -96,5 +96,7 @@ def simple_csv(request, lid, xlid, recset, what, length):
         writer.writerow([_("(Aucun enregistrement)"),"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ])
     if c !=size +1:
         writer.writerow([_("(ATTENTION : LISTE INCOMPLETE)"),"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ])
+    else:
+        writer.writerow([_("(Liste complète)"),"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ])
 
     return response

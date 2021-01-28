@@ -35,7 +35,10 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 17. possibilité d'exporter les principales listes au format csv,
 18. gestion autonome du mot de passe.
 
-eplouribousse s'adosse à un outil de traçage des bugs et offre la possibilité de s'abonner à deux listes de diffusions (infos importantes / toutes infos)
+# Autres services :
+Outil de suivi des bugs : GitLab
+Deux listes de diffusions (infos importantes / toutes infos)
+Forum des utilisateurs (liste Renater)
 
 # Plus d'info :
 
