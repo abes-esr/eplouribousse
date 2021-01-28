@@ -34,9 +34,10 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 18. autonomous password management.
 
 # Other services :
-Bug tracking tool: Gitlab
-Two mailing lists (important info / all info)
-User Forum (Renater list)
+
+* Bug tracking tool: Gitlab
+* Two mailing lists (important info / all info)
+* User Forum (Renater list)
 
 # More information :
 

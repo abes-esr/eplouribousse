@@ -36,9 +36,10 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 18. gestion autonome du mot de passe.
 
 # Autres services :
-Outil de suivi des bugs : GitLab
-Deux listes de diffusions (infos importantes / toutes infos)
-Forum des utilisateurs (liste Renater)
+
+* Outil de suivi des bugs : GitLab
+* Deux listes de diffusions (infos importantes / toutes infos)
+* Forum des utilisateurs (liste Renater)
 
 # Plus d'info :
 
