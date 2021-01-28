@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-27 16:06+0100\n"
+"POT-Creation-Date: 2021-01-28 11:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,6 +177,7 @@ msgid "Déconnexion"
 msgstr "Ausloggen"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:19
+#: eplouribousse/apps/epl/templates/epl/current.html:147
 #: eplouribousse/apps/epl/templates/epl/edition.html:28
 #: eplouribousse/apps/epl/templates/epl/ranking.html:18
 msgid "Retour à la liste"
@@ -394,7 +395,7 @@ msgstr "Benutzerhandbuch"
 #: eplouribousse/apps/epl/templates/epl/confirmation.html:46
 #: eplouribousse/apps/epl/templates/epl/contact.html:54
 #: eplouribousse/apps/epl/templates/epl/current.html:25
-#: eplouribousse/apps/epl/templates/epl/current.html:201
+#: eplouribousse/apps/epl/templates/epl/current.html:203
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:22
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:117
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
@@ -666,7 +667,7 @@ msgid "Lacunes"
 msgstr "Lücken"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:55
-#: eplouribousse/apps/epl/templates/epl/current.html:151
+#: eplouribousse/apps/epl/templates/epl/current.html:153
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:57
 #: eplouribousse/apps/epl/templates/epl/edition.html:56
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:64
@@ -679,7 +680,7 @@ msgstr "Zeile"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:56
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:110
 #: eplouribousse/apps/epl/templates/epl/current.html:128
-#: eplouribousse/apps/epl/templates/epl/current.html:152
+#: eplouribousse/apps/epl/templates/epl/current.html:154
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:58
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:41
 #: eplouribousse/apps/epl/templates/epl/edition.html:57
@@ -695,7 +696,7 @@ msgstr "Bibliothek"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:57
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:111
-#: eplouribousse/apps/epl/templates/epl/current.html:153
+#: eplouribousse/apps/epl/templates/epl/current.html:155
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:59
 #: eplouribousse/apps/epl/templates/epl/edition.html:58
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:66
@@ -708,7 +709,7 @@ msgstr "verbundene Form"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:58
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:112
-#: eplouribousse/apps/epl/templates/epl/current.html:154
+#: eplouribousse/apps/epl/templates/epl/current.html:156
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:60
 #: eplouribousse/apps/epl/templates/epl/edition.html:59
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:67
@@ -723,7 +724,7 @@ msgstr "Verbesserte Sammlung"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:59
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:113
-#: eplouribousse/apps/epl/templates/epl/current.html:155
+#: eplouribousse/apps/epl/templates/epl/current.html:157
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:61
 #: eplouribousse/apps/epl/templates/epl/edition.html:60
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:68
@@ -736,7 +737,7 @@ msgstr "Segment"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:60
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:114
-#: eplouribousse/apps/epl/templates/epl/current.html:156
+#: eplouribousse/apps/epl/templates/epl/current.html:158
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:62
 #: eplouribousse/apps/epl/templates/epl/edition.html:61
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:69
@@ -749,7 +750,7 @@ msgstr "Ausnahmen"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:61
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:115
-#: eplouribousse/apps/epl/templates/epl/current.html:157
+#: eplouribousse/apps/epl/templates/epl/current.html:159
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:63
 #: eplouribousse/apps/epl/templates/epl/edition.html:62
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:70
@@ -761,7 +762,7 @@ msgid "Eléments améliorables"
 msgstr "erweiterbar"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:96
-#: eplouribousse/apps/epl/templates/epl/current.html:194
+#: eplouribousse/apps/epl/templates/epl/current.html:196
 #: eplouribousse/apps/epl/templates/epl/search.html:225
 msgid "La dernière ligne validée est mise en évidence"
 msgstr "Die zuletzt bestätigte Zeile wird hervorgehoben"
@@ -843,7 +844,7 @@ msgstr "Später fortsetzen"
 #: eplouribousse/apps/epl/templates/epl/checker.html:47
 #: eplouribousse/apps/epl/templates/epl/confirmation.html:46
 #: eplouribousse/apps/epl/templates/epl/contact.html:54
-#: eplouribousse/apps/epl/templates/epl/current.html:201
+#: eplouribousse/apps/epl/templates/epl/current.html:203
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:117
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
 #: eplouribousse/apps/epl/templates/epl/edition.html:97
@@ -895,7 +896,7 @@ msgstr "Bleib informiert"
 #: eplouribousse/apps/epl/templates/epl/checker.html:47
 #: eplouribousse/apps/epl/templates/epl/confirmation.html:46
 #: eplouribousse/apps/epl/templates/epl/contact.html:54
-#: eplouribousse/apps/epl/templates/epl/current.html:201
+#: eplouribousse/apps/epl/templates/epl/current.html:203
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:117
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
 #: eplouribousse/apps/epl/templates/epl/edition.html:97
@@ -1648,19 +1649,15 @@ msgid "Statut"
 msgstr "Status"
 
 #: eplouribousse/apps/epl/templates/epl/current.html:130
-#: eplouribousse/apps/epl/templates/epl/current.html:158
+#: eplouribousse/apps/epl/templates/epl/current.html:160
 #: eplouribousse/apps/epl/templates/epl/search.html:161
 #: eplouribousse/apps/epl/templates/epl/search.html:189
 msgid "Administration"
 msgstr "Administration"
 
-#: eplouribousse/apps/epl/templates/epl/current.html:146
+#: eplouribousse/apps/epl/templates/epl/current.html:147
 msgid "Actualiser"
 msgstr "Seite neu laden"
-
-#: eplouribousse/apps/epl/templates/epl/current.html:146
-msgid "Revenir à la liste"
-msgstr "Zurück zur Liste"
 
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:32
 msgid "Suppression d'une ligne"
@@ -2526,6 +2523,10 @@ msgstr "(keine Aufzeichnungen)"
 msgid "(ATTENTION : LISTE INCOMPLETE)"
 msgstr "(ACHTUNG: UNVOLLSTÄNDIGE LISTE)"
 
+#: eplouribousse/apps/epl/views_csv.py:100
+msgid "(Liste complète)"
+msgstr "(Diese Liste ist vollständig)"
+
 #: eplouribousse/apps/epl/views_pdf.py:45
 #: eplouribousse/apps/epl/views_pdf.py:178
 #: eplouribousse/apps/epl/views_pdf.py:314
@@ -2609,6 +2610,9 @@ msgstr ""
 #: eplouribousse/settings/base.py:131
 msgid "Deutsch"
 msgstr ""
+
+#~ msgid "Revenir à la liste"
+#~ msgstr "Zurück zur Liste"
 
 #~ msgid ""
 #~ "Le statut est passé à 6 pour les enregistrements des bibliothèques "
