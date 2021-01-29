@@ -7,7 +7,6 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
     path('webmaster', views.webmstr, name='webmaster'),
-    path('mailinglist', views.mailinglist, name='listes'),
     path('confirmation', views.confirm, name='confirmation'),
     path('router/<str:lid>', views.router, name='route to the right list'),
     path('lang', views.lang, name='language'),

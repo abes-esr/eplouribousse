@@ -38,7 +38,7 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 # Autres services :
 
 * Outil de suivi des bugs (Launchpad) : https://bugs.launchpad.net/eplouribousse
-* Deux listes de diffusions (infos importantes / toutes infos)
+* La newsletter eplouribousse (liste Renater) : https://groupes.renater.fr/sympa/info/eplouribousse-newsletter
 * Forum des utilisateurs (liste Renater) : https://groupes.renater.fr/sympa/info/eplouribousse
 
 # Plus d'info :

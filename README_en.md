@@ -36,7 +36,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 # Other services :
 
 * Bug tracking tool (Launchpad) : https://bugs.launchpad.net/eplouribousse
-* Two mailing lists (important info / all info)
+* eplouribousse newsletter (Renater list) : https://groupes.renater.fr/sympa/info/eplouribousse-newsletter (french)
 * User Forum (Renater list) : https://groupes.renater.fr/sympa/info/eplouribousse
 
 # More information :
