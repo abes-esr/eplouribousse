@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-29 10:09+0100\n"
+"POT-Creation-Date: 2021-01-29 11:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1759,6 +1759,7 @@ msgid "Administration"
 msgstr "Admininistration"
 
 #: eplouribousse/apps/epl/templates/epl/current.html:147
+#: eplouribousse/apps/epl/templates/epl/search.html:177
 msgid "Actualiser"
 msgstr "Refresh"
 
