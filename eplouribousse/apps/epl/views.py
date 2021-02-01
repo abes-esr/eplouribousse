@@ -455,6 +455,9 @@ def indicators(request):
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
 
+    #Ressources incomplètement ou pas traitées
+    incomp = realcand - fullinstr
+
     return render(request, 'epl/indicators.html', locals())
 
 
@@ -1232,7 +1235,7 @@ def endinstr(request, sid, lid):
         z =1 #This is just to continue
 
     # Self instruction if no instruction
-    if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
+    if lid != "999999999" and len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
         if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name):
             blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
             .name, bound ="x", descr =_("-- Néant --"), \
@@ -1249,7 +1252,7 @@ def endinstr(request, sid, lid):
                     l +=1
             except:
                 pass
-    elif len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
+    elif lid != "999999999" and len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
         if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name, bound =" "):
             blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
             .name, bound =" ", descr =_("-- Néant --"), \
@@ -1383,7 +1386,7 @@ def endinstr(request, sid, lid):
             dest =[]
             for d in destprov:
                 dest.append(d.contact)
-            exp = Library.objects.get(lid ="999999999").contact
+            exp = request.user.email
             send_mail(subject, message, exp, dest, fail_silently=True, )
             return router(request, lid)
 
