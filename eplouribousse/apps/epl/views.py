@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -486,6 +486,13 @@ def search(request):
         progress =0
         action, laction =0,0
         alteraction, lalteraction =0,0
+        try:
+            if len(ItemRecord.objects.filter(sid =sid, status =4)) ==len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)):
+                progress =_("En attente de validation finale par le contrôleur")
+            elif len(ItemRecord.objects.filter(sid =sid, status =2)) ==len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)):
+                progress =_("En attente de validation intermédiaire par le contrôleur")
+        except:
+            pass
         if ItemRecord.objects.filter(sid =sid):
             # Bibliographic data :
             title = ItemRecord.objects.filter(sid =sid)[0].title
@@ -516,6 +523,7 @@ def search(request):
 
             rklist = ItemRecord.objects.filter(sid =sid).order_by('rank', 'lid')
             ranklist = [(element, Library.objects.get(lid =element.lid).name) for element in rklist]
+
             if lid !="999999999":
                 if ItemRecord.objects.filter(sid =sid, status =6):
                     progress =_("Une anomalie a été constatée au cours de l'instruction de la résultante")
@@ -2568,15 +2576,28 @@ def current_status(request, sid, lid):
     progress =0
     action, laction =0,0
     alteraction, lalteraction =0,0
+
+    try:
+        if len(ItemRecord.objects.filter(sid =sid, status =4)) ==len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)):
+            progress =_("En attente de validation finale par le contrôleur")
+        elif len(ItemRecord.objects.filter(sid =sid, status =2)) ==len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)):
+            progress =_("En attente de validation intermédiaire par le contrôleur")
+    except:
+        pass
+
+    tem =1
     # Bibliographic data :
     title = ItemRecord.objects.filter(sid =sid)[0].title
     issn = ItemRecord.objects.filter(sid =sid)[0].issn
     pubhist = ItemRecord.objects.filter(sid =sid)[0].pubhist
 
     # ItemRecord data :
-    holdstat = ItemRecord.objects.get(sid =sid, lid = lid).holdstat
-    missing = ItemRecord.objects.get(sid =sid, lid = lid).missing
-    cn = ItemRecord.objects.get(sid =sid, lid = lid).cn
+    try:
+        holdstat = ItemRecord.objects.get(sid =sid, lid = lid).holdstat
+        missing = ItemRecord.objects.get(sid =sid, lid = lid).missing
+        cn = ItemRecord.objects.get(sid =sid, lid = lid).cn
+    except:
+        tem =0
 
     #Getting instructions for the considered ressource :
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')

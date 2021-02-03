@@ -43,12 +43,13 @@
 
 	        <div id="content">
           <!-- <h5>{% trans "Données de rattachement" %} :</h5> -->
+          {% if tem != 0 %}
           <p>{% trans "Cote" %} : {{ cn }}</p>
           <p>{% trans "état de collection" %} : {{ holdstat }}</p>
             {% if missing != '' %}
             <p>{% trans "lacunes" %} : {{ missing }}</p>
             {% endif %}
-
+          {% endif %}
 
 
 
