@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -1238,8 +1238,7 @@ def endinstr(request, sid, lid):
     if lid != "999999999" and len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
         if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name):
             blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
-            .name, bound ="x", descr =_("-- Néant --"), \
-            exc =_("-- Néant --"), degr =_("-- Néant --"))
+            .name, bound ="x", descr =_("-- Néant --"))
             blankinst.save()
             #Renumbering instruction lines :
             try:
@@ -1255,8 +1254,7 @@ def endinstr(request, sid, lid):
     elif lid != "999999999" and len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
         if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name, bound =" "):
             blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
-            .name, bound =" ", descr =_("-- Néant --"), \
-            exc =_("-- Néant --"), degr =_("-- Néant --"))
+            .name, bound =" ", descr =_("-- Néant --"))
             blankinst.save()
             #Renumbering instruction lines :
             try:
