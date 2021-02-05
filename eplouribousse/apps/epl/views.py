@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -523,14 +523,13 @@ def search(request):
                         action, laction =_("Validation finale"), "/end/" + str(sid) + "/" + str(lid)
                 else:
                     if lid !="999999999":
-                        try:
-                            if ItemRecord.objects.get(sid =sid, lid =lid).status ==3:
-                                if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                                    progress =_("Instruction des non reliés en cours pour votre collection")
-                                else:
-                                    progress =_("Instruction des non reliés à débuter pour votre collection")
-                                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-                        except:
+                        if ItemRecord.objects.filter(sid =sid, lid =lid, status =3):
+                            if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
+                                progress =_("Instruction des non reliés en cours pour votre collection")
+                            else:
+                                progress =_("Instruction des non reliés à débuter pour votre collection")
+                            action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                        else:
                             xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                             if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
                                 progress =_("Instruction des non reliés en cours pour : ")
@@ -544,14 +543,13 @@ def search(request):
                             progress =_("Instruction des non reliés en cours ; à débuter pour : ")
             elif higher_status ==3:
                 if lid !="999999999":
-                    try:
-                        if ItemRecord.objects.get(sid =sid, lid =lid).status ==3:
-                            if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                                progress =_("Instruction des non reliés en cours pour votre collection")
-                            else:
-                                progress =_("Instruction des non reliés à débuter pour votre collection")
-                            action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-                    except:
+                    if ItemRecord.objects.filter(sid =sid, lid =lid, status =3):
+                        if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
+                            progress =_("Instruction des non reliés en cours pour votre collection")
+                        else:
+                            progress =_("Instruction des non reliés à débuter pour votre collection")
+                        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                    else:
                         xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                         if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
                             progress =_("Instruction des non reliés en cours pour : ")
@@ -570,37 +568,35 @@ def search(request):
                         action, laction =_("Validation intermédiaire"), "/end/" + str(sid) + "/" + str(lid)
                 else:
                     if lid !="999999999":
-                        try:
-                            if ItemRecord.objects.get(sid =sid, lid =lid).status ==1:
-                                if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                                    progress =_("Instruction des reliés en cours pour votre collection")
-                                else:
-                                    progress =_("Instruction des reliés à débuter pour votre collection")
-                                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-                        except:
+                        if ItemRecord.objects.filter(sid =sid, lid =lid, status =1):
+                            if Instruction.objects.filter(sid =sid, bound ="x", name =Library.objects.get(lid =lid).name):
+                                progress =_("Instruction des reliés en cours pour votre collection")
+                            else:
+                                progress =_("Instruction des reliés à débuter pour votre collection")
+                            action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                        else:
                             xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                            if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                            if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                                 progress =_("Instruction des reliés en cours pour : ")
                             else:
                                 progress =_("Instruction des reliés en cours ; à débuter pour : ")
                     else:#lid ="999999999"
                         xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                        if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                        if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                             progress =_("Instruction des reliés en cours pour : ")
                         else:
                             progress =_("Instruction des reliés en cours ; à débuter pour : ")
             elif higher_status ==1:
                 if lid !="999999999":
-                    try:
-                        if ItemRecord.objects.get(sid =sid, lid =lid).status ==1:
-                            if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                                progress =_("Instruction des reliés en cours pour votre collection")
-                            else:
-                                progress =_("Instruction des reliés à débuter pour votre collection")
-                            action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-                    except:
+                    if ItemRecord.objects.filter(sid =sid, lid =lid, status =1):
+                        if Instruction.objects.filter(sid =sid, bound ="x", name =Library.objects.get(lid =lid).name):
+                            progress =_("Instruction des reliés en cours pour votre collection")
+                        else:
+                            progress =_("Instruction des reliés à débuter pour votre collection")
+                        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                    else:
                         xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                        if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                        if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                             progress =_("Instruction des reliés en cours pour : ")
                         else:
                             progress =_("Instruction des reliés en cours ; à débuter pour : ")
@@ -608,7 +604,7 @@ def search(request):
                         alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
                 else:#lid ="999999999"
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                    if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                    if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                         progress =_("Instruction des reliés en cours pour : ")
                     else:
                         progress =_("Instruction des reliés en cours ; à débuter pour : ")
@@ -2656,14 +2652,13 @@ def current_status(request, sid, lid):
                 action, laction =_("Validation finale"), "/end/" + str(sid) + "/" + str(lid)
         else:
             if lid !="999999999":
-                try:
-                    if ItemRecord.objects.get(sid =sid, lid =lid).status ==3:
-                        if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                            progress =_("Instruction des non reliés en cours pour votre collection")
-                        else:
-                            progress =_("Instruction des non reliés à débuter pour votre collection")
-                        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-                except:
+                if ItemRecord.objects.filter(sid =sid, lid =lid, status =3):
+                    if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
+                        progress =_("Instruction des non reliés en cours pour votre collection")
+                    else:
+                        progress =_("Instruction des non reliés à débuter pour votre collection")
+                    action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                else:
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                     if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
                         progress =_("Instruction des non reliés en cours pour : ")
@@ -2677,14 +2672,13 @@ def current_status(request, sid, lid):
                     progress =_("Instruction des non reliés en cours ; à débuter pour : ")
     elif higher_status ==3:
         if lid !="999999999":
-            try:
-                if ItemRecord.objects.get(sid =sid, lid =lid).status ==3:
-                    if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                        progress =_("Instruction des non reliés en cours pour votre collection")
-                    else:
-                        progress =_("Instruction des non reliés à débuter pour votre collection")
-                    action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-            except:
+            if ItemRecord.objects.filter(sid =sid, lid =lid, status =3):
+                if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
+                    progress =_("Instruction des non reliés en cours pour votre collection")
+                else:
+                    progress =_("Instruction des non reliés à débuter pour votre collection")
+                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+            else:
                 xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =3).lid).name
                 if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
                     progress =_("Instruction des non reliés en cours pour : ")
@@ -2703,37 +2697,35 @@ def current_status(request, sid, lid):
                 action, laction =_("Validation intermédiaire"), "/end/" + str(sid) + "/" + str(lid)
         else:
             if lid !="999999999":
-                try:
-                    if ItemRecord.objects.get(sid =sid, lid =lid).status ==1:
-                        if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                            progress =_("Instruction des reliés en cours pour votre collection")
-                        else:
-                            progress =_("Instruction des reliés à débuter pour votre collection")
-                        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-                except:
+                if ItemRecord.objects.filter(sid =sid, lid =lid, status =1):
+                    if Instruction.objects.filter(sid =sid, bound ="x", name =Library.objects.get(lid =lid).name):
+                        progress =_("Instruction des reliés en cours pour votre collection")
+                    else:
+                        progress =_("Instruction des reliés à débuter pour votre collection")
+                    action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                else:
                     xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                    if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                    if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                         progress =_("Instruction des reliés en cours pour : ")
                     else:
                         progress =_("Instruction des reliés en cours ; à débuter pour : ")
             else:#lid ="999999999"
                 xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                     progress =_("Instruction des reliés en cours pour : ")
                 else:
                     progress =_("Instruction des reliés en cours ; à débuter pour : ")
     elif higher_status ==1:
         if lid !="999999999":
-            try:
-                if ItemRecord.objects.get(sid =sid, lid =lid).status ==1:
-                    if Instruction.objects.filter(sid =sid, bound =" ", name =Library.objects.get(lid =lid).name):
-                        progress =_("Instruction des reliés en cours pour votre collection")
-                    else:
-                        progress =_("Instruction des reliés à débuter pour votre collection")
-                    action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-            except:
+            if ItemRecord.objects.filter(sid =sid, lid =lid, status =1):
+                if Instruction.objects.filter(sid =sid, bound ="x", name =Library.objects.get(lid =lid).name):
+                    progress =_("Instruction des reliés en cours pour votre collection")
+                else:
+                    progress =_("Instruction des reliés à débuter pour votre collection")
+                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+            else:
                 xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+                if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                     progress =_("Instruction des reliés en cours pour : ")
                 else:
                     progress =_("Instruction des reliés en cours ; à débuter pour : ")
@@ -2741,7 +2733,7 @@ def current_status(request, sid, lid):
                 alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
         else:#lid ="999999999"
             xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-            if Instruction.objects.filter(sid =sid, bound =" ", name =xname):
+            if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
                 progress =_("Instruction des reliés en cours pour : ")
             else:
                 progress =_("Instruction des reliés en cours ; à débuter pour : ")
