@@ -110,7 +110,7 @@
                 {% else %}
                   <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ e.1 }}</b></font></td>
                   {% if e.0.rank == 99 %}
-                  <td><font color= #e74c3c ><b>{% trans "Pas encore pris" %}</b></font></td>
+                  <td><font color= #e74c3c ><b>{% trans "Pas pris" %}</b></font></td>
                   {% else %}
                   <td><font color= #e74c3c ><b>{{ e.0.rank }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</b></font></td>
                   {% endif %}
@@ -122,7 +122,7 @@
                 {% else %}
                   <td>{% trans "Positionnement pour" %} : {{ e.1 }}</td>
                   {% if e.0.rank == 99 %}
-                  <td>{% trans "Pas encore pris" %}</td>
+                  <td>{% trans "Pas pris" %}</td>
                   {% else %}
                   <td>{{ e.0.rank }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</td>
                   {% endif %}
@@ -174,7 +174,8 @@
    </tbody>
 
 </table>
-<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button></center>
+<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button>{% if lid != "999999999" %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></button>{% endif %}</center>
+  {% if size > 0 %}
 <table border="1">
 
    <thead>
@@ -223,6 +224,7 @@
 </table>
 
 <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
+  {% endif %}
 {% endif %}
         </div>
 <!-- ######################### -->

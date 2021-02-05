@@ -69,8 +69,12 @@
           <td>{% trans "Nombre de rattachements" %}</td>
           <td>{{ n }}</td>
     </tr>
-
-
+          {% if tem == 0 %}
+    <tr>
+          <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ lib }}</b></font></td>
+          <td><font color= #e74c3c ><b>{% trans "Votre bibliothèque n'est pas rattachée" %}</b></font></td>
+    </tr>
+          {% endif %}
         {% for e in ranklist %}
         <tr>
             {% if e.1 == lib %}
@@ -80,7 +84,7 @@
                 {% else %}
                   <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ e.1 }}</b></font></td>
                   {% if e.0.rank == 99 %}
-                  <td><font color= #e74c3c ><b>{% trans "Pas encore pris" %}</b></font></td>
+                  <td><font color= #e74c3c ><b>{% trans "Pas pris" %}</b></font></td>
                   {% else %}
                   <td><font color= #e74c3c ><b>{{ e.0.rank }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</b></font></td>
                   {% endif %}
@@ -92,7 +96,7 @@
                 {% else %}
                   <td>{% trans "Positionnement pour" %} : {{ e.1 }}</td>
                   {% if e.0.rank == 99 %}
-                  <td>{% trans "Pas encore pris" %}</td>
+                  <td>{% trans "Pas pris" %}</td>
                   {% else %}
                   <td>{{ e.0.rank }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</td>
                   {% endif %}
@@ -145,8 +149,8 @@
 
 </table>
 
-<center><button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Actualiser" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button onclick="history.back()">{% trans "Retour à la liste" %}</button></center>
-
+<center><button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Actualiser" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button onclick="history.back()">{% trans "Retour" %}</button></center>
+  {% if size > 0 %}
 <table border="1">
 
    <thead>
@@ -195,7 +199,7 @@
 </table>
 
 <p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
-
+    {% endif %}
         </div>
 <!-- ######################### -->
 
