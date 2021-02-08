@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -514,7 +514,7 @@ def search(request):
                     progress =_("Anomalie signalée lors de la phase des reliés")
             elif higher_status ==5:
                 progress =_("Instruction achevée")
-                if ItemRecord.objects.filter(sid =sid, lid =lid):
+                if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
                     action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
             elif higher_status ==4:
                 if len(ItemRecord.objects.filter(sid =sid, status =4)) ==len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)):
@@ -2652,7 +2652,7 @@ def current_status(request, sid, lid):
             progress =_("Anomalie signalée lors de la phase des reliés")
     elif higher_status ==5:
         progress =_("Instruction achevée")
-        if ItemRecord.objects.filter(sid =sid, lid =lid):
+        if ItemRecord.objects.filter(sid =sid, lid =lid).exclude(rank =0):
             action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
     elif higher_status ==4:
         if len(ItemRecord.objects.filter(sid =sid, status =4)) ==len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)):
@@ -2724,63 +2724,6 @@ def current_status(request, sid, lid):
                     progress =_("Instruction des reliés en cours pour : ")
                 else:
                     progress =_("Instruction des reliés en cours ; à débuter pour : ")
-    elif higher_status ==1:
-        if lid !="999999999":
-            if ItemRecord.objects.filter(sid =sid, lid =lid, status =1):
-                if Instruction.objects.filter(sid =sid, bound ="x", name =Library.objects.get(lid =lid).name):
-                    progress =_("Instruction des reliés en cours pour votre collection")
-                else:
-                    progress =_("Instruction des reliés à débuter pour votre collection")
-                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
-            else:
-                xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-                if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
-                    progress =_("Instruction des reliés en cours pour : ")
-                else:
-                    progress =_("Instruction des reliés en cours ; à débuter pour : ")
-            if ItemRecord.objects.filter(sid =sid, lid =lid) and len(Instruction.objects.filter(sid =sid)) ==0:
-                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-        else:#lid ="999999999"
-            xname =Library.objects.get(lid =ItemRecord.objects.get(sid =sid, status =1).lid).name
-            if Instruction.objects.filter(sid =sid, bound ="x", name =xname):
-                progress =_("Instruction des reliés en cours pour : ")
-            else:
-                progress =_("Instruction des reliés en cours ; à débuter pour : ")
-    else: # higher_status ==0
-        if lid !="999999999":
-            if len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) <2:
-                progress =_("La ressource n'est plus candidate au dédoublonnement")
-                if ItemRecord.objects.filter(sid =sid, lid =lid, rank =0):
-                     action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-            elif ItemRecord.objects.filter(sid =sid, rank =99) and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-                if ItemRecord.objects.filter(sid =sid, rank =99, lid =lid):
-                    progress =_("Positionnement à compléter pour votre collection")
-                    action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-                else:
-                    progress =_("Positionnement à compléter pour une ou plusieurs collections")
-                    if ItemRecord.objects.filter(sid =sid, lid =lid):
-                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-            elif len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
-                if ItemRecord.objects.filter(sid =sid, rank =1, lid =lid):
-                    progress =_("Rang 1 revendiqué pour plusieurs collections dont la vôtre")
-                    action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-                else:
-                    progress =_("Rang 1 revendiqué pour plusieurs collections mais pas la vôtre")
-                    if ItemRecord.objects.filter(sid =sid, lid =lid):
-                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-            else:# len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0:
-                progress =_("Le rang 1 n'a été revendiqué pour aucune collection")
-                if ItemRecord.objects.filter(sid =sid, lid =lid):
-                    action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
-        else: #lid ="999999999"
-            if len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) <2:
-                progress =_("La ressource n'est plus candidate au dédoublonnement")
-            elif ItemRecord.objects.filter(sid =sid, rank =99) and len(ItemRecord.objects.filter(sid =sid).exclude(rank =0)) >1:
-                progress =_("Positionnement à compléter pour une ou plusieurs collections")
-            elif len(ItemRecord.objects.filter(sid =sid, rank =1)) >1:
-                progress =_("Rang 1 revendiqué pour plusieurs collections")
-            else:# len(ItemRecord.objects.filter(sid =sid, rank =1)) ==0:
-                progress =_("Le rang 1 n'a été revendiqué pour aucune collection")
 
     #Getting instructions for the considered ressource :
     instrlist = Instruction.objects.filter(sid = sid).order_by('line')
