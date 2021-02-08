@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -1286,38 +1286,13 @@ def endinstr(request, sid, lid):
         z =1 #This is just to continue
 
     # Self instruction if no instruction
+    answer = ""
     if lid != "999999999" and len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
         if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name):
-            blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
-            .name, bound ="x", descr =_("-- Néant --"))
-            blankinst.save()
-            #Renumbering instruction lines :
-            try:
-                instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-                j, l =0, 1
-                while j <= len(instr):
-                    instr[j].line = l
-                    instr[j].save()
-                    j +=1
-                    l +=1
-            except:
-                pass
+            answer =_("Votre collection ne comprend pas d'éléments reliés améliorant la résultante")
     elif lid != "999999999" and len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
         if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name, bound =" "):
-            blankinst =Instruction(sid =sid, name =Library.objects.get(lid =lid)\
-            .name, bound =" ", descr =_("-- Néant --"))
-            blankinst.save()
-            #Renumbering instruction lines :
-            try:
-                instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
-                j, l =0, 1
-                while j <= len(instr):
-                    instr[j].line = l
-                    instr[j].save()
-                    j +=1
-                    l +=1
-            except:
-                pass
+            answer =_("Votre collection ne comprend pas d'éléments non reliés améliorant la résultante")
 
     #Ressource data :
     itemlist = ItemRecord.objects.filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
@@ -1355,8 +1330,6 @@ def endinstr(request, sid, lid):
     else:   # (==2)
         bd = _("instructions terminées")
         expected = _("ni relié, ni non reliés")
-
-    answer = ""
 
     y = Flag()
     z = CheckForm(request.POST or None, instance =y)
@@ -1443,6 +1416,21 @@ def endinstr(request, sid, lid):
         if z.is_valid() and y.flag ==True:
 
             if len(Instruction.objects.filter(sid =sid, name ='checker')) ==0:
+                if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name):
+                    blankinst =Instruction(line =1, sid =sid, name =Library.objects.get(lid =lid)\
+                    .name, bound ="x", descr =_("-- Néant --"), time =Now())
+                    blankinst.save()
+                #Renumbering instruction lines :
+                try:
+                    instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
+                    j, g =0, 1
+                    while j <= len(instr):
+                        instr[j].line = g
+                        instr[j].save()
+                        j +=1
+                        g +=1
+                except:
+                    pass
 
                 if ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
@@ -1463,6 +1451,22 @@ def endinstr(request, sid, lid):
                         j.save()
 
             elif len(Instruction.objects.filter(sid =sid, name ='checker')) ==1:
+                if not Instruction.objects.filter(sid =sid, name =Library.objects.get(lid =lid).name, bound =" "):
+                    blankinst =Instruction(line =2, sid =sid, name =Library.objects.get(lid =lid)\
+                    .name, bound =" ", descr =_("-- Néant --"), time =Now())
+                    blankinst.save()
+                #Renumbering instruction lines :
+                try:
+                    instr = Instruction.objects.filter(sid = sid).order_by('line', '-pk')
+                    j, g =0, 1
+                    while j <= len(instr):
+                        instr[j].line = g
+                        instr[j].save()
+                        j +=1
+                        g +=1
+                except:
+                    pass
+
                 if ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
                     nextlid = nextitem.lid
@@ -1507,7 +1511,8 @@ def endinstr(request, sid, lid):
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, })
+    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, \
+    'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer,})
 
 
 def ranktotake(request, lid, sort):
