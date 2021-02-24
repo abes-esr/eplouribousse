@@ -57,6 +57,9 @@
               {% endif %}
               {% if elmt.0.rank != 0 %}
               <li>{% trans "Rang courant" %} : <font color= #3498db  >{{ elmt.0.rank }}</font></li>
+              {% if elmt.0.comm != '' %}
+              <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
+              {% endif %}
               {% else %}
               <li>{% trans "Exclusion" %} : <font color= #3498db  >{{ elmt.0.excl}}</font></li>
                 {% if elmt.0.comm != '' %}
@@ -74,6 +77,9 @@
               {% endif %}
               {% if elmt.0.rank != 0 %}
               <li>{% trans "Rang courant" %} : <font color= #3498db  >{{ elmt.0.rank }}</font></li>
+              {% if elmt.0.comm != '' %}
+              <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
+              {% endif %}
               {% else %}
               <li>{% trans "Exclusion" %} : <font color= #3498db  >{{ elmt.0.excl}}</font></li>
                 {% if elmt.0.comm != '' %}
