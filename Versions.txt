@@ -31,6 +31,6 @@ Nouveautés de la dernière version master (* = important) :
 * export de principales listes au format csv
 * instruction renseignée automatiquement quand l'instructeur passe son tour
 * possibilité de s'abonner à des listes pour être tenu au courant
-routage de retour aux listes complété
-mise à jour du manuel utilisateur
+* routage de retour aux listes
+* mise à jour du manuel utilisateur
 
