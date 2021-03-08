@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -455,8 +455,11 @@ def indicators(request):
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
 
-    #Ressources incomplètement ou pas traitées
-    incomp = realcand - fullinstr
+    #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
+    incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
+
+    #Ressources pour lesquelles le positionnement doit être complété ou revu
+    stocomp = realcand - (incomp + fullinstr)
 
     return render(request, 'epl/indicators.html', locals())
 

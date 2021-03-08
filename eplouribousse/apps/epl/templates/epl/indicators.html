@@ -134,6 +134,10 @@
          <td><center>{{ realcand }}</center></td>
     </tr>
     <tr>
+         <td>{% trans "Ressources pour lesquelles le positionnement est à compléter ou à revoir (arbitrages)" %}</td>
+         <td><center>{{ stocomp }}</center></td>
+    </tr>
+    <tr>
          <td>{% trans "Collections impliquées dans un arbitrage quelconque" %}</td>
          <td><center>{{ ctotal }}</center></td>
     </tr>
@@ -178,7 +182,7 @@
          <td><center>{{ fullinstr }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources incomplètement ou pas traitées" %}</td>
+         <td>{% trans "Ressources dont l'instruction est incomplète, défectueuse ou n'a pas débuté (alors qu'elle le peut)" %}</td>
          <td><center>{{ incomp }}</center></td>
     </tr>
     <tr>
