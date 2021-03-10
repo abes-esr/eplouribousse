@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
