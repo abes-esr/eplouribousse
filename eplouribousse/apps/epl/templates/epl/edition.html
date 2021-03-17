@@ -42,7 +42,21 @@
 
 
           <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}.</i></p>
-          <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font></p>
+          <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font> /
+          {% trans "Autre(s) collection(s) participante(s)" %} :
+            {% for lib in liblist %}
+              {% if lib.rank != 0 %}
+                  {{ lib.name }} -
+              {% endif %}
+            {% endfor %}
+
+           / {% trans "Collection(s) exclue(s)" %} :
+            {% for lib in liblist %}
+              {% if lib.rank == 0 %}
+                  {{ lib.name }} -
+              {% endif %}
+            {% endfor %}
+                  </p>
       </div>
 
     <body>

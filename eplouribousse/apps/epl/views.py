@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -2608,6 +2608,12 @@ def edition(request, sid, lid):
             itrec =ItemRecord.objects.get(sid =sid, lid =lid)
         except:
             itrec =""
+
+        # Library list ordered by 'rank' (except "checker")
+        liblist = []
+        itemlist =ItemRecord.objects.filter(sid =sid).order_by("-rank")
+        for e in itemlist:
+            liblist.append(Library.objects.get(lid = e.lid))
 
         return render(request, 'epl/edition.html', locals())
 
