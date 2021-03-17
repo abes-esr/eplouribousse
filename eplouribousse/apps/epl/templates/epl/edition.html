@@ -35,13 +35,14 @@
           {% endif %}
           <h2>{{ name }} - {% trans "Edition" %}</h2>
 
-
           <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
           <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
             {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}{% if itrec.cn != "" %} / <b>{% trans "Cote" %} :</b> {{ itrec.cn }} {% endif %}</p>
 
 
           <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}.</i></p>
+
+
           <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font> /
           {% trans "Autre(s) collection(s) participante(s)" %} :
             {% for lib in liblist %}
@@ -57,6 +58,10 @@
               {% endif %}
             {% endfor %}
                   </p>
+
+            <HR>
+
+
       </div>
 
     <body>

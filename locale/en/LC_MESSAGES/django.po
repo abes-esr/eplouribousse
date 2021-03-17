@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 14:16+0100\n"
+"POT-Creation-Date: 2021-03-17 14:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgstr "Sign Out"
 #: eplouribousse/apps/epl/templates/epl/current.html:208
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
-#: eplouribousse/apps/epl/templates/epl/edition.html:111
+#: eplouribousse/apps/epl/templates/epl/edition.html:116
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/excl.html:80
 #: eplouribousse/apps/epl/templates/epl/faulty.html:73
@@ -235,7 +235,7 @@ msgstr "Stay informed"
 #: eplouribousse/apps/epl/templates/epl/current.html:208
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
-#: eplouribousse/apps/epl/templates/epl/edition.html:111
+#: eplouribousse/apps/epl/templates/epl/edition.html:116
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/excl.html:80
 #: eplouribousse/apps/epl/templates/epl/faulty.html:73
@@ -287,7 +287,7 @@ msgstr "User forum"
 #: eplouribousse/apps/epl/templates/epl/current.html:208
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
-#: eplouribousse/apps/epl/templates/epl/edition.html:111
+#: eplouribousse/apps/epl/templates/epl/edition.html:116
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/excl.html:80
 #: eplouribousse/apps/epl/templates/epl/faulty.html:73
@@ -553,7 +553,7 @@ msgstr "User manual"
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
 #: eplouribousse/apps/epl/templates/epl/edition.html:23
-#: eplouribousse/apps/epl/templates/epl/edition.html:111
+#: eplouribousse/apps/epl/templates/epl/edition.html:116
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:22
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/excl.html:24
@@ -642,7 +642,7 @@ msgstr "Instruction"
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:72
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:70
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:34
-#: eplouribousse/apps/epl/templates/epl/edition.html:39
+#: eplouribousse/apps/epl/templates/epl/edition.html:38
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:34
 #: eplouribousse/apps/epl/templates/epl/excl.html:63
 #: eplouribousse/apps/epl/templates/epl/faulty.html:60
@@ -694,7 +694,7 @@ msgstr "Title"
 #: eplouribousse/apps/epl/templates/epl/arbnork1.html:74
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:72
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:35
-#: eplouribousse/apps/epl/templates/epl/edition.html:40
+#: eplouribousse/apps/epl/templates/epl/edition.html:39
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:35
 #: eplouribousse/apps/epl/templates/epl/excl.html:65
 #: eplouribousse/apps/epl/templates/epl/faulty.html:62
@@ -736,7 +736,7 @@ msgstr "Serial ID"
 
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:37
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:36
-#: eplouribousse/apps/epl/templates/epl/edition.html:41
+#: eplouribousse/apps/epl/templates/epl/edition.html:40
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:36
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:38
 #: eplouribousse/apps/epl/templates/epl/ranking.html:38
@@ -758,7 +758,7 @@ msgstr "Processing order"
 #: eplouribousse/apps/epl/templates/epl/arbrk1.html:71
 #: eplouribousse/apps/epl/templates/epl/current.html:47
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:41
-#: eplouribousse/apps/epl/templates/epl/edition.html:41
+#: eplouribousse/apps/epl/templates/epl/edition.html:40
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:44
 #: eplouribousse/apps/epl/templates/epl/excl.html:64
 #: eplouribousse/apps/epl/templates/epl/faulty.html:61
@@ -823,7 +823,7 @@ msgstr "Gaps"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:55
 #: eplouribousse/apps/epl/templates/epl/current.html:158
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:57
-#: eplouribousse/apps/epl/templates/epl/edition.html:70
+#: eplouribousse/apps/epl/templates/epl/edition.html:75
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:64
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:56
 #: eplouribousse/apps/epl/templates/epl/search.html:183
@@ -837,7 +837,7 @@ msgstr "Row"
 #: eplouribousse/apps/epl/templates/epl/current.html:159
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:58
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:41
-#: eplouribousse/apps/epl/templates/epl/edition.html:71
+#: eplouribousse/apps/epl/templates/epl/edition.html:76
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:65
 #: eplouribousse/apps/epl/templates/epl/home.html:40
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:57
@@ -852,7 +852,7 @@ msgstr "Library"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:111
 #: eplouribousse/apps/epl/templates/epl/current.html:160
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:59
-#: eplouribousse/apps/epl/templates/epl/edition.html:72
+#: eplouribousse/apps/epl/templates/epl/edition.html:77
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:66
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:58
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:121
@@ -865,7 +865,7 @@ msgstr "bound shape"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:112
 #: eplouribousse/apps/epl/templates/epl/current.html:161
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:60
-#: eplouribousse/apps/epl/templates/epl/edition.html:73
+#: eplouribousse/apps/epl/templates/epl/edition.html:78
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:67
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:59
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:122
@@ -880,7 +880,7 @@ msgstr "Enhanceable library"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:113
 #: eplouribousse/apps/epl/templates/epl/current.html:162
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:61
-#: eplouribousse/apps/epl/templates/epl/edition.html:74
+#: eplouribousse/apps/epl/templates/epl/edition.html:79
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:68
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:60
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:123
@@ -893,7 +893,7 @@ msgstr "segment"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:114
 #: eplouribousse/apps/epl/templates/epl/current.html:163
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:62
-#: eplouribousse/apps/epl/templates/epl/edition.html:75
+#: eplouribousse/apps/epl/templates/epl/edition.html:80
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:69
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:61
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:124
@@ -906,7 +906,7 @@ msgstr "exceptions"
 #: eplouribousse/apps/epl/templates/epl/addinstruction.html:115
 #: eplouribousse/apps/epl/templates/epl/current.html:164
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:63
-#: eplouribousse/apps/epl/templates/epl/edition.html:76
+#: eplouribousse/apps/epl/templates/epl/edition.html:81
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:70
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:62
 #: eplouribousse/apps/epl/templates/epl/modinstruction.html:125
@@ -1000,7 +1000,7 @@ msgstr "Resume later"
 #: eplouribousse/apps/epl/templates/epl/current.html:208
 #: eplouribousse/apps/epl/templates/epl/delinstruction.html:118
 #: eplouribousse/apps/epl/templates/epl/disconnect.html:55
-#: eplouribousse/apps/epl/templates/epl/edition.html:111
+#: eplouribousse/apps/epl/templates/epl/edition.html:116
 #: eplouribousse/apps/epl/templates/epl/endinstruction.html:134
 #: eplouribousse/apps/epl/templates/epl/excl.html:80
 #: eplouribousse/apps/epl/templates/epl/faulty.html:73
@@ -1805,22 +1805,22 @@ msgstr "Edition"
 msgid "Export pdf"
 msgstr "pdf export"
 
-#: eplouribousse/apps/epl/templates/epl/edition.html:44
+#: eplouribousse/apps/epl/templates/epl/edition.html:43
 msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
 msgstr "Rows involving your libary are highlighted"
 
-#: eplouribousse/apps/epl/templates/epl/edition.html:45
+#: eplouribousse/apps/epl/templates/epl/edition.html:46
 #: eplouribousse/apps/epl/templates/epl/to_edit_list_mother.html:30
 #: eplouribousse/apps/epl/templates/epl/xto_edit_list_mother.html:29
 #: eplouribousse/apps/epl/views.py:2488
 msgid "Collection mère"
 msgstr "Mother collection"
 
-#: eplouribousse/apps/epl/templates/epl/edition.html:46
+#: eplouribousse/apps/epl/templates/epl/edition.html:47
 msgid "Autre(s) collection(s) participante(s)"
 msgstr "Other participating collection(s)"
 
-#: eplouribousse/apps/epl/templates/epl/edition.html:53
+#: eplouribousse/apps/epl/templates/epl/edition.html:54
 msgid "Collection(s) exclue(s)"
 msgstr "Excluded collection(s)"
 
