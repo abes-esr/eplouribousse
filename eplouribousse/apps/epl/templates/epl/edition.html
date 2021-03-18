@@ -45,18 +45,15 @@
 
           <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font> /
           {% trans "Autre(s) collection(s) participante(s)" %} :
-            {% for lib in liblist %}
-              {% if lib.rank != 0 %}
-                  {{ lib.name }} -
-              {% endif %}
+            {% for i in coliblist %}
+                  {{ i.name }} -
             {% endfor %}
 
            / {% trans "Collection(s) exclue(s)" %} :
-            {% for lib in liblist %}
-              {% if lib.rank == 0 %}
-                  {{ lib.name }} -
-              {% endif %}
-            {% endfor %}
+           {% for k in exliblist %}
+                 {{ exliblist.0 }} [ {{ exclulist.0 }} ] -
+           {% endfor %}
+
                   </p>
 
             <HR>
@@ -113,7 +110,8 @@
         </div>
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} ·
+              <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a> {% endif %}</p>
 
 <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
 <p>Version : {{ version }}</p>
