@@ -44,14 +44,14 @@
 
 
           <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font> /
-          {% trans "Autre(s) collection(s) participante(s)" %} :
+          {% trans "Collection(s) participante(s)" %} :
             {% for i in coliblist %}
                   {{ i.name }} -
             {% endfor %}
 
            / {% trans "Collection(s) exclue(s)" %} :
-           {% for k in exliblist %}
-                 {{ exliblist.0 }} [ {{ exclulist.0 }} ] -
+           {% for k in exlist %}
+                 {{ k.0 }} [{{ k.1 }}, {{ k.2 }}] -
            {% endfor %}
 
                   </p>

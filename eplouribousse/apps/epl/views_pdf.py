@@ -73,13 +73,15 @@ def pdfedition(request, sid, lid):
 
     datacoll =[]
 
+    datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
+
     for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
         if e.rank ==1:
-            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
+            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
         elif e.rank ==0:
-            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
         else:
-            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
+            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
 
     tcoll=Table(datacoll)
 
@@ -206,13 +208,15 @@ def edallpdf(request, lid):
 
         datacoll =[]
 
+        datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
+
         for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -342,13 +346,15 @@ def motherpdf(request, lid):
 
         datacoll =[]
 
+        datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
+
         for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -478,13 +484,15 @@ def notmotherpdf(request, lid):
 
         datacoll =[]
 
+        datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
+
         for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -614,13 +622,15 @@ def xmotherpdf(request, lid, xlid):
 
         datacoll =[]
 
+        datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
+
         for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -750,13 +760,15 @@ def xnotmotherpdf(request, lid, xlid):
 
         datacoll =[]
 
+        datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
+
         for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part")])
+                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 

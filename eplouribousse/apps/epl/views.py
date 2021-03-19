@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -2611,17 +2611,14 @@ def edition(request, sid, lid):
 
         # Contributing collections (lib) ordered by 'rank'
         coliblist = []
-        coitemlist =ItemRecord.objects.filter(sid =sid).exclude(rank =0).order_by("-rank")
+        coitemlist =ItemRecord.objects.filter(sid =sid).exclude(rank =0).order_by("rank")
         for co in coitemlist:
             coliblist.append(Library.objects.get(lid = co.lid))
 
         # Not Contributing collections (lib) ordered by 'rank'
-        exliblist = []
-        exclulist = []
-        exitemlist =ItemRecord.objects.filter(sid =sid, rank =0)
-        for ex in exitemlist:
-            exliblist.append((Library.objects.get(lid = ex.lid)).name)
-            exclulist.append(ex.excl)
+        exlist = []
+        for elmt in ItemRecord.objects.filter(sid =sid, rank =0):
+            exlist.append(((Library.objects.get(lid = elmt.lid)).name, elmt.excl, elmt.comm))
 
         return render(request, 'epl/edition.html', locals())
 
