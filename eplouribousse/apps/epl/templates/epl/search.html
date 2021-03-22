@@ -152,6 +152,15 @@
 
 <!-- ######################### -->
 {% if n > 1 %}
+
+
+    {% if higher_status == 6 %}
+      <center><button><b><a href="/reinit/{{ sid }}/{{ lid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
+      <center>({% trans "Réservé" %})</center>
+    {% endif %}
+
+
+
 <table border="1">
 
    <thead>

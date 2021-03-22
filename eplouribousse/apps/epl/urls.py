@@ -14,6 +14,7 @@ urlpatterns = [
     path('timeout/<str:sid>/<str:lid>', views.notintime, name='not in time'),
     path('dashboard', views.indicators, name='indicators'),
     path('search', views.search, name='searching a serial'),
+    path('reinit/<str:sid>/<str:lid>', views.reinit, name='reinitialisation'),
 
     path('rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),
 

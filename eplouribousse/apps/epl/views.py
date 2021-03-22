@@ -1,8 +1,8 @@
 epl_version ="v1.18.0 (Gomatrude)"
 date_version ="February 01, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.19-beta.0 (~Nantechilde )"
+# date_version ="February 01, 2021"
 
 from django.shortcuts import render
 
@@ -664,6 +664,60 @@ def search(request):
             ranklist = [(element, Library.objects.get(lid =element.lid).name) for element in rklist]
 
     return render(request, 'epl/search.html', locals())
+
+@login_required
+def reinit(request, sid, lid):
+
+    k = logstatus(request)
+    version =epl_version
+    webmaster =wbmstr
+    info =""
+
+    ressource =ItemRecord.objects.get(sid =sid, rank =1)
+
+    umail, uname = request.user.email, request.user.username
+
+    flag =0
+
+    for u in BddAdmin.objects.all():
+        if (u.contact, u.name) ==(umail, uname):
+            flag =1
+
+    if flag ==1:
+        y = Flag()
+        form = CheckForm(request.POST or None, instance =y)
+
+        if form.is_valid():
+            if y.flag:
+                if Instruction.objects.filter(sid =sid, bound =" "):
+                    for instr in Instruction.objects.filter(sid =sid).exclude(bound ="x"):
+                        instr.delete()
+                    for item in ItemRecord.objects.filter(sid =sid):
+                        if item.rank ==1:
+                            item.status =3
+                            item.save()
+                        else:
+                            item.status =2
+                            item.save()
+                    return current_status(request, sid, lid)
+                else:
+                    for instr in Instruction.objects.filter(sid =sid):
+                        instr.delete()
+                    for item in ItemRecord.objects.filter(sid =sid):
+                        if item.rank ==1:
+                            item.status =1
+                            item.save()
+                        else:
+                            item.status =0
+                            item.save()
+                    return current_status(request, sid, lid)
+            else:
+                info =_("Vous n'avez pas coché !")
+
+    else:
+        return notintime(request, sid, lid)
+
+    return render(request, 'epl/reinit.html', locals())
 
 
 @login_required
