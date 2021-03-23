@@ -1,8 +1,8 @@
-epl_version ="v1.18.0 (Gomatrude)"
-date_version ="February 01, 2021"
+epl_version ="v1.20.0 (Wulfégonde)"
+date_version ="March 23, 2021"
 # Mise au niveau de :
-epl_version ="v1.19-beta.0 (~Nantechilde )"
-date_version ="February 01, 2021"
+# epl_version ="v1.21-beta.0 (~Berchilde)"
+# date_version ="March 23, 2021"
 
 from django.shortcuts import render
 
@@ -666,7 +666,7 @@ def search(request):
     return render(request, 'epl/search.html', locals())
 
 @login_required
-def reinit(request, sid, lid):
+def reinit(request, sid):
 
     k = logstatus(request)
     version =epl_version
@@ -699,7 +699,6 @@ def reinit(request, sid, lid):
                         else:
                             item.status =2
                             item.save()
-                    return current_status(request, sid, lid)
                 else:
                     for instr in Instruction.objects.filter(sid =sid):
                         instr.delete()
@@ -710,7 +709,23 @@ def reinit(request, sid, lid):
                         else:
                             item.status =0
                             item.save()
-                    return current_status(request, sid, lid)
+
+                #Message data :
+                nextlid =ItemRecord.objects.get(sid =sid, rank =1).lid
+                nextlib =Library.objects.get(lid =nextlid)
+                subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
+                " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid) + \
+                " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+                return current_status(request, sid, "999999999")
             else:
                 info =_("Vous n'avez pas coché !")
 
@@ -1800,7 +1815,7 @@ def faulty(request):
 
     l =0
 
-    libch = ('',''),
+    libch = ('checker','checker'),
     for l in Library.objects.all().exclude(name ='checker').order_by('name'):
         libch += (l.name, l.name),
 
@@ -1817,7 +1832,7 @@ def faulty(request):
         lid = Library.objects.get(name =lib).lid
         name = lib
 
-        faulty_list =ItemRecord.objects.filter(lid =lid, status =6).order_by(sort)
+        faulty_list =ItemRecord.objects.filter(rank =1, status =6).order_by(sort)
 
         length =len(faulty_list)
 
@@ -2682,8 +2697,6 @@ def edition(request, sid, lid):
 
 def current_status(request, sid, lid):
 # Lot of code for this view is similar with the code for "search" view : When changing here, think to change there
-    if lid =="999999999":
-        return notintime(request, sid, lid)
 
     k = logstatus(request)
     version =epl_version

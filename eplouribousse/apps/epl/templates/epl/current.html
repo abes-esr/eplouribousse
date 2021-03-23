@@ -70,10 +70,12 @@
           <td>{{ n }}</td>
     </tr>
           {% if tem == 0 %}
+            {% if lid != "999999999" %}
     <tr>
           <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ lib }}</b></font></td>
           <td><font color= #e74c3c ><b>{% trans "Votre bibliothèque n'est pas rattachée" %}</b></font></td>
     </tr>
+            {% endif %}
           {% endif %}
         {% for e in ranklist %}
         <tr>
@@ -123,7 +125,7 @@
 </table>
 
     {% if higher_status == 6 %}
-      <center><button><b><a href="/reinit/{{ sid }}/{{ lid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
+      <center><button><b><a href="/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
       <center>({% trans "Réservé" %})</center>
     {% endif %}
 

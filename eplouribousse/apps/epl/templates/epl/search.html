@@ -155,7 +155,7 @@
 
 
     {% if higher_status == 6 %}
-      <center><button><b><a href="/reinit/{{ sid }}/{{ lid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
+      <center><button><b><a href="/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
       <center>({% trans "Réservé" %})</center>
     {% endif %}
 
@@ -183,7 +183,7 @@
    </tbody>
 
 </table>
-<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button>{% if lid != "999999999" %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></button>{% endif %}</center>
+<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></button></center>
   {% if size > 0 %}
 <table border="1">
 

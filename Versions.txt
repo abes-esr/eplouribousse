@@ -23,6 +23,9 @@ Version 1.16 (Bertrude)                     2021.01.05
 Version 1.17 (~Sichilde)                    beta
 Version 1.18 (Gomatrude)                    2021.02.01
 Version 1.19 (~Nantechilde)                 beta
+Version 1.20 (Wulfégonde)                   2021.03.23
+Version 1.21 (~Berchilde)                   beta
+
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)
 

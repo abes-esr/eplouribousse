@@ -41,7 +41,7 @@
                   <!-- </div> -->
                   </form>
                   {% if l == 1 %}
-                  <p><button><b><a href="/csv/{{ lid }}/None/{{ faulty_list }}/60/{{ length }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }} ~ {% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+                  {% if lid != "999999999" %}<p><button><b><a href="/csv/{{ lid }}/None/{{ faulty_list }}/60/{{ length }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }} ~ {% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
                   <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
         <HR>
       </div>
