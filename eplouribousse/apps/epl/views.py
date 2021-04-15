@@ -1,8 +1,8 @@
 epl_version ="v1.20.0 (Wulfégonde)"
 date_version ="March 23, 2021"
 # Mise au niveau de :
-epl_version ="v1.21-beta.0 (~Berchilde)"
-date_version ="March 23, 2021"
+# epl_version ="v1.21-beta.0 (~Berchilde)"
+# date_version ="April 15, 2021"
 
 from django.shortcuts import render
 
@@ -338,7 +338,7 @@ def indicators(request):
     #Number of rankings (exclusions excluded) :
     rkright = len(ItemRecord.objects.exclude(rank =99).exclude(rank =0))
 
-    #Number of exclusions :
+    #Number of exclusions (collections) :
     exclus = len(ItemRecord.objects.filter(rank =0))
 
     #number of libraries :
@@ -378,11 +378,11 @@ def indicators(request):
     coll = len(ItemRecord.objects.all())
 
     #Number of potential candidates :
-    cand =0
+    cand =[]
     for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) >1:
-            cand +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    cand = int(cand)
+        if len(ItemRecord.objects.filter(sid =e.sid)) >1 and not e.sid in cand:
+            cand.append(e.sid)
+    cand = len(cand)
 
     #from which strict duplicates :
     dupl =0
@@ -416,17 +416,14 @@ def indicators(request):
     candcoll =coll - isol
 
     #Number of descarded ressources for exclusion reason :
-    discard =0
+    discard =[]
     for i in ItemRecord.objects.filter(rank =0):
-        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) ==1:
-            discard +=1/(len(ItemRecord.objects.filter(sid =i.sid, rank =0)))
-    discard = int(discard)
+        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) ==1 and not i.sid in discard:
+            discard.append(i.sid)
+    discard = len(discard)
 
     #Number of real candidates (collections)
-    realcandcoll =candcoll - exclus
-
-    #Number of real candidates (ressources)
-    realcand =cand - discard
+    realcandcoll =candcoll - (exclus + discard)
 
     #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.filter(rank =1, status =1))
@@ -449,17 +446,24 @@ def indicators(request):
     #Number of instructions :
     instr = len(Instruction.objects.all())
 
+    #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
+    incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
+
+    #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
+    stocomp =[]
+    for i in ItemRecord.objects.filter(rank =99):
+        if len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) >1 and not i.sid in stocomp:
+            stocomp.append(i.sid)
+    stocomp = len(stocomp)
+
+    #Number of real candidates (ressources)
+    realcand =stocomp + incomp + fullinstr + fail
+
     #Absolute achievement :
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
 
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
-
-    #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
-    incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
-
-    #Ressources pour lesquelles le positionnement doit être complété ou revu
-    stocomp = realcand - (incomp + fullinstr)
 
     return render(request, 'epl/indicators.html', locals())
 
