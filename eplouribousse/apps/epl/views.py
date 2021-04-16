@@ -1,8 +1,8 @@
 epl_version ="v1.20.0 (Wulfégonde)"
 date_version ="March 23, 2021"
 # Mise au niveau de :
-epl_version ="v1.21-beta.0 (~Berchilde)"
-date_version ="April 15, 2021"
+# epl_version ="v1.21-beta.2 (~Berchilde)"
+# date_version ="April 16, 2021"
 
 from django.shortcuts import render
 
@@ -353,22 +353,24 @@ def indicators(request):
     del dict['']
 
     #Collections involved in arbitration for claiming 1st rank and number of serials concerned
-    c1st, s1st =0,0
+    c1st, s1st =0,[]
     for i in ItemRecord.objects.filter(rank =1, status =0):
         if len(ItemRecord.objects.filter(rank =1, sid =i.sid)) >1:
             c1st +=1
-            s1st +=1/len(ItemRecord.objects.filter(rank =1, sid =i.sid))
-    s1st = int(s1st)
+            if i.sid not in s1st:
+                s1st.append(i.sid)
+    s1st = len(s1st)
 
     #Collections involved in arbitration for 1st rank not claimed by any of the libraries
-    cnone, snone =0,0
+    cnone, snone =0,[]
     for i in ItemRecord.objects.exclude(rank =0).exclude(rank =1).exclude(rank =99):
         if len(ItemRecord.objects.filter(sid =i.sid, rank =99)) ==0 and \
         len(ItemRecord.objects.filter(sid =i.sid, rank =1)) ==0 and \
         len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0)) >1:
             cnone +=1
-            snone +=1/len(ItemRecord.objects.filter(sid =i.sid).exclude(rank =0))
-    snone = int(snone)
+            if i.sid not in snone:
+                snone.append(i.sid)
+    snone = len(snone)
 
     #Collections involved in arbitration for any of the two reasons and number of serials concerned
     ctotal = c1st + cnone
@@ -385,32 +387,32 @@ def indicators(request):
     cand = len(cand)
 
     #from which strict duplicates :
-    dupl =0
+    dupl =[]
     for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==2:
-            dupl +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    dupl = int(dupl)
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==2 and not e.sid in dupl:
+            dupl.append(e.sid)
+    dupl = len(dupl)
 
     #triplets :
-    tripl =0
+    tripl =[]
     for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==3:
-            tripl +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    tripl = int(tripl)
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==3 and not e.sid in tripl:
+            tripl.append(e.sid)
+    tripl = len(tripl)
 
     #quadruplets :
-    qudrpl =0
+    qudrpl =[]
     for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==4:
-            qudrpl +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    qudrpl = int(qudrpl)
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==4 and not e.sid in qudrpl:
+            qudrpl.append(e.sid)
+    qudrpl = len(qudrpl)
 
     #Unicas :
-    isol =0
+    isol =[]
     for e in ItemRecord.objects.all():
-        if len(ItemRecord.objects.filter(sid =e.sid)) ==1:
-            isol +=1/len(ItemRecord.objects.filter(sid =e.sid))
-    isol = int(isol)
+        if len(ItemRecord.objects.filter(sid =e.sid)) ==1 and not e.sid in isol:
+            isol.append(e.sid)
+    isol = len(isol)
 
     #candidate collections :
     candcoll =coll - isol
