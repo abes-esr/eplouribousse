@@ -1,8 +1,8 @@
 epl_version ="v1.20.0 (Wulfégonde)"
 date_version ="March 23, 2021"
 # Mise au niveau de :
-epl_version ="v1.21-beta.2 (~Berchilde)"
-date_version ="April 16, 2021"
+# epl_version ="v1.21-beta.2 (~Berchilde)"
+# date_version ="April 16, 2021"
 
 from django.shortcuts import render
 
@@ -459,7 +459,7 @@ def indicators(request):
     stocomp = len(stocomp)
 
     #Number of real candidates (ressources)
-    realcand =stocomp + incomp + fullinstr + fail
+    realcand =stocomp + incomp + fullinstr
 
     #Absolute achievement :
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
