@@ -3,6 +3,7 @@ date_version ="March 23, 2021"
 # Mise au niveau de :
 epl_version ="v1.21-beta.2 (~Berchilde)"
 date_version ="April 16, 2021"
+#branche = multi
 
 from django.shortcuts import render
 
