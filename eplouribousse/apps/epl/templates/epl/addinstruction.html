@@ -16,16 +16,16 @@
     </head>
     <div id="sticky-section">
       <nav id="sticky-menu">
-          <a href="/router/{{ lid }}">{% trans "Retour à la liste" %}</a>
-          <a href="/">{% trans "Accueil" %}</a>
-          <a href="/dashboard">{% trans "Supervision" %}</a>
-          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a href="/{{ bdd }}/router/{{ lid }}">{% trans "Retour à la liste" %}</a>
+          <a href="/{{ bdd }}/">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
-          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+          <a target="_blank" href="/{{ bdd }}/about">{% trans "A propos" %}</a>
       </nav>
 
           {% if k != 0 %}
-          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
           {% else %}
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
@@ -97,7 +97,7 @@
       <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}.</p>
 
       <div id="menucontextuel">
-      <button><b><a href="/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></b></button>
+      <button><b><a href="/{{ bdd }}/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></b></button>
       </div>
 
         <form method="post">{% csrf_token %}
@@ -149,12 +149,12 @@
 
         <div id="menucontextuel">
 
-        <p><button><b><a href="/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/sel/{{ sid }}/{{ library.lid }}">{% trans "Modifier une ligne erronée" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/router/{{ lid }}">{% trans "Reprendre plus tard" %}</a></b></button></p>
+        <p><button><b><a href="/{{ bdd }}/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/sel/{{ sid }}/{{ library.lid }}">{% trans "Modifier une ligne erronée" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/router/{{ lid }}">{% trans "Reprendre plus tard" %}</a></b></button></p>
         </div>
 
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/{{ bdd }}/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/{{ bdd }}/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
 
 <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
 

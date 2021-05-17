@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-
 class Project(models.Model):
     """Model for project."""
     name = models.CharField('project code name', max_length=30, blank =True)
@@ -21,11 +20,6 @@ class Library(models.Model):
     def __str__(self):
         return self.name
 
-LIBRARY_CHOICES = ('checker','checker'),
-if Library.objects.all().exclude(name ='checker'):
-    for l in Library.objects.all().exclude(name ='checker').order_by('name'):
-        LIBRARY_CHOICES += (l.name, l.name),
-
 #Reasons to exclude an item record (see under ; class : ItemRecord,
 #field : excl) :
 class Exclusion(models.Model):
@@ -33,11 +27,6 @@ class Exclusion(models.Model):
     label = models.CharField('label', max_length=50, unique=True)
     def __str__(self):
         return self.label
-
-EXCLUSION_CHOICES = ('', ''),
-for e in Exclusion.objects.all().order_by('label'):
-    EXCLUSION_CHOICES += (e.label, e.label),
-EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
 
 #Ranking choices :
 RANKING_CHOICES = ((4, 4), (3, 3), (2, 2), (1, 1),)
@@ -57,8 +46,7 @@ class ItemRecord(models.Model):
     #Ranking is used to order the libraries for treatment based on holdings
     #statement or other criteria ; 1 shall be used by the library claiming
     #to be the repository for the publication. 0 is used in case of exclusion :
-    excl = models.CharField("exclusion ?", max_length=100, \
-    choices=EXCLUSION_CHOICES, blank=True)
+    excl = models.CharField("exclusion ?", max_length=100, blank=True)
     #To let a library declaring that its item must not be taken into account
     #for one of the EXCLUSION_CHOICES reasons.
     comm = models.CharField('comment', max_length=250, blank=True)
@@ -119,8 +107,8 @@ FEATURE_CHOICES = (
 
 class Feature(models.Model):
     """Model for features."""
-    libname = models.CharField('library', max_length=30, blank=False, choices=LIBRARY_CHOICES)
-    feaname = models.CharField('feature', max_length=120, default="ranking", blank=False, choices=FEATURE_CHOICES)
+    libname = models.CharField('library', max_length=30, blank=False)
+    feaname = models.CharField('feature', max_length=120, default="ranking", blank=False)
     def __str__(self):
         info = self.libname + ' | ' + self.feaname
         return info

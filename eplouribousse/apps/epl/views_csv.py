@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from .models import *
 from django.utils.translation import ugettext as _
 
-project = Project.objects.all().order_by('pk')[0].name
+def simple_csv(request, bdd, lid, xlid, recset, what, length):
 
-def simple_csv(request, lid, xlid, recset, what, length):
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     fea =""
     parsed =recset.split("<ItemRecord: ")
@@ -71,24 +71,24 @@ def simple_csv(request, lid, xlid, recset, what, length):
     c =1
     for e in parsed[1:]:
         sid =e[0:9]
-        i =ItemRecord.objects.get(sid =sid, lid =lid)
-        set =ItemRecord.objects.filter(sid =sid)
+        i =ItemRecord.objects.using(bdd).get(sid =sid, lid =lid)
+        set =ItemRecord.objects.using(bdd).filter(sid =sid)
         writer.writerow([c, "x", sid, i.issn, lid, i.rank, i.excl, \
-        i.comm, Library.objects.get(lid =lid).name, i.cn, i.title, \
+        i.comm, Library.objects.using(bdd).get(lid =lid).name, i.cn, i.title, \
         i.pubhist, i.holdstat, i.missing, i.status])
         if xlid =="None":
             for k in set.exclude(lid =lid):
                 writer.writerow([c, "", k.sid, k.issn, k.lid, k.rank, k.excl, \
-                k.comm, Library.objects.get(lid =k.lid).name, k.cn, k.title, \
+                k.comm, Library.objects.using(bdd).get(lid =k.lid).name, k.cn, k.title, \
                 k.pubhist, k.holdstat, k.missing, k.status])
         elif xlid !="None":
-            j =ItemRecord.objects.get(sid =sid, lid =xlid)
+            j =ItemRecord.objects.using(bdd).get(sid =sid, lid =xlid)
             writer.writerow([c, "x", sid, j.issn, xlid, j.rank, j.excl, \
-            j.comm, Library.objects.get(lid =xlid).name, j.cn, j.title, \
+            j.comm, Library.objects.using(bdd).get(lid =xlid).name, j.cn, j.title, \
             j.pubhist, j.holdstat, j.missing, j.status])
             for k in set.exclude(lid =lid).exclude(lid =xlid):
                 writer.writerow([c, "", k.sid, k.issn, k.lid, k.rank, k.excl, \
-                k.comm, Library.objects.get(lid =k.lid).name, k.cn, k.title, \
+                k.comm, Library.objects.using(bdd).get(lid =k.lid).name, k.cn, k.title, \
                 k.pubhist, k.holdstat, k.missing, k.status])
         c +=1
 

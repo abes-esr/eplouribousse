@@ -21,7 +21,7 @@
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
         <div id="content">
         {% if k != 0 %}
-        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
         {% else %}
         <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
         <!-- (User : Anonymous) -->
@@ -43,8 +43,8 @@
             ·
             <a target="_blank" href="https://code.launchpad.net/eplouribousse">Launchpad</a> (Help by Canonical Ltd)
           </p>
-          <p>Pour demander une information, signaler un bug, faire une réclamation, faire une suggestion, donner un avis ou pour toute autre raison : contacter le <a target="_blank" href="/contact">développeur</a> de l'application.</p>
-          <p><a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · Contacter l'<a target="_blank" href="/webmaster">{% trans "administrateur" %}</a>  du site{% endif %}</p>
+          <p>Pour demander une information, signaler un bug, faire une réclamation, faire une suggestion, donner un avis ou pour toute autre raison : contacter le <a target="_blank" href="/{{ bdd }}/contact">développeur</a> de l'application.</p>
+          <p><a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · Contacter l'<a target="_blank" href="/{{ bdd }}/webmaster">{% trans "administrateur" %}</a>  du site{% endif %}</p>
           <p>Crédits : eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
           <p>Copyright (C) 2018-{% now 'Y' %} : Georges Gressot, Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg.</p></center>
 

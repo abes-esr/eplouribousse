@@ -12,10 +12,11 @@ from django.core.files.storage import FileSystemStorage
 
 from django.utils.translation import ugettext as _
 
-project = Project.objects.all().order_by('pk')[0].name
 styles = getSampleStyleSheet()
 
-def pdfedition(request, sid, lid):
+def pdfedition(request, bdd, sid, lid):
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     filename = sid + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
@@ -25,19 +26,19 @@ def pdfedition(request, sid, lid):
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    libname = Library.objects.get(lid =lid).name
-    title = ItemRecord.objects.get(sid =sid, lid =lid).title
-    sid = ItemRecord.objects.get(sid =sid, lid =lid).sid
-    cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
-    issn = ItemRecord.objects.get(sid =sid, lid =lid).issn
-    pubhist = ItemRecord.objects.get(sid =sid, lid =lid).pubhist
-    instructions = Instruction.objects.filter(sid =sid).order_by('line')
-    properinstructions = Instruction.objects.filter(sid =sid, name =libname)
-    otherinstructions = Instruction.objects.filter(sid =sid, oname =libname)
+    libname = Library.objects.using(bdd).get(lid =lid).name
+    title = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).title
+    sid = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).sid
+    cn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).cn
+    issn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).issn
+    pubhist = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).pubhist
+    instructions = Instruction.objects.using(bdd).filter(sid =sid).order_by('line')
+    properinstructions = Instruction.objects.using(bdd).filter(sid =sid, name =libname)
+    otherinstructions = Instruction.objects.using(bdd).filter(sid =sid, oname =libname)
     libinstructions = properinstructions.union(otherinstructions).order_by('line')
-    controlbd = Instruction.objects.get(sid =sid, bound ='x', name ='checker').descr
-    controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =sid, name ='checker').descr
-    mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =sid, rank =1).lid).name
+    controlbd = Instruction.objects.using(bdd).get(sid =sid, bound ='x', name ='checker').descr
+    controlnotbd = Instruction.objects.using(bdd).exclude(bound ='x').get(sid =sid, name ='checker').descr
+    mothercollection = Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid).name
 
     datap =[
     [_('Projet'), project],
@@ -75,13 +76,13 @@ def pdfedition(request, sid, lid):
 
     datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
 
-    for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
+    for e in ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank"):
         if e.rank ==1:
-            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
+            datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("collection mère"), e.comm])
         elif e.rank ==0:
-            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
+            datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, e.excl, e.comm])
         else:
-            datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
+            datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("a pris part"), e.comm])
 
     tcoll=Table(datacoll)
 
@@ -131,12 +132,14 @@ def pdfedition(request, sid, lid):
 
     return response
 
-def edallpdf(request, lid):
+def edallpdf(request, bdd, lid):
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     filename = lid + '.pdf'
     dirfile = "/tmp/" + filename
 
-    libname = Library.objects.get(lid =lid).name
+    libname = Library.objects.using(bdd).get(lid =lid).name
 
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
@@ -146,13 +149,13 @@ def edallpdf(request, lid):
     #Trick : These ressources have two instructions with name = 'checker' :
     #This is like "tobeedited" (see below)
 
-    l = ItemRecord.objects.filter(lid =lid).exclude(rank =0)
+    l = ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =0)
 
     #Initializing a list of ressources to edit :
     resslist = []
 
     for e in l:
-        nl = Instruction.objects.filter(sid =e.sid)
+        nl = Instruction.objects.using(bdd).filter(sid =e.sid)
         k = nl.filter(name = "checker")
         if len(k) ==2:
             resslist.append(e)
@@ -161,18 +164,18 @@ def edallpdf(request, lid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
-        sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
-        cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
-        issn = ItemRecord.objects.get(sid =r.sid, lid =lid).issn
-        pubhist = ItemRecord.objects.get(sid =r.sid, lid =lid).pubhist
-        instructions = Instruction.objects.filter(sid =r.sid).order_by('line')
-        properinstructions = Instruction.objects.filter(sid =r.sid, name =libname)
-        otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
+        title = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).title
+        sid = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).sid
+        cn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).cn
+        issn = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).issn
+        pubhist = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).pubhist
+        instructions = Instruction.objects.using(bdd).filter(sid =r.sid).order_by('line')
+        properinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, name =libname)
+        otherinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, oname =libname)
         libinstructions = properinstructions.union(otherinstructions).order_by('line')
-        controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
-        controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =r.sid, name ='checker').descr
-        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
+        controlbd = Instruction.objects.using(bdd).get(sid =r.sid, bound ='x', name ='checker').descr
+        controlnotbd = Instruction.objects.using(bdd).exclude(bound ='x').get(sid =r.sid, name ='checker').descr
+        mothercollection = Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =r.sid, rank =1).lid).name
 
         datap =[
         [_('Projet'), project],
@@ -210,13 +213,13 @@ def edallpdf(request, lid):
 
         datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
 
-        for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
+        for e in ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -269,12 +272,14 @@ def edallpdf(request, lid):
     return response
 
 
-def motherpdf(request, lid):
+def motherpdf(request, bdd, lid):
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     filename = lid + '.pdf'
     dirfile = "/tmp/" + filename
 
-    libname = Library.objects.get(lid =lid).name
+    libname = Library.objects.using(bdd).get(lid =lid).name
 
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
@@ -284,13 +289,13 @@ def motherpdf(request, lid):
     #Trick : These ressources have two instructions with name = 'checker' :
     #This is like "tobeedited" (see below) Mother collection (rank =1)
 
-    l = ItemRecord.objects.filter(lid =lid, rank =1)
+    l = ItemRecord.objects.using(bdd).filter(lid =lid, rank =1)
 
     #Initializing a list of ressources to edit :
     resslist = []
 
     for e in l:
-        nl = Instruction.objects.filter(sid =e.sid)
+        nl = Instruction.objects.using(bdd).filter(sid =e.sid)
         k = nl.filter(name = "checker")
         if len(k) ==2:
             resslist.append(e)
@@ -299,18 +304,18 @@ def motherpdf(request, lid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
-        sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
-        cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
-        issn = ItemRecord.objects.get(sid =r.sid, lid =lid).issn
-        pubhist = ItemRecord.objects.get(sid =r.sid, lid =lid).pubhist
-        instructions = Instruction.objects.filter(sid =r.sid).order_by('line')
-        properinstructions = Instruction.objects.filter(sid =r.sid, name =libname)
-        otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
+        title = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).title
+        sid = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).sid
+        cn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).cn
+        issn = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).issn
+        pubhist = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).pubhist
+        instructions = Instruction.objects.using(bdd).filter(sid =r.sid).order_by('line')
+        properinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, name =libname)
+        otherinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, oname =libname)
         libinstructions = properinstructions.union(otherinstructions).order_by('line')
-        controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
-        controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =r.sid, name ='checker').descr
-        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
+        controlbd = Instruction.objects.using(bdd).get(sid =r.sid, bound ='x', name ='checker').descr
+        controlnotbd = Instruction.objects.using(bdd).exclude(bound ='x').get(sid =r.sid, name ='checker').descr
+        mothercollection = Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =r.sid, rank =1).lid).name
 
         datap =[
         [_('Projet'), project],
@@ -348,13 +353,13 @@ def motherpdf(request, lid):
 
         datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
 
-        for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
+        for e in ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -407,12 +412,14 @@ def motherpdf(request, lid):
     return response
 
 
-def notmotherpdf(request, lid):
+def notmotherpdf(request, bdd, lid):
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     filename = lid + '.pdf'
     dirfile = "/tmp/" + filename
 
-    libname = Library.objects.get(lid =lid).name
+    libname = Library.objects.using(bdd).get(lid =lid).name
 
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
@@ -422,13 +429,13 @@ def notmotherpdf(request, lid):
     #Trick : These ressources have two instructions with name = 'checker' :
     #This is like "tobeedited" (see below) Not mother collection (rank not 1)
 
-    l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99)
+    l = ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99)
 
     #Initializing a list of ressources to edit :
     resslist = []
 
     for e in l:
-        nl = Instruction.objects.filter(sid =e.sid)
+        nl = Instruction.objects.using(bdd).filter(sid =e.sid)
         k = nl.filter(name = "checker")
         if len(k) ==2:
             resslist.append(e)
@@ -437,18 +444,18 @@ def notmotherpdf(request, lid):
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
-        sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
-        cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
-        issn = ItemRecord.objects.get(sid =r.sid, lid =lid).issn
-        pubhist = ItemRecord.objects.get(sid =r.sid, lid =lid).pubhist
-        instructions = Instruction.objects.filter(sid =r.sid).order_by('line')
-        properinstructions = Instruction.objects.filter(sid =r.sid, name =libname)
-        otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
+        title = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).title
+        sid = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).sid
+        cn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).cn
+        issn = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).issn
+        pubhist = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).pubhist
+        instructions = Instruction.objects.using(bdd).filter(sid =r.sid).order_by('line')
+        properinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, name =libname)
+        otherinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, oname =libname)
         libinstructions = properinstructions.union(otherinstructions).order_by('line')
-        controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
-        controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =r.sid, name ='checker').descr
-        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
+        controlbd = Instruction.objects.using(bdd).get(sid =r.sid, bound ='x', name ='checker').descr
+        controlnotbd = Instruction.objects.using(bdd).exclude(bound ='x').get(sid =r.sid, name ='checker').descr
+        mothercollection = Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =r.sid, rank =1).lid).name
 
         datap =[
         [_('Projet'), project],
@@ -486,13 +493,13 @@ def notmotherpdf(request, lid):
 
         datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
 
-        for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
+        for e in ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -545,12 +552,14 @@ def notmotherpdf(request, lid):
     return response
 
 
-def xmotherpdf(request, lid, xlid):
+def xmotherpdf(request, bdd, lid, xlid):
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     filename = lid + '.pdf'
     dirfile = "/tmp/" + filename
 
-    libname = Library.objects.get(lid =lid).name
+    libname = Library.objects.using(bdd).get(lid =lid).name
 
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
@@ -560,33 +569,33 @@ def xmotherpdf(request, lid, xlid):
     #Trick : These ressources have two instructions with name = 'checker' :
     #This is like "tobeedited" (see below)
 
-    l = ItemRecord.objects.filter(lid =lid, rank =1)
+    l = ItemRecord.objects.using(bdd).filter(lid =lid, rank =1)
 
     #Initializing a list of ressources to edit :
     resslist = []
 
     for e in l:
-        nl = Instruction.objects.filter(sid =e.sid)
+        nl = Instruction.objects.using(bdd).filter(sid =e.sid)
         kd = nl.filter(name = "checker")
-        if len(kd) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
+        if len(kd) ==2 and Instruction.objects.using(bdd).filter(sid =e.sid, name =Library.objects.using(bdd).get(lid =xlid)):
             resslist.append(e)
 
     for r in resslist:
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
-        sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
-        cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
-        issn = ItemRecord.objects.get(sid =r.sid, lid =lid).issn
-        pubhist = ItemRecord.objects.get(sid =r.sid, lid =lid).pubhist
-        instructions = Instruction.objects.filter(sid =r.sid).order_by('line')
-        properinstructions = Instruction.objects.filter(sid =r.sid, name =libname)
-        otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
+        title = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).title
+        sid = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).sid
+        cn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).cn
+        issn = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).issn
+        pubhist = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).pubhist
+        instructions = Instruction.objects.using(bdd).filter(sid =r.sid).order_by('line')
+        properinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, name =libname)
+        otherinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, oname =libname)
         libinstructions = properinstructions.union(otherinstructions).order_by('line')
-        controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
-        controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =r.sid, name ='checker').descr
-        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
+        controlbd = Instruction.objects.using(bdd).get(sid =r.sid, bound ='x', name ='checker').descr
+        controlnotbd = Instruction.objects.using(bdd).exclude(bound ='x').get(sid =r.sid, name ='checker').descr
+        mothercollection = Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =r.sid, rank =1).lid).name
 
         datap =[
         [_('Projet'), project],
@@ -624,13 +633,13 @@ def xmotherpdf(request, lid, xlid):
 
         datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
 
-        for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
+        for e in ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
@@ -683,12 +692,14 @@ def xmotherpdf(request, lid, xlid):
     return response
 
 
-def xnotmotherpdf(request, lid, xlid):
+def xnotmotherpdf(request, bdd, lid, xlid):
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     filename = lid + '.pdf'
     dirfile = "/tmp/" + filename
 
-    libname = Library.objects.get(lid =lid).name
+    libname = Library.objects.using(bdd).get(lid =lid).name
 
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
     elements = []
@@ -698,33 +709,33 @@ def xnotmotherpdf(request, lid, xlid):
     #Trick : These ressources have two instructions with name = 'checker' :
     #This is like "tobeedited" (see below)
 
-    l = ItemRecord.objects.filter(lid =lid).exclude(rank =1).exclude(rank =0)
+    l = ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =1).exclude(rank =0)
 
     #Initializing a list of ressources to edit :
     resslist = []
 
     for e in l:
-        nl = Instruction.objects.filter(sid =e.sid)
+        nl = Instruction.objects.using(bdd).filter(sid =e.sid)
         kd = nl.filter(name = "checker")
-        if len(kd) ==2 and Instruction.objects.filter(sid =e.sid, name =Library.objects.get(lid =xlid)):
+        if len(kd) ==2 and Instruction.objects.using(bdd).filter(sid =e.sid, name =Library.objects.using(bdd).get(lid =xlid)):
             resslist.append(e)
 
     for r in resslist:
 
         # Draw things on the PDF. Here's where the PDF generation happens.
         # See the ReportLab documentation for the full list of functionality.
-        title = ItemRecord.objects.get(sid =r.sid, lid =lid).title
-        sid = ItemRecord.objects.get(sid =r.sid, lid =lid).sid
-        cn = ItemRecord.objects.get(sid =sid, lid =lid).cn
-        issn = ItemRecord.objects.get(sid =r.sid, lid =lid).issn
-        pubhist = ItemRecord.objects.get(sid =r.sid, lid =lid).pubhist
-        instructions = Instruction.objects.filter(sid =r.sid).order_by('line')
-        properinstructions = Instruction.objects.filter(sid =r.sid, name =libname)
-        otherinstructions = Instruction.objects.filter(sid =r.sid, oname =libname)
+        title = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).title
+        sid = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).sid
+        cn = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).cn
+        issn = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).issn
+        pubhist = ItemRecord.objects.using(bdd).get(sid =r.sid, lid =lid).pubhist
+        instructions = Instruction.objects.using(bdd).filter(sid =r.sid).order_by('line')
+        properinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, name =libname)
+        otherinstructions = Instruction.objects.using(bdd).filter(sid =r.sid, oname =libname)
         libinstructions = properinstructions.union(otherinstructions).order_by('line')
-        controlbd = Instruction.objects.get(sid =r.sid, bound ='x', name ='checker').descr
-        controlnotbd = Instruction.objects.exclude(bound ='x').get(sid =r.sid, name ='checker').descr
-        mothercollection = Library.objects.get(lid =ItemRecord.objects.get(sid =r.sid, rank =1).lid).name
+        controlbd = Instruction.objects.using(bdd).get(sid =r.sid, bound ='x', name ='checker').descr
+        controlnotbd = Instruction.objects.using(bdd).exclude(bound ='x').get(sid =r.sid, name ='checker').descr
+        mothercollection = Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =r.sid, rank =1).lid).name
 
         datap =[
         [_('Projet'), project],
@@ -762,13 +773,13 @@ def xnotmotherpdf(request, lid, xlid):
 
         datacoll.append([_("rang"), _("bibliothèque"), _("info"), _("commentaire")])
 
-        for e in ItemRecord.objects.filter(sid =sid).order_by("rank"):
+        for e in ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank"):
             if e.rank ==1:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("collection mère"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("collection mère"), e.comm])
             elif e.rank ==0:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, e.excl, e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, e.excl, e.comm])
             else:
-                datacoll.append([e.rank, Library.objects.get(lid =e.lid).name, _("a pris part"), e.comm])
+                datacoll.append([e.rank, Library.objects.using(bdd).get(lid =e.lid).name, _("a pris part"), e.comm])
 
         tcoll=Table(datacoll)
 
