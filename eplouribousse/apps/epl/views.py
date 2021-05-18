@@ -55,7 +55,8 @@ def selectbdd(request):
 
     if f.is_valid():
         bdd = f.cleaned_data['bddname']
-        return home(request, bdd)
+        return HttpResponseRedirect(bdd)
+        # return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
 
