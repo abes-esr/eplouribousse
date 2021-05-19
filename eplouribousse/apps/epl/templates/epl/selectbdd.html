@@ -1,0 +1,58 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+
+        <!-- <div id="content">
+        {% if k != 0 %}
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
+        {% else %}
+        <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+        <!-- (User : Anonymous) -->
+        {% endif %}
+        </div> -->
+        <p></p>
+        <h1>{% trans "Selection de la base de données" %}</h1>
+
+        <div id="content">
+
+
+<p></p>
+          <form method="post">
+            <p>{% trans "Projet" %} : {{ f.bddname }}</p>
+            {% csrf_token %}
+            <p><input type="submit" value="{% trans "Valider" %}"></p>
+          </form>
+        </div>
+
+        <!-- <div id="footer">
+
+            <p><a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a> - <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a href="/./{{ bdd }}/accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./{{ bdd }}/admin">{% trans "Administration (réservé)" %}</a>] - <a href="/./{{ bdd }}/lang">{% trans "en / de" %}</a></p>
+
+        </div> -->
+
+        <div id="credits">
+              <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/{{ bdd }}/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a></p>
+              <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+		    </div>
+
+    </body>
+
+</html>
