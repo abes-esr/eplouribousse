@@ -25,6 +25,8 @@ from django.contrib.auth import logout
 
 from django.http import HttpResponseRedirect
 
+from django.http import HttpResponse
+
 lastrked =None
 wbmstr =""
 
@@ -56,6 +58,7 @@ def selectbdd(request):
     if f.is_valid():
         bdd = f.cleaned_data['bddname']
         return HttpResponseRedirect(bdd)
+        return bdd
         # return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
@@ -72,7 +75,7 @@ def common(request, bdd):
         replymail =ReplyMail.objects.using(bdd).all().order_by('pk')[0].sendermail
     except:
         replymail =BddAdmin.objects.using(bdd).all().order_by('pk')[0].contact
-    return wbmstr, replymail
+    return locals()
 
 
 def logstatus(request, bdd):
@@ -85,52 +88,53 @@ def logstatus(request, bdd):
 
 def home(request, bdd):
 
-    return logstatus(request, bdd)
+    # return logstatus(request, bdd)
     version =epl_version
-    return common(request, bdd)
+    # return common(request, bdd)
 
     "Homepage"
-
-    project = Project.objects.using(bdd).all().order_by('pk')[0].name
-
-    #Feature input :
-    i = Feature()
-
-    LIBRARY_CHOICES = ('checker','checker'),
-    if Library.objects.using(bdd).all().exclude(name ='checker'):
-        for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
-            LIBRARY_CHOICES += (l.name, l.name),
-
-    class FeatureForm(forms.ModelForm):
-        class Meta:
-            model = Feature
-            fields = ('libname', 'feaname',)
-            widgets = {
-                'libname' : forms.Select(choices=LIBRARY_CHOICES),
-                'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
-            }
-    form = FeatureForm(request.POST, instance =i)
-
-    if form.is_valid():
-        lid = Library.objects.using(bdd).get(name =i.libname).lid
-        feature =i.feaname
-        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
-            i.save(using=bdd)
-
-        if lid =="999999999":
-            if feature =='instrtodo':
-                return instrtodo(request, bdd, lid, 'title')
-            else:
-                return checkinstr(request, bdd)
-        else:
-            if feature =='ranking':
-                return ranktotake(request, bdd, lid, 'title')
-            elif feature =='arbitration':
-                return arbitration(request, bdd, lid, 'title')
-            elif feature =='instrtodo':
-                return instrtodo(request, bdd, lid, 'title')
-            elif feature =='edition':
-                return tobeedited(request, bdd, lid, 'title')
+    #
+    # project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    #
+    # #Feature input :
+    # i = Feature()
+    #
+    # LIBRARY_CHOICES = ('checker','checker'),
+    # if Library.objects.using(bdd).all().exclude(name ='checker'):
+    #     for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+    #         LIBRARY_CHOICES += (l.name, l.name),
+    #
+    # class FeatureForm(forms.ModelForm):
+    #     class Meta:
+    #         model = Feature
+    #         fields = ('libname', 'feaname',)
+    #         widgets = {
+    #             'libname' : forms.Select(choices=LIBRARY_CHOICES),
+    #             'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
+    #         }
+    # form = FeatureForm(request.POST, instance =i)
+    #
+    # if form.is_valid():
+    #     lid = Library.objects.using(bdd).get(name =i.libname).lid
+    #     feature =i.feaname
+    #     if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
+    #         i.save(using=bdd)
+    #
+    #     if lid =="999999999":
+    #         if feature =='instrtodo':
+    #             return instrtodo(request, bdd, lid, 'title')
+    #         else:
+    #             return checkinstr(request, bdd)
+    #     else:
+    #         if feature =='ranking':
+    #             return ranktotake(request, bdd, lid, 'title')
+    #         elif feature =='arbitration':
+    #             return arbitration(request, bdd, lid, 'title')
+    #         elif feature =='instrtodo':
+    #             return instrtodo(request, bdd, lid, 'title')
+    #         elif feature =='edition':
+    #             return tobeedited(request, bdd, lid, 'title')
+    return HttpResponse(bdd)
 
     return render(request, 'epl/home.html', locals())
 
