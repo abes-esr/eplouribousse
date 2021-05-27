@@ -65,21 +65,21 @@ def common(e):
     wbmstr =""
     replymail =""
     try:
-        wbmstr = ReplyMail.objects.using(e).all().order_by('pk')[1].sendermail
+        wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
         zz =1
     except:
         pass
 
     try:
-        replymail =ReplyMail.objects.using(e).all().order_by('pk')[0].sendermail
+        replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
     except:
-        replymail =BddAdmin.objects.using(e).all().order_by('pk')[0].contact
+        replymail =BddAdmin.objects.all().order_by('pk')[0].contact
     return wbmstr, replymail
 
 
-def logstatus(request, e):
+def logstatus(request):
     if request.user.is_authenticated:
-        k = request.user.get_username(using =e)
+        k = request.user.get_username()
     else:
         k =0
     return k
@@ -87,7 +87,7 @@ def logstatus(request, e):
 
 def home(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -140,7 +140,7 @@ def home(request, bdd):
 
 def about(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -151,7 +151,7 @@ def about(request, bdd):
 
 def contact(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -199,7 +199,7 @@ def contact(request, bdd):
 
 def webmstr(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -247,7 +247,7 @@ def webmstr(request, bdd):
 
 def confirm(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -314,7 +314,7 @@ def router(request, bdd, lid):
 
 
 def lang(request, bdd):
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -339,6 +339,21 @@ def logout_view(request, bdd):
 
     #Feature input :
     i = Feature()
+
+    LIBRARY_CHOICES = ('checker','checker'),
+    if Library.objects.using(bdd).all().exclude(name ='checker'):
+        for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+            LIBRARY_CHOICES += (l.name, l.name),
+
+    class FeatureForm(forms.ModelForm):
+        class Meta:
+            model = Feature
+            fields = ('libname', 'feaname',)
+            widgets = {
+                'libname' : forms.Select(choices=LIBRARY_CHOICES),
+                'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
+            }
+
     form = FeatureForm(request.POST, instance =i)
     if form.is_valid():
         lid = Library.objects.using(bdd).get(name =i.libname).lid
@@ -365,7 +380,7 @@ def logout_view(request, bdd):
 
 def notintime(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -384,7 +399,7 @@ def notintime(request, bdd, sid, lid):
 
 def indicators(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -537,7 +552,7 @@ def indicators(request, bdd):
 def search(request, bdd):
 # Lot of code for this view is similar with the code for "current_status" view : When changing here, think to change there
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -740,7 +755,7 @@ def search(request, bdd):
 @login_required
 def reinit(request, bdd, sid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -812,7 +827,7 @@ def reinit(request, bdd, sid):
 @login_required
 def takerank(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -909,7 +924,7 @@ def takerank(request, bdd, sid, lid):
 @login_required
 def addinstr(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1066,7 +1081,7 @@ def addinstr(request, bdd, sid, lid):
 @login_required
 def selinstr(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1167,7 +1182,7 @@ def selinstr(request, bdd, sid, lid):
 @login_required
 def modinstr(request, bdd, sid, lid, linetomodify):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1351,7 +1366,7 @@ def modinstr(request, bdd, sid, lid, linetomodify):
 @login_required
 def delinstr(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1471,7 +1486,7 @@ def delinstr(request, bdd, sid, lid):
 @login_required
 def endinstr(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1731,7 +1746,7 @@ def endinstr(request, bdd, sid, lid):
 
 def ranktotake(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1772,7 +1787,7 @@ def ranktotake(request, bdd, lid, sort):
 
 def modifranklist(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1819,7 +1834,7 @@ def modifranklist(request, bdd, lid, sort):
 
 def filter_rklist(request, bdd, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1848,7 +1863,7 @@ def filter_rklist(request, bdd, lid):
 
 def xranktotake(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1889,7 +1904,7 @@ def xranktotake(request, bdd, lid, xlid, sort):
 
 def excllist(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1961,7 +1976,7 @@ def excllist(request, bdd):
 
 def faulty(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -1995,7 +2010,7 @@ def faulty(request, bdd):
 
 def arbitration(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2059,7 +2074,7 @@ def arbitration(request, bdd, lid, sort):
 
 def arbrk1(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2106,7 +2121,7 @@ def arbrk1(request, bdd, lid, sort):
 
 def arbnork1(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2155,7 +2170,7 @@ def arbnork1(request, bdd, lid, sort):
 
 def filter_arblist(request, bdd, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2184,7 +2199,7 @@ def filter_arblist(request, bdd, lid):
 
 def xarbitration(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2248,7 +2263,7 @@ def xarbitration(request, bdd, lid, xlid, sort):
 
 def x1arb(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2296,7 +2311,7 @@ def x1arb(request, bdd, lid, xlid, sort):
 
 def x0arb(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2346,7 +2361,7 @@ def x0arb(request, bdd, lid, xlid, sort):
 
 def instrtodo(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2399,7 +2414,7 @@ def instrtodo(request, bdd, lid, sort):
 
 def instroneb(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2434,7 +2449,7 @@ def instroneb(request, bdd, lid, sort):
 
 def instrotherb(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2470,7 +2485,7 @@ def instrotherb(request, bdd, lid, sort):
 
 def instronenotb(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2505,7 +2520,7 @@ def instronenotb(request, bdd, lid, sort):
 
 def instrothernotb(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2540,7 +2555,7 @@ def instrothernotb(request, bdd, lid, sort):
 
 def instrfilter(request, bdd, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2568,7 +2583,7 @@ def instrfilter(request, bdd, lid):
 
 def xinstrlist(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2605,7 +2620,7 @@ def xinstrlist(request, bdd, lid, xlid, sort):
 
 def tobeedited(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2646,7 +2661,7 @@ def tobeedited(request, bdd, lid, sort):
 
 def mothered(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2687,7 +2702,7 @@ def mothered(request, bdd, lid, sort):
 
 def notmothered(request, bdd, lid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2728,7 +2743,7 @@ def notmothered(request, bdd, lid, sort):
 
 def filter_edlist(request, bdd, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2769,7 +2784,7 @@ def filter_edlist(request, bdd, lid):
 
 def xmothered(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2806,7 +2821,7 @@ def xmothered(request, bdd, lid, xlid, sort):
 
 def xnotmothered(request, bdd, lid, xlid, sort):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2843,7 +2858,7 @@ def xnotmothered(request, bdd, lid, xlid, sort):
 
 def edition(request, bdd, sid, lid):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -2894,7 +2909,7 @@ def edition(request, bdd, sid, lid):
 def current_status(request, bdd, sid, lid):
 # Lot of code for this view is similar with the code for "search" view : When changing here, think to change there
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -3082,7 +3097,7 @@ def current_status(request, bdd, sid, lid):
 
 def checkinstr(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -3095,7 +3110,7 @@ def checkinstr(request, bdd):
 
 def checkerfilter(request, bdd):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -3122,7 +3137,7 @@ def checkerfilter(request, bdd):
 
 def xckbd(request, bdd, coll_set):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -3156,7 +3171,7 @@ def xckbd(request, bdd, coll_set):
 
 def xcknbd(request, bdd, coll_set):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]
@@ -3190,7 +3205,7 @@ def xcknbd(request, bdd, coll_set):
 
 def xckall(request, bdd, coll_set):
 
-    k =logstatus(request, bdd)
+    k =logstatus(request)
     version =epl_version
     wbmstr = common(bdd)[0]
     replymail = common(bdd)[1]

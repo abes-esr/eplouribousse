@@ -94,7 +94,10 @@ WSGI_APPLICATION = 'eplouribousse.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {},
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': join(BASE_DIR, 'db.sqlite3'),
+    },
     'eplone': {
         'NAME': join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.sqlite3',

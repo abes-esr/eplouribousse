@@ -17,7 +17,7 @@
 
     <div id="sticky-section">
       <nav id="sticky-menu">
-          <a href="/{{ bdd }}/">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
           <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
           <!-- <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a> -->
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
@@ -177,7 +177,7 @@
     <tr>
         <td>{{ elmt.0 }}</td>
         <td>{{ elmt.1.status }}</td>
-        <td><a target="_blank" href="/{{ bdd }}/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td>
+        <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td>
     </tr>
      {% endfor %}
    </tbody>
@@ -212,7 +212,7 @@
          <td><font color= #3364ff >{{ elmt.descr }}</font></td>
          <td><font color= #3364ff >{{ elmt.exc}}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
-         <td><a target="_blank" href="/{{ bdd }}/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
+         <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
     </tr>
         {% else %}
     <tr>
@@ -223,7 +223,7 @@
         <td>{{ elmt.descr }}</td>
         <td>{{ elmt.exc}}</td>
         <td>{{ elmt.degr }}</td>
-        <td><a target="_blank" href="/{{ bdd }}/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
+        <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
     </tr>
         {% endif %}
      {% endfor %}
