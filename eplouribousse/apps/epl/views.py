@@ -28,6 +28,16 @@ from django.http import HttpResponseRedirect
 
 lastrked =None
 wbmstr =""
+try:
+    wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
+    zz =1
+except:
+    pass
+
+try:
+    replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
+except:
+    replymail =BddAdmin.objects.all().order_by('pk')[0].contact
 
 def serial_title(e):
     """sorting by title"""
@@ -61,20 +71,20 @@ def selectbdd(request):
     return render(request, 'epl/selectbdd.html', locals())
 
 
-def common(e):
-    wbmstr =""
-    replymail =""
-    try:
-        wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
-        zz =1
-    except:
-        pass
-
-    try:
-        replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
-    except:
-        replymail =BddAdmin.objects.all().order_by('pk')[0].contact
-    return wbmstr, replymail
+# def common(e):
+#     wbmstr =""
+#     replymail =""
+#     try:
+#         wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
+#         zz =1
+#     except:
+#         pass
+#
+#     try:
+#         replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
+#     except:
+#         replymail =BddAdmin.objects.all().order_by('pk')[0].contact
+#     return wbmstr, replymail
 
 
 def logstatus(request):
@@ -89,8 +99,8 @@ def home(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
     "Homepage"
 
@@ -142,8 +152,8 @@ def about(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
     date =date_version
     host = str(request.get_host())
     return render(request, 'epl/about.html', locals())
@@ -153,8 +163,8 @@ def contact(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+    
+
     date =date_version
     host = str(request.get_host())
 
@@ -201,8 +211,8 @@ def webmstr(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     date =date_version
@@ -249,8 +259,8 @@ def confirm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     return render(request, 'epl/confirmation.html', locals())
@@ -316,8 +326,8 @@ def router(request, bdd, lid):
 def lang(request, bdd):
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     return render(request, 'epl/language.html', locals())
@@ -332,8 +342,8 @@ def logout_view(request, bdd):
     # Redirect to a success page.
 
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
@@ -382,8 +392,8 @@ def notintime(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     library = Library.objects.using(bdd).get(lid = lid).name
@@ -401,8 +411,8 @@ def indicators(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     #Indicators :
@@ -554,8 +564,8 @@ def search(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     libch = ('checker','checker'),
@@ -757,8 +767,8 @@ def reinit(request, bdd, sid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
     info =""
 
@@ -829,8 +839,8 @@ def takerank(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     #Authentication control :
@@ -926,8 +936,8 @@ def addinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
     length =0
 
@@ -1083,8 +1093,8 @@ def selinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     #Authentication control :
@@ -1184,8 +1194,8 @@ def modinstr(request, bdd, sid, lid, linetomodify):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
     length =0
 
@@ -1368,8 +1378,8 @@ def delinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     #Authentication control :
@@ -1488,8 +1498,8 @@ def endinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     #Authentication control :
@@ -1748,8 +1758,8 @@ def ranktotake(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -1789,8 +1799,8 @@ def modifranklist(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -1836,8 +1846,8 @@ def filter_rklist(request, bdd, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     "Filter rk list"
@@ -1865,8 +1875,8 @@ def xranktotake(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -1906,8 +1916,8 @@ def excllist(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -1978,8 +1988,8 @@ def faulty(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     l =0
@@ -2012,8 +2022,8 @@ def arbitration(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2076,8 +2086,8 @@ def arbrk1(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2123,8 +2133,8 @@ def arbnork1(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2172,8 +2182,8 @@ def filter_arblist(request, bdd, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     "Filter arb list"
@@ -2201,8 +2211,8 @@ def xarbitration(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2265,8 +2275,8 @@ def x1arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2313,8 +2323,8 @@ def x0arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2363,8 +2373,8 @@ def instrtodo(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2416,8 +2426,8 @@ def instroneb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2451,8 +2461,8 @@ def instrotherb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2487,8 +2497,8 @@ def instronenotb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2522,8 +2532,8 @@ def instrothernotb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2557,8 +2567,8 @@ def instrfilter(request, bdd, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     "Filter instruction list"
@@ -2585,8 +2595,8 @@ def xinstrlist(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     if lid =="999999999":
@@ -2622,8 +2632,8 @@ def tobeedited(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2663,8 +2673,8 @@ def mothered(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2704,8 +2714,8 @@ def notmothered(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2745,8 +2755,8 @@ def filter_edlist(request, bdd, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     "Filter"
@@ -2786,8 +2796,8 @@ def xmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2823,8 +2833,8 @@ def xnotmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -2860,8 +2870,8 @@ def edition(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     #edition of the resulting collection for the considered sid and lid :
@@ -2911,8 +2921,8 @@ def current_status(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     l =1
@@ -3099,8 +3109,8 @@ def checkinstr(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -3112,8 +3122,8 @@ def checkerfilter(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     class InstructionCheckerFilter(forms.Form):
@@ -3139,8 +3149,8 @@ def xckbd(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -3173,8 +3183,8 @@ def xcknbd(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
@@ -3207,8 +3217,8 @@ def xckall(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-    wbmstr = common(bdd)[0]
-    replymail = common(bdd)[1]
+
+
 
 
     newestfeature =Feature()
