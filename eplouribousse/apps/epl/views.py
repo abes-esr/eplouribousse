@@ -27,9 +27,9 @@ from django.http import HttpResponseRedirect
 
 
 lastrked =None
-wbmstr =""
+webmaster =""
 try:
-    wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
+    webmasterstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
     zz =1
 except:
     pass
@@ -38,6 +38,7 @@ try:
     replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
 except:
     replymail =BddAdmin.objects.all().order_by('pk')[0].contact
+
 
 def serial_title(e):
     """sorting by title"""
@@ -163,7 +164,7 @@ def contact(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    
+
 
     date =date_version
     host = str(request.get_host())
