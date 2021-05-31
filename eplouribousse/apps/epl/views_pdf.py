@@ -18,7 +18,7 @@ def pdfedition(request, bdd, sid, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    filename = sid + '_' + lid + '.pdf'
+    filename = bdd + '_' + sid + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
     doc = SimpleDocTemplate(filename="{}".format(dirfile), pagesize=landscape(A4))
@@ -136,7 +136,7 @@ def edallpdf(request, bdd, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    filename = lid + '.pdf'
+    filename = bdd + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -276,7 +276,7 @@ def motherpdf(request, bdd, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    filename = lid + '.pdf'
+    filename = bdd + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -416,7 +416,7 @@ def notmotherpdf(request, bdd, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    filename = lid + '.pdf'
+    filename = bdd + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -556,7 +556,7 @@ def xmotherpdf(request, bdd, lid, xlid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    filename = lid + '.pdf'
+    filename = bdd + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -696,7 +696,7 @@ def xnotmotherpdf(request, bdd, lid, xlid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    filename = lid + '.pdf'
+    filename = bdd + '_' + lid + '.pdf'
     dirfile = "/tmp/" + filename
 
     libname = Library.objects.using(bdd).get(lid =lid).name

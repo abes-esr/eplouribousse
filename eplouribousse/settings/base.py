@@ -98,19 +98,37 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': join(BASE_DIR, 'db.sqlite3'),
     },
-    'eplone': {
-        'NAME': join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.sqlite3',
-    },
-    'epltwo': {
-        'NAME': join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.sqlite3',
-    },
-    'eplthree': {
-        'NAME': join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.sqlite3',
-    }
 }
+
+i, k =0, 1
+while i <100 and k ==1:
+    try:
+        DATABASES['{:02d}'.format(i)] = {
+            'NAME': join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.sqlite3',
+        }
+        i +=1
+    except:
+        k =0
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#     },
+#     'eplone': {
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#     },
+#     'epltwo': {
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#     },
+#     'eplthree': {
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#     }
+# }
 
 
 # Password validation

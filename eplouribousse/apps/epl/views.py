@@ -54,20 +54,28 @@ def coll_cn(e):
 def selectbdd(request):
 
     version =epl_version
-    projo1 =Project.objects.using('eplone').all().order_by('pk')[0].name
-    projo2 =Project.objects.using('epltwo').all().order_by('pk')[0].name
-    projo3 =Project.objects.using('eplthree').all().order_by('pk')[0].name
+    i, k =0, 1
+    BDD_CHOICES =('bidon','bidon'),
 
-    BDD_CHOICES =(('eplone',projo1), ('epltwo', projo2), ('eplthree',projo3),)
+    while k ==1:
+        try:
+            BDD_CHOICES += ('{:02d}'.format(i), Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name),
+            i +=1
+        except:
+            k =0
+    BDD_CHOICES =BDD_CHOICES[1:]
 
-    class BddSel_Form(forms.Form):
-        bddname = forms.ChoiceField(required = True, widget=forms.Select, choices=BDD_CHOICES)
+    if len(BDD_CHOICES) ==1:
+        return home(request, BDD_CHOICES[0])
+    else:
+        class BddSel_Form(forms.Form):
+            bddname = forms.ChoiceField(required = True, widget=forms.Select, choices=BDD_CHOICES)
 
-    f = BddSel_Form(request.POST or None)
+        f = BddSel_Form(request.POST or None)
 
-    if f.is_valid():
-        bdd = f.cleaned_data['bddname']
-        return home(request, bdd)
+        if f.is_valid():
+            bdd = f.cleaned_data['bddname']
+            return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
 
@@ -100,8 +108,6 @@ def home(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
 
     "Homepage"
 

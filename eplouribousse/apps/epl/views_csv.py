@@ -56,7 +56,7 @@ def simple_csv(request, bdd, lid, xlid, recset, what, length):
     elif what =="60":
         fea ="faulty"
 
-    filename = fea + '_' + lid + '_' + xlid + '.csv'
+    filename = bdd + '_' + fea + '_' + lid + '_' + xlid + '.csv'
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
