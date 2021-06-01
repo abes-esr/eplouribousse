@@ -80,22 +80,6 @@ def selectbdd(request):
     return render(request, 'epl/selectbdd.html', locals())
 
 
-# def common(e):
-#     wbmstr =""
-#     replymail =""
-#     try:
-#         wbmstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
-#         zz =1
-#     except:
-#         pass
-#
-#     try:
-#         replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
-#     except:
-#         replymail =BddAdmin.objects.all().order_by('pk')[0].contact
-#     return wbmstr, replymail
-
-
 def logstatus(request):
     if request.user.is_authenticated:
         k = request.user.get_username()
@@ -114,27 +98,26 @@ def home(request, bdd):
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     #Feature input :
-    i = Feature()
+    # i = Feature()
 
     LIBRARY_CHOICES = ('checker','checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
-    class FeatureForm(forms.ModelForm):
-        class Meta:
-            model = Feature
-            fields = ('libname', 'feaname',)
-            widgets = {
-                'libname' : forms.Select(choices=LIBRARY_CHOICES),
-                'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
-            }
-    form = FeatureForm(request.POST, instance =i)
 
+    class FeatureForm(forms.Form):
+        libn = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES, label =_("Bibliothèque"))
+        fean = forms.ChoiceField(required = True, widget=forms.RadioSelect, choices=FEATURE_CHOICES, label =_("Fonctionnalité"))
+
+    form = FeatureForm(request.POST)
     if form.is_valid():
-        lid = Library.objects.using(bdd).get(name =i.libname).lid
-        feature =i.feaname
-        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
+        libname = form.cleaned_data['libn']
+        feaname = form.cleaned_data['fean']
+        lid = Library.objects.using(bdd).get(name =libname).lid
+        feature =feaname
+        if not Feature.objects.using(bdd).filter(feaname =feature, libname =libname):
+            i = Feature(libname =libname, feaname = feature)
             i.save(using=bdd)
 
         if lid =="999999999":
@@ -151,6 +134,37 @@ def home(request, bdd):
                 return instrtodo(request, bdd, lid, 'title')
             elif feature =='edition':
                 return tobeedited(request, bdd, lid, 'title')
+
+    # class FeatureForm(forms.ModelForm):
+    #     class Meta:
+    #         model = Feature
+    #         fields = ('libname', 'feaname',)
+    #         widgets = {
+    #             'libname' : forms.Select(choices=LIBRARY_CHOICES),
+    #             'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
+    #         }
+    # form = FeatureForm(request.POST, instance =i)
+    #
+    # if form.is_valid() or not form.is_valid():
+        # lid = Library.objects.using(bdd).get(name =i.libname).lid
+        # feature =i.feaname
+        # if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
+        #     i.save(using=bdd)
+        #
+        # if lid =="999999999":
+        #     if feature =='instrtodo':
+        #         return instrtodo(request, bdd, lid, 'title')
+        #     else:
+        #         return checkinstr(request, bdd)
+        # else:
+        #     if feature =='ranking':
+        #         return ranktotake(request, bdd, lid, 'title')
+        #     elif feature =='arbitration':
+        #         return arbitration(request, bdd, lid, 'title')
+        #     elif feature =='instrtodo':
+        #         return instrtodo(request, bdd, lid, 'title')
+        #     elif feature =='edition':
+        #         return tobeedited(request, bdd, lid, 'title')
 
     return render(request, 'epl/home.html', locals())
 
@@ -1765,9 +1779,6 @@ def ranktotake(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
