@@ -37,8 +37,8 @@
 
 <p></p>
           <form method="post">
-            <p>{% trans "Bibliothèque" %} : {{ form.libn }}</p>
-            <p>{% trans "Fonctionnalité" %} : {{ form.fean }}</p>
+            <p>{% trans "Bibliothèque" %} : {{ form.libname }}</p>
+            <p>{% trans "Fonctionnalité" %} : {{ form.feaname }}</p>
             {% csrf_token %}
             <p><input type="submit" value="{% trans "Valider" %}"></p>
           </form>

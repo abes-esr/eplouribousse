@@ -23,7 +23,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import logout
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 lastrked =None
@@ -66,7 +66,7 @@ def selectbdd(request):
     BDD_CHOICES =BDD_CHOICES[1:]
 
     if len(BDD_CHOICES) ==1:
-        return home(request, BDD_CHOICES[0])
+        return home(request, BDD_CHOICES[0][0])
     else:
         class BddSel_Form(forms.Form):
             bddname = forms.ChoiceField(required = True, widget=forms.Select, choices=BDD_CHOICES)
@@ -97,27 +97,77 @@ def home(request, bdd):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    #Feature input :
-    # i = Feature()
-
     LIBRARY_CHOICES = ('checker','checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
+    # class ContactForm(forms.Form):
+    #     object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+    #      ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+    #     object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+    #     email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+    #     email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+    #     content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+    #
+    # form = ContactForm(request.POST or None)
+    # if form.is_valid():
+    #     recipient = form.cleaned_data['email']
+    #     recipient_confirm = form.cleaned_data['email_confirm']
+    #     subject2 = form.cleaned_data['object']
+    #     body = form.cleaned_data['content']
+    #
+    # class FeatureForm(forms.Form):
+    #     libn = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES, label =_("Bibliothèque"))
+    #     fean = forms.ChoiceField(required = True, widget=forms.RadioSelect, choices=FEATURE_CHOICES, label =_("Fonctionnalité"))
+    #
+    # form = FeatureForm(request.POST or None)
+    # if form.is_valid():
+    #     libname = form.cleaned_data['libn']
+    #     feaname = form.cleaned_data['fean']
+    #     lid = Library.objects.using(bdd).get(name =libname).lid
+    #     feature =feaname
+    #     if not Feature.objects.using(bdd).filter(feaname =feature, libname =libname):
+    #         i = Feature(libname =libname, feaname = feature)
+    #         i.save(using=bdd)
+    #
+    #     if lid =="999999999":
+    #         if feature =='instrtodo':
+    #             return instrtodo(request, bdd, lid, 'title')
+    #         else:
+    #             return checkinstr(request, bdd)
+    #     else:
+    #         if feature =='ranking':
+    #             return ranktotake(request, bdd, lid, 'title')
+    #         elif feature =='arbitration':
+    #             return arbitration(request, bdd, lid, 'title')
+    #         elif feature =='instrtodo':
+    #             return instrtodo(request, bdd, lid, 'title')
+    #         elif feature =='edition':
+    #             return tobeedited(request, bdd, lid, 'title')
+    # else:
+    #     return HttpResponse(form)
+    # gift =a
 
-    class FeatureForm(forms.Form):
-        libn = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES, label =_("Bibliothèque"))
-        fean = forms.ChoiceField(required = True, widget=forms.RadioSelect, choices=FEATURE_CHOICES, label =_("Fonctionnalité"))
 
-    form = FeatureForm(request.POST)
+    class FeatureForm(forms.ModelForm):
+        class Meta:
+            model = Feature
+            fields = ('libname', 'feaname',)
+            widgets = {
+                'libname' : forms.Select(choices=LIBRARY_CHOICES),
+                'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
+            }
+
+    #Feature input :
+    i = Feature()
+
+    form = FeatureForm(request.POST, instance =i)
+
     if form.is_valid():
-        libname = form.cleaned_data['libn']
-        feaname = form.cleaned_data['fean']
-        lid = Library.objects.using(bdd).get(name =libname).lid
-        feature =feaname
-        if not Feature.objects.using(bdd).filter(feaname =feature, libname =libname):
-            i = Feature(libname =libname, feaname = feature)
+        lid = Library.objects.using(bdd).get(name =i.libname).lid
+        feature =i.feaname
+        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
             i.save(using=bdd)
 
         if lid =="999999999":
@@ -134,37 +184,9 @@ def home(request, bdd):
                 return instrtodo(request, bdd, lid, 'title')
             elif feature =='edition':
                 return tobeedited(request, bdd, lid, 'title')
-
-    # class FeatureForm(forms.ModelForm):
-    #     class Meta:
-    #         model = Feature
-    #         fields = ('libname', 'feaname',)
-    #         widgets = {
-    #             'libname' : forms.Select(choices=LIBRARY_CHOICES),
-    #             'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
-    #         }
-    # form = FeatureForm(request.POST, instance =i)
-    #
-    # if form.is_valid() or not form.is_valid():
-        # lid = Library.objects.using(bdd).get(name =i.libname).lid
-        # feature =i.feaname
-        # if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
-        #     i.save(using=bdd)
-        #
-        # if lid =="999999999":
-        #     if feature =='instrtodo':
-        #         return instrtodo(request, bdd, lid, 'title')
-        #     else:
-        #         return checkinstr(request, bdd)
-        # else:
-        #     if feature =='ranking':
-        #         return ranktotake(request, bdd, lid, 'title')
-        #     elif feature =='arbitration':
-        #         return arbitration(request, bdd, lid, 'title')
-        #     elif feature =='instrtodo':
-        #         return instrtodo(request, bdd, lid, 'title')
-        #     elif feature =='edition':
-        #         return tobeedited(request, bdd, lid, 'title')
+    # else:
+    #     return HttpResponse(str(form.is_valid()) + str(i))
+    gift =a
 
     return render(request, 'epl/home.html', locals())
 
