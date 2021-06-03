@@ -55,7 +55,7 @@ def selectbdd(request):
 
     version =epl_version
     i, k =0, 1
-    BDD_CHOICES =('bidon','bidon'),
+    BDD_CHOICES =('',_('Sélectionnez votre projet')),
 
     while k ==1:
         try:
@@ -63,10 +63,11 @@ def selectbdd(request):
             i +=1
         except:
             k =0
-    BDD_CHOICES =BDD_CHOICES[1:]
+    # BDD_CHOICES =BDD_CHOICES[1:]
 
-    if len(BDD_CHOICES) ==1:
-        return home(request, BDD_CHOICES[0][0])
+    if len(BDD_CHOICES) ==2:
+        return HttpResponse(request.method)
+        # return home(request, BDD_CHOICES[1][0])
     else:
         class BddSel_Form(forms.Form):
             bddname = forms.ChoiceField(required = True, widget=forms.Select, choices=BDD_CHOICES)
@@ -75,7 +76,9 @@ def selectbdd(request):
 
         if f.is_valid():
             bdd = f.cleaned_data['bddname']
-            return home(request, bdd)
+            request.method = "GET"
+            return HttpResponse(request.method)
+            # return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
 
@@ -149,7 +152,6 @@ def home(request, bdd):
     #     return HttpResponse(form)
     # gift =a
 
-
     class FeatureForm(forms.ModelForm):
         class Meta:
             model = Feature
@@ -164,26 +166,27 @@ def home(request, bdd):
 
     form = FeatureForm(request.POST, instance =i)
 
-    if form.is_valid():
-        lid = Library.objects.using(bdd).get(name =i.libname).lid
-        feature =i.feaname
-        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
-            i.save(using=bdd)
+    if not request.method == "GET":
+        if form.is_valid():
+            lid = Library.objects.using(bdd).get(name =i.libname).lid
+            feature =i.feaname
+            if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
+                i.save(using=bdd)
 
-        if lid =="999999999":
-            if feature =='instrtodo':
-                return instrtodo(request, bdd, lid, 'title')
+            if lid =="999999999":
+                if feature =='instrtodo':
+                    return instrtodo(request, bdd, lid, 'title')
+                else:
+                    return checkinstr(request, bdd)
             else:
-                return checkinstr(request, bdd)
-        else:
-            if feature =='ranking':
-                return ranktotake(request, bdd, lid, 'title')
-            elif feature =='arbitration':
-                return arbitration(request, bdd, lid, 'title')
-            elif feature =='instrtodo':
-                return instrtodo(request, bdd, lid, 'title')
-            elif feature =='edition':
-                return tobeedited(request, bdd, lid, 'title')
+                if feature =='ranking':
+                    return ranktotake(request, bdd, lid, 'title')
+                elif feature =='arbitration':
+                    return arbitration(request, bdd, lid, 'title')
+                elif feature =='instrtodo':
+                    return instrtodo(request, bdd, lid, 'title')
+                elif feature =='edition':
+                    return tobeedited(request, bdd, lid, 'title')
     # else:
     #     return HttpResponse(str(form.is_valid()) + str(i))
     gift =a
@@ -195,7 +198,6 @@ def about(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
 
     date =date_version
     host = str(request.get_host())
@@ -254,9 +256,6 @@ def webmstr(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     date =date_version
     host = str(request.get_host())
@@ -855,10 +854,10 @@ def reinit(request, bdd, sid):
                 #Message data :
                 nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
                 nextlib =Library.objects.using(bdd).get(lid =nextlid)
-                subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
-                " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid) + \
+                " :\n" + "https://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
                 " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
                 dest = [nextlib.contact]
                 if nextlib.contact_bis:
@@ -945,6 +944,20 @@ def takerank(request, bdd, sid, lid):
                 p = ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
                 p.status =1
                 p.save(using=bdd)
+                #Message data :
+                nextlib =Library.objects.using(bdd).get(lid =p.lid)
+                nextlid =nextlib.lid
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "https://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
+
 
         else:
             return notintime(request, bdd, sid, lid)
@@ -1656,10 +1669,10 @@ def endinstr(request, bdd, sid, lid):
                     j.status = 3
                     j.save(using=bdd)
                     #Message data :
-                    subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                    " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+                    " :\n" + "https://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = [nextlib.contact]
                     if nextlib.contact_bis:
                         dest.append(nextlib.contact_bis)
@@ -1680,11 +1693,11 @@ def endinstr(request, bdd, sid, lid):
                 e.save(using=bdd)
 
             #Message data to the BDD administrator(s):
-            subject = "eplouribousse : " + str(sid) + " / " + "status = 6"
+            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "status = 6"
             host = str(request.get_host())
             message = _("Fiche défectueuse signalée par le contrôleur pour le ppn ") + str(sid) +\
             "\n" + _("Une intervention est attendue de la part d'un des administrateurs de la base") +\
-            " :\n" + "https://" + host + "/current_status/" + str(sid) + '/' + str(lid) + \
+            " :\n" + "https://" + host + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + _("Merci !")
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
@@ -1768,10 +1781,10 @@ def endinstr(request, bdd, sid, lid):
                         j.save(using=bdd)
 
             #Message data :
-            subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-            " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+            " :\n" + "https://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid)
             dest = [nextlib.contact]
             if nextlib.contact_bis:
                 dest.append(nextlib.contact_bis)

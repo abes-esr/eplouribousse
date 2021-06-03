@@ -4,7 +4,7 @@ from . import views, views_pdf, views_csv
 
 urlpatterns = [
     path('', views.selectbdd, name='bddselect'),
-    path('<str:bdd>', views.home, name='home'),
+    path('<str:bdd>', views.home, name='project_home'),
     path('<str:bdd>/about', views.about, name='about'),
     path('<str:bdd>/contact', views.contact, name='contact'),
     path('<str:bdd>/webmaster', views.webmstr, name='webmaster'),
