@@ -271,7 +271,7 @@ def lang(request):
 
 def logout_view(request):
 
-    "Homepage sepcial disconnected"
+    "Homepage special disconnected"
 
     logout(request)
 
@@ -790,6 +790,19 @@ def takerank(request, sid, lid):
                 p = ItemRecord.objects.filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
                 p.status =1
                 p.save()
+                #Message data :
+                nextlib =Library.objects.get(lid =p.lid)
+                nextlid =nextlib.lid
+                subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
 
         else:
             return notintime(request, sid, lid)
