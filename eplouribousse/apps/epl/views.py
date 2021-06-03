@@ -66,8 +66,7 @@ def selectbdd(request):
     # BDD_CHOICES =BDD_CHOICES[1:]
 
     if len(BDD_CHOICES) ==2:
-        return HttpResponse(request.method)
-        # return home(request, BDD_CHOICES[1][0])
+        return home(request, BDD_CHOICES[1][0])
     else:
         class BddSel_Form(forms.Form):
             bddname = forms.ChoiceField(required = True, widget=forms.Select, choices=BDD_CHOICES)
@@ -77,8 +76,8 @@ def selectbdd(request):
         if f.is_valid():
             bdd = f.cleaned_data['bddname']
             request.method = "GET"
-            return HttpResponse(request.method)
-            # return home(request, bdd)
+            # return HttpResponse(request.method + BDD_CHOICES[1][0])
+            return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
 
@@ -100,7 +99,7 @@ def home(request, bdd):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
-    LIBRARY_CHOICES = ('checker','checker'),
+    LIBRARY_CHOICES = ('', 'Choisissez votre bibliothèque'),('checker','checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
@@ -166,30 +165,26 @@ def home(request, bdd):
 
     form = FeatureForm(request.POST, instance =i)
 
-    if not request.method == "GET":
-        if form.is_valid():
-            lid = Library.objects.using(bdd).get(name =i.libname).lid
-            feature =i.feaname
-            if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
-                i.save(using=bdd)
+    if form.is_valid():
+        lid = Library.objects.using(bdd).get(name =i.libname).lid
+        feature =i.feaname
+        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
+            i.save(using=bdd)
 
-            if lid =="999999999":
-                if feature =='instrtodo':
-                    return instrtodo(request, bdd, lid, 'title')
-                else:
-                    return checkinstr(request, bdd)
+        if lid =="999999999":
+            if feature =='instrtodo':
+                return instrtodo(request, bdd, lid, 'title')
             else:
-                if feature =='ranking':
-                    return ranktotake(request, bdd, lid, 'title')
-                elif feature =='arbitration':
-                    return arbitration(request, bdd, lid, 'title')
-                elif feature =='instrtodo':
-                    return instrtodo(request, bdd, lid, 'title')
-                elif feature =='edition':
-                    return tobeedited(request, bdd, lid, 'title')
-    # else:
-    #     return HttpResponse(str(form.is_valid()) + str(i))
-    gift =a
+                return checkinstr(request, bdd)
+        else:
+            if feature =='ranking':
+                return ranktotake(request, bdd, lid, 'title')
+            elif feature =='arbitration':
+                return arbitration(request, bdd, lid, 'title')
+            elif feature =='instrtodo':
+                return instrtodo(request, bdd, lid, 'title')
+            elif feature =='edition':
+                return tobeedited(request, bdd, lid, 'title')
 
     return render(request, 'epl/home.html', locals())
 
@@ -369,9 +364,6 @@ def lang(request, bdd):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     return render(request, 'epl/language.html', locals())
 
 
@@ -384,8 +376,6 @@ def logout_view(request, bdd):
     # Redirect to a success page.
 
     version =epl_version
-
-
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
@@ -410,8 +400,8 @@ def logout_view(request, bdd):
     if form.is_valid():
         lid = Library.objects.using(bdd).get(name =i.libname).lid
         feature =i.feaname
-        # if not Feature.objects.using(bdd).filter(feaname = i.feaname, libname =i.libname):
-        i.save(using=bdd)
+        if not Feature.objects.using(bdd).filter(feaname = i.feaname, libname =i.libname):
+            i.save(using=bdd)
         if lid =="999999999":
             if feature =='instrtodo':
                 return instrtodo(request, bdd, lid, 'title')
