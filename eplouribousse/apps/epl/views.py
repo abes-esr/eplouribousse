@@ -75,8 +75,6 @@ def selectbdd(request):
 
         if f.is_valid():
             bdd = f.cleaned_data['bddname']
-            request.method = "GET"
-            # return HttpResponse(request.method + BDD_CHOICES[1][0])
             return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
