@@ -142,7 +142,7 @@ def home(request, bdd):
     return render(request, 'epl/home.html', locals())
 
 
-def about(request, bdd):
+def about(request):
 
     k =logstatus(request)
     version =epl_version
@@ -197,7 +197,7 @@ def contact(request, bdd):
 
 
 
-def webmstr(request, bdd):
+def webmstr(request):
 
     k =logstatus(request)
     version =epl_version

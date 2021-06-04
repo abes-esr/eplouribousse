@@ -1,13 +1,17 @@
 from django.urls import path
 
 from . import views, views_pdf, views_csv
+# from django.contrib.staticfiles.storage import staticfiles_storage
+# from django.views.generic.base import RedirectView
+# from django.conf import settings
+# from django.urls import include
 
 urlpatterns = [
     path('', views.selectbdd, name='bddselect'),
     path('<str:bdd>', views.home, name='project_home'),
-    path('<str:bdd>/about', views.about, name='about'),
+    path('default/about', views.about, name='about'),
     path('<str:bdd>/contact', views.contact, name='contact'),
-    path('<str:bdd>/webmaster', views.webmstr, name='webmaster'),
+    path('default/webmaster', views.webmstr, name='webmaster'),
     path('<str:bdd>/confirmation', views.confirm, name='confirmation'),
     path('<str:bdd>/router/<str:lid>', views.router, name='route to the right list'),
     path('<str:bdd>/lang', views.lang, name='language'),
@@ -71,4 +75,5 @@ urlpatterns = [
     path('<str:bdd>/ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
 
     path('<str:bdd>/csv/<str:lid>/<str:xlid>/<path:recset>/<str:what>/<str:length>', views_csv.simple_csv, name='csv export'),
+    # path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")), ),
 ]
