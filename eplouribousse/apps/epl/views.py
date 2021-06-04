@@ -66,7 +66,8 @@ def selectbdd(request):
     # BDD_CHOICES =BDD_CHOICES[1:]
 
     if len(BDD_CHOICES) ==2:
-        return home(request, BDD_CHOICES[1][0])
+        return HttpResponseRedirect(BDD_CHOICES[1][0])
+        # return home(request, BDD_CHOICES[1][0])
     else:
         class BddSel_Form(forms.Form):
             bddname = forms.ChoiceField(required = True, widget=forms.Select, choices=BDD_CHOICES)
@@ -75,7 +76,8 @@ def selectbdd(request):
 
         if f.is_valid():
             bdd = f.cleaned_data['bddname']
-            return home(request, bdd)
+            return HttpResponseRedirect(bdd)
+            # return home(request, bdd)
 
     return render(request, 'epl/selectbdd.html', locals())
 
@@ -144,7 +146,6 @@ def about(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
     date =date_version
     host = str(request.get_host())
     return render(request, 'epl/about.html', locals())
@@ -154,8 +155,6 @@ def contact(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
     date =date_version
     host = str(request.get_host())
 
@@ -202,7 +201,6 @@ def webmstr(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
     date =date_version
     host = str(request.get_host())
 
@@ -247,9 +245,6 @@ def confirm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     return render(request, 'epl/confirmation.html', locals())
 
@@ -378,9 +373,6 @@ def notintime(request, bdd, sid, lid):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     library = Library.objects.using(bdd).get(lid = lid).name
     if lid =="999999999":
         try:
@@ -396,9 +388,6 @@ def indicators(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     #Indicators :
 
@@ -549,9 +538,6 @@ def search(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     libch = ('checker','checker'),
     for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
@@ -753,8 +739,6 @@ def reinit(request, bdd, sid):
     k =logstatus(request)
     version =epl_version
 
-
-
     info =""
 
     ressource =ItemRecord.objects.using(bdd).get(sid =sid, rank =1)
@@ -824,9 +808,6 @@ def takerank(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
@@ -935,8 +916,6 @@ def addinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
 
     length =0
 
@@ -1085,16 +1064,13 @@ def addinstr(request, bdd, sid, lid):
     return render(request, 'epl/addinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, 'l' : length, 'itrec' : itrec, 'webmaster' : webmaster, })
+    'lid' : lid, 'expected' : q, 'lastone' : pklastone, 'k' : k, 'version' : version, 'l' : length, 'itrec' : itrec, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 @login_required
 def selinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
@@ -1185,7 +1161,7 @@ def selinstr(request, bdd, sid, lid):
     return render(request, 'epl/selinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, })
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 @login_required
@@ -1193,8 +1169,6 @@ def modinstr(request, bdd, sid, lid, linetomodify):
 
     k =logstatus(request)
     version =epl_version
-
-
 
     length =0
 
@@ -1369,7 +1343,7 @@ def modinstr(request, bdd, sid, lid, linetomodify):
     return render(request, 'epl/modinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'foname' : foname, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : q, 'k' : k, 'version' : version, 'l' : length, 'line' : linetomodify, 'itrec' : itrec, 'webmaster' : webmaster, })
+    'lid' : lid, 'expected' : q, 'k' : k, 'version' : version, 'l' : length, 'line' : linetomodify, 'itrec' : itrec, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 @login_required
@@ -1377,9 +1351,6 @@ def delinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
@@ -1489,7 +1460,7 @@ def delinstr(request, bdd, sid, lid):
     return render(request, 'epl/delinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'form' : f, 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, })
+    'lid' : lid, 'expected' : expected, 'answer' : answer, 'k' : k, 'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 @login_required
@@ -1497,9 +1468,6 @@ def endinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
@@ -1750,7 +1718,7 @@ def endinstr(request, bdd, sid, lid):
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
     'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, \
-    'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer,})
+    'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer, 'bdd' : bdd, })
 
 
 def ranktotake(request, bdd, lid, sort):
@@ -1788,16 +1756,13 @@ def ranktotake(request, bdd, lid, sort):
 
     return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def modifranklist(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -1835,16 +1800,13 @@ def modifranklist(request, bdd, lid, sort):
 
     return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def filter_rklist(request, bdd, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     "Filter rk list"
 
@@ -1871,9 +1833,6 @@ def xranktotake(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -1905,15 +1864,13 @@ def xranktotake(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def excllist(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -1985,9 +1942,6 @@ def faulty(request, bdd):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     l =0
 
     libch = ('checker','checker'),
@@ -2018,9 +1972,6 @@ def arbitration(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2075,16 +2026,13 @@ def arbitration(request, bdd, lid, sort):
 
     return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
-    'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def arbrk1(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2122,16 +2070,13 @@ def arbrk1(request, bdd, lid, sort):
 
     return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def arbnork1(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2171,16 +2116,13 @@ def arbnork1(request, bdd, lid, sort):
 
     return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def filter_arblist(request, bdd, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     "Filter arb list"
 
@@ -2207,9 +2149,6 @@ def xarbitration(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2264,16 +2203,13 @@ def xarbitration(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
-    'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, })
+    'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def x1arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2312,16 +2248,13 @@ def x1arb(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def x0arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2362,16 +2295,13 @@ def x0arb(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 
 def instrtodo(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2423,9 +2353,6 @@ def instroneb(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
@@ -2457,9 +2384,6 @@ def instrotherb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2494,9 +2418,6 @@ def instronenotb(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
@@ -2528,9 +2449,6 @@ def instrothernotb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2564,9 +2482,6 @@ def instrfilter(request, bdd, lid):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     "Filter instruction list"
 
     libname = (Library.objects.using(bdd).get(lid =lid)).name
@@ -2591,9 +2506,6 @@ def xinstrlist(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     if lid =="999999999":
         return notintime(request, bdd, "-?-", lid)
@@ -2628,9 +2540,6 @@ def tobeedited(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2670,9 +2579,6 @@ def mothered(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
@@ -2710,9 +2616,6 @@ def notmothered(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -2752,9 +2655,6 @@ def filter_edlist(request, bdd, lid):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     "Filter"
 
     name = (Library.objects.using(bdd).get(lid =lid)).name
@@ -2793,9 +2693,6 @@ def xmothered(request, bdd, lid, xlid, sort):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
@@ -2830,9 +2727,6 @@ def xnotmothered(request, bdd, lid, xlid, sort):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
@@ -2866,9 +2760,6 @@ def edition(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     #edition of the resulting collection for the considered sid and lid :
 
@@ -2917,9 +2808,6 @@ def current_status(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     l =1
     lib = Library.objects.using(bdd).get(lid =lid).name
@@ -3106,9 +2994,6 @@ def checkinstr(request, bdd):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     return render(request, 'epl/checker.html', locals())
@@ -3119,8 +3004,10 @@ def checkerfilter(request, bdd):
     k =logstatus(request)
     version =epl_version
 
-
-
+    LIBRARY_CHOICES = ('', ''),
+    if Library.objects.using(bdd).all().exclude(name ='checker'):
+        for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+            LIBRARY_CHOICES += (l.name, l.name),
 
     class InstructionCheckerFilter(forms.Form):
         name = forms.MultipleChoiceField(required = True, widget=forms.CheckboxSelectMultiple, choices=LIBRARY_CHOICES[1:], label =_("Bibliothèques impliquées (opérateur 'ou')"))
@@ -3145,9 +3032,6 @@ def xckbd(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -3180,9 +3064,6 @@ def xcknbd(request, bdd, coll_set):
     k =logstatus(request)
     version =epl_version
 
-
-
-
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
         newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
@@ -3213,9 +3094,6 @@ def xckall(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-
-
-
 
     newestfeature =Feature()
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
