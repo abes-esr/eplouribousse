@@ -1,8 +1,8 @@
 epl_version ="v1.20.0 (Wulfégonde)"
 date_version ="March 23, 2021"
 # Mise au niveau de :
-epl_version ="v1.21-beta.3 (~Berchilde)"
-date_version ="June 3, 2021"
+# epl_version ="v1.21-beta.4 (~Berchilde)"
+# date_version ="June 4, 2021"
 
 from django.shortcuts import render
 
@@ -722,7 +722,7 @@ def reinit(request, sid):
                 subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
-                " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid) + \
+                " :\n" + "http://" + host + "/add/" + str(sid) + '/' + str(nextlid) + \
                 " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
                 dest = [nextlib.contact]
                 if nextlib.contact_bis:
@@ -796,7 +796,7 @@ def takerank(request, sid, lid):
                 subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+                " :\n" + "http://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                 dest = [nextlib.contact]
                 if nextlib.contact_bis:
                     dest.append(nextlib.contact_bis)
@@ -1472,7 +1472,7 @@ def endinstr(request, sid, lid):
                     subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                    " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+                    " :\n" + "http://" + host + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = [nextlib.contact]
                     if nextlib.contact_bis:
                         dest.append(nextlib.contact_bis)
@@ -1497,7 +1497,7 @@ def endinstr(request, sid, lid):
             host = str(request.get_host())
             message = _("Fiche défectueuse signalée par le contrôleur pour le ppn ") + str(sid) +\
             "\n" + _("Une intervention est attendue de la part d'un des administrateurs de la base") +\
-            " :\n" + "https://" + host + "/current_status/" + str(sid) + '/' + str(lid) + \
+            " :\n" + "http://" + host + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + _("Merci !")
             destprov = BddAdmin.objects.all()
             dest =[]
@@ -1584,7 +1584,7 @@ def endinstr(request, sid, lid):
             subject = "eplouribousse : " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-            " :\n" + "https://" + host + "/add/" + str(sid) + '/' + str(nextlid)
+            " :\n" + "http://" + host + "/add/" + str(sid) + '/' + str(nextlid)
             dest = [nextlib.contact]
             if nextlib.contact_bis:
                 dest.append(nextlib.contact_bis)
