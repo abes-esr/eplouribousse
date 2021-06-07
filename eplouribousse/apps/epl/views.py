@@ -2989,6 +2989,76 @@ def current_status(request, bdd, sid, lid):
     return render(request, 'epl/current.html', locals())
 
 
+def statadmin(request, bdd, id):
+
+    k =logstatus(request)
+    version =epl_version
+
+    try:
+        d =ItemRecord.objects.using(bdd).get(id =id)
+        bib =Library.objects.using(bdd).get(lid =d.lid)
+    except:
+        return HttpResponse(_("Pas d'enregistrement correspondant"))
+
+    i =ItemRecord()
+    class ItemRecordStatusForm(forms.Form):
+        status = forms.ChoiceField(required = True, widget=forms.Select, choices= ((6, 6), (5, 5), \
+        (4, 4), (3, 3), (2, 2), (1, 1), (0, 0),), initial = d.status,label =_("statut"))
+
+    form = ItemRecordStatusForm(request.POST or None)
+    if form.is_valid():
+        status = form.cleaned_data['status']
+
+    return render(request, 'epl/statadmin.html', locals())
+
+
+def instradmin(request, bdd, id):
+
+    k =logstatus(request)
+    version =epl_version
+
+    try:
+        d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =id).sid)[0]
+        bib =Library.objects.using(bdd).get(lid =d.lid)
+    except:
+        return HttpResponse(_("Pas d'instruction correspondante"))
+
+
+    class InstructionForm(forms.ModelForm):
+        class Meta:
+            REM_CHOICES =('',''),
+            if Library.objects.using(bdd).all().exclude(name ='checker'):
+                for l in Library.objects.using(bdd).all().exclude(name ='checker').exclude(name =Instruction.objects.using(bdd).get(id =id).name).order_by('name'):
+                    REM_CHOICES += (l.name, l.name),
+            model = Instruction
+            fields =('line', 'name', 'bound', 'oname', 'descr', 'exc', 'degr')
+            # exclude = ('sid', 'name', 'bound',)
+            widgets = {
+                'oname' : forms.Select(choices=REM_CHOICES, attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
+                'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex."), 'title': _("Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer selon l'ordre chronologique de ce champ")}),
+                'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex."), 'title': \
+                _("éléments manquants dans le segment pour la forme considérée (pas forcément des lacunes si l'on considère la forme reliée)")}),
+                'degr' : forms.TextInput(attrs={'placeholder': _("1995(4) par ex."), 'title': \
+                _("éléments dégradés (un volume relié dégradé peut être remplacé par les fascicules correspondants en bon état)")}),
+            }
+
+    i =Instruction()
+    f = InstructionForm(request.POST or None, instance =i, initial = {
+    'line' : Instruction.objects.using(bdd).get(id =id).line,
+    # 'name' : Instruction.objects.using(bdd).get(id =id).name,
+    'bound' : Instruction.objects.using(bdd).get(id =id).bound,
+    'oname' : Instruction.objects.using(bdd).get(id =id).oname,
+    'descr' : Instruction.objects.using(bdd).get(id =id).descr,
+    'exc' : Instruction.objects.using(bdd).get(id =id).exc,
+    'degr' : Instruction.objects.using(bdd).get(id =id).degr,
+    })
+
+    j =Flag()
+    c = CheckForm(request.POST or None, instance =j)
+
+    return render(request, 'epl/instradmin.html', locals())
+
+
 def checkinstr(request, bdd):
 
     k =logstatus(request)

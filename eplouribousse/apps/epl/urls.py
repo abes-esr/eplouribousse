@@ -60,6 +60,8 @@ urlpatterns = [
     path('<str:bdd>/ednotmotherlist/<str:lid>/<str:xlid>/<str:sort>', views.xnotmothered, name='xto be edited notmother list'),
     path('<str:bdd>/ed/<str:sid>/<str:lid>', views.edition, name='edition'),
     path('<str:bdd>/current_status/<str:sid>/<str:lid>', views.current_status, name='current status'),
+    path('<str:bdd>/statadmin/<str:id>', views.statadmin, name='status admin'),
+    path('<str:bdd>/instradmin/<str:id>', views.instradmin, name='instruction admin'),
 
     path('<str:bdd>/999999999', views.checkinstr, name='message to checker'),
     path('<str:bdd>/xcheck', views.checkerfilter, name='checker filter'),
