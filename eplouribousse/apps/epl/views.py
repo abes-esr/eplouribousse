@@ -3016,13 +3016,16 @@ def instradmin(request, bdd, id):
 
     k =logstatus(request)
     version =epl_version
+    instrid =int(id)
 
     try:
-        d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =id).sid)[0]
+        d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =instrid).sid)[0]
         bib =Library.objects.using(bdd).get(lid =d.lid)
+
     except:
         return HttpResponse(_("Pas d'instruction correspondante"))
 
+    instrlist =Instruction.objects.using(bdd).filter(sid =d.sid).order_by('line')
 
     class InstructionForm(forms.ModelForm):
         class Meta:
@@ -3031,7 +3034,7 @@ def instradmin(request, bdd, id):
                 for l in Library.objects.using(bdd).all().exclude(name ='checker').exclude(name =Instruction.objects.using(bdd).get(id =id).name).order_by('name'):
                     REM_CHOICES += (l.name, l.name),
             model = Instruction
-            fields =('line', 'name', 'bound', 'oname', 'descr', 'exc', 'degr')
+            fields =('line', 'name', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
             # exclude = ('sid', 'name', 'bound',)
             widgets = {
                 'oname' : forms.Select(choices=REM_CHOICES, attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
@@ -3044,17 +3047,26 @@ def instradmin(request, bdd, id):
 
     i =Instruction()
     f = InstructionForm(request.POST or None, instance =i, initial = {
-    'line' : Instruction.objects.using(bdd).get(id =id).line,
+    'line' : Instruction.objects.using(bdd).get(id =instrid).line -1,
     # 'name' : Instruction.objects.using(bdd).get(id =id).name,
-    'bound' : Instruction.objects.using(bdd).get(id =id).bound,
-    'oname' : Instruction.objects.using(bdd).get(id =id).oname,
-    'descr' : Instruction.objects.using(bdd).get(id =id).descr,
-    'exc' : Instruction.objects.using(bdd).get(id =id).exc,
-    'degr' : Instruction.objects.using(bdd).get(id =id).degr,
+    'bound' : Instruction.objects.using(bdd).get(id =instrid).bound,
+    'oname' : Instruction.objects.using(bdd).get(id =instrid).oname,
+    'descr' : Instruction.objects.using(bdd).get(id =instrid).descr,
+    'exc' : Instruction.objects.using(bdd).get(id =instrid).exc,
+    'degr' : Instruction.objects.using(bdd).get(id =instrid).degr,
     })
 
-    j =Flag()
-    c = CheckForm(request.POST or None, instance =j)
+    supprimer =Flag()
+    sup = CheckForm(request.POST or None, instance =supprimer)
+
+    ajouter =Flag()
+    aj = CheckForm(request.POST or None, instance =ajouter)
+
+    try:
+        if request.method() =="POST" and not f.is_valid(): #compléter
+            return current_status(request, bdd, d.sid, d.lid)
+    except:
+        pass
 
     return render(request, 'epl/instradmin.html', locals())
 
