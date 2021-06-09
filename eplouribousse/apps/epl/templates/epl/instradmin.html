@@ -35,11 +35,11 @@
     </div>
 
     <div id="content">
-      <h2>{% trans "Administration d'une ligne d'instruction" %} :  {{ bib }}</h2>
+      <h2>{% trans "Administration d'une ligne d'instruction" %} :  {{ bib.name }}</h2>
     <p><b>{% trans "Titre" %} :</b> {{ d.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> {{ d.sid }} / <b>issn :</b> {{ d.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ d.pubhist }}</p>
 
 
-    <p><center><font color= #FF0000 >{% trans "Attention : Le statut des rattachements est ajusté à mesure ; il peut toutefois être nécessaire de lever une ambiguïté une fois l'administration des instrutions achevée" %}.</font></center></p>
+    <p><center><font color= #FF0000 >{% trans "Attention : Une fois l'administration des instructions achevée, n'oubliez la modification de statut des rattachements" %}.</font></center></p>
 
       <table border="1">
 
@@ -68,6 +68,7 @@
               <td><font color= #FF0000 >{{ elmt.degr }}</font></td>
 
           </tr>
+
               {% else %}
           <tr>
               <td><center>{{ elmt.line }}</center></td>
@@ -83,11 +84,11 @@
             {% endfor %}
          </tbody>
         </table>
-      <p>{% trans "Modifiez" %} :</p>
+      <p>{% trans "Modifiez (action irrémédiable)" %} :</p>
         <table>
          <thead>
 
-             <td>{% trans "A placer sous la ligne" %}</td>
+             <td>{% trans "A placer sous la ligne (actuelle)" %}</td>
              <td>{% trans "Bibliothèque" %}</td>
              <td>{% trans "Forme reliée" %}</td>
              <td>{% trans "Bibliothèque remédiée" %}</td>
@@ -101,7 +102,7 @@
              <tr>
                  <td><center>{{ f.line }}</center></td>
                  <td>{{ bib.name }}</td>
-                 <td>{{ f.bound }}</td>
+                 <td>{{ q }}</td>
                  <td>{{ f.oname }}</td>
                  <td>{{ f.descr }}</td>
                  <td>{{ f.exc }}</td>
@@ -115,7 +116,7 @@
 
 
       <p><center>{% trans "ou cochez la case suivante et validez pour supprimer la ligne (action irrémédiable)" %} : {{ sup.flag }}</center></p>
-      <p><center>{% trans "ou cochez la case suivante et validez pour ajouter la ligne telle que renseignée" %} : {{ aj.flag }} (Prioritaire en cas de double cochage)</center></p>
+      <p><center>{% trans "et/ou cochez la case suivante et validez pour ajouter la ligne telle que renseignée" %} : {{ aj.flag }}</center></p>
       <p><input type="submit" value="{% trans "Valider" %}"> <B><font color= #3364ff >{{ info }}</font></B></p>
 
         </form>

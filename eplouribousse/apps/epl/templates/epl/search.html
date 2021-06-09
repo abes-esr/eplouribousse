@@ -212,7 +212,8 @@
          <td><font color= #3364ff >{{ elmt.descr }}</font></td>
          <td><font color= #3364ff >{{ elmt.exc}}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
-         <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
+         <td><a target="_blank" href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+         <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% else %}
     <tr>
@@ -223,7 +224,8 @@
         <td>{{ elmt.descr }}</td>
         <td>{{ elmt.exc}}</td>
         <td>{{ elmt.degr }}</td>
-        <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
+        <td><a target="_blank" href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+        <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% endif %}
      {% endfor %}

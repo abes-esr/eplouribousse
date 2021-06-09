@@ -720,7 +720,7 @@ def search(request, bdd):
             size =len(instrlist)
 
             try:
-                pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('pk').pk
+                pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('time').pk
             except:
                 pklastone =0
 
@@ -1052,7 +1052,7 @@ def addinstr(request, bdd, sid, lid):
         instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
 
         try:
-            pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('pk').pk
+            pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('time').pk
         except:
             pklastone =0
 
@@ -1297,7 +1297,7 @@ def modinstr(request, bdd, sid, lid, linetomodify):
             instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
 
             try:
-                pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('pk').pk
+                pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('time').pk
             except:
                 pklastone =0
             if info =="":
@@ -2975,7 +2975,7 @@ def current_status(request, bdd, sid, lid):
     size =len(instrlist)
 
     try:
-        pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('pk').pk
+        pklastone = Instruction.objects.using(bdd).filter(sid = sid).latest('time').pk
     except:
         pklastone =0
 
@@ -3020,6 +3020,12 @@ def instradmin(request, bdd, id):
     k =logstatus(request)
     version =epl_version
     instrid =int(id)
+    instru =Instruction.objects.using(bdd).get(id =instrid)
+    sid =instru.sid
+    if len(Instruction.objects.using(bdd).filter(name ="checker")):
+        q =" "
+    else:
+        q ="x"
 
     try:
         d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =instrid).sid)[0]
@@ -3037,9 +3043,10 @@ def instradmin(request, bdd, id):
                 for l in Library.objects.using(bdd).all().exclude(name ='checker').exclude(name =Instruction.objects.using(bdd).get(id =id).name).order_by('name'):
                     REM_CHOICES += (l.name, l.name),
             model = Instruction
-            fields =('line', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
+            fields =('line', 'oname', 'descr', 'exc', 'degr', 'time')
             # exclude = ('sid', 'name', 'bound',)
             widgets = {
+                'bound' : forms.Select(choices=(('',''),('x','x'),)),
                 'oname' : forms.Select(choices=REM_CHOICES, attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
                 'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex."), 'title': _("Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer selon l'ordre chronologique de ce champ")}),
                 'exc' : forms.TextInput(attrs={'placeholder': _("1991(5) par ex."), 'title': \
@@ -3048,11 +3055,11 @@ def instradmin(request, bdd, id):
                 _("éléments dégradés (un volume relié dégradé peut être remplacé par les fascicules correspondants en bon état)")}),
             }
 
-    i =Instruction()
+    i =Instruction(sid =sid, name =bib)
     f = InstructionForm(request.POST or None, instance =i, initial = {
     'line' : Instruction.objects.using(bdd).get(id =instrid).line -1,
     # 'name' : Instruction.objects.using(bdd).get(id =id).name,
-    'bound' : Instruction.objects.using(bdd).get(id =instrid).bound,
+    # 'bound' : Instruction.objects.using(bdd).get(id =instrid).bound,
     'oname' : Instruction.objects.using(bdd).get(id =instrid).oname,
     'descr' : Instruction.objects.using(bdd).get(id =instrid).descr,
     'exc' : Instruction.objects.using(bdd).get(id =instrid).exc,
@@ -3065,36 +3072,36 @@ def instradmin(request, bdd, id):
     ajouter =Flag()
     aj = CheckForm(request.POST or None, instance =ajouter)
 
-    if f.is_valid() and sup.is_valid() and aj.is_valid():
+    if request.method =="POST" and f.is_valid() and sup.is_valid() and aj.is_valid():
+        i.time =Now()
         # traitements à insérer ici
-        # if not sup and not aj:
-                    # if f.is_valid():
-                    #     if foname.is_valid():
-                    #         i.oname = foname.cleaned_data['oname']
-                    #     i.bound =q
-                    #     #A line may only be registered once :
-                    #     if not len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
-                    #         i.line +=1
-                    #         i.time =Now()
-                    #         f.save(using=bdd)
-                    #         url ="/add/" + str(sid) + "/" + str(lid)
-                    #         return HttpResponseRedirect(url)
-                    #     else:
-                    #         info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
-                    #
-                    # #Renumbering instruction lines :
-                    # try:
-                    #     instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
-                    #     j, l =0, 1
-                    #     while j <= len(instr):
-                    #         instr[j].line = l
-                    #         instr[j].save(using=bdd)
-                    #         j +=1
-                    #         l +=1
-                    # except:
-                    #     pass
-                    # instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
+        if (sup, aj) ==(False, False):
+            instru.line =i.line
+            instru.oname =i.oname
+            instru.descr =i.descr
+            instru.exc =i.exc
+            instru.degr =i.degr
+            instru.time =i.time
+            instru.save()
+        elif (sup, aj) ==(True, True):
+            instru.delete(using=bdd)
+            i.save(using=bdd)
+        elif (sup, aj) ==(True, False):
+            instru.delete(using=bdd)
+        else:#aj and not sup
+            i.save(using=bdd)
 
+        #Renumbering instruction lines :
+        try:
+            instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+            j, l =0, 1
+            while j <= len(instr):
+                instr[j].line = l
+                instr[j].save(using=bdd)
+                j +=1
+                l +=1
+        except:
+            pass
 
         return current_status(request, bdd, d.sid, bib.lid)
         # return HttpResponseRedirect("/" + bdd + "/current_status" + "/" + str(d.sid) + "/" + str(bib.lid))
