@@ -3011,8 +3011,11 @@ def statadmin(request, bdd, id):
 
     return render(request, 'epl/statadmin.html', locals())
 
-
+#@login_required
 def instradmin(request, bdd, id):
+
+    #reste à faire les contrôle et traitements !!!!! (y compris sur les statuts)
+    #contrôle ici
 
     k =logstatus(request)
     version =epl_version
@@ -3034,7 +3037,7 @@ def instradmin(request, bdd, id):
                 for l in Library.objects.using(bdd).all().exclude(name ='checker').exclude(name =Instruction.objects.using(bdd).get(id =id).name).order_by('name'):
                     REM_CHOICES += (l.name, l.name),
             model = Instruction
-            fields =('line', 'name', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
+            fields =('line', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
             # exclude = ('sid', 'name', 'bound',)
             widgets = {
                 'oname' : forms.Select(choices=REM_CHOICES, attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
@@ -3062,11 +3065,39 @@ def instradmin(request, bdd, id):
     ajouter =Flag()
     aj = CheckForm(request.POST or None, instance =ajouter)
 
-    try:
-        if request.method() =="POST" and not f.is_valid(): #compléter
-            return current_status(request, bdd, d.sid, d.lid)
-    except:
-        pass
+    if f.is_valid() and sup.is_valid() and aj.is_valid():
+        # traitements à insérer ici
+        # if not sup and not aj:
+                    # if f.is_valid():
+                    #     if foname.is_valid():
+                    #         i.oname = foname.cleaned_data['oname']
+                    #     i.bound =q
+                    #     #A line may only be registered once :
+                    #     if not len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
+                    #         i.line +=1
+                    #         i.time =Now()
+                    #         f.save(using=bdd)
+                    #         url ="/add/" + str(sid) + "/" + str(lid)
+                    #         return HttpResponseRedirect(url)
+                    #     else:
+                    #         info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
+                    #
+                    # #Renumbering instruction lines :
+                    # try:
+                    #     instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+                    #     j, l =0, 1
+                    #     while j <= len(instr):
+                    #         instr[j].line = l
+                    #         instr[j].save(using=bdd)
+                    #         j +=1
+                    #         l +=1
+                    # except:
+                    #     pass
+                    # instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
+
+
+        return current_status(request, bdd, d.sid, bib.lid)
+        # return HttpResponseRedirect("/" + bdd + "/current_status" + "/" + str(d.sid) + "/" + str(bib.lid))
 
     return render(request, 'epl/instradmin.html', locals())
 
