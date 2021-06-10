@@ -177,7 +177,8 @@
     <tr>
         <td>{{ elmt.0 }}</td>
         <td>{{ elmt.1.status }}</td>
-        <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td>
+        <!-- <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td> -->
+        <td><a href="/{{ bdd }}/statadmin/{{ elmt.1.id }}">{{ elmt.1.id }}</a></td>
     </tr>
      {% endfor %}
    </tbody>
@@ -212,7 +213,7 @@
          <td><font color= #3364ff >{{ elmt.descr }}</font></td>
          <td><font color= #3364ff >{{ elmt.exc}}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
-         <td><a target="_blank" href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+         <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
          <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% else %}
@@ -224,7 +225,7 @@
         <td>{{ elmt.descr }}</td>
         <td>{{ elmt.exc}}</td>
         <td>{{ elmt.degr }}</td>
-        <td><a target="_blank" href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+        <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
         <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% endif %}

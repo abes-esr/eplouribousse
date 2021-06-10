@@ -151,7 +151,7 @@ def about(request):
     return render(request, 'epl/about.html', locals())
 
 
-def contact(request, bdd):
+def contact(request):
 
     k =logstatus(request)
     version =epl_version
@@ -241,7 +241,7 @@ def webmstr(request):
     return render(request, 'epl/webmaster.html', locals())
 
 
-def confirm(request, bdd):
+def confirm(request):
 
     k =logstatus(request)
     version =epl_version
@@ -306,7 +306,7 @@ def router(request, bdd, lid):
     return render(request, 'epl/router.html', locals())
 
 
-def lang(request, bdd):
+def lang(request):
     k =logstatus(request)
     version =epl_version
 
@@ -586,12 +586,12 @@ def search(request, bdd):
             elif higher_status ==5:
                 progress =_("Instruction achevée")
                 if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid).exclude(rank =0):
-                    action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Edition de la fiche de résultante"), bdd + "/ed/" + str(sid) + "/" + str(lid)
             elif higher_status ==4:
                 if len(ItemRecord.objects.using(bdd).filter(sid =sid, status =4)) ==len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)):
                     progress =_("En attente de validation finale par le contrôleur")
                     if lid =="999999999":
-                        action, laction =_("Validation finale"), "/end/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Validation finale"), bdd + "/end/" + str(sid) + "/" + str(lid)
                 else:
                     if lid !="999999999":
                         if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid, status =3):
@@ -599,7 +599,7 @@ def search(request, bdd):
                                 progress =_("Instruction des non reliés en cours pour votre collection")
                             else:
                                 progress =_("Instruction des non reliés à débuter pour votre collection")
-                            action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                            action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
                         else:
                             xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid).name
                             if Instruction.objects.using(bdd).filter(sid =sid, bound =" ", name =xname):
@@ -619,7 +619,7 @@ def search(request, bdd):
                             progress =_("Instruction des non reliés en cours pour votre collection")
                         else:
                             progress =_("Instruction des non reliés à débuter pour votre collection")
-                        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
                     else:
                         xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid).name
                         if Instruction.objects.using(bdd).filter(sid =sid, bound =" ", name =xname):
@@ -636,7 +636,7 @@ def search(request, bdd):
                 if len(ItemRecord.objects.using(bdd).filter(sid =sid, status =2)) ==len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)):
                     progress =_("En attente de validation intermédiaire par le contrôleur")
                     if lid =="999999999":
-                        action, laction =_("Validation intermédiaire"), "/end/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Validation intermédiaire"), bdd + "/end/" + str(sid) + "/" + str(lid)
                 else:
                     if lid !="999999999":
                         if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid, status =1):
@@ -644,7 +644,7 @@ def search(request, bdd):
                                 progress =_("Instruction des reliés en cours pour votre collection")
                             else:
                                 progress =_("Instruction des reliés à débuter pour votre collection")
-                            action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                            action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
                         else:
                             xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid).name
                             if Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =xname):
@@ -664,7 +664,7 @@ def search(request, bdd):
                             progress =_("Instruction des reliés en cours pour votre collection")
                         else:
                             progress =_("Instruction des reliés à débuter pour votre collection")
-                        action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                        action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
                     else:
                         xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid).name
                         if Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =xname):
@@ -672,7 +672,7 @@ def search(request, bdd):
                         else:
                             progress =_("Instruction des reliés en cours ; à débuter pour : ")
                     if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid) and len(Instruction.objects.using(bdd).filter(sid =sid)) ==0:
-                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                 else:#lid ="999999999"
                     xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid).name
                     if Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =xname):
@@ -684,27 +684,27 @@ def search(request, bdd):
                     if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) <2:
                         progress =_("La ressource n'est plus candidate au dédoublonnement")
                         if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid, rank =0):
-                             action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                             action, laction =_("Repositionnement éventuel de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                     elif ItemRecord.objects.using(bdd).filter(sid =sid, rank =99) and len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
                         if ItemRecord.objects.using(bdd).filter(sid =sid, rank =99, lid =lid):
                             progress =_("Positionnement à compléter pour votre collection")
-                            action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                            action, laction =_("Positionnement de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                         else:
                             progress =_("Positionnement à compléter pour une ou plusieurs collections")
                             if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid):
-                                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                     elif len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) >1:
                         if ItemRecord.objects.using(bdd).filter(sid =sid, rank =1, lid =lid):
                             progress =_("Rang 1 revendiqué pour plusieurs collections dont la vôtre")
-                            action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                            action, laction =_("Repositionnement éventuel de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                         else:
                             progress =_("Rang 1 revendiqué pour plusieurs collections mais pas la vôtre")
                             if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid):
-                                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                     else:# len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0:
                         progress =_("Le rang 1 n'a été revendiqué pour aucune collection")
                         if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid):
-                            action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                            action, laction =_("Repositionnement éventuel de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                 else: #lid ="999999999"
                     if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) <2:
                         progress =_("La ressource n'est plus candidate au dédoublonnement")
@@ -784,7 +784,7 @@ def reinit(request, bdd, sid):
                 subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
-                " :\n" + "http://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
                 " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
                 dest = [nextlib.contact]
                 if nextlib.contact_bis:
@@ -874,7 +874,7 @@ def takerank(request, bdd, sid, lid):
                 subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                " :\n" + "http://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
                 dest = [nextlib.contact]
                 if nextlib.contact_bis:
                     dest.append(nextlib.contact_bis)
@@ -1033,14 +1033,14 @@ def addinstr(request, bdd, sid, lid):
                 i.line +=1
                 i.time =Now()
                 f.save(using=bdd)
-                url ="/add/" + str(sid) + "/" + str(lid)
+                url =bdd + "/add/" + str(sid) + "/" + str(lid)
                 return HttpResponseRedirect(url)
             else:
                 info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
 
         #Renumbering instruction lines :
         try:
-            instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+            instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
             j, l =0, 1
             while j <= len(instr):
                 instr[j].line = l
@@ -1142,7 +1142,7 @@ def selinstr(request, bdd, sid, lid):
 
     if f.is_valid():
         linetomodify = f.cleaned_data['row']
-        url ="/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
+        url =bdd + "/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
         return HttpResponseRedirect(url)
 
     instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
@@ -1301,7 +1301,7 @@ def modinstr(request, bdd, sid, lid, linetomodify):
             except:
                 pklastone =0
             if info =="":
-                url ="/add/" + str(sid) + "/" + str(lid)
+                url =bdd + "/add/" + str(sid) + "/" + str(lid)
                 return HttpResponseRedirect(url) # Renumbering shall be done there.
         else:
             #Instruction form instanciation and validation :
@@ -1441,7 +1441,7 @@ def delinstr(request, bdd, sid, lid):
         if answer == "":
             for todel in linestodel:
                 Instruction.objects.using(bdd).get(sid =sid, name =lib.name, line =todel).delete()
-            url ="/add/" + str(sid) + "/" + str(lid)
+            url =bdd + "/add/" + str(sid) + "/" + str(lid)
             return HttpResponseRedirect(url) # Renumbering shall be done there.
 
     instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
@@ -1561,7 +1561,7 @@ def endinstr(request, bdd, sid, lid):
 
             #Renumbering instruction lines :
             try:
-                instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+                instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
                 j, g =0, 1
                 while j <= len(instr):
                     instr[j].line = g
@@ -1583,7 +1583,7 @@ def endinstr(request, bdd, sid, lid):
                     subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                    " :\n" + "http://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
                     dest = [nextlib.contact]
                     if nextlib.contact_bis:
                         dest.append(nextlib.contact_bis)
@@ -1608,7 +1608,7 @@ def endinstr(request, bdd, sid, lid):
             host = str(request.get_host())
             message = _("Fiche défectueuse signalée par le contrôleur pour le ppn ") + str(sid) +\
             "\n" + _("Une intervention est attendue de la part d'un des administrateurs de la base") +\
-            " :\n" + "http://" + host + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
+            " :\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + _("Merci !")
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
@@ -1628,7 +1628,7 @@ def endinstr(request, bdd, sid, lid):
                     blankinst.save(using=bdd)
                 #Renumbering instruction lines :
                 try:
-                    instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+                    instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
                     j, g =0, 1
                     while j <= len(instr):
                         instr[j].line = g
@@ -1663,7 +1663,7 @@ def endinstr(request, bdd, sid, lid):
                     blankinst.save(using=bdd)
                 #Renumbering instruction lines :
                 try:
-                    instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+                    instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
                     j, g =0, 1
                     while j <= len(instr):
                         instr[j].line = g
@@ -1695,7 +1695,7 @@ def endinstr(request, bdd, sid, lid):
             subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-            " :\n" + "http://" + host + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+            " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
             dest = [nextlib.contact]
             if nextlib.contact_bis:
                 dest.append(nextlib.contact_bis)
@@ -2841,12 +2841,12 @@ def current_status(request, bdd, sid, lid):
     elif higher_status ==5:
         progress =_("Instruction achevée")
         if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid).exclude(rank =0):
-            action, laction =_("Edition de la fiche de résultante"), "/ed/" + str(sid) + "/" + str(lid)
+            action, laction =_("Edition de la fiche de résultante"), bdd + "/ed/" + str(sid) + "/" + str(lid)
     elif higher_status ==4:
         if len(ItemRecord.objects.using(bdd).filter(sid =sid, status =4)) ==len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)):
             progress =_("En attente de validation finale par le contrôleur")
             if lid =="999999999":
-                action, laction =_("Validation finale"), "/end/" + str(sid) + "/" + str(lid)
+                action, laction =_("Validation finale"), bdd + "/end/" + str(sid) + "/" + str(lid)
         else:
             if lid !="999999999":
                 if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid, status =3):
@@ -2854,7 +2854,7 @@ def current_status(request, bdd, sid, lid):
                         progress =_("Instruction des non reliés en cours pour votre collection")
                     else:
                         progress =_("Instruction des non reliés à débuter pour votre collection")
-                    action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
                 else:
                     xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid).name
                     if Instruction.objects.using(bdd).filter(sid =sid, bound =" ", name =xname):
@@ -2874,7 +2874,7 @@ def current_status(request, bdd, sid, lid):
                     progress =_("Instruction des non reliés en cours pour votre collection")
                 else:
                     progress =_("Instruction des non reliés à débuter pour votre collection")
-                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
             else:
                 xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid).name
                 if Instruction.objects.using(bdd).filter(sid =sid, bound =" ", name =xname):
@@ -2891,7 +2891,7 @@ def current_status(request, bdd, sid, lid):
         if len(ItemRecord.objects.using(bdd).filter(sid =sid, status =2)) ==len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)):
             progress =_("En attente de validation intermédiaire par le contrôleur")
             if lid =="999999999":
-                action, laction =_("Validation intermédiaire"), "/end/" + str(sid) + "/" + str(lid)
+                action, laction =_("Validation intermédiaire"), bdd + "/end/" + str(sid) + "/" + str(lid)
         else:
             if lid !="999999999":
                 if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid, status =1):
@@ -2899,7 +2899,7 @@ def current_status(request, bdd, sid, lid):
                         progress =_("Instruction des reliés en cours pour votre collection")
                     else:
                         progress =_("Instruction des reliés à débuter pour votre collection")
-                    action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
                 else:
                     xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid).name
                     if Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =xname):
@@ -2919,7 +2919,7 @@ def current_status(request, bdd, sid, lid):
                     progress =_("Instruction des reliés en cours pour votre collection")
                 else:
                     progress =_("Instruction des reliés à débuter pour votre collection")
-                action, laction =_("Instruction"), "/add/" + str(sid) + "/" + str(lid)
+                action, laction =_("Instruction"), bdd + "/add/" + str(sid) + "/" + str(lid)
             else:
                 xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid).name
                 if Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =xname):
@@ -2927,7 +2927,7 @@ def current_status(request, bdd, sid, lid):
                 else:
                     progress =_("Instruction des reliés en cours ; à débuter pour : ")
             if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid) and len(Instruction.objects.using(bdd).filter(sid =sid)) ==0:
-                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
         else:#lid ="999999999"
             xname =Library.objects.using(bdd).get(lid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid).name
             if Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =xname):
@@ -2939,27 +2939,27 @@ def current_status(request, bdd, sid, lid):
             if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) <2:
                 progress =_("La ressource n'est plus candidate au dédoublonnement")
                 if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid, rank =0):
-                     action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                     action, laction =_("Repositionnement éventuel de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
             elif ItemRecord.objects.using(bdd).filter(sid =sid, rank =99) and len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
                 if ItemRecord.objects.using(bdd).filter(sid =sid, rank =99, lid =lid):
                     progress =_("Positionnement à compléter pour votre collection")
-                    action, laction =_("Positionnement de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Positionnement de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                 else:
                     progress =_("Positionnement à compléter pour une ou plusieurs collections")
                     if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid):
-                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
             elif len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) >1:
                 if ItemRecord.objects.using(bdd).filter(sid =sid, rank =1, lid =lid):
                     progress =_("Rang 1 revendiqué pour plusieurs collections dont la vôtre")
-                    action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Repositionnement éventuel de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
                 else:
                     progress =_("Rang 1 revendiqué pour plusieurs collections mais pas la vôtre")
                     if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid):
-                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                        alteraction, lalteraction =_("Modification éventuelle du rang de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
             else:# len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0:
                 progress =_("Le rang 1 n'a été revendiqué pour aucune collection")
                 if ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid):
-                    action, laction =_("Repositionnement éventuel de votre collection"), "/rk/" + str(sid) + "/" + str(lid)
+                    action, laction =_("Repositionnement éventuel de votre collection"), bdd + "/rk/" + str(sid) + "/" + str(lid)
         else: #lid ="999999999"
             if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) <2:
                 progress =_("La ressource n'est plus candidate au dédoublonnement")
@@ -2989,32 +2989,38 @@ def current_status(request, bdd, sid, lid):
     return render(request, 'epl/current.html', locals())
 
 
+#@login_required
 def statadmin(request, bdd, id):
+
+    #contrôle ici
 
     k =logstatus(request)
     version =epl_version
+    itemid =int(id)
 
     try:
-        d =ItemRecord.objects.using(bdd).get(id =id)
-        bib =Library.objects.using(bdd).get(lid =d.lid)
+        itemrec =ItemRecord.objects.using(bdd).get(id =itemid)
+        bib =Library.objects.using(bdd).get(lid =itemrec.lid)
+        sid =itemrec.sid
     except:
         return HttpResponse(_("Pas d'enregistrement correspondant"))
 
-    i =ItemRecord()
     class ItemRecordStatusForm(forms.Form):
-        status = forms.ChoiceField(required = True, widget=forms.Select, choices= ((6, 6), (5, 5), \
-        (4, 4), (3, 3), (2, 2), (1, 1), (0, 0),), initial = d.status,label =_("statut"))
+        stat = forms.ChoiceField(required = True, widget=forms.Select, choices= ((6, 6), (5, 5), \
+        (4, 4), (3, 3), (2, 2), (1, 1), (0, 0),), initial = itemrec.status, label =_("statut"))
 
     form = ItemRecordStatusForm(request.POST or None)
-    if form.is_valid():
-        status = form.cleaned_data['status']
+    if request.method =="POST" and form.is_valid():
+        stat = form.cleaned_data['stat']
+        itemrec.status =stat
+        itemrec.save(using=bdd)
+        return current_status(request, bdd, sid, bib.lid)
 
     return render(request, 'epl/statadmin.html', locals())
 
 #@login_required
 def instradmin(request, bdd, id):
 
-    #reste à faire les contrôle et traitements !!!!! (y compris sur les statuts)
     #contrôle ici
 
     k =logstatus(request)
@@ -3022,10 +3028,7 @@ def instradmin(request, bdd, id):
     instrid =int(id)
     instru =Instruction.objects.using(bdd).get(id =instrid)
     sid =instru.sid
-    if len(Instruction.objects.using(bdd).filter(name ="checker")):
-        q =" "
-    else:
-        q ="x"
+    name =instru.name
 
     try:
         d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =instrid).sid)[0]
@@ -3043,7 +3046,7 @@ def instradmin(request, bdd, id):
                 for l in Library.objects.using(bdd).all().exclude(name ='checker').exclude(name =Instruction.objects.using(bdd).get(id =id).name).order_by('name'):
                     REM_CHOICES += (l.name, l.name),
             model = Instruction
-            fields =('line', 'oname', 'descr', 'exc', 'degr', 'time')
+            fields =('line', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
             # exclude = ('sid', 'name', 'bound',)
             widgets = {
                 'bound' : forms.Select(choices=(('',''),('x','x'),)),
@@ -3055,45 +3058,52 @@ def instradmin(request, bdd, id):
                 _("éléments dégradés (un volume relié dégradé peut être remplacé par les fascicules correspondants en bon état)")}),
             }
 
-    i =Instruction(sid =sid, name =bib)
+    i =Instruction(sid =sid, name =bib.name)
     f = InstructionForm(request.POST or None, instance =i, initial = {
     'line' : Instruction.objects.using(bdd).get(id =instrid).line -1,
     # 'name' : Instruction.objects.using(bdd).get(id =id).name,
-    # 'bound' : Instruction.objects.using(bdd).get(id =instrid).bound,
+    'bound' : Instruction.objects.using(bdd).get(id =instrid).bound,
     'oname' : Instruction.objects.using(bdd).get(id =instrid).oname,
     'descr' : Instruction.objects.using(bdd).get(id =instrid).descr,
     'exc' : Instruction.objects.using(bdd).get(id =instrid).exc,
     'degr' : Instruction.objects.using(bdd).get(id =instrid).degr,
     })
 
-    supprimer =Flag()
-    sup = CheckForm(request.POST or None, instance =supprimer)
+    class SupAjForm(forms.Form):
+        suppr = forms.BooleanField(required=False)
+        ajo = forms.BooleanField(required=False)
 
-    ajouter =Flag()
-    aj = CheckForm(request.POST or None, instance =ajouter)
+    modeform =SupAjForm(request.POST or None)
 
-    if request.method =="POST" and f.is_valid() and sup.is_valid() and aj.is_valid():
+    if request.method =="POST" and f.is_valid() and modeform.is_valid():
+        sup = modeform.cleaned_data['suppr']
+        aj = modeform.cleaned_data['ajo']
         i.time =Now()
-        # traitements à insérer ici
         if (sup, aj) ==(False, False):
-            instru.line =i.line
+            instru.line =i.line +1
+            instru.bound =i.bound
             instru.oname =i.oname
-            instru.descr =i.descr
+            if name =="checker":
+                instru.descr =i.time
+            else:
+                instru.descr =i.descr
             instru.exc =i.exc
             instru.degr =i.degr
             instru.time =i.time
-            instru.save()
+            instru.save(using=bdd)
         elif (sup, aj) ==(True, True):
             instru.delete(using=bdd)
             i.save(using=bdd)
         elif (sup, aj) ==(True, False):
             instru.delete(using=bdd)
-        else:#aj and not sup
+        elif (sup, aj) ==(False, True):
             i.save(using=bdd)
+        else:#it should never happen
+            HttpResponse("Unexpected request !")
 
         #Renumbering instruction lines :
         try:
-            instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', '-pk')
+            instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
             j, l =0, 1
             while j <= len(instr):
                 instr[j].line = l
