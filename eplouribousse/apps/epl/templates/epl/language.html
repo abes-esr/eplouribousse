@@ -19,15 +19,15 @@
 
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
 
-        <div id="content">
-        {% if k != 0 %}
+        <!-- <div id="content"> -->
+        <!-- {% if k != 0 %}
         <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
-        {% else %}
+        {% else %} -->
         <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
         <!-- (User : Anonymous) -->
-        {% endif %}
-        </div>
-        <p></p>
+        <!-- {% endif %}
+        </div> -->
+        <!-- <p></p> -->
         <div id="content">
 
           <h1>Change language</h1>
@@ -41,7 +41,7 @@
               {% endfor %}
               </select>
 
-              <input type="submit" />
+              <input type="submit" />  <p><a href="/{{ bdd }}">{% trans "Retour à la page d'accueil" %}</a></p>
           </form>
 
 
@@ -51,7 +51,7 @@
 
         <div id="footer">
 
-            <p><a href="/{{ bdd }}">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./admin/">{% trans "Administration (réservé)" %}</a>]</p>
+            <p><a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - [<a href="/./admin/">{% trans "Administration (réservé)" %}</a>]</p>
 
         </div>
 

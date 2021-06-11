@@ -79,6 +79,18 @@ def selectbdd(request):
             return HttpResponseRedirect(bdd)
             # return home(request, bdd)
 
+    #abstract :
+    librnbr =0
+    itemrecnbr =0
+    instrnbr =0
+    usernbr =len(User.objects.all())
+    projnbr =len(BDD_CHOICES) -1
+    for e in BDD_CHOICES[1:]:
+        librnbr +=len(Library.objects.using(e[0]).all())
+        itemrecnbr +=len(ItemRecord.objects.using(e[0]).all())
+        instrnbr +=len(Instruction.objects.using(e[0]).all())
+
+
     return render(request, 'epl/selectbdd.html', locals())
 
 
