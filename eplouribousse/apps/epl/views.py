@@ -1034,8 +1034,6 @@ def addinstr(request, bdd, sid, lid):
                 i.line +=1
                 i.time =Now()
                 i.save(using=bdd)
-                return addinstr(request, bdd, sid, lid)
-
             else:
                 info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
 
@@ -1143,9 +1141,9 @@ def selinstr(request, bdd, sid, lid):
 
     if f.is_valid():
         linetomodify = f.cleaned_data['row']
-        return modinstr(request, bdd, sid, lid, linetomodify)
-        # url =bdd + "/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
-        # return HttpResponseRedirect(url)
+        # return modinstr(request, bdd, sid, lid, linetomodify)
+        url ="/" + bdd + "/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
+        return HttpResponseRedirect(url)
 
     instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
 
@@ -1303,14 +1301,14 @@ def modinstr(request, bdd, sid, lid, linetomodify):
             except:
                 pklastone =0
             if info =="":
-                return addinstr(request, bdd, sid, lid)
-                # url =bdd + "/add/" + str(sid) + "/" + str(lid)
-                # return HttpResponseRedirect(url) # Renumbering shall be done there.
+                # return addinstr(request, bdd, sid, lid)
+                url ="/" + bdd + "/add/" + str(sid) + "/" + str(lid)
+                return HttpResponseRedirect(url) # Renumbering shall be done there.
         else:
             #Instruction form instanciation and validation :
             f = InstructionForm(instance =i, initial = {
             'line' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).line - 1,
-            'oname' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).oname,
+            # 'oname' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).oname,
             'descr' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).descr,
             'exc' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).exc,
             'degr' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).degr,
