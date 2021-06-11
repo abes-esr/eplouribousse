@@ -29,7 +29,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 lastrked =None
 webmaster =""
 try:
-    webmasterstr = ReplyMail.objects.all().order_by('pk')[1].sendermail
+    webmaster = ReplyMail.objects.all().order_by('pk')[1].sendermail
     zz =1
 except:
     pass
@@ -176,11 +176,12 @@ def contact(request):
             subject2 = "[eplouribousse]" + " - " + subject2
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
-            message2 = "Votre message a bien été envoyé au développeur de l'application"\
-             + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
+            message2 = _("Votre message a bien été envoyé au développeur de l'application qui y répondra prochainement")\
+             + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" + \
              "Rappel de l'objet de votre message" + " : " + subject2 + \
-             "\n" + "Rappel de votre message" + " :\n" + "\n" + \
-             _("***** Début *****") + "\n" + body + "\n" + _("*****  Fin  *****")
+             "\n" + _("Rappel de votre message") + " :\n" + \
+              _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
+              "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
             dest1 = ["eplouribousse@gmail.com"]
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
@@ -222,12 +223,12 @@ def webmstr(request):
             subject2 = "[eplouribousse]" + " - " + subject2
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
-            message2 = "Votre message a bien été envoyé au webmaster"\
-             + ".\n" + "Ne répondez pas au présent message s'il vous plaît" + ".\n" + \
-             "Rappel de l'objet de votre message" + " : " + subject2 + \
-             "\n" + "Rappel de votre message" + " :\n" + "\n" + \
-             _("***** Début *****") + "\n" + body + "\n" + _("*****  Fin  *****")
-            dest1 = [wbmstr]
+            message2 = _("Votre message a bien été envoyé au webmaster qui y répondra prochainement")\
+             + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" \
+             + _("Rappel de votre message") + " :\n" + \
+             _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
+             "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
+            dest1 = [webmaster]
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
             send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
@@ -852,7 +853,7 @@ def takerank(request, bdd, sid, lid):
             # if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(status =0)) ==0:
             if i.excl !='':
                 i.rank =0
-            f.save(using=bdd)
+            i.save(using=bdd)
             # Other status modification if all libraries have taken rank :
             # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
             # ordering by pk for identical ranks upper than 1.
@@ -1032,9 +1033,9 @@ def addinstr(request, bdd, sid, lid):
             if not len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
                 i.line +=1
                 i.time =Now()
-                f.save(using=bdd)
-                url =bdd + "/add/" + str(sid) + "/" + str(lid)
-                return HttpResponseRedirect(url)
+                i.save(using=bdd)
+                return addinstr(request, bdd, sid, lid)
+
             else:
                 info = _("Vous ne pouvez pas valider deux fois la même ligne d'instruction.")
 
@@ -1142,8 +1143,9 @@ def selinstr(request, bdd, sid, lid):
 
     if f.is_valid():
         linetomodify = f.cleaned_data['row']
-        url =bdd + "/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
-        return HttpResponseRedirect(url)
+        return modinstr(request, bdd, sid, lid, linetomodify)
+        # url =bdd + "/mod/" + str(sid) + "/" + str(lid) + "/" + str(linetomodify)
+        # return HttpResponseRedirect(url)
 
     instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
 
@@ -1301,13 +1303,14 @@ def modinstr(request, bdd, sid, lid, linetomodify):
             except:
                 pklastone =0
             if info =="":
-                url =bdd + "/add/" + str(sid) + "/" + str(lid)
-                return HttpResponseRedirect(url) # Renumbering shall be done there.
+                return addinstr(request, bdd, sid, lid)
+                # url =bdd + "/add/" + str(sid) + "/" + str(lid)
+                # return HttpResponseRedirect(url) # Renumbering shall be done there.
         else:
             #Instruction form instanciation and validation :
             f = InstructionForm(instance =i, initial = {
             'line' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).line - 1,
-            # 'oname' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).oname,
+            'oname' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).oname,
             'descr' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).descr,
             'exc' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).exc,
             'degr' : Instruction.objects.using(bdd).get(sid =sid, line =linetomodify).degr,
@@ -1441,8 +1444,9 @@ def delinstr(request, bdd, sid, lid):
         if answer == "":
             for todel in linestodel:
                 Instruction.objects.using(bdd).get(sid =sid, name =lib.name, line =todel).delete()
-            url =bdd + "/add/" + str(sid) + "/" + str(lid)
-            return HttpResponseRedirect(url) # Renumbering shall be done there.
+            return addinstr(request, bdd, sid, lid)
+            # url =bdd + "/add/" + str(sid) + "/" + str(lid)
+            # return HttpResponseRedirect(url) # Renumbering shall be done there.
 
     instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
 
