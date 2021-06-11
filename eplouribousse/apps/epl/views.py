@@ -1442,9 +1442,9 @@ def delinstr(request, bdd, sid, lid):
         if answer == "":
             for todel in linestodel:
                 Instruction.objects.using(bdd).get(sid =sid, name =lib.name, line =todel).delete()
-            return addinstr(request, bdd, sid, lid)
-            # url =bdd + "/add/" + str(sid) + "/" + str(lid)
-            # return HttpResponseRedirect(url) # Renumbering shall be done there.
+            # return addinstr(request, bdd, sid, lid)
+            url ="/" + bdd + "/add/" + str(sid) + "/" + str(lid)
+            return HttpResponseRedirect(url) # Renumbering shall be done there.
 
     instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
 
