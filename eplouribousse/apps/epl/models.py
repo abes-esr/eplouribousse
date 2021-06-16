@@ -115,7 +115,7 @@ class Feature(models.Model):
 
 class BddAdmin(models.Model):
     """Model for BDD administrator(s)"""
-    name = models.CharField('name', max_length=30, unique=True)
+    name = models.CharField('name', max_length=30, unique=True, blank=False)
     contact = models.EmailField('email')
     def __str__(self):
         return self.name

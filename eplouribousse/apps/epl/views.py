@@ -24,7 +24,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 
 from django.http import HttpResponseRedirect, HttpResponse
-
+import os
 
 lastrked =None
 webmaster =""
@@ -54,16 +54,13 @@ def coll_cn(e):
 def selectbdd(request):
 
     version =epl_version
-    i, k =0, 1
+
     BDD_CHOICES =('',_('Sélectionnez votre projet')),
 
-    while k ==1:
-        try:
-            BDD_CHOICES += ('{:02d}'.format(i), Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name),
-            i +=1
-        except:
-            k =0
-    # BDD_CHOICES =BDD_CHOICES[1:]
+    for i in [n for n in range(10)]:
+        if os.path.isfile('{:02d}.db'.format(i)):
+            p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
+            BDD_CHOICES += ('{:02d}'.format(i), p),
 
     if len(BDD_CHOICES) ==2:
         return HttpResponseRedirect(BDD_CHOICES[1][0])
@@ -85,11 +82,10 @@ def selectbdd(request):
     instrnbr =0
     usernbr =len(User.objects.all())
     projnbr =len(BDD_CHOICES) -1
-    for e in BDD_CHOICES[1:]:
-        librnbr +=len(Library.objects.using(e[0]).all())
-        itemrecnbr +=len(ItemRecord.objects.using(e[0]).all())
-        instrnbr +=len(Instruction.objects.using(e[0]).all())
-
+    for bdd in BDD_CHOICES[1:]:
+        librnbr +=len(Library.objects.using(bdd[0]).all())
+        itemrecnbr +=len(ItemRecord.objects.using(bdd[0]).all())
+        instrnbr +=len(Instruction.objects.using(bdd[0]).all())
 
     return render(request, 'epl/selectbdd.html', locals())
 
@@ -152,6 +148,58 @@ def home(request, bdd):
                 return tobeedited(request, bdd, lid, 'title')
 
     return render(request, 'epl/home.html', locals())
+
+
+def adminbase(request, bdd):
+
+    #contrôle d'accès ici
+
+    k =logstatus(request)
+    version =epl_version
+
+    EXCLUSION_CHOICES = ('', ''),
+    for e in Exclusion.objects.using(bdd).all().order_by('label'):
+        EXCLUSION_CHOICES += (e.label, e.label),
+    EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
+    exclnbr =len(EXCLUSION_CHOICES) -1
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    class ProjectForm(forms.Form):
+        exclusup = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
+        name = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
+        descr =forms.CharField(required =False, widget=forms.Textarea(), max_length=300, label =_("project description"))
+        date =forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
+
+    form = ProjectForm(request.POST or None)
+    # if form.is_valid():
+    #     recipient = form.cleaned_data['email']
+    #     recipient_confirm = form.cleaned_data['email_confirm']
+    #     subject2 = form.cleaned_data['object']
+    #     body = form.cleaned_data['content']
+
+    LIBRARY_CHOICES = ('', 'Sélectionnez la bibliothèque'),
+    if Library.objects.using(bdd).all().exclude(name ='checker'):
+        for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+            LIBRARY_CHOICES += (l.name, l.name),
+
+    class LibraryForm(forms.ModelForm):
+        class Meta:
+            model = Library
+            fields = ('name',)
+            widgets = {
+                'name' : forms.Select(choices=LIBRARY_CHOICES),
+            }
+
+    i =Library()
+    libriform = LibraryForm(request.POST or None, instance =i)
+    if libriform.is_valid():
+        libname =i.name
+        contact =i.contact
+        contact_bis =i.contact_bis
+        contact_ter =i.contact_ter
+        j =Library(libname =libname)
+
+
+    return render(request, 'epl/adminbase.html', locals())
 
 
 def about(request):
