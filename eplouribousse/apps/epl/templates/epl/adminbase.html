@@ -35,15 +35,15 @@
     </div>
 
     <div id="content">
-      <h2>{% trans "Administration du projet" %} :  {{ name }}</h2>
+      <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
 
 
     <p><center><font color= #FF0000 >{% trans "Attention : Pensez à créer les utilisateurs dans la base principale" %}.</font></center></p>
 <p><form method="post">{% csrf_token %}{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %}
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Le cas échéant, motif à ajouter" %} : {{ form.exclusup }}</p>
 <p>{% trans "Nom actuel du projet" %} : {{ project }}
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Le cas échéant, nouveau nom" %} : {{ form.name }}</p>
-  {% trans "Modification des propriétés d'une bibliothèque" %} : {{ librform.name }}
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Le cas échéant, nouveau nom" %} : {{ form.projname }}</p>
+  {% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.name }} {{ librmform }}
 <p><input type="submit" value="{% trans "Valider" %}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ bib.lid }}">{% trans "Annuler" %}</a></b></button></p>
 
         </form>

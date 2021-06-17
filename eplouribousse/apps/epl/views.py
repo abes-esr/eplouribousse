@@ -165,7 +165,7 @@ def adminbase(request, bdd):
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
     class ProjectForm(forms.Form):
         exclusup = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
-        name = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
+        projname = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
         descr =forms.CharField(required =False, widget=forms.Textarea(), max_length=300, label =_("project description"))
         date =forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
 
@@ -181,22 +181,23 @@ def adminbase(request, bdd):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
-    class LibraryForm(forms.ModelForm):
-        class Meta:
-            model = Library
-            fields = ('name',)
-            widgets = {
-                'name' : forms.Select(choices=LIBRARY_CHOICES),
-            }
+    class LibrForm(forms.Form):
+        librname = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
 
-    i =Library()
+    libriform = LibrForm(request.POST or None)
+
+
     libriform = LibraryForm(request.POST or None, instance =i)
     if libriform.is_valid():
         libname =i.name
         contact =i.contact
         contact_bis =i.contact_bis
         contact_ter =i.contact_ter
-        j =Library(libname =libname)
+        j =Library(name =libname)#modified
+        librmform = LibraryForm(request.POST or None, instance =j)
+        if librmform.is_valid():
+            a =1
+    gift =a
 
 
     return render(request, 'epl/adminbase.html', locals())
