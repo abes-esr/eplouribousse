@@ -163,41 +163,65 @@ def adminbase(request, bdd):
     EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
     exclnbr =len(EXCLUSION_CHOICES) -1
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
+    extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
     class ProjectForm(forms.Form):
-        exclusup = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
-        projname = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
-        descr =forms.CharField(required =False, widget=forms.Textarea(), max_length=300, label =_("project description"))
-        date =forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
+        projname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
+        descr =forms.CharField(required =True, widget=forms.Textarea(attrs={'rows':5, 'cols':60},), max_length=300, label =_("project description"))
+        date =forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
+    projform = ProjectForm(request.POST or None)
 
-    form = ProjectForm(request.POST or None)
-    # if form.is_valid():
-    #     recipient = form.cleaned_data['email']
-    #     recipient_confirm = form.cleaned_data['email_confirm']
-    #     subject2 = form.cleaned_data['object']
-    #     body = form.cleaned_data['content']
+    class ExcluForm(forms.Form):
+        exclusup = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
+    exclform =ExcluForm(request.POST or None)
 
     LIBRARY_CHOICES = ('', 'Sélectionnez la bibliothèque'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
-    class LibrForm(forms.Form):
-        librname = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+    class LibrIForm(forms.Form):
+        librname = forms.ChoiceField(required =True, widget=forms.Select, choices = LIBRARY_CHOICES, label =_("nom de la bib"))
+    class LibrMForm(forms.Form):
+        newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+        contact1 = forms.EmailField(required =True, label ='email 1')
+        contact2 = forms.EmailField(required =True, label ='email 2')
+        suppr2 = forms.BooleanField(required=False)
+        contact3 = forms.EmailField(required =True, label ='email 3')
+        suppr3 = forms.BooleanField(required=False)
 
-    libriform = LibrForm(request.POST or None)
 
+    libriform = LibrIForm(request.POST or None)
 
-    libriform = LibraryForm(request.POST or None, instance =i)
+    g =0
     if libriform.is_valid():
-        libname =i.name
-        contact =i.contact
-        contact_bis =i.contact_bis
-        contact_ter =i.contact_ter
-        j =Library(name =libname)#modified
-        librmform = LibraryForm(request.POST or None, instance =j)
-        if librmform.is_valid():
-            a =1
-    gift =a
+        g =1
+        libriname = libriform.cleaned_data['librname']
+        ctcti1 =Library.objects.using(bdd).get(name =libriname).contact
+        ctcti2 =Library.objects.using(bdd).get(name =libriname).contact_bis
+        ctcti3 =Library.objects.using(bdd).get(name =libriname).contact_ter
+        librmform = LibrMForm(request.POST or None)
+        # pour supprimr contact2 ou contact3 !!!& Changement rétroactif sur l'ensemble des instructions (name et oname aussi)
+            # class SupAjForm(forms.Form):
+            #     suppr = forms.BooleanField(required=False)
+            #     ajo = forms.BooleanField(required=False)
+            #
+            # modeform =SupAjForm(request.POST or None)
+            #
+            # if request.method =="POST" and f.is_valid() and modeform.is_valid():
+            #     sup = modeform.cleaned_data['suppr']
+            #     aj = modeform.cleaned_data['ajo']
+        # recipient = form.cleaned_data['librname']
+        a=1
+        # libname =i.name
+        # contact =i.contact
+        # contact_bis =i.contact_bis
+        # contact_ter =i.contact_ter
+        # j =Library(name =libname)#modified
+        # librmform = LibrForm(request.POST or None, instance =j)
+        # if librmform.is_valid():
+            # a =1
+    # gift =a
 
 
     return render(request, 'epl/adminbase.html', locals())
