@@ -9,6 +9,7 @@ urlpatterns = [
     path('default/about', views.about, name='about'),
     path('default/contact', views.contact, name='contact'),
     path('default/webmaster', views.webmstr, name='webmaster'),
+    path('<str:bdd>/projectmaster', views.projmstr, name='projectmaster'),
     path('default/confirmation', views.confirm, name='confirmation'),
     path('<str:bdd>/router/<str:lid>', views.router, name='route to the right list'),
     path('default/lang', views.lang, name='language'),

@@ -327,6 +327,56 @@ def webmstr(request):
     return render(request, 'epl/webmaster.html', locals())
 
 
+def projmstr(request, bdd):
+
+    k =logstatus(request)
+    version =epl_version
+    date =date_version
+    host = str(request.get_host())
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    dest1 =[]
+    for bddadm in BddAdmin.objects.using(bdd).all():
+        dest1.append(bddadm.contact)
+
+    class ContactForm(forms.Form):
+        object_list = (("Projet (nom, résumé, date)", _("Projet (nom, résumé, date)")), \
+        ("Ajout d'un motif d'exclusion", _("Ajout d'un motif d'exclusion")),\
+         ("Modification, suppression ou ajout d'un utilisateur", _("Modification, suppression ou ajout d'un utilisateur")), \
+         ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), \
+         ("Autre", _("Autre")))
+        object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+        email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+        email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+        content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        recipient = form.cleaned_data['email']
+        recipient_confirm = form.cleaned_data['email_confirm']
+        subject2 = form.cleaned_data['object']
+        body = form.cleaned_data['content']
+        if recipient ==recipient_confirm:
+            subject2 = "[eplouribousse]" + " - " + subject2
+            subject1 = subject2 + " - " + version + " - " + host
+            message1 = subject1 + " :\n" + "\n" + body
+            message2 = _("Votre message a bien été envoyé à l'administrateur du projet qui y répondra prochainement")\
+             + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" \
+             + _("Rappel de votre message") + " :\n" + \
+             _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
+             "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
+            dest2 = [recipient]
+            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
+            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
+            return render(request, 'epl/confirmation.html', locals())
+        else:
+            info =_("Attention : Les adresses doivent être identiques") + "."
+    else:
+        if request.method =="POST":
+            info =_("Vérifier que les adresses sont correctes") + "."
+
+    return render(request, 'epl/projmaster.html', locals())
+
+
 def confirm(request):
 
     k =logstatus(request)

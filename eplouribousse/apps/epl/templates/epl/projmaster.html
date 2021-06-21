@@ -19,43 +19,43 @@
     <body>
 
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
-
         <div id="content">
         {% if k != 0 %}
-        <p style="text-align:right;"><b><font color= #017a04 >@ : {% trans "Déconnexion effectuée" %}</font></b></p>
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
         {% else %}
         <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
         <!-- (User : Anonymous) -->
         {% endif %}
         </div>
-
         <p></p>
-        <h1>{% trans "Accueil" %}</h1>
-        <h2>{% trans "Projet" %} : {{ project }}</h2>
-
+        <h2>{% trans "Contacter l'administration du projet" %} : {{ project }}</h2>
         <div id="content">
 
 
 <p></p>
           <form method="post">
-            <p>{% trans "Bibliothèque" %} : {{ form.libname }}</p>
-            <p>{% trans "Fonctionnalité" %} : {{ form.feaname }}</p>
+            <p>{% trans "Objet" %} : {{ form.object }}</p>
+            <p>{% trans "Votre adresse mail de contact" %} : {{ form.email }}</p>
+            <p><b>{{ info }}</b></p>
+            <p>{% trans "Confirmation de l'adresse mail" %} : {{ form.email_confirm }}</p>
+            <p>{% trans "Votre message" %} : </p>
+            <p>{{ form.content }}</p>
             {% csrf_token %}
             <p><input type="submit" value="{% trans "Valider" %}"></p>
           </form>
         </div>
 
-        <div id="footer">
 
-            <p><a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a> - <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Changer mon mot de passe" %}</a> - <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a> - <a href="/./default/lang">{% trans "en / de" %}</a></p>
-            <p>[<a href="/{{ bdd }}/adminbase">{% trans "Administration du projet (réservé)" %}</a>] -  [<a href="/./admin/">{% trans "Administration générale (réservé)" %}</a>]</p>
-        </div>
+          <div id="footer">
+              <p><a href="/{{ bdd }}">{% trans "Accueil" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a></p>
+          </div>
 
-        <div id="credits">
+          <div id="credits">
               <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
 
-              <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
-		    </div>
+  <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+
+          </div>
 
     </body>
 
