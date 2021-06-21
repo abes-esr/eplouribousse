@@ -43,47 +43,15 @@
 
       <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p>
 
-<p><form method="post">{% csrf_token %}{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><form method="post">{% csrf_token %}{% trans "Motifs d'exclusion actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   {% trans "Le cas échéant, motif à ajouter" %} : {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
       </div>
       <div id="content">
-  <table border="1">
-
-    <thead>
-
-        <th>{% trans "Propriété" %}</th>
-        <th>{% trans "Valeur actuelle" %}</th>
-        <th>{% trans "Le cas échéant, nouvelle valeur" %}</th>
-
-    </thead>
-
-     <tbody>
-
-       <tr>
-             <td>{% trans "Nom du projet" %}</td>
-             <td>{{ project }}</td>
-             <td><form method="post">{% csrf_token %}{{ projform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
-       </tr>
-       <tr>
-             <td>{% trans "Résumé" %}</td>
-             <td>{{ abstract }}</td>
-             <td><form method="post">{% csrf_token %}{{ projform.descr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
-       </tr>
-      <tr>
-            <td>{% trans "Date d'extraction de la base" %}</td>
-            <td>{{ extractdate }}</td>
-            <td><form method="post">{% csrf_token %}{{ projform.date }} <input type="submit" value="{% trans "Valider" %}"></form></td>
-      </tr>
-
-     </tbody>
-
-  </table>
-
 
 <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
     {% if g != 0  %}
-<p><center><font color= #FF0000 >{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale" %}.</font></center></p>
+
 <table border="1">
 
   <thead>
@@ -123,6 +91,72 @@
 
 
     {% endif %}
+
+    <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
+
+    <table border="1">
+
+      <thead>
+
+          <th>{% trans "Administrateur du projet (email)" %}</th>
+          <th>{% trans "Le cas échéant, modifier l'email" %}</th>
+          <th>{% trans "Le cas échéant, cocher et valider pour supprimer cet administrateur" %}</th>
+
+      </thead>
+
+       <tbody>
+         {% for ad in admintupl %}
+
+         <tr>
+
+             <td>{{ ad.0 }}</td>
+
+             <td><form method="post"> {% csrf_token %} {{ ad.1.contact }} <input type="submit" value="{% trans "Valider" %}"> </form></td>
+
+             <td><center><form method="post"> {% csrf_token %} {{ ad.2.flag }} <input type="submit" value="{% trans "Valider" %}"> </form></center></td>
+
+         </tr>
+
+         {% endfor %}
+
+       </tbody>
+
+    </table>
+    <p><form method="post">{% csrf_token %}{% trans "Le cas échéant, ajouter un administrateur pour ce projet (email)" %} : {{ projadmform.contact }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+    <table border="1">
+
+      <thead>
+
+          <th>{% trans "Propriété" %}</th>
+          <th>{% trans "Valeur actuelle" %}</th>
+          <th>{% trans "Le cas échéant, nouvelle valeur" %}</th>
+
+      </thead>
+
+       <tbody>
+
+         <tr>
+               <td>{% trans "Nom du projet" %}</td>
+               <td>{{ project }}</td>
+               <td><form method="post">{% csrf_token %}{{ projform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+         </tr>
+         <tr>
+               <td>{% trans "Résumé" %}</td>
+               <td>{{ abstract }}</td>
+               <td><form method="post">{% csrf_token %}{{ projform.descr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+         </tr>
+        <tr>
+              <td>{% trans "Date d'extraction de la base" %}</td>
+              <td>{{ extractdate }}</td>
+              <td><form method="post">{% csrf_token %}{{ projform.date }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+        </tr>
+
+       </tbody>
+
+    </table>
+
+
 <center><a href="/{{ bdd }}">{% trans "Retour à l'accueil" %}</a></center>
 
         </div>

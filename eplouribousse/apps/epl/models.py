@@ -115,10 +115,9 @@ class Feature(models.Model):
 
 class BddAdmin(models.Model):
     """Model for BDD administrator(s)"""
-    name = models.CharField('name', max_length=30, unique=True, blank=False)
     contact = models.EmailField('email')
     def __str__(self):
-        return self.name
+        return self.contact
 
 #Checking choices :
 CHECKING_CHOICES = (('Visa', _("Visa OK (La fiche est conforme)")), ('Notify', _("Anomalie (L'administrateur de la base sera informé)")),)

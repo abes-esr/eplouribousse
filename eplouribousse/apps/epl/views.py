@@ -175,6 +175,11 @@ def adminbase(request, bdd):
         exclusup = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
     exclform =ExcluForm(request.POST or None)
 
+    if exclform.is_valid():
+        newexcl =Exclusion()
+        newexcl.label =exclform.cleaned_data['exclusup']
+        newexcl.save(using =bdd)
+
     LIBRARY_CHOICES = ('', 'Sélectionnez la bibliothèque'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
@@ -186,9 +191,9 @@ def adminbase(request, bdd):
         newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
         contact1 = forms.EmailField(required =True, label ='email 1')
         contact2 = forms.EmailField(required =True, label ='email 2')
-        suppr2 = forms.BooleanField(required=False)
+        suppr2 = forms.BooleanField(required=True)
         contact3 = forms.EmailField(required =True, label ='email 3')
-        suppr3 = forms.BooleanField(required=False)
+        suppr3 = forms.BooleanField(required=True)
 
 
     libriform = LibrIForm(request.POST or None)
@@ -222,7 +227,16 @@ def adminbase(request, bdd):
         # if librmform.is_valid():
             # a =1
     # gift =a
+    class ProjadmForm(forms.Form):
+        contact = forms.EmailField(required =True, label ='email')
 
+    adminlist =BddAdmin.objects.using(bdd).all()
+    admintupl =('', ProjadmForm(), CheckForm()),
+    for ad in adminlist:
+        admintupl += (ad.contact, ProjadmForm(), CheckForm()),
+    admintupl =admintupl[1:]
+
+    projadmform =ProjadmForm(request.POST or None)
 
     return render(request, 'epl/adminbase.html', locals())
 
