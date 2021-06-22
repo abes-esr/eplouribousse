@@ -58,7 +58,7 @@ from django.utils.translation import ugettext_lazy as _
 class BddAdminForm(forms.ModelForm):
     class Meta:
         model = BddAdmin
-        fields = ('contact', 'active',)
+        fields = ('contact',)
         # widgets = {
         #     'contact' : forms.EmailInput(),
         #     'active' : forms.CheckBoxInput(),

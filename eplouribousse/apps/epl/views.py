@@ -204,7 +204,7 @@ def adminbase(request, bdd):
         newexcl.save(using =bdd)
         return HttpResponseRedirect(url)
 
-    LIBRARY_CHOICES = ('', 'Sélectionnez la bibliothèque'),
+    LIBRARY_CHOICES = ('', _('Sélectionnez la bibliothèque')), ('checker', 'checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
@@ -251,26 +251,21 @@ def adminbase(request, bdd):
         # if librmform.is_valid():
             # a =1
     # gift =a
+
+    ADMIN_CHOICES =('', _('Sélectionnez')),
+    for b in BddAdmin.objects.using(bdd).all():
+        ADMIN_CHOICES +=(b.contact, b.contact),
+    sizeadm =len(ADMIN_CHOICES[1:])
+    class AdminForm(forms.Form):
+        bddadmemail = forms.ChoiceField(required =True, widget=forms.Select, choices = ADMIN_CHOICES, label =_("email admin"))
+    bddadmform =AdminForm(request.POST or None)
+    if bddadmform.is_valid():
+        seladmin =BddAdmin.objects.using(bdd).get(contact =bddadmform.cleaned_data['bddadmemail'])
+        seladmin.delete(using =bdd)
+        return HttpResponseRedirect(url)
+
     class ProjadmForm(forms.Form):
         contact = forms.EmailField(required =True, label ='email')
-
-    # adminlist =BddAdmin.objects.using(bdd).all()
-    # admintupl =('', '', ''),
-    # for ad in adminlist:
-    #     admintupl += (ad.contact, ProjadmForm(request.POST or None, contact =ad.contact), ProjadmSupprForm(request.POST or None, contact =ad.contact)),
-    # admintupl =admintupl[1:]
-
-    # for elmt in admintupl:
-    #     if elmt[1].is_valid():
-    #         modadm =BddAdmin.objects.using(bdd).get(contact =elmt[0])
-    #         modadm.contact =elmt[1].cleaned_data['contact']
-    #         modadm.save(using =bdd)
-    #         return HttpResponseRedirect(url)
-    #     if elmt[2].is_valid():
-    #         modadm =BddAdmin.objects.using(bdd).get(contact =elmt[0])
-    #         modadm.delete(using =bdd)
-    #         return HttpResponseRedirect(url)
-
     projadmform =ProjadmForm(request.POST or None)
     if projadmform.is_valid():
         emaillist =[]
@@ -280,6 +275,7 @@ def adminbase(request, bdd):
         if not projadmform.cleaned_data['contact'] in emaillist:
             newadm =BddAdmin()
             newadm.contact =projadmform.cleaned_data['contact']
+            newadm.nothere =False
             newadm.save(using =bdd)
         return HttpResponseRedirect(url)
 

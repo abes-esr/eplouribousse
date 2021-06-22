@@ -77,12 +77,12 @@
      </tr>
     <tr>
           <td>{% trans "Second contact" %}</td>
-          <td>{{ ctcti2 }}</td>
+          <td>{% if ctcti2 != None %} {{ ctcti2 }} {% else %} ({% trans "Vacante" %}) {% endif %}</td>
           <td><form method="post">{% csrf_token %}{{ librmform.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> <form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ librmform.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
     </tr>
     <tr>
           <td>{% trans "Troisième contact" %}</td>
-          <td>{{ ctcti3 }}</td>
+          <td>{% if ctcti3 != None %} {{ ctcti3 }} {% else %} ({% trans "Vacante" %}) {% endif %}</td>
           <td><form method="post">{% csrf_token %}{{ librmform.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> <form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ librmform.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
     </tr>
 
@@ -95,35 +95,10 @@
 <HR>
     <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
 <HR>
-    <table border="1">
+      <p>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</p>
+  <p><form method="post"> {% csrf_token %} {% trans "Suppression d'un administrateur" %} : {{ bddadmform.bddadmemail }} {% trans "êtes-vous sûr ?" %} <input type="submit" value="{% trans "Oui, je supprime" %}"> </form><p>
 
-      <thead>
-
-          <th>{% trans "Administrateur du projet (email)" %}</th>
-          <th>{% trans "Le cas échéant, modifier l'email" %}</th>
-          <th>{% trans "Le cas échéant, cocher et valider pour supprimer cet administrateur" %}</th>
-
-      </thead>
-
-       <tbody>
-         {% for ad in admintupl %}
-
-         <tr>
-
-             <td>{{ ad.0 }}</td>
-
-             <td><form method="post"> {% csrf_token %} {{ ad.1.contact }} <input type="submit" value="{% trans "Valider" %}"> </form></td>
-
-             <td><center><form method="post"> {% csrf_token %} {{ ad.2.flag }} <input type="submit" value="{% trans "Valider" %}"> </form></center></td>
-
-         </tr>
-
-         {% endfor %}
-
-       </tbody>
-
-    </table>
-    <p><form method="post">{% csrf_token %}{% trans "Le cas échéant, ajouter un administrateur pour ce projet (email)" %} : {{ projadmform.contact }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+    <p><form method="post">{% csrf_token %}{% trans "Ou ajouter un administrateur pour ce projet (email)" %} : {{ projadmform.contact }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <HR>
     <table border="1">
 
