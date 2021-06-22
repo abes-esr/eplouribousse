@@ -116,6 +116,7 @@ class Feature(models.Model):
 class BddAdmin(models.Model):
     """Model for BDD administrator(s)"""
     contact = models.EmailField('email')
+    active = models.BooleanField('active', default=True)
     def __str__(self):
         return self.contact
 

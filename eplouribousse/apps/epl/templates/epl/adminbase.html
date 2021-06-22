@@ -41,10 +41,11 @@
 
       <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
 
-      <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p>
-
-<p><form method="post">{% csrf_token %}{% trans "Motifs d'exclusion actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  {% trans "Le cas échéant, motif à ajouter" %} : {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+      <!-- <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p> -->
+<HR>
+<p>{% trans "Motifs d'exclusion actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
+<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} : {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<HR>
       </div>
       <div id="content">
 
@@ -91,9 +92,9 @@
 
 
     {% endif %}
-
-    <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
-
+<HR>
+    <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
+<HR>
     <table border="1">
 
       <thead>
@@ -123,7 +124,7 @@
 
     </table>
     <p><form method="post">{% csrf_token %}{% trans "Le cas échéant, ajouter un administrateur pour ce projet (email)" %} : {{ projadmform.contact }} <input type="submit" value="{% trans "Valider" %}"></form></p>
-
+<HR>
     <table border="1">
 
       <thead>
@@ -139,17 +140,17 @@
          <tr>
                <td>{% trans "Nom du projet" %}</td>
                <td>{{ project }}</td>
-               <td><form method="post">{% csrf_token %}{{ projform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+               <td><form method="post">{% csrf_token %}{{ projnamform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
          </tr>
          <tr>
                <td>{% trans "Résumé" %}</td>
                <td>{{ abstract }}</td>
-               <td><form method="post">{% csrf_token %}{{ projform.descr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+               <td><form method="post">{% csrf_token %}{{ projdescform.projdescr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
          </tr>
         <tr>
               <td>{% trans "Date d'extraction de la base" %}</td>
               <td>{{ extractdate }}</td>
-              <td><form method="post">{% csrf_token %}{{ projform.date }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+              <td><form method="post">{% csrf_token %}{{ projdateform.projdate }} <input type="submit" value="{% trans "Valider" %}"></form></td>
         </tr>
 
        </tbody>

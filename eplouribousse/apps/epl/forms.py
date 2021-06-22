@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import ItemRecord, Instruction, Library, Feature, FEATURE_CHOICES, CHECKING_CHOICES, Check, Flag, PHASE_CHOICES
+from .models import *
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -53,6 +53,16 @@ from django.utils.translation import ugettext_lazy as _
 #             'libname' : forms.Select(choices=LIBRARY_CHOICES),
 #             'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
 #         }
+
+
+class BddAdminForm(forms.ModelForm):
+    class Meta:
+        model = BddAdmin
+        fields = ('contact', 'active',)
+        # widgets = {
+        #     'contact' : forms.EmailInput(),
+        #     'active' : forms.CheckBoxInput(),
+        # }
 
 
 class CheckForm(forms.ModelForm):

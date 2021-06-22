@@ -149,13 +149,14 @@ def home(request, bdd):
 
     return render(request, 'epl/home.html', locals())
 
-
+#@login_required
 def adminbase(request, bdd):
 
     #contrôle d'accès ici
 
     k =logstatus(request)
     version =epl_version
+    url ="/" + bdd + "/adminbase"
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -165,11 +166,33 @@ def adminbase(request, bdd):
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
     abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
     extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
-    class ProjectForm(forms.Form):
+    class ProjNameForm(forms.Form):
         projname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
-        descr =forms.CharField(required =True, widget=forms.Textarea(attrs={'rows':5, 'cols':60},), max_length=300, label =_("project description"))
-        date =forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
-    projform = ProjectForm(request.POST or None)
+    class ProjDescrForm(forms.Form):
+        projdescr =forms.CharField(required =True, widget=forms.Textarea(attrs={'rows':1, 'cols':50},), max_length=300, label =_("project description"))
+    class ProjDateForm(forms.Form):
+        projdate =forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
+    projnamform = ProjNameForm(request.POST or None)
+    projdescform = ProjDescrForm(request.POST or None)
+    projdateform = ProjDateForm(request.POST or None)
+
+    if projnamform.is_valid():
+        prj =Project.objects.using(bdd).all().order_by('pk')[0]
+        prj.name =projnamform.cleaned_data['projname']
+        prj.save(using =bdd)
+        return HttpResponseRedirect(url)
+
+    if projdescform.is_valid():
+        prj =Project.objects.using(bdd).all().order_by('pk')[0]
+        prj.descr =projdescform.cleaned_data['projdescr']
+        prj.save(using =bdd)
+        return HttpResponseRedirect(url)
+
+    if projdateform.is_valid():
+        prj =Project.objects.using(bdd).all().order_by('pk')[0]
+        prj.date =projdateform.cleaned_data['projdate']
+        prj.save(using =bdd)
+        return HttpResponseRedirect(url)
 
     class ExcluForm(forms.Form):
         exclusup = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
@@ -179,6 +202,7 @@ def adminbase(request, bdd):
         newexcl =Exclusion()
         newexcl.label =exclform.cleaned_data['exclusup']
         newexcl.save(using =bdd)
+        return HttpResponseRedirect(url)
 
     LIBRARY_CHOICES = ('', 'Sélectionnez la bibliothèque'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
@@ -230,13 +254,34 @@ def adminbase(request, bdd):
     class ProjadmForm(forms.Form):
         contact = forms.EmailField(required =True, label ='email')
 
-    adminlist =BddAdmin.objects.using(bdd).all()
-    admintupl =('', ProjadmForm(), CheckForm()),
-    for ad in adminlist:
-        admintupl += (ad.contact, ProjadmForm(), CheckForm()),
-    admintupl =admintupl[1:]
+    # adminlist =BddAdmin.objects.using(bdd).all()
+    # admintupl =('', '', ''),
+    # for ad in adminlist:
+    #     admintupl += (ad.contact, ProjadmForm(request.POST or None, contact =ad.contact), ProjadmSupprForm(request.POST or None, contact =ad.contact)),
+    # admintupl =admintupl[1:]
+
+    # for elmt in admintupl:
+    #     if elmt[1].is_valid():
+    #         modadm =BddAdmin.objects.using(bdd).get(contact =elmt[0])
+    #         modadm.contact =elmt[1].cleaned_data['contact']
+    #         modadm.save(using =bdd)
+    #         return HttpResponseRedirect(url)
+    #     if elmt[2].is_valid():
+    #         modadm =BddAdmin.objects.using(bdd).get(contact =elmt[0])
+    #         modadm.delete(using =bdd)
+    #         return HttpResponseRedirect(url)
 
     projadmform =ProjadmForm(request.POST or None)
+    if projadmform.is_valid():
+        emaillist =[]
+        for e in BddAdmin.objects.using(bdd).all():
+            if e.contact not in emaillist:
+                emaillist.append(e.contact)
+        if not projadmform.cleaned_data['contact'] in emaillist:
+            newadm =BddAdmin()
+            newadm.contact =projadmform.cleaned_data['contact']
+            newadm.save(using =bdd)
+        return HttpResponseRedirect(url)
 
     return render(request, 'epl/adminbase.html', locals())
 
