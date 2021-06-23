@@ -51,7 +51,7 @@
 
 <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
-    {% if g != 0  %}
+    {% if g != 0 %}
 
 <table border="1">
 
@@ -68,23 +68,22 @@
      <tr>
            <td>{% trans "Nom de la bibliothèque" %}</td>
            <td>{{ libriname }}</td>
-           <td><form method="post">{% csrf_token %}{{ librmform.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form></td>
+           <td>{% if libriname != 'checker'  %}<form method="post">{% csrf_token %}{{ formlibname.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form>{% else %} ({% trans "Non modifiable" %}) {% endif %}</td>
      </tr>
      <tr>
            <td>{% trans "Contact principal" %}</td>
            <td>{{ ctcti1 }}</td>
-           <td><form method="post">{% csrf_token %}{{ librmform.contact1 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+           <td><form method="post">{% csrf_token %}{{ formlibct1.contact1 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
      </tr>
     <tr>
           <td>{% trans "Second contact" %}</td>
           <td>{% if ctcti2 != None %} {{ ctcti2 }} {% else %} ({% trans "Vacante" %}) {% endif %}</td>
-          <td><form method="post">{% csrf_token %}{{ librmform.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> <form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ librmform.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+          <td><form method="post">{% csrf_token %}{{ formlibct2.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if ctcti2 != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu2.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td>
     </tr>
     <tr>
           <td>{% trans "Troisième contact" %}</td>
           <td>{% if ctcti3 != None %} {{ ctcti3 }} {% else %} ({% trans "Vacante" %}) {% endif %}</td>
-          <td><form method="post">{% csrf_token %}{{ librmform.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> <form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ librmform.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
-    </tr>
+          <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if ctcti3 != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td>    </tr>
 
    </tbody>
 
@@ -93,8 +92,8 @@
 
     {% endif %}
 <HR>
-    <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
-<HR>
+    <!-- <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
+<HR> -->
       <p>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</p>
   <p><form method="post"> {% csrf_token %} {% trans "Suppression d'un administrateur" %} : {{ bddadmform.bddadmemail }} {% trans "êtes-vous sûr ?" %} <input type="submit" value="{% trans "Oui, je supprime" %}"> </form><p>
 
