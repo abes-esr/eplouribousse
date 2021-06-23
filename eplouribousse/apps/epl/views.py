@@ -157,6 +157,7 @@ def adminbase(request, bdd):
     k =logstatus(request)
     version =epl_version
     url ="/" + bdd + "/adminbase"
+    info =_('Le nom courant est à indiquer dans tous les cas (drag & drop)')
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -209,48 +210,42 @@ def adminbase(request, bdd):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
-    class LibrIForm(forms.Form):
-        librname = forms.ChoiceField(required =True, widget=forms.Select, choices = LIBRARY_CHOICES, label =_("nom de la bib"))
     class LibrMNameForm(forms.Form):
+        currname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
         newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
     class LibrMCtc1Form(forms.Form):
         contact1 = forms.EmailField(required =True, label ='email 1')
+        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
     class LibrMCtc2Form(forms.Form):
         contact2 = forms.EmailField(required =True, label ='email 2')
+        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
     class LibrMSu2Form(forms.Form):
         suppr2 = forms.BooleanField(required=True)
     class LibrMCtc3Form(forms.Form):
         contact3 = forms.EmailField(required =True, label ='email 3')
+        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
     class LibrMSu3Form(forms.Form):
         suppr3 = forms.BooleanField(required=True)
 
-    libriform = LibrIForm(request.POST or None)
+    liblist =Library.objects.using(bdd).all()
+    sizelib =len(liblist)
 
-    g =0
-    if libriform.is_valid():
-        g =1
-        libriname = libriform.cleaned_data['librname']
-        lib =Library.objects.using(bdd).get(name =libriname)
-        ctcti1 =Library.objects.using(bdd).get(name =libriname).contact
-        ctcti2 =Library.objects.using(bdd).get(name =libriname).contact_bis
-        ctcti3 =Library.objects.using(bdd).get(name =libriname).contact_ter
-
-        formlibname = LibrMNameForm(request.POST or None)
-        formlibct1 = LibrMCtc1Form(request.POST or None)
-        formlibct2 = LibrMCtc2Form(request.POST or None)
-        formlibsu2 = LibrMSu2Form(request.POST or None)
-        formlibct3 = LibrMCtc3Form(request.POST or None)
-        formlibsu3 = LibrMSu3Form(request.POST or None)
-        if formlibname.is_valid():
-            if not libriname ==formlibname.cleaned_data['newlibrname'] and not formlibname.cleaned_data['newlibrname'] =='checker':
-                lib.name =formlibname.cleaned_data['newlibrname']
-                lib.save(using =bdd)
-                for insn in Instruction.objects.using(bdd).filter(name =formlibname.cleaned_data['newlibrname']):
-                    insn.name =formlibname.cleaned_data['newlibrname']
-                    insn.save(using =bdd)
-                for inso in Instruction.objects.using(bdd).filter(oname =formlibname.cleaned_data['newlibrname']):
-                    inso.oname =formlibname.cleaned_data['newlibrname']
-                    inso.save(using =bdd)
+    formlibname = LibrMNameForm(request.POST or None)
+    formlibct1 = LibrMCtc1Form(request.POST or None)
+    formlibct2 = LibrMCtc2Form(request.POST or None)
+    formlibsu2 = LibrMSu2Form(request.POST or None)
+    formlibct3 = LibrMCtc3Form(request.POST or None)
+    formlibsu3 = LibrMSu3Form(request.POST or None)
+    if formlibname.is_valid():
+        if not libriname ==formlibname.cleaned_data['newlibrname'] and not formlibname.cleaned_data['newlibrname'] =='checker':
+            lib.name =formlibname.cleaned_data['newlibrname']
+            lib.save(using =bdd)
+            for insn in Instruction.objects.using(bdd).filter(name =formlibname.cleaned_data['newlibrname']):
+                insn.name =formlibname.cleaned_data['newlibrname']
+                insn.save(using =bdd)
+            for inso in Instruction.objects.using(bdd).filter(oname =formlibname.cleaned_data['newlibrname']):
+                inso.oname =formlibname.cleaned_data['newlibrname']
+                inso.save(using =bdd)
 
         # pour supprimr contact2 ou contact3 !!!& Changement rétroactif sur l'ensemble des instructions (name et oname aussi)
             # class SupAjForm(forms.Form):
@@ -283,11 +278,12 @@ def adminbase(request, bdd):
     bddadmform =AdminForm(request.POST or None)
     if bddadmform.is_valid():
         seladmin =BddAdmin.objects.using(bdd).get(contact =bddadmform.cleaned_data['bddadmemail'])
-        seladmin.delete(using =bdd)
+        seladmin.delete(using =bdd)#suppression impossible quand il n'y a plus qu'un seul bddadmin pour le projet (contrôle dans le template)
         return HttpResponseRedirect(url)
 
     class ProjadmForm(forms.Form):
         contact = forms.EmailField(required =True, label ='email')
+        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
     projadmform =ProjadmForm(request.POST or None)
     if projadmform.is_valid():
         emaillist =[]

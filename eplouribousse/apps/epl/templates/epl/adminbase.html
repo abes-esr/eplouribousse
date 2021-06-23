@@ -49,17 +49,17 @@
       </div>
       <div id="content">
 
-<p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<!-- <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p> -->
 
-    {% if g != 0 %}
 
+      <p>{% trans "Gestion des bibliothèques" %} ({{ sizelib }}, {% trans "checker inclus" %}) :</p>
 <table border="1">
-
+    {% for l in liblist %}
   <thead>
 
       <th>{% trans "Propriété" %}</th>
       <th>{% trans "Valeur actuelle" %}</th>
-      <th>{% trans "Le cas échéant, nouvelle valeur" %}</th>
+      <!-- <th>{% trans "Le cas échéant, nouvelle valeur" %}</th> -->
 
   </thead>
 
@@ -67,37 +67,77 @@
 
      <tr>
            <td>{% trans "Nom de la bibliothèque" %}</td>
-           <td>{{ libriname }}</td>
-           <td>{% if libriname != 'checker'  %}<form method="post">{% csrf_token %}{{ formlibname.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form>{% else %} ({% trans "Non modifiable" %}) {% endif %}</td>
+           <td>{{ l.name }}</td>
+           <!-- <td>{% if l.name != 'checker'  %}<form method="post">{% csrf_token %}{{ formlibname.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form>{% else %} ({% trans "Non modifiable" %}) {% endif %}</td> -->
      </tr>
      <tr>
            <td>{% trans "Contact principal" %}</td>
-           <td>{{ ctcti1 }}</td>
-           <td><form method="post">{% csrf_token %}{{ formlibct1.contact1 }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+           <td>{{ l.contact }}</td>
+           <!-- <td><form method="post">{% csrf_token %}{{ formlibct1.contact1 }} <input type="submit" value="{% trans "Valider" %}"></form></td> -->
      </tr>
     <tr>
           <td>{% trans "Second contact" %}</td>
-          <td>{% if ctcti2 != None %} {{ ctcti2 }} {% else %} ({% trans "Vacante" %}) {% endif %}</td>
-          <td><form method="post">{% csrf_token %}{{ formlibct2.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if ctcti2 != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu2.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td>
+          <td>{% if l.contact_bis != None %} {{ l.contact_bis }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
+          <!-- <td><form method="post">{% csrf_token %}{{ formlibct2.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_bis != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu2.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td> -->
     </tr>
     <tr>
           <td>{% trans "Troisième contact" %}</td>
-          <td>{% if ctcti3 != None %} {{ ctcti3 }} {% else %} ({% trans "Vacante" %}) {% endif %}</td>
-          <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if ctcti3 != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td>    </tr>
+          <td>{% if l.contact_ter != None %} {{ l.contact_ter }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
+          <!-- <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_ter != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td>    </tr> -->
 
    </tbody>
-
+      {% endfor %}
 </table>
 
+<!-- <p><b><font color= #FF0000 >{% trans "Le nom courant est à indiquer dans tous les cas (drag & drop) ; une seule validation à la fois" %}</font></b></p> -->
 
-    {% endif %}
+<b><font color= #FF0000 >{{ info }}</font></b>
+
+  <p><form method="post"> {% csrf_token %}
+    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% trans "Nouveau nom de la bibliothèque" %} : {{ formlibname.newlibrname }}
+    <input type="submit" value="{% trans "Valider" %}"> </form></p>
+  <p><form method="post"> {% csrf_token %}
+    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% trans "email contact 1" %} : {{ formlibct1.contact1 }} {% trans "Identifiant" %} : {{ formlibct1.ident }}
+    <input type="submit" value="{% trans "Valider" %}"> </form></p>
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+<p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{% trans "email contact 2" %} : {{ formlibct2.contact2 }} {% trans "Identifiant" %} : {{ formlibct2.ident }}
+    <input type="submit" value="{% trans "Valider" %}"> </form></p>
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+<p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% trans "email contact 3" %} : {{ formlibct3.contact3 }} {% trans "Identifiant" %} : {{ formlibct3.ident }}
+    <input type="submit" value="{% trans "Valider" %}"> </form>
+  </p>
+  <p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  {% trans "Supprimer le contact 2" %} : {{ formlibsu2.suppr2 }}
+      <input type="submit" value="{% trans "Valider" %}"> </form></p>
+  <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+  <p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  {% trans "Supprimer le contact 3" %} : {{ formlibsu3.suppr3 }}
+      <input type="submit" value="{% trans "Valider" %}"> </form>
+    </p>
+
+
+
 <HR>
     <!-- <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
 <HR> -->
       <p>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</p>
-  <p><form method="post"> {% csrf_token %} {% trans "Suppression d'un administrateur" %} : {{ bddadmform.bddadmemail }} {% trans "êtes-vous sûr ?" %} <input type="submit" value="{% trans "Oui, je supprime" %}"> </form><p>
 
-    <p><form method="post">{% csrf_token %}{% trans "Ou ajouter un administrateur pour ce projet (email)" %} : {{ projadmform.contact }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projadmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projadmform.ident }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+    {% if sizeadm > 1 %}
+<p><form method="post"> {% csrf_token %} {% trans "Suppression d'un administrateur" %} : {{ bddadmform.bddadmemail }} {% trans "êtes-vous sûr ?" %} <input type="submit" value="{% trans "Oui, je supprime" %}"> </form><p>
+    {% endif %}
+
 <HR>
     <table border="1">
 
