@@ -67,7 +67,7 @@
 
      <tr>
            <td>{% trans "Nom de la bibliothèque" %}</td>
-           <td>{{ l.name }}</td>
+           <td>{{ l.name }} {% if l.name == 'checker'  %} ({% trans "Non modifiable" %}) {% endif %}</td>
            <!-- <td>{% if l.name != 'checker'  %}<form method="post">{% csrf_token %}{{ formlibname.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form>{% else %} ({% trans "Non modifiable" %}) {% endif %}</td> -->
      </tr>
      <tr>
@@ -91,35 +91,33 @@
 
 <!-- <p><b><font color= #FF0000 >{% trans "Le nom courant est à indiquer dans tous les cas (drag & drop) ; une seule validation à la fois" %}</font></b></p> -->
 
-<b><font color= #FF0000 >{{ info }}</font></b>
-
   <p><form method="post"> {% csrf_token %}
-    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    {% trans "Nouveau nom de la bibliothèque" %} : {{ formlibname.newlibrname }}
+    {% trans "Nouveau nom de la bibliothèque" %} : {{ formnewlibname.newlibrname }}
     <input type="submit" value="{% trans "Valider" %}"> </form></p>
   <p><form method="post"> {% csrf_token %}
-    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     {% trans "email contact 1" %} : {{ formlibct1.contact1 }} {% trans "Identifiant" %} : {{ formlibct1.ident }}
     <input type="submit" value="{% trans "Valider" %}"> </form></p>
 <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-<p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+<p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 {% trans "email contact 2" %} : {{ formlibct2.contact2 }} {% trans "Identifiant" %} : {{ formlibct2.ident }}
     <input type="submit" value="{% trans "Valider" %}"> </form></p>
 <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-<p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+<p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     {% trans "email contact 3" %} : {{ formlibct3.contact3 }} {% trans "Identifiant" %} : {{ formlibct3.ident }}
     <input type="submit" value="{% trans "Valider" %}"> </form>
   </p>
-  <p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+  <p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   {% trans "Supprimer le contact 2" %} : {{ formlibsu2.suppr2 }}
       <input type="submit" value="{% trans "Valider" %}"> </form></p>
   <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-  <p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.currname }}
+  <p><form method="post"> {% csrf_token %}{% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   {% trans "Supprimer le contact 3" %} : {{ formlibsu3.suppr3 }}
       <input type="submit" value="{% trans "Valider" %}"> </form>

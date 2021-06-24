@@ -157,7 +157,6 @@ def adminbase(request, bdd):
     k =logstatus(request)
     version =epl_version
     url ="/" + bdd + "/adminbase"
-    info =_('Le nom courant est à indiquer dans tous les cas (drag & drop)')
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -210,8 +209,9 @@ def adminbase(request, bdd):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
-    class LibrMNameForm(forms.Form):
-        currname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+    class LibrMCurNameForm(forms.Form):
+        curname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+    class LibrMNewNameForm(forms.Form):
         newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
     class LibrMCtc1Form(forms.Form):
         contact1 = forms.EmailField(required =True, label ='email 1')
@@ -230,24 +230,32 @@ def adminbase(request, bdd):
     liblist =Library.objects.using(bdd).all()
     sizelib =len(liblist)
 
-    formlibname = LibrMNameForm(request.POST or None)
+    formlibname = LibrMCurNameForm(request.POST or None)
+    formnewlibname = LibrMNewNameForm(request.POST or None)
     formlibct1 = LibrMCtc1Form(request.POST or None)
     formlibct2 = LibrMCtc2Form(request.POST or None)
     formlibsu2 = LibrMSu2Form(request.POST or None)
     formlibct3 = LibrMCtc3Form(request.POST or None)
     formlibsu3 = LibrMSu3Form(request.POST or None)
-    if formlibname.is_valid():
-        if not libriname ==formlibname.cleaned_data['newlibrname'] and not formlibname.cleaned_data['newlibrname'] =='checker':
-            lib.name =formlibname.cleaned_data['newlibrname']
-            lib.save(using =bdd)
-            for insn in Instruction.objects.using(bdd).filter(name =formlibname.cleaned_data['newlibrname']):
-                insn.name =formlibname.cleaned_data['newlibrname']
-                insn.save(using =bdd)
-            for inso in Instruction.objects.using(bdd).filter(oname =formlibname.cleaned_data['newlibrname']):
-                inso.oname =formlibname.cleaned_data['newlibrname']
-                inso.save(using =bdd)
+    if formlibname.is_valid() and formnewlibname.is_valid():
+        if not formlibname.cleaned_data['curname'] ==formnewlibname.cleaned_data['newlibrname']:
+            if formlibname.cleaned_data['curname'] =='checker' or formnewlibname.cleaned_data['newlibrname'] =='checker':
+                return HttpResponseRedirect(url)
+            else:
+                curname = formlibname.cleaned_data['curname']
+                newname = formnewlibname.cleaned_data['newlibrname']
+                for insn in Instruction.objects.using(bdd).filter(name =curname):
+                    insn.name =newname
+                    insn.save(using =bdd)
+                for inso in Instruction.objects.using(bdd).filter(oname =curname):
+                    inso.oname =newname
+                    inso.save(using =bdd)
+                lib = Library.objects.using(bdd).get(name =curname)
+                lib.name =formnewlibname.cleaned_data['newlibrname']
+                lib.save(using =bdd)
+                return HttpResponseRedirect(url)
 
-        # pour supprimr contact2 ou contact3 !!!& Changement rétroactif sur l'ensemble des instructions (name et oname aussi)
+        # pour supprimr contact2 ou contact3 !!!
             # class SupAjForm(forms.Form):
             #     suppr = forms.BooleanField(required=False)
             #     ajo = forms.BooleanField(required=False)
