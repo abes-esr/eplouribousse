@@ -308,22 +308,27 @@ def adminbase(request, bdd):
         # librmform = LibrForm(request.POST or None, instance =j)
         # if librmform.is_valid():
             # a =1
-    # gift =a
 
-    ADMIN_CHOICES =('', _('Sélectionnez')),
+    admintuple =('', ''),
     for b in BddAdmin.objects.using(bdd).all():
-        ADMIN_CHOICES +=(b.contact, b.contact),
-    sizeadm =len(ADMIN_CHOICES[1:])
-    class AdminForm(forms.Form):
-        bddadmemail = forms.ChoiceField(required =True, widget=forms.Select, choices = ADMIN_CHOICES, label =_("email admin"))
-    bddadmform =AdminForm(request.POST or None)
-    if bddadmform.is_valid():
-        seladmin =BddAdmin.objects.using(bdd).get(contact =bddadmform.cleaned_data['bddadmemail'])
-        seladmin.delete(using =bdd)#suppression impossible quand il n'y a plus qu'un seul bddadmin pour le projet (ce contrôle est réalisé dans le template)
-        return HttpResponseRedirect(url)
+        admintuple +=(b.contact, Utilisateur.objects.using(bdd).get(mail =BddAdmin.objects.using(bdd).get(contact =b.contact))),
+    admintuple =admintuple[1:]
+    sizeadm =len(BddAdmin.objects.using(bdd).all())
+
+
+    class ProjadmModForm(forms.Form):
+        curcontact = forms.EmailField(required =True, label ='current email')
+        newcontact = forms.EmailField(required =False, label ='new email')
+        ident = forms.CharField(required =False, widget=forms.TextInput(attrs=\
+        {'placeholder': "Basin@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
+        suppr = forms.BooleanField(required=True)
+    projmodadmform =ProjadmModForm(request.POST or None)
 
     class ProjadmForm(forms.Form):
-        contact = forms.EmailField(required =True, label ='email')
+        contact = forms.EmailField(required =True, label ='current email')
         ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
         {'placeholder': "Rosemonde@" + bdd, 'title': _("Suffixe obligatoire") + \
         ' : ' + '@' + bdd + '. ' + \
@@ -338,7 +343,7 @@ def adminbase(request, bdd):
         if not projadmform.cleaned_data['contact'] in emaillist:
             newadm =BddAdmin()
             newadm.contact =projadmform.cleaned_data['contact']
-            newadm.nothere =False
+            newadm.ident =projadmform.cleaned_data['ident']
             newadm.save(using =bdd)
         return HttpResponseRedirect(url)
 

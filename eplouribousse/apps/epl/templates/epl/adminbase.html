@@ -88,7 +88,8 @@
           <td>{% trans "Troisième contact" %}</td>
           <td>{% if l.0.contact_ter != None %} {{ l.0.contact_ter }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
           <td>{% if l.3 != None %} {{ l.3.username }} {% endif %}</td>
-          <!-- <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_ter != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td>    </tr> -->
+          <!-- <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_ter != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td> -->
+    </tr>
 
    </tbody>
       {% endfor %}
@@ -135,10 +136,36 @@
 <HR> -->
       <p>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</p>
 
+      <table border="1">
+
+        <thead>
+
+            <th>{% trans "mail de l'admin" %}</th>
+            <th>{% trans "identifiant" %}</th>
+            <!-- <th>{% trans "Identifiant" %}</th> -->
+            <!-- <th>{% trans "Le cas échéant, nouvelle valeur" %}</th> -->
+
+        </thead>
+
+         <tbody>
+            {% for adm in admintuple %}
+           <tr>
+                 <td>{{ adm.0 }}</td>
+                 <td>{{ adm.1.username }}</td>
+           </tr>
+
+         </tbody>
+            {% endfor %}
+      </table>
+
     <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projadmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projadmform.ident }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
+
+<p><form method="post"> {% csrf_token %}{% trans "Modification d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email actuel" %}  {{ projmodadmform.curcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  {% trans "email souhaité" %} {{ projmodadmform.newcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  {% trans "Identifiant souhaité" %} :  {{ projmodadmform.ident }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
     {% if sizeadm > 1 %}
-<p><form method="post"> {% csrf_token %} {% trans "Suppression d'un administrateur" %} : {{ bddadmform.bddadmemail }} {% trans "êtes-vous sûr ?" %} <input type="submit" value="{% trans "Oui, je supprime" %}"> </form><p>
+<p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email" %}  {{ projmodadmform.curcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projmodadmform.suppr }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
     {% endif %}
 
 <HR>
