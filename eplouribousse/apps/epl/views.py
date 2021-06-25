@@ -86,6 +86,7 @@ def selectbdd(request):
         librnbr +=len(Library.objects.using(bdd[0]).all())
         itemrecnbr +=len(ItemRecord.objects.using(bdd[0]).all())
         instrnbr +=len(Instruction.objects.using(bdd[0]).all())
+    librnbr =librnbr - projnbr #checkers are not libraries ! (one checker per project)
 
     return render(request, 'epl/selectbdd.html', locals())
 
@@ -215,20 +216,52 @@ def adminbase(request, bdd):
         newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
     class LibrMCtc1Form(forms.Form):
         contact1 = forms.EmailField(required =True, label ='email 1')
-        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
+        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        {'placeholder': "Oriane@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
     class LibrMCtc2Form(forms.Form):
         contact2 = forms.EmailField(required =True, label ='email 2')
-        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
+        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        {'placeholder': "Marcel@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
     class LibrMSu2Form(forms.Form):
         suppr2 = forms.BooleanField(required=True)
     class LibrMCtc3Form(forms.Form):
         contact3 = forms.EmailField(required =True, label ='email 3')
-        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
+        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        {'placeholder': "Gisèle@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
     class LibrMSu3Form(forms.Form):
         suppr3 = forms.BooleanField(required=True)
 
-    liblist =Library.objects.using(bdd).all()
+    liblist =Library.objects.using(bdd).exclude(name ='checker')
     sizelib =len(liblist)
+    try:
+        bis = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name ='checker').contact_bis)
+    except:
+        bis =None
+    try:
+        ter = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name ='checker').contact_ter)
+    except:
+        ter =None
+
+    libtuple =(Library.objects.using(bdd).get(name ='checker'), Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name ='checker').contact), bis, ter),
+    for libelmt in liblist:
+        try:
+            bis = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name =libelmt.name).contact_bis)
+        except:
+            bis =None
+        try:
+            ter = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name =libelmt.name).contact_ter)
+        except:
+            ter =None
+        libtuple +=(Library.objects.using(bdd).get(name =libelmt.name), Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name =libelmt.name).contact), bis, ter),
 
     formlibname = LibrMCurNameForm(request.POST or None)
     formnewlibname = LibrMNewNameForm(request.POST or None)
@@ -286,12 +319,16 @@ def adminbase(request, bdd):
     bddadmform =AdminForm(request.POST or None)
     if bddadmform.is_valid():
         seladmin =BddAdmin.objects.using(bdd).get(contact =bddadmform.cleaned_data['bddadmemail'])
-        seladmin.delete(using =bdd)#suppression impossible quand il n'y a plus qu'un seul bddadmin pour le projet (contrôle dans le template)
+        seladmin.delete(using =bdd)#suppression impossible quand il n'y a plus qu'un seul bddadmin pour le projet (ce contrôle est réalisé dans le template)
         return HttpResponseRedirect(url)
 
     class ProjadmForm(forms.Form):
         contact = forms.EmailField(required =True, label ='email')
-        ident = forms.CharField(required =True, widget=forms.TextInput(), max_length=30, label =_("identifiant"))
+        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        {'placeholder': "Rosemonde@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
     projadmform =ProjadmForm(request.POST or None)
     if projadmform.is_valid():
         emaillist =[]

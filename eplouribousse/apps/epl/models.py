@@ -145,3 +145,11 @@ class ReplyMail(models.Model):
     sendermail = models.EmailField('email')
     def __str__(self):
         return self.sendermail
+
+class Utilisateur(models.Model):
+    """Model for users"""
+    username = models.CharField('username', max_length=30, unique =True, blank=False)
+    mail = models.EmailField('user email', unique =True, blank=False)
+    def __str__(self):
+        info = self.mail + ' | ' + self.username
+        return info
