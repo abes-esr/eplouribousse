@@ -25,10 +25,7 @@
           <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
-      <nav id="sticky-menu">
-        <a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a>
-        <!-- <button><b><a href="/{{ bdd }}/projmaster">{% trans "Vider les formulaires ci-dessous" %}</a></b></button> -->
-      </nav>
+
           {% if k != 0 %}
           <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
           {% else %}
@@ -36,21 +33,24 @@
           <!-- (User : Anonymous) -->
           {% endif %}
 
-    </div>
+    <!-- </div> -->
 
 <body>
 
-       <div id="content">
+       <!-- <div id="content"> -->
 
       <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
+      <a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a>
 
       <!-- <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p> -->
 <HR>
+      </div>
+      <div id="content">
 <p>{% trans "Motifs d'exclusion actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
 <p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} : {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <HR>
-      </div>
-      <div id="content">
+      <!-- </div> -->
+      <!-- <div id="content"> -->
 
 <!-- <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p> -->
 

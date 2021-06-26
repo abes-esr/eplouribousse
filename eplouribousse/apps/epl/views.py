@@ -82,10 +82,17 @@ def selectbdd(request):
     instrnbr =0
     usernbr =len(User.objects.all())
     projnbr =len(BDD_CHOICES) -1
+    totcand =0
     for bdd in BDD_CHOICES[1:]:
         librnbr +=len(Library.objects.using(bdd[0]).all())
         itemrecnbr +=len(ItemRecord.objects.using(bdd[0]).all())
         instrnbr +=len(Instruction.objects.using(bdd[0]).all())
+        cand =[]
+        for e in ItemRecord.objects.using(bdd[0]).all():
+            if len(ItemRecord.objects.using(bdd[0]).filter(sid =e.sid)) >1 and not e.sid in cand:
+                cand.append(e.sid)
+        totcand +=len(cand)
+
     librnbr =librnbr - projnbr #checkers are not libraries ! (one checker per project)
 
     return render(request, 'epl/selectbdd.html', locals())
@@ -147,6 +154,21 @@ def home(request, bdd):
                 return instrtodo(request, bdd, lid, 'title')
             elif feature =='edition':
                 return tobeedited(request, bdd, lid, 'title')
+
+    #abstract :
+    librnbr =0
+    itemrecnbr =0
+    instrnbr =0
+    usernbr =len(User.objects.all())
+    totcand =0
+    librnbr +=len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
+    itemrecnbr +=len(ItemRecord.objects.using(bdd).all())
+    instrnbr +=len(Instruction.objects.using(bdd).all())
+    cand =[]
+    for e in ItemRecord.objects.using(bdd).all():
+        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
+            cand.append(e.sid)
+    totcand +=len(cand)
 
     return render(request, 'epl/home.html', locals())
 
@@ -344,7 +366,7 @@ def adminbase(request, bdd):
             newadm =BddAdmin()
             newadm.contact =projadmform.cleaned_data['contact']
             newuser =Utilisateur()
-            newuser.username =projadmform.cleaned_data['ident']
+            newuser.username =projadmform.cleaned_data['ident']#contrôles à prévoir ici (conformité du username etc. avec try except)
             newuser.mail =projadmform.cleaned_data['contact']
             newuser.save(using =bdd)
             newadm.save(using =bdd)
@@ -626,6 +648,21 @@ def logout_view(request, bdd):
                 return instrtodo(request, bdd, lid, 'title')
             elif feature =='edition':
                 return tobeedited(request, bdd, lid, 'title')
+
+    #abstract :
+    librnbr =0
+    itemrecnbr =0
+    instrnbr =0
+    usernbr =len(User.objects.all())
+    totcand =0
+    librnbr +=len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
+    itemrecnbr +=len(ItemRecord.objects.using(bdd).all())
+    instrnbr +=len(Instruction.objects.using(bdd).all())
+    cand =[]
+    for e in ItemRecord.objects.using(bdd).all():
+        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
+            cand.append(e.sid)
+    totcand +=len(cand)
 
     return render(request, 'epl/disconnect.html', locals())
 
