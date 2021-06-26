@@ -343,7 +343,10 @@ def adminbase(request, bdd):
         if not projadmform.cleaned_data['contact'] in emaillist:
             newadm =BddAdmin()
             newadm.contact =projadmform.cleaned_data['contact']
-            newadm.ident =projadmform.cleaned_data['ident']
+            newuser =Utilisateur()
+            newuser.username =projadmform.cleaned_data['ident']
+            newuser.mail =projadmform.cleaned_data['contact']
+            newuser.save(using =bdd)
             newadm.save(using =bdd)
         return HttpResponseRedirect(url)
 
