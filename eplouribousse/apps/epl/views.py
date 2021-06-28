@@ -232,35 +232,22 @@ def adminbase(request, bdd):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
             LIBRARY_CHOICES += (l.name, l.name),
 
+    CONTACT_CHOICE =('', _('Contact')), ('1', '1'), ('2', '2'), ('3', '3'),
+
     class LibrMCurNameForm(forms.Form):
         curname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
     class LibrMNewNameForm(forms.Form):
         newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
-    class LibrMCtc1Form(forms.Form):
-        contact1 = forms.EmailField(required =True, label ='email 1')
-        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+    class LibrMCtcForm(forms.Form):
+        name = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+        contactnbr =forms.ChoiceField(required = True, widget=forms.Select, choices=CONTACT_CHOICE)
+        contact = forms.EmailField(required =False, label ='email 1')
+        ident = forms.CharField(required =False, widget=forms.TextInput(attrs=\
         {'placeholder': "Oriane@" + bdd, 'title': _("Suffixe obligatoire") + \
         ' : ' + '@' + bdd + '. ' + \
         "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
-        max_length=30, label =_("identifiant"))
-    class LibrMCtc2Form(forms.Form):
-        contact2 = forms.EmailField(required =True, label ='email 2')
-        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
-        {'placeholder': "Marcel@" + bdd, 'title': _("Suffixe obligatoire") + \
-        ' : ' + '@' + bdd + '. ' + \
-        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
-        max_length=30, label =_("identifiant"))
-    class LibrMSu2Form(forms.Form):
-        suppr2 = forms.BooleanField(required=True)
-    class LibrMCtc3Form(forms.Form):
-        contact3 = forms.EmailField(required =True, label ='email 3')
-        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
-        {'placeholder': "Gisèle@" + bdd, 'title': _("Suffixe obligatoire") + \
-        ' : ' + '@' + bdd + '. ' + \
-        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
-        max_length=30, label =_("identifiant"))
-    class LibrMSu3Form(forms.Form):
-        suppr3 = forms.BooleanField(required=True)
+        max_length=30, label =_("identifiant 1"))
+        suppr = forms.BooleanField(required=False)
 
     liblist =Library.objects.using(bdd).exclude(name ='checker')
     sizelib =len(liblist)
@@ -287,11 +274,8 @@ def adminbase(request, bdd):
 
     formlibname = LibrMCurNameForm(request.POST or None)
     formnewlibname = LibrMNewNameForm(request.POST or None)
-    formlibct1 = LibrMCtc1Form(request.POST or None)
-    formlibct2 = LibrMCtc2Form(request.POST or None)
-    formlibsu2 = LibrMSu2Form(request.POST or None)
-    formlibct3 = LibrMCtc3Form(request.POST or None)
-    formlibsu3 = LibrMSu3Form(request.POST or None)
+    formlibct = LibrMCtcForm(request.POST or None)
+
     if formlibname.is_valid() and formnewlibname.is_valid():
         if not formlibname.cleaned_data['curname'] ==formnewlibname.cleaned_data['newlibrname']:
             if formlibname.cleaned_data['curname'] =='checker' or formnewlibname.cleaned_data['newlibrname'] =='checker':
@@ -309,6 +293,62 @@ def adminbase(request, bdd):
                 lib.name =formnewlibname.cleaned_data['newlibrname']
                 lib.save(using =bdd)
                 return HttpResponseRedirect(url)
+
+    # sender =request.user.email
+    sender ="gressot@unistra.fr"
+    BDD_CHOICES =('', ''),
+    for i in [n for n in range(10)]:
+        if os.path.isfile('{:02d}.db'.format(i)):
+            p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
+            BDD_CHOICES += ('{:02d}'.format(i), p),
+    BDD_CHOICES =BDD_CHOICES[1:]
+    compteur =0
+    if formlibct.is_valid():
+        if Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']) in Library.objects.using(bdd).all():
+            lib = Library.objects.using(bdd).get(name =formlibct.cleaned_data['name'])
+            if formlibct.cleaned_data['suppr'] ==True:
+                if formlibct.cleaned_data['contactnbr'] =='2':
+                    for datab in BDD_CHOICES:
+                        for lb in Library.objects.using(datab[0]).all():
+                            if lb.contact ==lib.contact_bis:
+                                compteur +=1
+                            if lb.contact_bis ==lib.contact_bis:
+                                compteur +=1
+                            if lb.contact_ter ==lib.contact_bis:
+                                compteur +=1
+                        for bd in BddAdmin.objects.using(datab[0]).all():
+                            if bd.contact ==lib.contact_bis:
+                                compteur +=1
+                    # if compteur >1 and not User.objects.get(email =lib.contact_bis).is_staff() and not User.objects.get(email =lib.contact_bis).is_superuser():
+                    #     lib.contact_bis =None
+                    #     lib.save(using =bdd)
+                    # else:
+                    #     lib.contact_bis =None
+                    #     lib.save(using =bdd)
+                    #     usager =User.objects.get(email =lib.contact_bis)
+                    #     usager.delete()
+
+                    #     librnbr +=len(Library.objects.using(bdd[0]).all())
+                    #     itemrecnbr +=len(ItemRecord.objects.using(bdd[0]).all())
+                    #     instrnbr +=len(Instruction.objects.using(bdd[0]).all())
+                    #     cand =[]
+                    #     for e in ItemRecord.objects.using(bdd[0]).all():
+                    #         if len(ItemRecord.objects.using(bdd[0]).filter(sid =e.sid)) >1 and not e.sid in cand:
+                    #             cand.append(e.sid)
+                    #     totcand +=len(cand)
+                    # libr.contact_bis =None
+                    # libr.save(using =bdd)
+            # if formlibct.cleaned_data['contact'] and not formlibct.cleaned_data['ident']:
+            #     recipient =[formlibct.cleaned_data['contact'], Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']).contact]
+            #     objet ="eplouribousse / " + project + " / " + _("Modification d'un contact (email)")
+            #     message =_("Nouvel email de contact : ") + formlibct.cleaned_data['contact']
+            #     # if contactnbr ==
+            # elif formlibct.cleaned_data['ident'] and not formlibct.cleaned_data['contact']:
+            #     m =2
+            # elif formlibct.cleaned_data['ident'] and formlibct.cleaned_data['contact1']:
+            #     recipient.append(formlibct1.cleaned_data['contact1'])
+            #     m =3
+
 
         # pour supprimr contact2 ou contact3 !!!
             # class SupAjForm(forms.Form):
