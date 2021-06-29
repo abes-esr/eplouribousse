@@ -22,7 +22,7 @@
 
         <div id="content">
         {% if k != 0 %}
-        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./{{ bdd }}/disconnect">{% trans "Déconnexion" %}</a>)</p>
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
         {% else %}
         <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
         <!-- (User : Anonymous) -->
@@ -49,7 +49,8 @@
 
         <div id="footer">
 
-            <p><a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a> - <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> - <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a> - <a href="/./default/lang">{% trans "en / de" %}</a></p>
+            <p><a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a> - <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a> - <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> - <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a></p>
+             <!-- - <a href="/./default/lang">{% trans "en / de" %}</a> -->
             <p>[<a href="/{{ bdd }}/adminbase">{% trans "Administration du projet (réservé)" %}</a>] -  [<a href="/./admin/">{% trans "Administration générale (réservé)" %}</a>]</p>
         </div>
 

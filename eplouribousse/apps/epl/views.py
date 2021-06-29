@@ -113,6 +113,13 @@ def home(request, bdd):
 
     "Homepage"
 
+    for e in Utilisateur.objects.using(bdd).all():
+        try:
+            user =User.objects.get(username =e.username)
+        except:
+            user =User.objects.create_user(e.username, email =e.mail, password ="glass onion")
+
+
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     LIBRARY_CHOICES = ('', 'Choisissez votre bibliothèque'),('checker','checker'),
@@ -637,7 +644,7 @@ def lang(request):
     return render(request, 'epl/language.html', locals())
 
 
-def logout_view(request, bdd):
+def logout_view(request):
 
     "Homepage special disconnected"
 
@@ -646,63 +653,6 @@ def logout_view(request, bdd):
     # Redirect to a success page.
 
     version =epl_version
-
-    project = Project.objects.using(bdd).all().order_by('pk')[0].name
-
-    LIBRARY_CHOICES = ('', 'Choisissez votre bibliothèque'),('checker','checker'),
-    if Library.objects.using(bdd).all().exclude(name ='checker'):
-        for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
-            LIBRARY_CHOICES += (l.name, l.name),
-
-    class FeatureForm(forms.ModelForm):
-        class Meta:
-            model = Feature
-            fields = ('libname', 'feaname',)
-            widgets = {
-                'libname' : forms.Select(choices=LIBRARY_CHOICES),
-                'feaname' : forms.RadioSelect(choices=FEATURE_CHOICES),
-            }
-
-    #Feature input :
-    i = Feature()
-
-    form = FeatureForm(request.POST, instance =i)
-
-    if form.is_valid():
-        lid = Library.objects.using(bdd).get(name =i.libname).lid
-        feature =i.feaname
-        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
-            i.save(using=bdd)
-
-        if lid =="999999999":
-            if feature =='instrtodo':
-                return instrtodo(request, bdd, lid, 'title')
-            else:
-                return checkinstr(request, bdd)
-        else:
-            if feature =='ranking':
-                return ranktotake(request, bdd, lid, 'title')
-            elif feature =='arbitration':
-                return arbitration(request, bdd, lid, 'title')
-            elif feature =='instrtodo':
-                return instrtodo(request, bdd, lid, 'title')
-            elif feature =='edition':
-                return tobeedited(request, bdd, lid, 'title')
-
-    #abstract :
-    librnbr =0
-    itemrecnbr =0
-    instrnbr =0
-    usernbr =len(User.objects.all())
-    totcand =0
-    librnbr +=len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
-    itemrecnbr +=len(ItemRecord.objects.using(bdd).all())
-    instrnbr +=len(Instruction.objects.using(bdd).all())
-    cand =[]
-    for e in ItemRecord.objects.using(bdd).all():
-        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
-            cand.append(e.sid)
-    totcand +=len(cand)
 
     return render(request, 'epl/disconnect.html', locals())
 
