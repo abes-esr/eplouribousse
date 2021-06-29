@@ -309,74 +309,31 @@ def adminbase(request, bdd):
             p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
             BDD_CHOICES += ('{:02d}'.format(i), p),
     BDD_CHOICES =BDD_CHOICES[1:]
-    compteur =0
+
     if formlibct.is_valid():
         if Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']) in Library.objects.using(bdd).all():
             lib = Library.objects.using(bdd).get(name =formlibct.cleaned_data['name'])
             if formlibct.cleaned_data['suppr'] ==True:
+                compteura =0
                 if formlibct.cleaned_data['contactnbr'] =='2':
-                    for datab in BDD_CHOICES:
-                        for lb in Library.objects.using(datab[0]).all():
-                            if lb.contact ==lib.contact_bis:
-                                compteur +=1
-                            if lb.contact_bis ==lib.contact_bis:
-                                compteur +=1
-                            if lb.contact_ter ==lib.contact_bis:
-                                compteur +=1
-                        for bd in BddAdmin.objects.using(datab[0]).all():
-                            if bd.contact ==lib.contact_bis:
-                                compteur +=1
-                    # if compteur >1 and not User.objects.get(email =lib.contact_bis).is_staff() and not User.objects.get(email =lib.contact_bis).is_superuser():
-                    #     lib.contact_bis =None
-                    #     lib.save(using =bdd)
-                    # else:
-                    #     lib.contact_bis =None
-                    #     lib.save(using =bdd)
-                    #     usager =User.objects.get(email =lib.contact_bis)
-                    #     usager.delete()
-
-                    #     librnbr +=len(Library.objects.using(bdd[0]).all())
-                    #     itemrecnbr +=len(ItemRecord.objects.using(bdd[0]).all())
-                    #     instrnbr +=len(Instruction.objects.using(bdd[0]).all())
-                    #     cand =[]
-                    #     for e in ItemRecord.objects.using(bdd[0]).all():
-                    #         if len(ItemRecord.objects.using(bdd[0]).filter(sid =e.sid)) >1 and not e.sid in cand:
-                    #             cand.append(e.sid)
-                    #     totcand +=len(cand)
-                    # libr.contact_bis =None
-                    # libr.save(using =bdd)
-            # if formlibct.cleaned_data['contact'] and not formlibct.cleaned_data['ident']:
-            #     recipient =[formlibct.cleaned_data['contact'], Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']).contact]
-            #     objet ="eplouribousse / " + project + " / " + _("Modification d'un contact (email)")
-            #     message =_("Nouvel email de contact : ") + formlibct.cleaned_data['contact']
-            #     # if contactnbr ==
-            # elif formlibct.cleaned_data['ident'] and not formlibct.cleaned_data['contact']:
-            #     m =2
-            # elif formlibct.cleaned_data['ident'] and formlibct.cleaned_data['contact1']:
-            #     recipient.append(formlibct1.cleaned_data['contact1'])
-            #     m =3
-
-
-        # pour supprimr contact2 ou contact3 !!!
-            # class SupAjForm(forms.Form):
-            #     suppr = forms.BooleanField(required=False)
-            #     ajo = forms.BooleanField(required=False)
-            #
-            # modeform =SupAjForm(request.POST or None)
-            #
-            # if request.method =="POST" and f.is_valid() and modeform.is_valid():
-            #     sup = modeform.cleaned_data['suppr']
-            #     aj = modeform.cleaned_data['ajo']
-        # recipient = form.cleaned_data['librname']
-        # a=1
-        # libname =i.name
-        # contact =i.contact
-        # contact_bis =i.contact_bis
-        # contact_ter =i.contact_ter
-        # j =Library(name =libname)#modified
-        # librmform = LibrForm(request.POST or None, instance =j)
-        # if librmform.is_valid():
-            # a =1
+                    for u in Library.objects.using(bdd).all():
+                        if u.contact ==lib.contact_bis:
+                            compteura +=1
+                        if u.contact_bis ==lib.contact_bis:
+                            compteura +=1
+                        if u.contact_ter ==lib.contact_bis:
+                            compteura +=1
+                    for v in BddAdmin.objects.using(bdd).all():
+                        if v.contact ==lib.contact_bis:
+                            compteura +=1
+                    if compteura ==1:
+                        user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username)
+                        uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis)
+                        user.delete()
+                        uter.delete()
+                    lib.contact_bis =None
+                    lib.save(using =bdd)
+                    return HttpResponseRedirect(url)
 
     admintuple =('', ''),
     for b in BddAdmin.objects.using(bdd).all():
