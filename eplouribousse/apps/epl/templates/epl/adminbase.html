@@ -41,13 +41,19 @@
 
       <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
       <a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a>
-
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <center><font color= #0000FF ><p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
+          {% endfor %}
+      </ul>
+      {% endif %}
       <!-- <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p> -->
 <HR>
       </div>
       <div id="content">
 <p>{% trans "Motifs d'exclusion actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
-<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} : {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <HR>
       <!-- </div> -->
       <!-- <div id="content"> -->
@@ -101,14 +107,17 @@
 <!-- <p><b><font color= #FF0000 >{% trans "Le nom courant est à indiquer dans tous les cas (drag & drop) ; une seule validation à la fois" %}</font></b></p> -->
 
   <p><form method="post"> {% csrf_token %}
-    {% trans "Nom courant de la bibliothèque" %} : {{ formlibname.curname }}
+    {% trans "Nom courant de la bibliothèque" %} {{ formlibname.curname }}
     &nbsp;&nbsp;&nbsp;&nbsp;
-    {% trans "Nouveau nom de la bibliothèque" %} : {{ formnewlibname.newlibrname }}
+    {% trans "Nouveau nom de la bibliothèque" %} {{ formnewlibname.newlibrname }}
     <input type="submit" value="{% trans "Valider" %}"> </form></p>
 
-<p><form method="post"> {% csrf_token %}{% trans "Bibliothèque" %} : {{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email" %} : {{ formlibct.contact }} &nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} : {{ formlibct.ident }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} : {{ formlibct.suppr }}    <input type="submit" value="{% trans "Valider" %}"> </form>
+<p><form method="post"> {% csrf_token %}{% trans "Bibliothèque" %} {{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou modifier" %} {% trans "email" %} {{ formlibct.contact }}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou / et" %}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ formlibct.ident }}
+<input type="submit" value="{% trans "Valider" %}"> </form>
   </p>
 
 
@@ -145,7 +154,7 @@
 
 <p><form method="post"> {% csrf_token %}{% trans "Modification d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email actuel" %}  {{ projmodadmform.curcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   {% trans "email souhaité" %} {{ projmodadmform.newcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  {% trans "Identifiant souhaité" %} :  {{ projmodadmform.ident }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
+  {% trans "Identifiant souhaité" %} {{ projmodadmform.ident }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
     {% if sizeadm > 1 %}
 <p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email" %}  {{ projmodadmform.curcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projmodadmform.suppr }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
     {% endif %}

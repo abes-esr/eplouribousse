@@ -26,6 +26,8 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect, HttpResponse
 import os
 
+from django.contrib import messages
+
 lastrked =None
 webmaster =""
 try:
@@ -232,6 +234,7 @@ def adminbase(request, bdd):
         newexcl =Exclusion()
         newexcl.label =exclform.cleaned_data['exclusup']
         newexcl.save(using =bdd)
+        messages.info(request, _('Exclusion ajoutée avec succès'))
         return HttpResponseRedirect(url)
 
     LIBRARY_CHOICES = ('', _('Sélectionnez la bibliothèque')), ('checker', 'checker'),
@@ -375,6 +378,14 @@ def adminbase(request, bdd):
             newuser.save(using =bdd)
             newadm.save(using =bdd)
         return HttpResponseRedirect(url)
+
+    # messages.debug(request, '%s SQL statements were executed.' % count)
+    # messages.info(request, 'Three credits remain in your account.')
+    # messages.success(request, 'Profile details updated.')
+    # messages.warning(request, 'Your account expires in three days.')
+    # messages.error(request, 'Document deleted.')
+    # messages.add_message(request, messages.INFO, 'Hello world.')
+    # messages.add_message(request, messages.SUCCESS, 'Hello wolafùlrld.')
 
     return render(request, 'epl/adminbase.html', locals())
 
