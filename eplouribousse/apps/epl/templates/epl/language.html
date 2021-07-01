@@ -33,6 +33,7 @@
           <h1>Change language</h1>
 
           <form action="/i18n/setlang/" method="post">
+            <input name="next" type="hidden" value="/">
               {% csrf_token %}
 
               <select name="language">
@@ -41,9 +42,9 @@
               {% endfor %}
               </select>
 
-              <input type="submit" />  <p><a href="/">{% trans "Retour à la page d'accueil" %}</a></p>
+              <input type="submit" />
           </form>
-
+<p><a href="/">{% trans "Retour à la page d'accueil" %}</a></p>
 
 <p></p>
 

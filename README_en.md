@@ -28,9 +28,10 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 12. authentication controls,
 13. parameterization of derogation reasons,
 14. administration of faulty card cases,
-15. contact forms : to contact either the webmaster(s) or the developer(s),
-16. csv export for the main lists,
-17. autonomous password management.
+15. internationalization (English and German in progress, possible extension to other languages),
+16. contact forms : to contact either the webmaster(s) or the developer(s),
+17. csv export for the main lists,
+18. autonomous password management.
 
 # Other services :
 
