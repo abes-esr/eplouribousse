@@ -119,8 +119,16 @@ def home(request, bdd):
         try:
             user =User.objects.get(username =e.username)
         except:
-            user =User.objects.create_user(e.username, email =e.mail, password ="glass onion")
+            user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
 
+    #Pour ne pas avoir à faire les contrôles correspondants dans la vue adminbase (par contre cela implique de passer par la page d'acceuil du projet !)
+    suffixe = "@" + str(bdd)
+    for j in User.objects.all():
+        if j.username[-3:] ==suffixe:
+            try:
+                utilisateur =Utilisateur.objects.using(bdd).get(username =j.username)
+            except:
+                j.delete()
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
@@ -231,11 +239,16 @@ def adminbase(request, bdd):
     exclform =ExcluForm(request.POST or None)
 
     if exclform.is_valid():
-        newexcl =Exclusion()
-        newexcl.label =exclform.cleaned_data['exclusup']
-        newexcl.save(using =bdd)
-        messages.info(request, _('Exclusion ajoutée avec succès'))
-        return HttpResponseRedirect(url)
+        try:
+            op =Exclusion.objects.using(bdd).get(label =exclform.cleaned_data['exclusup'])
+            messages.info(request, _('Cette exclusion existe déjà'))
+            return HttpResponseRedirect(url)
+        except:
+            newexcl =Exclusion()
+            newexcl.label =exclform.cleaned_data['exclusup']
+            newexcl.save(using =bdd)
+            messages.info(request, _('Exclusion ajoutée avec succès'))
+            return HttpResponseRedirect(url)
 
     LIBRARY_CHOICES = ('', _('Sélectionnez la bibliothèque')), ('checker', 'checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
@@ -247,7 +260,7 @@ def adminbase(request, bdd):
     class LibrMCurNameForm(forms.Form):
         curname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
     class LibrMNewNameForm(forms.Form):
-        newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+        newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30', 'title': _("Action rétroactive applicable à l'ensemble des instructions")}), max_length=30, label =_("nom de la bib"))
     class LibrMCtcForm(forms.Form):
         name = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
         contactnbr =forms.ChoiceField(required = True, widget=forms.Select, choices=CONTACT_CHOICE)
@@ -255,7 +268,7 @@ def adminbase(request, bdd):
         ident = forms.CharField(required =False, widget=forms.TextInput(attrs=\
         {'placeholder': "Oriane@" + bdd, 'title': _("Suffixe obligatoire") + \
         ' : ' + '@' + bdd + '. ' + \
-        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        _("Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ ».")}), \
         max_length=30, label =_("identifiant 1"))
         suppr = forms.BooleanField(required=False)
 
@@ -289,20 +302,28 @@ def adminbase(request, bdd):
     if formlibname.is_valid() and formnewlibname.is_valid():
         if not formlibname.cleaned_data['curname'] ==formnewlibname.cleaned_data['newlibrname']:
             if formlibname.cleaned_data['curname'] =='checker' or formnewlibname.cleaned_data['newlibrname'] =='checker':
+                messages.add_message(request, messages.INFO, _("'checker' est un nom réservé"))
                 return HttpResponseRedirect(url)
             else:
-                curname = formlibname.cleaned_data['curname']
-                newname = formnewlibname.cleaned_data['newlibrname']
-                for insn in Instruction.objects.using(bdd).filter(name =curname):
-                    insn.name =newname
-                    insn.save(using =bdd)
-                for inso in Instruction.objects.using(bdd).filter(oname =curname):
-                    inso.oname =newname
-                    inso.save(using =bdd)
-                lib = Library.objects.using(bdd).get(name =curname)
-                lib.name =formnewlibname.cleaned_data['newlibrname']
-                lib.save(using =bdd)
-                return HttpResponseRedirect(url)
+                try:
+                    bibliot =Library.objects.using(bdd).get(name =formlibname.cleaned_data['curname'])
+                    curname = formlibname.cleaned_data['curname']
+                    newname = formnewlibname.cleaned_data['newlibrname']
+                    for insn in Instruction.objects.using(bdd).filter(name =curname):
+                        insn.name =newname
+                        insn.save(using =bdd)
+                    for inso in Instruction.objects.using(bdd).filter(oname =curname):
+                        inso.oname =newname
+                        inso.save(using =bdd)
+                    lib = Library.objects.using(bdd).get(name =curname)
+                    lib.name =formnewlibname.cleaned_data['newlibrname']
+                    lib.save(using =bdd)
+                    messages.add_message(request, messages.INFO, _("Nom de la bibliothèque modifié avec succès"))
+                    return HttpResponseRedirect(url)
+                except:
+                    messages.add_message(request, messages.INFO, _("Pas de bibliothèque au nom que vous avez indiqué"))
+                    return HttpResponseRedirect(url)
+
 
     # sender =request.user.email
     sender ="gressot@unistra.fr"
@@ -314,29 +335,128 @@ def adminbase(request, bdd):
     BDD_CHOICES =BDD_CHOICES[1:]
 
     if formlibct.is_valid():
-        if Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']) in Library.objects.using(bdd).all():
-            lib = Library.objects.using(bdd).get(name =formlibct.cleaned_data['name'])
-            if formlibct.cleaned_data['suppr'] ==True:
-                compteura =0
-                if formlibct.cleaned_data['contactnbr'] =='2':
-                    for u in Library.objects.using(bdd).all():
-                        if u.contact ==lib.contact_bis:
-                            compteura +=1
-                        if u.contact_bis ==lib.contact_bis:
-                            compteura +=1
-                        if u.contact_ter ==lib.contact_bis:
-                            compteura +=1
-                    for v in BddAdmin.objects.using(bdd).all():
-                        if v.contact ==lib.contact_bis:
-                            compteura +=1
-                    if compteura ==1:
-                        user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username)
-                        uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis)
-                        user.delete()
-                        uter.delete()
-                    lib.contact_bis =None
-                    lib.save(using =bdd)
-                    return HttpResponseRedirect(url)
+        try:
+            if Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']) in Library.objects.using(bdd).all():
+                lib = Library.objects.using(bdd).get(name =formlibct.cleaned_data['name'])
+                if formlibct.cleaned_data['suppr'] ==True:
+                    compteura =0
+                    if formlibct.cleaned_data['contactnbr'] =='2':
+                        for u in Library.objects.using(bdd).all():
+                            if u.contact ==lib.contact_bis:
+                                compteura +=1
+                            if u.contact_bis ==lib.contact_bis:
+                                compteura +=1
+                            if u.contact_ter ==lib.contact_bis:
+                                compteura +=1
+                        for v in BddAdmin.objects.using(bdd).all():
+                            if v.contact ==lib.contact_bis:
+                                compteura +=1
+                        if compteura ==1:
+                            user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username)
+                            uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis)
+                            user.delete()
+                            uter.delete()
+                        lib.contact_bis =None
+                        lib.save(using =bdd)
+                        messages.add_message(request, messages.INFO, _('Contact supprimé avec succès'))
+                        return HttpResponseRedirect(url)
+                    compteurb =0
+                    if formlibct.cleaned_data['contactnbr'] =='3':
+                        for u in Library.objects.using(bdd).all():
+                            if u.contact ==lib.contact_ter:
+                                compteurb +=1
+                            if u.contact_bis ==lib.contact_ter:
+                                compteurb +=1
+                            if u.contact_ter ==lib.contact_ter:
+                                compteurb +=1
+                        for v in BddAdmin.objects.using(bdd).all():
+                            if v.contact ==lib.contact_ter:
+                                compteurb +=1
+                        if compteurb ==1:
+                            user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter).username)
+                            uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter)
+                            user.delete()
+                            uter.delete()
+                        lib.contact_ter =None
+                        lib.save(using =bdd)
+                        messages.add_message(request, messages.INFO, _('Contact supprimé avec succès'))
+                        return HttpResponseRedirect(url)
+                    if formlibct.cleaned_data['contactnbr'] =='1':
+                        messages.add_message(request, messages.INFO, _('Le contact principal ne peut pas être supprimé'))
+                        return HttpResponseRedirect(url)
+                else:#formlibct.cleaned_data['suppr'] ==False
+                    if formlibct.cleaned_data['ident']:
+                        suffixe ="@" + str(bdd)
+                        if formlibct.cleaned_data['ident'][-3:] ==suffixe:
+                            if formlibct.cleaned_data['contact']:
+                                try:# to know if the utilisateur already exists
+                                    usertry =Utilisateur.objects.using(bdd).get(username =formlibct.cleaned_data['ident'], mail =formlibct.cleaned_data['contact'])
+                                    if formlibct.cleaned_data['contactnbr'] =='1':
+                                        lib.contact =formlibct.cleaned_data['contact']
+                                        lib.save(using =bdd)
+                                    if formlibct.cleaned_data['contactnbr'] =='2':
+                                        lib.contact_bis =formlibct.cleaned_data['contact']
+                                        lib.save(using =bdd)
+                                    if formlibct.cleaned_data['contactnbr'] =='3':
+                                        lib.contact_ter =formlibct.cleaned_data['contact']
+                                        lib.save(using =bdd)
+                                except:#the utilisateur doesn't already exist
+                                    try:# username must not be an existing one
+                                        usertry =Utilisateur.objects.using(bdd).get(username =formlibct.cleaned_data['ident'])
+                                        messages.add_message(request, messages.INFO, _("Cet identifiant est déjà pris"))
+                                        return HttpResponseRedirect(url)
+                                    except:
+                                        usernew =Utilisateur()
+                                        usernew.username =formlibct.cleaned_data['ident']
+                                        usernew.mail =formlibct.cleaned_data['contact']
+                                        usernew.save(using =bdd)
+                                        user =User.objects.create_user(username =formlibct.cleaned_data['ident'], email =formlibct.cleaned_data['contact'], password ="glass onion")
+                                        if formlibct.cleaned_data['contactnbr'] =='1':
+                                            lib.contact =formlibct.cleaned_data['contact']
+                                            lib.save(using =bdd)
+                                        if formlibct.cleaned_data['contactnbr'] =='2':
+                                            lib.contact_bis =formlibct.cleaned_data['contact']
+                                            lib.save(using =bdd)
+                                        if formlibct.cleaned_data['contactnbr'] =='3':
+                                            lib.contact_ter =formlibct.cleaned_data['contact']
+                                            lib.save(using =bdd)
+                                            messages.add_message(request, messages.INFO, _("Modification effectuée"))
+                                            return HttpResponseRedirect(url)
+                            else:#formlibct.cleaned_data['contact'] == None but formlibct.cleaned_data['ident'] is ok
+                                try:# username must not be an existing one
+                                    usertry =Utilisateur.objects.using(bdd).get(username =formlibct.cleaned_data['ident'])
+                                    messages.add_message(request, messages.INFO, _("Cet identifiant est déjà pris"))
+                                    return HttpResponseRedirect(url)
+                                except:
+                                    usermod =Utilisateur()
+                                    usermod.username =formlibct.cleaned_data['ident']
+                                    usermod.save(using =bdd)
+                                    user =User.objects.create_user(username =formlibct.cleaned_data['ident'], email =formlibct.cleaned_data['contact'], password ="glass onion")
+                                    messages.add_message(request, messages.INFO, _("L'identifiant de l'utilisateur a été modifié avec succès"))
+                                    return HttpResponseRedirect(url)
+                        else:
+                            messages.add_message(request, messages.INFO, _("échec : suffixe non conforme"))
+                            return HttpResponseRedirect(url)
+                    else:# formlibct.cleaned_data['ident'] == None
+                        if formlibct.cleaned_data['contact']:
+                            if formlibct.cleaned_data['contactnbr'] =='1':
+                                lib.contact =formlibct.cleaned_data['contact']
+                                lib.save(using =bdd)
+                            if formlibct.cleaned_data['contactnbr'] =='2':
+                                lib.contact_bis =formlibct.cleaned_data['contact']
+                                lib.save(using =bdd)
+                            if formlibct.cleaned_data['contactnbr'] =='3':
+                                lib.contact_ter =formlibct.cleaned_data['contact']
+                                lib.save(using =bdd)
+                                messages.add_message(request, messages.INFO, _("Modification effectuée"))
+                                return HttpResponseRedirect(url)
+                        else: #formlibct.cleaned_data['contact'] == None and formlibct.cleaned_data['ident'] == None
+                            messages.add_message(request, messages.INFO, _("(Vous n'avez pas complété le formulaire)"))
+                            return HttpResponseRedirect(url)
+        except:
+            messages.add_message(request, messages.INFO, _("Pas de bibliothèque au nom que vous avez indiqué"))
+            return HttpResponseRedirect(url)
+
 
     admintuple =('', ''),
     for b in BddAdmin.objects.using(bdd).all():
