@@ -114,9 +114,7 @@
 
 <p><form method="post"> {% csrf_token %}{% trans "Bibliothèque" %} {{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
 &nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou modifier" %} {% trans "email" %} {{ formlibct.contact }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou / et" %}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ formlibct.ident }}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou modifier la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
 <input type="submit" value="{% trans "Valider" %}"> </form>
   </p>
 
