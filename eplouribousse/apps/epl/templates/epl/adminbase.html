@@ -113,8 +113,8 @@
     <input type="submit" value="{% trans "Valider" %}"> </form></p>
 
 <p><form method="post"> {% csrf_token %}{% trans "Bibliothèque" %} {{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou modifier la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}<br />
+{% trans "ou modifier (ou créer) la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
 <input type="submit" value="{% trans "Valider" %}"> </form>
   </p>
 
@@ -147,14 +147,10 @@
             {% endfor %}
       </table>
 
-    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projadmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projadmform.ident }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.ident }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
-
-<p><form method="post"> {% csrf_token %}{% trans "Modification d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email actuel" %}  {{ projmodadmform.curcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  {% trans "email souhaité" %} {{ projmodadmform.newcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  {% trans "Identifiant souhaité" %} {{ projmodadmform.ident }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
     {% if sizeadm > 1 %}
-<p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email" %}  {{ projmodadmform.curcontact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projmodadmform.suppr }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
+<p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email" %}  {{ projsuppradmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppr }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
     {% endif %}
 
 <HR>

@@ -148,8 +148,8 @@ class ReplyMail(models.Model):
 
 class Utilisateur(models.Model):
     """Model for users"""
-    username = models.CharField('username', max_length=30, unique =True, blank=False)
-    mail = models.EmailField('user email', unique =True, blank=False)
+    username = models.CharField('username', max_length=30, unique =True, blank=False) #Attention : Unique
+    mail = models.EmailField('user email', unique =True, blank=False) #Attention : Unique
     def __str__(self):
         info = self.mail + ' | ' + self.username
         return info
