@@ -182,6 +182,7 @@ def adminbase(request, bdd):
     k =logstatus(request)
     version =epl_version
     url ="/" + bdd + "/adminbase"
+    suffixe = "@" + str(bdd)
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -191,6 +192,8 @@ def adminbase(request, bdd):
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
     abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
     extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
+
+    #Stuff about project
     class ProjNameForm(forms.Form):
         projname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
     class ProjDescrForm(forms.Form):
@@ -222,9 +225,15 @@ def adminbase(request, bdd):
         messages.info(request, _("La date d'extraction de la base a été modifiée avec succès"))
         # return HttpResponseRedirect(url)
 
+    #Stuff about exclusions
     class ExcluForm(forms.Form):
         exclusup = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
     exclform =ExcluForm(request.POST or None)
+    class ExcluSupprForm(forms.Form):
+        exclreason = forms.ChoiceField(required = True, widget=forms.Select, choices=EXCLUSION_CHOICES[:-1], label =_("Motif d'exclusion à supprimer"))
+        exclmod = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion modifiée"))
+        suppr = forms.BooleanField(required=False)
+    exclsupprform =ExcluSupprForm(request.POST or None)
 
     if exclform.is_valid():
         try:
@@ -237,7 +246,28 @@ def adminbase(request, bdd):
             newexcl.save(using =bdd)
             messages.info(request, _('Exclusion ajoutée avec succès'))
             # return HttpResponseRedirect(url)
+    if exclsupprform.is_valid():
+        op =Exclusion.objects.using(bdd).get(label =exclsupprform.cleaned_data['exclreason'])
+        if exclsupprform.cleaned_data['suppr'] ==True:
+            if len(ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason'])):
+                messages.info(request, _('Suppression impossible : Cete exclusion a déjà servi (vous pouvez éventuellement modifier son intitulé)'))
+            else:
+                op.delete(using =bdd)
+                messages.info(request, _('Exclusion supprimée avec succès'))
+        else:
+            if exclsupprform.cleaned_data['exclmod']:
+                for it in ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason']):
+                    if it.excl ==exclsupprform.cleaned_data['exclreason']:
+                        it.excl =exclsupprform.cleaned_data['exclmod']
+                        it.save(using =bdd)
+                op.label =exclsupprform.cleaned_data['exclmod']
+                op.save(using =bdd)
+                messages.info(request, _('Exclusion modifiée avec succès'))
+            else:
+                messages.info(request, _("Vous n'avez pas complété le formulaire correctement"))
 
+
+    #Stuff about libraries
     LIBRARY_CHOICES = ('', _('Sélectionnez la bibliothèque')), ('checker', 'checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
         for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
@@ -246,11 +276,13 @@ def adminbase(request, bdd):
     CONTACT_CHOICE =('', _('Contact')), ('1', '1'), ('2', '2'), ('3', '3'),
 
     class LibrMCurNameForm(forms.Form):
-        curname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+        curname = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES, label =_("bibliothèque"))
+        # curname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
     class LibrMNewNameForm(forms.Form):
         newlibrname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30', 'title': _("Action rétroactive applicable à l'ensemble des instructions")}), max_length=30, label =_("nom de la bib"))
     class LibrMCtcForm(forms.Form):
-        name = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES, label =_("bibliothèque"))
+        # name = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("nom de la bib"))
         contactnbr =forms.ChoiceField(required = True, widget=forms.Select, choices=CONTACT_CHOICE)
         contact = forms.EmailField(required =False, label ='email 1')
         ident = forms.CharField(required =False, widget=forms.TextInput(attrs=\
@@ -309,7 +341,8 @@ def adminbase(request, bdd):
                     messages.info(request, _("Nom de la bibliothèque modifié avec succès"))
                     # return HttpResponseRedirect(url)
                 except:
-                    messages.info(request, _("Pas de bibliothèque au nom que vous avez indiqué"))
+                    pass
+                    # messages.info(request, _("Pas de bibliothèque au nom que vous avez indiqué"))
                     # return HttpResponseRedirect(url)
 
     BDD_CHOICES =('', ''),
@@ -376,9 +409,11 @@ def adminbase(request, bdd):
                         messages.info(request, _('Le contact principal ne peut pas être supprimé'))
                         # return HttpResponseRedirect(url)
                 else:#formlibct.cleaned_data['suppr'] ==False
-                    if formlibct.cleaned_data['ident'] =="" or formlibct.cleaned_data['contact'] =="":
-                        messages.info(request, _("Vous devez renseigner les deux éléments de la paire"))
-                    else:
+                    if not formlibct.cleaned_data['ident'] and formlibct.cleaned_data['contact']:
+                        messages.info(request, _("Echec : Vous avez omis l'identifiant"))
+                    elif formlibct.cleaned_data['ident'] and not formlibct.cleaned_data['contact']:
+                        messages.info(request, _("Echec : Vous avez omis l'email"))
+                    else:#Formulaire complet
                         try:#utilisateur déjà présent dans la base
                             uter =Utilisateur.objects.using(bdd).get(username =formlibct.cleaned_data['ident'], mail =formlibct.cleaned_data['contact'])
                             if formlibct.cleaned_data['contactnbr'] =='1':
@@ -392,44 +427,44 @@ def adminbase(request, bdd):
                                 lib.save(using =bdd)
                                 messages.info(request, _("Modification effectuée avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
                                 # return HttpResponseRedirect(url)
-                        except:
-                            try:
-                                uter =Utilisateur.objects.using(bdd).get(username =formlibct.cleaned_data['ident'])
-                                messages.info(request, _("Cet identifiant est déjà pris avec un autre mail"))
-                                # return HttpResponseRedirect(url)
-                            except:
-                                try:
-                                    uter =Utilisateur.objects.using(bdd).get(mail =formlibct.cleaned_data['contact'])
-                                    messages.info(request, _("Ce mail est déjà utilisé avec un autre identifiant"))
-                                    # return HttpResponseRedirect(url)
-                                except:#création d'un nouvel utilisateur ; la suppression éventuelle de l'ancien utilisateur (et user) et
-                                # la création du nouvel user sont factorisées à la fin de la présente vue.
-                                    uter =Utilisateur(username =formlibct.cleaned_data['ident'], mail =formlibct.cleaned_data['contact'])
-                                    uter.save(using =bdd)
-                                    if formlibct.cleaned_data['contactnbr'] =='1':
-                                        lib.contact =formlibct.cleaned_data['contact']
-                                        lib.save(using =bdd)
-                                    if formlibct.cleaned_data['contactnbr'] =='2':
-                                        lib.contact_bis =formlibct.cleaned_data['contact']
-                                        lib.save(using =bdd)
-                                    if formlibct.cleaned_data['contactnbr'] =='3':
-                                        lib.contact_ter =formlibct.cleaned_data['contact']
-                                        lib.save(using =bdd)
-                                    messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé)"))
-                                    # return HttpResponseRedirect(url)
+                        except:#utilisateur absent de la base
+                            if len(Utilisateur.objects.using(bdd).filter(username =formlibct.cleaned_data['ident'])):
+                                messages.info(request, _("Echec : l'identifiant est déjà attribué à un autre utilisateur"))
+                            elif len(Utilisateur.objects.using(bdd).filter(mail =formlibct.cleaned_data['contact'])):
+                                messages.info(request, _("Echec : l'email est déjà attribué à un autre utilisateur"))
+                            else:
+                                if str(formlibct.cleaned_data['ident'])[-3:] !=suffixe:
+                                    messages.info(request, _("L'identifiant doit se terminer en {}".format(suffixe)))
+                                else:
+                                    try:
+                                        user =User.objects.create_user(username =formlibct.cleaned_data['ident'], email =formlibct.cleaned_data['contact'], password ="glass onion")
+                                        uter =Utilisateur(username =formlibct.cleaned_data['ident'], mail =formlibct.cleaned_data['contact'])
+                                        uter.save(using =bdd)
+                                        if formlibct.cleaned_data['contactnbr'] =='1':
+                                            lib.contact =formlibct.cleaned_data['contact']
+                                            lib.save(using =bdd)
+                                        if formlibct.cleaned_data['contactnbr'] =='2':
+                                            lib.contact_bis =formlibct.cleaned_data['contact']
+                                            lib.save(using =bdd)
+                                        if formlibct.cleaned_data['contactnbr'] =='3':
+                                            lib.contact_ter =formlibct.cleaned_data['contact']
+                                            lib.save(using =bdd)
+                                        messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé)"))
+                                    except:
+                                        messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
         except:
-            messages.info(request, _("Pas de bibliothèque au nom que vous avez indiqué"))
-            return HttpResponseRedirect(url)
+            pass
 
-    admintuple =('', ''),
+    #Stuff about bddadministrators
+    admintuple =('', "Sélectionnez l'administrateur"),
     for b in BddAdmin.objects.using(bdd).all():
         admintuple +=(b.contact, Utilisateur.objects.using(bdd).get(mail =BddAdmin.objects.using(bdd).get(contact =b.contact))),
-    admintuple =admintuple[1:]
+    admintup =admintuple[1:]
     sizeadm =len(BddAdmin.objects.using(bdd).all())
 
     class ProjadmAjForm(forms.Form):
-        contact = forms.EmailField(required =True, label ='current email')
-        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        contactajadm = forms.EmailField(required =True, label ='current email')
+        identajadm = forms.CharField(required =True, widget=forms.TextInput(attrs=\
         {'placeholder': "Rosemonde@" + bdd, 'title': _("Suffixe obligatoire") + \
         ' : ' + '@' + bdd + '. ' + \
         "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
@@ -438,44 +473,63 @@ def adminbase(request, bdd):
     projajadmform =ProjadmAjForm(request.POST or None)
 
     class ProjadmSupprForm(forms.Form):
-        contact = forms.EmailField(required =True, label ='current email')
-        ident = forms.CharField(required =True, widget=forms.TextInput(attrs=\
-        {'placeholder': "Rosemonde@" + bdd, 'title': _("Suffixe obligatoire") + \
-        ' : ' + '@' + bdd + '. ' + \
-        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
-        max_length=30, label =_("identifiant"))
-        suppr = forms.BooleanField(required=True)
+        contactsuadm = forms.ChoiceField(required = True, widget=forms.Select, choices=admintuple, label =_("email courant"))
+        # contact = forms.EmailField(required =True, label ='email courant')
+        # identsuadm = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        # {'placeholder': "Rosemonde@" + bdd, 'title': _("Suffixe obligatoire") + \
+        # ' : ' + '@' + bdd + '. ' + \
+        # "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        # max_length=30, label =_("identifiant"))
+        suppradm = forms.BooleanField(required=True)
 
     projsuppradmform =ProjadmSupprForm(request.POST or None)
 
-    if projajadmform.is_valid():
+    if projajadmform.is_valid():#j'en suis là, bientôt fertig !
         try:
-            uter =Utilisateur.objects.using(bdd).get(username =projajadmform.cleaned_data['ident'], mail =projajadmform.cleaned_data['contact'])
-            newadm =BddAdmin(mail =projajadmform.cleaned_data['contact'])
+            uter =Utilisateur.objects.using(bdd).get(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
+            newadm =BddAdmin(mail =projajadmform.cleaned_data['contactajadm'])
             newadm.save(using =bdd)
             messages.info(request, _("Administrateur ajouté avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
         except:
-            try:
-                uter =Utilisateur.objects.using(bdd).get(username =projajadmform.cleaned_data['ident'])
-                messages.info(request, _("Cet identifiant est déjà pris avec un autre mail"))
-            except:
+            if str(projajadmform.cleaned_data['identajadm'])[-3:] !=suffixe:
+                messages.info(request, _("L'identifiant doit se terminer en {}".format(suffixe)))
+            else:
                 try:
-                    uter =Utilisateur.objects.using(bdd).get(mail =projajadmform.cleaned_data['contact'])
-                    messages.info(request, _("Ce mail est déjà utilisé avec un autre identifiant"))
-                except:
-                    uter =Utilisateur(username =projajadmform.cleaned_data['ident'], mail =projajadmform.cleaned_data['contact'])
-                    uter.save(using =bdd) # (la création du nouvel user est factorisée à la fin de la présente vue.)
-                    newadm =BddAdmin(mail =projajadmform.cleaned_data['contact'])
+                    uter =Utilisateur(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
+                    user =User.objects.create_user(username =projajadmform.cleaned_data['identajadm'], email =projajadmform.cleaned_data['contactajadm'], password ="glass onion")
+                    uter.save(using =bdd)
+                    newadm =BddAdmin(mail =projajadmform.cleaned_data['contactajadm'])
                     newadm.save(using =bdd)
                     messages.info(request, _("Administrateur ajouté avec succès (un nouvel utilisateur a été créé)"))
+                except:
+                    messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
 
     if projsuppradmform.is_valid():
         if len(BddAdmin.objects.using(bdd).all()) ==1:
             messages.info(request, _("Vous ne pouvez pas supprimer le dernier administrateur restant"))
         else:
-            suppradm =BddAdmin(contact =projsuppradmform.cleaned_data['contact'])
+            suppradm =BddAdmin.objects.using(bdd).get(contact =projsuppradmform.cleaned_data['contactsuadm'])
+            compteurc =0
+            for u in Library.objects.using(bdd).all():
+                if u.contact ==suppradm.contact:
+                    compteurc +=1
+                if u.contact_bis ==suppradm.contact:
+                    compteurc +=1
+                if u.contact_ter ==suppradm.contact:
+                    compteurc +=1
+            for v in BddAdmin.objects.using(bdd).all():
+                if v.contact ==suppradm.contact:
+                    compteurc +=1
+            if compteurc ==1:
+                user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm']).username)
+                uter =Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm'])
+                user.delete()
+                uter.delete()
             suppradm.delete(using =bdd)
-            # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue)
+            messages.info(request, _('Administrateur supprimé avec succès'))
+
+
+            # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
 
     # messages.debug(request, '%s SQL statements were executed.' % count)
     # messages.info(request, 'Three credits remain in your account.')

@@ -52,8 +52,12 @@
 <HR>
       </div>
       <div id="content">
-<p>{% trans "Motifs d'exclusion actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
+      <p><b>{% trans "Gestion des motifs d'exlusion" %} :</b></p>
+<p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
 <p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à modifier" %} {{ exclsupprform.exclreason }} &nbsp;&nbsp;&nbsp;&nbsp;
+  {% trans "Nouvel intitulé" %}  {{ exclsupprform.exclmod }} &nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou supprimer" %}{{ exclsupprform.suppr }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
+
 <HR>
       <!-- </div> -->
       <!-- <div id="content"> -->
@@ -61,7 +65,7 @@
 <!-- <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p> -->
 
 
-      <p>{% trans "Gestion des bibliothèques" %} ({{ sizelib }}, {% trans "checker exclu" %}) :</p>
+      <p><b>{% trans "Gestion des bibliothèques" %} ({{ sizelib }}, {% trans "checker exclu" %}) :</b></p>
 <table border="1">
     {% for l in libtuple %}
   <thead>
@@ -107,12 +111,12 @@
 <!-- <p><b><font color= #FF0000 >{% trans "Le nom courant est à indiquer dans tous les cas (drag & drop) ; une seule validation à la fois" %}</font></b></p> -->
 
   <p><form method="post"> {% csrf_token %}
-    {% trans "Nom courant de la bibliothèque" %} {{ formlibname.curname }}
+    {{ formlibname.curname }}
     &nbsp;&nbsp;&nbsp;&nbsp;
     {% trans "Nouveau nom de la bibliothèque" %} {{ formnewlibname.newlibrname }}
     <input type="submit" value="{% trans "Valider" %}"> </form></p>
 
-<p><form method="post"> {% csrf_token %}{% trans "Bibliothèque" %} {{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
+<p><form method="post"> {% csrf_token %}{{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
 &nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}<br />
 {% trans "ou modifier (ou créer) la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
 <input type="submit" value="{% trans "Valider" %}"> </form>
@@ -123,7 +127,7 @@
 <HR>
     <!-- <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
 <HR> -->
-      <p>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</p>
+      <p><b>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</b></p>
 
       <table border="1">
 
@@ -137,7 +141,7 @@
         </thead>
 
          <tbody>
-            {% for adm in admintuple %}
+            {% for adm in admintup %}
            <tr>
                  <td>{{ adm.0 }}</td>
                  <td>{{ adm.1.username }}</td>
@@ -147,13 +151,15 @@
             {% endfor %}
       </table>
 
-    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.ident }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
-    {% if sizeadm > 1 %}
-<p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "email" %}  {{ projsuppradmform.contact }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppr }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
-    {% endif %}
+    <p>{% trans "Pour une modification, supprimer puis ajouter (deux administrateurs minimum requis : en ajouter un fictif temporairement si besoin )" %}</br><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contactajadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.identajadm }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+
+<p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
+
 
 <HR>
+  <p><b>{% trans "Gestion des informations projet" %} :</b></p>
     <table border="1">
 
       <thead>
