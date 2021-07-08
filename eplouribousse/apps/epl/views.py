@@ -434,7 +434,7 @@ def adminbase(request, bdd):
                                 messages.info(request, _("Echec : l'email est déjà attribué à un autre utilisateur"))
                             else:
                                 if str(formlibct.cleaned_data['ident'])[-3:] !=suffixe:
-                                    messages.info(request, _("L'identifiant doit se terminer en {}".format(suffixe)))
+                                    messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
                                 else:
                                     try:
                                         user =User.objects.create_user(username =formlibct.cleaned_data['ident'], email =formlibct.cleaned_data['contact'], password ="glass onion")
@@ -458,7 +458,7 @@ def adminbase(request, bdd):
     #Stuff about bddadministrators
     admintuple =('', "Sélectionnez l'administrateur"),
     for b in BddAdmin.objects.using(bdd).all():
-        admintuple +=(b.contact, Utilisateur.objects.using(bdd).get(mail =BddAdmin.objects.using(bdd).get(contact =b.contact))),
+        admintuple +=(b.contact, Utilisateur.objects.using(bdd).get(mail =BddAdmin.objects.using(bdd).get(contact =b.contact).contact)),
     admintup =admintuple[1:]
     sizeadm =len(BddAdmin.objects.using(bdd).all())
 
@@ -474,35 +474,41 @@ def adminbase(request, bdd):
 
     class ProjadmSupprForm(forms.Form):
         contactsuadm = forms.ChoiceField(required = True, widget=forms.Select, choices=admintuple, label =_("email courant"))
-        # contact = forms.EmailField(required =True, label ='email courant')
-        # identsuadm = forms.CharField(required =True, widget=forms.TextInput(attrs=\
-        # {'placeholder': "Rosemonde@" + bdd, 'title': _("Suffixe obligatoire") + \
-        # ' : ' + '@' + bdd + '. ' + \
-        # "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
-        # max_length=30, label =_("identifiant"))
         suppradm = forms.BooleanField(required=True)
 
     projsuppradmform =ProjadmSupprForm(request.POST or None)
 
-    if projajadmform.is_valid():#j'en suis là, bientôt fertig !
+    if projajadmform.is_valid():
         try:
-            uter =Utilisateur.objects.using(bdd).get(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
-            newadm =BddAdmin(mail =projajadmform.cleaned_data['contactajadm'])
-            newadm.save(using =bdd)
-            messages.info(request, _("Administrateur ajouté avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
+            newadm =BddAdmin.objects.using(bdd).get(contact =projajadmform.cleaned_data['contactajadm'])
+            messages.info(request, _("(Administrateur déjà enregistré)"))
         except:
-            if str(projajadmform.cleaned_data['identajadm'])[-3:] !=suffixe:
-                messages.info(request, _("L'identifiant doit se terminer en {}".format(suffixe)))
-            else:
+            try:
+                uter =Utilisateur.objects.using(bdd).get(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
+                newadm =BddAdmin(contact =projajadmform.cleaned_data['contactajadm'])
+                newadm.save(using =bdd)
+                messages.info(request, _("Administrateur ajouté avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
+            except:
                 try:
-                    uter =Utilisateur(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
-                    user =User.objects.create_user(username =projajadmform.cleaned_data['identajadm'], email =projajadmform.cleaned_data['contactajadm'], password ="glass onion")
-                    uter.save(using =bdd)
-                    newadm =BddAdmin(mail =projajadmform.cleaned_data['contactajadm'])
-                    newadm.save(using =bdd)
-                    messages.info(request, _("Administrateur ajouté avec succès (un nouvel utilisateur a été créé)"))
+                    uter =Utilisateur.objects.using(bdd).get(username =projajadmform.cleaned_data['identajadm'])
+                    messages.info(request, _("Echec : L'identifiant saisi est déjà utilisé"))
                 except:
-                    messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
+                    try:
+                        uter =Utilisateur.objects.using(bdd).get(mail =projajadmform.cleaned_data['contactajadm'])
+                        messages.info(request, _("Echec : L'email saisi est celui d'un utilisateur déjà enregistré"))
+                    except:
+                        if str(projajadmform.cleaned_data['identajadm'])[-3:] !=suffixe:
+                            messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
+                        else:
+                            try:
+                                uter =Utilisateur(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
+                                user =User.objects.create_user(username =projajadmform.cleaned_data['identajadm'], email =projajadmform.cleaned_data['contactajadm'], password ="glass onion")
+                                uter.save(using =bdd)
+                                newadm =BddAdmin(contact =projajadmform.cleaned_data['contactajadm'])
+                                newadm.save(using =bdd)
+                                messages.info(request, _("Administrateur ajouté avec succès (un nouvel utilisateur a été créé)"))
+                            except:
+                                messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
 
     if projsuppradmform.is_valid():
         if len(BddAdmin.objects.using(bdd).all()) ==1:
@@ -528,8 +534,74 @@ def adminbase(request, bdd):
             suppradm.delete(using =bdd)
             messages.info(request, _('Administrateur supprimé avec succès'))
 
+    #Stuff about utilisateurs :
+    uterstuple =('', "Sélectionnez l'utilisateur"),
+    for u in Utilisateur.objects.using(bdd).all().order_by("username"):
+        uterstuple +=(u.mail, Utilisateur.objects.using(bdd).get(mail =u.mail)),
+    sizeuters =len(Utilisateur.objects.using(bdd).all())
 
-            # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
+    class UtModForm(forms.Form):
+        uterxy = forms.ChoiceField(required = True, widget=forms.Select, choices=uterstuple, label =_("Utilisateur"))
+        newuterid = forms.CharField(required =False, widget=forms.TextInput(attrs=\
+        {'placeholder': "Marcel@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("nouvel identifiant de l'utilisateur"))
+        newutermail = forms.EmailField(required =False, label ="nouvel email de l'utilisateur")
+
+    utermodform =UtModForm(request.POST or None)
+
+    if utermodform.is_valid():
+        if utermodform.cleaned_data['newuterid'] and utermodform.cleaned_data['newutermail']:
+            messages.info(request, _("Echec : Ne complétez qu'un des arguments à la fois"))
+        else:
+            try:
+                uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['newutermail'])
+                messages.info(request, _("Echec : L'email saisi est celui d'un utilisateur déjà enregistré"))
+            except:
+                try:
+                    uter =Utilisateur.objects.using(bdd).get(username =utermodform.cleaned_data['newuterid'])
+                    messages.info(request, _("Echec : L'identifiant saisi est déjà utilisé"))
+                except:
+                    if utermodform.cleaned_data['newuterid']:
+                        if str(utermodform.cleaned_data['newuterid'])[-3:] !=suffixe:
+                            messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
+                        else:
+                            try:
+                                uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy'])
+                                uter.username =utermodform.cleaned_data['newuterid']
+                                user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy']).username)
+                                user.username =utermodform.cleaned_data['newuterid']
+                                uter.save(using =bdd)
+                                user.save(using =bdd)
+                                messages.info(request, _("L'identifiant de l'utilisateur a été modifié avec succès"))
+                            except:
+                                messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
+                    elif utermodform.cleaned_data['newutermail']:
+                        # try:
+                        uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy'])
+                        uter.mail =utermodform.cleaned_data['newutermail']
+                        user =User.objects.create_user(username =utermodform.cleaned_data['newuterid'], email =utermodform.cleaned_data['uterxy'], password ="glass onion")
+                        for l in Library.objects.using(bdd).all():
+                            if l.contact ==utermodform.cleaned_data['uterxy']:
+                                l.contact =utermodform.cleaned_data['newutermail']
+                            if l.contact_bis ==utermodform.cleaned_data['uterxy']:
+                                l.contact_bis =utermodform.cleaned_data['newutermail']
+                            if l.contact_ter ==utermodform.cleaned_data['uterxy']:
+                                l.contact_ter =utermodform.cleaned_data['newutermail']
+                            l.save(using =bdd)
+                        if BddAdmin.objects.using(bdd).filter(contact =utermodform.cleaned_data['uterxy']):
+                            adm =BddAdmin.objects.using(bdd).get(contact =utermodform.cleaned_data['uterxy'])
+                            adm.contact =utermodform.cleaned_data['newutermail']
+                            adm.save(using =bdd)
+                        uter.save(using =bdd)
+                        messages.info(request, _("L'email de l'utilisateur a été modifié avec succès"))
+                        # except:
+                        #     pass
+
+
+
+    # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
 
     # messages.debug(request, '%s SQL statements were executed.' % count)
     # messages.info(request, 'Three credits remain in your account.')

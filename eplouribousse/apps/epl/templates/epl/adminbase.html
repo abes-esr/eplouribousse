@@ -157,7 +157,9 @@
 
 <p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
 
-
+<HR>
+  <p><b>{% trans "Gestion des utilisateurs" %} ({{ sizeuters }}) :</b></p>
+<p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <HR>
   <p><b>{% trans "Gestion des informations projet" %} :</b></p>
     <table border="1">
@@ -191,7 +193,6 @@
        </tbody>
 
     </table>
-
 
 <center><a href="/{{ bdd }}">{% trans "Retour à l'accueil" %}</a></center>
 
