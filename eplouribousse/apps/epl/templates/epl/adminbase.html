@@ -22,7 +22,7 @@
           <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
           <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
-          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <!-- <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a> -->
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
 
@@ -40,7 +40,7 @@
        <!-- <div id="content"> -->
 
       <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
-      <a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a>
+      <div align="right"><a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a></div>
       {% if messages %}
       <ul class="messages">
           {% for message in messages %}
@@ -152,10 +152,10 @@
       </table>
 
 
-    <p>{% trans "Pour une modification, supprimer puis ajouter (deux administrateurs minimum requis : en ajouter un fictif temporairement si besoin )" %}</br><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contactajadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.identajadm }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contactajadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.identajadm }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
 
-<p><form method="post"> {% csrf_token %}{% trans "Suppression d'un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
+<p><form method="post"> {% csrf_token %}{% trans "Supprimer un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
 
 <HR>
   <p><b>{% trans "Gestion des utilisateurs" %} ({{ sizeuters }}) :</b></p>

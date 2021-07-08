@@ -110,10 +110,26 @@ def logstatus(request):
 
 def home(request, bdd):
 
+    "Homepage"
+
     k =logstatus(request)
     version =epl_version
 
-    "Homepage"
+    #La partie de code ci-dessous est reproduite dans la vue adminbase(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
+    for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
+        try:
+            user =User.objects.get(username =e.username)
+        except:
+            user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
+
+    #2/2 (see upper, this order is important)
+    suffixe = "@" + str(bdd)
+    for j in User.objects.all(): #Suppression d'users pour lesquels l'utilisateur a été supprimé de la base locale
+        if j.username[-3:] ==suffixe:
+            try:
+                utilisateur =Utilisateur.objects.using(bdd).get(username =j.username)
+            except:
+                j.delete() #suppression dans la bdd générale
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
@@ -174,10 +190,13 @@ def home(request, bdd):
 
     return render(request, 'epl/home.html', locals())
 
-#@login_required
+@login_required
 def adminbase(request, bdd):
 
     #contrôle d'accès ici
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
 
     k =logstatus(request)
     version =epl_version
@@ -495,7 +514,7 @@ def adminbase(request, bdd):
                 except:
                     try:
                         uter =Utilisateur.objects.using(bdd).get(mail =projajadmform.cleaned_data['contactajadm'])
-                        messages.info(request, _("Echec : L'email saisi est celui d'un utilisateur déjà enregistré"))
+                        messages.info(request, _("Echec : L'email saisi est déjà utilisé"))
                     except:
                         if str(projajadmform.cleaned_data['identajadm'])[-3:] !=suffixe:
                             messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
@@ -557,7 +576,7 @@ def adminbase(request, bdd):
         else:
             try:
                 uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['newutermail'])
-                messages.info(request, _("Echec : L'email saisi est celui d'un utilisateur déjà enregistré"))
+                messages.info(request, _("Echec : L'email saisi est déjà utilisé"))
             except:
                 try:
                     uter =Utilisateur.objects.using(bdd).get(username =utermodform.cleaned_data['newuterid'])
@@ -573,31 +592,32 @@ def adminbase(request, bdd):
                                 user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy']).username)
                                 user.username =utermodform.cleaned_data['newuterid']
                                 uter.save(using =bdd)
-                                user.save(using =bdd)
+                                user.save()
                                 messages.info(request, _("L'identifiant de l'utilisateur a été modifié avec succès"))
                             except:
                                 messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
                     elif utermodform.cleaned_data['newutermail']:
-                        # try:
-                        uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy'])
-                        uter.mail =utermodform.cleaned_data['newutermail']
-                        user =User.objects.create_user(username =utermodform.cleaned_data['newuterid'], email =utermodform.cleaned_data['uterxy'], password ="glass onion")
-                        for l in Library.objects.using(bdd).all():
-                            if l.contact ==utermodform.cleaned_data['uterxy']:
-                                l.contact =utermodform.cleaned_data['newutermail']
-                            if l.contact_bis ==utermodform.cleaned_data['uterxy']:
-                                l.contact_bis =utermodform.cleaned_data['newutermail']
-                            if l.contact_ter ==utermodform.cleaned_data['uterxy']:
-                                l.contact_ter =utermodform.cleaned_data['newutermail']
-                            l.save(using =bdd)
-                        if BddAdmin.objects.using(bdd).filter(contact =utermodform.cleaned_data['uterxy']):
-                            adm =BddAdmin.objects.using(bdd).get(contact =utermodform.cleaned_data['uterxy'])
-                            adm.contact =utermodform.cleaned_data['newutermail']
-                            adm.save(using =bdd)
-                        uter.save(using =bdd)
-                        messages.info(request, _("L'email de l'utilisateur a été modifié avec succès"))
-                        # except:
-                        #     pass
+                        try:
+                            uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy'])
+                            uter.mail =utermodform.cleaned_data['newutermail']
+                            user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['uterxy']).username)
+                            for l in Library.objects.using(bdd).all():
+                                if l.contact ==utermodform.cleaned_data['uterxy']:
+                                    l.contact =utermodform.cleaned_data['newutermail']
+                                if l.contact_bis ==utermodform.cleaned_data['uterxy']:
+                                    l.contact_bis =utermodform.cleaned_data['newutermail']
+                                if l.contact_ter ==utermodform.cleaned_data['uterxy']:
+                                    l.contact_ter =utermodform.cleaned_data['newutermail']
+                                l.save(using =bdd)
+                            if BddAdmin.objects.using(bdd).filter(contact =utermodform.cleaned_data['uterxy']):
+                                adm =BddAdmin.objects.using(bdd).get(contact =utermodform.cleaned_data['uterxy'])
+                                adm.contact =utermodform.cleaned_data['newutermail']
+                                adm.save(using =bdd)
+                            uter.save(using =bdd)
+                            user.save()
+                            messages.info(request, _("L'email de l'utilisateur a été modifié avec succès"))
+                        except:
+                            pass
 
 
 
@@ -613,31 +633,15 @@ def adminbase(request, bdd):
 
     if request.method =="POST":
         return HttpResponseRedirect(url)
-    else:#request.method =="GET"
-        #Factorisation de la suppression des utilisateurs et users inemployés (en tant que contact de bib ou en tant qu'admin de la base locale)
-        # contlist =[]
-        # for bibl in Library.objects.using(bdd).all():
-        #     if bibl.contact not in contlist:
-        #         contlist.append(bibl.contact)
-        #     elif bibl.contact_bis not in contlist:
-        #         contlist.append(bibl.contact_bis)
-        #     elif bibl.contact_ter not in contlist:
-        #         contlist.append(bibl.contact_ter)
-        # for adbdd in BddAdmin.objects.using(bdd).all():
-        #     if adbdd.contact not in contlist:
-        #         contlist.append(adbdd.contact)
-        #
-        # for utelmt in Utilisateur.objects.using(bdd).all():#1/3 Suppression d'utilisateurs locaux inemployés
-        #     if utelmt.mail not in contlist:
-        #         utelmt.delete(using =bdd)
-
-        for e in Utilisateur.objects.using(bdd).all():#2/3 création d'éventuels nouveaux users dans la base générale
+    else:#request.method =="GET
+    #La partie de code ci-dessous est reproduite dans la vue home(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
+        for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
             try:
                 user =User.objects.get(username =e.username)
             except:
                 user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
 
-        #3/3 (see upper, this order is important)
+        #2/2 (see upper, this order is important)
         suffixe = "@" + str(bdd)
         for j in User.objects.all(): #Suppression d'users pour lesquels l'utilisateur a été supprimé de la base locale
             if j.username[-3:] ==suffixe:
@@ -3506,10 +3510,13 @@ def current_status(request, bdd, sid, lid):
     return render(request, 'epl/current.html', locals())
 
 
-#@login_required
+@login_required
 def statadmin(request, bdd, id):
 
     #contrôle ici
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
 
     k =logstatus(request)
     version =epl_version
@@ -3535,10 +3542,13 @@ def statadmin(request, bdd, id):
 
     return render(request, 'epl/statadmin.html', locals())
 
-#@login_required
+@login_required
 def instradmin(request, bdd, id):
 
     #contrôle ici
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
 
     k =logstatus(request)
     version =epl_version
