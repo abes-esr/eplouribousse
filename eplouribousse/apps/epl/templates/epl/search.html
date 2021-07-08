@@ -135,14 +135,14 @@
         {% if action != 0 %}
     <tr>
           <td>{% trans "Action attendue" %}</td>
-          <td><a href="{{ laction }}" target="_blank">{{ action }}</a></td>
+          <td><a href="/{{ laction }}" target="_blank">{{ action }}</a></td>
     </tr>
         {% endif %}
 
         {% if alteraction != 0 %}
     <tr>
           <td>{% trans "Action encore possible" %}</td>
-          <td><a href="{{ lalteraction }}" target="_blank">{{ alteraction }}</a></td>
+          <td><a href="/{{ lalteraction }}" target="_blank">{{ alteraction }}</a></td>
     </tr>
         {% endif %}
    </tbody>
