@@ -1,8 +1,8 @@
-epl_version ="v1.20.0 (Wulfégonde)"
-date_version ="March 23, 2021"
+# epl_version ="v2.00 (Chimnechilde)"
+# date_version ="July 9, 2021"
 # Mise au niveau de :
-epl_version ="v1.21-beta.2 (~Berchilde)"
-date_version ="April 16, 2021"
+epl_version ="v2.01-beta (~Bathilde)"
+date_version ="July 9, 2021"
 #branche = multi
 
 from django.shortcuts import render

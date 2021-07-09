@@ -26,6 +26,9 @@ Version 1.19 (~Nantechilde)                 beta
 Version 1.20 (Wulfégonde)                   2021.03.23
 Version 1.21 (~Berchilde)                   beta
 
+Version 2.00 (Chimnechilde)                 2021.07.09
+Version 2.01 (~Bathilde)                    beta
+
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)
 
@@ -36,4 +39,6 @@ Nouveautés de la dernière version master (* = important) :
 * possibilité de s'abonner à des listes pour être tenu au courant
 * routage de retour aux listes
 * mise à jour du manuel utilisateur
+
+Version 2 : Version multi-projets (beta tant qu'elle n'est pas testée grandeur nature ...)
 
