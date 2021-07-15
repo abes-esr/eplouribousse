@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.selectbdd, name='bddselect'),
     path('<str:bdd>', views.home, name='project_home'),
     path('<str:bdd>/adminbase', views.adminbase, name='project administration'),
+    path('default/globadm', views.globadm, name='global administration'),
     path('default/about', views.about, name='about'),
     path('default/contact', views.contact, name='contact'),
     path('default/webmaster', views.webmstr, name='webmaster'),
@@ -75,4 +76,5 @@ urlpatterns = [
     path('<str:bdd>/ednotmotherpdf/<str:lid>/<str:xlid>', views_pdf.xnotmotherpdf, name='xnotmothertopdf'),
 
     path('<str:bdd>/csv/<str:lid>/<str:xlid>/<path:recset>/<str:what>/<str:length>', views_csv.simple_csv, name='csv export'),
+    path('default/csv/uters', views_csv.uters_csv, name='csv uters export'),
 ]

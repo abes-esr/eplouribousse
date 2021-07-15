@@ -2,6 +2,11 @@ import csv
 from django.http import HttpResponse
 from .models import *
 from django.utils.translation import ugettext as _
+import os
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .views import selectbdd
 
 def simple_csv(request, bdd, lid, xlid, recset, what, length):
 
@@ -98,5 +103,75 @@ def simple_csv(request, bdd, lid, xlid, recset, what, length):
         writer.writerow([_("(ATTENTION : LISTE INCOMPLETE)"),"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ])
     else:
         writer.writerow([_("(Liste complète)"),"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"" ])
+
+    return response
+
+@login_required
+def uters_csv(request):
+
+    """Extraction de l'ensemble des utilisateurs"""
+
+    #contrôle d'accès ici
+    if not request.user.is_staff:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return selectbdd(request)
+
+    filename = 'alluters.csv'
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+
+    writer = csv.writer(response)
+    writer.writerow(['#', _('bdd'), _('bddid'), _('centralid'), _('identifiant'), _("email"), _('admin'), _("checker"), \
+    _("contact bib (hors checker)"), _('contact pour')])
+
+    BDD_CHOICES =('', ''),
+
+    for i in [n for n in range(100)]:
+        if os.path.isfile('{:02d}.db'.format(i)):
+            p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
+            BDD_CHOICES += ('{:02d}'.format(i), p),
+
+    c =1
+
+    for bddelmt in BDD_CHOICES[1:]:
+
+        for uterelmt in Utilisateur.objects.using(bddelmt[0]).all():
+            if BddAdmin.objects.using(bddelmt[0]).filter(contact =uterelmt.mail):
+                ad ="x"
+                adlist ="@ admin - "
+            else:
+                ad =""
+            if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==\
+            Library.objects.using(bddelmt[0]).get(name ="checker").contact or \
+            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==\
+            Library.objects.using(bddelmt[0]).get(name ="checker").contact_bis or \
+            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==\
+            Library.objects.using(bddelmt[0]).get(name ="checker").contact_ter:
+                bibcheck ="x"
+                bibchecklist ="@ checker - "
+            else:
+                bibcheck =""
+
+            bibnotcheck, bibnotchecklist ="", ""
+            for libelmt in Library.objects.using(bddelmt[0]).all().exclude(name ="checker"):
+                if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==libelmt.contact:
+                    bibnotcheck ="x"
+                    bibnotchecklist +="@ " + str(Library.objects.using(bddelmt[0]).get(name =libelmt.name).name) +" - "
+                if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==libelmt.contact_bis:
+                    bibnotcheck ="x"
+                    bibnotchecklist +="@ " + str(Library.objects.using(bddelmt[0]).get(name =libelmt.name).name) +" - "
+                if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==libelmt.contact_ter:
+                    bibnotcheck ="x"
+                    bibnotchecklist +="@ " + str(Library.objects.using(bddelmt[0]).get(name =libelmt.name).name) +" - "
+            list =adlist + bibchecklist + bibnotchecklist
+
+            writer.writerow([c, bddelmt[0], Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).id, \
+            User.objects.get(username =uterelmt.username, email = uterelmt.mail).id, \
+            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).username, \
+            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail, ad, bibcheck, \
+            bibnotcheck, list])
+
+            adlist, bibchecklist, bibnotchecklist ="", "", "" # remise à zéro des compteurs
 
     return response

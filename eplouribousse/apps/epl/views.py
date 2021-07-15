@@ -55,11 +55,12 @@ def coll_cn(e):
 
 def selectbdd(request):
 
+    k =logstatus(request)
     version =epl_version
 
     BDD_CHOICES =('',_('Sélectionnez votre projet')),
 
-    for i in [n for n in range(10)]:
+    for i in [n for n in range(100)]:
         if os.path.isfile('{:02d}.db'.format(i)):
             p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
             BDD_CHOICES += ('{:02d}'.format(i), p),
@@ -365,7 +366,7 @@ def adminbase(request, bdd):
                     # return HttpResponseRedirect(url)
 
     BDD_CHOICES =('', ''),
-    for i in [n for n in range(10)]:
+    for i in [n for n in range(100)]:
         if os.path.isfile('{:02d}.db'.format(i)):
             p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
             BDD_CHOICES += ('{:02d}'.format(i), p),
@@ -651,6 +652,24 @@ def adminbase(request, bdd):
                     j.delete() #suppression dans la bdd générale
 
     return render(request, 'epl/adminbase.html', locals())
+
+@login_required
+def globadm(request):
+
+    """Global administration"""
+
+    #contrôle d'accès ici
+    if not request.user.is_staff:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return selectbdd(request)
+
+    k =logstatus(request)
+    version =epl_version
+    date =date_version
+    host = str(request.get_host())
+
+    return render(request, 'epl/globadm.html', locals())
+
 
 
 def about(request):

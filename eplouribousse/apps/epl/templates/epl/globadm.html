@@ -29,38 +29,24 @@
         <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
         <!-- (User : Anonymous) -->
         {% endif %}
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <center><font color= #0000FF ><p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
-            {% endfor %}
-        </ul>
-        {% endif %}
-
-        <h1>{% trans "Selection de la base de données" %}</h1>
-
-        <br><br><br>
+        <h1>{% trans "Administration globale" %} : {{ host }}</h1>
 
 
-<p></p>
-          <form method="post">
-            <p>{% trans "Projet" %} : {{ f.bddname }}</p>
-            {% csrf_token %}
-            <p><input type="submit" value="{% trans "Valider" %}"></p>
-          </form>
-        <br><br><br>
+
+</br></br></br></br>
+<p><center><button><a href="/admin/">{% trans "Module d'administration de Django" %}</a></button>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button><a href="/default/csv/uters">{% trans "Extraction des utilisateurs" %}</a>*</button></center></p>
+</br></br>
+<p><center>* : {% trans "Pour d'éventuels contacts" %}</center></p>
+</br></br>
         </div>
-
-        <p><center><code>{% trans "Projets" %} : {{ projnbr }} - {% trans "Bibliothèques" %} : {{ librnbr }} - {% trans "Utilisateurs" %} : {{ usernbr }} -
-          {% trans "Rattachements" %} : {{ itemrecnbr }} - {% trans "Ressources candidates" %} : {{ totcand }} - {% trans "Instructions" %} : {{ instrnbr }}</code><center></p>
 
         <div id="footer">
 
-            <p><a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> -
-              <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> -
-              [<a href="/default/globadm">{% trans "Administration générale (réservé)" %}</a>] - <a href="/default/lang">{% trans "en / de" %}</a></p>
-
-
+            <p><a href="/">{% trans "Retour à l'accueil général" %}</a> -
+              <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> -
+              <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> - <a href="/default/lang">{% trans "en / de" %}</a></p>
 
 
         </div>
