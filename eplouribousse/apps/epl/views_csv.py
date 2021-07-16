@@ -172,6 +172,8 @@ def uters_csv(request):
             Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail, ad, bibcheck, \
             bibnotcheck, list])
 
+            c +=1
+
             adlist, bibchecklist, bibnotchecklist ="", "", "" # remise à zéro des compteurs
 
     return response

@@ -116,6 +116,30 @@ def home(request, bdd):
     k =logstatus(request)
     version =epl_version
 
+    #Vérification que tous les utilisateurs sont bien enregistrés
+    email_list =[]
+    for lib in Library.objects.using(bdd).all():
+        if lib.contact and lib.contact not in email_list:
+            email_list.append(lib.contact)
+        if lib.contact_bis and lib.contact_bis not in email_list:
+            email_list.append(lib.contact_bis)
+        if lib.contact_ter and lib.contact_ter not in email_list:
+            email_list.append(lib.contact_ter)
+    for adm in BddAdmin.objects.using(bdd).all():
+        if adm.contact not in email_list:
+            email_list.append(adm.contact)
+    utermail_list =[]
+    for uter in Utilisateur.objects.using(bdd).all():
+        utermail_list.append(uter.mail)
+
+    diffa =set(email_list) - set(utermail_list)
+    diffb =set(utermail_list) - set(email_list)
+    if diffa !=set():
+        messages.info(request, _("Anomalie détectée. Pas d'utilisateur associé aux mails suivants : ") + str(diffa) + ". " + "Veuillez alerter l'administrateur")
+
+    if diffb != set():
+        messages.info(request, _("Anomalie détectée. Les utilisateurs dont les mails suivent sont inutilisés : ") + str(diffb) + ". " + "Veuillez alerter l'administrateur")
+
     #La partie de code ci-dessous est reproduite dans la vue adminbase(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
     for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
         try:
@@ -784,9 +808,12 @@ def projmstr(request, bdd):
         dest1.append(bddadm.contact)
 
     class ContactForm(forms.Form):
-        object_list = (("Projet (nom, résumé, date)", _("Projet (nom, résumé, date)")), \
-        ("Ajout d'un motif d'exclusion", _("Ajout d'un motif d'exclusion")),\
-         ("Modification, suppression ou ajout d'un utilisateur", _("Modification, suppression ou ajout d'un utilisateur")), \
+        object_list = (("Signalement d'une anomalie", _("Signalement d'une anomalie")), \
+        ("Modification des infos projet (nom, résumé, date d'extraction)", _("Modification des infos projet (nom, résumé, date d'extraction)")), \
+        ("Ajout, modification ou suppression de motifs d'exclusion", _("Ajout, modification ou suppression de motifs d'exclusion")),\
+         ("Ajout, modification ou suppression de correspondants d'une bibliothèque", _("Ajout, modification ou suppression de correspondants d'une bibliothèque")), \
+         ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), \
+         ("Ajout, modification ou suppression d'utilisateurs", _("Ajout, modification ou suppression d'utilisateurs")), \
          ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), \
          ("Autre", _("Autre")))
         object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
