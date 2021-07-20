@@ -2063,9 +2063,24 @@ def endinstr(request, bdd, sid, lid):
     if lid != "999999999" and len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==0:
         if not Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =lid).name):
             answer =_("Votre collection ne comprend pas d'éléments reliés améliorant la résultante")
+            #Renumbering instruction lines :
+            for instr in Instruction.objects.using(bdd).filter(sid = sid):
+                instr.line =instr.line +1
+                instr.save(using=bdd)
+            blankinst =Instruction(line =1, sid =sid, name =Library.objects.using(bdd).get(lid =lid)\
+            .name, bound ="x", descr =_("-- Néant --"), time =Now())
+            blankinst.save(using=bdd)
+
     elif lid != "999999999" and len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==1:
         if not Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =lid).name, bound =" "):
             answer =_("Votre collection ne comprend pas d'éléments non reliés améliorant la résultante")
+            #Renumbering instruction lines :
+            for instr in Instruction.objects.using(bdd).filter(sid = sid).exclude(line =1):
+                instr.line =instr.line +1
+                instr.save(using=bdd)
+            blankinst =Instruction(line =2, sid =sid, name =Library.objects.using(bdd).get(lid =lid)\
+            .name, bound =" ", descr =_("-- Néant --"), time =Now())
+            blankinst.save(using=bdd)
 
     #Ressource data :
     itemlist = ItemRecord.objects.using(bdd).filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
@@ -2189,21 +2204,6 @@ def endinstr(request, bdd, sid, lid):
         if z.is_valid() and y.flag ==True:
 
             if len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==0:
-                if not Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =lid).name):
-                    blankinst =Instruction(line =1, sid =sid, name =Library.objects.using(bdd).get(lid =lid)\
-                    .name, bound ="x", descr =_("-- Néant --"), time =Now())
-                    blankinst.save(using=bdd)
-                #Renumbering instruction lines :
-                try:
-                    instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
-                    j, g =0, 1
-                    while j <= len(instr):
-                        instr[j].line = g
-                        instr[j].save(using=bdd)
-                        j +=1
-                        g +=1
-                except:
-                    pass
 
                 if ItemRecord.objects.using(bdd).filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.using(bdd).filter(sid =sid, status =0).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
@@ -2224,21 +2224,6 @@ def endinstr(request, bdd, sid, lid):
                         j.save(using=bdd)
 
             elif len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==1:
-                if not Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =lid).name, bound =" "):
-                    blankinst =Instruction(line =2, sid =sid, name =Library.objects.using(bdd).get(lid =lid)\
-                    .name, bound =" ", descr =_("-- Néant --"), time =Now())
-                    blankinst.save(using=bdd)
-                #Renumbering instruction lines :
-                try:
-                    instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
-                    j, g =0, 1
-                    while j <= len(instr):
-                        instr[j].line = g
-                        instr[j].save(using=bdd)
-                        j +=1
-                        g +=1
-                except:
-                    pass
 
                 if ItemRecord.objects.using(bdd).filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).exists():
                     nextitem = ItemRecord.objects.using(bdd).filter(sid =sid, status =2).exclude(lid =lid).exclude(rank =0).order_by('rank', 'pk')[0]
