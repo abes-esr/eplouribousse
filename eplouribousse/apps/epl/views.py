@@ -3340,7 +3340,7 @@ def edition(request, bdd, sid, lid):
 
         # Contributing collections (lib) ordered by 'rank'
         coliblist = []
-        coitemlist =ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0).order_by("rank")
+        coitemlist =ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0).order_by("rank", "pk")
         for co in coitemlist:
             coliblist.append(Library.objects.using(bdd).get(lid = co.lid))
 
