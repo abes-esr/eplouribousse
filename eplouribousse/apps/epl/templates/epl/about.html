@@ -31,11 +31,11 @@
         <p></p>
           <center>
             <p>*** eplouribousse est une application web destinée à faciliter la gestion du dédoublonnement des périodiques dans les bibliothèques ***</p>
-
-            <p>Version : {{ version }}</p>
+            <p>Licence : <a target="_blank" href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a></p>
+            <p>Version : {{ version }} - Date : {{ date }}</p>
             <p>Serveur : {{ host }}</p>
-          <p>{{ date }}</p>
-          <p>Licence : <a target="_blank" href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a></p>
+
+
           <p>Développée avec : Django 2.2.12 (LTS), Python 3.5.2, ReportLab open-source [3.5.42], HTML5, CSS3.</p>
           <p>Code en accès libre sur le <a target="_blank" href="https://git.unistra.fr/gressot/yellow"> GitLab</a> de l'Université de Strasbourg et sur les miroirs suivants :</p>
           <p>
@@ -48,7 +48,7 @@
           <p>Pour demander une information, signaler un bug, faire une réclamation, faire une suggestion, donner un avis ou pour toute autre raison : contacter le <a target="_blank" href="/default/contact">développeur</a> de l'application.</p>
           <p><a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · Contacter l'<a target="_blank" href="/default/webmaster">{% trans "administrateur" %}</a>  du site{% endif %}</p>
           <p>Crédits : eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
-          <p>Copyright (C) 2018-{% now 'Y' %} : Georges Gressot, Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg.</p></center>
+          <p>Copyright (C) 2018-{% now 'Y' %} : G. Gressot, Service des bibliothèques de l'Université de Strasbourg.</p></center>
 
 
     </body>
