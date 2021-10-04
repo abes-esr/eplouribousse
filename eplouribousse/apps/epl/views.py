@@ -204,14 +204,14 @@ def home(request, bdd):
     instrnbr =0
     usernbr =len(Utilisateur.objects.using(bdd).all())
     totcand =0
-    librnbr +=len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
-    itemrecnbr +=len(ItemRecord.objects.using(bdd).all())
-    instrnbr +=len(Instruction.objects.using(bdd).all())
+    librnbr =len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
+    itemrecnbr =len(ItemRecord.objects.using(bdd).all())
+    instrnbr =len(Instruction.objects.using(bdd).all())
     cand =[]
     for e in ItemRecord.objects.using(bdd).all():
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
             cand.append(e.sid)
-    totcand +=len(cand)
+    totcand =len(cand)
 
     return render(request, 'epl/home.html', locals())
 
