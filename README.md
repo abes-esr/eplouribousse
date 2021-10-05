@@ -35,6 +35,10 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 17. possibilité d'exporter les principales listes au format csv,
 18. gestion autonome du mot de passe.
 
+# Démo :
+
+https://seafile.unistra.fr/f/c2e9ec44798f490087f7/
+
 # Autres services :
 
 * Outil de suivi des bugs (Launchpad) : https://bugs.launchpad.net/eplouribousse

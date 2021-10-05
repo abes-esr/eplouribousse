@@ -33,6 +33,10 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 17. csv export for the main lists,
 18. autonomous password management.
 
+# Démo :
+
+https://seafile.unistra.fr/f/c2e9ec44798f490087f7/
+
 # Other services :
 
 * Bug tracking tool (Launchpad) : https://bugs.launchpad.net/eplouribousse
