@@ -199,11 +199,7 @@ def home(request, bdd):
                 return tobeedited(request, bdd, lid, 'title')
 
     #abstract :
-    librnbr =0
-    itemrecnbr =0
-    instrnbr =0
     usernbr =len(Utilisateur.objects.using(bdd).all())
-    totcand =0
     librnbr =len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
     itemrecnbr =len(ItemRecord.objects.using(bdd).all())
     instrnbr =len(Instruction.objects.using(bdd).all())
