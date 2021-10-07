@@ -1,8 +1,8 @@
 # epl_version ="v2.00 (Chimnechilde)"
 # date_version ="July 9, 2021"
 # Mise au niveau de :
-epl_version ="v2.01.4-beta (~Bathilde)"
-date_version ="September 13, 2021"
+epl_version ="v2.01.5-beta (~Bathilde)"
+date_version ="October 7, 2021"
 #branche = multi
 
 from django.shortcuts import render
@@ -1592,7 +1592,7 @@ def addinstr(request, bdd, sid, lid):
             i.bound =q
             #A line may only be registered once :
             if not len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound =i.bound, oname =i.oname, descr =i.descr, exc =i.exc, degr =i.degr)):
-                i.line +=1
+                # i.line +=1
                 i.time =Now()
                 i.save(using=bdd)
             else:
