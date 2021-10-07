@@ -1,7 +1,7 @@
 # epl_version ="v2.00 (Chimnechilde)"
 # date_version ="July 9, 2021"
 # Mise au niveau de :
-epl_version ="v2.01.5-beta (~Bathilde)"
+epl_version ="v2.01.6-beta (~Bathilde)"
 date_version ="October 7, 2021"
 #branche = multi
 
@@ -1847,11 +1847,11 @@ def modinstr(request, bdd, sid, lid, linetomodify):
                 else:
                     Instruction.objects.using(bdd).get(sid =sid, name =lib.name, line =linetomodify).delete()
                     if i.line <linetomodify:
-                        i.line +=1
+                        # i.line +=1
                         i.time =Now()
                         i.save(using=bdd)
                     else:
-                        i.line +=2
+                        i.line +=1
                         i.time =Now()
                         i.save(using=bdd)
 
