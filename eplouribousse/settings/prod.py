@@ -2,6 +2,7 @@
 
 from os import environ
 from os.path import normpath
+
 from .base import *
 
 ############################
@@ -18,7 +19,7 @@ DATABASES['default']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)),'shared
 i, k =0, 1
 while i <100 and k ==1:
     try:
-        DATABASES['{:02d}'.format(i)]['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/' + '{:02d}'.format(i) + '.db')
+        DATABASES['{:02d}'.format(i)]['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/' + '{:02d}'.format(i) + '.db'))
         i +=1
     except:
         k =0
