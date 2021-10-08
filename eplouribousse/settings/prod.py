@@ -19,6 +19,7 @@ DATABASES['default']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)),'shared
 i, k =0, 1
 while i <100 and k ==1:
     try:
+        DATABASES['{:02d}'.format(i)]['ENGINE'] = 'django.db.backends.sqlite3' #ligne ajoutée suite au problème lors du déploiement en prod sur sbu-epluribousse.unistra.fr
         DATABASES['{:02d}'.format(i)]['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/' + '{:02d}'.format(i) + '.db'))
         i +=1
     except:
@@ -26,3 +27,4 @@ while i <100 and k ==1:
 # DATABASES['eplone']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/eplone.db')
 # DATABASES['epltwo']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/epltwo.db')
 # DATABASES['eplthree']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/eplthree.db')
+DEBUG = False #ligne ajoutée suite au problème lors du déploiement en prod sur sbu-epluribousse.unistra.fr
