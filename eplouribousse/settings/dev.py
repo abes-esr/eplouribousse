@@ -21,9 +21,6 @@ while i <100 and k ==1:
         i +=1
     except:
         k =0
-# DATABASES['eplone']['NAME'] = environ.get('DEFAULT_DB_NAME', 'eplone.db')
-# DATABASES['epltwo']['NAME'] = environ.get('DEFAULT_DB_NAME', 'epltwo.db')
-# DATABASES['eplthree']['NAME'] = environ.get('DEFAULT_DB_NAME', 'eplthree.db')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEBUG = True

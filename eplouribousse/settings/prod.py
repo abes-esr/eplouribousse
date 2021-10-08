@@ -24,7 +24,5 @@ while i <100 and k ==1:
         i +=1
     except:
         k =0
-# DATABASES['eplone']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/eplone.db')
-# DATABASES['epltwo']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/epltwo.db')
-# DATABASES['eplthree']['NAME'] = normpath(join(dirname(dirname(SITE_ROOT)), 'shared/eplthree.db')
+
 DEBUG = False #ligne ajoutée suite au problème lors du déploiement en prod sur sbu-epluribousse.unistra.fr
