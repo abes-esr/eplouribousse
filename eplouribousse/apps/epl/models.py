@@ -1,6 +1,16 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+class Proj_setting(models.Model):
+    """Model for project settings."""
+    rkg = models.BooleanField('mail when ranking', default=True)
+    arb = models.BooleanField('mail when arbitration', default=True)
+    ins = models.BooleanField('mail when instruction', default=True)
+    edi = models.BooleanField('mail when edition', default=True)
+    def __str__(self):
+        info = str(self.rkg) + ' | ' + str(self.arb) + ' | ' + str(self.ins) + ' | ' + str(self.edi)
+        return info
+
 class Project(models.Model):
     """Model for project."""
     name = models.CharField('project code name', max_length=30, blank =True)

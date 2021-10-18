@@ -41,7 +41,6 @@ try:
 except:
     replymail =BddAdmin.objects.all().order_by('pk')[0].contact
 
-
 def serial_title(e):
     """sorting by title"""
     return e.title
@@ -223,6 +222,24 @@ def adminbase(request, bdd):
     version =epl_version
     url ="/" + bdd + "/adminbase"
     suffixe = "@" + str(bdd)
+
+    # gestion des alertes (début)
+    class AlertSettings(forms.Form):
+        gkr = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].rkg)
+        bra = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].arb)
+        sni = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].ins)
+        ide = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].edi)
+
+    projsetform = AlertSettings(request.POST or None)
+    if projsetform.is_valid():
+        settg =Proj_setting.objects.using(bdd).all().order_by('pk')[0]
+        settg.rkg =projsetform.cleaned_data['gkr']
+        settg.arb =projsetform.cleaned_data['bra']
+        settg.ins =projsetform.cleaned_data['sni']
+        settg.edi =projsetform.cleaned_data['ide']
+        settg.save(using =bdd)
+        messages.info(request, _("Les alertes ont été reconfigurées avec succès"))
+    # gestion des alertes (fin)
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -1339,21 +1356,21 @@ def reinit(request, bdd, sid):
                         else:
                             item.status =0
                             item.save(using=bdd)
-
-                #Message data :
-                nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
-                nextlib =Library.objects.using(bdd).get(lid =nextlid)
-                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
-                host = str(request.get_host())
-                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
-                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
-                " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
-                dest = [nextlib.contact]
-                if nextlib.contact_bis:
-                    dest.append(nextlib.contact_bis)
-                if nextlib.contact_ter:
-                    dest.append(nextlib.contact_ter)
-                send_mail(subject, message, replymail, dest, fail_silently=True, )
+                if Proj_setting.objects.using(bdd).all()[0].ins:
+                    #Message data :
+                    nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
+                    nextlib =Library.objects.using(bdd).get(lid =nextlid)
+                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    host = str(request.get_host())
+                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
+                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
+                    " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                    dest = [nextlib.contact]
+                    if nextlib.contact_bis:
+                        dest.append(nextlib.contact_bis)
+                    if nextlib.contact_ter:
+                        dest.append(nextlib.contact_ter)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
 
                 return current_status(request, bdd, sid, "999999999")
             else:
@@ -1430,19 +1447,20 @@ def takerank(request, bdd, sid, lid):
                 p = ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0).exclude(rank =99).order_by("rank", "pk")[0]
                 p.status =1
                 p.save(using=bdd)
-                #Message data :
-                nextlib =Library.objects.using(bdd).get(lid =p.lid)
-                nextlid =nextlib.lid
-                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
-                host = str(request.get_host())
-                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
-                dest = [nextlib.contact]
-                if nextlib.contact_bis:
-                    dest.append(nextlib.contact_bis)
-                if nextlib.contact_ter:
-                    dest.append(nextlib.contact_ter)
-                send_mail(subject, message, replymail, dest, fail_silently=True, )
+                if Proj_setting.objects.using(bdd).all()[0].ins:
+                    #Message data :
+                    nextlib =Library.objects.using(bdd).get(lid =p.lid)
+                    nextlid =nextlib.lid
+                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    host = str(request.get_host())
+                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                    dest = [nextlib.contact]
+                    if nextlib.contact_bis:
+                        dest.append(nextlib.contact_bis)
+                    if nextlib.contact_ter:
+                        dest.append(nextlib.contact_ter)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
 
 
         else:
@@ -2157,17 +2175,18 @@ def endinstr(request, bdd, sid, lid):
                 if j.status !=3:
                     j.status = 3
                     j.save(using=bdd)
-                    #Message data :
-                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
-                    host = str(request.get_host())
-                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
-                    dest = [nextlib.contact]
-                    if nextlib.contact_bis:
-                        dest.append(nextlib.contact_bis)
-                    if nextlib.contact_ter:
-                        dest.append(nextlib.contact_ter)
-                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+                    if Proj_setting.objects.using(bdd).all()[0].ins:
+                        #Message data :
+                        subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                        host = str(request.get_host())
+                        message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                        " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                        dest = [nextlib.contact]
+                        if nextlib.contact_bis:
+                            dest.append(nextlib.contact_bis)
+                        if nextlib.contact_ter:
+                            dest.append(nextlib.contact_ter)
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             if len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==2:
                 for e in ItemRecord.objects.using(bdd).filter(sid =sid, status =4):
@@ -2238,19 +2257,19 @@ def endinstr(request, bdd, sid, lid):
                     if j.status !=4:
                         j.status = 4
                         j.save(using=bdd)
-
-            #Message data :
-            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
-            host = str(request.get_host())
-            message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
-            " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
-            dest = [nextlib.contact]
-            if nextlib.contact_bis:
-                dest.append(nextlib.contact_bis)
-            if nextlib.contact_ter:
-                dest.append(nextlib.contact_ter)
-            send_mail(subject, message, replymail, dest, fail_silently=True, )
-            return router(request, bdd, lid)
+            if Proj_setting.objects.using(bdd).all()[0].ins:
+                #Message data :
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
+                return router(request, bdd, lid)
 
         if z.is_valid() and y.flag ==False:
             info =_("Vous n'avez pas coché !")
