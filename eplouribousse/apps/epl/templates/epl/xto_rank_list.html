@@ -15,41 +15,42 @@
 
     <div id="sticky-section">
       <nav id="sticky-menu">
-          <a href="/">{% trans "Accueil" %}</a>
-          <a href="/dashboard">{% trans "Supervision" %}</a>
-          <a href="/search">{% trans "Recherche (bêta)" %}</a>
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
-          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
           {% if k != 0 %}
-          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
           {% else %}
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
           {% endif %}
           <h2>{{ libname }}  (& {{ xlibname }}) - {% trans "positionnement" %}</h2>
 
-          <p><button><b><a href="/csv/{{ lid }}/{{ xlid }}/{{ resslist }}/11/{{ l }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
+          <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/{{ xlid }}/{{ resslist }}/11/{{ l }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ l }}</p>
 
           <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
-        <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %} ~ <a href="/modifrklist/{{ lid }}/title">{% trans "Modifier un précédent positionnement" %}</a></p>
+        <p>{% trans "Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]" %} ~ <a href="/{{ bdd }}/modifrklist/{{ lid }}/title">{% trans "Modifier un précédent positionnement" %}</a></p>
 
                 {% if sort == 'title' %}
-                <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
-                 / <a href="/rklist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+                <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/rklist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
+                 / <a href="/{{ bdd }}/rklist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
                  {% elif sort == 'cn' %}
-                 <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a>
-                    / <a href="/rklist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+                 <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/rklist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a>
+                    / <a href="/{{ bdd }}/rklist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
                   {% elif sort == 'sid' %}
-                  <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/rklist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a>
-                     / <a href="/rklist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)</p>
+                  <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/rklist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a>
+                     / <a href="/{{ bdd }}/rklist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)</p>
                 {% endif %}
 
             {% if lastrked != None %}
             <div id="highlight">
             <p><b>{% trans "Dernier positionnement enregistré" %}</b> : {{ lastrked.sid }} | {{ lastrked.title }} |{% if lastrked.rank != 0 %} {% trans "rang" %} : {{ lastrked.rank }}
-               {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
+               {% else %} {% trans "Exclusion" %} : {{ lastrked.excl }} {% endif %} (<a href="/{{ bdd }}/rk/{{ lastrked.sid }}/{{ lastrked.lid }}">{% trans "Modifier" %}</a>)</p>
             </div>
             {% endif %}
         <HR>
@@ -67,7 +68,7 @@
        <p></p>
           <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
           <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
             <HR>
 
        {% endfor %}
@@ -77,7 +78,7 @@
         </div>
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
 
 <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
 

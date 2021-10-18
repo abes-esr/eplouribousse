@@ -17,14 +17,15 @@
 
     <div id="sticky-section">
       <nav id="sticky-menu">
-          <a href="/">{% trans "Accueil" %}</a>
-          <a href="/dashboard">{% trans "Supervision" %}</a>
-          <!-- <a href="/search">{% trans "Recherche (bêta)" %}</a> -->
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <!-- <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a> -->
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
-          <a target="_blank" href="/about">{% trans "A propos" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
           {% if k != 0 %}
-          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./disconnect">{% trans "Déconnexion" %}</a>)</p>
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
           {% else %}
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
@@ -35,7 +36,7 @@
             <form method="post">{% csrf_token %}
                 <p>{% trans "ppn" %} : {{ form.sid }} {% trans "Votre bibliothèque" %} :  {{ form.lib }}
                    <input type="submit" value="{% trans "Valider" %}">
-                    <button><b><a href="/search">{% trans "Réinitialiser" %}</a></b></button></p>
+                    <button><b><a href="/{{ bdd }}/search">{% trans "Réinitialiser" %}</a></b></button></p>
             </form>
             <HR>
 
@@ -134,14 +135,14 @@
         {% if action != 0 %}
     <tr>
           <td>{% trans "Action attendue" %}</td>
-          <td><a href="{{ laction }}" target="_blank">{{ action }}</a></td>
+          <td><a href="/{{ laction }}" target="_blank">{{ action }}</a></td>
     </tr>
         {% endif %}
 
         {% if alteraction != 0 %}
     <tr>
           <td>{% trans "Action encore possible" %}</td>
-          <td><a href="{{ lalteraction }}" target="_blank">{{ alteraction }}</a></td>
+          <td><a href="/{{ lalteraction }}" target="_blank">{{ alteraction }}</a></td>
     </tr>
         {% endif %}
    </tbody>
@@ -155,7 +156,7 @@
 
 
     {% if higher_status == 6 %}
-      <center><button><b><a href="/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
+      <center><button><b><a href="/{{ bdd }}/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
       <center>({% trans "Réservé" %})</center>
     {% endif %}
 
@@ -177,13 +178,14 @@
     <tr>
         <td>{{ elmt.0 }}</td>
         <td>{{ elmt.1.status }}</td>
-        <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td>
+        <!-- <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td> -->
+        <td><a href="/{{ bdd }}/statadmin/{{ elmt.1.id }}">{{ elmt.1.id }}</a></td>
     </tr>
      {% endfor %}
    </tbody>
 
 </table>
-<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></button></center>
+<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></button></center>
   {% if size > 0 %}
 <table border="1">
 
@@ -212,7 +214,8 @@
          <td><font color= #3364ff >{{ elmt.descr }}</font></td>
          <td><font color= #3364ff >{{ elmt.exc}}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
-         <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
+         <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+         <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% else %}
     <tr>
@@ -223,7 +226,8 @@
         <td>{{ elmt.descr }}</td>
         <td>{{ elmt.exc}}</td>
         <td>{{ elmt.degr }}</td>
-        <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td>
+        <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+        <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% endif %}
      {% endfor %}
@@ -240,7 +244,7 @@
 
 
         <div id="credits">
-            <p>Conservation et valorisation des collections · Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
             <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
             <p>Version : {{ version }}</p>
 

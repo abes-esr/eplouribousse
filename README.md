@@ -30,10 +30,14 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 12. contrôles d'authentification,
 13. paramétrage des motifs de dérogation,
 14. administration des cas de fiches défectueuses,
-15. prise en charge multilingue (français, anglais, allemand ; possibilité d'étendre à d'autres langues),
+15. internationalisation (anglais et allemand en cours, extension possible à d'autres langues),
 16. formulaires de contact de l'administrateur de l'instance et du développeur,
 17. possibilité d'exporter les principales listes au format csv,
 18. gestion autonome du mot de passe.
+
+# Démo :
+
+https://seafile.unistra.fr/f/c2e9ec44798f490087f7/
 
 # Autres services :
 
