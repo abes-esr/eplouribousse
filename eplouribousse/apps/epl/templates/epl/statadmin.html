@@ -5,10 +5,13 @@
 
     <head>
 
-        <meta charset="utf-8" />
+
+      <meta charset="utf-8" />
 
 		{% load static %}
-		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
 
 
     </head>
@@ -22,51 +25,38 @@
           <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
+
           {% if k != 0 %}
           <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
           {% else %}
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
           {% endif %}
-          <h2>{% trans "Contrôle final" %}</h2>
-          <h2>{{ coll_set }} (ou)</h2>
+    </div>
+    <div id="content">
+        <h2>{% trans "Administration du statut d'un enregistrement" %} : {{ bib.name }}</h2>
 
+      <p><b>{% trans "Titre" %} :</b> {{ d.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> {{ d.sid }} / <b>issn :</b> {{ d.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ d.pubhist }}
+        <p><center><font color= #FF0000 >{% trans "Attention : Instructions et statuts des rattachements sont dépendants ; n'oubliez pas de les administrer complémentairement" %}.</font></center></p>
 
+        <form method="post">{% csrf_token %}
 
-          <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
-          <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
+          <p><center>{% trans "Modifiez" %} : {{ form.stat }}</center></p>
 
-        <HR>
-      </div>
+          <p><input type="submit" value="{% trans "Valider" %}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ bib.lid }}">{% trans "Annuler" %}</a></b></button></p>
 
-    <body>
-
-        <div id="content">
-      <ul>
-
-      {% for elmt in l %}
-
-            <!-- <HR> -->
-      <p></p>
-
-            <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-            <!-- <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li> -->
-            <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/999999999">{{ elmt.sid }}</a></li>
-           <HR>
-      {% endfor %}
-
-
-      </ul>
-
+        </form>
         </div>
 
 
         <div id="credits">
             <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
 
-<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+<p>Version : {{ version }}</p>
 
         </div>
+
     </body>
 
 </html>

@@ -9,7 +9,8 @@
         <meta charset="utf-8" />
 
 		{% load static %}
-		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
 
 
 
@@ -21,22 +22,38 @@
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
 
         <div id="content">
+        <p></p>
+        {% if k != 0 %}
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+        {% else %}
+        <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+        <!-- (User : Anonymous) -->
+        {% endif %}
+        <h1>{% trans "Administration globale" %} : {{ host }}</h1>
 
-        <p style="text-align:center;"><b><font color= #017a04 >@ : {% trans "Déconnexion effectuée" %}</font></b></p>
 
 
-          <p style="text-align:center;"><b><a href="/">{% trans "Retour à la page d'accueil" %}</a></b></p>
+</br></br></br></br>
+<p><center><button><a href="/admin/">{% trans "Module d'administration de Django" %}</a></button>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button><a href="/default/csv/uters">{% trans "Extraction des utilisateurs" %}</a>*</button></center></p>
+</br></br>
+<p><center>* : {% trans "Pour d'éventuels contacts" %}</center></p>
+</br></br>
         </div>
 
         <div id="footer">
 
-            <p><a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> - <a href="/default/lang">{% trans "en / de" %}</a></p>
-            <p>[<a href="/default/globadm">{% trans "Administration générale (réservé)" %}</a>]</p>
+            <p><a href="/">{% trans "Retour à l'accueil général" %}</a> -
+              <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> -
+              <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> - <a href="/default/lang">{% trans "en / de" %}</a></p>
+
+
         </div>
+
 
         <div id="credits">
               <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
-
               <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
 		    </div>
 

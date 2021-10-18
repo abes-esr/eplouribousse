@@ -25,8 +25,8 @@ SITE_NAME = basename(BASE_DIR)
 SECRET_KEY = '()1bdh=2vyryvvuzh%kp!ovheq2)495vql^l&lc@$(h78#00wj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -86,12 +86,49 @@ WSGI_APPLICATION = 'eplouribousse.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
 }
+
+i, k =0, 1
+while i <100 and k ==1:
+    try:
+        DATABASES['{:02d}'.format(i)] = {
+            'NAME': join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.sqlite3',
+        }
+        i +=1
+    except:
+        k =0
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#     },
+#     'eplone': {
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#     },
+#     'epltwo': {
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#     },
+#     'eplthree': {
+#         'NAME': join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -121,6 +158,7 @@ LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+# USE_I18N = False
 
 USE_L10N = True
 
