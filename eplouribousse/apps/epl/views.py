@@ -1462,6 +1462,30 @@ def takerank(request, bdd, sid, lid):
                         dest.append(nextlib.contact_ter)
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
+            #Début codage alerte positionnement ou arbitrage
+            # sera probablement à décliner sous chaque "if" ci-dessus.
+
+            # j'en suis là
+            if Proj_setting.objects.using(bdd).all()[0].rkg and not Proj_setting.objects.using(bdd).all()[0].arb:
+                az = 1
+            if Proj_setting.objects.using(bdd).all()[0].arb and not Proj_setting.objects.using(bdd).all()[0].rkg:
+                az = 1
+            # if Proj_setting.objects.using(bdd).all()[0].rkg and Proj_setting.objects.using(bdd).all()[0].arb: traité comme :
+            # if Proj_setting.objects.using(bdd).all()[0].rkg and not Proj_setting.objects.using(bdd).all()[0].arb:
+                #Message data :
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+            #Fin codage alerte positionnement ou arbitrage
+
 
         else:
             return notintime(request, bdd, sid, lid)
@@ -2106,8 +2130,10 @@ def endinstr(request, bdd, sid, lid):
     # Library list ordered by 'rank' (except "checker" which must be the last one)
     # to get from the precedent item list above :
     liblist = []
+    liblistrict = []
     for e in itemlist:
         liblist.append(Library.objects.using(bdd).get(lid = e.lid))
+        liblistrict.append(Library.objects.using(bdd).get(lid = e.lid)) #is used later for mailing
     liblist.append(Library.objects.using(bdd).get(name = 'checker'))
 
     #Remedied library list :
@@ -2192,6 +2218,21 @@ def endinstr(request, bdd, sid, lid):
                 for e in ItemRecord.objects.using(bdd).filter(sid =sid, status =4):
                     e.status = 5
                     e.save(using=bdd)
+                # envoi de l'alerte le cas échéant (début)
+                if Proj_setting.objects.using(bdd).all()[0].edi:
+                    for librelmt in liblistrict:
+                        #Message data :
+                        subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(librelmt.lid)
+                        host = str(request.get_host())
+                        message = _("La résultante est désormais disponible pour le ppn ") + str(sid) +\
+                        " :\n" + "http://" + host + "/" + bdd + "/ed/" + str(sid) + '/' + str(librelmt.lid)
+                        dest = [librelmt.contact]
+                        if librelmt.contact_bis:
+                            dest.append(librelmt.contact_bis)
+                        if librelmt.contact_ter:
+                            dest.append(librelmt.contact_ter)
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
+                # envoi de l'alerte le cas échéant (fin)
             return router(request, bdd, lid)
 
         elif u.is_valid() and t.checkin =="Notify": #In this case BDD administrator will be informed of errors in the instructions.
@@ -2269,7 +2310,8 @@ def endinstr(request, bdd, sid, lid):
                 if nextlib.contact_ter:
                     dest.append(nextlib.contact_ter)
                 send_mail(subject, message, replymail, dest, fail_silently=True, )
-                return router(request, bdd, lid)
+
+            return router(request, bdd, lid)
 
         if z.is_valid() and y.flag ==False:
             info =_("Vous n'avez pas coché !")
