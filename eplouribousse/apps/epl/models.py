@@ -3,10 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 
 class Proj_setting(models.Model):
     """Model for project settings."""
-    rkg = models.BooleanField('mail when ranking', default=True)
-    arb = models.BooleanField('mail when arbitration', default=True)
-    ins = models.BooleanField('mail when instruction', default=True)
-    edi = models.BooleanField('mail when edition', default=True)
+    rkg = models.BooleanField('mail when ranking')
+    arb = models.BooleanField('mail when arbitration')
+    ins = models.BooleanField('mail when instruction')
+    edi = models.BooleanField('mail when edition')
     def __str__(self):
         info = str(self.rkg) + ' | ' + str(self.arb) + ' | ' + str(self.ins) + ' | ' + str(self.edi)
         return info
@@ -71,6 +71,7 @@ class ItemRecord(models.Model):
     # 4 : publication has just been completely instructed by the lid identified library
     # 5 : visa is ok for the whole treatment by checker
     # 6 : error in instructing the resulting collection (doesn't affect ItemRecord with rank =0) to inform the bdd admin and to retire provisionally the ressource
+    last = models.PositiveSmallIntegerField('lastrked', null =True) # 1 if lastrked (else : 0 or empty)
     def __str__(self):
         r = str(self.rank)
         s = str(self.status)

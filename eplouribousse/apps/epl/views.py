@@ -1426,12 +1426,18 @@ def takerank(request, bdd, sid, lid):
         #last controls before modifications :
         if (len(list(ItemRecord.objects.using(bdd).filter(sid = sid, status =1))) and not len(list(Instruction.objects.using(bdd).filter(sid = sid)))) or\
         len(list(ItemRecord.objects.using(bdd).filter(sid = sid).exclude(status =0))) ==0:
-            global lastrked
-            lastrked =i
             # if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(status =0)) ==0:
             if i.excl !='':
                 i.rank =0
+            try:
+                old = ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+                old.last =0
+                old.save(using =bdd)
+                i.last =1
+            except:
+                i.last =1
             i.save(using=bdd)
+
             # Other status modification if all libraries have taken rank :
             # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
             # ordering by pk for identical ranks upper than 1.
@@ -1463,11 +1469,32 @@ def takerank(request, bdd, sid, lid):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             #Début codage alerte positionnement ou arbitrage
-            # sera probablement à décliner sous chaque "if" ci-dessus.
+            dest =[]
+            liblist =[]
+            for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid):
+                if Library.objects.using(bdd).get(lid =itelmt.lid) not in liblist:
+                    liblist.append(Library.objects.using(bdd).get(lid =itelmt.lid))
+            for libelmt in liblist:
+                if libelmt.contact !=request.user.email and libelmt.contact and not libelmt.contact in dest:
+                    dest.append(libelmt.contact)
+                if libelmt.contact_bis !=request.user.email and libelmt.contact_bis and not libelmt.contact_bis in dest:
+                    dest.append(libelmt.contact_bis)
+                if libelmt.contact_ter !=request.user.email and libelmt.contact_ter and not libelmt.contact_ter in dest:
+                    dest.append(libelmt.contact_ter)
 
             # j'en suis là
             if Proj_setting.objects.using(bdd).all()[0].rkg and not Proj_setting.objects.using(bdd).all()[0].arb:
-                az = 1
+                #Message data :
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
             if Proj_setting.objects.using(bdd).all()[0].arb and not Proj_setting.objects.using(bdd).all()[0].rkg:
                 az = 1
             # if Proj_setting.objects.using(bdd).all()[0].rkg and Proj_setting.objects.using(bdd).all()[0].arb: traité comme :
@@ -2359,8 +2386,9 @@ def ranktotake(request, bdd, lid, sort):
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
@@ -2403,8 +2431,9 @@ def modifranklist(request, bdd, lid, sort):
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
@@ -2467,8 +2496,9 @@ def xranktotake(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
@@ -2629,8 +2659,9 @@ def arbitration(request, bdd, lid, sort):
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
@@ -2673,8 +2704,9 @@ def arbrk1(request, bdd, lid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
@@ -2719,8 +2751,9 @@ def arbnork1(request, bdd, lid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
@@ -2806,8 +2839,9 @@ def xarbitration(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
@@ -2851,8 +2885,9 @@ def x1arb(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
@@ -2898,8 +2933,9 @@ def x0arb(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
