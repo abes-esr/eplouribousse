@@ -161,6 +161,15 @@
   <p><b>{% trans "Gestion des utilisateurs" %} ({{ sizeuters }}) :</b></p>
 <p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <HR>
+
+  <p><b>{% trans "Gestion des alertes" %} :</b></p>
+
+<p><form method="post">{% csrf_token %}{% trans "Positionnements" %} : {{ projsetform.gkr }} |
+   {% trans "Arbitrages" %} : {{ projsetform.bra }} |
+   {% trans "Instructions" %} : {{ projsetform.sni }} |
+   {% trans "Résultantes" %} : {{ projsetform.ide }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="{% trans "Valider" %}"></form></p>
+<HR>
+
   <p><b>{% trans "Gestion des informations projet" %} :</b></p>
     <table border="1">
 

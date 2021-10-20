@@ -46,7 +46,6 @@ try:
 except:
     replymail =BddAdmin.objects.all().order_by('pk')[0].contact
 
-
 def serial_title(e):
     """sorting by title"""
     return e.title
@@ -228,6 +227,24 @@ def adminbase(request, bdd):
     version =epl_version
     url ="/" + bdd + "/adminbase"
     suffixe = "@" + str(bdd)
+
+    # gestion des alertes (début)
+    class AlertSettings(forms.Form):
+        gkr = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].rkg)
+        bra = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].arb)
+        sni = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].ins)
+        ide = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].edi)
+
+    projsetform = AlertSettings(request.POST or None)
+    if projsetform.is_valid():
+        settg =Proj_setting.objects.using(bdd).all().order_by('pk')[0]
+        settg.rkg =projsetform.cleaned_data['gkr']
+        settg.arb =projsetform.cleaned_data['bra']
+        settg.ins =projsetform.cleaned_data['sni']
+        settg.edi =projsetform.cleaned_data['ide']
+        settg.save(using =bdd)
+        messages.info(request, _("Les alertes ont été reconfigurées avec succès"))
+    # gestion des alertes (fin)
 
     EXCLUSION_CHOICES = ('', ''),
     for e in Exclusion.objects.using(bdd).all().order_by('label'):
@@ -1344,6 +1361,7 @@ def reinit(request, bdd, sid):
                         else:
                             item.status =0
                             item.save(using=bdd)
+<<<<<<< HEAD
 
                 #Message data :
                 nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
@@ -1363,6 +1381,23 @@ def reinit(request, bdd, sid):
                 if nextlib.contact_ter:
                     dest.append(nextlib.contact_ter)
                 send_mail(subject, message, replymail, dest, fail_silently=True, )
+=======
+                if Proj_setting.objects.using(bdd).all()[0].ins:
+                    #Message data :
+                    nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
+                    nextlib =Library.objects.using(bdd).get(lid =nextlid)
+                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    host = str(request.get_host())
+                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
+                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
+                    " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                    dest = [nextlib.contact]
+                    if nextlib.contact_bis:
+                        dest.append(nextlib.contact_bis)
+                    if nextlib.contact_ter:
+                        dest.append(nextlib.contact_ter)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+>>>>>>> multi
 
                 return current_status(request, bdd, sid, "999999999")
             else:
@@ -1418,12 +1453,18 @@ def takerank(request, bdd, sid, lid):
         #last controls before modifications :
         if (len(list(ItemRecord.objects.using(bdd).filter(sid = sid, status =1))) and not len(list(Instruction.objects.using(bdd).filter(sid = sid)))) or\
         len(list(ItemRecord.objects.using(bdd).filter(sid = sid).exclude(status =0))) ==0:
-            global lastrked
-            lastrked =i
             # if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(status =0)) ==0:
             if i.excl !='':
                 i.rank =0
+            try:
+                old = ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+                old.last =0
+                old.save(using =bdd)
+                i.last =1
+            except:
+                i.last =1
             i.save(using=bdd)
+
             # Other status modification if all libraries have taken rank :
             # Status = 1 : item whose lid identified library must begin bound elements instructions on the sid identified serial (rank =1, no arbitration)
             # ordering by pk for identical ranks upper than 1.
@@ -1449,9 +1490,53 @@ def takerank(request, bdd, sid, lid):
                 " :\n" + "http://" + host + "/add/" + str(sid) + '/' + str(nextlid)
 =======
                 p.save(using=bdd)
+                if Proj_setting.objects.using(bdd).all()[0].ins:
+                    #Message data :
+                    nextlib =Library.objects.using(bdd).get(lid =p.lid)
+                    nextlid =nextlib.lid
+                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    host = str(request.get_host())
+                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                    dest = [nextlib.contact]
+                    if nextlib.contact_bis:
+                        dest.append(nextlib.contact_bis)
+                    if nextlib.contact_ter:
+                        dest.append(nextlib.contact_ter)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+            #Début codage alerte positionnement ou arbitrage
+            dest =[]
+            liblist =[]
+            for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid):
+                if Library.objects.using(bdd).get(lid =itelmt.lid) not in liblist:
+                    liblist.append(Library.objects.using(bdd).get(lid =itelmt.lid))
+            for libelmt in liblist:
+                if libelmt.contact !=request.user.email and libelmt.contact and not libelmt.contact in dest:
+                    dest.append(libelmt.contact)
+                if libelmt.contact_bis !=request.user.email and libelmt.contact_bis and not libelmt.contact_bis in dest:
+                    dest.append(libelmt.contact_bis)
+                if libelmt.contact_ter !=request.user.email and libelmt.contact_ter and not libelmt.contact_ter in dest:
+                    dest.append(libelmt.contact_ter)
+
+            # j'en suis là
+            if Proj_setting.objects.using(bdd).all()[0].rkg and not Proj_setting.objects.using(bdd).all()[0].arb:
                 #Message data :
-                nextlib =Library.objects.using(bdd).get(lid =p.lid)
-                nextlid =nextlib.lid
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
+            if Proj_setting.objects.using(bdd).all()[0].arb and not Proj_setting.objects.using(bdd).all()[0].rkg:
+                az = 1
+            # if Proj_setting.objects.using(bdd).all()[0].rkg and Proj_setting.objects.using(bdd).all()[0].arb: traité comme :
+            # if Proj_setting.objects.using(bdd).all()[0].rkg and not Proj_setting.objects.using(bdd).all()[0].arb:
+                #Message data :
                 subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
@@ -1465,6 +1550,11 @@ def takerank(request, bdd, sid, lid):
                 send_mail(subject, message, replymail, dest, fail_silently=True, )
 <<<<<<< HEAD
 =======
+
+<<<<<<< HEAD
+>>>>>>> multi
+=======
+            #Fin codage alerte positionnement ou arbitrage
 
 >>>>>>> multi
 
@@ -2111,8 +2201,10 @@ def endinstr(request, bdd, sid, lid):
     # Library list ordered by 'rank' (except "checker" which must be the last one)
     # to get from the precedent item list above :
     liblist = []
+    liblistrict = []
     for e in itemlist:
         liblist.append(Library.objects.using(bdd).get(lid = e.lid))
+        liblistrict.append(Library.objects.using(bdd).get(lid = e.lid)) #is used later for mailing
     liblist.append(Library.objects.using(bdd).get(name = 'checker'))
 
     #Remedied library list :
@@ -2180,6 +2272,7 @@ def endinstr(request, bdd, sid, lid):
                 if j.status !=3:
                     j.status = 3
                     j.save(using=bdd)
+<<<<<<< HEAD
                     #Message data :
                     subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
@@ -2195,11 +2288,40 @@ def endinstr(request, bdd, sid, lid):
                     if nextlib.contact_ter:
                         dest.append(nextlib.contact_ter)
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
+=======
+                    if Proj_setting.objects.using(bdd).all()[0].ins:
+                        #Message data :
+                        subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                        host = str(request.get_host())
+                        message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                        " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                        dest = [nextlib.contact]
+                        if nextlib.contact_bis:
+                            dest.append(nextlib.contact_bis)
+                        if nextlib.contact_ter:
+                            dest.append(nextlib.contact_ter)
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
+>>>>>>> multi
 
             if len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==2:
                 for e in ItemRecord.objects.using(bdd).filter(sid =sid, status =4):
                     e.status = 5
                     e.save(using=bdd)
+                # envoi de l'alerte le cas échéant (début)
+                if Proj_setting.objects.using(bdd).all()[0].edi:
+                    for librelmt in liblistrict:
+                        #Message data :
+                        subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(librelmt.lid)
+                        host = str(request.get_host())
+                        message = _("La résultante est désormais disponible pour le ppn ") + str(sid) +\
+                        " :\n" + "http://" + host + "/" + bdd + "/ed/" + str(sid) + '/' + str(librelmt.lid)
+                        dest = [librelmt.contact]
+                        if librelmt.contact_bis:
+                            dest.append(librelmt.contact_bis)
+                        if librelmt.contact_ter:
+                            dest.append(librelmt.contact_ter)
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
+                # envoi de l'alerte le cas échéant (fin)
             return router(request, bdd, lid)
 
         elif u.is_valid() and t.checkin =="Notify": #In this case BDD administrator will be informed of errors in the instructions.
@@ -2269,7 +2391,20 @@ def endinstr(request, bdd, sid, lid):
                     if j.status !=4:
                         j.status = 4
                         j.save(using=bdd)
+            if Proj_setting.objects.using(bdd).all()[0].ins:
+                #Message data :
+                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
+                dest = [nextlib.contact]
+                if nextlib.contact_bis:
+                    dest.append(nextlib.contact_bis)
+                if nextlib.contact_ter:
+                    dest.append(nextlib.contact_ter)
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
 
+<<<<<<< HEAD
             #Message data :
             subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
@@ -2285,6 +2420,8 @@ def endinstr(request, bdd, sid, lid):
             if nextlib.contact_ter:
                 dest.append(nextlib.contact_ter)
             send_mail(subject, message, replymail, dest, fail_silently=True, )
+=======
+>>>>>>> multi
             return router(request, bdd, lid)
 
         if z.is_valid() and y.flag ==False:
@@ -2333,8 +2470,9 @@ def ranktotake(request, bdd, lid, sort):
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
@@ -2377,8 +2515,9 @@ def modifranklist(request, bdd, lid, sort):
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
@@ -2441,8 +2580,9 @@ def xranktotake(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
@@ -2603,8 +2743,9 @@ def arbitration(request, bdd, lid, sort):
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
@@ -2647,8 +2788,9 @@ def arbrk1(request, bdd, lid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
@@ -2693,8 +2835,9 @@ def arbnork1(request, bdd, lid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
@@ -2780,8 +2923,9 @@ def xarbitration(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
@@ -2825,8 +2969,9 @@ def x1arb(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
@@ -2872,8 +3017,9 @@ def x0arb(request, bdd, lid, xlid, sort):
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
 
-    global lastrked
-    if lastrked !=None and not lastrked.lid ==lid:
+    try:
+        lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+    except:
         lastrked =None
 
     return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
