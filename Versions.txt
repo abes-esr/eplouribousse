@@ -28,16 +28,18 @@ Version 1.21 (~Berchilde)                   beta
 
 Version 2.00 (Chimnechilde)                 2021.07.09
 Version 2.01 (~Bathilde)                    beta
-
+Version 2.02 (Bilichilde)                   2021.10.21
+Version 2.03 (~Chrothildis)                 beta
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)
 
-Nouveautés de la dernière version master (* = important) :
+Dernières nouveautés (* = important) :
 
-* export de principales listes au format csv
+* export des principales listes au format csv
 * instruction renseignée automatiquement quand l'instructeur passe son tour
 * possibilité de s'abonner à des listes pour être tenu au courant
 * routage de retour aux listes
+* alertes possibles non seulement pour les instructions mais aussi pour le positionnement, les arbitrages et les résultantes
 * mise à jour du manuel utilisateur
 
 Version 2 : Version multi-projets (beta tant qu'elle n'est pas testée grandeur nature ...)

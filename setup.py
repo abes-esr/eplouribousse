@@ -44,7 +44,7 @@ setup(
     maintainer_email='gressot@unistra.fr',
     url='',
     download_url='',
-    license='PSF',
+    license='GPLv3',
     keywords=['django', 'Université de Strasbourg'],
     include_package_data=True,
 )
