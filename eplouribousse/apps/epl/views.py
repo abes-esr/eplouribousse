@@ -1,12 +1,17 @@
-# epl_version ="v2.00 (Chimnechilde)"
-# date_version ="July 9, 2021"
+# epl_version ="v2.02 (Bilichilde)"
+# date_version ="October 21, 2021"
 # Mise au niveau de :
+<<<<<<< HEAD
 <<<<<<< HEAD
 epl_version ="v1.21-beta.5 (~Berchilde)"
 date_version ="June 14, 2021"
 =======
 epl_version ="v2.01.6-beta (~Bathilde)"
 date_version ="October 7, 2021"
+=======
+epl_version ="v2.03.0 (~Chrothildis)"
+date_version ="October 21, 2021"
+>>>>>>> multi
 #branche = multi
 >>>>>>> multi
 
@@ -1386,11 +1391,11 @@ def reinit(request, bdd, sid):
                     #Message data :
                     nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
                     nextlib =Library.objects.using(bdd).get(lid =nextlid)
-                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
                     " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
-                    " :\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                    "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
                     dest = [nextlib.contact]
                     if nextlib.contact_bis:
                         dest.append(nextlib.contact_bis)
@@ -1494,7 +1499,7 @@ def takerank(request, bdd, sid, lid):
                     #Message data :
                     nextlib =Library.objects.using(bdd).get(lid =p.lid)
                     nextlid =nextlib.lid
-                    subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                     " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
@@ -1506,6 +1511,7 @@ def takerank(request, bdd, sid, lid):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             #Début codage alerte positionnement ou arbitrage
+<<<<<<< HEAD
             dest =[]
             liblist =[]
             for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid):
@@ -1555,8 +1561,57 @@ def takerank(request, bdd, sid, lid):
 >>>>>>> multi
 =======
             #Fin codage alerte positionnement ou arbitrage
+=======
+
+            if Proj_setting.objects.using(bdd).all()[0].rkg and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)):
+                for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid, rank =99):
+                    dest =[]
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    #Message data :
+                    subject = "eplouribousse / positionnement : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
+                    host = str(request.get_host())
+                    message = _("Un nouveau positionnement a été enregistré pour le ppn ") + \
+                    str(sid) + " : rang " + str(i.rank) + " --> "  + Library.objects.using(bdd).get(lid =lid).name + \
+                    "\n" + "Pour plus de détails et pour positionner votre collection" + \
+                    " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+>>>>>>> multi
 
 >>>>>>> multi
+
+            if Proj_setting.objects.using(bdd).all()[0].arb and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
+            len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)) ==0 and \
+            len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
+                for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid):
+                    dest =[]
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    #Message data :
+                    subject = "eplouribousse / arbitrage (type 0) : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
+                    host = str(request.get_host())
+                    message = _("Un nouvel arbitrage de type 0 a été repéré pour le ppn ") + str(sid) + \
+                    "\n" + "Pour plus de détails ou pour modifier le rang de votre collection" + \
+                    " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+            if Proj_setting.objects.using(bdd).all()[0].arb and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) >1:
+                for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid, rank =1):
+                    dest =[]
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    #Message data :
+                    subject = "eplouribousse / arbitrage (type 1) : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
+                    host = str(request.get_host())
+                    message = _("Un nouvel arbitrage de type 1 a été repéré pour le ppn ") + str(sid) + \
+                    "\n" + "Pour plus de détails ou pour modifier le rang de votre collection" + \
+                    " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+            #Fin codage alerte positionnement ou arbitrage
 
         else:
             return notintime(request, bdd, sid, lid)
@@ -2291,7 +2346,7 @@ def endinstr(request, bdd, sid, lid):
 =======
                     if Proj_setting.objects.using(bdd).all()[0].ins:
                         #Message data :
-                        subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                        subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                         host = str(request.get_host())
                         message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                         " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
@@ -2311,7 +2366,7 @@ def endinstr(request, bdd, sid, lid):
                 if Proj_setting.objects.using(bdd).all()[0].edi:
                     for librelmt in liblistrict:
                         #Message data :
-                        subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(librelmt.lid)
+                        subject = "eplouribousse / fiche : " + bdd + " / " + str(sid) + " / " + str(librelmt.lid)
                         host = str(request.get_host())
                         message = _("La résultante est désormais disponible pour le ppn ") + str(sid) +\
                         " :\n" + "http://" + host + "/" + bdd + "/ed/" + str(sid) + '/' + str(librelmt.lid)
@@ -2393,7 +2448,7 @@ def endinstr(request, bdd, sid, lid):
                         j.save(using=bdd)
             if Proj_setting.objects.using(bdd).all()[0].ins:
                 #Message data :
-                subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                 " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)

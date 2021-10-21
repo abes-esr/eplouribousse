@@ -17,7 +17,7 @@ See illustration here : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 01. edition of the candidates for each taking part library,
 02. positioning form (including derogations),
 03. edition of the resources whose instruction of the resulting collection may begin,
-04. alert when its turn came to continue the instruction of the resulting collection,
+04. alerts may be activated (ranking, arbitration, instruction, edition),
 05. instruction forms (add, delete, modify, end),
 06. neat worked pdf reports,
 07. conformity check at the end of each process cycle,

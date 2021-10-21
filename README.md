@@ -19,7 +19,7 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 01. édition des candidats pour chaque bibliothèque participante,
 02. formulaire de positionnement (ou de dérogation),
 03. édition des ressources dont l'instruction de la résultante peut débuter,
-04. alerte quand son tour est venu de poursuivre l'instruction de la résultante,
+04. alertes possibles (positionnement, arbitrage, instruction, résultante),
 05. formulaires d'instruction (ajout, suppression, modification, fin),
 06. édition différenciée des résultantes (rapports soignés au format pdf),
 07. contrôle de conformité à la fin de chaque cycle d'instruction,
