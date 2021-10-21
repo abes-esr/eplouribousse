@@ -1,0 +1,178 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+
+                <h2>{{ library.name }} - {% trans "Modification d'une ligne d'instruction" %}</h2>
+
+                  <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+                    {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / <b>{% trans "Ordre de traitement" %} :</b>
+                      {% for elmt in librarylist %}
+                          {{ elmt.name }} |
+                      {% endfor %}
+                      {% if itrec.cn != "" %} <b>{% trans "Cote" %} :</b> {{ itrec.cn }}{% endif %}
+                      {% if itrec.holdstat != "" %} / <b>{% trans "Etat de collection" %} :</b> {{ itrec.holdstat }} {% endif %}
+                      {% if itrec.missing != "" %} / <b>{% trans "Lacunes" %} :</b> {{ itrec.missing }}{% endif %}</p>
+        <HR>
+      </div>
+
+    <body>
+
+
+      <div id="content">
+      <table border="1">
+
+         <thead>
+
+             <th>{% trans "Ligne" %}</th>
+             <th>{% trans "Bibliothèque" %}</th>
+             <th>{% trans "Forme reliée" %}</th>
+             <th>{% trans "Bibliothèque remédiée" %}</th>
+             <th>{% trans "Segment" %}</th>
+             <th>{% trans "Exceptions" %}</th>
+             <th>{% trans "Eléments améliorables" %}</th>
+
+         </thead>
+
+         <tbody>
+
+           {% for elmt in instructions %}
+              {% if elmt.line == line %}
+          <tr>
+               <td><center><font color= #999999  >#</font></center></td>
+               <td><font color= #999999 >{{ elmt.name }}</font></td>
+               <td><center><font color= #999999 >{{ elmt.bound }}</font></center></td>
+               <td><font color= #999999 >{{ elmt.oname }}</font></td>
+               <td><font color= #999999 >{{ elmt.descr }}</font></td>
+               <td><font color= #999999 >{{ elmt.exc}}</font></td>
+               <td><font color= #999999 >{{ elmt.degr }}</font></td>
+          </tr>
+              {% elif elmt.line > line %}
+          <tr>
+              <td><center>{{ elmt.line|add:"-1" }}</center></td>
+              <td>{{ elmt.name }}</td>
+              <td><center>{{ elmt.bound }}</center></td>
+              <td>{{ elmt.oname }}</td>
+              <td>{{ elmt.descr }}</td>
+              <td>{{ elmt.exc}}</td>
+              <td>{{ elmt.degr }}</td>
+          </tr>
+              {% else %}
+          <tr>
+              <td><center>{{ elmt.line }}</center></td>
+              <td>{{ elmt.name }}</td>
+              <td><center>{{ elmt.bound }}</center></td>
+              <td>{{ elmt.oname }}</td>
+              <td>{{ elmt.descr }}</td>
+              <td>{{ elmt.exc}}</td>
+              <td>{{ elmt.degr }}</td>
+
+          </tr>
+              {% endif %}
+           {% endfor %}
+         </tbody>
+
+
+      </table>
+
+      <p>{% trans "[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments manquant dans le segment pour la forme considérée" %}.</p>
+
+      <div id="menucontextuel">
+      <button><b><a href="/{{ bdd }}/add/{{ sid }}/{{ lid }}">{% trans "Vider le formulaire ci-dessous" %}</a></b></button>
+      </div>
+
+        <form method="post">{% csrf_token %}
+
+      <table border="1">
+
+         <thead>
+
+             <td>{% trans "Sous la ligne" %}</td>
+             <td>{% trans "Bibliothèque" %}</td>
+             <td>{% trans "Forme reliée" %}</td>
+             <td>{% trans "Bibliothèque remédiée" %}</td>
+             <td>{% trans "Segment" %}</td>
+             <td>{% trans "Exceptions" %}</td>
+             <td>{% trans "Eléments améliorables" %}</td>
+
+         </thead>
+
+         <tbody>
+
+          <tr>
+              <td><center>{{ form.line }}</center></td>
+              <td>{{ library.name }}</td>
+              {% if expected == "x" %}
+              <td><center>x</center></td>
+              {% else %}
+              <td><center> </center></td>
+              {% endif %}
+              {% if l != 0 %}
+              <td>{{ foname.oname }}</td>
+              {% else %}
+              <td></td>
+              {% endif %}
+              <td>{{ form.descr }}</td>
+              <td>{{ form.exc }}</td>
+              <td>{{ form.degr }}</td>
+
+          </tr>
+
+         </tbody>
+
+
+      </table>
+        <p><input type="submit" value="{% trans "Valider" %}"> <B><font color= #3364ff >{{ info }}</font></B></p>
+
+        </form>
+        </div>
+
+        <div id="menucontextuel">
+
+        <p><button><b><a href="/{{ bdd }}/add/{{ sid }}/{{ lid }}">{% trans "Revenir à l'instruction" %}</a></b></button> -
+          <button><b><a href="/{{ bdd }}/end/{{ sid }}/{{ library.lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> -
+          <button><b><a href="/{{ bdd }}/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> -
+          <button><b><a href="/{{ bdd }}/router/{{ lid }}">{% trans "Reprendre plus tard" %}</a></b></button></p>
+        </div>
+
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+
+        </div>
+
+    </body>
+
+</html>

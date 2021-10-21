@@ -1,0 +1,121 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}/router/{{ lid }}">{% trans "Retour à la liste" %}</a>
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+          <h2>{{ lib.name }} - {% trans "Positionnement" %}</h2>
+
+
+          <p><b>{% trans "Titre" %} :</b> {{ ress.title|truncatewords:80 }}</p>
+          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ ress.sid }}" target="_blank">{{ ress.sid }}</a>
+           / <b>issn :</b> {{ ress.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ress.pubhist }}</p>
+        <HR>
+      </div>
+
+    <body>
+
+
+        <div id="content">
+      <ul>
+
+      {% for elmt in itemlist %}
+          {% if elmt.0.lid == lib.lid %}
+                <!-- <HR> -->
+          <p></p>
+              <li><font color= #e74c3c ><b>{{ elmt.1 }}</b></font></li>
+              <li>{% trans "Cote" %} : {{ elmt.0.cn }}</li>
+              <li>{% trans "Etat de collection" %} : {{ elmt.0.holdstat }}</li>
+              {% if elmt.0.missing != '' %}
+              <li>{% trans "Lacunes" %} : {{ elmt.0.missing }}</li>
+              {% endif %}
+              {% if elmt.0.rank != 0 %}
+              <li>{% trans "Rang courant" %} : <font color= #3498db  >{{ elmt.0.rank }}</font></li>
+              {% if elmt.0.comm != '' %}
+              <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
+              {% endif %}
+              {% else %}
+              <li>{% trans "Exclusion" %} : <font color= #3498db  >{{ elmt.0.excl}}</font></li>
+                {% if elmt.0.comm != '' %}
+                <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
+                {% endif %}
+              {% endif %}
+          {% else %}
+                <!-- <HR> -->
+          <p></p>
+              <li><b>{{ elmt.1 }}</b></li>
+              <li>{% trans "Cote" %} : {{ elmt.0.cn }}</li>
+              <li>{% trans "Etat de collection" %} : {{ elmt.0.holdstat }}</li>
+              {% if elmt.0.missing != '' %}
+              <li>{% trans "Lacunes" %} : {{ elmt.0.missing }}</li>
+              {% endif %}
+              {% if elmt.0.rank != 0 %}
+              <li>{% trans "Rang courant" %} : <font color= #3498db  >{{ elmt.0.rank }}</font></li>
+              {% if elmt.0.comm != '' %}
+              <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
+              {% endif %}
+              {% else %}
+              <li>{% trans "Exclusion" %} : <font color= #3498db  >{{ elmt.0.excl}}</font></li>
+                {% if elmt.0.comm != '' %}
+                <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
+                {% endif %}
+              {% endif %}
+          {% endif %}
+          <HR>
+      {% endfor %}
+
+
+      </ul>
+      <!-- <HR> -->
+
+      <form method="post">
+      <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ f.excl }}</p>
+      <p>{% trans "Sinon, rang de votre collection" %} : {{ f.rank }}</p>
+      <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}
+        <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a></p>
+      <p>{{ f.comm }} <input type="Submit" value="{% trans "Valider" %}"></p>
+      {% csrf_token %}
+      </form>
+
+
+
+        </div>
+
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+
+        </div>
+
+      <body>
+
+</html>

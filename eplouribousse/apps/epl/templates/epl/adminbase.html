@@ -1,0 +1,220 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <!-- <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a> -->
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+    <!-- </div> -->
+
+<body>
+
+       <!-- <div id="content"> -->
+
+      <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
+      <div align="right"><a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a></div>
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <center><font color= #0000FF ><p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <!-- <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p> -->
+<HR>
+      </div>
+      <div id="content">
+      <p><b>{% trans "Gestion des motifs d'exlusion" %} :</b></p>
+<p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
+<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à modifier" %} {{ exclsupprform.exclreason }} &nbsp;&nbsp;&nbsp;&nbsp;
+  {% trans "Nouvel intitulé" %}  {{ exclsupprform.exclmod }} &nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou supprimer" %}{{ exclsupprform.suppr }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
+
+<HR>
+      <!-- </div> -->
+      <!-- <div id="content"> -->
+
+<!-- <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p> -->
+
+
+      <p><b>{% trans "Gestion des bibliothèques" %} ({{ sizelib }}, {% trans "checker exclu" %}) :</b></p>
+<table border="1">
+    {% for l in libtuple %}
+  <thead>
+
+      <th>{% trans "Propriété" %}</th>
+      <th>{% trans "Valeur actuelle" %}</th>
+      <th>{% trans "Identifiant" %}</th>
+      <!-- <th>{% trans "Le cas échéant, nouvelle valeur" %}</th> -->
+
+  </thead>
+
+   <tbody>
+
+     <tr>
+           <td>{% trans "Nom de la bibliothèque" %}</td>
+           <td>{{ l.0.name }} {% if l.0.name == 'checker'  %} ({% trans "Non modifiable" %}) {% endif %}</td>
+           <td></td>
+           <!-- <td>{% if l.name != 'checker'  %}<form method="post">{% csrf_token %}{{ formlibname.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form>{% else %} ({% trans "Non modifiable" %}) {% endif %}</td> -->
+     </tr>
+     <tr>
+           <td>{% trans "Contact principal" %} ({% trans "Obligatoire" %})</td>
+           <td>{{ l.0.contact }}</td>
+           <td>{{ l.1.username }}</td>
+           <!-- <td><form method="post">{% csrf_token %}{{ formlibct1.contact1 }} <input type="submit" value="{% trans "Valider" %}"></form></td> -->
+     </tr>
+    <tr>
+          <td>{% trans "Second contact" %}</td>
+          <td>{% if l.0.contact_bis != None %} {{ l.0.contact_bis }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
+          <td>{% if l.2 != None %} {{ l.2.username }} {% endif %}</td>
+          <!-- <td><form method="post">{% csrf_token %}{{ formlibct2.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_bis != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu2.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td> -->
+    </tr>
+    <tr>
+          <td>{% trans "Troisième contact" %}</td>
+          <td>{% if l.0.contact_ter != None %} {{ l.0.contact_ter }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
+          <td>{% if l.3 != None %} {{ l.3.username }} {% endif %}</td>
+          <!-- <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_ter != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td> -->
+    </tr>
+
+   </tbody>
+      {% endfor %}
+</table>
+
+<!-- <p><b><font color= #FF0000 >{% trans "Le nom courant est à indiquer dans tous les cas (drag & drop) ; une seule validation à la fois" %}</font></b></p> -->
+
+  <p><form method="post"> {% csrf_token %}
+    {{ formlibname.curname }}
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    {% trans "Nouveau nom de la bibliothèque" %} {{ formnewlibname.newlibrname }}
+    <input type="submit" value="{% trans "Valider" %}"> </form></p>
+
+<p><form method="post"> {% csrf_token %}{{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
+&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}<br />
+{% trans "ou modifier (ou créer) la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
+<input type="submit" value="{% trans "Valider" %}"> </form>
+  </p>
+
+
+
+<HR>
+    <!-- <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
+<HR> -->
+      <p><b>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</b></p>
+
+      <table border="1">
+
+        <thead>
+
+            <th>{% trans "mail de l'admin" %}</th>
+            <th>{% trans "identifiant" %}</th>
+            <!-- <th>{% trans "Identifiant" %}</th> -->
+            <!-- <th>{% trans "Le cas échéant, nouvelle valeur" %}</th> -->
+
+        </thead>
+
+         <tbody>
+            {% for adm in admintup %}
+           <tr>
+                 <td>{{ adm.0 }}</td>
+                 <td>{{ adm.1.username }}</td>
+           </tr>
+
+         </tbody>
+            {% endfor %}
+      </table>
+
+
+    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contactajadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.identajadm }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+
+<p><form method="post"> {% csrf_token %}{% trans "Supprimer un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
+
+<HR>
+  <p><b>{% trans "Gestion des utilisateurs" %} ({{ sizeuters }}) :</b></p>
+<p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<HR>
+
+  <p><b>{% trans "Gestion des alertes" %} :</b></p>
+
+<p><form method="post">{% csrf_token %}{% trans "Positionnements" %} : {{ projsetform.gkr }} |
+   {% trans "Arbitrages" %} : {{ projsetform.bra }} |
+   {% trans "Instructions" %} : {{ projsetform.sni }} |
+   {% trans "Résultantes" %} : {{ projsetform.ide }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="{% trans "Valider" %}"></form></p>
+<HR>
+
+  <p><b>{% trans "Gestion des informations projet" %} :</b></p>
+    <table border="1">
+
+      <thead>
+
+          <th>{% trans "Propriété" %}</th>
+          <th>{% trans "Valeur actuelle" %}</th>
+          <th>{% trans "Le cas échéant, nouvelle valeur" %}</th>
+
+      </thead>
+
+       <tbody>
+
+         <tr>
+               <td>{% trans "Nom du projet" %}</td>
+               <td>{{ project }}</td>
+               <td><form method="post">{% csrf_token %}{{ projnamform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+         </tr>
+         <tr>
+               <td>{% trans "Résumé" %}</td>
+               <td>{{ abstract }}</td>
+               <td><form method="post">{% csrf_token %}{{ projdescform.projdescr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+         </tr>
+        <tr>
+              <td>{% trans "Date d'extraction de la base" %}</td>
+              <td>{{ extractdate }}</td>
+              <td><form method="post">{% csrf_token %}{{ projdateform.projdate }} <input type="submit" value="{% trans "Valider" %}"></form></td>
+        </tr>
+
+       </tbody>
+
+    </table>
+
+<center><a href="/{{ bdd }}">{% trans "Retour à l'accueil" %}</a></center>
+
+        </div>
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+<p>Version : {{ version }}</p>
+
+        </div>
+
+</body>
+
+</html>

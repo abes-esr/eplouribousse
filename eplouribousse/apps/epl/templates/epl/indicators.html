@@ -1,0 +1,211 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+          <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+</head>
+
+
+        <div id="sticky-section">
+          <nav id="sticky-menu">
+              <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+              <!-- <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a> -->
+              <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+              <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+              <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+              <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+          </nav>
+              {% if k != 0 %}
+              <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+              {% else %}
+              <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+              <!-- (User : Anonymous) -->
+              {% endif %}
+              <!-- <h2>{% trans "Supervision" %}</h2> -->
+                <!-- <div id="content"> -->
+
+          </div>
+
+<body>
+
+
+	        <div id="content">
+
+
+<table border="1">
+
+   <thead>
+
+       <th>{% trans "Supervision" %} : {% trans "Indicateur" %}</th>
+       <th>{% trans "Valeur" %}</th>
+
+
+   </thead>
+
+   <tbody>
+
+     <tr>
+           <td>{% trans "Réalisation relative (ressources traitées/ressources effectivement candidates)" %}</td>
+           <td><center>{{ relative_real }} %</center></td>
+     </tr>
+     <tr>
+           <td>{% trans "Réalisation absolue (ressources n'étant plus à traiter/ressources potentiellement candidates)" %}</td>
+           <td><center>{{ absolute_real }} %</center></td>
+     </tr>
+    <tr>
+          <td>{% trans "Collections" %}</td>
+          <td><center>{{ coll }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "Unicas" %}</td>
+          <td><center>{{ isol }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "Collections candidates au départ" %}</td>
+          <td><center>{{ candcoll }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "Ressources potentiellement candidates" %}</td>
+          <td><center>{{ cand }}</center></td>
+    </tr>
+    {% if nlib > 3 %}
+    <tr>
+          <td>{% trans "dont doublons stricts" %}</td>
+          <td><center>{{ dupl }}</center></td>
+    </tr>
+    <tr>
+          <td>{% trans "dont triplons" %}</td>
+          <td><center>{{ tripl }}</center></td>
+    </tr>
+    {% endif %}
+    {% if nlib > 4 %}
+    <!-- 4 and not 3, since the checker is another library -->
+    <tr>
+          <td>{% trans "dont quadruplons" %}</td>
+          <td><center>{{ qudrpl }}</center></td>
+    </tr>
+    {% endif %}
+    <tr>
+         <td>{% trans "Collections positionnées (exclusions incluses)" %}</td>
+         <td><center>{{ rkall }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Collections positionnées (hors exclusions)" %}</td>
+         <td><center>{{ rkright }}</center></td>
+    </tr>
+    <tr>
+         <td><a href="/{{ bdd }}/excl">{% trans "Collections exclues" %}</a></td>
+         <td><center><a href="/{{ bdd }}/excl">{{ exclus }}</a></center></td>
+    </tr>
+
+
+    {% for e, v in dict.items %}
+           {% if e == "Autre (Commenter)" %}
+         <tr>
+           <td>{% trans "dont : " %} {% trans "Autre (Commenter)" %}</td>
+           <td><center>{{ v }}</center></td>
+         </tr>
+           {% else %}
+         <tr>
+         <td>{% trans "dont : " %} {{ e }}</td>
+         <td><center>{{ v }}</center></td>
+         </tr>
+           {% endif %}
+    {% endfor %}</p>
+
+    <tr>
+         <td>{% trans "Ressources écartées par exclusion de collection" %}</td>
+         <td><center>{{ discard }}</center></td>
+    </tr>
+
+    <tr>
+         <td>{% trans "Collections effectivement candidates" %}</td>
+         <td><center>{{ realcandcoll }}</center></td>
+    </tr>
+
+    <tr>
+         <td>{% trans "Ressources effectivement candidates" %}</td>
+         <td><center>{{ realcand }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources pour lesquelles le positionnement est à compléter (hors arbitrages)" %}</td>
+         <td><center>{{ stocomp }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Collections impliquées dans un arbitrage quelconque" %}</td>
+         <td><center>{{ ctotal }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Collections impliquées dans un arbitrage de 1ère place" %}</td>
+         <td><center>{{ c1st }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Collections impliquées dans un arbitrage faute de 1ère place" %}</td>
+         <td><center>{{ cnone }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources impliquées dans un arbitrage quelconque" %}</td>
+         <td><center>{{ stotal }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources impliquées dans un arbitrage de 1ère place" %}</td>
+         <td><center>{{ s1st }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources impliquées dans un arbitrage faute de 1ère place" %}</td>
+         <td><center>{{ snone }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources dont l'instruction des éléments reliés peut débuter" %}</td>
+         <td><center>{{ bdmaybeg }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources dont l'instruction des éléments reliés est en cours" %}</td>
+         <td><center>{{ bdonway }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources dont l'instruction des éléments non reliés peut débuter" %}</td>
+         <td><center>{{ notbdmaybeg }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources dont l'instruction des éléments non reliés est en cours" %}</td>
+         <td><center>{{ notbdonway }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources complètement instruites" %}</td>
+         <td><center>{{ fullinstr }}</center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Ressources dont l'instruction est incomplète, défectueuse ou n'a pas débuté (alors qu'elle le peut)" %}</td>
+         <td><center>{{ incomp }}</center></td>
+    </tr>
+    <tr>
+         <td><a href="/{{ bdd }}/faulty">{% trans "Fiches défectueuses" %}</a></td>
+         <td><center><a href="/{{ bdd }}/faulty">{{ fail }}</a></center></td>
+    </tr>
+    <tr>
+         <td>{% trans "Instructions" %}</td>
+         <td><center>{{ instr }}</center></td>
+    </tr>
+   </tbody>
+
+
+</table>
+
+  </div>
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+
+        </div>
+</body>
+
+</html>

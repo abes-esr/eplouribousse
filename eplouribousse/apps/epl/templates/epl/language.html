@@ -1,0 +1,69 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+
+        <!-- <div id="content"> -->
+        <!-- {% if k != 0 %}
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+        {% else %} -->
+        <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+        <!-- (User : Anonymous) -->
+        <!-- {% endif %}
+        </div> -->
+        <!-- <p></p> -->
+        <div id="content">
+
+          <h1>Change language</h1>
+
+          <form action="/i18n/setlang/" method="post">
+            <input name="next" type="hidden" value="/">
+              {% csrf_token %}
+
+              <select name="language">
+              {% for lang in LANGUAGES %}
+                  <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+              {% endfor %}
+              </select>
+
+              <input type="submit" />
+          </form>
+<p><a href="/">{% trans "Retour à la page d'accueil" %}</a></p>
+
+<p></p>
+
+        </div>
+
+        <div id="footer">
+
+            <p><a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a> - <a target="_blank" href="/./accounts/password_change">{% trans "Gérer mon mot de passe" %}</a> - [<a href="/./admin/">{% trans "Administration (réservé)" %}</a>]</p>
+
+        </div>
+
+        <div id="credits">
+
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+
+		</div>
+
+    </body>
+
+</html>

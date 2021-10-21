@@ -1,0 +1,133 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+    </head>
+
+  </head>
+  <div id="sticky-section">
+    <nav id="sticky-menu">
+        <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+        <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+        <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+        <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+        <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+        <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+    </nav>
+
+        {% if k != 0 %}
+        <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+        {% else %}
+        <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+        <!-- (User : Anonymous) -->
+        {% endif %}
+
+        <h2>{{ library.name }} - {% trans "Sélection de la ligne à modifier" %}</h2>
+
+
+          <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }}</p>
+          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+            {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / <b>{% trans "Ordre de traitement" %} :</b>
+
+
+          {% for elmt in librarylist %}
+              {{ elmt.name }} |
+          {% endfor %}
+          {% if itrec.cn != "" %} <b>{% trans "Cote" %} :</b> {{ itrec.cn }}{% endif %}
+          {% if itrec.holdstat != "" %} / <b>{% trans "Etat de collection" %} :</b> {{ itrec.holdstat }} {% endif %}
+          {% if itrec.missing != "" %} / <b>{% trans "Lacunes" %} :</b> {{ itrec.missing }}{% endif %}</p>
+
+        <p><i>({% trans "Les lignes en rouge ne peuvent plus être modifiées" %})</i></p>
+      <HR>
+    </div>
+
+    <body>
+
+
+      <div id="content">
+      <table border="1">
+
+         <thead>
+
+             <th>{% trans "Ligne" %}</th>
+             <th>{% trans "Bibliothèque" %}</th>
+             <th>{% trans "Forme reliée" %}</th>
+             <th>{% trans "Bibliothèque remédiée" %}</th>
+             <th>{% trans "Segment" %}</th>
+             <th>{% trans "Exceptions" %}</th>
+             <th>{% trans "Eléments améliorables" %}</th>
+
+         </thead>
+
+         <tbody>
+
+           {% for elmt in instructions %}
+              {% if elmt.name == library.name and elmt.bound == expected %}
+          <tr>
+               <td><center><font color= #2ba121 >{{ elmt.line }}</font></center></td>
+               <td><font color= #2ba121 >{{ elmt.name }}</font></td>
+               <td><center><font color= #2ba121 >{{ elmt.bound }}</font></center></td>
+               <td><font color= #2ba121 >{{ elmt.oname }}</font></td>
+               <td><font color= #2ba121 >{{ elmt.descr }}</font></td>
+               <td><font color= #2ba121 >{{ elmt.exc}}</font></td>
+               <td><font color= #2ba121 >{{ elmt.degr }}</font></td>
+          </tr>
+              {% else %}
+          <tr>
+              <td><center><font color= #e32111 >{{ elmt.line }}</font></center></td>
+              <td><font color= #e32111 >{{ elmt.name }}</font></td>
+              <td><center><font color= #e32111 >{{ elmt.bound }}</font></center></td>
+              <td><font color= #e32111 >{{ elmt.oname }}</font></td>
+              <td><font color= #e32111 >{{ elmt.descr }}</font></td>
+              <td><font color= #e32111 >{{ elmt.exc}}</font></td>
+              <td><font color= #e32111 >{{ elmt.degr }}</font></td>
+
+          </tr>
+              {% endif %}
+           {% endfor %}
+         </tbody>
+
+
+      </table>
+
+      {% if answer == "" %}
+
+      <form method="post">{% csrf_token %}
+          <p>{% trans "Ligne à modifier" %} : {{ form.row }} <B><font color= #e74c3c >{{ answer }}</font></B></p>
+          <p><input type="submit" value="{% trans "Valider" %}"></p>
+
+      </form>
+
+      {% else %}
+        <p><B><font color= #3364ff >{{ answer }}.</font></B></p>
+      {% endif %}
+      </div>
+
+      <div id="menucontextuel">
+
+        <p><button><b><a href="/{{ bdd }}/add/{{ sid }}/{{ lid }}">{% trans "Revenir à l'instruction" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/end/{{ sid }}/{{ lid }}">{% trans "J'ai fini pour la forme courante" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/del/{{ sid }}/{{ library.lid }}">{% trans "Supprimer une ligne erronée" %}</a></b></button> -
+          <button><b><a href="/{{ bdd }}/router/{{ lid }}">{% trans "Reprendre plus tard" %}</a></b></button></p>
+
+      </div>
+
+
+      <div id="credits">
+          <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+<p>Version : {{ version }}</p>
+
+      </div>
+
+  </body>
+
+</html>

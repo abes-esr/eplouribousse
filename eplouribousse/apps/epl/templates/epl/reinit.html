@@ -1,0 +1,56 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+      </div>
+
+    <body>
+
+      <h2>{% trans "Réinitialisation d'une fiche erronée" %}</h2>
+        <div id="content">
+      <p><b>{% trans "Ressource concernée" %} :</b> {{ ressource.title }} (<b>identifiant :</b> {{ sid }})</p>
+          <form method="post">{% csrf_token %}
+            <p>{% trans "Je souhaite réinitialer la fiche" %} : {{ form.flag }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><font color= #017a04 >{{ info }}</font></b></p>
+            <p>{% trans "En confirmant, vous allez réinitialiser la fiche au début de la phase sur laquelle l'erreur a été constatée" %}.</p>
+          <p><input type="submit" value="{% trans "Confirmer" %}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><a href="/{{ bdd }}/current_status/{{ sid }}/999999999">{% trans "Annuler" %}</a></button></p>
+
+          </form>
+          <p>{% trans "Après validation ou annulation, vous serez redirigé vers la fiche de statut courant qui vous permettra de vérifier la prise en compte de votre choix" %}.</p>
+        </div>
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p><p>Version : {{ version }}</p>
+
+        </div>
+
+    </body>
+
+</html>
