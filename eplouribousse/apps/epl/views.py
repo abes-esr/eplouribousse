@@ -1,8 +1,8 @@
-# epl_version ="v2.02 (Bilichilde)"
-# date_version ="October 21, 2021"
+epl_version ="v2.02 (Bilichilde)"
+date_version ="October 21, 2021"
 # Mise au niveau de :
-epl_version ="v2.03.2 (~Chrothildis)"
-date_version ="October 22, 2021"
+# epl_version ="v2.03.2 (~Chrothildis)"
+# date_version ="October 22, 2021"
 
 from django.shortcuts import render
 
@@ -2111,9 +2111,14 @@ def endinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
+    suffixe = "@" + str(bdd)
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)
 
     #Control (endinstr only if it's up to the considered library == same conditions as for addinstr)
