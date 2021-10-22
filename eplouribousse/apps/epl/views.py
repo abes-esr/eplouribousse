@@ -1517,11 +1517,19 @@ def takerank(request, bdd, sid, lid):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             #Fin codage alerte positionnement ou arbitrage
+            #renvoi vers la liste adéquate en cas de recours au lien envoyé dans les alertes mail
+            try:
+                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                key =newestfeature.feaname.split('$')
+                if key[0] in ["10", "11", "12", "20", "21", "22", "23", "24", "25"]:
+                    return router(request, bdd, lid)
+                else:
+                    return ranktotake(request, bdd, lid, 'title')
+            except:
+                return ranktotake(request, bdd, lid, 'title')
 
         else:
             return notintime(request, bdd, sid, lid)
-
-        return router(request, bdd, lid)
 
     # Item records list :
     itlist = ItemRecord.objects.using(bdd).filter(sid =  sid)
@@ -2264,7 +2272,17 @@ def endinstr(request, bdd, sid, lid):
                             dest.append(librelmt.contact_ter)
                         send_mail(subject, message, replymail, dest, fail_silently=True, )
                 # envoi de l'alerte le cas échéant (fin)
-            return router(request, bdd, lid)
+
+            #renvoi vers la liste adéquate en cas de recours au lien envoyé dans les alertes mail
+            try:
+                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                key =newestfeature.feaname.split('$')
+                if key[0] in ["30", "31", "32", "33", "34", "35", "36", "37", "38"]:
+                    return router(request, bdd, lid)
+                else:
+                    return instrtodo(request, bdd, lid, 'title')
+            except:
+                return instrtodo(request, bdd, lid, 'title')
 
         elif u.is_valid() and t.checkin =="Notify": #In this case BDD administrator will be informed of errors in the instructions.
             # Change all ItemRecords status (except those with rank =0) for the considered sid to status =6
@@ -2285,7 +2303,16 @@ def endinstr(request, bdd, sid, lid):
                 dest.append(d.contact)
             exp = request.user.email
             send_mail(subject, message, exp, dest, fail_silently=True, )
-            return router(request, bdd, lid)
+
+            try:
+                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                key =newestfeature.feaname.split('$')
+                if key[0] in ["30", "31", "32", "33", "34", "35", "36", "37", "38"]:
+                    return router(request, bdd, lid)
+                else:
+                    return instrtodo(request, bdd, lid, 'title')
+            except:
+                return instrtodo(request, bdd, lid, 'title')
 
     else: #lid !="999999999"
         if z.is_valid() and y.flag ==True:
@@ -2342,7 +2369,15 @@ def endinstr(request, bdd, sid, lid):
                     dest.append(nextlib.contact_ter)
                 send_mail(subject, message, replymail, dest, fail_silently=True, )
 
-            return router(request, bdd, lid)
+            try:
+                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                key =newestfeature.feaname.split('$')
+                if key[0] in ["30", "31", "32", "33", "34", "35", "36", "37", "38"]:
+                    return router(request, bdd, lid)
+                else:
+                    return instrtodo(request, bdd, lid, 'title')
+            except:
+                return instrtodo(request, bdd, lid, 'title')
 
         if z.is_valid() and y.flag ==False:
             info =_("Vous n'avez pas coché !")
@@ -2392,6 +2427,8 @@ def ranktotake(request, bdd, lid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2437,6 +2474,8 @@ def modifranklist(request, bdd, lid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2502,6 +2541,8 @@ def xranktotake(request, bdd, lid, xlid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2665,6 +2706,8 @@ def arbitration(request, bdd, lid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2710,6 +2753,8 @@ def arbrk1(request, bdd, lid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2757,6 +2802,8 @@ def arbnork1(request, bdd, lid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2845,6 +2892,8 @@ def xarbitration(request, bdd, lid, xlid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2891,6 +2940,8 @@ def x1arb(request, bdd, lid, xlid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
@@ -2939,6 +2990,8 @@ def x0arb(request, bdd, lid, xlid, sort):
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
+        if len(Instruction.objects.using(bdd).filter(sid =lastrked.sid)):
+            lastrked =None
     except:
         lastrked =None
 
