@@ -1,8 +1,8 @@
-# epl_version ="v2.02 (Bilichilde)"
-# date_version ="October 21, 2021"
+epl_version ="v2.02 (Bilichilde)"
+date_version ="October 21, 2021"
 # Mise au niveau de :
-epl_version ="v2.03.2 (~Chrothildis)"
-date_version ="October 22, 2021"
+# epl_version ="v2.03.2 (~Chrothildis)"
+# date_version ="October 22, 2021"
 
 from django.shortcuts import render
 
