@@ -85,7 +85,8 @@ In all cases, let us know that you're interested (see contact below)
 - The deployment tool having been coded in python 2.7, it will first be necessary to create a virtual environment under which we will install this version of python,
 - Deployment shall be done with the tool pydiploy <https://pypi.org/project/pydiploy/> (installation with the command 'pip install pydiploy', in the virtual environment),
 - The use of pydiploy implies the creation of an ad-hoc fabfile on the model of those provided in the repository (example <https://github.com/GGre/eplouribounistra/blob/master/fabfile_eplouribousse1.py>),
-- It is also necessary to install reportlab open source <https://pypi.org/project/reportlab/> (for the generation of pdf files).
+- It is also necessary to install reportlab open source <https://pypi.org/project/reportlab/> (for the generation of pdf files),
+- Attention : Django secret key kept secret in public respository (**/settings/secret_key.py in .gitignore)
 
 # Credits :
 
