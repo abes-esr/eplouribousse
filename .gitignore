@@ -85,9 +85,9 @@ target/
 __pycache__/
 local_settings.py
 migrations/
+secret_key.py #ajouté par Georges G. le 25 octobre 2021 (pour cacher la clef secrète)
 
 .env
 db.sqlite3
-#eplouribousse.db
 *.db
 assets/
