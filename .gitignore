@@ -77,6 +77,8 @@ docs/_build/
 # PyBuilder
 target/
 
+### Mes réglages ###
+**/settings/secret_key.py
 
 ### Django ###
 *.log
@@ -86,8 +88,8 @@ __pycache__/
 local_settings.py
 migrations/
 
+
 .env
 db.sqlite3
-#eplouribousse.db
 *.db
 assets/
