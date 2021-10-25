@@ -78,7 +78,7 @@ docs/_build/
 target/
 
 ### Mes réglages ###
-*/secret_key.py
+**/settings/secret_key.py
 
 ### Django ###
 *.log
