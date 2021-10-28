@@ -27,6 +27,8 @@ import os
 
 from django.contrib import messages
 
+from .decorators import edmode
+
 lastrked =None
 webmaster =""
 try:
@@ -131,12 +133,12 @@ def home(request, bdd):
         utermail_list.append(uter.mail)
 
     diffa =set(email_list) - set(utermail_list)
-    diffb =set(utermail_list) - set(email_list)
+    # diffb =set(utermail_list) - set(email_list)
     if diffa !=set():
         messages.info(request, _("Anomalie détectée. Pas d'utilisateur associé aux mails suivants : ") + str(diffa) + ". " + "Veuillez alerter l'administrateur")
 
-    if diffb != set():
-        messages.info(request, _("Anomalie détectée. Les utilisateurs dont les mails suivent sont inutilisés : ") + str(diffb) + ". " + "Veuillez alerter l'administrateur")
+    # if diffb != set():
+    #     messages.info(request, _("Anomalie détectée. Les utilisateurs dont les mails suivent sont inutilisés : ") + str(diffb) + ". " + "Veuillez alerter l'administrateur")
 
     #La partie de code ci-dessous est reproduite dans la vue adminbase(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
     for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
@@ -213,6 +215,10 @@ def home(request, bdd):
 def adminbase(request, bdd):
 
     #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
     if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)
@@ -220,24 +226,79 @@ def adminbase(request, bdd):
     k =logstatus(request)
     version =epl_version
     url ="/" + bdd + "/adminbase"
-    suffixe = "@" + str(bdd)
+    private =Proj_setting.objects.using(bdd)[0].prv
 
     # gestion des alertes (début)
-    class AlertSettings(forms.Form):
-        gkr = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].rkg)
-        bra = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].arb)
-        sni = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].ins)
-        ide = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].edi)
+    current_alerts =[] #initialzing
+    if Proj_setting.objects.using(bdd)[0].rkg:
+        current_alerts.append(_("positionnement"))
+    if Proj_setting.objects.using(bdd)[0].arb:
+        current_alerts.append(_("arbitrages"))
+    if Proj_setting.objects.using(bdd)[0].ins:
+        current_alerts.append(_("instructions"))
+    if Proj_setting.objects.using(bdd)[0].edi:
+        current_alerts.append(_("résultantes"))
+    if len(current_alerts):
+        al =1
+    else:
+        al =0
+    if Proj_setting.objects.using(bdd)[0].prv:
+        priv_mode = _("activé")
+    else:
+        priv_mode = _("désactivé")
 
-    projsetform = AlertSettings(request.POST or None)
-    if projsetform.is_valid():
-        settg =Proj_setting.objects.using(bdd).all().order_by('pk')[0]
-        settg.rkg =projsetform.cleaned_data['gkr']
-        settg.arb =projsetform.cleaned_data['bra']
-        settg.ins =projsetform.cleaned_data['sni']
-        settg.edi =projsetform.cleaned_data['ide']
-        settg.save(using =bdd)
-        messages.info(request, _("Les alertes ont été reconfigurées avec succès"))
+    SETTING_CHOICES = (
+        ('rkg', _("Alertes positionnement")),
+        ('arb', _("Alertes arbitrages")),
+        ('ins', _("Alertes instructions")),
+        ('edi', _("Alertes résultantes")),
+        ('prv', _("Mode édition restreint (usagers autorisés)")),
+    )
+
+    actu =[]
+    projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).rkg:
+        actu.append('rkg')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).arb:
+        actu.append('arb')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).ins:
+        actu.append('ins')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).edi:
+        actu.append('edi')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).prv:
+        actu.append('prv')
+    class ProjoSettings(forms.Form):
+        projsett = forms.MultipleChoiceField(required = False, widget=forms.CheckboxSelectMultiple(), choices=SETTING_CHOICES, initial =actu, label =_("Choisissez vos nouveaux réglages"))
+
+    projosetform = ProjoSettings(request.POST or None)
+    if projosetform.is_valid():
+        settinglist =projosetform.cleaned_data['projsett']
+        newprojset =Proj_setting()
+        if "rkg" in settinglist:
+            newprojset.rkg =1
+        else:
+            newprojset.rkg =0
+        if "arb" in settinglist:
+            newprojset.arb =1
+        else:
+            newprojset.arb =0
+        if "ins" in settinglist:
+            newprojset.ins =1
+        else:
+            newprojset.ins =0
+        if "edi" in settinglist:
+            newprojset.edi =1
+        else:
+            newprojset.edi =0
+        if "prv" in settinglist:
+            newprojset.prv =1
+        else:
+            newprojset.prv =0
+        newprojset.save(using =bdd)
+        projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+        oldprojset =Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk)
+        oldprojset.delete(using =bdd)
+        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès"))
     # gestion des alertes (fin)
 
     EXCLUSION_CHOICES = ('', ''),
@@ -590,7 +651,7 @@ def adminbase(request, bdd):
             suppradm.delete(using =bdd)
             messages.info(request, _('Administrateur supprimé avec succès'))
 
-    #Stuff about utilisateurs :
+    #Stuff about instructors :
     uterstuple =('', "Sélectionnez l'utilisateur"),
     for u in Utilisateur.objects.using(bdd).all().order_by("username"):
         uterstuple +=(u.mail, Utilisateur.objects.using(bdd).get(mail =u.mail)),
@@ -656,7 +717,64 @@ def adminbase(request, bdd):
                         except:
                             pass
 
+    #Début stuff about other authorized users
+    otherauthtuple =('', "Sélectionnez l'utilisateur"),
+    ft =0
+    # for elmt in User.objects.all():
+    for elmt in Utilisateur.objects.using(bdd).all():
+        if not BddAdmin.objects.using(bdd).filter(contact =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact_bis =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact_ter =elmt.mail):
+            if elmt.username[-3:] ==suffixe:
+                otherauthtuple +=(elmt.mail, Utilisateur.objects.using(bdd).get(mail =elmt.mail)),
+                ft +=1
+    sizeotherus =ft
+    otherauthtup =otherauthtuple[1:]
 
+    class OthUsAjForm(forms.Form):
+        contactajoth = forms.EmailField(required =True, label ='current email')
+        identajoth = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        {'placeholder': "Charles@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
+
+    othusajform =OthUsAjForm(request.POST or None)
+
+    class OthUsSupprForm(forms.Form):
+        contactsuoth = forms.ChoiceField(required = True, widget=forms.Select, choices=otherauthtuple, label =_("email courant"))
+        supproth = forms.BooleanField(required=True)
+
+    othussupprform =OthUsSupprForm(request.POST or None)
+
+    if othusajform.is_valid():
+        try:
+            newothus =Utilisateur.objects.using(bdd).get(contact =othusajform.cleaned_data['contactajoth'])
+            messages.info(request, _("(Utilisateur déjà enregistré avec des droits suffisants)"))
+        except:
+            try:
+                uter =Utilisateur.objects.using(bdd).get(username =othusajform.cleaned_data['identajoth'])
+                messages.info(request, _("Echec : L'identifiant saisi est déjà utilisé"))
+            except:
+                if str(othusajform.cleaned_data['identajoth'])[-3:] !=suffixe:
+                    messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
+                else:
+                    try:
+                        uter =Utilisateur(username =othusajform.cleaned_data['identajoth'], mail =othusajform.cleaned_data['contactajoth'])
+                        user =User.objects.create_user(username =othusajform.cleaned_data['identajoth'], email =othusajform.cleaned_data['contactajoth'], password ="glass onion")
+                        uter.save(using =bdd)
+                        messages.info(request, _("Utilisateur créé avec succès"))
+                    except:
+                        messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
+
+    if othussupprform.is_valid():
+        user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth']).username)
+        uter =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth'])
+        user.delete()
+        uter.delete()
+        messages.info(request, _('Utilisateur supprimé avec succès'))
+    # Fin de stuff about other authorized users
 
     # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
 
@@ -2399,7 +2517,7 @@ def endinstr(request, bdd, sid, lid):
     'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, \
     'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer, 'bdd' : bdd, })
 
-
+@edmode
 def ranktotake(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3699,6 +3817,10 @@ def current_status(request, bdd, sid, lid):
 def statadmin(request, bdd, id):
 
     #contrôle ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
     if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)
@@ -3731,6 +3853,10 @@ def statadmin(request, bdd, id):
 def instradmin(request, bdd, id):
 
     #contrôle ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
     if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)

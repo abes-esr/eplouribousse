@@ -122,7 +122,7 @@ def uters_csv(request):
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
 
     writer = csv.writer(response)
-    writer.writerow(['#', _('bdd'), _('bddid'), _('centralid'), _('identifiant'), _("email"), _('admin'), _("checker"), \
+    writer.writerow(['#', _('bdd'), _('bddid'), _('centralid'), _('identifiant'), _("email"), _('admin projet'), _("checker"), \
     _("contact bib (hors checker)"), _('contact pour')])
 
     BDD_CHOICES =('', ''),

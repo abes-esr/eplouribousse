@@ -22,7 +22,6 @@
           <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
           <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
-          <!-- <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a> -->
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
 
@@ -33,11 +32,9 @@
           <!-- (User : Anonymous) -->
           {% endif %}
 
-    <!-- </div> -->
 
 <body>
 
-       <!-- <div id="content"> -->
 
       <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
       <div align="right"><a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a></div>
@@ -48,7 +45,6 @@
           {% endfor %}
       </ul>
       {% endif %}
-      <!-- <p><center><font color= #FF0000 >{% trans "Attention : Une seule validation à la fois" %}.</font></center></p> -->
 <HR>
       </div>
       <div id="content">
@@ -59,10 +55,6 @@
   {% trans "Nouvel intitulé" %}  {{ exclsupprform.exclmod }} &nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou supprimer" %}{{ exclsupprform.suppr }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
 
 <HR>
-      <!-- </div> -->
-      <!-- <div id="content"> -->
-
-<!-- <p><form method="post">{% csrf_token %}{% trans "Modification des propriétés d'une bibliothèque" %} : {{ libriform.librname }} <input type="submit" value="{% trans "Valider" %}"></form></p> -->
 
 
       <p><b>{% trans "Gestion des bibliothèques" %} ({{ sizelib }}, {% trans "checker exclu" %}) :</b></p>
@@ -73,7 +65,6 @@
       <th>{% trans "Propriété" %}</th>
       <th>{% trans "Valeur actuelle" %}</th>
       <th>{% trans "Identifiant" %}</th>
-      <!-- <th>{% trans "Le cas échéant, nouvelle valeur" %}</th> -->
 
   </thead>
 
@@ -83,32 +74,27 @@
            <td>{% trans "Nom de la bibliothèque" %}</td>
            <td>{{ l.0.name }} {% if l.0.name == 'checker'  %} ({% trans "Non modifiable" %}) {% endif %}</td>
            <td></td>
-           <!-- <td>{% if l.name != 'checker'  %}<form method="post">{% csrf_token %}{{ formlibname.newlibrname }} <input type="submit" value="{% trans "Valider" %}"> {% trans "Rétroactif (instructions)" %}</form>{% else %} ({% trans "Non modifiable" %}) {% endif %}</td> -->
      </tr>
      <tr>
            <td>{% trans "Contact principal" %} ({% trans "Obligatoire" %})</td>
            <td>{{ l.0.contact }}</td>
            <td>{{ l.1.username }}</td>
-           <!-- <td><form method="post">{% csrf_token %}{{ formlibct1.contact1 }} <input type="submit" value="{% trans "Valider" %}"></form></td> -->
      </tr>
     <tr>
           <td>{% trans "Second contact" %}</td>
           <td>{% if l.0.contact_bis != None %} {{ l.0.contact_bis }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
           <td>{% if l.2 != None %} {{ l.2.username }} {% endif %}</td>
-          <!-- <td><form method="post">{% csrf_token %}{{ formlibct2.contact2 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_bis != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu2.suppr2 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td> -->
     </tr>
     <tr>
           <td>{% trans "Troisième contact" %}</td>
           <td>{% if l.0.contact_ter != None %} {{ l.0.contact_ter }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
           <td>{% if l.3 != None %} {{ l.3.username }} {% endif %}</td>
-          <!-- <td><form method="post">{% csrf_token %}{{ formlibct3.contact3 }} <input type="submit" value="{% trans "Valider" %}"></form> {% if l.contact_ter != None %}<form method="post">{% csrf_token %} {% trans "ou supprimer" %} {{ formlibsu3.suppr3 }} <input type="submit" value="{% trans "Valider" %}"></form>{% else %}{% endif %}</td> -->
     </tr>
 
    </tbody>
       {% endfor %}
 </table>
 
-<!-- <p><b><font color= #FF0000 >{% trans "Le nom courant est à indiquer dans tous les cas (drag & drop) ; une seule validation à la fois" %}</font></b></p> -->
 
   <p><form method="post"> {% csrf_token %}
     {{ formlibname.curname }}
@@ -119,14 +105,12 @@
 <p><form method="post"> {% csrf_token %}{{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
 &nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}<br />
 {% trans "ou modifier (ou créer) la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
-<input type="submit" value="{% trans "Valider" %}"> </form>
-  </p>
+<input type="submit" value="{% trans "Valider" %}"> </form></p>
 
 
 
 <HR>
-    <!-- <p><b><center>{% trans "Attention : Le cas échéant, pensez à administrer les utilisateurs dans la base principale : à moins que .... !!! afficher ici les choses à régler !" %}. <a target="_blank" href="/./admin/">{% trans "OK j'y vais" %}</a></center></b></p>
-<HR> -->
+
       <p><b>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</b></p>
 
       <table border="1">
@@ -135,8 +119,6 @@
 
             <th>{% trans "mail de l'admin" %}</th>
             <th>{% trans "identifiant" %}</th>
-            <!-- <th>{% trans "Identifiant" %}</th> -->
-            <!-- <th>{% trans "Le cas échéant, nouvelle valeur" %}</th> -->
 
         </thead>
 
@@ -146,9 +128,9 @@
                  <td>{{ adm.0 }}</td>
                  <td>{{ adm.1.username }}</td>
            </tr>
-
-         </tbody>
             {% endfor %}
+         </tbody>
+
       </table>
 
 
@@ -158,17 +140,52 @@
 <p><form method="post"> {% csrf_token %}{% trans "Supprimer un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
 
 <HR>
-  <p><b>{% trans "Gestion des utilisateurs" %} ({{ sizeuters }}) :</b></p>
+  <p><b>{% trans "Gestion des instructeurs" %} ({{ sizeuters }}) :</b></p>
 <p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <HR>
 
-  <p><b>{% trans "Gestion des alertes" %} :</b></p>
+  <p><b>{% trans "Gestion des alertes et du type d'accès" %} :</b></p>
+  <p>{% trans "Alertes activées" %} : {% if al == 1 %} {% for almt in current_alerts %} <b>{{ almt }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% endfor %}{% else %} <b>{% trans "aucune" %}</b> {% endif %}<br />{% trans "Mode édition restreint (usagers autorisés)" %} : <b>{{ priv_mode }}</b></p>
 
-<p><form method="post">{% csrf_token %}{% trans "Positionnements" %} : {{ projsetform.gkr }} |
-   {% trans "Arbitrages" %} : {{ projsetform.bra }} |
-   {% trans "Instructions" %} : {{ projsetform.sni }} |
-   {% trans "Résultantes" %} : {{ projsetform.ide }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="{% trans "Valider" %}"></form></p>
+<p><form method="post">{% csrf_token %}
+    {{ projosetform }}
+  <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+
 <HR>
+
+  {% if private == 1 %}
+  <p><b>{% trans "Utilisateurs autorisés aux simples consultations" %} ({{ ft }}) :</b></p>
+      {% if ft != 0 %}
+        <table border="1">
+
+          <thead>
+
+              <th>{% trans "mail" %}</th>
+              <th>{% trans "identifiant" %}</th>
+
+          </thead>
+
+           <tbody>
+              {% for oth in otherauthtup %}
+             <tr>
+                   <td>{{ oth.0 }}</td>
+                   <td>{{ oth.1.username }}</td>
+             </tr>
+              {% endfor %}
+           </tbody>
+
+        </table>
+      {% endif %}
+
+        <p><form method="post">{% csrf_token %}{% trans "Ajouter un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ othusajform.contactajoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ othusajform.identajoth }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+      {% if ft != 0 %}
+        <p><form method="post">{% csrf_token %}{% trans "Supprimer un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ othussupprform.contactsuoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ othussupprform.supproth }} <input type="submit" value="{% trans "Supprimer" %}"></form><p>
+      {% endif %}
+
+<HR>
+  {% endif %}
 
   <p><b>{% trans "Gestion des informations projet" %} :</b></p>
     <table border="1">
