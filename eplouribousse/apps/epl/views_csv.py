@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .views import selectbdd
+from .decorators import edmode7
 
+@edmode7
 def simple_csv(request, bdd, lid, xlid, recset, what, length):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name

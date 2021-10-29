@@ -27,7 +27,7 @@ import os
 
 from django.contrib import messages
 
-from .decorators import edmode
+from .decorators import *
 
 lastrked =None
 webmaster =""
@@ -108,7 +108,7 @@ def logstatus(request):
         k =0
     return k
 
-
+@edmode3
 def home(request, bdd):
 
     "Homepage"
@@ -925,7 +925,7 @@ def webmstr(request):
 
     return render(request, 'epl/webmaster.html', locals())
 
-
+@edmode3
 def projmstr(request, bdd):
 
     k =logstatus(request)
@@ -986,7 +986,7 @@ def confirm(request):
 
     return render(request, 'epl/confirmation.html', locals())
 
-
+@edmode4
 def router(request, bdd, lid):
 
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -1063,7 +1063,7 @@ def logout_view(request):
 
     return render(request, 'epl/disconnect.html', locals())
 
-
+@edmode5
 def notintime(request, bdd, sid, lid):
 
     k =logstatus(request)
@@ -1079,7 +1079,7 @@ def notintime(request, bdd, sid, lid):
         title = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).title
     return render(request, 'epl/notintime.html', locals())
 
-
+@edmode3
 def indicators(request, bdd):
 
     k =logstatus(request)
@@ -1228,7 +1228,7 @@ def indicators(request, bdd):
 
     return render(request, 'epl/indicators.html', locals())
 
-
+@edmode3
 def search(request, bdd):
 # Lot of code for this view is similar with the code for "current_status" view : When changing here, think to change there
 
@@ -2517,7 +2517,7 @@ def endinstr(request, bdd, sid, lid):
     'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, \
     'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer, 'bdd' : bdd, })
 
-@edmode
+@edmode1
 def ranktotake(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2558,7 +2558,7 @@ def ranktotake(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def modifranklist(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2605,7 +2605,7 @@ def modifranklist(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode4
 def filter_rklist(request, bdd, lid):
 
     k =logstatus(request)
@@ -2631,7 +2631,7 @@ def filter_rklist(request, bdd, lid):
 
     return render(request, 'epl/filter_rklist.html', locals())
 
-
+@edmode2
 def xranktotake(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -2672,7 +2672,7 @@ def xranktotake(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode3
 def excllist(request, bdd):
 
     k =logstatus(request)
@@ -2742,7 +2742,7 @@ def excllist(request, bdd):
 
     return render(request, 'epl/excl.html', locals())
 
-
+@edmode3
 def faulty(request, bdd):
 
     k =logstatus(request)
@@ -2773,7 +2773,7 @@ def faulty(request, bdd):
 
     return render(request, 'epl/faulty.html', locals())
 
-
+@edmode1
 def arbitration(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2837,7 +2837,7 @@ def arbitration(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
     'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def arbrk1(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2884,7 +2884,7 @@ def arbrk1(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def arbnork1(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2933,7 +2933,7 @@ def arbnork1(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode4
 def filter_arblist(request, bdd, lid):
 
     k =logstatus(request)
@@ -2959,7 +2959,7 @@ def filter_arblist(request, bdd, lid):
 
     return render(request, 'epl/filter_arblist.html', locals())
 
-
+@edmode2
 def xarbitration(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3023,7 +3023,7 @@ def xarbitration(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode2
 def x1arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3071,7 +3071,7 @@ def x1arb(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode2
 def x0arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3121,7 +3121,7 @@ def x0arb(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def instrtodo(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3171,7 +3171,7 @@ def instrtodo(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodo.html', locals())
 
-
+@edmode1
 def instroneb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3203,7 +3203,7 @@ def instroneb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodobd1.html', locals())
 
-
+@edmode1
 def instrotherb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3236,7 +3236,7 @@ def instrotherb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodobdnot1.html', locals())
 
-
+@edmode1
 def instronenotb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3268,7 +3268,7 @@ def instronenotb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodonotbd1.html', locals())
 
-
+@edmode1
 def instrothernotb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3300,7 +3300,7 @@ def instrothernotb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodonotbdnot1.html', locals())
 
-
+@edmode4
 def instrfilter(request, bdd, lid):
 
     k =logstatus(request)
@@ -3325,7 +3325,7 @@ def instrfilter(request, bdd, lid):
         return xinstrlist(request, bdd, lid, xlid, 'title')
     return render(request, 'epl/filter_instrlist.html', locals())
 
-
+@edmode2
 def xinstrlist(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3359,7 +3359,7 @@ def xinstrlist(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_instr_list.html', locals())
 
-
+@edmode1
 def tobeedited(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3397,7 +3397,7 @@ def tobeedited(request, bdd, lid, sort):
 
     return render(request, 'epl/to_edit_list.html', locals())
 
-
+@edmode1
 def mothered(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3435,7 +3435,7 @@ def mothered(request, bdd, lid, sort):
 
     return render(request, 'epl/to_edit_list_mother.html', locals())
 
-
+@edmode1
 def notmothered(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3473,7 +3473,7 @@ def notmothered(request, bdd, lid, sort):
 
     return render(request, 'epl/to_edit_list_notmother.html', locals())
 
-
+@edmode4
 def filter_edlist(request, bdd, lid):
 
     k =logstatus(request)
@@ -3511,7 +3511,7 @@ def filter_edlist(request, bdd, lid):
 
     return render(request, 'epl/filter_edlist.html', locals())
 
-
+@edmode2
 def xmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3545,7 +3545,7 @@ def xmothered(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_edit_list_mother.html', locals())
 
-
+@edmode2
 def xnotmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3579,7 +3579,7 @@ def xnotmothered(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_edit_list_notmother.html', locals())
 
-
+@edmode5
 def edition(request, bdd, sid, lid):
 
     k =logstatus(request)
@@ -3626,7 +3626,7 @@ def edition(request, bdd, sid, lid):
     else:
         return notintime(request, bdd, sid, lid)
 
-
+@edmode5
 def current_status(request, bdd, sid, lid):
 # Lot of code for this view is similar with the code for "search" view : When changing here, think to change there
 
@@ -3956,7 +3956,7 @@ def instradmin(request, bdd, id):
 
     return render(request, 'epl/instradmin.html', locals())
 
-
+@edmode3
 def checkinstr(request, bdd):
 
     k =logstatus(request)
@@ -3966,7 +3966,7 @@ def checkinstr(request, bdd):
 
     return render(request, 'epl/checker.html', locals())
 
-
+@edmode3
 def checkerfilter(request, bdd):
 
     k =logstatus(request)
@@ -3995,7 +3995,7 @@ def checkerfilter(request, bdd):
 
     return render(request, 'epl/filter_ck_instrlist.html', locals())
 
-
+@edmode6
 def xckbd(request, bdd, coll_set):
 
     k =logstatus(request)
@@ -4026,7 +4026,7 @@ def xckbd(request, bdd, coll_set):
 
     return render(request, 'epl/xckbd.html', locals())
 
-
+@edmode6
 def xcknbd(request, bdd, coll_set):
 
     k =logstatus(request)
@@ -4057,7 +4057,7 @@ def xcknbd(request, bdd, coll_set):
 
     return render(request, 'epl/xcknbd.html', locals())
 
-
+@edmode6
 def xckall(request, bdd, coll_set):
 
     k =logstatus(request)

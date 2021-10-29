@@ -12,8 +12,11 @@ from django.core.files.storage import FileSystemStorage
 
 from django.utils.translation import ugettext as _
 
+from .decorators import edmode4, edmode5, edmode7
+
 styles = getSampleStyleSheet()
 
+@edmode5
 def pdfedition(request, bdd, sid, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -132,6 +135,7 @@ def pdfedition(request, bdd, sid, lid):
 
     return response
 
+@edmode4
 def edallpdf(request, bdd, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -271,7 +275,7 @@ def edallpdf(request, bdd, lid):
 
     return response
 
-
+@edmode4
 def motherpdf(request, bdd, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -411,7 +415,7 @@ def motherpdf(request, bdd, lid):
 
     return response
 
-
+@edmode4
 def notmotherpdf(request, bdd, lid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -551,7 +555,7 @@ def notmotherpdf(request, bdd, lid):
 
     return response
 
-
+@edmode7
 def xmotherpdf(request, bdd, lid, xlid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -691,7 +695,7 @@ def xmotherpdf(request, bdd, lid, xlid):
 
     return response
 
-
+@edmode7
 def xnotmotherpdf(request, bdd, lid, xlid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
