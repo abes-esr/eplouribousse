@@ -1,8 +1,8 @@
-epl_version ="v2.02 (Bilichilde)"
-date_version ="October 21, 2021"
+epl_version ="v2.04 (Bertrada)"
+date_version ="November 2, 2021"
 # Mise au niveau de :
-# epl_version ="v2.03.2 (~Chrothildis)"
-# date_version ="October 22, 2021"
+# epl_version ="v2.05.0 (~Himiltrude)"
+# date_version ="November 2, 2021"
 
 from django.shortcuts import render
 
@@ -26,6 +26,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 import os
 
 from django.contrib import messages
+
+from .decorators import *
 
 lastrked =None
 webmaster =""
@@ -106,7 +108,7 @@ def logstatus(request):
         k =0
     return k
 
-
+@edmode3
 def home(request, bdd):
 
     "Homepage"
@@ -131,12 +133,12 @@ def home(request, bdd):
         utermail_list.append(uter.mail)
 
     diffa =set(email_list) - set(utermail_list)
-    diffb =set(utermail_list) - set(email_list)
+    # diffb =set(utermail_list) - set(email_list)
     if diffa !=set():
         messages.info(request, _("Anomalie détectée. Pas d'utilisateur associé aux mails suivants : ") + str(diffa) + ". " + "Veuillez alerter l'administrateur")
 
-    if diffb != set():
-        messages.info(request, _("Anomalie détectée. Les utilisateurs dont les mails suivent sont inutilisés : ") + str(diffb) + ". " + "Veuillez alerter l'administrateur")
+    # if diffb != set():
+    #     messages.info(request, _("Anomalie détectée. Les utilisateurs dont les mails suivent sont inutilisés : ") + str(diffb) + ". " + "Veuillez alerter l'administrateur")
 
     #La partie de code ci-dessous est reproduite dans la vue adminbase(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
     for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
@@ -213,6 +215,10 @@ def home(request, bdd):
 def adminbase(request, bdd):
 
     #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
     if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)
@@ -220,24 +226,79 @@ def adminbase(request, bdd):
     k =logstatus(request)
     version =epl_version
     url ="/" + bdd + "/adminbase"
-    suffixe = "@" + str(bdd)
+    private =Proj_setting.objects.using(bdd)[0].prv
 
     # gestion des alertes (début)
-    class AlertSettings(forms.Form):
-        gkr = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].rkg)
-        bra = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].arb)
-        sni = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].ins)
-        ide = forms.BooleanField(required=False, initial =Proj_setting.objects.using(bdd)[0].edi)
+    current_alerts =[] #initialzing
+    if Proj_setting.objects.using(bdd)[0].rkg:
+        current_alerts.append(_("positionnement"))
+    if Proj_setting.objects.using(bdd)[0].arb:
+        current_alerts.append(_("arbitrages"))
+    if Proj_setting.objects.using(bdd)[0].ins:
+        current_alerts.append(_("instructions"))
+    if Proj_setting.objects.using(bdd)[0].edi:
+        current_alerts.append(_("résultantes"))
+    if len(current_alerts):
+        al =1
+    else:
+        al =0
+    if Proj_setting.objects.using(bdd)[0].prv:
+        priv_mode = _("activé")
+    else:
+        priv_mode = _("désactivé")
 
-    projsetform = AlertSettings(request.POST or None)
-    if projsetform.is_valid():
-        settg =Proj_setting.objects.using(bdd).all().order_by('pk')[0]
-        settg.rkg =projsetform.cleaned_data['gkr']
-        settg.arb =projsetform.cleaned_data['bra']
-        settg.ins =projsetform.cleaned_data['sni']
-        settg.edi =projsetform.cleaned_data['ide']
-        settg.save(using =bdd)
-        messages.info(request, _("Les alertes ont été reconfigurées avec succès"))
+    SETTING_CHOICES = (
+        ('rkg', _("Alertes positionnement")),
+        ('arb', _("Alertes arbitrages")),
+        ('ins', _("Alertes instructions")),
+        ('edi', _("Alertes résultantes")),
+        ('prv', _("Mode édition restreint (usagers autorisés)")),
+    )
+
+    actu =[]
+    projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).rkg:
+        actu.append('rkg')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).arb:
+        actu.append('arb')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).ins:
+        actu.append('ins')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).edi:
+        actu.append('edi')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).prv:
+        actu.append('prv')
+    class ProjoSettings(forms.Form):
+        projsett = forms.MultipleChoiceField(required = False, widget=forms.CheckboxSelectMultiple(), choices=SETTING_CHOICES, initial =actu, label =_("Choisissez vos nouveaux réglages"))
+
+    projosetform = ProjoSettings(request.POST or None)
+    if projosetform.is_valid():
+        settinglist =projosetform.cleaned_data['projsett']
+        newprojset =Proj_setting()
+        if "rkg" in settinglist:
+            newprojset.rkg =1
+        else:
+            newprojset.rkg =0
+        if "arb" in settinglist:
+            newprojset.arb =1
+        else:
+            newprojset.arb =0
+        if "ins" in settinglist:
+            newprojset.ins =1
+        else:
+            newprojset.ins =0
+        if "edi" in settinglist:
+            newprojset.edi =1
+        else:
+            newprojset.edi =0
+        if "prv" in settinglist:
+            newprojset.prv =1
+        else:
+            newprojset.prv =0
+        newprojset.save(using =bdd)
+        projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+        oldprojset =Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk)
+        oldprojset.delete(using =bdd)
+        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès"))
     # gestion des alertes (fin)
 
     EXCLUSION_CHOICES = ('', ''),
@@ -590,7 +651,7 @@ def adminbase(request, bdd):
             suppradm.delete(using =bdd)
             messages.info(request, _('Administrateur supprimé avec succès'))
 
-    #Stuff about utilisateurs :
+    #Stuff about instructors :
     uterstuple =('', "Sélectionnez l'utilisateur"),
     for u in Utilisateur.objects.using(bdd).all().order_by("username"):
         uterstuple +=(u.mail, Utilisateur.objects.using(bdd).get(mail =u.mail)),
@@ -656,7 +717,64 @@ def adminbase(request, bdd):
                         except:
                             pass
 
+    #Début stuff about other authorized users
+    otherauthtuple =('', "Sélectionnez l'utilisateur"),
+    ft =0
+    # for elmt in User.objects.all():
+    for elmt in Utilisateur.objects.using(bdd).all():
+        if not BddAdmin.objects.using(bdd).filter(contact =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact_bis =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact_ter =elmt.mail):
+            if elmt.username[-3:] ==suffixe:
+                otherauthtuple +=(elmt.mail, Utilisateur.objects.using(bdd).get(mail =elmt.mail)),
+                ft +=1
+    sizeotherus =ft
+    otherauthtup =otherauthtuple[1:]
 
+    class OthUsAjForm(forms.Form):
+        contactajoth = forms.EmailField(required =True, label ='current email')
+        identajoth = forms.CharField(required =True, widget=forms.TextInput(attrs=\
+        {'placeholder': "Charles@" + bdd, 'title': _("Suffixe obligatoire") + \
+        ' : ' + '@' + bdd + '. ' + \
+        "Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, des nombres ou les caractères « @ », « . », « + », « - » et « _ »."}), \
+        max_length=30, label =_("identifiant"))
+
+    othusajform =OthUsAjForm(request.POST or None)
+
+    class OthUsSupprForm(forms.Form):
+        contactsuoth = forms.ChoiceField(required = True, widget=forms.Select, choices=otherauthtuple, label =_("email courant"))
+        supproth = forms.BooleanField(required=True)
+
+    othussupprform =OthUsSupprForm(request.POST or None)
+
+    if othusajform.is_valid():
+        try:
+            newothus =Utilisateur.objects.using(bdd).get(contact =othusajform.cleaned_data['contactajoth'])
+            messages.info(request, _("(Utilisateur déjà enregistré avec des droits suffisants)"))
+        except:
+            try:
+                uter =Utilisateur.objects.using(bdd).get(username =othusajform.cleaned_data['identajoth'])
+                messages.info(request, _("Echec : L'identifiant saisi est déjà utilisé"))
+            except:
+                if str(othusajform.cleaned_data['identajoth'])[-3:] !=suffixe:
+                    messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
+                else:
+                    try:
+                        uter =Utilisateur(username =othusajform.cleaned_data['identajoth'], mail =othusajform.cleaned_data['contactajoth'])
+                        user =User.objects.create_user(username =othusajform.cleaned_data['identajoth'], email =othusajform.cleaned_data['contactajoth'], password ="glass onion")
+                        uter.save(using =bdd)
+                        messages.info(request, _("Utilisateur créé avec succès"))
+                    except:
+                        messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
+
+    if othussupprform.is_valid():
+        user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth']).username)
+        uter =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth'])
+        user.delete()
+        uter.delete()
+        messages.info(request, _('Utilisateur supprimé avec succès'))
+    # Fin de stuff about other authorized users
 
     # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
 
@@ -807,7 +925,7 @@ def webmstr(request):
 
     return render(request, 'epl/webmaster.html', locals())
 
-
+@edmode3
 def projmstr(request, bdd):
 
     k =logstatus(request)
@@ -868,7 +986,7 @@ def confirm(request):
 
     return render(request, 'epl/confirmation.html', locals())
 
-
+@edmode4
 def router(request, bdd, lid):
 
     if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
@@ -945,7 +1063,7 @@ def logout_view(request):
 
     return render(request, 'epl/disconnect.html', locals())
 
-
+@edmode5
 def notintime(request, bdd, sid, lid):
 
     k =logstatus(request)
@@ -961,7 +1079,7 @@ def notintime(request, bdd, sid, lid):
         title = ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).title
     return render(request, 'epl/notintime.html', locals())
 
-
+@edmode3
 def indicators(request, bdd):
 
     k =logstatus(request)
@@ -1110,7 +1228,7 @@ def indicators(request, bdd):
 
     return render(request, 'epl/indicators.html', locals())
 
-
+@edmode3
 def search(request, bdd):
 # Lot of code for this view is similar with the code for "current_status" view : When changing here, think to change there
 
@@ -2399,7 +2517,7 @@ def endinstr(request, bdd, sid, lid):
     'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, \
     'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer, 'bdd' : bdd, })
 
-
+@edmode1
 def ranktotake(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2440,7 +2558,7 @@ def ranktotake(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def modifranklist(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2487,7 +2605,7 @@ def modifranklist(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode4
 def filter_rklist(request, bdd, lid):
 
     k =logstatus(request)
@@ -2513,7 +2631,7 @@ def filter_rklist(request, bdd, lid):
 
     return render(request, 'epl/filter_rklist.html', locals())
 
-
+@edmode2
 def xranktotake(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -2554,7 +2672,7 @@ def xranktotake(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode3
 def excllist(request, bdd):
 
     k =logstatus(request)
@@ -2624,7 +2742,7 @@ def excllist(request, bdd):
 
     return render(request, 'epl/excl.html', locals())
 
-
+@edmode3
 def faulty(request, bdd):
 
     k =logstatus(request)
@@ -2655,7 +2773,7 @@ def faulty(request, bdd):
 
     return render(request, 'epl/faulty.html', locals())
 
-
+@edmode1
 def arbitration(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2719,7 +2837,7 @@ def arbitration(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
     'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def arbrk1(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2766,7 +2884,7 @@ def arbrk1(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def arbnork1(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -2815,7 +2933,7 @@ def arbnork1(request, bdd, lid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode4
 def filter_arblist(request, bdd, lid):
 
     k =logstatus(request)
@@ -2841,7 +2959,7 @@ def filter_arblist(request, bdd, lid):
 
     return render(request, 'epl/filter_arblist.html', locals())
 
-
+@edmode2
 def xarbitration(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -2905,7 +3023,7 @@ def xarbitration(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode2
 def x1arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -2953,7 +3071,7 @@ def x1arb(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode2
 def x0arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3003,7 +3121,7 @@ def x0arb(request, bdd, lid, xlid, sort):
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
-
+@edmode1
 def instrtodo(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3053,7 +3171,7 @@ def instrtodo(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodo.html', locals())
 
-
+@edmode1
 def instroneb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3085,7 +3203,7 @@ def instroneb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodobd1.html', locals())
 
-
+@edmode1
 def instrotherb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3118,7 +3236,7 @@ def instrotherb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodobdnot1.html', locals())
 
-
+@edmode1
 def instronenotb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3150,7 +3268,7 @@ def instronenotb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodonotbd1.html', locals())
 
-
+@edmode1
 def instrothernotb(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3182,7 +3300,7 @@ def instrothernotb(request, bdd, lid, sort):
 
     return render(request, 'epl/instrtodonotbdnot1.html', locals())
 
-
+@edmode4
 def instrfilter(request, bdd, lid):
 
     k =logstatus(request)
@@ -3207,7 +3325,7 @@ def instrfilter(request, bdd, lid):
         return xinstrlist(request, bdd, lid, xlid, 'title')
     return render(request, 'epl/filter_instrlist.html', locals())
 
-
+@edmode2
 def xinstrlist(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3241,7 +3359,7 @@ def xinstrlist(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_instr_list.html', locals())
 
-
+@edmode1
 def tobeedited(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3279,7 +3397,7 @@ def tobeedited(request, bdd, lid, sort):
 
     return render(request, 'epl/to_edit_list.html', locals())
 
-
+@edmode1
 def mothered(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3317,7 +3435,7 @@ def mothered(request, bdd, lid, sort):
 
     return render(request, 'epl/to_edit_list_mother.html', locals())
 
-
+@edmode1
 def notmothered(request, bdd, lid, sort):
 
     k =logstatus(request)
@@ -3355,7 +3473,7 @@ def notmothered(request, bdd, lid, sort):
 
     return render(request, 'epl/to_edit_list_notmother.html', locals())
 
-
+@edmode4
 def filter_edlist(request, bdd, lid):
 
     k =logstatus(request)
@@ -3393,7 +3511,7 @@ def filter_edlist(request, bdd, lid):
 
     return render(request, 'epl/filter_edlist.html', locals())
 
-
+@edmode2
 def xmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3427,7 +3545,7 @@ def xmothered(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_edit_list_mother.html', locals())
 
-
+@edmode2
 def xnotmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
@@ -3461,7 +3579,7 @@ def xnotmothered(request, bdd, lid, xlid, sort):
 
     return render(request, 'epl/xto_edit_list_notmother.html', locals())
 
-
+@edmode5
 def edition(request, bdd, sid, lid):
 
     k =logstatus(request)
@@ -3508,7 +3626,7 @@ def edition(request, bdd, sid, lid):
     else:
         return notintime(request, bdd, sid, lid)
 
-
+@edmode5
 def current_status(request, bdd, sid, lid):
 # Lot of code for this view is similar with the code for "search" view : When changing here, think to change there
 
@@ -3699,6 +3817,10 @@ def current_status(request, bdd, sid, lid):
 def statadmin(request, bdd, id):
 
     #contrôle ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
     if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)
@@ -3731,6 +3853,10 @@ def statadmin(request, bdd, id):
 def instradmin(request, bdd, id):
 
     #contrôle ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
     if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return home(request, bdd)
@@ -3830,7 +3956,7 @@ def instradmin(request, bdd, id):
 
     return render(request, 'epl/instradmin.html', locals())
 
-
+@edmode3
 def checkinstr(request, bdd):
 
     k =logstatus(request)
@@ -3840,7 +3966,7 @@ def checkinstr(request, bdd):
 
     return render(request, 'epl/checker.html', locals())
 
-
+@edmode3
 def checkerfilter(request, bdd):
 
     k =logstatus(request)
@@ -3869,7 +3995,7 @@ def checkerfilter(request, bdd):
 
     return render(request, 'epl/filter_ck_instrlist.html', locals())
 
-
+@edmode6
 def xckbd(request, bdd, coll_set):
 
     k =logstatus(request)
@@ -3900,7 +4026,7 @@ def xckbd(request, bdd, coll_set):
 
     return render(request, 'epl/xckbd.html', locals())
 
-
+@edmode6
 def xcknbd(request, bdd, coll_set):
 
     k =logstatus(request)
@@ -3931,7 +4057,7 @@ def xcknbd(request, bdd, coll_set):
 
     return render(request, 'epl/xcknbd.html', locals())
 
-
+@edmode6
 def xckall(request, bdd, coll_set):
 
     k =logstatus(request)

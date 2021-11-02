@@ -26,6 +26,7 @@
         {% if k != 0 %}
         <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
         {% else %}
+        <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
         <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
         <!-- (User : Anonymous) -->
         {% endif %}
@@ -38,7 +39,7 @@
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button><a href="/default/csv/uters">{% trans "Extraction des utilisateurs" %}</a>*</button></center></p>
 </br></br>
-<p><center>* : {% trans "Pour d'éventuels contacts" %}</center></p>
+* : {% trans "Pour vérifications et éventuels contacts" %}
 </br></br>
         </div>
 

@@ -25,6 +25,7 @@
           {% if k != 0 %}
           <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
           {% else %}
+          <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
           {% endif %}
@@ -38,8 +39,10 @@
 
                 <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
-                    <p>{% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}</p>
-
+                <p>{% trans "Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la ressource]" %}  ~  <a href="/{{ bdd }}/modifrklist/{{ lid }}/title">{% trans "Modifier un précédent positionnement" %}</a>
+                <br />
+                {% trans "Pour une simple édition de la fiche de situation courante, cliquez sur la petite paire de lunettes : 0^0" %}
+                </p>
                         {% if sort == 'title' %}
                         <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/arbrk1_list/{{ lid }}/cn">{% trans "cote et titre" %}</a>
                          / <a href="/{{ bdd }}/arbrk1_list/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
@@ -70,7 +73,7 @@
                 <p></p>
                 <li><b>{% trans "Titre" %} :</b> {{ elmt.title|truncatewords:80 }}</li>
                 <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-                <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+                <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/rk/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                 <HR>
 
               {% endfor %}

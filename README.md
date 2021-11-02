@@ -33,7 +33,8 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 15. internationalisation (anglais et allemand en cours, extension possible à d'autres langues),
 16. formulaires de contact de l'administrateur de l'instance et du développeur,
 17. possibilité d'exporter les principales listes au format csv,
-18. gestion autonome du mot de passe.
+18. gestion autonome du mot de passe,
+19. réglage privé / public pour les simples consultations.
 
 # Démo :
 

@@ -7,7 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .views import selectbdd
+from .decorators import edmode7
+from datetime import datetime
 
+@edmode7
 def simple_csv(request, bdd, lid, xlid, recset, what, length):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -106,6 +109,7 @@ def simple_csv(request, bdd, lid, xlid, recset, what, length):
 
     return response
 
+
 @login_required
 def uters_csv(request):
 
@@ -116,64 +120,88 @@ def uters_csv(request):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
         return selectbdd(request)
 
-    filename = 'alluters.csv'
+    host = str(request.get_host())
+    adesso =str(datetime.now())
+    filename = 'allusers_' + host + '_' + adesso + '_' + '_.csv'
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
 
     writer = csv.writer(response)
-    writer.writerow(['#', _('bdd'), _('bddid'), _('centralid'), _('identifiant'), _("email"), _('admin'), _("checker"), \
-    _("contact bib (hors checker)"), _('contact pour')])
+    writer.writerow(['','','','', _("horodatage de l'extraction : "), adesso])
+    writer.writerow([])
+    writer.writerow(['#', _('centralid'), _('bdd'), _('bddid'), _("date d'enregistrement"), \
+    _('dernier login'), _('identifiant'), _("email"), _('super admin'), _('admin général'), \
+    _('admin projet'), _("checker"), _("contact bib (hors checker)"), \
+    _('autorisé'), _('mode privé activé')])
 
-    BDD_CHOICES =('', ''),
-
-    for i in [n for n in range(100)]:
-        if os.path.isfile('{:02d}.db'.format(i)):
-            p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
-            BDD_CHOICES += ('{:02d}'.format(i), p),
 
     c =1
-
-    for bddelmt in BDD_CHOICES[1:]:
-
-        for uterelmt in Utilisateur.objects.using(bddelmt[0]).all():
-            if BddAdmin.objects.using(bddelmt[0]).filter(contact =uterelmt.mail):
-                ad ="x"
-                adlist ="@ admin - "
-            else:
-                ad =""
-            if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==\
-            Library.objects.using(bddelmt[0]).get(name ="checker").contact or \
-            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==\
-            Library.objects.using(bddelmt[0]).get(name ="checker").contact_bis or \
-            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==\
-            Library.objects.using(bddelmt[0]).get(name ="checker").contact_ter:
-                bibcheck ="x"
-                bibchecklist ="@ checker - "
-            else:
-                bibcheck =""
-
-            bibnotcheck, bibnotchecklist ="", ""
-            for libelmt in Library.objects.using(bddelmt[0]).all().exclude(name ="checker"):
-                if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==libelmt.contact:
-                    bibnotcheck ="x"
-                    bibnotchecklist +="@ " + str(Library.objects.using(bddelmt[0]).get(name =libelmt.name).name) +" - "
-                if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==libelmt.contact_bis:
-                    bibnotcheck ="x"
-                    bibnotchecklist +="@ " + str(Library.objects.using(bddelmt[0]).get(name =libelmt.name).name) +" - "
-                if Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail ==libelmt.contact_ter:
-                    bibnotcheck ="x"
-                    bibnotchecklist +="@ " + str(Library.objects.using(bddelmt[0]).get(name =libelmt.name).name) +" - "
-            list =adlist + bibchecklist + bibnotchecklist
-
-            writer.writerow([c, bddelmt[0], Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).id, \
-            User.objects.get(username =uterelmt.username, email = uterelmt.mail).id, \
-            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).username, \
-            Utilisateur.objects.using(bddelmt[0]).get(username =uterelmt.username).mail, ad, bibcheck, \
-            bibnotcheck, list])
-
+    for user in User.objects.all():
+        if user.is_superuser and user.is_staff:
+            writer.writerow([c, user.id, '', '', user.date_joined, \
+            user.last_login, user.username, user.email, 'x', 'x', \
+            '', '', '', '', ''])
             c +=1
+        elif user.is_superuser and not user.is_staff: # (but it should not happen)
+            writer.writerow([c, user.id, '', '', user.date_joined, \
+            user.last_login, user.username, user.email, 'x', '', \
+            '', '', '', '', ''])
+            c +=1
+        elif user.is_staff and not user.is_superuser:
+            writer.writerow([c, user.id, '', '', user.date_joined, \
+            user.last_login, user.username, user.email, '', 'x', \
+            '', '', '', '', ''])
+            c +=1
+        else: # i.e. project users
+            suffx =user.username[-2:]
+            try:
+                if Proj_setting.objects.using(suffx)[0].prv:
+                    private =_("oui")
+                else:
+                    private =_("non")
+                if BddAdmin.objects.using(suffx).filter(contact =user.email):
+                    projadmin ="@" + suffx
+                else:
+                    projadmin =""
 
-            adlist, bibchecklist, bibnotchecklist ="", "", "" # remise à zéro des compteurs
+                if Utilisateur.objects.using(suffx).get(username =user.username).mail ==\
+                Library.objects.using(suffx).get(name ="checker").contact or \
+                Utilisateur.objects.using(suffx).get(username =user.username).mail ==\
+                Library.objects.using(suffx).get(name ="checker").contact_bis or \
+                Utilisateur.objects.using(suffx).get(username =user.username).mail ==\
+                Library.objects.using(suffx).get(name ="checker").contact_ter:
+                    projchecker ="@" + suffx
+                else:
+                    projchecker =""
+
+                is_instructor =""
+                for libelmt in Library.objects.using(suffx).all().exclude(name ="checker"):
+                    if Utilisateur.objects.using(suffx).get(username =user.username).mail ==libelmt.contact:
+                        is_instructor +="@" + str(Library.objects.using(suffx).get(name =libelmt.name).name) +" - "
+                    if Utilisateur.objects.using(suffx).get(username =user.username).mail ==libelmt.contact_bis:
+                        is_instructor +="@" + str(Library.objects.using(suffx).get(name =libelmt.name).name) +" - "
+                    if Utilisateur.objects.using(suffx).get(username =user.username).mail ==libelmt.contact_ter:
+                        is_instructor +="@" + str(Library.objects.using(suffx).get(name =libelmt.name).name) +" - "
+
+                if Utilisateur.objects.using(suffx).get(username =user.username) and not \
+                Library.objects.using(suffx).filter(contact =user.email) and not \
+                Library.objects.using(suffx).filter(contact_bis =user.email) and not \
+                Library.objects.using(suffx).filter(contact_ter =user.email) and not \
+                BddAdmin.objects.using(suffx).filter(contact =user.email):
+                    autoris ="x"
+                else:
+                    autoris =""
+
+                writer.writerow([c, user.id, suffx, Utilisateur.objects.using(suffx).get(username =user.username).id, \
+                user.date_joined, user.last_login, user.username, user.email, '', '', projadmin, projchecker, is_instructor, \
+                autoris, private])
+
+                c +=1
+
+            except:
+                writer.writerow([suffx, user.id, "absente", "?", user.date_joined, user.last_login, \
+                user.username, user.email, '', '', '?', '?', '?', '?', '?'])
+                c +=1
 
     return response

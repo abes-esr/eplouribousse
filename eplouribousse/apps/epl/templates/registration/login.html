@@ -19,7 +19,13 @@
     <body>
 
         <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
-
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
           <h2>{% trans "Authentification" %}</h2>
 
 

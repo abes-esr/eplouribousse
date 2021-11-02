@@ -7,8 +7,9 @@ class Proj_setting(models.Model):
     arb = models.BooleanField('mail when arbitration')
     ins = models.BooleanField('mail when instruction')
     edi = models.BooleanField('mail when edition')
+    prv = models.BooleanField('private displaying')
     def __str__(self):
-        info = str(self.rkg) + ' | ' + str(self.arb) + ' | ' + str(self.ins) + ' | ' + str(self.edi)
+        info = str(self.rkg) + ' | ' + str(self.arb) + ' | ' + str(self.ins) + ' | ' + str(self.edi) + ' | ' + str(self.prv)
         return info
 
 class Project(models.Model):
