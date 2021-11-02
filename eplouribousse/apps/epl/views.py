@@ -1,8 +1,8 @@
-# epl_version ="v2.04 (Bertrada)"
-# date_version ="November 2, 2021"
-# Mise au niveau de :
-epl_version ="v2.05.1 (~Himiltrude)"
+epl_version ="v2.04 (Bertrada)"
 date_version ="November 2, 2021"
+# Mise au niveau de :
+# epl_version ="v2.05.2 (~Himiltrude)"
+# date_version ="November 2, 2021"
 
 from django.shortcuts import render
 
@@ -464,13 +464,6 @@ def adminbase(request, bdd):
                     pass
                     # messages.info(request, _("Pas de bibliothèque au nom que vous avez indiqué"))
                     # return HttpResponseRedirect(url)
-
-    BDD_CHOICES =('', ''),
-    for i in [n for n in range(100)]:
-        if os.path.isfile('{:02d}.db'.format(i)):
-            p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
-            BDD_CHOICES += ('{:02d}'.format(i), p),
-    BDD_CHOICES =BDD_CHOICES[1:]
 
     if formlibct.is_valid():
         try:
