@@ -53,7 +53,10 @@
           {% endif %}
 
           <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-          <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+          <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.
+            <br />
+            {% trans "Pour une simple édition de la fiche de situation courante, cliquez sur la petite paire de lunettes : 0^0" %}
+            </p>
 
           {% if lid == "999999999" %}
 
@@ -93,11 +96,11 @@
                   {% if elmt.status == 2 %}
                   <li><b><font color= #a7a7a7 >1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <!-- <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li> -->
-                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                   {% elif elmt.status == 4 %}
                   <li><b><font color= #a7a7a7 >2/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <!-- <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li> -->
-                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a></li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                   {% endif %}
                   <HR>
               {% endfor %}
@@ -109,21 +112,21 @@
                   {% if elmt.rank == 1 %}
                   <li><b><font color= #a7a7a7 >*1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                   {% elif elmt.rank != 1 %}
                   <li><b><font color= #a7a7a7 >1/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                   {% endif %}
                 {% elif elmt.status == 3 %}
                   {% if elmt.rank == 1 %}
                   <li><b><font color= #a7a7a7 >*2/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                   {% elif elmt.rank != 1 %}
                   <li><b><font color= #a7a7a7 >2/2</font> {% trans "Titre" %} :</b> {{ elmt.title }}</li>
                   <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a></li>
+                  <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ elmt.lid }}">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
                   {% endif %}
                 {% endif %}
                 <HR>
