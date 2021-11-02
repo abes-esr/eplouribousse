@@ -1,8 +1,8 @@
-# epl_version ="v2.04 (Bertrada)"
-# date_version ="November 2, 2021"
-# Mise au niveau de :
-epl_version ="v2.05.0 (~Himiltrude)"
+epl_version ="v2.04 (Bertrada)"
 date_version ="November 2, 2021"
+# Mise au niveau de :
+# epl_version ="v2.05.1 (~Himiltrude)"
+# date_version ="November 2, 2021"
 
 from django.shortcuts import render
 
@@ -62,8 +62,11 @@ def selectbdd(request):
 
     for i in [n for n in range(100)]:
         if os.path.isfile('{:02d}.db'.format(i)):
-            p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
-            BDD_CHOICES += ('{:02d}'.format(i), '{:02d}'.format(i) + " - " + p),
+            try:
+                p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
+                BDD_CHOICES += ('{:02d}'.format(i), '{:02d}'.format(i) + " - " + p),
+            except:
+                pass
 
     if len(BDD_CHOICES) ==2:
         return HttpResponseRedirect(BDD_CHOICES[1][0])
