@@ -1,8 +1,8 @@
-epl_version ="v2.04 (Bertrada)"
-date_version ="November 2, 2021"
-# Mise au niveau de :
-# epl_version ="v2.05.0 (~Himiltrude)"
+# epl_version ="v2.04 (Bertrada)"
 # date_version ="November 2, 2021"
+# Mise au niveau de :
+epl_version ="v2.05.0 (~Himiltrude)"
+date_version ="November 2, 2021"
 
 from django.shortcuts import render
 
