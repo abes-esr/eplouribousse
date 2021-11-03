@@ -22,8 +22,11 @@ SITE_NAME = basename(BASE_DIR)
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from .secret_key import SECRET_KEY
-# Le fichier secret_key.py n'apparait pas dans les dépôts publics = inclus dans .gitignore (Georges G.)
+try:
+    from .secret_key import SECRET_KEY
+    # Le fichier secret_key.py n'apparait pas dans les dépôts publics = inclus dans .gitignore (Georges G.)
+except:
+    pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
