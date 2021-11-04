@@ -58,38 +58,25 @@ Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas �
 05. Administration du site : https://seafile.unistra.fr/f/d3f6a23f94804dfabddd/
 06. Crédits : https://seafile.unistra.fr/f/579d874730604579b073/
 
-# Comment obtenir eplouribousse ?
+# Comment profiter d'eplouribousse ?
 
-Pour avoir un aperçu de l'application, commencez par visiter une instance réelle parmi les suivantes :
-01. https://eplouribousse1.di.unistra.fr/
-02. https://eplouribousse2.di.unistra.fr/
-03. https://eplouribousse3.di.unistra.fr/
+La version 2 d’eplouribousse a été développée dans l’idée d’affranchir les établissements porteurs de projet de toute opération de déploiement d’une instance propre. Les établissements n’ont plus qu’à mettre à disposition leur base de données projet sur un serveur de leur choix et d’en autoriser l’accès en écriture à l’instance dont leur projet dépend.
 
-----------------
+N’ayant pas encore subi l’épreuve d’une mise en production en situation réelle, cette version doit être considérée comme une version en bêta test fermée telle que définie dans l’article Wikipedia « version d’un logiciel » : « version dans laquelle les personnes intéressées par le produit doivent s'inscrire au préalable ou sont contactées par les concepteurs du produit testé qui sélectionnent les candidatures. »
 
-ça vous a plu ? Allez plus loin ; essayez eplouribousse sur un poste local équipé du serveur de développement de Django ; cela vous permettra de tester toutes les fonctionnalités (Les alertes mail seront éditées dans le terminal).
+(Pour l’instant, la version stable est la version 1, mais son déploiement s’est avéré délicat, ce qui a été la raison principale du développement de la version 2).
 
-Pour les distributions Debian de Linux (Ubuntu, LinuxMint etc.), suivez les instructions pas à pas données dans Doc/guide.txt
+Les objectifs principaux de la phase beta test sont les suivants :
+-	Mettre en évidence d’éventuels bogues
+-	Corriger d’éventuels défauts majeurs de l’interface utilisateur
+-	Observer l’effet d’une montée en charge de la volumétrie des projets supportés par une seule instance (en théorie, une instance peut admettre jusqu’à 100 projets i.e. 100 bases de données)
 
-----------------
+Les établissements candidats bêta testeurs bénéficieront d’une formation gratuite en ligne (utilisateurs et administrateurs), d’une assistance complète en ligne au peuplement de leur base de données, de conseils lors de la mise en place de la base de données sur un serveur de leur choix, d’une assistance à distance aux utilisateurs et, si l’établissement le souhaite et dans la mesure du possible, de la reprise du travail déjà réalisé lors du passage à la version finale.
 
-Vous êtes convaincu et vous voulez mettre en oeuvre eplouribousse dans votre établissement ?
-Nous conseillons d'abord de vous rapprocher de votre équipe informatique pour une installation de test.
+Visitez l'instance de bêta test : https://sbu-eplouribousse.unistra.fr/
 
-Si vous souhaitez utiliser eplouribousse pour un projet ferme, il y a actuellement trois possibilités :
-- Confier le déploiement à votre service informatique en indiquant l'adresse du présent site
-- Confier le déploiement à un hébergeur en indiquant l'adresse du présent site
-- Nous confier le déploiement (sous réserve d'accord)
+Vous avez un projet de dédoublonnement de revues papier dans votre établissement ; profitez-en pour vous porter candidat. Vous n’avez pas de projet précis mais la participation au test vous intéresse, contactez-nous (voir contact au bas de cette page).
 
-Dans tous ces cas, veuillez nous informer de votre intérêt (contact ci-après)
-
-# Instructions pour le déploiement :
-
-- L'outil de déploiement ayant été codé en python 2.7, il conviendra d'abord de créer un environnement virtuel sous lequel on installera cette version de python,
-- Le déploiement se fait avec l'outil pydiploy <https://pypi.org/project/pydiploy/> (installation avec la commande 'pip install pydiploy', dans l'environnement virtuel précédemment créé),
-- L'usage de pydiploy implique la création d'un fabfile ad-hoc sur le modèle de ceux fournis dans le dépôt (exemple <https://github.com/GGre/eplouribounistra/blob/master/fabfile_eplouribousse1.py>),
-- Il faut également prévoir l'installation de reportlab open source <https://pypi.org/project/reportlab/> (pour la génération de fichiers pdf),
-- Attention : La clef secrète générée par Django n'est pas livrée dans le dépôt public (ligne **/settings/secret_key.py dans .gitignore)
 
 # Crédits :
 
