@@ -56,38 +56,24 @@ Videos (in french ; please download if you cannot fully view) :
 05. Site administration : https://seafile.unistra.fr/f/d3f6a23f94804dfabddd/
 06. Credits : https://seafile.unistra.fr/f/579d874730604579b073/
 
-# How to get eplouribousse?
+# How to take advantage of eplouribousse?
 
-In order to have an idea of what it turns about and what it looks, we first recommand to take a tour on one of these real instances :
-01. https://eplouribousse1.di.unistra.fr/
-02. https://eplouribousse2.di.unistra.fr/
-03. https://eplouribousse3.di.unistra.fr/
+The scope of version 2 was to make the institutions free from any deployment operation for its own instance. The institutions only have to make their project database available on a server of their choice and to authorize the write access to the instance on which their project depends.
 
-----------------
+As it has not yet been tested in a real-life production environment, this version should be considered a private beta test version as defined in the Wikipedia article "Software release life cycle": "Software beta releases can be either public or private, depending on whether they are openly available or only available to a limited audience. Beta version software is often useful for demonstrations and previews within an organization and to prospective customers. Some developers refer to this stage as a preview, preview release, prototype, technical preview or technology preview (TP),[14] or early access."
 
-It looks good ? Let's try it on your desktop with the Django development server ; this will allow you to test all features (Mail alerts will be edited in the console).
+(For now, the stable version is version 1, but its deployment has proved tricky, which was the main reason for the development of version 2).
 
-Debian Linux users : follow the step-by-step instructions in Doc/howto.txt
+The main objectives of the beta test phase are the following:
+- To highlight possible bugs
+- To correct possible major defects of the user interface
+- Observe the effect of an increase in the volume of projects supported by a single instance (in theory, an instance can support up to 100 projects, i.e. 100 databases)
 
-----------------
+Candidate beta testers will benefit from free online training (users and administrators), full online assistance in populating their database, advice on setting up the database on a server of their choice, remote assistance to users and, if the institution so wishes and where possible, the recovery of work already done during the transition to the final version.
 
-You're OK and you want the real one with all the conveniences ?
-We recommend that you first approach your IT team for a test installation.
+Visit the beta test instance: https://sbu-eplouribousse.unistra.fr/
 
-If you want to use eplouribousse for a firm project, there are three possibilities at the moment :
-- Entrust the deployment to your IT department by indicating the address of this site
-- Entrust the deployment to a host indicating the address of this site
-- We entrust the deployment (subject to agreement)
-
-In all cases, let us know that you're interested (see contact below)
-
-# Instructions for deployment:
-
-- The deployment tool having been coded in python 2.7, it will first be necessary to create a virtual environment under which we will install this version of python,
-- Deployment shall be done with the tool pydiploy <https://pypi.org/project/pydiploy/> (installation with the command 'pip install pydiploy', in the virtual environment),
-- The use of pydiploy implies the creation of an ad-hoc fabfile on the model of those provided in the repository (example <https://github.com/GGre/eplouribounistra/blob/master/fabfile_eplouribousse1.py>),
-- It is also necessary to install reportlab open source <https://pypi.org/project/reportlab/> (for the generation of pdf files),
-- Attention : Django secret key kept secret in public respository (**/settings/secret_key.py in .gitignore)
+If you have a project to deduplicate paper journals in your institution, take advantage of this opportunity to apply. If you do not have a specific project but are interested in participating in the test, contact us (see contact at the bottom of this page).
 
 # Credits :
 
