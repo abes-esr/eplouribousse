@@ -38,7 +38,6 @@
 
 
       <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
-      <div align="right"><a href="/{{ bdd }}/adminbase">{% trans "Vider les formulaires ci-dessous" %}</a></div>
       {% if messages %}
       <ul class="messages">
           {% for message in messages %}
@@ -49,16 +48,13 @@
 <HR>
       </div>
       <div id="content">
-      <p><b>{% trans "Gestion des motifs d'exlusion" %} :</b></p>
+      <p><a href="/{{ bdd }}/excl_adm">{% trans "Gestion des motifs d'exlusion" %}</a></p>
 <p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
-<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
-<p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à modifier" %} {{ exclsupprform.exclreason }} &nbsp;&nbsp;&nbsp;&nbsp;
-  {% trans "Nouvel intitulé" %}  {{ exclsupprform.exclmod }} &nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou supprimer" %}{{ exclsupprform.suppr }} <input type="submit" value="{% trans "Valider" %}"> </form><p>
 
 <HR>
 
+      <p><a href="/{{ bdd }}/lib_adm">{% trans "Gestion des bibliothèques" %}</a> ({{ sizelib }}, {% trans "checker exclu" %}) :</p>
 
-      <p><b>{% trans "Gestion des bibliothèques" %} ({{ sizelib }}, {% trans "checker exclu" %}) :</b></p>
 <table border="1">
     {% for l in libtuple %}
   <thead>
@@ -97,22 +93,8 @@
 </table>
 
 
-  <p><form method="post"> {% csrf_token %}
-    {{ formlibname.curname }}
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    {% trans "Nouveau nom de la bibliothèque" %} {{ formnewlibname.newlibrname }}
-    <input type="submit" value="{% trans "Valider" %}"> </form></p>
-
-<p><form method="post"> {% csrf_token %}{{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
-&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}<br />
-{% trans "ou modifier (ou créer) la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
-<input type="submit" value="{% trans "Valider" %}"> </form></p>
-
-
-
 <HR>
-
-      <p><b>{% trans "Gestion des administrateurs" %} ({{ sizeadm }}) :</b></p>
+      <p><a href="/{{ bdd }}/admins_adm">{% trans "Gestion des administrateurs" %}</a> ({{ sizeadm }})</p>
 
       <table border="1">
 
@@ -135,28 +117,18 @@
       </table>
 
 
-    <p><form method="post">{% csrf_token %}{% trans "Ajouter un administrateur pour ce projet" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ projajadmform.contactajadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ projajadmform.identajadm }} <input type="submit" value="{% trans "Valider" %}"></form></p>
-
-
-<p><form method="post"> {% csrf_token %}{% trans "Supprimer un administrateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ projsuppradmform.contactsuadm }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ projsuppradmform.suppradm }} <input type="submit" value="{% trans "Supprimer" %}"> </form><p>
-
 <HR>
-  <p><b>{% trans "Gestion des instructeurs" %} ({{ sizeuters }}) :</b></p>
-<p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+  <p><a href="/{{ bdd }}/instrtrs_adm">{% trans "Gestion des instructeurs" %}</a> ({{ sizeuters }})</p>
 <HR>
 
-  <p><b>{% trans "Gestion des alertes et du type d'accès" %} :</b></p>
+  <p><a href="/{{ bdd }}/alerts_adm">{% trans "Gestion des alertes et du type d'accès" %}</a></p>
   <p>{% trans "Alertes activées" %} : {% if al == 1 %} {% for almt in current_alerts %} <b>{{ almt }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% endfor %}{% else %} <b>{% trans "aucune" %}</b> {% endif %}<br />{% trans "Mode édition restreint (usagers autorisés)" %} : <b>{{ priv_mode }}</b></p>
-
-<p><form method="post">{% csrf_token %}
-    {{ projosetform }}
-  <input type="submit" value="{% trans "Valider" %}"></form></p>
 
 
 <HR>
 
   {% if private == 1 %}
-  <p><b>{% trans "Utilisateurs autorisés aux simples consultations" %} ({{ ft }}) :</b></p>
+  <p><a href="/{{ bdd }}/authusrs_adm">{% trans "Gestion des utilisateurs autorisés aux simples consultations" %}</a> ({{ ft }})</p>
       {% if ft != 0 %}
         <table border="1">
 
@@ -179,23 +151,18 @@
         </table>
       {% endif %}
 
-        <p><form method="post">{% csrf_token %}{% trans "Ajouter un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ othusajform.contactajoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ othusajform.identajoth }} <input type="submit" value="{% trans "Valider" %}"></form></p>
-
-      {% if ft != 0 %}
-        <p><form method="post">{% csrf_token %}{% trans "Supprimer un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ othussupprform.contactsuoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ othussupprform.supproth }} <input type="submit" value="{% trans "Supprimer" %}"></form><p>
-      {% endif %}
-
 <HR>
   {% endif %}
 
-  <p><b>{% trans "Gestion des informations projet" %} :</b></p>
+  <p><a href="/{{ bdd }}/projinfos_adm">{% trans "Gestion des informations projet" %}</a></p>
+
     <table border="1">
 
       <thead>
 
           <th>{% trans "Propriété" %}</th>
           <th>{% trans "Valeur actuelle" %}</th>
-          <th>{% trans "Le cas échéant, nouvelle valeur" %}</th>
+
 
       </thead>
 
@@ -204,24 +171,20 @@
          <tr>
                <td>{% trans "Nom du projet" %}</td>
                <td>{{ project }}</td>
-               <td><form method="post">{% csrf_token %}{{ projnamform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
          </tr>
          <tr>
                <td>{% trans "Résumé" %}</td>
                <td>{{ abstract }}</td>
-               <td><form method="post">{% csrf_token %}{{ projdescform.projdescr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
          </tr>
         <tr>
               <td>{% trans "Date d'extraction de la base" %}</td>
               <td>{{ extractdate }}</td>
-              <td><form method="post">{% csrf_token %}{{ projdateform.projdate }} <input type="submit" value="{% trans "Valider" %}"></form></td>
         </tr>
 
        </tbody>
 
     </table>
 
-<center><a href="/{{ bdd }}">{% trans "Retour à l'accueil" %}</a></center>
 
         </div>
 
