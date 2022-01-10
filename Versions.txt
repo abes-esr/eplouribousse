@@ -32,6 +32,8 @@ Version 2.02 (Bilichilde)                   2021.10.21
 Version 2.03 (~Chrothildis)                 beta
 Version 2.04 (Bertrada)                     2021.11.02
 Version 2.05 (~Himiltrude)                  beta
+Version 2.06 (Desiderata)                   2022.01.07
+Version 2.07 (~Hildegarde)                  beta
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)
 
@@ -44,6 +46,7 @@ Dernières nouveautés (* = important) :
 * alertes possibles non seulement pour les instructions mais aussi pour le positionnement, les arbitrages et les résultantes
 * ajout du mode d'édition privé
 * mise à jour du manuel utilisateur
+* distribution de l'amdinistration de projet en modules élémentaires simples
 
 Version 2 : Version multi-projets (beta tant qu'elle n'est pas testée grandeur nature ...)
 

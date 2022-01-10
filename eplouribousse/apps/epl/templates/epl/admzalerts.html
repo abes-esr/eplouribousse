@@ -1,0 +1,75 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+      <nav id="sticky-menu">
+        {% trans "Administration du projet" %} :
+        <a href="/{{ bdd }}/adminbase">{% trans "Retour au sommaire" %}</a>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+
+<body>
+
+
+      <h2>{% trans "Administration du projet" %} :  {{ project }}</h2>
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <center><font color= #0000FF ><p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
+          {% endfor %}
+      </ul>
+      {% endif %}
+
+      </div>
+      <div id="content">
+
+
+  <p><b>{% trans "Gestion des alertes et du type d'accès" %} :</b></p>
+  <p>{% trans "Alertes activées" %} : {% if al == 1 %} {% for almt in current_alerts %} <b>{{ almt }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% endfor %}{% else %} <b>{% trans "aucune" %}</b> {% endif %}<br />{% trans "Mode édition restreint (usagers autorisés)" %} : <b>{{ priv_mode }}</b></p>
+
+<p><form method="post">{% csrf_token %}
+    {{ projosetform }}
+  <input type="submit" value="{% trans "Valider" %}"></form></p>
+
+      </div>
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+<p>Version : {{ version }}</p>
+
+        </div>
+
+</body>
+
+</html>

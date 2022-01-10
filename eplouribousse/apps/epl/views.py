@@ -1,8 +1,8 @@
-epl_version ="v2.04 (Bertrada)"
-date_version ="November 2, 2021"
+epl_version ="v2.06 (Desiderata)"
+date_version ="January 10, 2022"
 # Mise au niveau de :
-epl_version ="v2.05.3 (~Himiltrude)"
-date_version ="November 2, 2021"
+# epl_version ="v2.07.0 (~Hildegarde)"
+# date_version ="January 10, 2022"
 
 from django.shortcuts import render
 
@@ -249,59 +249,6 @@ def adminbase(request, bdd):
         priv_mode = _("activé")
     else:
         priv_mode = _("désactivé")
-
-    SETTING_CHOICES = (
-        ('rkg', _("Alertes positionnement")),
-        ('arb', _("Alertes arbitrages")),
-        ('ins', _("Alertes instructions")),
-        ('edi', _("Alertes résultantes")),
-        ('prv', _("Mode édition restreint (usagers autorisés)")),
-    )
-
-    actu =[]
-    projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
-    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).rkg:
-        actu.append('rkg')
-    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).arb:
-        actu.append('arb')
-    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).ins:
-        actu.append('ins')
-    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).edi:
-        actu.append('edi')
-    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).prv:
-        actu.append('prv')
-    class ProjoSettings(forms.Form):
-        projsett = forms.MultipleChoiceField(required = False, widget=forms.CheckboxSelectMultiple(), choices=SETTING_CHOICES, initial =actu, label =_("Choisissez vos nouveaux réglages"))
-
-    projosetform = ProjoSettings(request.POST or None)
-    if projosetform.is_valid():
-        settinglist =projosetform.cleaned_data['projsett']
-        newprojset =Proj_setting()
-        if "rkg" in settinglist:
-            newprojset.rkg =1
-        else:
-            newprojset.rkg =0
-        if "arb" in settinglist:
-            newprojset.arb =1
-        else:
-            newprojset.arb =0
-        if "ins" in settinglist:
-            newprojset.ins =1
-        else:
-            newprojset.ins =0
-        if "edi" in settinglist:
-            newprojset.edi =1
-        else:
-            newprojset.edi =0
-        if "prv" in settinglist:
-            newprojset.prv =1
-        else:
-            newprojset.prv =0
-        newprojset.save(using =bdd)
-        projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
-        oldprojset =Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk)
-        oldprojset.delete(using =bdd)
-        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès"))
     # gestion des alertes (fin)
 
     EXCLUSION_CHOICES = ('', ''),
@@ -309,6 +256,160 @@ def adminbase(request, bdd):
         EXCLUSION_CHOICES += (e.label, e.label),
     EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
     exclnbr =len(EXCLUSION_CHOICES) -1
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
+    extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
+
+    #Stuff about libraries
+    LIBRARY_CHOICES = ('', _('Sélectionnez la bibliothèque')), ('checker', 'checker'),
+    if Library.objects.using(bdd).all().exclude(name ='checker'):
+        for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+            LIBRARY_CHOICES += (l.name, l.name),
+
+    liblist =Library.objects.using(bdd).exclude(name ='checker')
+    sizelib =len(liblist)
+    try:
+        bis = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name ='checker').contact_bis)
+    except:
+        bis =None
+    try:
+        ter = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name ='checker').contact_ter)
+    except:
+        ter =None
+
+    libtuple =(Library.objects.using(bdd).get(name ='checker'), Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name ='checker').contact), bis, ter),
+    for libelmt in liblist:
+        try:
+            bis = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name =libelmt.name).contact_bis)
+        except:
+            bis =None
+        try:
+            ter = Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name =libelmt.name).contact_ter)
+        except:
+            ter =None
+        libtuple +=(Library.objects.using(bdd).get(name =libelmt.name), Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(name =libelmt.name).contact), bis, ter),
+
+    #Stuff about bddadministrators
+    admintuple =('', "Sélectionnez l'administrateur"),
+    for b in BddAdmin.objects.using(bdd).all():
+        admintuple +=(b.contact, Utilisateur.objects.using(bdd).get(mail =BddAdmin.objects.using(bdd).get(contact =b.contact).contact)),
+    admintup =admintuple[1:]
+    sizeadm =len(BddAdmin.objects.using(bdd).all())
+
+    #Stuff about instructors :
+    sizeuters =len(Utilisateur.objects.using(bdd).all())
+
+    #Début stuff about other authorized users
+    otherauthtuple =('', "Sélectionnez l'utilisateur"),
+    ft =0
+    # for elmt in User.objects.all():
+    for elmt in Utilisateur.objects.using(bdd).all():
+        if not BddAdmin.objects.using(bdd).filter(contact =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact_bis =elmt.mail) and not \
+        Library.objects.using(bdd).filter(contact_ter =elmt.mail):
+            if elmt.username[-3:] ==suffixe:
+                otherauthtuple +=(elmt.mail, Utilisateur.objects.using(bdd).get(mail =elmt.mail)),
+                ft +=1
+    sizeotherus =ft
+    otherauthtup =otherauthtuple[1:]
+
+    return render(request, 'epl/adminbase.html', locals())
+
+
+@login_required
+def excl_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/excl_adm"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+
+    EXCLUSION_CHOICES = ('', ''),
+    for e in Exclusion.objects.using(bdd).all().order_by('label'):
+        EXCLUSION_CHOICES += (e.label, e.label),
+    EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
+    exclnbr =len(EXCLUSION_CHOICES) -1
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+
+    #Stuff about exclusions
+    class ExcluForm(forms.Form):
+        exclusup = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
+    exclform =ExcluForm(request.POST or None)
+    class ExcluSupprForm(forms.Form):
+        exclreason = forms.ChoiceField(required = True, widget=forms.Select, choices=EXCLUSION_CHOICES[:-1], label =_("Motif d'exclusion à supprimer"))
+        exclmod = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion modifiée"))
+        suppr = forms.BooleanField(required=False)
+    exclsupprform =ExcluSupprForm(request.POST or None)
+
+    if exclform.is_valid():
+        try:
+            op =Exclusion.objects.using(bdd).get(label =exclform.cleaned_data['exclusup'])
+            messages.info(request, _('Cette exclusion existe déjà'))
+            # return HttpResponseRedirect(url)
+        except:
+            newexcl =Exclusion()
+            newexcl.label =exclform.cleaned_data['exclusup']
+            newexcl.save(using =bdd)
+            messages.info(request, _('Exclusion ajoutée avec succès'))
+            # return HttpResponseRedirect(url)
+    if exclsupprform.is_valid():
+        op =Exclusion.objects.using(bdd).get(label =exclsupprform.cleaned_data['exclreason'])
+        if exclsupprform.cleaned_data['suppr'] ==True:
+            if len(ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason'])):
+                messages.info(request, _('Suppression impossible : Cete exclusion a déjà servi (vous pouvez éventuellement modifier son intitulé)'))
+            else:
+                op.delete(using =bdd)
+                messages.info(request, _('Exclusion supprimée avec succès'))
+        else:
+            try:
+                xc =Exclusion.objects.using(bdd).get(label =exclsupprform.cleaned_data['exclmod'])
+                messages.info(request, _("Modification non autorisée : Le nouvel intitulé d'exclusion est déjà utilisé"))
+            except:
+                if exclsupprform.cleaned_data['exclmod']:
+                    for it in ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason']):
+                        if it.excl ==exclsupprform.cleaned_data['exclreason']:
+                            it.excl =exclsupprform.cleaned_data['exclmod']
+                            it.save(using =bdd)
+                    op.label =exclsupprform.cleaned_data['exclmod']
+                    op.save(using =bdd)
+                    messages.info(request, _('Exclusion modifiée avec succès'))
+                else:
+                    messages.info(request, _("Vous n'avez pas complété le formulaire correctement"))
+
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
+
+    return render(request, 'epl/admzexcl.html', locals())
+
+
+@login_required
+def projinfos_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/projinfos_adm"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
     abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
     extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
@@ -345,47 +446,30 @@ def adminbase(request, bdd):
         messages.info(request, _("La date d'extraction de la base a été modifiée avec succès"))
         # return HttpResponseRedirect(url)
 
-    #Stuff about exclusions
-    class ExcluForm(forms.Form):
-        exclusup = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion suppl"))
-    exclform =ExcluForm(request.POST or None)
-    class ExcluSupprForm(forms.Form):
-        exclreason = forms.ChoiceField(required = True, widget=forms.Select, choices=EXCLUSION_CHOICES[:-1], label =_("Motif d'exclusion à supprimer"))
-        exclmod = forms.CharField(required =False, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("exclusion modifiée"))
-        suppr = forms.BooleanField(required=False)
-    exclsupprform =ExcluSupprForm(request.POST or None)
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
 
-    if exclform.is_valid():
-        try:
-            op =Exclusion.objects.using(bdd).get(label =exclform.cleaned_data['exclusup'])
-            messages.info(request, _('Cette exclusion existe déjà'))
-            # return HttpResponseRedirect(url)
-        except:
-            newexcl =Exclusion()
-            newexcl.label =exclform.cleaned_data['exclusup']
-            newexcl.save(using =bdd)
-            messages.info(request, _('Exclusion ajoutée avec succès'))
-            # return HttpResponseRedirect(url)
-    if exclsupprform.is_valid():
-        op =Exclusion.objects.using(bdd).get(label =exclsupprform.cleaned_data['exclreason'])
-        if exclsupprform.cleaned_data['suppr'] ==True:
-            if len(ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason'])):
-                messages.info(request, _('Suppression impossible : Cete exclusion a déjà servi (vous pouvez éventuellement modifier son intitulé)'))
-            else:
-                op.delete(using =bdd)
-                messages.info(request, _('Exclusion supprimée avec succès'))
-        else:
-            if exclsupprform.cleaned_data['exclmod']:
-                for it in ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason']):
-                    if it.excl ==exclsupprform.cleaned_data['exclreason']:
-                        it.excl =exclsupprform.cleaned_data['exclmod']
-                        it.save(using =bdd)
-                op.label =exclsupprform.cleaned_data['exclmod']
-                op.save(using =bdd)
-                messages.info(request, _('Exclusion modifiée avec succès'))
-            else:
-                messages.info(request, _("Vous n'avez pas complété le formulaire correctement"))
+    return render(request, 'epl/admzprojinfos.html', locals())
 
+
+@login_required
+def lib_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/lib_adm"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     #Stuff about libraries
     LIBRARY_CHOICES = ('', _('Sélectionnez la bibliothèque')), ('checker', 'checker'),
@@ -568,6 +652,145 @@ def adminbase(request, bdd):
         except:
             pass
 
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
+    else:#request.method =="GET
+    #La partie de code ci-dessous est reproduite dans la vue home(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
+        for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
+            try:
+                user =User.objects.get(username =e.username)
+            except:
+                user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
+
+        #2/2 (see upper, this order is important)
+        suffixe = "@" + str(bdd)
+        for j in User.objects.all(): #Suppression d'users pour lesquels l'utilisateur a été supprimé de la base locale
+            if j.username[-3:] ==suffixe:
+                try:
+                    utilisateur =Utilisateur.objects.using(bdd).get(username =j.username)
+                except:
+                    j.delete() #suppression dans la bdd générale
+
+    return render(request, 'epl/admzlib.html', locals())
+
+
+@login_required
+def alerts_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/alerts_adm"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+    # gestion des alertes (début)
+    current_alerts =[] #initialzing
+    if Proj_setting.objects.using(bdd)[0].rkg:
+        current_alerts.append(_("positionnement"))
+    if Proj_setting.objects.using(bdd)[0].arb:
+        current_alerts.append(_("arbitrages"))
+    if Proj_setting.objects.using(bdd)[0].ins:
+        current_alerts.append(_("instructions"))
+    if Proj_setting.objects.using(bdd)[0].edi:
+        current_alerts.append(_("résultantes"))
+    if len(current_alerts):
+        al =1
+    else:
+        al =0
+    if Proj_setting.objects.using(bdd)[0].prv:
+        priv_mode = _("activé")
+    else:
+        priv_mode = _("désactivé")
+
+    SETTING_CHOICES = (
+        ('rkg', _("Alertes positionnement")),
+        ('arb', _("Alertes arbitrages")),
+        ('ins', _("Alertes instructions")),
+        ('edi', _("Alertes résultantes")),
+        ('prv', _("Mode édition restreint (usagers autorisés)")),
+    )
+
+    actu =[]
+    projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).rkg:
+        actu.append('rkg')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).arb:
+        actu.append('arb')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).ins:
+        actu.append('ins')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).edi:
+        actu.append('edi')
+    if Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk).prv:
+        actu.append('prv')
+    class ProjoSettings(forms.Form):
+        projsett = forms.MultipleChoiceField(required = False, widget=forms.CheckboxSelectMultiple(), choices=SETTING_CHOICES, initial =actu, label =_("Choisissez vos nouveaux réglages"))
+
+    projosetform = ProjoSettings(request.POST or None)
+    if projosetform.is_valid():
+        settinglist =projosetform.cleaned_data['projsett']
+        newprojset =Proj_setting()
+        if "rkg" in settinglist:
+            newprojset.rkg =1
+        else:
+            newprojset.rkg =0
+        if "arb" in settinglist:
+            newprojset.arb =1
+        else:
+            newprojset.arb =0
+        if "ins" in settinglist:
+            newprojset.ins =1
+        else:
+            newprojset.ins =0
+        if "edi" in settinglist:
+            newprojset.edi =1
+        else:
+            newprojset.edi =0
+        if "prv" in settinglist:
+            newprojset.prv =1
+        else:
+            newprojset.prv =0
+        newprojset.save(using =bdd)
+        projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+        oldprojset =Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk)
+        oldprojset.delete(using =bdd)
+        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès"))
+    # gestion des alertes (fin)
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
+
+    return render(request, 'epl/admzalerts.html', locals())
+
+
+@login_required
+def admins_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/admins_adm"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+
     #Stuff about bddadministrators
     admintuple =('', "Sélectionnez l'administrateur"),
     for b in BddAdmin.objects.using(bdd).all():
@@ -647,6 +870,47 @@ def adminbase(request, bdd):
             suppradm.delete(using =bdd)
             messages.info(request, _('Administrateur supprimé avec succès'))
 
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
+    else:#request.method =="GET
+    #La partie de code ci-dessous est reproduite dans la vue home(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
+        for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
+            try:
+                user =User.objects.get(username =e.username)
+            except:
+                user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
+
+        #2/2 (see upper, this order is important)
+        suffixe = "@" + str(bdd)
+        for j in User.objects.all(): #Suppression d'users pour lesquels l'utilisateur a été supprimé de la base locale
+            if j.username[-3:] ==suffixe:
+                try:
+                    utilisateur =Utilisateur.objects.using(bdd).get(username =j.username)
+                except:
+                    j.delete() #suppression dans la bdd générale
+
+    return render(request, 'epl/admzadmins.html', locals())
+
+
+@login_required
+def instrtrs_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/adminbase"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+
     #Stuff about instructors :
     uterstuple =('', "Sélectionnez l'utilisateur"),
     for u in Utilisateur.objects.using(bdd).all().order_by("username"):
@@ -713,6 +977,49 @@ def adminbase(request, bdd):
                         except:
                             pass
 
+    # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
+
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
+    else:#request.method =="GET
+    #La partie de code ci-dessous est reproduite dans la vue home(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
+        for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
+            try:
+                user =User.objects.get(username =e.username)
+            except:
+                user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
+
+        #2/2 (see upper, this order is important)
+        suffixe = "@" + str(bdd)
+        for j in User.objects.all(): #Suppression d'users pour lesquels l'utilisateur a été supprimé de la base locale
+            if j.username[-3:] ==suffixe:
+                try:
+                    utilisateur =Utilisateur.objects.using(bdd).get(username =j.username)
+                except:
+                    j.delete() #suppression dans la bdd générale
+
+    return render(request, 'epl/admzinstrtrs.html', locals())
+
+
+@login_required
+def authusrs_adm(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(BddAdmin.objects.using(bdd).filter(contact =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/adminbase"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+
     #Début stuff about other authorized users
     otherauthtuple =('', "Sélectionnez l'utilisateur"),
     ft =0
@@ -774,14 +1081,6 @@ def adminbase(request, bdd):
 
     # (la suppression éventuelle de l'utilisateur et du user est factorisée en fin de vue) ????
 
-    # messages.debug(request, '%s SQL statements were executed.' % count)
-    # messages.info(request, 'Three credits remain in your account.')
-    # messages.success(request, 'Profile details updated.')
-    # messages.warning(request, 'Your account expires in three days.')
-    # messages.error(request, 'Document deleted.')
-    # messages.info(request, 'Hello world.')
-    # messages.info(request, messages.SUCCESS, 'Hello wolafùlrld.')
-
     if request.method =="POST":
         return HttpResponseRedirect(url)
     else:#request.method =="GET
@@ -801,7 +1100,8 @@ def adminbase(request, bdd):
                 except:
                     j.delete() #suppression dans la bdd générale
 
-    return render(request, 'epl/adminbase.html', locals())
+    return render(request, 'epl/admzauthusrs.html', locals())
+
 
 @login_required
 def globadm(request):
