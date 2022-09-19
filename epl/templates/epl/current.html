@@ -1,0 +1,227 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+
+            <div id="sticky-section">
+              <nav id="sticky-menu">
+                  <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+                  <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+                  <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+                  <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+                  <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+                  <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+              </nav>
+                  {% if k != 0 %}
+                  <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+                  {% else %}
+                  <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
+                  <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+                  <!-- (User : Anonymous) -->
+                  {% endif %}
+                  <h2>{{ lib }} - {{ sid }} : {% trans "Statut courant" %}</h2>
+
+                    <!-- <h5>{% trans "Données bibliographiques" %} :</h5> -->
+                    <p>{{ title }}</p>
+                    <p>{% trans "ppn" %} : {{ sid }} | {% trans "issn" %} : {{ issn }} | {% trans "Période de publication" %} : {{ pubhist }}</p>
+
+                <HR>
+              </div>
+
+    <body>
+
+	        <div id="content">
+          <!-- <h5>{% trans "Données de rattachement" %} :</h5> -->
+          {% if tem != 0 %}
+          <p>{% trans "Cote" %} : {{ cn }}</p>
+          <p>{% trans "état de collection" %} : {{ holdstat }}</p>
+            {% if missing != '' %}
+            <p>{% trans "lacunes" %} : {{ missing }}</p>
+            {% endif %}
+          {% endif %}
+
+
+
+
+<table border="1">
+
+   <tbody>
+
+          {% if progress != 0 %}
+    <tr>
+          <td>{% trans "Avancement" %}</td>
+          <td>{{ progress }} {{ xname }}</td>
+    </tr>
+          {% endif %}
+
+    <tr>
+          <td>{% trans "Nombre de rattachements" %}</td>
+          <td>{{ n }}</td>
+    </tr>
+          {% if tem == 0 %}
+            {% if lid != "999999999" %}
+    <tr>
+          <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ lib }}</b></font></td>
+          <td><font color= #e74c3c ><b>{% trans "Votre bibliothèque n'est pas rattachée" %}</b></font></td>
+    </tr>
+            {% endif %}
+          {% endif %}
+        {% for e in ranklist %}
+        <tr>
+            {% if e.1 == lib %}
+                {% if e.0.rank == 0 %}
+                  <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ e.1 }}</b></font></td>
+                  <td><font color= #e74c3c ><b>{{ e.0.excl }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</b></font></td>
+                {% else %}
+                  <td><font color= #e74c3c ><b>{% trans "Positionnement pour" %} : {{ e.1 }}</b></font></td>
+                  {% if e.0.rank == 99 %}
+                  <td><font color= #e74c3c ><b>{% trans "Pas pris" %}</b></font></td>
+                  {% else %}
+                  <td><font color= #e74c3c ><b>{{ e.0.rank }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</b></font></td>
+                  {% endif %}
+                {% endif %}
+            {% elif e.1 != lib %}
+                {% if e.0.rank == 0 %}
+                  <td>{% trans "Positionnement pour" %} : {{ e.1 }}</td>
+                  <td>{{ e.0.excl }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</td>
+                {% else %}
+                  <td>{% trans "Positionnement pour" %} : {{ e.1 }}</td>
+                  {% if e.0.rank == 99 %}
+                  <td>{% trans "Pas pris" %}</td>
+                  {% else %}
+                  <td>{{ e.0.rank }}{% if e.0.comm != "" %} : {{ e.0.comm }}{% endif %}</td>
+                  {% endif %}
+                {% endif %}
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+        {% if action != 0 %}
+    <tr>
+          <td>{% trans "Action attendue" %}</td>
+          <td><a href="/{{ laction }}" target="_blank">{{ action }}</a></td>
+    </tr>
+        {% endif %}
+
+        {% if alteraction != 0 %}
+    <tr>
+          <td>{% trans "Action encore possible" %}</td>
+          <td><a href="/{{ lalteraction }}" target="_blank">{{ alteraction }}</a></td>
+    </tr>
+        {% endif %}
+   </tbody>
+
+</table>
+
+    {% if higher_status == 6 %}
+      <center><button><b><a href="/{{ bdd }}/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
+      <center>({% trans "Réservé" %})</center>
+    {% endif %}
+
+<!-- ######################### -->
+
+<table border="1">
+
+   <thead>
+
+       <th>{% trans "Bibliothèque" %}</th>
+       <th>{% trans "Statut" %}</th>
+       <th>{% trans "Administration" %}</th>
+
+   </thead>
+
+   <tbody>
+
+     {% for elmt in attlist %}
+    <tr>
+        <td>{{ elmt.0 }}</td>
+        <td>{{ elmt.1.status }}</td>
+        <!-- <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td> -->
+        <td><a href="/{{ bdd }}/statadmin/{{ elmt.1.id }}">{{ elmt.1.id }}</a></td>
+    </tr>
+     {% endfor %}
+   </tbody>
+
+</table>
+
+<center><button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ lid }}">{% trans "Actualiser" %}</a></b></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button onclick="history.back()">{% trans "Retour" %}</button></center>
+  {% if size > 0 %}
+<table border="1">
+
+   <thead>
+
+       <th>{% trans "Ligne" %}</th>
+       <th>{% trans "Bibliothèque" %}</th>
+       <th>{% trans "Forme reliée" %}</th>
+       <th>{% trans "Bibliothèque remédiée" %}</th>
+       <th>{% trans "Segment" %}</th>
+       <th>{% trans "Exceptions" %}</th>
+       <th>{% trans "Eléments améliorables" %}</th>
+       <th>{% trans "Administration" %}</th>
+
+   </thead>
+
+   <tbody>
+
+     {% for elmt in instrlist %}
+        {% if elmt.pk == pklastone %}
+    <tr>
+         <td><center><font color= #3364ff  >{{ elmt.line }}</font></center></td>
+         <td><font color= #3364ff >{{ elmt.name }}</font></td>
+         <td><center><font color= #3364ff >{{ elmt.bound }}</font></center></td>
+         <td><font color= #3364ff >{{ elmt.oname }}</font></td>
+         <td><font color= #3364ff >{{ elmt.descr }}</font></td>
+         <td><font color= #3364ff >{{ elmt.exc}}</font></td>
+         <td><font color= #3364ff >{{ elmt.degr }}</font></td>
+         <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
+         <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+
+    </tr>
+        {% else %}
+    <tr>
+        <td><center>{{ elmt.line }}</center></td>
+        <td>{{ elmt.name }}</td>
+        <td><center>{{ elmt.bound }}</center></td>
+        <td>{{ elmt.oname }}</td>
+        <td>{{ elmt.descr }}</td>
+        <td>{{ elmt.exc}}</td>
+        <td>{{ elmt.degr }}</td>
+        <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
+        <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
+    </tr>
+        {% endif %}
+     {% endfor %}
+   </tbody>
+
+
+</table>
+
+<p>{% trans "La dernière ligne validée est mise en évidence" %}</p>
+    {% endif %}
+        </div>
+<!-- ######################### -->
+
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+            <p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+            <p>Version : {{ version }}</p>
+
+        </div>
+
+    </body>
+
+</html>

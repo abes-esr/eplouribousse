@@ -1,0 +1,125 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+      <nav id="sticky-menu">
+        {% trans "Edition" %} :
+        <a target="_blank" href="/{{ bdd }}/pdf/{{ sid }}/{{ lid }}">{% trans "Export pdf" %}</a>
+        <a href="/{{ bdd }}/router/{{ lid }}">{% trans "Retour à la liste" %}</a></p>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+          <h2>{{ name }} - {% trans "Edition" %}</h2>
+
+          <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
+          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+            {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}{% if itrec.cn != "" %} / <b>{% trans "Cote" %} :</b> {{ itrec.cn }} {% endif %}</p>
+
+
+          <p><i>{% trans "Les lignes impliquant votre bibliothèque sont mises en évidence" %}.</i></p>
+
+
+          <p><b>{% trans "Collection mère" %} :</b><font color= #e74c3c > {{ mothercollection }}</font> /
+          {% trans "Collection(s) participante(s)" %} :
+            {% for i in coliblist %}
+                  {{ i.name }} -
+            {% endfor %}
+
+           / {% trans "Collection(s) exclue(s)" %} :
+           {% for k in exlist %}
+                 {{ k.0 }} [{{ k.1 }}, {{ k.2 }}] -
+           {% endfor %}
+
+                  </p>
+
+            <HR>
+
+
+      </div>
+
+    <body>
+
+
+        <div id="content">
+          <table border="1">
+
+
+             <thead>
+               <th>{% trans "Ligne" %}</th>
+               <th>{% trans "Bibliothèque" %}</th>
+               <th>{% trans "Forme reliée" %}</th>
+               <th>{% trans "Bibliothèque remédiée" %}</th>
+               <th>{% trans "Segment" %}</th>
+               <th>{% trans "Exceptions" %}</th>
+               <th>{% trans "Eléments améliorables" %}</th>
+
+             </thead>
+
+             <tbody>
+               {% for e in l %}
+                   {% if e.name == name or e.oname == name %}
+              <tr>
+                   <td><center><font color= #e74c3c >{{ e.line }}</font></center></td>
+                   <td><font color= #e74c3c >{{ e.name }}</font></td>
+                   <td><center><font color= #e74c3c >{{ e.bound }}</font></center></td>
+                   <td><font color= #e74c3c >{{ e.oname }}</font></td>
+                   <td><font color= #e74c3c >{{ e.descr }}</font></td>
+                   <td><font color= #e74c3c >{{ e.exc}}</font></td>
+                   <td><font color= #e74c3c >{{ e.degr }}</font></td>
+              </tr>
+                   {% else %}
+              <tr>
+                    <td><center>{{ e.line }}</center></td>
+                    <td>{{ e.name }}</td>
+                    <td><center>{{ e.bound }}</center></td>
+                    <td>{{ e.oname }}</td>
+                    <td>{{ e.descr }}</td>
+                    <td>{{ e.exc}}</td>
+                    <td>{{ e.degr }}</td>
+              </tr>
+                   {% endif %}
+               {% endfor %}
+             </tbody>
+
+
+          </table>
+        </div>
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} ·
+              <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a> {% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+<p>Version : {{ version }}</p>
+
+        </div>
+
+    </body>
+
+</html>

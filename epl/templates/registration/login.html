@@ -1,0 +1,48 @@
+<!-- templates/registration/login.html -->
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="logo"><img src="{% static "pictures/signature_eplouribousse.svg" %}" alt="Logo eplouribousse Unistra"/></div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
+          <h2>{% trans "Authentification" %}</h2>
+
+
+        <div id="content">
+
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{% trans "Me connecter" %}</button>
+          </form>
+          <p></p>
+          <a href="/accounts/password_reset">{% trans "Mot de passe perdu ou pas encore défini" %}</a> ?
+
+<p></p>
+
+        </div>
+
+    </body>
+
+</html>

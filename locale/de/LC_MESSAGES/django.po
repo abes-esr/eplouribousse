@@ -1,0 +1,3673 @@
+# Eplouribousse.
+# Copyright (C) 2018 COPYRIGHT Georges Gressot
+# This file is distributed under the same license as the main package.
+# FIRST AUTHOR : <gressot@unistra.fr>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-15 16:53+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: epl/decorators.py:23 epl/decorators.py:41 epl/decorators.py:59
+#: epl/decorators.py:77 epl/decorators.py:95 epl/decorators.py:113
+#: epl/decorators.py:131 epl/decorators.py:149
+msgid ""
+"Votre projet est en mode d'édition privé ; vous devez d'abord vous connecter."
+msgstr ""
+
+#: epl/models.py:113
+msgid "1. Positionnement"
+msgstr "1. Rang nehmen"
+
+#: epl/models.py:114
+msgid "2. Arbitrages"
+msgstr "2. Schiedsverfahren"
+
+#: epl/models.py:115
+msgid "3. Instruction"
+msgstr "3. Ausfüllen"
+
+#: epl/models.py:116
+msgid "4. Résultantes"
+msgstr "4. Ausgabe"
+
+#: epl/models.py:135
+msgid "Visa OK (La fiche est conforme)"
+msgstr "Alles richtig"
+
+#: epl/models.py:135
+msgid "Anomalie (L'administrateur de la base sera informé)"
+msgstr "Anomalie (Der Datenbankadministrator wird informiert)"
+
+#: epl/models.py:139
+msgid "Visa de conformité"
+msgstr "Compliance-Visum"
+
+#: epl/models.py:151
+msgid "Reliés"
+msgstr "Verbunden"
+
+#: epl/models.py:152
+msgid "Non reliés"
+msgstr "Nicht Verbunden"
+
+#: epl/templates/epl/about.html:25 epl/templates/epl/addinstruction.html:30
+#: epl/templates/epl/adminbase.html:29 epl/templates/epl/admzadmins.html:32
+#: epl/templates/epl/admzalerts.html:32 epl/templates/epl/admzauthusrs.html:32
+#: epl/templates/epl/admzexcl.html:32 epl/templates/epl/admzinstrtrs.html:32
+#: epl/templates/epl/admzlib.html:32 epl/templates/epl/admzprojinfos.html:32
+#: epl/templates/epl/arbitration.html:27 epl/templates/epl/arbnork1.html:26
+#: epl/templates/epl/arbrk1.html:27 epl/templates/epl/checker.html:24
+#: epl/templates/epl/confirmation.html:25 epl/templates/epl/contact.html:25
+#: epl/templates/epl/current.html:30 epl/templates/epl/delinstruction.html:28
+#: epl/templates/epl/edition.html:33 epl/templates/epl/endinstruction.html:28
+#: epl/templates/epl/excl.html:29 epl/templates/epl/faulty.html:29
+#: epl/templates/epl/filter_arblist.html:27
+#: epl/templates/epl/filter_ck_instrlist.html:29
+#: epl/templates/epl/filter_edlist.html:29
+#: epl/templates/epl/filter_instrlist.html:28
+#: epl/templates/epl/filter_rklist.html:29 epl/templates/epl/globadm.html:27
+#: epl/templates/epl/home.html:26 epl/templates/epl/indicators.html:27
+#: epl/templates/epl/instradmin.html:30 epl/templates/epl/instrtodo.html:26
+#: epl/templates/epl/instrtodobd1.html:37
+#: epl/templates/epl/instrtodobdnot1.html:36
+#: epl/templates/epl/instrtodonotbd1.html:35
+#: epl/templates/epl/instrtodonotbdnot1.html:35
+#: epl/templates/epl/language.html:25 epl/templates/epl/modifrklist.html:28
+#: epl/templates/epl/modinstruction.html:30 epl/templates/epl/notintime.html:27
+#: epl/templates/epl/projmaster.html:25 epl/templates/epl/ranking.html:29
+#: epl/templates/epl/reinit.html:27 epl/templates/epl/search.html:29
+#: epl/templates/epl/selectbdd.html:27 epl/templates/epl/selinstruction.html:29
+#: epl/templates/epl/statadmin.html:30 epl/templates/epl/to_edit_list.html:26
+#: epl/templates/epl/to_edit_list_mother.html:27
+#: epl/templates/epl/to_edit_list_notmother.html:26
+#: epl/templates/epl/to_rank_list.html:28 epl/templates/epl/webmaster.html:25
+#: epl/templates/epl/x0arbitration.html:26
+#: epl/templates/epl/x1arbitration.html:26
+#: epl/templates/epl/xarbitration.html:27 epl/templates/epl/xckall.html:27
+#: epl/templates/epl/xckbd.html:26 epl/templates/epl/xcknbd.html:27
+#: epl/templates/epl/xto_edit_list_mother.html:26
+#: epl/templates/epl/xto_edit_list_notmother.html:26
+#: epl/templates/epl/xto_instr_list.html:27
+#: epl/templates/epl/xto_rank_list.html:27
+msgid "Déconnexion"
+msgstr "Ausloggen"
+
+#: epl/templates/epl/about.html:49 epl/templates/epl/addinstruction.html:160
+#: epl/templates/epl/adminbase.html:192 epl/templates/epl/admzadmins.html:87
+#: epl/templates/epl/admzalerts.html:66 epl/templates/epl/admzauthusrs.html:92
+#: epl/templates/epl/admzexcl.html:65 epl/templates/epl/admzinstrtrs.html:63
+#: epl/templates/epl/admzlib.html:109 epl/templates/epl/admzprojinfos.html:93
+#: epl/templates/epl/arbitration.html:105 epl/templates/epl/arbnork1.html:89
+#: epl/templates/epl/arbrk1.html:87 epl/templates/epl/checker.html:48
+#: epl/templates/epl/confirmation.html:48 epl/templates/epl/contact.html:56
+#: epl/templates/epl/current.html:220 epl/templates/epl/delinstruction.html:121
+#: epl/templates/epl/disconnect.html:39 epl/templates/epl/edition.html:116
+#: epl/templates/epl/endinstruction.html:137 epl/templates/epl/excl.html:83
+#: epl/templates/epl/faulty.html:76 epl/templates/epl/filter_arblist.html:57
+#: epl/templates/epl/filter_ck_instrlist.html:54
+#: epl/templates/epl/filter_edlist.html:55
+#: epl/templates/epl/filter_instrlist.html:54
+#: epl/templates/epl/filter_rklist.html:58 epl/templates/epl/globadm.html:57
+#: epl/templates/epl/home.html:67 epl/templates/epl/indicators.html:206
+#: epl/templates/epl/instradmin.html:132 epl/templates/epl/instrtodo.html:143
+#: epl/templates/epl/instrtodobd1.html:91
+#: epl/templates/epl/instrtodobdnot1.html:89
+#: epl/templates/epl/instrtodonotbd1.html:86
+#: epl/templates/epl/instrtodonotbdnot1.html:87
+#: epl/templates/epl/language.html:64 epl/templates/epl/modifrklist.html:85
+#: epl/templates/epl/modinstruction.html:172
+#: epl/templates/epl/notintime.html:50 epl/templates/epl/projmaster.html:56
+#: epl/templates/epl/ranking.html:115 epl/templates/epl/reinit.html:50
+#: epl/templates/epl/search.html:249 epl/templates/epl/selectbdd.html:71
+#: epl/templates/epl/selinstruction.html:126
+#: epl/templates/epl/statadmin.html:54 epl/templates/epl/to_edit_list.html:86
+#: epl/templates/epl/to_edit_list_mother.html:70
+#: epl/templates/epl/to_edit_list_notmother.html:70
+#: epl/templates/epl/to_rank_list.html:89 epl/templates/epl/webmaster.html:56
+#: epl/templates/epl/x0arbitration.html:88
+#: epl/templates/epl/x1arbitration.html:84
+#: epl/templates/epl/xarbitration.html:98 epl/templates/epl/xckall.html:73
+#: epl/templates/epl/xckbd.html:68 epl/templates/epl/xcknbd.html:70
+#: epl/templates/epl/xto_edit_list_mother.html:72
+#: epl/templates/epl/xto_edit_list_notmother.html:70
+#: epl/templates/epl/xto_instr_list.html:94
+#: epl/templates/epl/xto_rank_list.html:85
+msgid "Me tenir au courant"
+msgstr "Bleib informiert"
+
+#: epl/templates/epl/about.html:49 epl/templates/epl/addinstruction.html:160
+#: epl/templates/epl/adminbase.html:192 epl/templates/epl/admzadmins.html:87
+#: epl/templates/epl/admzalerts.html:66 epl/templates/epl/admzauthusrs.html:92
+#: epl/templates/epl/admzexcl.html:65 epl/templates/epl/admzinstrtrs.html:63
+#: epl/templates/epl/admzlib.html:109 epl/templates/epl/admzprojinfos.html:93
+#: epl/templates/epl/arbitration.html:105 epl/templates/epl/arbnork1.html:89
+#: epl/templates/epl/arbrk1.html:87 epl/templates/epl/checker.html:48
+#: epl/templates/epl/confirmation.html:48 epl/templates/epl/contact.html:56
+#: epl/templates/epl/current.html:220 epl/templates/epl/delinstruction.html:121
+#: epl/templates/epl/disconnect.html:39 epl/templates/epl/edition.html:116
+#: epl/templates/epl/endinstruction.html:137 epl/templates/epl/excl.html:83
+#: epl/templates/epl/faulty.html:76 epl/templates/epl/filter_arblist.html:57
+#: epl/templates/epl/filter_ck_instrlist.html:54
+#: epl/templates/epl/filter_edlist.html:55
+#: epl/templates/epl/filter_instrlist.html:54
+#: epl/templates/epl/filter_rklist.html:58 epl/templates/epl/globadm.html:57
+#: epl/templates/epl/home.html:67 epl/templates/epl/indicators.html:206
+#: epl/templates/epl/instradmin.html:132 epl/templates/epl/instrtodo.html:143
+#: epl/templates/epl/instrtodobd1.html:91
+#: epl/templates/epl/instrtodobdnot1.html:89
+#: epl/templates/epl/instrtodonotbd1.html:86
+#: epl/templates/epl/instrtodonotbdnot1.html:87
+#: epl/templates/epl/language.html:64 epl/templates/epl/modifrklist.html:85
+#: epl/templates/epl/modinstruction.html:172
+#: epl/templates/epl/notintime.html:50 epl/templates/epl/projmaster.html:56
+#: epl/templates/epl/ranking.html:115 epl/templates/epl/reinit.html:50
+#: epl/templates/epl/search.html:249 epl/templates/epl/selectbdd.html:71
+#: epl/templates/epl/selinstruction.html:126
+#: epl/templates/epl/statadmin.html:54 epl/templates/epl/to_edit_list.html:86
+#: epl/templates/epl/to_edit_list_mother.html:70
+#: epl/templates/epl/to_edit_list_notmother.html:70
+#: epl/templates/epl/to_rank_list.html:89 epl/templates/epl/webmaster.html:56
+#: epl/templates/epl/x0arbitration.html:88
+#: epl/templates/epl/x1arbitration.html:84
+#: epl/templates/epl/xarbitration.html:98 epl/templates/epl/xckall.html:73
+#: epl/templates/epl/xckbd.html:68 epl/templates/epl/xcknbd.html:70
+#: epl/templates/epl/xto_edit_list_mother.html:72
+#: epl/templates/epl/xto_edit_list_notmother.html:70
+#: epl/templates/epl/xto_instr_list.html:94
+#: epl/templates/epl/xto_rank_list.html:85
+msgid "Forum des utilisateurs"
+msgstr "Benutzerforum"
+
+#: epl/templates/epl/about.html:49 epl/templates/epl/addinstruction.html:160
+#: epl/templates/epl/adminbase.html:192 epl/templates/epl/admzadmins.html:87
+#: epl/templates/epl/admzalerts.html:66 epl/templates/epl/admzauthusrs.html:92
+#: epl/templates/epl/admzexcl.html:65 epl/templates/epl/admzinstrtrs.html:63
+#: epl/templates/epl/admzlib.html:109 epl/templates/epl/admzprojinfos.html:93
+#: epl/templates/epl/arbitration.html:105 epl/templates/epl/arbnork1.html:89
+#: epl/templates/epl/arbrk1.html:87 epl/templates/epl/checker.html:48
+#: epl/templates/epl/confirmation.html:48 epl/templates/epl/contact.html:56
+#: epl/templates/epl/current.html:220 epl/templates/epl/delinstruction.html:121
+#: epl/templates/epl/disconnect.html:39 epl/templates/epl/edition.html:116
+#: epl/templates/epl/endinstruction.html:137 epl/templates/epl/excl.html:83
+#: epl/templates/epl/faulty.html:76 epl/templates/epl/filter_arblist.html:57
+#: epl/templates/epl/filter_ck_instrlist.html:54
+#: epl/templates/epl/filter_edlist.html:55
+#: epl/templates/epl/filter_instrlist.html:54
+#: epl/templates/epl/filter_rklist.html:58 epl/templates/epl/globadm.html:57
+#: epl/templates/epl/home.html:67 epl/templates/epl/indicators.html:206
+#: epl/templates/epl/instradmin.html:132 epl/templates/epl/instrtodo.html:143
+#: epl/templates/epl/instrtodobd1.html:91
+#: epl/templates/epl/instrtodobdnot1.html:89
+#: epl/templates/epl/instrtodonotbd1.html:86
+#: epl/templates/epl/instrtodonotbdnot1.html:87
+#: epl/templates/epl/language.html:64 epl/templates/epl/modifrklist.html:85
+#: epl/templates/epl/modinstruction.html:172
+#: epl/templates/epl/notintime.html:50 epl/templates/epl/projmaster.html:56
+#: epl/templates/epl/ranking.html:115 epl/templates/epl/reinit.html:50
+#: epl/templates/epl/search.html:249 epl/templates/epl/selectbdd.html:71
+#: epl/templates/epl/selinstruction.html:126
+#: epl/templates/epl/statadmin.html:54 epl/templates/epl/to_edit_list.html:86
+#: epl/templates/epl/to_edit_list_mother.html:70
+#: epl/templates/epl/to_edit_list_notmother.html:70
+#: epl/templates/epl/to_rank_list.html:89 epl/templates/epl/webmaster.html:56
+#: epl/templates/epl/x0arbitration.html:88
+#: epl/templates/epl/x1arbitration.html:84
+#: epl/templates/epl/xarbitration.html:98 epl/templates/epl/xckall.html:73
+#: epl/templates/epl/xckbd.html:68 epl/templates/epl/xcknbd.html:70
+#: epl/templates/epl/xto_edit_list_mother.html:72
+#: epl/templates/epl/xto_edit_list_notmother.html:70
+#: epl/templates/epl/xto_instr_list.html:94
+#: epl/templates/epl/xto_rank_list.html:85
+msgid "Suivi des bugs"
+msgstr "Bug-Tracking"
+
+#: epl/templates/epl/about.html:49
+msgid "administrateur"
+msgstr "Webmaster"
+
+#: epl/templates/epl/addinstruction.html:20 epl/templates/epl/edition.html:30
+#: epl/templates/epl/ranking.html:19
+msgid "Retour à la liste"
+msgstr "Zurück zur Liste"
+
+#: epl/templates/epl/addinstruction.html:21 epl/templates/epl/adminbase.html:21
+#: epl/templates/epl/admzadmins.html:21 epl/templates/epl/admzalerts.html:21
+#: epl/templates/epl/admzauthusrs.html:21 epl/templates/epl/admzexcl.html:21
+#: epl/templates/epl/admzinstrtrs.html:21 epl/templates/epl/admzlib.html:21
+#: epl/templates/epl/admzprojinfos.html:21
+#: epl/templates/epl/arbitration.html:19 epl/templates/epl/arbnork1.html:18
+#: epl/templates/epl/arbrk1.html:19 epl/templates/epl/checker.html:31
+#: epl/templates/epl/confirmation.html:44 epl/templates/epl/contact.html:52
+#: epl/templates/epl/current.html:22 epl/templates/epl/delinstruction.html:19
+#: epl/templates/epl/edition.html:20 epl/templates/epl/endinstruction.html:19
+#: epl/templates/epl/excl.html:21 epl/templates/epl/faulty.html:21
+#: epl/templates/epl/filter_arblist.html:19
+#: epl/templates/epl/filter_ck_instrlist.html:20
+#: epl/templates/epl/filter_edlist.html:20
+#: epl/templates/epl/filter_instrlist.html:20
+#: epl/templates/epl/filter_rklist.html:21 epl/templates/epl/home.html:41
+#: epl/templates/epl/indicators.html:19 epl/templates/epl/instradmin.html:21
+#: epl/templates/epl/instrtodo.html:18 epl/templates/epl/instrtodobd1.html:20
+#: epl/templates/epl/instrtodobdnot1.html:19
+#: epl/templates/epl/instrtodonotbd1.html:18
+#: epl/templates/epl/instrtodonotbdnot1.html:18
+#: epl/templates/epl/modifrklist.html:20
+#: epl/templates/epl/modinstruction.html:21 epl/templates/epl/notintime.html:19
+#: epl/templates/epl/projmaster.html:52 epl/templates/epl/ranking.html:20
+#: epl/templates/epl/reinit.html:19 epl/templates/epl/search.html:21
+#: epl/templates/epl/selinstruction.html:20 epl/templates/epl/statadmin.html:21
+#: epl/templates/epl/to_edit_list.html:18
+#: epl/templates/epl/to_edit_list_mother.html:19
+#: epl/templates/epl/to_edit_list_notmother.html:18
+#: epl/templates/epl/to_rank_list.html:20 epl/templates/epl/webmaster.html:52
+#: epl/templates/epl/x0arbitration.html:18
+#: epl/templates/epl/x1arbitration.html:18
+#: epl/templates/epl/xarbitration.html:19 epl/templates/epl/xckall.html:19
+#: epl/templates/epl/xckbd.html:18 epl/templates/epl/xcknbd.html:19
+#: epl/templates/epl/xto_edit_list_mother.html:18
+#: epl/templates/epl/xto_edit_list_notmother.html:18
+#: epl/templates/epl/xto_instr_list.html:19
+#: epl/templates/epl/xto_rank_list.html:19
+msgid "Accueil"
+msgstr "Startseite"
+
+#: epl/templates/epl/addinstruction.html:22 epl/templates/epl/adminbase.html:22
+#: epl/templates/epl/admzadmins.html:22 epl/templates/epl/admzalerts.html:22
+#: epl/templates/epl/admzauthusrs.html:22 epl/templates/epl/admzexcl.html:22
+#: epl/templates/epl/admzinstrtrs.html:22 epl/templates/epl/admzlib.html:22
+#: epl/templates/epl/admzprojinfos.html:22
+#: epl/templates/epl/arbitration.html:20 epl/templates/epl/arbnork1.html:19
+#: epl/templates/epl/arbrk1.html:20 epl/templates/epl/checker.html:42
+#: epl/templates/epl/current.html:23 epl/templates/epl/delinstruction.html:20
+#: epl/templates/epl/edition.html:21 epl/templates/epl/endinstruction.html:20
+#: epl/templates/epl/excl.html:22 epl/templates/epl/faulty.html:22
+#: epl/templates/epl/filter_arblist.html:20
+#: epl/templates/epl/filter_ck_instrlist.html:21
+#: epl/templates/epl/filter_edlist.html:21
+#: epl/templates/epl/filter_instrlist.html:21
+#: epl/templates/epl/filter_rklist.html:22 epl/templates/epl/home.html:61
+#: epl/templates/epl/indicators.html:20 epl/templates/epl/indicators.html:33
+#: epl/templates/epl/indicators.html:48 epl/templates/epl/instradmin.html:22
+#: epl/templates/epl/instrtodo.html:19 epl/templates/epl/instrtodobd1.html:21
+#: epl/templates/epl/instrtodobdnot1.html:20
+#: epl/templates/epl/instrtodonotbd1.html:19
+#: epl/templates/epl/instrtodonotbdnot1.html:19
+#: epl/templates/epl/modifrklist.html:21
+#: epl/templates/epl/modinstruction.html:22 epl/templates/epl/notintime.html:20
+#: epl/templates/epl/ranking.html:21 epl/templates/epl/reinit.html:20
+#: epl/templates/epl/search.html:22 epl/templates/epl/selinstruction.html:21
+#: epl/templates/epl/statadmin.html:22 epl/templates/epl/to_edit_list.html:19
+#: epl/templates/epl/to_edit_list_mother.html:20
+#: epl/templates/epl/to_edit_list_notmother.html:19
+#: epl/templates/epl/to_rank_list.html:21
+#: epl/templates/epl/x0arbitration.html:19
+#: epl/templates/epl/x1arbitration.html:19
+#: epl/templates/epl/xarbitration.html:20 epl/templates/epl/xckall.html:20
+#: epl/templates/epl/xckbd.html:19 epl/templates/epl/xcknbd.html:20
+#: epl/templates/epl/xto_edit_list_mother.html:19
+#: epl/templates/epl/xto_edit_list_notmother.html:19
+#: epl/templates/epl/xto_instr_list.html:20
+#: epl/templates/epl/xto_rank_list.html:20
+msgid "Supervision"
+msgstr "Aufsicht"
+
+#: epl/templates/epl/addinstruction.html:23 epl/templates/epl/adminbase.html:23
+#: epl/templates/epl/admzadmins.html:23 epl/templates/epl/admzalerts.html:23
+#: epl/templates/epl/admzauthusrs.html:23 epl/templates/epl/admzexcl.html:23
+#: epl/templates/epl/admzinstrtrs.html:23 epl/templates/epl/admzlib.html:23
+#: epl/templates/epl/admzprojinfos.html:23
+#: epl/templates/epl/arbitration.html:21 epl/templates/epl/arbnork1.html:20
+#: epl/templates/epl/arbrk1.html:21 epl/templates/epl/checker.html:42
+#: epl/templates/epl/current.html:24 epl/templates/epl/delinstruction.html:21
+#: epl/templates/epl/edition.html:22 epl/templates/epl/endinstruction.html:21
+#: epl/templates/epl/excl.html:23 epl/templates/epl/faulty.html:23
+#: epl/templates/epl/filter_arblist.html:21
+#: epl/templates/epl/filter_ck_instrlist.html:22
+#: epl/templates/epl/filter_edlist.html:22
+#: epl/templates/epl/filter_instrlist.html:22
+#: epl/templates/epl/filter_rklist.html:23 epl/templates/epl/home.html:61
+#: epl/templates/epl/indicators.html:21 epl/templates/epl/instradmin.html:23
+#: epl/templates/epl/instrtodo.html:20 epl/templates/epl/instrtodobd1.html:22
+#: epl/templates/epl/instrtodobdnot1.html:21
+#: epl/templates/epl/instrtodonotbd1.html:20
+#: epl/templates/epl/instrtodonotbdnot1.html:20
+#: epl/templates/epl/modifrklist.html:22
+#: epl/templates/epl/modinstruction.html:23 epl/templates/epl/notintime.html:21
+#: epl/templates/epl/ranking.html:22 epl/templates/epl/reinit.html:21
+#: epl/templates/epl/search.html:23 epl/templates/epl/selinstruction.html:22
+#: epl/templates/epl/statadmin.html:23 epl/templates/epl/to_edit_list.html:20
+#: epl/templates/epl/to_edit_list_mother.html:21
+#: epl/templates/epl/to_edit_list_notmother.html:20
+#: epl/templates/epl/to_rank_list.html:22
+#: epl/templates/epl/x0arbitration.html:20
+#: epl/templates/epl/x1arbitration.html:20
+#: epl/templates/epl/xarbitration.html:21 epl/templates/epl/xckall.html:21
+#: epl/templates/epl/xckbd.html:20 epl/templates/epl/xcknbd.html:21
+#: epl/templates/epl/xto_edit_list_mother.html:20
+#: epl/templates/epl/xto_edit_list_notmother.html:20
+#: epl/templates/epl/xto_instr_list.html:21
+#: epl/templates/epl/xto_rank_list.html:21
+msgid "Recherche (bêta)"
+msgstr "Suche (Beta)"
+
+#: epl/templates/epl/addinstruction.html:24 epl/templates/epl/adminbase.html:24
+#: epl/templates/epl/admzadmins.html:24 epl/templates/epl/admzalerts.html:24
+#: epl/templates/epl/admzauthusrs.html:24 epl/templates/epl/admzexcl.html:24
+#: epl/templates/epl/admzinstrtrs.html:24 epl/templates/epl/admzlib.html:24
+#: epl/templates/epl/admzprojinfos.html:24
+#: epl/templates/epl/arbitration.html:22 epl/templates/epl/arbnork1.html:21
+#: epl/templates/epl/arbrk1.html:22 epl/templates/epl/checker.html:42
+#: epl/templates/epl/confirmation.html:44 epl/templates/epl/contact.html:52
+#: epl/templates/epl/current.html:25 epl/templates/epl/delinstruction.html:22
+#: epl/templates/epl/disconnect.html:34 epl/templates/epl/edition.html:23
+#: epl/templates/epl/endinstruction.html:22 epl/templates/epl/excl.html:24
+#: epl/templates/epl/faulty.html:24 epl/templates/epl/filter_arblist.html:22
+#: epl/templates/epl/filter_ck_instrlist.html:23
+#: epl/templates/epl/filter_edlist.html:23
+#: epl/templates/epl/filter_instrlist.html:23
+#: epl/templates/epl/filter_rklist.html:24 epl/templates/epl/globadm.html:49
+#: epl/templates/epl/home.html:61 epl/templates/epl/indicators.html:22
+#: epl/templates/epl/instradmin.html:24 epl/templates/epl/instrtodo.html:21
+#: epl/templates/epl/instrtodobd1.html:23
+#: epl/templates/epl/instrtodobdnot1.html:22
+#: epl/templates/epl/instrtodonotbd1.html:21
+#: epl/templates/epl/instrtodonotbdnot1.html:21
+#: epl/templates/epl/language.html:58 epl/templates/epl/modifrklist.html:23
+#: epl/templates/epl/modinstruction.html:24 epl/templates/epl/notintime.html:22
+#: epl/templates/epl/projmaster.html:52 epl/templates/epl/ranking.html:23
+#: epl/templates/epl/reinit.html:22 epl/templates/epl/search.html:24
+#: epl/templates/epl/selectbdd.html:60 epl/templates/epl/selinstruction.html:23
+#: epl/templates/epl/statadmin.html:24 epl/templates/epl/to_edit_list.html:21
+#: epl/templates/epl/to_edit_list_mother.html:22
+#: epl/templates/epl/to_edit_list_notmother.html:21
+#: epl/templates/epl/to_rank_list.html:23 epl/templates/epl/webmaster.html:52
+#: epl/templates/epl/x0arbitration.html:21
+#: epl/templates/epl/x1arbitration.html:21
+#: epl/templates/epl/xarbitration.html:22 epl/templates/epl/xckall.html:22
+#: epl/templates/epl/xckbd.html:21 epl/templates/epl/xcknbd.html:22
+#: epl/templates/epl/xto_edit_list_mother.html:21
+#: epl/templates/epl/xto_edit_list_notmother.html:21
+#: epl/templates/epl/xto_instr_list.html:22
+#: epl/templates/epl/xto_rank_list.html:22
+msgid "Manuel de l'utilisateur"
+msgstr "Benutzerhandbuch"
+
+#: epl/templates/epl/addinstruction.html:25
+#: epl/templates/epl/arbitration.html:23 epl/templates/epl/arbnork1.html:22
+#: epl/templates/epl/arbrk1.html:23 epl/templates/epl/current.html:26
+#: epl/templates/epl/delinstruction.html:23 epl/templates/epl/edition.html:24
+#: epl/templates/epl/endinstruction.html:23 epl/templates/epl/excl.html:25
+#: epl/templates/epl/faulty.html:25 epl/templates/epl/filter_arblist.html:23
+#: epl/templates/epl/filter_ck_instrlist.html:24
+#: epl/templates/epl/filter_edlist.html:24
+#: epl/templates/epl/filter_instrlist.html:24
+#: epl/templates/epl/filter_rklist.html:25 epl/templates/epl/home.html:61
+#: epl/templates/epl/indicators.html:23 epl/templates/epl/instradmin.html:25
+#: epl/templates/epl/instrtodo.html:22 epl/templates/epl/instrtodobd1.html:24
+#: epl/templates/epl/instrtodobdnot1.html:23
+#: epl/templates/epl/instrtodonotbd1.html:22
+#: epl/templates/epl/instrtodonotbdnot1.html:22
+#: epl/templates/epl/modifrklist.html:24
+#: epl/templates/epl/modinstruction.html:25 epl/templates/epl/notintime.html:23
+#: epl/templates/epl/ranking.html:24 epl/templates/epl/reinit.html:23
+#: epl/templates/epl/search.html:25 epl/templates/epl/selinstruction.html:24
+#: epl/templates/epl/statadmin.html:25 epl/templates/epl/to_edit_list.html:22
+#: epl/templates/epl/to_edit_list_mother.html:23
+#: epl/templates/epl/to_edit_list_notmother.html:22
+#: epl/templates/epl/to_rank_list.html:24
+#: epl/templates/epl/x0arbitration.html:22
+#: epl/templates/epl/x1arbitration.html:22
+#: epl/templates/epl/xarbitration.html:23 epl/templates/epl/xckall.html:23
+#: epl/templates/epl/xckbd.html:22 epl/templates/epl/xcknbd.html:23
+#: epl/templates/epl/xto_edit_list_mother.html:22
+#: epl/templates/epl/xto_edit_list_notmother.html:22
+#: epl/templates/epl/xto_instr_list.html:23
+#: epl/templates/epl/xto_rank_list.html:23
+#, fuzzy
+#| msgid "Ce ppn est absent du projet"
+msgid "Contact du projet"
+msgstr "Dieser SID fehlt im Projekt"
+
+#: epl/templates/epl/addinstruction.html:26
+#: epl/templates/epl/addinstruction.html:160
+#: epl/templates/epl/adminbase.html:25 epl/templates/epl/adminbase.html:192
+#: epl/templates/epl/admzadmins.html:25 epl/templates/epl/admzadmins.html:87
+#: epl/templates/epl/admzalerts.html:25 epl/templates/epl/admzalerts.html:66
+#: epl/templates/epl/admzauthusrs.html:25
+#: epl/templates/epl/admzauthusrs.html:92 epl/templates/epl/admzexcl.html:25
+#: epl/templates/epl/admzexcl.html:65 epl/templates/epl/admzinstrtrs.html:25
+#: epl/templates/epl/admzinstrtrs.html:63 epl/templates/epl/admzlib.html:25
+#: epl/templates/epl/admzlib.html:109 epl/templates/epl/admzprojinfos.html:25
+#: epl/templates/epl/admzprojinfos.html:93
+#: epl/templates/epl/arbitration.html:24 epl/templates/epl/arbitration.html:105
+#: epl/templates/epl/arbnork1.html:23 epl/templates/epl/arbnork1.html:89
+#: epl/templates/epl/arbrk1.html:24 epl/templates/epl/arbrk1.html:87
+#: epl/templates/epl/checker.html:48 epl/templates/epl/confirmation.html:48
+#: epl/templates/epl/contact.html:56 epl/templates/epl/current.html:27
+#: epl/templates/epl/current.html:220 epl/templates/epl/delinstruction.html:24
+#: epl/templates/epl/delinstruction.html:121
+#: epl/templates/epl/disconnect.html:39 epl/templates/epl/edition.html:25
+#: epl/templates/epl/edition.html:116 epl/templates/epl/endinstruction.html:24
+#: epl/templates/epl/endinstruction.html:137 epl/templates/epl/excl.html:26
+#: epl/templates/epl/excl.html:83 epl/templates/epl/faulty.html:26
+#: epl/templates/epl/faulty.html:76 epl/templates/epl/filter_arblist.html:24
+#: epl/templates/epl/filter_arblist.html:57
+#: epl/templates/epl/filter_ck_instrlist.html:25
+#: epl/templates/epl/filter_ck_instrlist.html:54
+#: epl/templates/epl/filter_edlist.html:25
+#: epl/templates/epl/filter_edlist.html:55
+#: epl/templates/epl/filter_instrlist.html:25
+#: epl/templates/epl/filter_instrlist.html:54
+#: epl/templates/epl/filter_rklist.html:26
+#: epl/templates/epl/filter_rklist.html:58 epl/templates/epl/globadm.html:57
+#: epl/templates/epl/home.html:67 epl/templates/epl/indicators.html:24
+#: epl/templates/epl/indicators.html:206 epl/templates/epl/instradmin.html:26
+#: epl/templates/epl/instradmin.html:132 epl/templates/epl/instrtodo.html:23
+#: epl/templates/epl/instrtodo.html:143 epl/templates/epl/instrtodobd1.html:25
+#: epl/templates/epl/instrtodobd1.html:91
+#: epl/templates/epl/instrtodobdnot1.html:24
+#: epl/templates/epl/instrtodobdnot1.html:89
+#: epl/templates/epl/instrtodonotbd1.html:23
+#: epl/templates/epl/instrtodonotbd1.html:86
+#: epl/templates/epl/instrtodonotbdnot1.html:23
+#: epl/templates/epl/instrtodonotbdnot1.html:87
+#: epl/templates/epl/language.html:64 epl/templates/epl/modifrklist.html:25
+#: epl/templates/epl/modifrklist.html:85
+#: epl/templates/epl/modinstruction.html:26
+#: epl/templates/epl/modinstruction.html:172
+#: epl/templates/epl/notintime.html:24 epl/templates/epl/notintime.html:50
+#: epl/templates/epl/projmaster.html:56 epl/templates/epl/ranking.html:25
+#: epl/templates/epl/ranking.html:115 epl/templates/epl/reinit.html:24
+#: epl/templates/epl/reinit.html:50 epl/templates/epl/search.html:26
+#: epl/templates/epl/search.html:249 epl/templates/epl/selectbdd.html:71
+#: epl/templates/epl/selinstruction.html:25
+#: epl/templates/epl/selinstruction.html:126
+#: epl/templates/epl/statadmin.html:26 epl/templates/epl/statadmin.html:54
+#: epl/templates/epl/to_edit_list.html:23
+#: epl/templates/epl/to_edit_list.html:86
+#: epl/templates/epl/to_edit_list_mother.html:24
+#: epl/templates/epl/to_edit_list_mother.html:70
+#: epl/templates/epl/to_edit_list_notmother.html:23
+#: epl/templates/epl/to_edit_list_notmother.html:70
+#: epl/templates/epl/to_rank_list.html:25
+#: epl/templates/epl/to_rank_list.html:89 epl/templates/epl/webmaster.html:56
+#: epl/templates/epl/x0arbitration.html:23
+#: epl/templates/epl/x0arbitration.html:88
+#: epl/templates/epl/x1arbitration.html:23
+#: epl/templates/epl/x1arbitration.html:84
+#: epl/templates/epl/xarbitration.html:24
+#: epl/templates/epl/xarbitration.html:98 epl/templates/epl/xckall.html:24
+#: epl/templates/epl/xckall.html:73 epl/templates/epl/xckbd.html:23
+#: epl/templates/epl/xckbd.html:68 epl/templates/epl/xcknbd.html:24
+#: epl/templates/epl/xcknbd.html:70
+#: epl/templates/epl/xto_edit_list_mother.html:23
+#: epl/templates/epl/xto_edit_list_mother.html:72
+#: epl/templates/epl/xto_edit_list_notmother.html:23
+#: epl/templates/epl/xto_edit_list_notmother.html:70
+#: epl/templates/epl/xto_instr_list.html:24
+#: epl/templates/epl/xto_instr_list.html:94
+#: epl/templates/epl/xto_rank_list.html:24
+#: epl/templates/epl/xto_rank_list.html:85
+msgid "A propos"
+msgstr "Über uns"
+
+#: epl/templates/epl/addinstruction.html:32 epl/templates/epl/adminbase.html:31
+#: epl/templates/epl/admzadmins.html:34 epl/templates/epl/admzalerts.html:34
+#: epl/templates/epl/admzauthusrs.html:34 epl/templates/epl/admzexcl.html:34
+#: epl/templates/epl/admzinstrtrs.html:34 epl/templates/epl/admzlib.html:34
+#: epl/templates/epl/admzprojinfos.html:34
+#: epl/templates/epl/arbitration.html:29 epl/templates/epl/arbnork1.html:28
+#: epl/templates/epl/arbrk1.html:29 epl/templates/epl/checker.html:26
+#: epl/templates/epl/confirmation.html:27 epl/templates/epl/contact.html:27
+#: epl/templates/epl/current.html:32 epl/templates/epl/delinstruction.html:30
+#: epl/templates/epl/disconnect.html:25 epl/templates/epl/edition.html:35
+#: epl/templates/epl/endinstruction.html:30 epl/templates/epl/excl.html:31
+#: epl/templates/epl/faulty.html:31 epl/templates/epl/filter_arblist.html:29
+#: epl/templates/epl/filter_ck_instrlist.html:31
+#: epl/templates/epl/filter_edlist.html:31
+#: epl/templates/epl/filter_instrlist.html:30
+#: epl/templates/epl/filter_rklist.html:31 epl/templates/epl/globadm.html:29
+#: epl/templates/epl/home.html:28 epl/templates/epl/indicators.html:29
+#: epl/templates/epl/instradmin.html:32 epl/templates/epl/instrtodo.html:28
+#: epl/templates/epl/instrtodobd1.html:39
+#: epl/templates/epl/instrtodobdnot1.html:38
+#: epl/templates/epl/instrtodonotbd1.html:37
+#: epl/templates/epl/instrtodonotbdnot1.html:37
+#: epl/templates/epl/modifrklist.html:30
+#: epl/templates/epl/modinstruction.html:32 epl/templates/epl/notintime.html:29
+#: epl/templates/epl/projmaster.html:27 epl/templates/epl/ranking.html:31
+#: epl/templates/epl/reinit.html:29 epl/templates/epl/search.html:31
+#: epl/templates/epl/selectbdd.html:29 epl/templates/epl/selinstruction.html:31
+#: epl/templates/epl/statadmin.html:32 epl/templates/epl/to_edit_list.html:28
+#: epl/templates/epl/to_edit_list_mother.html:29
+#: epl/templates/epl/to_edit_list_notmother.html:28
+#: epl/templates/epl/to_rank_list.html:30 epl/templates/epl/webmaster.html:27
+#: epl/templates/epl/x0arbitration.html:28
+#: epl/templates/epl/x1arbitration.html:28
+#: epl/templates/epl/xarbitration.html:29 epl/templates/epl/xckall.html:29
+#: epl/templates/epl/xckbd.html:28 epl/templates/epl/xcknbd.html:29
+#: epl/templates/epl/xto_edit_list_mother.html:28
+#: epl/templates/epl/xto_edit_list_notmother.html:28
+#: epl/templates/epl/xto_instr_list.html:29
+#: epl/templates/epl/xto_rank_list.html:29
+#, fuzzy
+#| msgid "Authentification"
+msgid "M'authentifier"
+msgstr "Login"
+
+#: epl/templates/epl/addinstruction.html:37 epl/views.py:1596 epl/views.py:1616
+#: epl/views.py:1641 epl/views.py:1661 epl/views.py:3979 epl/views.py:3999
+#: epl/views.py:4024 epl/views.py:4044
+msgid "Instruction"
+msgstr "Ausfüllen"
+
+#: epl/templates/epl/addinstruction.html:39
+#: epl/templates/epl/arbitration.html:86 epl/templates/epl/arbitration.html:93
+#: epl/templates/epl/arbnork1.html:77 epl/templates/epl/arbrk1.html:75
+#: epl/templates/epl/delinstruction.html:37 epl/templates/epl/edition.html:41
+#: epl/templates/epl/endinstruction.html:37 epl/templates/epl/excl.html:66
+#: epl/templates/epl/faulty.html:63 epl/templates/epl/instradmin.html:41
+#: epl/templates/epl/instrtodo.html:98 epl/templates/epl/instrtodo.html:102
+#: epl/templates/epl/instrtodo.html:114 epl/templates/epl/instrtodo.html:118
+#: epl/templates/epl/instrtodo.html:124 epl/templates/epl/instrtodo.html:128
+#: epl/templates/epl/instrtodobd1.html:76
+#: epl/templates/epl/instrtodobdnot1.html:76
+#: epl/templates/epl/instrtodonotbd1.html:74
+#: epl/templates/epl/instrtodonotbdnot1.html:76
+#: epl/templates/epl/modifrklist.html:73
+#: epl/templates/epl/modinstruction.html:40 epl/templates/epl/ranking.html:39
+#: epl/templates/epl/selinstruction.html:39 epl/templates/epl/statadmin.html:40
+#: epl/templates/epl/to_edit_list.html:67
+#: epl/templates/epl/to_edit_list.html:74
+#: epl/templates/epl/to_edit_list_mother.html:58
+#: epl/templates/epl/to_edit_list_notmother.html:58
+#: epl/templates/epl/to_rank_list.html:76
+#: epl/templates/epl/x0arbitration.html:77
+#: epl/templates/epl/x1arbitration.html:73
+#: epl/templates/epl/xarbitration.html:80
+#: epl/templates/epl/xarbitration.html:86 epl/templates/epl/xckall.html:60
+#: epl/templates/epl/xckbd.html:56 epl/templates/epl/xcknbd.html:57
+#: epl/templates/epl/xto_edit_list_mother.html:60
+#: epl/templates/epl/xto_edit_list_notmother.html:58
+#: epl/templates/epl/xto_instr_list.html:66
+#: epl/templates/epl/xto_instr_list.html:70
+#: epl/templates/epl/xto_instr_list.html:76
+#: epl/templates/epl/xto_instr_list.html:80
+#: epl/templates/epl/xto_rank_list.html:73 epl/views_pdf.py:48
+#: epl/views_pdf.py:186 epl/views_pdf.py:326 epl/views_pdf.py:466
+#: epl/views_pdf.py:606 epl/views_pdf.py:746
+msgid "Titre"
+msgstr "Titel"
+
+#: epl/templates/epl/addinstruction.html:39
+#: epl/templates/epl/arbitration.html:88 epl/templates/epl/arbitration.html:95
+#: epl/templates/epl/arbnork1.html:79 epl/templates/epl/arbrk1.html:77
+#: epl/templates/epl/delinstruction.html:38 epl/templates/epl/edition.html:42
+#: epl/templates/epl/endinstruction.html:38 epl/templates/epl/excl.html:68
+#: epl/templates/epl/faulty.html:65 epl/templates/epl/instradmin.html:41
+#: epl/templates/epl/instrtodo.html:100 epl/templates/epl/instrtodo.html:104
+#: epl/templates/epl/instrtodo.html:116 epl/templates/epl/instrtodo.html:120
+#: epl/templates/epl/instrtodo.html:126 epl/templates/epl/instrtodo.html:130
+#: epl/templates/epl/instrtodobd1.html:78
+#: epl/templates/epl/instrtodobdnot1.html:78
+#: epl/templates/epl/instrtodonotbd1.html:76
+#: epl/templates/epl/instrtodonotbdnot1.html:78
+#: epl/templates/epl/modifrklist.html:75
+#: epl/templates/epl/modinstruction.html:40 epl/templates/epl/ranking.html:40
+#: epl/templates/epl/selinstruction.html:40 epl/templates/epl/statadmin.html:40
+#: epl/templates/epl/to_edit_list.html:69
+#: epl/templates/epl/to_edit_list.html:76
+#: epl/templates/epl/to_edit_list_mother.html:60
+#: epl/templates/epl/to_edit_list_notmother.html:60
+#: epl/templates/epl/to_rank_list.html:78
+#: epl/templates/epl/x0arbitration.html:79
+#: epl/templates/epl/x1arbitration.html:75
+#: epl/templates/epl/xarbitration.html:82
+#: epl/templates/epl/xarbitration.html:88 epl/templates/epl/xckall.html:62
+#: epl/templates/epl/xckbd.html:58 epl/templates/epl/xcknbd.html:59
+#: epl/templates/epl/xto_edit_list_mother.html:62
+#: epl/templates/epl/xto_edit_list_notmother.html:60
+#: epl/templates/epl/xto_instr_list.html:68
+#: epl/templates/epl/xto_instr_list.html:72
+#: epl/templates/epl/xto_instr_list.html:78
+#: epl/templates/epl/xto_instr_list.html:82
+#: epl/templates/epl/xto_rank_list.html:75
+msgid "Identifiant de la ressource"
+msgstr "Zeitschrift ID"
+
+#: epl/templates/epl/addinstruction.html:40
+#: epl/templates/epl/delinstruction.html:39 epl/templates/epl/edition.html:43
+#: epl/templates/epl/endinstruction.html:39
+#: epl/templates/epl/instradmin.html:41
+#: epl/templates/epl/modinstruction.html:41 epl/templates/epl/ranking.html:41
+#: epl/templates/epl/selinstruction.html:41 epl/templates/epl/statadmin.html:40
+msgid "Historique de la publication"
+msgstr "Ersch.-verlauf"
+
+#: epl/templates/epl/addinstruction.html:40
+#: epl/templates/epl/delinstruction.html:39
+#: epl/templates/epl/modinstruction.html:41
+#: epl/templates/epl/selinstruction.html:41
+msgid "Ordre de traitement"
+msgstr "Reihenfolge der Behandlung"
+
+#: epl/templates/epl/addinstruction.html:44
+#: epl/templates/epl/arbitration.html:87 epl/templates/epl/arbitration.html:94
+#: epl/templates/epl/arbnork1.html:78 epl/templates/epl/arbrk1.html:76
+#: epl/templates/epl/current.html:50 epl/templates/epl/delinstruction.html:44
+#: epl/templates/epl/edition.html:43 epl/templates/epl/endinstruction.html:47
+#: epl/templates/epl/excl.html:67 epl/templates/epl/faulty.html:64
+#: epl/templates/epl/instrtodo.html:99 epl/templates/epl/instrtodo.html:103
+#: epl/templates/epl/instrtodo.html:115 epl/templates/epl/instrtodo.html:119
+#: epl/templates/epl/instrtodo.html:125 epl/templates/epl/instrtodo.html:129
+#: epl/templates/epl/instrtodobd1.html:77
+#: epl/templates/epl/instrtodobdnot1.html:77
+#: epl/templates/epl/instrtodonotbd1.html:75
+#: epl/templates/epl/instrtodonotbdnot1.html:77
+#: epl/templates/epl/modifrklist.html:74
+#: epl/templates/epl/modinstruction.html:45 epl/templates/epl/ranking.html:56
+#: epl/templates/epl/ranking.html:76 epl/templates/epl/search.html:74
+#: epl/templates/epl/selinstruction.html:47
+#: epl/templates/epl/to_edit_list.html:68
+#: epl/templates/epl/to_edit_list.html:75
+#: epl/templates/epl/to_edit_list_mother.html:59
+#: epl/templates/epl/to_edit_list_notmother.html:59
+#: epl/templates/epl/to_rank_list.html:77
+#: epl/templates/epl/x0arbitration.html:78
+#: epl/templates/epl/x1arbitration.html:74
+#: epl/templates/epl/xarbitration.html:81
+#: epl/templates/epl/xarbitration.html:87 epl/templates/epl/xckall.html:61
+#: epl/templates/epl/xckbd.html:57 epl/templates/epl/xcknbd.html:58
+#: epl/templates/epl/xto_edit_list_mother.html:61
+#: epl/templates/epl/xto_edit_list_notmother.html:59
+#: epl/templates/epl/xto_instr_list.html:67
+#: epl/templates/epl/xto_instr_list.html:71
+#: epl/templates/epl/xto_instr_list.html:77
+#: epl/templates/epl/xto_instr_list.html:81
+#: epl/templates/epl/xto_rank_list.html:74
+msgid "Cote"
+msgstr "Signatur"
+
+#: epl/templates/epl/addinstruction.html:45
+#: epl/templates/epl/delinstruction.html:45
+#: epl/templates/epl/endinstruction.html:48
+#: epl/templates/epl/modinstruction.html:46 epl/templates/epl/ranking.html:57
+#: epl/templates/epl/ranking.html:77 epl/templates/epl/selinstruction.html:48
+msgid "Etat de collection"
+msgstr "Bestand"
+
+#: epl/templates/epl/addinstruction.html:46
+#: epl/templates/epl/delinstruction.html:46
+#: epl/templates/epl/endinstruction.html:49
+#: epl/templates/epl/modinstruction.html:47 epl/templates/epl/ranking.html:59
+#: epl/templates/epl/ranking.html:79 epl/templates/epl/selinstruction.html:49
+msgid "Lacunes"
+msgstr "Lücken"
+
+#: epl/templates/epl/addinstruction.html:58 epl/templates/epl/current.html:167
+#: epl/templates/epl/delinstruction.html:60 epl/templates/epl/edition.html:75
+#: epl/templates/epl/endinstruction.html:67
+#: epl/templates/epl/instradmin.html:50
+#: epl/templates/epl/modinstruction.html:59 epl/templates/epl/search.html:196
+#: epl/templates/epl/selinstruction.html:63
+msgid "Ligne"
+msgstr "Zeile"
+
+#: epl/templates/epl/addinstruction.html:59
+#: epl/templates/epl/addinstruction.html:113 epl/templates/epl/current.html:141
+#: epl/templates/epl/current.html:168 epl/templates/epl/delinstruction.html:61
+#: epl/templates/epl/edition.html:76 epl/templates/epl/endinstruction.html:68
+#: epl/templates/epl/home.html:49 epl/templates/epl/instradmin.html:51
+#: epl/templates/epl/instradmin.html:94
+#: epl/templates/epl/modinstruction.html:60
+#: epl/templates/epl/modinstruction.html:123 epl/templates/epl/search.html:171
+#: epl/templates/epl/search.html:197 epl/templates/epl/selinstruction.html:64
+msgid "Bibliothèque"
+msgstr "Bibliothek"
+
+#: epl/templates/epl/addinstruction.html:60
+#: epl/templates/epl/addinstruction.html:114 epl/templates/epl/current.html:169
+#: epl/templates/epl/delinstruction.html:62 epl/templates/epl/edition.html:77
+#: epl/templates/epl/endinstruction.html:69
+#: epl/templates/epl/instradmin.html:52 epl/templates/epl/instradmin.html:95
+#: epl/templates/epl/modinstruction.html:61
+#: epl/templates/epl/modinstruction.html:124 epl/templates/epl/search.html:198
+#: epl/templates/epl/selinstruction.html:65
+msgid "Forme reliée"
+msgstr "verbundene Form"
+
+#: epl/templates/epl/addinstruction.html:61
+#: epl/templates/epl/addinstruction.html:115 epl/templates/epl/current.html:170
+#: epl/templates/epl/delinstruction.html:63 epl/templates/epl/edition.html:78
+#: epl/templates/epl/endinstruction.html:70
+#: epl/templates/epl/instradmin.html:53 epl/templates/epl/instradmin.html:96
+#: epl/templates/epl/modinstruction.html:62
+#: epl/templates/epl/modinstruction.html:125 epl/templates/epl/search.html:199
+#: epl/templates/epl/selinstruction.html:66 epl/views.py:2081 epl/views.py:2332
+#: epl/views.py:2390
+msgid "Bibliothèque remédiée"
+msgstr "Verbesserte Sammlung"
+
+#: epl/templates/epl/addinstruction.html:62
+#: epl/templates/epl/addinstruction.html:116 epl/templates/epl/current.html:171
+#: epl/templates/epl/delinstruction.html:64 epl/templates/epl/edition.html:79
+#: epl/templates/epl/endinstruction.html:71
+#: epl/templates/epl/instradmin.html:54 epl/templates/epl/instradmin.html:97
+#: epl/templates/epl/modinstruction.html:63
+#: epl/templates/epl/modinstruction.html:126 epl/templates/epl/search.html:200
+#: epl/templates/epl/selinstruction.html:67
+msgid "Segment"
+msgstr "Segment"
+
+#: epl/templates/epl/addinstruction.html:63
+#: epl/templates/epl/addinstruction.html:117 epl/templates/epl/current.html:172
+#: epl/templates/epl/delinstruction.html:65 epl/templates/epl/edition.html:80
+#: epl/templates/epl/endinstruction.html:72
+#: epl/templates/epl/instradmin.html:55 epl/templates/epl/instradmin.html:98
+#: epl/templates/epl/modinstruction.html:64
+#: epl/templates/epl/modinstruction.html:127 epl/templates/epl/search.html:201
+#: epl/templates/epl/selinstruction.html:68
+msgid "Exceptions"
+msgstr "Ausnahmen"
+
+#: epl/templates/epl/addinstruction.html:64
+#: epl/templates/epl/addinstruction.html:118 epl/templates/epl/current.html:173
+#: epl/templates/epl/delinstruction.html:66 epl/templates/epl/edition.html:81
+#: epl/templates/epl/endinstruction.html:73
+#: epl/templates/epl/instradmin.html:56 epl/templates/epl/instradmin.html:99
+#: epl/templates/epl/modinstruction.html:65
+#: epl/templates/epl/modinstruction.html:128 epl/templates/epl/search.html:202
+#: epl/templates/epl/selinstruction.html:69
+msgid "Eléments améliorables"
+msgstr "erweiterbar"
+
+#: epl/templates/epl/addinstruction.html:99 epl/templates/epl/current.html:213
+#: epl/templates/epl/search.html:241
+msgid "La dernière ligne validée est mise en évidence"
+msgstr "Die zuletzt bestätigte Zeile wird hervorgehoben"
+
+#: epl/templates/epl/addinstruction.html:100
+#: epl/templates/epl/modinstruction.html:110
+msgid ""
+"[Segment] = Suite ininterrompue chronologiquement, [Exceptions] = éléments "
+"manquant dans le segment pour la forme considérée"
+msgstr ""
+"[Segment] = chronologisch ununterbrochen segment - [Ausnahmen] = Fehlende "
+"elemente für die betrachteten Segment und Form"
+
+#: epl/templates/epl/addinstruction.html:103
+#: epl/templates/epl/admzadmins.html:44 epl/templates/epl/admzauthusrs.html:44
+#: epl/templates/epl/admzexcl.html:44 epl/templates/epl/admzinstrtrs.html:44
+#: epl/templates/epl/admzlib.html:44 epl/templates/epl/admzprojinfos.html:44
+#: epl/templates/epl/modinstruction.html:113
+msgid "Vider le formulaire ci-dessous"
+msgstr "Leeren Sie das folgende Formular"
+
+#: epl/templates/epl/addinstruction.html:112
+#: epl/templates/epl/modinstruction.html:122
+msgid "Sous la ligne"
+msgstr "Unter die Zeile nummer"
+
+#: epl/templates/epl/addinstruction.html:149
+#: epl/templates/epl/admzadmins.html:79 epl/templates/epl/admzalerts.html:61
+#: epl/templates/epl/admzauthusrs.html:80 epl/templates/epl/admzexcl.html:57
+#: epl/templates/epl/admzexcl.html:59 epl/templates/epl/admzinstrtrs.html:57
+#: epl/templates/epl/admzlib.html:98 epl/templates/epl/admzlib.html:103
+#: epl/templates/epl/admzprojinfos.html:72
+#: epl/templates/epl/admzprojinfos.html:77
+#: epl/templates/epl/admzprojinfos.html:82 epl/templates/epl/contact.html:46
+#: epl/templates/epl/delinstruction.html:105
+#: epl/templates/epl/endinstruction.html:113
+#: epl/templates/epl/endinstruction.html:124 epl/templates/epl/excl.html:44
+#: epl/templates/epl/faulty.html:43 epl/templates/epl/filter_arblist.html:42
+#: epl/templates/epl/filter_ck_instrlist.html:45
+#: epl/templates/epl/filter_edlist.html:47
+#: epl/templates/epl/filter_instrlist.html:43
+#: epl/templates/epl/filter_rklist.html:48 epl/templates/epl/home.html:52
+#: epl/templates/epl/instradmin.html:126
+#: epl/templates/epl/modinstruction.html:157
+#: epl/templates/epl/projmaster.html:46 epl/templates/epl/ranking.html:105
+#: epl/templates/epl/search.html:40 epl/templates/epl/selectbdd.html:50
+#: epl/templates/epl/selinstruction.html:108
+#: epl/templates/epl/statadmin.html:47 epl/templates/epl/webmaster.html:46
+msgid "Valider"
+msgstr "Bestätigen"
+
+#: epl/templates/epl/addinstruction.html:155
+#: epl/templates/epl/delinstruction.html:115
+#: epl/templates/epl/modinstruction.html:165
+#: epl/templates/epl/selinstruction.html:119
+msgid "J'ai fini pour la forme courante"
+msgstr "Fertig für aktuelle Form"
+
+#: epl/templates/epl/addinstruction.html:155
+#: epl/templates/epl/endinstruction.html:129
+#: epl/templates/epl/modinstruction.html:166
+#: epl/templates/epl/selinstruction.html:119
+msgid "Supprimer une ligne erronée"
+msgstr "Fehlerhafte Zeile bearbeiten"
+
+#: epl/templates/epl/addinstruction.html:155
+#: epl/templates/epl/delinstruction.html:115
+#: epl/templates/epl/endinstruction.html:129
+msgid "Modifier une ligne erronée"
+msgstr "Fehlerhafte Zeile löschen"
+
+#: epl/templates/epl/addinstruction.html:155
+#: epl/templates/epl/delinstruction.html:116
+#: epl/templates/epl/endinstruction.html:129
+#: epl/templates/epl/modinstruction.html:167
+#: epl/templates/epl/selinstruction.html:120
+msgid "Reprendre plus tard"
+msgstr "Später fortsetzen"
+
+#: epl/templates/epl/addinstruction.html:160
+#: epl/templates/epl/adminbase.html:192 epl/templates/epl/admzadmins.html:87
+#: epl/templates/epl/admzalerts.html:66 epl/templates/epl/admzauthusrs.html:92
+#: epl/templates/epl/admzexcl.html:65 epl/templates/epl/admzinstrtrs.html:63
+#: epl/templates/epl/admzlib.html:109 epl/templates/epl/admzprojinfos.html:93
+#: epl/templates/epl/arbitration.html:105 epl/templates/epl/arbnork1.html:89
+#: epl/templates/epl/arbrk1.html:87 epl/templates/epl/checker.html:48
+#: epl/templates/epl/confirmation.html:48 epl/templates/epl/contact.html:56
+#: epl/templates/epl/current.html:220 epl/templates/epl/delinstruction.html:121
+#: epl/templates/epl/disconnect.html:39 epl/templates/epl/edition.html:117
+#: epl/templates/epl/endinstruction.html:137 epl/templates/epl/excl.html:83
+#: epl/templates/epl/faulty.html:76 epl/templates/epl/filter_arblist.html:57
+#: epl/templates/epl/filter_ck_instrlist.html:54
+#: epl/templates/epl/filter_edlist.html:55
+#: epl/templates/epl/filter_instrlist.html:54
+#: epl/templates/epl/filter_rklist.html:58 epl/templates/epl/globadm.html:57
+#: epl/templates/epl/home.html:67 epl/templates/epl/indicators.html:206
+#: epl/templates/epl/instradmin.html:132 epl/templates/epl/instrtodo.html:143
+#: epl/templates/epl/instrtodobd1.html:91
+#: epl/templates/epl/instrtodobdnot1.html:89
+#: epl/templates/epl/instrtodonotbd1.html:86
+#: epl/templates/epl/instrtodonotbdnot1.html:87
+#: epl/templates/epl/language.html:64 epl/templates/epl/modifrklist.html:85
+#: epl/templates/epl/modinstruction.html:172
+#: epl/templates/epl/notintime.html:50 epl/templates/epl/projmaster.html:56
+#: epl/templates/epl/ranking.html:115 epl/templates/epl/reinit.html:50
+#: epl/templates/epl/search.html:249 epl/templates/epl/selectbdd.html:71
+#: epl/templates/epl/selinstruction.html:126
+#: epl/templates/epl/statadmin.html:54 epl/templates/epl/to_edit_list.html:86
+#: epl/templates/epl/to_edit_list_mother.html:70
+#: epl/templates/epl/to_edit_list_notmother.html:70
+#: epl/templates/epl/to_rank_list.html:89 epl/templates/epl/webmaster.html:56
+#: epl/templates/epl/x0arbitration.html:88
+#: epl/templates/epl/x1arbitration.html:84
+#: epl/templates/epl/xarbitration.html:98 epl/templates/epl/xckall.html:73
+#: epl/templates/epl/xckbd.html:68 epl/templates/epl/xcknbd.html:70
+#: epl/templates/epl/xto_edit_list_mother.html:72
+#: epl/templates/epl/xto_edit_list_notmother.html:70
+#: epl/templates/epl/xto_instr_list.html:94
+#: epl/templates/epl/xto_rank_list.html:85
+msgid "Administrateur du site"
+msgstr "Webmaster"
+
+#: epl/templates/epl/adminbase.html:40 epl/templates/epl/admzadmins.html:28
+#: epl/templates/epl/admzadmins.html:43 epl/templates/epl/admzalerts.html:28
+#: epl/templates/epl/admzalerts.html:43 epl/templates/epl/admzauthusrs.html:28
+#: epl/templates/epl/admzauthusrs.html:43 epl/templates/epl/admzexcl.html:28
+#: epl/templates/epl/admzexcl.html:43 epl/templates/epl/admzinstrtrs.html:28
+#: epl/templates/epl/admzinstrtrs.html:43 epl/templates/epl/admzlib.html:28
+#: epl/templates/epl/admzlib.html:43 epl/templates/epl/admzprojinfos.html:28
+#: epl/templates/epl/admzprojinfos.html:43
+#, fuzzy
+#| msgid "Administration"
+msgid "Administration du projet"
+msgstr "Administration"
+
+#: epl/templates/epl/adminbase.html:51 epl/templates/epl/admzexcl.html:55
+#, fuzzy
+#| msgid "motif d'exclusion"
+msgid "Gestion des motifs d'exlusion"
+msgstr "Ausschlussgrund"
+
+#: epl/templates/epl/adminbase.html:52 epl/templates/epl/admzexcl.html:56
+msgid "Motifs actuels"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:56 epl/templates/epl/admzlib.html:53
+#, fuzzy
+#| msgid "Votre bibliothèque"
+msgid "Gestion des bibliothèques"
+msgstr "Ihre Bibliothek"
+
+#: epl/templates/epl/adminbase.html:56 epl/templates/epl/admzlib.html:53
+msgid "checker exclu"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:62 epl/templates/epl/adminbase.html:163
+#: epl/templates/epl/admzlib.html:60 epl/templates/epl/admzprojinfos.html:61
+msgid "Propriété"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:63 epl/templates/epl/adminbase.html:164
+#: epl/templates/epl/admzlib.html:61 epl/templates/epl/admzprojinfos.html:62
+msgid "Valeur actuelle"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:64 epl/templates/epl/admzadmins.html:79
+#: epl/templates/epl/admzauthusrs.html:80 epl/templates/epl/admzlib.html:62
+msgid "Identifiant"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:71 epl/templates/epl/admzlib.html:69
+#, fuzzy
+#| msgid "Votre bibliothèque"
+msgid "Nom de la bibliothèque"
+msgstr "Ihre Bibliothek"
+
+#: epl/templates/epl/adminbase.html:72 epl/templates/epl/admzlib.html:70
+#, fuzzy
+#| msgid "Modifiable ?"
+msgid "Non modifiable"
+msgstr "Änderung möglich ?"
+
+#: epl/templates/epl/adminbase.html:76 epl/templates/epl/admzlib.html:74
+msgid "Contact principal"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:76 epl/templates/epl/admzlib.html:74
+msgid "Obligatoire"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:81 epl/templates/epl/admzlib.html:79
+msgid "Second contact"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:82 epl/templates/epl/adminbase.html:87
+#: epl/templates/epl/admzlib.html:80 epl/templates/epl/admzlib.html:85
+msgid "Vacant"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:86 epl/templates/epl/admzlib.html:84
+msgid "Troisième contact"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:97 epl/templates/epl/admzadmins.html:56
+#, fuzzy
+#| msgid "administrateur"
+msgid "Gestion des administrateurs"
+msgstr "Webmaster"
+
+#: epl/templates/epl/adminbase.html:103 epl/templates/epl/admzadmins.html:62
+msgid "mail de l'admin"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:104 epl/templates/epl/adminbase.html:138
+#: epl/templates/epl/admzadmins.html:63 epl/templates/epl/admzauthusrs.html:64
+#: epl/views.py:807 epl/views.py:1044 epl/views_csv.py:134
+msgid "identifiant"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:121 epl/templates/epl/admzinstrtrs.html:56
+#, fuzzy
+#| msgid "administrateur"
+msgid "Gestion des instructeurs"
+msgstr "Webmaster"
+
+#: epl/templates/epl/adminbase.html:124 epl/templates/epl/admzalerts.html:56
+msgid "Gestion des alertes et du type d'accès"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:125 epl/templates/epl/admzalerts.html:57
+msgid "Alertes activées"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:125 epl/templates/epl/admzalerts.html:57
+#, fuzzy
+#| msgid "Lacunes"
+msgid "aucune"
+msgstr "Lücken"
+
+#: epl/templates/epl/adminbase.html:125 epl/templates/epl/admzalerts.html:57
+#: epl/views.py:718
+msgid "Mode édition restreint (usagers autorisés)"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:131
+msgid "Gestion des utilisateurs autorisés aux simples consultations"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:137 epl/templates/epl/admzauthusrs.html:63
+msgid "mail"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:157 epl/templates/epl/admzprojinfos.html:54
+#, fuzzy
+#| msgid "Demande d'information"
+msgid "Gestion des informations projet"
+msgstr "Informationsanfrage"
+
+#: epl/templates/epl/adminbase.html:172 epl/templates/epl/admzprojinfos.html:70
+msgid "Nom du projet"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:176 epl/templates/epl/admzprojinfos.html:75
+msgid "Résumé"
+msgstr ""
+
+#: epl/templates/epl/adminbase.html:180 epl/templates/epl/admzprojinfos.html:80
+#, fuzzy
+#| msgid "Sélection de la ligne à modifier"
+msgid "Date d'extraction de la base"
+msgstr "Auswahl der Zeile zu bearbeiten"
+
+#: epl/templates/epl/admzadmins.html:29 epl/templates/epl/admzalerts.html:29
+#: epl/templates/epl/admzauthusrs.html:29 epl/templates/epl/admzexcl.html:29
+#: epl/templates/epl/admzinstrtrs.html:29 epl/templates/epl/admzlib.html:29
+#: epl/templates/epl/admzprojinfos.html:29
+#, fuzzy
+#| msgid "Retour à la liste"
+msgid "Retour au sommaire"
+msgstr "Zurück zur Liste"
+
+#: epl/templates/epl/admzadmins.html:79
+#, fuzzy
+#| msgid "Contacter l'administrateur du site"
+msgid "Ajouter un administrateur pour ce projet"
+msgstr "Schreiben Sie an den Webmaster"
+
+#: epl/templates/epl/admzadmins.html:82
+#, fuzzy
+#| msgid "Supprimer une ligne"
+msgid "Supprimer un administrateur"
+msgstr "Fehlerhafte Zeile löschen"
+
+#: epl/templates/epl/admzadmins.html:82 epl/templates/epl/admzauthusrs.html:83
+msgid "êtes-vous sûr ?"
+msgstr ""
+
+#: epl/templates/epl/admzadmins.html:82 epl/templates/epl/admzauthusrs.html:83
+#: epl/templates/epl/admzlib.html:101
+#, fuzzy
+#| msgid "Supprimer une ligne"
+msgid "Supprimer"
+msgstr "Fehlerhafte Zeile löschen"
+
+#: epl/templates/epl/admzauthusrs.html:57
+msgid "Utilisateurs autorisés aux simples consultations"
+msgstr ""
+
+#: epl/templates/epl/admzauthusrs.html:80
+#, fuzzy
+#| msgid "Forum des utilisateurs"
+msgid "Ajouter un utilisateur"
+msgstr "Benutzerforum"
+
+#: epl/templates/epl/admzauthusrs.html:83
+#, fuzzy
+#| msgid "Supprimer une ligne"
+msgid "Supprimer un utilisateur"
+msgstr "Fehlerhafte Zeile löschen"
+
+#: epl/templates/epl/admzexcl.html:57
+#, fuzzy
+#| msgid "Le cas échéant, motif d'exclusion"
+msgid "Le cas échéant, motif à ajouter"
+msgstr "Wenn ja, Ausschlussgrund"
+
+#: epl/templates/epl/admzexcl.html:58
+#, fuzzy
+#| msgid "Le cas échéant, motif d'exclusion"
+msgid "Le cas échéant, motif à modifier"
+msgstr "Wenn ja, Ausschlussgrund"
+
+#: epl/templates/epl/admzexcl.html:59
+msgid "Nouvel intitulé"
+msgstr ""
+
+#: epl/templates/epl/admzexcl.html:59
+#, fuzzy
+#| msgid "Ligne(s) à supprimer"
+msgid "ou supprimer"
+msgstr "Zeile(n) zu löschen"
+
+#: epl/templates/epl/admzinstrtrs.html:57
+#, fuzzy
+#| msgid "Modifier"
+msgid "Modifier l'email"
+msgstr "Ändern"
+
+#: epl/templates/epl/admzinstrtrs.html:57
+msgid "ou l'identifiant"
+msgstr ""
+
+#: epl/templates/epl/admzlib.html:97
+#, fuzzy
+#| msgid "Votre bibliothèque"
+msgid "Nouveau nom de la bibliothèque"
+msgstr "Ihre Bibliothek"
+
+#: epl/templates/epl/admzlib.html:102
+msgid ""
+"ou modifier (ou créer) la paire email / identifiant pour le contact choisi"
+msgstr ""
+
+#: epl/templates/epl/admzprojinfos.html:63
+#, fuzzy
+#| msgid "Le cas échéant, motif d'exclusion"
+msgid "Le cas échéant, nouvelle valeur"
+msgstr "Wenn ja, Ausschlussgrund"
+
+#: epl/templates/epl/arbitration.html:34 epl/templates/epl/xarbitration.html:37
+msgid "Arbitrages"
+msgstr "Schiedsverfahren"
+
+#: epl/templates/epl/arbitration.html:38 epl/templates/epl/arbnork1.html:36
+#: epl/templates/epl/arbrk1.html:37 epl/templates/epl/excl.html:50
+#: epl/templates/epl/faulty.html:47 epl/templates/epl/instrtodo.html:34
+#: epl/templates/epl/instrtodobd1.html:48
+#: epl/templates/epl/instrtodobdnot1.html:47
+#: epl/templates/epl/instrtodonotbd1.html:45
+#: epl/templates/epl/instrtodonotbdnot1.html:46
+#: epl/templates/epl/modifrklist.html:36 epl/templates/epl/to_edit_list.html:34
+#: epl/templates/epl/to_edit_list_mother.html:35
+#: epl/templates/epl/to_edit_list_notmother.html:35
+#: epl/templates/epl/to_rank_list.html:36
+#: epl/templates/epl/x0arbitration.html:36
+#: epl/templates/epl/x1arbitration.html:37
+#: epl/templates/epl/xarbitration.html:39
+#: epl/templates/epl/xto_edit_list_mother.html:34
+#: epl/templates/epl/xto_edit_list_notmother.html:34
+#: epl/templates/epl/xto_instr_list.html:38
+#: epl/templates/epl/xto_rank_list.html:35
+msgid "liste csv"
+msgstr "csv list"
+
+#: epl/templates/epl/arbitration.html:38 epl/templates/epl/arbnork1.html:36
+#: epl/templates/epl/arbrk1.html:37 epl/templates/epl/excl.html:50
+#: epl/templates/epl/faulty.html:47 epl/templates/epl/instrtodo.html:34
+#: epl/templates/epl/instrtodobd1.html:48
+#: epl/templates/epl/instrtodobdnot1.html:47
+#: epl/templates/epl/instrtodonotbd1.html:45
+#: epl/templates/epl/instrtodonotbdnot1.html:46
+#: epl/templates/epl/modifrklist.html:36 epl/templates/epl/to_edit_list.html:34
+#: epl/templates/epl/to_edit_list_mother.html:35
+#: epl/templates/epl/to_edit_list_notmother.html:35
+#: epl/templates/epl/to_rank_list.html:36
+#: epl/templates/epl/x0arbitration.html:36
+#: epl/templates/epl/x1arbitration.html:37
+#: epl/templates/epl/xarbitration.html:39 epl/templates/epl/xckall.html:38
+#: epl/templates/epl/xckbd.html:36 epl/templates/epl/xcknbd.html:38
+#: epl/templates/epl/xto_edit_list_mother.html:34
+#: epl/templates/epl/xto_edit_list_notmother.html:34
+#: epl/templates/epl/xto_instr_list.html:38
+#: epl/templates/epl/xto_rank_list.html:35
+msgid "Nombre de ressources concernées"
+msgstr "Anzahl der beteiligten Ressourcen"
+
+#: epl/templates/epl/arbitration.html:40
+msgid "Restreindre la liste aux arbitrages avec une autre bibliothèque"
+msgstr ""
+"Beschränken Sie die Liste auf Schiedsverfahren mit einer anderen Bibliothek"
+
+#: epl/templates/epl/arbitration.html:45 epl/templates/epl/xarbitration.html:41
+msgid "Concurrence sur le rang 1"
+msgstr "Wettbewerb auf Rang 1"
+
+#: epl/templates/epl/arbitration.html:46 epl/templates/epl/xarbitration.html:41
+msgid "Rang 1 non revendiqué"
+msgstr "Rang 1 nicht beansprucht"
+
+#: epl/templates/epl/arbitration.html:48 epl/templates/epl/arbnork1.html:40
+#: epl/templates/epl/arbrk1.html:41 epl/templates/epl/excl.html:51
+#: epl/templates/epl/faulty.html:48 epl/templates/epl/instrtodo.html:56
+#: epl/templates/epl/instrtodobd1.html:50
+#: epl/templates/epl/instrtodobdnot1.html:49
+#: epl/templates/epl/instrtodonotbd1.html:48
+#: epl/templates/epl/instrtodonotbdnot1.html:49
+#: epl/templates/epl/modifrklist.html:38 epl/templates/epl/to_edit_list.html:43
+#: epl/templates/epl/to_edit_list_mother.html:36
+#: epl/templates/epl/to_edit_list_notmother.html:37
+#: epl/templates/epl/to_rank_list.html:41
+#: epl/templates/epl/x0arbitration.html:38
+#: epl/templates/epl/x1arbitration.html:39
+#: epl/templates/epl/xarbitration.html:43 epl/templates/epl/xckall.html:42
+#: epl/templates/epl/xckbd.html:38 epl/templates/epl/xcknbd.html:39
+#: epl/templates/epl/xto_edit_list_mother.html:36
+#: epl/templates/epl/xto_edit_list_notmother.html:36
+#: epl/templates/epl/xto_instr_list.html:40
+#: epl/templates/epl/xto_rank_list.html:37
+msgid ""
+"Pour chercher une occurrence dans cette liste, veuillez utiliser la "
+"fonctionnalité de recherche du navigateur."
+msgstr "Verwenden Sie 'Seite durchsuchen', um ein Begriff zu finden."
+
+#: epl/templates/epl/arbitration.html:49 epl/templates/epl/arbnork1.html:42
+#: epl/templates/epl/arbrk1.html:43 epl/templates/epl/x0arbitration.html:39
+#: epl/templates/epl/x1arbitration.html:40
+#: epl/templates/epl/xarbitration.html:44
+msgid ""
+"Pour modifier votre positionnement, cliquez sur le lien [Identifiant de la "
+"ressource]"
+msgstr "Um Ihren Rang zu ändern, klicken Sie auf den Link [Zeitschrift ID]"
+
+#: epl/templates/epl/arbitration.html:49 epl/templates/epl/arbnork1.html:42
+#: epl/templates/epl/arbrk1.html:43 epl/templates/epl/to_rank_list.html:43
+#: epl/templates/epl/x0arbitration.html:39
+#: epl/templates/epl/x1arbitration.html:40
+#: epl/templates/epl/xarbitration.html:44
+#: epl/templates/epl/xto_rank_list.html:39
+msgid "Modifier un précédent positionnement"
+msgstr "Ein früher Rang ändern"
+
+#: epl/templates/epl/arbitration.html:51 epl/templates/epl/arbnork1.html:44
+#: epl/templates/epl/arbrk1.html:45 epl/templates/epl/instrtodo.html:59
+#: epl/templates/epl/instrtodobd1.html:53
+#: epl/templates/epl/instrtodobdnot1.html:52
+#: epl/templates/epl/instrtodonotbd1.html:51
+#: epl/templates/epl/instrtodonotbdnot1.html:52
+#: epl/templates/epl/modifrklist.html:42 epl/templates/epl/to_rank_list.html:45
+#: epl/templates/epl/x0arbitration.html:41
+#: epl/templates/epl/x1arbitration.html:42
+#: epl/templates/epl/xarbitration.html:46 epl/templates/epl/xckall.html:45
+#: epl/templates/epl/xckbd.html:41 epl/templates/epl/xcknbd.html:42
+#: epl/templates/epl/xto_instr_list.html:43
+#: epl/templates/epl/xto_rank_list.html:41
+msgid ""
+"Pour une simple édition de la fiche de situation courante, cliquez sur la "
+"petite paire de lunettes : 0^0"
+msgstr ""
+
+#: epl/templates/epl/arbitration.html:55 epl/templates/epl/arbitration.html:58
+#: epl/templates/epl/arbitration.html:60 epl/templates/epl/arbnork1.html:48
+#: epl/templates/epl/arbnork1.html:51 epl/templates/epl/arbnork1.html:53
+#: epl/templates/epl/arbrk1.html:48 epl/templates/epl/arbrk1.html:51
+#: epl/templates/epl/arbrk1.html:53 epl/templates/epl/instrtodo.html:65
+#: epl/templates/epl/instrtodo.html:67 epl/templates/epl/instrtodo.html:74
+#: epl/templates/epl/instrtodo.html:77 epl/templates/epl/instrtodo.html:79
+#: epl/templates/epl/instrtodobd1.html:57
+#: epl/templates/epl/instrtodobd1.html:60
+#: epl/templates/epl/instrtodobd1.html:62
+#: epl/templates/epl/instrtodobdnot1.html:56
+#: epl/templates/epl/instrtodobdnot1.html:59
+#: epl/templates/epl/instrtodobdnot1.html:61
+#: epl/templates/epl/instrtodonotbd1.html:55
+#: epl/templates/epl/instrtodonotbd1.html:58
+#: epl/templates/epl/instrtodonotbd1.html:60
+#: epl/templates/epl/instrtodonotbdnot1.html:55
+#: epl/templates/epl/instrtodonotbdnot1.html:58
+#: epl/templates/epl/instrtodonotbdnot1.html:60
+#: epl/templates/epl/modifrklist.html:45 epl/templates/epl/modifrklist.html:48
+#: epl/templates/epl/modifrklist.html:50 epl/templates/epl/to_edit_list.html:47
+#: epl/templates/epl/to_edit_list.html:50
+#: epl/templates/epl/to_edit_list.html:52
+#: epl/templates/epl/to_edit_list_mother.html:39
+#: epl/templates/epl/to_edit_list_mother.html:42
+#: epl/templates/epl/to_edit_list_mother.html:44
+#: epl/templates/epl/to_edit_list_notmother.html:40
+#: epl/templates/epl/to_edit_list_notmother.html:43
+#: epl/templates/epl/to_edit_list_notmother.html:45
+#: epl/templates/epl/to_rank_list.html:49
+#: epl/templates/epl/to_rank_list.html:52
+#: epl/templates/epl/to_rank_list.html:54
+#: epl/templates/epl/x0arbitration.html:45
+#: epl/templates/epl/x0arbitration.html:48
+#: epl/templates/epl/x0arbitration.html:50
+#: epl/templates/epl/x1arbitration.html:45
+#: epl/templates/epl/x1arbitration.html:48
+#: epl/templates/epl/x1arbitration.html:50
+#: epl/templates/epl/xarbitration.html:50
+#: epl/templates/epl/xarbitration.html:53
+#: epl/templates/epl/xarbitration.html:55
+#: epl/templates/epl/xto_edit_list_mother.html:41
+#: epl/templates/epl/xto_edit_list_mother.html:44
+#: epl/templates/epl/xto_edit_list_mother.html:46
+#: epl/templates/epl/xto_edit_list_notmother.html:39
+#: epl/templates/epl/xto_edit_list_notmother.html:42
+#: epl/templates/epl/xto_edit_list_notmother.html:44
+#: epl/templates/epl/xto_instr_list.html:46
+#: epl/templates/epl/xto_instr_list.html:49
+#: epl/templates/epl/xto_instr_list.html:51
+#: epl/templates/epl/xto_rank_list.html:44
+#: epl/templates/epl/xto_rank_list.html:47
+#: epl/templates/epl/xto_rank_list.html:50
+msgid "Classement par"
+msgstr "Sortiert nach"
+
+#: epl/templates/epl/arbitration.html:55 epl/templates/epl/arbitration.html:58
+#: epl/templates/epl/arbitration.html:60 epl/templates/epl/arbnork1.html:48
+#: epl/templates/epl/arbnork1.html:51 epl/templates/epl/arbnork1.html:53
+#: epl/templates/epl/arbrk1.html:48 epl/templates/epl/arbrk1.html:51
+#: epl/templates/epl/arbrk1.html:53 epl/templates/epl/instrtodo.html:65
+#: epl/templates/epl/instrtodo.html:67 epl/templates/epl/instrtodo.html:74
+#: epl/templates/epl/instrtodo.html:77 epl/templates/epl/instrtodo.html:79
+#: epl/templates/epl/instrtodobd1.html:57
+#: epl/templates/epl/instrtodobd1.html:60
+#: epl/templates/epl/instrtodobd1.html:62
+#: epl/templates/epl/instrtodobdnot1.html:56
+#: epl/templates/epl/instrtodobdnot1.html:59
+#: epl/templates/epl/instrtodobdnot1.html:61
+#: epl/templates/epl/instrtodonotbd1.html:55
+#: epl/templates/epl/instrtodonotbd1.html:58
+#: epl/templates/epl/instrtodonotbd1.html:60
+#: epl/templates/epl/instrtodonotbdnot1.html:55
+#: epl/templates/epl/instrtodonotbdnot1.html:58
+#: epl/templates/epl/instrtodonotbdnot1.html:60
+#: epl/templates/epl/modifrklist.html:45 epl/templates/epl/modifrklist.html:48
+#: epl/templates/epl/modifrklist.html:50 epl/templates/epl/to_edit_list.html:47
+#: epl/templates/epl/to_edit_list.html:50
+#: epl/templates/epl/to_edit_list.html:52
+#: epl/templates/epl/to_edit_list_mother.html:39
+#: epl/templates/epl/to_edit_list_mother.html:42
+#: epl/templates/epl/to_edit_list_mother.html:44
+#: epl/templates/epl/to_edit_list_notmother.html:40
+#: epl/templates/epl/to_edit_list_notmother.html:43
+#: epl/templates/epl/to_edit_list_notmother.html:45
+#: epl/templates/epl/to_rank_list.html:49
+#: epl/templates/epl/to_rank_list.html:52
+#: epl/templates/epl/to_rank_list.html:54
+#: epl/templates/epl/x0arbitration.html:45
+#: epl/templates/epl/x0arbitration.html:48
+#: epl/templates/epl/x0arbitration.html:50
+#: epl/templates/epl/x1arbitration.html:45
+#: epl/templates/epl/x1arbitration.html:48
+#: epl/templates/epl/x1arbitration.html:50
+#: epl/templates/epl/xarbitration.html:50
+#: epl/templates/epl/xarbitration.html:53
+#: epl/templates/epl/xarbitration.html:55
+#: epl/templates/epl/xto_edit_list_mother.html:41
+#: epl/templates/epl/xto_edit_list_mother.html:44
+#: epl/templates/epl/xto_edit_list_mother.html:46
+#: epl/templates/epl/xto_edit_list_notmother.html:39
+#: epl/templates/epl/xto_edit_list_notmother.html:42
+#: epl/templates/epl/xto_edit_list_notmother.html:44
+#: epl/templates/epl/xto_instr_list.html:46
+#: epl/templates/epl/xto_instr_list.html:49
+#: epl/templates/epl/xto_instr_list.html:51
+#: epl/templates/epl/xto_rank_list.html:44
+#: epl/templates/epl/xto_rank_list.html:47
+#: epl/templates/epl/xto_rank_list.html:50 epl/views.py:2990 epl/views.py:3055
+#: epl/views_csv.py:75
+msgid "titre"
+msgstr "Titel"
+
+#: epl/templates/epl/arbitration.html:55 epl/templates/epl/arbitration.html:58
+#: epl/templates/epl/arbitration.html:60 epl/templates/epl/arbnork1.html:48
+#: epl/templates/epl/arbnork1.html:51 epl/templates/epl/arbnork1.html:53
+#: epl/templates/epl/arbrk1.html:48 epl/templates/epl/arbrk1.html:51
+#: epl/templates/epl/arbrk1.html:53 epl/templates/epl/instrtodo.html:65
+#: epl/templates/epl/instrtodo.html:67 epl/templates/epl/instrtodo.html:74
+#: epl/templates/epl/instrtodo.html:77 epl/templates/epl/instrtodo.html:79
+#: epl/templates/epl/instrtodobd1.html:57
+#: epl/templates/epl/instrtodobd1.html:60
+#: epl/templates/epl/instrtodobd1.html:62
+#: epl/templates/epl/instrtodobdnot1.html:56
+#: epl/templates/epl/instrtodobdnot1.html:59
+#: epl/templates/epl/instrtodobdnot1.html:61
+#: epl/templates/epl/instrtodonotbd1.html:55
+#: epl/templates/epl/instrtodonotbd1.html:58
+#: epl/templates/epl/instrtodonotbd1.html:60
+#: epl/templates/epl/instrtodonotbdnot1.html:55
+#: epl/templates/epl/instrtodonotbdnot1.html:58
+#: epl/templates/epl/instrtodonotbdnot1.html:60
+#: epl/templates/epl/modifrklist.html:45 epl/templates/epl/modifrklist.html:48
+#: epl/templates/epl/modifrklist.html:50 epl/templates/epl/to_edit_list.html:47
+#: epl/templates/epl/to_edit_list.html:50
+#: epl/templates/epl/to_edit_list.html:52
+#: epl/templates/epl/to_edit_list_mother.html:39
+#: epl/templates/epl/to_edit_list_mother.html:42
+#: epl/templates/epl/to_edit_list_mother.html:44
+#: epl/templates/epl/to_edit_list_notmother.html:40
+#: epl/templates/epl/to_edit_list_notmother.html:43
+#: epl/templates/epl/to_edit_list_notmother.html:45
+#: epl/templates/epl/to_rank_list.html:49
+#: epl/templates/epl/to_rank_list.html:52
+#: epl/templates/epl/to_rank_list.html:54
+#: epl/templates/epl/x0arbitration.html:45
+#: epl/templates/epl/x0arbitration.html:48
+#: epl/templates/epl/x0arbitration.html:50
+#: epl/templates/epl/x1arbitration.html:45
+#: epl/templates/epl/x1arbitration.html:48
+#: epl/templates/epl/x1arbitration.html:50
+#: epl/templates/epl/xarbitration.html:50
+#: epl/templates/epl/xarbitration.html:53
+#: epl/templates/epl/xarbitration.html:55
+#: epl/templates/epl/xto_edit_list_mother.html:41
+#: epl/templates/epl/xto_edit_list_mother.html:44
+#: epl/templates/epl/xto_edit_list_mother.html:46
+#: epl/templates/epl/xto_edit_list_notmother.html:39
+#: epl/templates/epl/xto_edit_list_notmother.html:42
+#: epl/templates/epl/xto_edit_list_notmother.html:44
+#: epl/templates/epl/xto_instr_list.html:46
+#: epl/templates/epl/xto_instr_list.html:49
+#: epl/templates/epl/xto_instr_list.html:51
+#: epl/templates/epl/xto_rank_list.html:44
+#: epl/templates/epl/xto_rank_list.html:47
+#: epl/templates/epl/xto_rank_list.html:50
+msgid "reclasser par"
+msgstr "sortieren nach"
+
+#: epl/templates/epl/arbitration.html:55 epl/templates/epl/arbitration.html:60
+#: epl/templates/epl/arbnork1.html:48 epl/templates/epl/arbnork1.html:53
+#: epl/templates/epl/arbrk1.html:48 epl/templates/epl/arbrk1.html:53
+#: epl/templates/epl/instrtodo.html:74 epl/templates/epl/instrtodo.html:79
+#: epl/templates/epl/instrtodobd1.html:57
+#: epl/templates/epl/instrtodobd1.html:62
+#: epl/templates/epl/instrtodobdnot1.html:56
+#: epl/templates/epl/instrtodobdnot1.html:61
+#: epl/templates/epl/instrtodonotbd1.html:55
+#: epl/templates/epl/instrtodonotbd1.html:60
+#: epl/templates/epl/instrtodonotbdnot1.html:55
+#: epl/templates/epl/instrtodonotbdnot1.html:60
+#: epl/templates/epl/modifrklist.html:45 epl/templates/epl/modifrklist.html:50
+#: epl/templates/epl/to_edit_list.html:47
+#: epl/templates/epl/to_edit_list.html:52
+#: epl/templates/epl/to_edit_list_mother.html:39
+#: epl/templates/epl/to_edit_list_mother.html:44
+#: epl/templates/epl/to_edit_list_notmother.html:40
+#: epl/templates/epl/to_edit_list_notmother.html:45
+#: epl/templates/epl/to_rank_list.html:49
+#: epl/templates/epl/to_rank_list.html:54
+#: epl/templates/epl/x0arbitration.html:45
+#: epl/templates/epl/x0arbitration.html:50
+#: epl/templates/epl/x1arbitration.html:45
+#: epl/templates/epl/x1arbitration.html:50
+#: epl/templates/epl/xarbitration.html:50
+#: epl/templates/epl/xarbitration.html:55
+#: epl/templates/epl/xto_edit_list_mother.html:41
+#: epl/templates/epl/xto_edit_list_mother.html:46
+#: epl/templates/epl/xto_edit_list_notmother.html:39
+#: epl/templates/epl/xto_edit_list_notmother.html:44
+#: epl/templates/epl/xto_instr_list.html:46
+#: epl/templates/epl/xto_instr_list.html:51
+#: epl/templates/epl/xto_rank_list.html:44
+#: epl/templates/epl/xto_rank_list.html:51 epl/views.py:2990 epl/views.py:3055
+msgid "cote et titre"
+msgstr "Signatur und Titel"
+
+#: epl/templates/epl/arbitration.html:56 epl/templates/epl/arbitration.html:58
+#: epl/templates/epl/arbitration.html:60 epl/templates/epl/arbnork1.html:49
+#: epl/templates/epl/arbnork1.html:51 epl/templates/epl/arbnork1.html:53
+#: epl/templates/epl/arbrk1.html:49 epl/templates/epl/arbrk1.html:51
+#: epl/templates/epl/arbrk1.html:53 epl/templates/epl/current.html:40
+#: epl/templates/epl/instrtodo.html:65 epl/templates/epl/instrtodo.html:67
+#: epl/templates/epl/instrtodo.html:75 epl/templates/epl/instrtodo.html:77
+#: epl/templates/epl/instrtodo.html:79 epl/templates/epl/instrtodobd1.html:58
+#: epl/templates/epl/instrtodobd1.html:60
+#: epl/templates/epl/instrtodobd1.html:62
+#: epl/templates/epl/instrtodobdnot1.html:57
+#: epl/templates/epl/instrtodobdnot1.html:59
+#: epl/templates/epl/instrtodobdnot1.html:61
+#: epl/templates/epl/instrtodonotbd1.html:56
+#: epl/templates/epl/instrtodonotbd1.html:58
+#: epl/templates/epl/instrtodonotbd1.html:60
+#: epl/templates/epl/instrtodonotbdnot1.html:56
+#: epl/templates/epl/instrtodonotbdnot1.html:58
+#: epl/templates/epl/instrtodonotbdnot1.html:60
+#: epl/templates/epl/modifrklist.html:46 epl/templates/epl/modifrklist.html:48
+#: epl/templates/epl/modifrklist.html:50 epl/templates/epl/search.html:39
+#: epl/templates/epl/search.html:60 epl/templates/epl/search.html:71
+#: epl/templates/epl/to_edit_list.html:48
+#: epl/templates/epl/to_edit_list.html:50
+#: epl/templates/epl/to_edit_list.html:52
+#: epl/templates/epl/to_edit_list_mother.html:40
+#: epl/templates/epl/to_edit_list_mother.html:42
+#: epl/templates/epl/to_edit_list_mother.html:44
+#: epl/templates/epl/to_edit_list_notmother.html:41
+#: epl/templates/epl/to_edit_list_notmother.html:43
+#: epl/templates/epl/to_edit_list_notmother.html:45
+#: epl/templates/epl/to_rank_list.html:50
+#: epl/templates/epl/to_rank_list.html:52
+#: epl/templates/epl/to_rank_list.html:54
+#: epl/templates/epl/x0arbitration.html:46
+#: epl/templates/epl/x0arbitration.html:48
+#: epl/templates/epl/x0arbitration.html:50
+#: epl/templates/epl/x1arbitration.html:46
+#: epl/templates/epl/x1arbitration.html:48
+#: epl/templates/epl/x1arbitration.html:50
+#: epl/templates/epl/xarbitration.html:51
+#: epl/templates/epl/xarbitration.html:53
+#: epl/templates/epl/xarbitration.html:55
+#: epl/templates/epl/xto_edit_list_mother.html:42
+#: epl/templates/epl/xto_edit_list_mother.html:44
+#: epl/templates/epl/xto_edit_list_mother.html:46
+#: epl/templates/epl/xto_edit_list_notmother.html:40
+#: epl/templates/epl/xto_edit_list_notmother.html:42
+#: epl/templates/epl/xto_edit_list_notmother.html:44
+#: epl/templates/epl/xto_instr_list.html:47
+#: epl/templates/epl/xto_instr_list.html:49
+#: epl/templates/epl/xto_instr_list.html:51
+#: epl/templates/epl/xto_rank_list.html:45
+#: epl/templates/epl/xto_rank_list.html:48
+#: epl/templates/epl/xto_rank_list.html:50 epl/views.py:1541 epl/views.py:2990
+#: epl/views.py:3055 epl/views_csv.py:73 epl/views_pdf.py:64
+#: epl/views_pdf.py:202 epl/views_pdf.py:342 epl/views_pdf.py:482
+#: epl/views_pdf.py:622 epl/views_pdf.py:762
+msgid "ppn"
+msgstr "sid"
+
+#: epl/templates/epl/arbitration.html:58 epl/templates/epl/arbnork1.html:51
+#: epl/templates/epl/arbrk1.html:51 epl/templates/epl/instrtodo.html:77
+#: epl/templates/epl/instrtodobd1.html:60
+#: epl/templates/epl/instrtodobdnot1.html:59
+#: epl/templates/epl/instrtodonotbd1.html:58
+#: epl/templates/epl/instrtodonotbdnot1.html:58
+#: epl/templates/epl/modifrklist.html:48 epl/templates/epl/to_edit_list.html:50
+#: epl/templates/epl/to_edit_list_mother.html:42
+#: epl/templates/epl/to_edit_list_notmother.html:43
+#: epl/templates/epl/to_rank_list.html:52
+#: epl/templates/epl/x0arbitration.html:48
+#: epl/templates/epl/x1arbitration.html:48
+#: epl/templates/epl/xarbitration.html:53
+#: epl/templates/epl/xto_edit_list_mother.html:44
+#: epl/templates/epl/xto_edit_list_notmother.html:42
+#: epl/templates/epl/xto_instr_list.html:49
+#: epl/templates/epl/xto_rank_list.html:47 epl/views_csv.py:74
+#: epl/views_pdf.py:49 epl/views_pdf.py:187 epl/views_pdf.py:327
+#: epl/views_pdf.py:467 epl/views_pdf.py:607 epl/views_pdf.py:747
+msgid "cote"
+msgstr "Signatur"
+
+#: epl/templates/epl/arbitration.html:67 epl/templates/epl/arbnork1.html:60
+#: epl/templates/epl/arbrk1.html:59 epl/templates/epl/modifrklist.html:55
+#: epl/templates/epl/to_rank_list.html:60
+#: epl/templates/epl/x0arbitration.html:57
+#: epl/templates/epl/x1arbitration.html:56
+#: epl/templates/epl/xarbitration.html:62
+#: epl/templates/epl/xto_rank_list.html:56
+msgid "Dernier positionnement enregistré"
+msgstr "Letzter genommener Rang"
+
+#: epl/templates/epl/arbitration.html:67 epl/templates/epl/arbnork1.html:60
+#: epl/templates/epl/arbrk1.html:59 epl/templates/epl/modifrklist.html:55
+#: epl/templates/epl/to_rank_list.html:60
+#: epl/templates/epl/x0arbitration.html:57
+#: epl/templates/epl/x1arbitration.html:56
+#: epl/templates/epl/xarbitration.html:62
+#: epl/templates/epl/xto_rank_list.html:56 epl/views_pdf.py:80
+#: epl/views_pdf.py:218 epl/views_pdf.py:358 epl/views_pdf.py:498
+#: epl/views_pdf.py:638 epl/views_pdf.py:778
+msgid "rang"
+msgstr "Rang"
+
+#: epl/templates/epl/arbitration.html:68 epl/templates/epl/arbnork1.html:61
+#: epl/templates/epl/arbrk1.html:60 epl/templates/epl/modifrklist.html:56
+#: epl/templates/epl/ranking.html:67 epl/templates/epl/ranking.html:87
+#: epl/templates/epl/to_rank_list.html:61
+#: epl/templates/epl/x0arbitration.html:58
+#: epl/templates/epl/x1arbitration.html:57
+#: epl/templates/epl/xarbitration.html:63
+#: epl/templates/epl/xto_rank_list.html:57
+msgid "Exclusion"
+msgstr "Ausnahmen"
+
+#: epl/templates/epl/arbitration.html:68 epl/templates/epl/arbnork1.html:61
+#: epl/templates/epl/arbrk1.html:60 epl/templates/epl/modifrklist.html:56
+#: epl/templates/epl/to_rank_list.html:61
+#: epl/templates/epl/x0arbitration.html:58
+#: epl/templates/epl/x1arbitration.html:57
+#: epl/templates/epl/xarbitration.html:63
+#: epl/templates/epl/xto_rank_list.html:57
+msgid "Modifier"
+msgstr "Ändern"
+
+#: epl/templates/epl/arbnork1.html:33
+msgid "Arbitrages (Rang 1 non revendiqué)"
+msgstr "Schiedsverfahren (Rang 1 nicht beansprucht)"
+
+#: epl/templates/epl/arbrk1.html:34
+msgid "Arbitrages (Concurrence sur le rang 1)"
+msgstr "Schiedsverfahren (Wettbewerb auf Rang 1)"
+
+#: epl/templates/epl/checker.html:32 epl/templates/epl/home.html:42
+#: epl/templates/epl/selectbdd.html:48 epl/views_pdf.py:47 epl/views_pdf.py:185
+#: epl/views_pdf.py:325 epl/views_pdf.py:465 epl/views_pdf.py:605
+#: epl/views_pdf.py:745
+msgid "Projet"
+msgstr "Projekt"
+
+#: epl/templates/epl/checker.html:36
+msgid "Intervention possible pour le contrôleur"
+msgstr "Möglicher Eingriff für den Checker"
+
+#: epl/templates/epl/checker.html:36 epl/templates/epl/home.html:57
+#: epl/templates/epl/indicators.html:196 epl/templates/epl/instrtodo.html:32
+#: epl/templates/epl/instrtodobd1.html:28
+#: epl/templates/epl/instrtodobd1.html:45
+#: epl/templates/epl/instrtodobdnot1.html:27
+#: epl/templates/epl/instrtodobdnot1.html:44
+#: epl/templates/epl/instrtodonotbd1.html:26
+#: epl/templates/epl/instrtodonotbd1.html:43
+#: epl/templates/epl/instrtodonotbdnot1.html:26
+#: epl/templates/epl/instrtodonotbdnot1.html:43
+#: epl/templates/epl/selectbdd.html:56
+msgid "Instructions"
+msgstr "Ausfüllens"
+
+#: epl/templates/epl/checker.html:42 epl/templates/epl/disconnect.html:34
+#: epl/templates/epl/globadm.html:50 epl/templates/epl/home.html:61
+#: epl/templates/epl/language.html:58 epl/templates/epl/selectbdd.html:61
+#, fuzzy
+#| msgid "Changer mon mot de passe"
+msgid "Gérer mon mot de passe"
+msgstr "Passwort ändern"
+
+#: epl/templates/epl/checker.html:42 epl/templates/epl/language.html:58
+msgid "Administration (réservé)"
+msgstr "Administration (reserviert)"
+
+#: epl/templates/epl/confirmation.html:33
+msgid "Confirmation de l'envoi"
+msgstr "Versandbestätigung"
+
+#: epl/templates/epl/confirmation.html:37
+msgid "Votre message a bien été envoyé"
+msgstr "Ihre Nachricht wurde gesendet"
+
+#: epl/templates/epl/confirmation.html:38
+msgid ""
+"Un message de confirmation vous a été adressé à l'adresse de messagerie "
+"indiquée"
+msgstr ""
+"Eine Bestätigungsnachricht wurde an die angegebene E-Mail-Adresse gesendet"
+
+#: epl/templates/epl/contact.html:33
+msgid "Contacter le développeur de l'application"
+msgstr "Schreiben Sie an den Softwareentwickler"
+
+#: epl/templates/epl/contact.html:39 epl/templates/epl/projmaster.html:39
+#: epl/templates/epl/webmaster.html:39 epl/views.py:1144 epl/views.py:1163
+#: epl/views.py:1191 epl/views.py:1209 epl/views.py:1245 epl/views.py:1263
+msgid "Objet"
+msgstr "Objekt"
+
+#: epl/templates/epl/contact.html:40 epl/templates/epl/projmaster.html:40
+#: epl/templates/epl/webmaster.html:40 epl/views.py:1145 epl/views.py:1192
+#: epl/views.py:1246
+msgid "Votre adresse mail de contact"
+msgstr "Ihre Kontakt-E-Mail"
+
+#: epl/templates/epl/contact.html:42 epl/templates/epl/projmaster.html:42
+#: epl/templates/epl/webmaster.html:42 epl/views.py:1146 epl/views.py:1193
+#: epl/views.py:1247
+msgid "Confirmation de l'adresse mail"
+msgstr "Bestätigung der E-Mail"
+
+#: epl/templates/epl/contact.html:43 epl/templates/epl/projmaster.html:43
+#: epl/templates/epl/webmaster.html:43 epl/views.py:1147 epl/views.py:1194
+#: epl/views.py:1248
+msgid "Votre message"
+msgstr "Ihre Nachricht"
+
+#: epl/templates/epl/current.html:36 epl/templates/epl/search.html:36
+msgid "Statut courant"
+msgstr "Momentane Situation"
+
+#: epl/templates/epl/current.html:38 epl/templates/epl/search.html:58
+#: epl/templates/epl/search.html:69
+msgid "Données bibliographiques"
+msgstr "Bibliografische Daten"
+
+#: epl/templates/epl/current.html:40 epl/templates/epl/search.html:60
+#: epl/templates/epl/search.html:71 epl/views_pdf.py:64 epl/views_pdf.py:202
+#: epl/views_pdf.py:342 epl/views_pdf.py:482 epl/views_pdf.py:622
+#: epl/views_pdf.py:762
+msgid "issn"
+msgstr "issn"
+
+#: epl/templates/epl/current.html:40 epl/templates/epl/search.html:60
+#: epl/templates/epl/search.html:71
+msgid "Période de publication"
+msgstr "Ersch.-verlauf"
+
+#: epl/templates/epl/current.html:48 epl/templates/epl/search.html:73
+msgid "Données de rattachement"
+msgstr "Item daten"
+
+#: epl/templates/epl/current.html:51 epl/templates/epl/search.html:75
+#: epl/views_csv.py:75
+msgid "état de collection"
+msgstr "Bestand"
+
+#: epl/templates/epl/current.html:53 epl/templates/epl/search.html:77
+#: epl/views_csv.py:76
+msgid "lacunes"
+msgstr "Lücken"
+
+#: epl/templates/epl/current.html:66 epl/templates/epl/search.html:90
+msgid "Avancement"
+msgstr "Förderung"
+
+#: epl/templates/epl/current.html:72 epl/templates/epl/search.html:96
+msgid "Nombre de rattachements"
+msgstr "Anzahl der Anhänge"
+
+#: epl/templates/epl/current.html:78 epl/templates/epl/current.html:87
+#: epl/templates/epl/current.html:90 epl/templates/epl/current.html:99
+#: epl/templates/epl/current.html:102 epl/templates/epl/search.html:111
+#: epl/templates/epl/search.html:114 epl/templates/epl/search.html:123
+#: epl/templates/epl/search.html:126
+msgid "Positionnement pour"
+msgstr "Rang für"
+
+#: epl/templates/epl/current.html:79 epl/templates/epl/search.html:103
+msgid "Votre bibliothèque n'est pas rattachée"
+msgstr "Ihre Bibliothek ist nicht angehängt"
+
+#: epl/templates/epl/current.html:92 epl/templates/epl/current.html:104
+#: epl/templates/epl/search.html:116 epl/templates/epl/search.html:128
+msgid "Pas pris"
+msgstr "Nicht vergeben"
+
+#: epl/templates/epl/current.html:115 epl/templates/epl/search.html:139
+msgid "Action attendue"
+msgstr "Erwartete Aktion"
+
+#: epl/templates/epl/current.html:122 epl/templates/epl/search.html:146
+msgid "Action encore possible"
+msgstr "Aktion noch möglich"
+
+#: epl/templates/epl/current.html:131 epl/templates/epl/search.html:161
+msgid "Réinitialiser la fiche"
+msgstr "Blatt zurücksetzen"
+
+#: epl/templates/epl/current.html:132 epl/templates/epl/search.html:162
+msgid "Réservé"
+msgstr "Reserviert "
+
+#: epl/templates/epl/current.html:142 epl/templates/epl/search.html:102
+#: epl/templates/epl/search.html:172
+msgid "Statut"
+msgstr "Status"
+
+#: epl/templates/epl/current.html:143 epl/templates/epl/current.html:174
+#: epl/templates/epl/search.html:173 epl/templates/epl/search.html:203
+msgid "Administration"
+msgstr "Administration"
+
+#: epl/templates/epl/current.html:161 epl/templates/epl/search.html:190
+msgid "Actualiser"
+msgstr "Seite neu laden"
+
+#: epl/templates/epl/current.html:161
+msgid "Retour"
+msgstr "Zurück"
+
+#: epl/templates/epl/delinstruction.html:35
+msgid "Suppression d'une ligne"
+msgstr "Eine Anweisungszeile löschen"
+
+#: epl/templates/epl/delinstruction.html:48
+msgid "Les lignes en rouge ne peuvent plus être supprimées"
+msgstr "Rote Zeilen können nicht mehr gelöscht werden"
+
+#: epl/templates/epl/delinstruction.html:104
+msgid "Ligne(s) à supprimer"
+msgstr "Zeile(n) zu löschen"
+
+#: epl/templates/epl/delinstruction.html:107
+msgid "Aucune ligne ne peut être supprimée"
+msgstr "Keine Zeile kann gelöscht werden"
+
+#: epl/templates/epl/delinstruction.html:115
+#: epl/templates/epl/endinstruction.html:129
+#: epl/templates/epl/modinstruction.html:164
+#: epl/templates/epl/selinstruction.html:119
+msgid "Revenir à l'instruction"
+msgstr "Zurück zum Ausfüllen"
+
+#: epl/templates/epl/disconnect.html:26
+msgid "Déconnexion effectuée"
+msgstr "Sie sind ausgeloggt"
+
+#: epl/templates/epl/disconnect.html:29 epl/templates/epl/language.html:50
+#, fuzzy
+#| msgid "Retour à la liste"
+msgid "Retour à la page d'accueil"
+msgstr "Zurück zur Liste"
+
+#: epl/templates/epl/disconnect.html:34 epl/templates/epl/globadm.html:50
+#: epl/templates/epl/home.html:61 epl/templates/epl/selectbdd.html:62
+msgid "en / de"
+msgstr "fr / en"
+
+#: epl/templates/epl/disconnect.html:35 epl/templates/epl/home.html:63
+#: epl/templates/epl/selectbdd.html:62
+#, fuzzy
+#| msgid "Administration (réservé)"
+msgid "Administration générale (réservé)"
+msgstr "Administration (reserviert)"
+
+#: epl/templates/epl/edition.html:28 epl/templates/epl/edition.html:39
+msgid "Edition"
+msgstr "Edition"
+
+#: epl/templates/epl/edition.html:29
+msgid "Export pdf"
+msgstr "Export im PDF-Format"
+
+#: epl/templates/epl/edition.html:46
+msgid "Les lignes impliquant votre bibliothèque sont mises en évidence"
+msgstr "Zeilen, die Ihre Bibliothek betreffen, sind hervorgehoben."
+
+#: epl/templates/epl/edition.html:49
+#: epl/templates/epl/to_edit_list_mother.html:33
+#: epl/templates/epl/xto_edit_list_mother.html:32 epl/views.py:3790
+msgid "Collection mère"
+msgstr "Mutter Sammlung"
+
+#: epl/templates/epl/edition.html:50
+msgid "Collection(s) participante(s)"
+msgstr "Andere teilnehmende Sammlung(en)"
+
+#: epl/templates/epl/edition.html:55
+msgid "Collection(s) exclue(s)"
+msgstr "Ausgeschlossene Sammlung(en)"
+
+#: epl/templates/epl/endinstruction.html:35
+msgid "Fin des instructions"
+msgstr "Ende des Ausfüllens"
+
+#: epl/templates/epl/endinstruction.html:53
+msgid "Les lignes saisies pour la forme courante sont mises en évidence"
+msgstr "Für die aktuelle Form eingegebene Linien werden hervorgehoben"
+
+#: epl/templates/epl/endinstruction.html:123
+msgid "J'ai bien vérifié avant de valider"
+msgstr "Ja, ich habe übergeprüft"
+
+#: epl/templates/epl/excl.html:37 epl/templates/epl/indicators.html:106
+msgid "Collections exclues"
+msgstr "Ausgeschlossene Sammlungen"
+
+#: epl/templates/epl/excl.html:40 epl/templates/epl/faulty.html:41
+#: epl/templates/epl/search.html:39 epl/views.py:1542 epl/views.py:2995
+#: epl/views.py:3058
+msgid "Votre bibliothèque"
+msgstr "Ihre Bibliothek"
+
+#: epl/templates/epl/excl.html:41 epl/templates/epl/faulty.html:42
+#: epl/views.py:2996 epl/views.py:3059
+msgid "Critère de tri"
+msgstr "Sortierkriterien"
+
+#: epl/templates/epl/excl.html:42 epl/templates/epl/excl.html:69
+#: epl/views.py:2997
+msgid "Motif d'exclusion"
+msgstr "Ausschlussgrund"
+
+#: epl/templates/epl/excl.html:43 epl/views.py:2998
+msgid "Modifiable ?"
+msgstr "Änderung möglich ?"
+
+#: epl/templates/epl/excl.html:44 epl/templates/epl/faulty.html:43
+#: epl/templates/epl/search.html:41
+msgid "Réinitialiser"
+msgstr "Zurücksetzen"
+
+#: epl/templates/epl/excl.html:50 epl/templates/epl/faulty.html:47
+msgid ""
+"Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]"
+msgstr "Für weitere Informationen klicken Sie auf den Link [Zeitschrift ID]"
+
+#: epl/templates/epl/excl.html:71 epl/templates/epl/ranking.html:64
+#: epl/templates/epl/ranking.html:69 epl/templates/epl/ranking.html:84
+#: epl/templates/epl/ranking.html:89
+msgid "Commentaire"
+msgstr "Kommentar"
+
+#: epl/templates/epl/faulty.html:38 epl/templates/epl/indicators.html:192
+msgid "Fiches défectueuses"
+msgstr "Defekte Aufzeichnungen"
+
+#: epl/templates/epl/filter_arblist.html:35
+msgid "Arbitrages / Filtre"
+msgstr "Schiedsverfahren / Filter"
+
+#: epl/templates/epl/filter_arblist.html:42
+msgid "Autre collection impliquée dans l'arbitrage"
+msgstr "Andere Sammlung, die an Schiedsverfahren beteiligt ist"
+
+#: epl/templates/epl/filter_ck_instrlist.html:35
+msgid "Filtre pour les contrôles de fin de phase"
+msgstr "Kontrollen Filter"
+
+#: epl/templates/epl/filter_ck_instrlist.html:43
+msgid "Phase"
+msgstr "Phase"
+
+#: epl/templates/epl/filter_ck_instrlist.html:44
+msgid "Collection impliquée"
+msgstr "Beteiligte Sammlung"
+
+#: epl/templates/epl/filter_ck_instrlist.html:44
+msgid "(C'est l'opérateur 'ou' qui est appliqué en cas de choix multiple)"
+msgstr "(*oder* Operator falls Multiwahl)"
+
+#: epl/templates/epl/filter_edlist.html:37
+msgid "Filtre d'édition"
+msgstr "Anzeigefilter"
+
+#: epl/templates/epl/filter_edlist.html:46
+#: epl/templates/epl/filter_instrlist.html:43
+#: epl/templates/epl/filter_rklist.html:48
+msgid "Autre collection impliquée"
+msgstr "Andere beteiligte Sammlung"
+
+#: epl/templates/epl/filter_instrlist.html:36
+msgid "Instruction / Filtre"
+msgstr "Ausfüllen / Filter"
+
+#: epl/templates/epl/filter_rklist.html:41
+msgid "Positionnement / Filtre"
+msgstr "Rang nehmen / Filter"
+
+#: epl/templates/epl/globadm.html:33
+#, fuzzy
+#| msgid "Administration"
+msgid "Administration globale"
+msgstr "Administration"
+
+#: epl/templates/epl/globadm.html:38
+#, fuzzy
+#| msgid "Contacter l'administrateur du site"
+msgid "Module d'administration de Django"
+msgstr "Schreiben Sie an den Webmaster"
+
+#: epl/templates/epl/globadm.html:40
+#, fuzzy
+#| msgid "Forum des utilisateurs"
+msgid "Extraction des utilisateurs"
+msgstr "Benutzerforum"
+
+#: epl/templates/epl/globadm.html:42
+msgid "Pour vérifications et éventuels contacts"
+msgstr ""
+
+#: epl/templates/epl/globadm.html:48
+#, fuzzy
+#| msgid "Retour à la liste"
+msgid "Retour à l'accueil général"
+msgstr "Zurück zur Liste"
+
+#: epl/templates/epl/home.html:50
+msgid "Fonctionnalité"
+msgstr "Funktionalität"
+
+#: epl/templates/epl/home.html:56 epl/templates/epl/selectbdd.html:55
+msgid "Bibliothèques"
+msgstr "Bibliotheke"
+
+#: epl/templates/epl/home.html:56 epl/templates/epl/selectbdd.html:55
+msgid "Utilisateurs"
+msgstr "Benützer"
+
+#: epl/templates/epl/home.html:57 epl/templates/epl/selectbdd.html:56
+msgid "Rattachements"
+msgstr "Anhängen"
+
+#: epl/templates/epl/home.html:57 epl/templates/epl/selectbdd.html:56
+msgid "Ressources candidates"
+msgstr "Kandidatenressourcen"
+
+#: epl/templates/epl/home.html:63
+#, fuzzy
+#| msgid "Administration (réservé)"
+msgid "Administration du projet (réservé)"
+msgstr "Administration (reserviert)"
+
+#: epl/templates/epl/indicators.html:48
+msgid "Indicateur"
+msgstr "Indikator"
+
+#: epl/templates/epl/indicators.html:49
+msgid "Valeur"
+msgstr "Anzahl"
+
+#: epl/templates/epl/indicators.html:57
+msgid ""
+"Réalisation relative (ressources traitées/ressources effectivement "
+"candidates)"
+msgstr "Relative Leistung (verarbeitete Ressourcen / tatsächlich Kandidaten)"
+
+#: epl/templates/epl/indicators.html:61
+msgid ""
+"Réalisation absolue (ressources n'étant plus à traiter/ressources "
+"potentiellement candidates)"
+msgstr ""
+"Absolute Leistung (nicht mehr zu verarbeitende Ressourcen / "
+"KandidatenZeitschriften am Beginn)"
+
+#: epl/templates/epl/indicators.html:65
+msgid "Collections"
+msgstr "Sammlungen"
+
+#: epl/templates/epl/indicators.html:69
+msgid "Unicas"
+msgstr "einzigartige Sammlungen"
+
+#: epl/templates/epl/indicators.html:73
+msgid "Collections candidates au départ"
+msgstr "Kandidatensammlungen am Anfang"
+
+#: epl/templates/epl/indicators.html:77
+msgid "Ressources potentiellement candidates"
+msgstr "Potenzielle Kandidatenzeitschriften"
+
+#: epl/templates/epl/indicators.html:82
+msgid "dont doublons stricts"
+msgstr "davon strenge Duplikate"
+
+#: epl/templates/epl/indicators.html:86
+msgid "dont triplons"
+msgstr "Drillinge"
+
+#: epl/templates/epl/indicators.html:93
+msgid "dont quadruplons"
+msgstr "Vierlinge"
+
+#: epl/templates/epl/indicators.html:98
+msgid "Collections positionnées (exclusions incluses)"
+msgstr "Rang genommen (inkl. Ausnahmen)"
+
+#: epl/templates/epl/indicators.html:102
+msgid "Collections positionnées (hors exclusions)"
+msgstr "Rang genommen (Ausnahmen ausgenommen)"
+
+#: epl/templates/epl/indicators.html:114 epl/templates/epl/indicators.html:119
+msgid "dont : "
+msgstr "deren : "
+
+#: epl/templates/epl/indicators.html:114 epl/views.py:257 epl/views.py:341
+#: epl/views.py:1405 epl/views.py:1826 epl/views.py:2982
+msgid "Autre (Commenter)"
+msgstr "Sonstiges (Kommentar)"
+
+#: epl/templates/epl/indicators.html:126
+msgid "Ressources écartées par exclusion de collection"
+msgstr "Zeitschriften, die vom Ausschlussgrund ausgeschlossen sind"
+
+#: epl/templates/epl/indicators.html:131
+msgid "Collections effectivement candidates"
+msgstr "Aktuelle Kandidatensammlungen"
+
+#: epl/templates/epl/indicators.html:136
+msgid "Ressources effectivement candidates"
+msgstr "Aktuelle Kandidatenzeitschriften"
+
+#: epl/templates/epl/indicators.html:140
+msgid ""
+"Ressources pour lesquelles le positionnement est à compléter (hors "
+"arbitrages)"
+msgstr ""
+"Zeitschriften, für die die Positionierung abgeschlossen werden soll "
+"(Schiedsverfahren ausgeschlossen)"
+
+#: epl/templates/epl/indicators.html:144
+msgid "Collections impliquées dans un arbitrage quelconque"
+msgstr "Sammlungen, die an Schiedsverfahren beteiligt sind"
+
+#: epl/templates/epl/indicators.html:148
+msgid "Collections impliquées dans un arbitrage de 1ère place"
+msgstr "Sammlungen, die an einem 1. Platz Schiedsverfahren beteiligt sind"
+
+#: epl/templates/epl/indicators.html:152
+msgid "Collections impliquées dans un arbitrage faute de 1ère place"
+msgstr ""
+"Sammlungen, die an einem Schiedsverfahren mangels 1. Platz beteiligt sind"
+
+#: epl/templates/epl/indicators.html:156
+msgid "Ressources impliquées dans un arbitrage quelconque"
+msgstr "Zeitschriften, die an Schiedsverfahren beteiligt sind"
+
+#: epl/templates/epl/indicators.html:160
+msgid "Ressources impliquées dans un arbitrage de 1ère place"
+msgstr "Zeitschriften, die an einem 1. Platz Schiedsverfahren beteiligt sind"
+
+#: epl/templates/epl/indicators.html:164
+msgid "Ressources impliquées dans un arbitrage faute de 1ère place"
+msgstr ""
+"Zeitschriften, die an einem Schiedsverfahren mangels 1. Platz beteiligt sind"
+
+#: epl/templates/epl/indicators.html:168
+msgid "Ressources dont l'instruction des éléments reliés peut débuter"
+msgstr "Die Anweisung der verbundenen Elemente kann beginnen"
+
+#: epl/templates/epl/indicators.html:172
+msgid "Ressources dont l'instruction des éléments reliés est en cours"
+msgstr "Die Anweisung der verbundenen Elemente wird ausgeführt"
+
+#: epl/templates/epl/indicators.html:176
+msgid "Ressources dont l'instruction des éléments non reliés peut débuter"
+msgstr "Die Anweisung der nicht verbundenen Elemente kann beginnen"
+
+#: epl/templates/epl/indicators.html:180
+msgid "Ressources dont l'instruction des éléments non reliés est en cours"
+msgstr "Die Anweisung der nicht verbundenen Elemente wird ausgeführt"
+
+#: epl/templates/epl/indicators.html:184
+msgid "Ressources complètement instruites"
+msgstr "Zeitschriften deren Anweisung ist vollständig"
+
+#: epl/templates/epl/indicators.html:188
+msgid ""
+"Ressources dont l'instruction est incomplète, défectueuse ou n'a pas débuté "
+"(alors qu'elle le peut)"
+msgstr ""
+"Zeitschriften, für die die Anweisung unvollständig, fehlerhaft oder nicht "
+"gestartet ist (solange sie kann)"
+
+#: epl/templates/epl/instradmin.html:40
+#, fuzzy
+#| msgid "Modification d'une ligne d'instruction"
+msgid "Administration d'une ligne d'instruction"
+msgstr "Bearbeiten einer Anweisungszeile"
+
+#: epl/templates/epl/instradmin.html:44 epl/templates/epl/statadmin.html:41
+msgid ""
+"Attention : Instructions et statuts des rattachements sont dépendants ; "
+"n'oubliez pas de les administrer complémentairement"
+msgstr ""
+
+#: epl/templates/epl/instradmin.html:89
+#, fuzzy
+#| msgid "Vérification intermédiaire"
+msgid "Modifiez (action irrémédiable)"
+msgstr "Zwischenüberprüfung"
+
+#: epl/templates/epl/instradmin.html:93
+msgid "A placer sous la ligne (actuelle)"
+msgstr ""
+
+#: epl/templates/epl/instradmin.html:124
+msgid ""
+"ou cochez la case suivante et validez pour supprimer la ligne (action "
+"irrémédiable)"
+msgstr ""
+
+#: epl/templates/epl/instradmin.html:125
+msgid ""
+"et/ou cochez la case suivante et validez pour ajouter la ligne telle que "
+"renseignée"
+msgstr ""
+
+#: epl/templates/epl/instradmin.html:126 epl/templates/epl/reinit.html:43
+#: epl/templates/epl/statadmin.html:47
+msgid "Annuler"
+msgstr "Abbrechen"
+
+#: epl/templates/epl/instrtodo.html:32
+msgid "toutes formes, tous rangs"
+msgstr "Alles"
+
+#: epl/templates/epl/instrtodo.html:37
+msgid "Restreindre la liste aux instructions avec une autre bibliothèque"
+msgstr "Beschränken Sie die Ausfüllung Liste mit einer anderen Bibliothek"
+
+#: epl/templates/epl/instrtodo.html:44 epl/templates/epl/xckbd.html:32
+msgid "Contrôle à mi-chemin"
+msgstr "Halbweg Kontroll"
+
+#: epl/templates/epl/instrtodo.html:44 epl/templates/epl/xcknbd.html:33
+msgid "Contrôle final"
+msgstr "Endkontroll"
+
+#: epl/templates/epl/instrtodo.html:45
+msgid "Filtrer la liste"
+msgstr "Liste filtern"
+
+#: epl/templates/epl/instrtodo.html:50 epl/templates/epl/xto_instr_list.html:39
+msgid "Phase d'instruction courante, 1 = reliés, 2 = non reliés"
+msgstr "Laufender Schritt, 1 = verbunde Form, 2 = nicht vervunde Form"
+
+#: epl/templates/epl/instrtodo.html:50 epl/templates/epl/xto_instr_list.html:39
+#: epl/views_pdf.py:84 epl/views_pdf.py:222 epl/views_pdf.py:362
+#: epl/views_pdf.py:502 epl/views_pdf.py:642 epl/views_pdf.py:782
+msgid "collection mère"
+msgstr "Mutter Sammlung"
+
+#: epl/templates/epl/instrtodo.html:51
+msgid "liste"
+msgstr "Verzeichnis"
+
+#: epl/templates/epl/instrtodo.html:57 epl/templates/epl/instrtodobd1.html:48
+#: epl/templates/epl/instrtodobd1.html:51
+#: epl/templates/epl/instrtodobdnot1.html:47
+#: epl/templates/epl/instrtodobdnot1.html:50
+#: epl/templates/epl/instrtodonotbd1.html:45
+#: epl/templates/epl/instrtodonotbd1.html:49
+#: epl/templates/epl/instrtodonotbdnot1.html:46
+#: epl/templates/epl/instrtodonotbdnot1.html:50
+#: epl/templates/epl/xckall.html:43 epl/templates/epl/xckbd.html:39
+#: epl/templates/epl/xcknbd.html:40 epl/templates/epl/xto_instr_list.html:38
+#: epl/templates/epl/xto_instr_list.html:41
+msgid "Pour instruire, cliquez sur le lien [Identifiant de la ressource]"
+msgstr "zum Anweisen, klicken Sie auf den Link [Zeitschrift ID]"
+
+#: epl/templates/epl/instrtodobd1.html:29
+#: epl/templates/epl/instrtodonotbd1.html:28
+#: epl/templates/epl/instrtodonotbdnot1.html:28
+msgid "reliés autres rangs"
+msgstr "Verbundene From, anderer rang"
+
+#: epl/templates/epl/instrtodobd1.html:30
+#: epl/templates/epl/instrtodobdnot1.html:29
+#: epl/templates/epl/instrtodonotbdnot1.html:29
+msgid "non reliés rang 1"
+msgstr "nicht verbundene Form, rang 1"
+
+#: epl/templates/epl/instrtodobd1.html:31
+#: epl/templates/epl/instrtodobdnot1.html:30
+#: epl/templates/epl/instrtodonotbd1.html:29
+msgid "non reliés autres rangs"
+msgstr "Nicht verbundene Form, anderer rang"
+
+#: epl/templates/epl/instrtodobd1.html:32
+#: epl/templates/epl/instrtodobdnot1.html:31
+#: epl/templates/epl/instrtodonotbd1.html:30
+#: epl/templates/epl/instrtodonotbdnot1.html:30
+msgid "tout"
+msgstr "Alles"
+
+#: epl/templates/epl/instrtodobd1.html:45
+msgid "forme reliée, rang 1"
+msgstr "verbundene Form, rang 1"
+
+#: epl/templates/epl/instrtodobdnot1.html:28
+#: epl/templates/epl/instrtodonotbd1.html:27
+#: epl/templates/epl/instrtodonotbdnot1.html:27
+msgid "reliés rang 1"
+msgstr "verbundene Form, rang 1"
+
+#: epl/templates/epl/instrtodobdnot1.html:44
+msgid "forme reliée, autres rangs"
+msgstr "Verbundene Form, anderer rang"
+
+#: epl/templates/epl/instrtodonotbd1.html:43
+msgid "non reliés, rang 1"
+msgstr "nicht verbundene Form, rang 1"
+
+#: epl/templates/epl/instrtodonotbdnot1.html:43
+msgid "non reliés, autres rangs"
+msgstr "Nicht verbundene Form, anderer rang"
+
+#: epl/templates/epl/modifrklist.html:34
+msgid "Positionnement modifiable"
+msgstr "Änderbare Rang"
+
+#: epl/templates/epl/modifrklist.html:40
+msgid ""
+"Pour modifier le positionnement, cliquez sur le lien [Identifiant de la "
+"ressource]"
+msgstr "Um Ihren Rang zu ändern, klicken Sie auf den Link [Zeitschrift ID]"
+
+#: epl/templates/epl/modinstruction.html:38
+msgid "Modification d'une ligne d'instruction"
+msgstr "Bearbeiten einer Anweisungszeile"
+
+#: epl/templates/epl/notintime.html:37
+msgid "Tentative d'intervention non autorisée"
+msgstr "Ausser-Zeit Eingriff"
+
+#: epl/templates/epl/notintime.html:41 epl/templates/epl/reinit.html:39
+msgid "Ressource concernée"
+msgstr "Zeitschrift"
+
+#: epl/templates/epl/notintime.html:43
+msgid ""
+"Vous avez été redirigé ici parce que l'action que vous souhaitez réaliser "
+"n'est pas autorisée"
+msgstr "Häufig unmögliche Aktion"
+
+#: epl/templates/epl/notintime.html:45
+msgid "fiche de situation"
+msgstr "Lageblatt"
+
+#: epl/templates/epl/projmaster.html:33
+#, fuzzy
+#| msgid "Contacter l'administrateur du site"
+msgid "Contacter l'administration du projet"
+msgstr "Schreiben Sie an den Webmaster"
+
+#: epl/templates/epl/ranking.html:36
+msgid "Positionnement"
+msgstr "Rang nehmen"
+
+#: epl/templates/epl/ranking.html:62 epl/templates/epl/ranking.html:82
+msgid "Rang courant"
+msgstr "Aktueller Rang"
+
+#: epl/templates/epl/ranking.html:101
+msgid "Le cas échéant, motif d'exclusion"
+msgstr "Wenn ja, Ausschlussgrund"
+
+#: epl/templates/epl/ranking.html:102
+msgid "Sinon, rang de votre collection"
+msgstr "Wenn nicht, rang Ihrer Sammlung"
+
+#: epl/templates/epl/ranking.html:103 epl/views.py:1834
+msgid ""
+"Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre "
+"collection ou d'autres raisons ..."
+msgstr ""
+"Wählen Sie 1, wenn Ihre Sammlung diejenige ist, zu der andere Elemente "
+"hinzugefügt werden ; 4 falls Ihre Sammlung ist die geringste."
+
+#: epl/templates/epl/reinit.html:37
+msgid "Réinitialisation d'une fiche erronée"
+msgstr "Zurücksetzen eines fehlerhaften Blattes"
+
+#: epl/templates/epl/reinit.html:41
+msgid "Je souhaite réinitialer la fiche"
+msgstr "Ich möchte die Datei zurücksetzen"
+
+#: epl/templates/epl/reinit.html:42
+msgid ""
+"En confirmant, vous allez réinitialiser la fiche au début de la phase sur "
+"laquelle l'erreur a été constatée"
+msgstr ""
+"Durch Bestätigen setzen Sie das Formular zu Beginn der Phase zurück, in der "
+"der Fehler beobachtet wurde"
+
+#: epl/templates/epl/reinit.html:43
+msgid "Confirmer"
+msgstr "Bestätigen"
+
+#: epl/templates/epl/reinit.html:46
+msgid ""
+"Après validation ou annulation, vous serez redirigé vers la fiche de statut "
+"courant qui vous permettra de vérifier la prise en compte de votre choix"
+msgstr ""
+"Nach dem Bestätigen oder Abbrechen werden Sie zum aktuellen Statusformular "
+"weitergeleitet, mit dem Sie die Berücksichtigung Ihrer Wahl überprüfen "
+"können."
+
+#: epl/templates/epl/search.html:52
+msgid "Ce ppn est absent du projet"
+msgstr "Dieser SID fehlt im Projekt"
+
+#: epl/templates/epl/search.html:52
+msgid "Vérifier dans le Sudoc"
+msgstr "Checken Sie in Sudoc ein"
+
+#: epl/templates/epl/search.html:53
+msgid "(Si cette vérification n'aboutit pas, vérifiez la saisie du ppn)"
+msgstr ""
+"(Wenn diese Prüfung nicht erfolgreich ist, überprüfen Sie den Eintrag des "
+"SID)"
+
+#: epl/templates/epl/search.html:62
+msgid "Pas d'autre collection que la vôtre"
+msgstr "Keine andere beteiligte Sammlung"
+
+#: epl/templates/epl/search.html:64
+msgid "Une seule bibliothèque rattachée"
+msgstr "Nur eine teilnehmende Bibliothek"
+
+#: epl/templates/epl/search.html:190
+msgid "Fiche de situation"
+msgstr "Lageblatt"
+
+#: epl/templates/epl/selectbdd.html:41
+msgid "Selection de la base de données"
+msgstr "Auswahl der datenbank"
+
+#: epl/templates/epl/selectbdd.html:55
+msgid "Projets"
+msgstr "Projekte"
+
+#: epl/templates/epl/selinstruction.html:36
+msgid "Sélection de la ligne à modifier"
+msgstr "Auswahl der Zeile zu bearbeiten"
+
+#: epl/templates/epl/selinstruction.html:51
+msgid "Les lignes en rouge ne peuvent plus être modifiées"
+msgstr "Rot farbige Linien können nicht mehr geändert werden"
+
+#: epl/templates/epl/selinstruction.html:107
+msgid "Ligne à modifier"
+msgstr "Zeile zu bearbeiten"
+
+#: epl/templates/epl/statadmin.html:38
+msgid "Administration du statut d'un enregistrement"
+msgstr ""
+
+#: epl/templates/epl/statadmin.html:45
+#, fuzzy
+#| msgid "Modifier"
+msgid "Modifiez"
+msgstr "Ändern"
+
+#: epl/templates/epl/to_edit_list.html:32
+msgid "ressources éditables"
+msgstr "erschienbar"
+
+#: epl/templates/epl/to_edit_list.html:34
+msgid "rapports pdf"
+msgstr "pdf Berichte"
+
+#: epl/templates/epl/to_edit_list.html:34
+#: epl/templates/epl/to_edit_list_mother.html:35
+#: epl/templates/epl/to_edit_list_notmother.html:35
+#: epl/templates/epl/xto_edit_list_mother.html:34
+#: epl/templates/epl/xto_edit_list_mother.html:38
+#: epl/templates/epl/xto_edit_list_notmother.html:34
+msgid "Pour éditer, cliquez sur le lien [Identifiant de la ressource]"
+msgstr "zum Bearbeiten, klicken Sie auf den Link [Zeitschrift ID]"
+
+#: epl/templates/epl/to_edit_list.html:37
+msgid "Votre collection est la collection mère"
+msgstr "Ihre Sammlung ist die Muttersammlung"
+
+#: epl/templates/epl/to_edit_list.html:38
+msgid "Restreindre la liste à ces cas"
+msgstr "Schränken Sie die Liste auf diese Fälle ein"
+
+#: epl/templates/epl/to_edit_list.html:39
+msgid "Restreindre aux autres cas"
+msgstr "Beschränken Sie sich auf andere Fälle"
+
+#: epl/templates/epl/to_edit_list.html:40
+msgid "Filtrer plus finement"
+msgstr "Feiner filtern"
+
+#: epl/templates/epl/to_edit_list_mother.html:33
+#: epl/templates/epl/to_edit_list_notmother.html:32
+#: epl/templates/epl/xto_edit_list_mother.html:32
+#: epl/templates/epl/xto_edit_list_notmother.html:32
+msgid "Résultantes"
+msgstr "Ausgabe"
+
+#: epl/templates/epl/to_edit_list_mother.html:35
+#: epl/templates/epl/to_edit_list_notmother.html:35
+#: epl/templates/epl/xto_edit_list_mother.html:34
+#: epl/templates/epl/xto_edit_list_notmother.html:34
+msgid "tout exporter en pdf"
+msgstr "Alles zum PDF-Format"
+
+#: epl/templates/epl/to_edit_list_notmother.html:32
+#: epl/templates/epl/xto_edit_list_notmother.html:32 epl/views.py:3790
+msgid "Collection non mère"
+msgstr "Nicht Mutter Sammlung"
+
+#: epl/templates/epl/to_rank_list.html:34
+#: epl/templates/epl/xto_rank_list.html:33 epl/views.py:237 epl/views.py:697
+#: epl/views_csv.py:73
+msgid "positionnement"
+msgstr "Rang nehmen"
+
+#: epl/templates/epl/to_rank_list.html:38
+msgid "Restreindre la liste aux doublons avec une autre bibliothèque"
+msgstr "Beschränken Sie die Duplikaten Liste mit einer anderen Bibliothek"
+
+#: epl/templates/epl/to_rank_list.html:43
+#: epl/templates/epl/xto_rank_list.html:39
+msgid ""
+"Pour vous positionner, cliquez sur le lien [Identifiant de la ressource]"
+msgstr "zum Rang nehmen,klicken Sie auf den Link [Zeitschrift ID]"
+
+#: epl/templates/epl/webmaster.html:33
+msgid "Contacter l'administrateur du site"
+msgstr "Schreiben Sie an den Webmaster"
+
+#: epl/templates/epl/x0arbitration.html:34
+msgid "Arbitrages faute de rang 1"
+msgstr "Schiedsverfahren (kein Rang 1)"
+
+#: epl/templates/epl/x1arbitration.html:34
+msgid "Arbitrages de rang 1"
+msgstr "Schiedsverfahren (Mehrer Ränge 1"
+
+#: epl/templates/epl/xckall.html:33
+msgid "Contrôle à mi-chemin ou final"
+msgstr "Halbweg- oder End- Kontroll"
+
+#: epl/templates/epl/xto_instr_list.html:35
+msgid "collections à instruire"
+msgstr "Auszufüllen Sammlungen"
+
+#: epl/templates/registration/login.html:30
+msgid "Authentification"
+msgstr "Login"
+
+#: epl/templates/registration/login.html:38
+msgid "Me connecter"
+msgstr "Einloggen"
+
+#: epl/templates/registration/login.html:41
+#, fuzzy
+#| msgid "Mot de passe perdu"
+msgid "Mot de passe perdu ou pas encore défini"
+msgstr "Passwort vergessen ?"
+
+#: epl/views.py:61
+msgid "Sélectionnez votre projet"
+msgstr "Wähle Ihr Projekt"
+
+#: epl/views.py:141
+msgid "Anomalie détectée. Pas d'utilisateur associé aux mails suivants : "
+msgstr ""
+
+#: epl/views.py:223 epl/views.py:226 epl/views.py:326 epl/views.py:329
+#: epl/views.py:402 epl/views.py:405 epl/views.py:461 epl/views.py:464
+#: epl/views.py:683 epl/views.py:686 epl/views.py:781 epl/views.py:784
+#: epl/views.py:901 epl/views.py:904 epl/views.py:1010 epl/views.py:1013
+#: epl/views.py:1113 epl/views.py:2534 epl/views.py:2537 epl/views.py:4120
+#: epl/views.py:4123 epl/views.py:4156 epl/views.py:4159 epl/views_csv.py:120
+msgid ""
+"Vous avez été renvoyé à cette page parce que vous n'avez pas les droits "
+"d'accès à la page que vous demandiez"
+msgstr ""
+
+#: epl/views.py:239 epl/views.py:699
+#, fuzzy
+#| msgid "Arbitrages"
+msgid "arbitrages"
+msgstr "Schiedsverfahren"
+
+#: epl/views.py:241 epl/views.py:701
+#, fuzzy
+#| msgid "Instructions"
+msgid "instructions"
+msgstr "Ausfüllens"
+
+#: epl/views.py:243 epl/views.py:703
+#, fuzzy
+#| msgid "Résultantes"
+msgid "résultantes"
+msgstr "Ausgabe"
+
+#: epl/views.py:249 epl/views.py:709
+msgid "activé"
+msgstr ""
+
+#: epl/views.py:251 epl/views.py:711
+msgid "désactivé"
+msgstr ""
+
+#: epl/views.py:264 epl/views.py:475
+#, fuzzy
+#| msgid "Votre bibliothèque"
+msgid "Sélectionnez la bibliothèque"
+msgstr "Ihre Bibliothek"
+
+#: epl/views.py:347
+#, fuzzy
+#| msgid "Exclusion"
+msgid "exclusion suppl"
+msgstr "Ausnahmen"
+
+#: epl/views.py:350
+#, fuzzy
+#| msgid "Motif d'exclusion"
+msgid "Motif d'exclusion à supprimer"
+msgstr "Ausschlussgrund"
+
+#: epl/views.py:351
+msgid "exclusion modifiée"
+msgstr ""
+
+#: epl/views.py:358
+msgid "Cette exclusion existe déjà"
+msgstr ""
+
+#: epl/views.py:364
+msgid "Exclusion ajoutée avec succès"
+msgstr ""
+
+#: epl/views.py:370
+msgid ""
+"Suppression impossible : Cete exclusion a déjà servi (vous pouvez "
+"éventuellement modifier son intitulé)"
+msgstr ""
+
+#: epl/views.py:373
+msgid "Exclusion supprimée avec succès"
+msgstr ""
+
+#: epl/views.py:377
+msgid ""
+"Modification non autorisée : Le nouvel intitulé d'exclusion est déjà utilisé"
+msgstr ""
+
+#: epl/views.py:386
+msgid "Exclusion modifiée avec succès"
+msgstr ""
+
+#: epl/views.py:388
+msgid "Vous n'avez pas complété le formulaire correctement"
+msgstr ""
+
+#: epl/views.py:419
+msgid "project code name"
+msgstr ""
+
+#: epl/views.py:421
+msgid "project description"
+msgstr ""
+
+#: epl/views.py:423
+msgid "database extraction date"
+msgstr ""
+
+#: epl/views.py:432
+msgid "Le nom du projet a été modifié avec succès"
+msgstr ""
+
+#: epl/views.py:439
+msgid "Le résumé du projet a été modifié avec succès"
+msgstr ""
+
+#: epl/views.py:446
+msgid "La date d'extraction de la base a été modifiée avec succès"
+msgstr ""
+
+#: epl/views.py:480
+msgid "Contact"
+msgstr ""
+
+#: epl/views.py:483 epl/views.py:488 epl/views_csv.py:74 epl/views_pdf.py:80
+#: epl/views_pdf.py:103 epl/views_pdf.py:218 epl/views_pdf.py:241
+#: epl/views_pdf.py:358 epl/views_pdf.py:381 epl/views_pdf.py:498
+#: epl/views_pdf.py:521 epl/views_pdf.py:638 epl/views_pdf.py:661
+#: epl/views_pdf.py:778 epl/views_pdf.py:801
+msgid "bibliothèque"
+msgstr "Bibliothek"
+
+#: epl/views.py:486
+msgid "Action rétroactive applicable à l'ensemble des instructions"
+msgstr ""
+
+#: epl/views.py:486
+#, fuzzy
+#| msgid "Choix de la liste"
+msgid "nom de la bib"
+msgstr "Wählen Sie Ihre Mailinglist"
+
+#: epl/views.py:493 epl/views.py:804 epl/views.py:923 epl/views.py:1041
+msgid "Suffixe obligatoire"
+msgstr ""
+
+#: epl/views.py:495
+msgid ""
+"Saisissez un nom d'utilisateur valide. Il ne peut contenir que des lettres, "
+"des nombres ou les caractères « @ », « . », « + », « - » et « _ »."
+msgstr ""
+
+#: epl/views.py:496
+msgid "identifiant 1"
+msgstr ""
+
+#: epl/views.py:529
+msgid "'checker' est un nom réservé"
+msgstr ""
+
+#: epl/views.py:545
+msgid "Nom de la bibliothèque modifié avec succès"
+msgstr ""
+
+#: epl/views.py:577 epl/views.py:601
+msgid "Contact supprimé avec succès"
+msgstr ""
+
+#: epl/views.py:579 epl/views.py:603
+msgid "(Le contact était déjà vacant)"
+msgstr ""
+
+#: epl/views.py:606
+#, fuzzy
+#| msgid "Aucune ligne ne peut être supprimée"
+msgid "Le contact principal ne peut pas être supprimé"
+msgstr "Keine Zeile kann gelöscht werden"
+
+#: epl/views.py:610
+msgid "Echec : Vous avez omis l'identifiant"
+msgstr ""
+
+#: epl/views.py:612
+msgid "Echec : Vous avez omis l'email"
+msgstr ""
+
+#: epl/views.py:625
+msgid ""
+"Modification effectuée avec succès (réemploi d'un utilisateur déjà présent "
+"dans la base)"
+msgstr ""
+
+#: epl/views.py:629
+msgid "Echec : l'identifiant est déjà attribué à un autre utilisateur"
+msgstr ""
+
+#: epl/views.py:631
+msgid "Echec : l'email est déjà attribué à un autre utilisateur"
+msgstr ""
+
+#: epl/views.py:634 epl/views.py:837 epl/views.py:945 epl/views.py:1064
+msgid "Echec : L'identifiant doit se terminer en {}"
+msgstr ""
+
+#: epl/views.py:649
+msgid "Modification effectuée avec succès (un nouvel utilisateur a été créé)"
+msgstr ""
+
+#: epl/views.py:651 epl/views.py:956
+msgid "L'identifiant ne respecte pas le format prescrit"
+msgstr ""
+
+#: epl/views.py:714
+#, fuzzy
+#| msgid "positionnement"
+msgid "Alertes positionnement"
+msgstr "Rang nehmen"
+
+#: epl/views.py:715
+#, fuzzy
+#| msgid "Arbitrages"
+msgid "Alertes arbitrages"
+msgstr "Schiedsverfahren"
+
+#: epl/views.py:716
+#, fuzzy
+#| msgid "Fin des instructions"
+msgid "Alertes instructions"
+msgstr "Ende des Ausfüllens"
+
+#: epl/views.py:717
+#, fuzzy
+#| msgid "Résultantes"
+msgid "Alertes résultantes"
+msgstr "Ausgabe"
+
+#: epl/views.py:734
+msgid "Choisissez vos nouveaux réglages"
+msgstr ""
+
+#: epl/views.py:764
+msgid "Les alertes et le type d'accès ont été reconfigurés avec succès"
+msgstr ""
+
+#: epl/views.py:812 epl/views.py:1049
+#, fuzzy
+#| msgid "Rang courant"
+msgid "email courant"
+msgstr "Aktueller Rang"
+
+#: epl/views.py:820
+#, fuzzy
+#| msgid "Administrateur du site"
+msgid "(Administrateur déjà enregistré)"
+msgstr "Webmaster"
+
+#: epl/views.py:826
+msgid ""
+"Administrateur ajouté avec succès (réemploi d'un utilisateur déjà présent "
+"dans la base)"
+msgstr ""
+
+#: epl/views.py:830 epl/views.py:941 epl/views.py:1061
+msgid "Echec : L'identifiant saisi est déjà utilisé"
+msgstr ""
+
+#: epl/views.py:834 epl/views.py:937
+msgid "Echec : L'email saisi est déjà utilisé"
+msgstr ""
+
+#: epl/views.py:845
+msgid "Administrateur ajouté avec succès (un nouvel utilisateur a été créé)"
+msgstr ""
+
+#: epl/views.py:847 epl/views.py:1072
+msgid "Echec : L'identifiant ne respecte pas le format prescrit"
+msgstr ""
+
+#: epl/views.py:851
+msgid "Vous ne pouvez pas supprimer le dernier administrateur restant"
+msgstr ""
+
+#: epl/views.py:871
+#, fuzzy
+#| msgid "Administrateur du site"
+msgid "Administrateur supprimé avec succès"
+msgstr "Webmaster"
+
+#: epl/views.py:921
+#, fuzzy
+#| msgid "administrateur"
+msgid "Utilisateur"
+msgstr "Webmaster"
+
+#: epl/views.py:926
+#, fuzzy
+#| msgid "Manuel de l'utilisateur"
+msgid "nouvel identifiant de l'utilisateur"
+msgstr "Benutzerhandbuch"
+
+#: epl/views.py:933
+msgid "Echec : Ne complétez qu'un des arguments à la fois"
+msgstr ""
+
+#: epl/views.py:954
+msgid "L'identifiant de l'utilisateur a été modifié avec succès"
+msgstr ""
+
+#: epl/views.py:976
+msgid "L'email de l'utilisateur a été modifié avec succès"
+msgstr ""
+
+#: epl/views.py:1057
+#, fuzzy
+#| msgid "Administrateur du site"
+msgid "(Utilisateur déjà enregistré avec des droits suffisants)"
+msgstr "Webmaster"
+
+#: epl/views.py:1070
+#, fuzzy
+#| msgid "Administrateur du site"
+msgid "Utilisateur créé avec succès"
+msgstr "Webmaster"
+
+#: epl/views.py:1079
+#, fuzzy
+#| msgid "Administrateur du site"
+msgid "Utilisateur supprimé avec succès"
+msgstr "Webmaster"
+
+#: epl/views.py:1142 epl/views.py:1189
+msgid "Demande d'information"
+msgstr "Informationsanfrage"
+
+#: epl/views.py:1142 epl/views.py:1189
+msgid "Bug"
+msgstr "Fehler"
+
+#: epl/views.py:1143 epl/views.py:1190
+msgid "Réclamation"
+msgstr "Anspruch"
+
+#: epl/views.py:1143 epl/views.py:1190
+msgid "Suggestion"
+msgstr "Vorschlag"
+
+#: epl/views.py:1143 epl/views.py:1190
+msgid "Avis"
+msgstr "Beachten"
+
+#: epl/views.py:1143 epl/views.py:1190 epl/views.py:1244
+msgid "Autre"
+msgstr "Andere"
+
+#: epl/views.py:1159
+msgid ""
+"Votre message a bien été envoyé au développeur de l'application qui y "
+"répondra prochainement"
+msgstr ""
+
+#: epl/views.py:1160 epl/views.py:1207 epl/views.py:1261
+msgid "Ne répondez pas au présent mail s'il vous plaît"
+msgstr ""
+
+#: epl/views.py:1162 epl/views.py:1208 epl/views.py:1262
+#, fuzzy
+#| msgid "Votre message"
+msgid "Rappel de votre message"
+msgstr "Ihre Nachricht"
+
+#: epl/views.py:1163 epl/views.py:1209 epl/views.py:1263
+msgid "***** Début *****"
+msgstr "***** Anfang *****"
+
+#: epl/views.py:1164 epl/views.py:1210 epl/views.py:1264
+msgid "Corps"
+msgstr ""
+
+#: epl/views.py:1164 epl/views.py:1210 epl/views.py:1264
+msgid "*****  Fin  *****"
+msgstr "****** Ende ******"
+
+#: epl/views.py:1171 epl/views.py:1217 epl/views.py:1270
+msgid "Attention : Les adresses doivent être identiques"
+msgstr "Achtung: Die Adressen müssen identisch sein"
+
+#: epl/views.py:1174 epl/views.py:1220 epl/views.py:1273
+msgid "Vérifier que les adresses sont correctes"
+msgstr "Überprüfen Sie, ob die Adressen korrekt sind"
+
+#: epl/views.py:1206
+#, fuzzy
+#| msgid "Votre message a bien été envoyé"
+msgid ""
+"Votre message a bien été envoyé au webmaster qui y répondra prochainement"
+msgstr "Ihre Nachricht wurde gesendet"
+
+#: epl/views.py:1237
+msgid "Signalement d'une anomalie"
+msgstr ""
+
+#: epl/views.py:1238
+msgid "Modification des infos projet (nom, résumé, date d'extraction)"
+msgstr ""
+
+#: epl/views.py:1239
+#, fuzzy
+#| msgid "motif d'exclusion"
+msgid "Ajout, modification ou suppression de motifs d'exclusion"
+msgstr "Ausschlussgrund"
+
+#: epl/views.py:1240
+#, fuzzy
+#| msgid "Edition des résultantes par bibliothèque"
+msgid "Ajout, modification ou suppression de correspondants d'une bibliothèque"
+msgstr "Bearbeitung der Ergebnisse nach Bibliothek"
+
+#: epl/views.py:1241
+msgid "Ajout, modification ou suppression d'administrateurs"
+msgstr ""
+
+#: epl/views.py:1242
+msgid "Ajout, modification ou suppression d'utilisateurs"
+msgstr ""
+
+#: epl/views.py:1243
+msgid "Info d'un des administrateurs du projet à ses co-administrateurs"
+msgstr ""
+
+#: epl/views.py:1260
+msgid ""
+"Votre message a bien été envoyé à l'administrateur du projet qui y répondra "
+"prochainement"
+msgstr ""
+
+#: epl/views.py:1577 epl/views.py:3960
+msgid "Anomalie signalée lors de la phase des non reliés"
+msgstr "Anomalie während der letzten Phase gemeldet"
+
+#: epl/views.py:1579 epl/views.py:3962
+msgid "Anomalie signalée lors de la phase des reliés"
+msgstr "Anomalie während der ersten Phase gemeldet"
+
+#: epl/views.py:1581 epl/views.py:3964
+msgid "Instruction achevée"
+msgstr "Ausfüllen beendet"
+
+#: epl/views.py:1583 epl/views.py:3966
+msgid "Edition de la fiche de résultante"
+msgstr "Ausgabe des Ergebnisblatts"
+
+#: epl/views.py:1586 epl/views.py:3969
+msgid "En attente de validation finale par le contrôleur"
+msgstr "Warten auf die endgültige Validierung durch den Checker"
+
+#: epl/views.py:1588 epl/views.py:3971
+msgid "Validation finale"
+msgstr "Endgültige Validierung"
+
+#: epl/views.py:1593 epl/views.py:1613 epl/views.py:3976 epl/views.py:3996
+msgid "Instruction des non reliés en cours pour votre collection"
+msgstr ""
+"Die Anweisung der nicht verbundenen Elemente wird für Ihre Bibliothek "
+"ausgeführt"
+
+#: epl/views.py:1595 epl/views.py:1615 epl/views.py:3978 epl/views.py:3998
+msgid "Instruction des non reliés à débuter pour votre collection"
+msgstr ""
+"Die Anweisung der nicht verbundenen Elemente wird für Ihre Bibliothek "
+"ausgeführt"
+
+#: epl/views.py:1600 epl/views.py:1606 epl/views.py:1620 epl/views.py:1626
+#: epl/views.py:3983 epl/views.py:3989 epl/views.py:4003 epl/views.py:4009
+msgid "Instruction des non reliés en cours pour : "
+msgstr ""
+"Die Anweisung der nicht verbundenen Elemente wird für die folgende "
+"Bibliothek ausgeführt : "
+
+#: epl/views.py:1602 epl/views.py:1608 epl/views.py:1622 epl/views.py:1628
+#: epl/views.py:3985 epl/views.py:3991 epl/views.py:4005 epl/views.py:4011
+msgid "Instruction des non reliés en cours ; à débuter pour : "
+msgstr ""
+"Die Anweisung der nicht verbundenen Elemente wird für die folgende "
+"Bibliothek ausgeführt : "
+
+#: epl/views.py:1631 epl/views.py:4014
+msgid "En attente de validation intermédiaire par le contrôleur"
+msgstr "Warten auf Zwischenvalidierung durch den Checker"
+
+#: epl/views.py:1633 epl/views.py:4016
+msgid "Validation intermédiaire"
+msgstr "Zwischenvalidierung"
+
+#: epl/views.py:1638 epl/views.py:1658 epl/views.py:4021 epl/views.py:4041
+msgid "Instruction des reliés en cours pour votre collection"
+msgstr ""
+"Die Anweisung der verbundenen Elemente wird für Ihre Bibliothek ausgeführt"
+
+#: epl/views.py:1640 epl/views.py:1660 epl/views.py:4023 epl/views.py:4043
+msgid "Instruction des reliés à débuter pour votre collection"
+msgstr ""
+"Die Anweisung der verbundenen Elemente wird für Ihre Bibliothek ausgeführt"
+
+#: epl/views.py:1645 epl/views.py:1651 epl/views.py:1665 epl/views.py:1673
+#: epl/views.py:4028 epl/views.py:4034 epl/views.py:4048 epl/views.py:4056
+msgid "Instruction des reliés en cours pour : "
+msgstr ""
+"Die Anweisung der verbundenen Elemente wird für die folgende Bibliothek "
+"ausgeführt"
+
+#: epl/views.py:1647 epl/views.py:1653 epl/views.py:1667 epl/views.py:1675
+#: epl/views.py:4030 epl/views.py:4036 epl/views.py:4050 epl/views.py:4058
+msgid "Instruction des reliés en cours ; à débuter pour : "
+msgstr ""
+"Anweisung der verbundenen Elemente in Bearbeitung; um zu beginnen für: "
+
+#: epl/views.py:1669 epl/views.py:1689 epl/views.py:1697 epl/views.py:4052
+#: epl/views.py:4072 epl/views.py:4080
+msgid "Modification éventuelle du rang de votre collection"
+msgstr "Mögliche Änderung des Ranges Ihrer Sammlung"
+
+#: epl/views.py:1679 epl/views.py:1704 epl/views.py:4062 epl/views.py:4087
+msgid "La ressource n'est plus candidate au dédoublonnement"
+msgstr "Nicht mehr Kandidat"
+
+#: epl/views.py:1681 epl/views.py:1693 epl/views.py:1701 epl/views.py:4064
+#: epl/views.py:4076 epl/views.py:4084
+msgid "Repositionnement éventuel de votre collection"
+msgstr "Möglicher neu Rang Ihrer Sammlung"
+
+#: epl/views.py:1684 epl/views.py:4067
+msgid "Positionnement à compléter pour votre collection"
+msgstr "Rang für Ihre Sammlung zu vervollständigen"
+
+#: epl/views.py:1685 epl/views.py:4068
+msgid "Positionnement de votre collection"
+msgstr "Rang für Ihre Sammlung"
+
+#: epl/views.py:1687 epl/views.py:1706 epl/views.py:4070 epl/views.py:4089
+msgid "Positionnement à compléter pour une ou plusieurs collections"
+msgstr "Rang für eine oder mehrere Sammlungen zu abgeschlossen"
+
+#: epl/views.py:1692 epl/views.py:4075
+msgid "Rang 1 revendiqué pour plusieurs collections dont la vôtre"
+msgstr "Rang 1 für mehrere Sammlungen einschließlich Ihrer beansprucht"
+
+#: epl/views.py:1695 epl/views.py:4078
+msgid "Rang 1 revendiqué pour plusieurs collections mais pas la vôtre"
+msgstr "Rang 1 beansprucht für mehrere Sammlungen, aber nicht Ihre"
+
+#: epl/views.py:1699 epl/views.py:1710 epl/views.py:4082 epl/views.py:4093
+msgid "Le rang 1 n'a été revendiqué pour aucune collection"
+msgstr "Kein Rang 1"
+
+#: epl/views.py:1708 epl/views.py:4091
+msgid "Rang 1 revendiqué pour plusieurs collections"
+msgstr "Rang 1 für mehrere Sammlungen beansprucht"
+
+#: epl/views.py:1780 epl/views.py:1877 epl/views.py:2667 epl/views.py:2783
+msgid "Votre tour est venu d'instruire la fiche eplouribousse pour le ppn "
+msgstr ""
+"Sie sind an der Reihe, das Eplouribousse-Blatt für den folgende SID "
+"anzuweisen : "
+
+#: epl/views.py:1782
+msgid ""
+"(Ce message fait suite à une correction apportée par l'administrateur de la "
+"base de données)"
+msgstr ""
+"(Diese Nachricht folgt einer Korrektur, die vom Datenbankadministrator "
+"vorgenommen wurde)"
+
+#: epl/views.py:1792 epl/views.py:2803
+msgid "Vous n'avez pas coché !"
+msgstr "Sie haben nicht geprüft !"
+
+#: epl/views.py:1836
+msgid "Commentaire éventuel pour expliquer votre choix (max. 250 caractères)"
+msgstr "Möglicher Kommentar zur Erläuterung Ihrer Wahl (max. 250 Zeichen)"
+
+#: epl/views.py:1897
+#, fuzzy
+#| msgid "Dernier positionnement enregistré"
+msgid "Un nouveau positionnement a été enregistré pour le ppn "
+msgstr "Letzter genommener Rang"
+
+#: epl/views.py:1915
+msgid "Un nouvel arbitrage de type 0 a été repéré pour le ppn "
+msgstr ""
+
+#: epl/views.py:1929
+msgid "Un nouvel arbitrage de type 1 a été repéré pour le ppn "
+msgstr ""
+
+#: epl/views.py:2037 epl/views.py:2175 epl/views.py:2303 epl/views.py:2457
+#: epl/views.py:2610
+msgid "éléments reliés"
+msgstr "verbundene elemente"
+
+#: epl/views.py:2039 epl/views.py:2179 epl/views.py:2305 epl/views.py:2461
+#: epl/views.py:2614
+msgid "éléments non reliés"
+msgstr "Nicht verbundene elemente"
+
+#: epl/views.py:2058 epl/views.py:2081 epl/views.py:2241 epl/views.py:2330
+#: epl/views.py:2388 epl/views.py:4189
+msgid ""
+"Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un "
+"'améliorable'"
+msgstr ""
+"Bibliothek, die zuvor eine 'Ausnahme' oder etwas 'erweiterbar' ausgefüllt hat"
+
+#: epl/views.py:2059 epl/views.py:2242 epl/views.py:4190
+msgid "1990(2)-1998(12) par ex."
+msgstr "1990(2)-1998(12), z.B."
+
+#: epl/views.py:2059 epl/views.py:2242 epl/views.py:4190
+msgid ""
+"Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer "
+"selon l'ordre chronologique de ce champ"
+msgstr ""
+"Fortsetzung chronologisch; die Zeilennummer ist zu bestimmen in "
+"chronologischer Reihenfolge dieses Feldes"
+
+#: epl/views.py:2060 epl/views.py:2243 epl/views.py:4191
+msgid "1991(5) par ex."
+msgstr "1991(5), z.B."
+
+#: epl/views.py:2061 epl/views.py:2244 epl/views.py:4192
+msgid ""
+"éléments manquants dans le segment pour la forme considérée (pas forcément "
+"des lacunes si l'on considère la forme reliée)"
+msgstr ""
+"fehlende Elemente im Segment für das betrachtete Formular (nicht unbedingt "
+"Lücken unter Berücksichtigung der verbundenen Form)"
+
+#: epl/views.py:2062 epl/views.py:2245 epl/views.py:4193
+msgid "1995(4) par ex."
+msgstr "1995(4), z.B."
+
+#: epl/views.py:2063 epl/views.py:2246 epl/views.py:4194
+msgid ""
+"éléments dégradés (un volume relié dégradé peut être remplacé par les "
+"fascicules correspondants en bon état)"
+msgstr ""
+"verschlechterte Elemente (ein verschlechtertes gebundenes Volumen kann durch "
+"das entsprechende Broschüren in gutem Zustand)"
+
+#: epl/views.py:2095
+msgid "Vous ne pouvez pas valider deux fois la même ligne d'instruction."
+msgstr "Sie dürfen dieselbe Anweisungszeile nicht zweimal validieren"
+
+#: epl/views.py:2183 epl/views.py:2465 epl/views.py:2618
+msgid "instructions terminées"
+msgstr "XXXXX (Ausfüllung schon fertig)"
+
+#: epl/views.py:2193
+msgid "Aucune ligne ne peut être modifiée"
+msgstr "Keine Zeile kann geändert werden"
+
+#: epl/views.py:2342
+msgid "Une autre ligne contient déjà les mêmes données."
+msgstr "Eine andere Zeile enthält bereits dieselben Daten."
+
+#: epl/views.py:2479
+msgid "Par exemple : 5, 8-12, 14 pour supprimer les lignes 5, 8 à 12 et 14."
+msgstr ""
+"Zum Beispiel: 5, 8-12, 14, um die Zeilen 5, 8 bis 12 und 14 zu löschen."
+
+#: epl/views.py:2498
+msgid " <=== Expression invalide (vérifiez les conditions indiquées) "
+msgstr " <=== Ungültiger Ausdruck (überprüfen Sie die angegebenen Bedingungen)"
+
+#: epl/views.py:2562
+msgid ""
+"Votre collection ne comprend pas d'éléments reliés améliorant la résultante"
+msgstr ""
+"Ihre Sammlung enthält keine verbundene Elemente, die das Ergebnis verbessert"
+
+#: epl/views.py:2568 epl/views.py:2579
+msgid "-- Néant --"
+msgstr "-- Nichts --"
+
+#: epl/views.py:2573
+msgid ""
+"Votre collection ne comprend pas d'éléments non reliés améliorant la "
+"résultante"
+msgstr ""
+"Ihre Sammlung enthält keine nichtverbundene Elemente, die das Ergebnis "
+"verbessert"
+
+#: epl/views.py:2619
+msgid "ni relié, ni non reliés"
+msgstr "Nicht verbunden weder nicht"
+
+#: epl/views.py:2686
+msgid "La résultante est désormais disponible pour le ppn "
+msgstr ""
+
+#: epl/views.py:2716
+msgid "Fiche défectueuse signalée par le contrôleur pour le ppn "
+msgstr "Der Controller meldet einen falschen Stecker für den folgende SID "
+
+#: epl/views.py:2717
+msgid ""
+"Une intervention est attendue de la part d'un des administrateurs de la base"
+msgstr "Eine Intervention wird von einem der Database Administratoren erwartet"
+
+#: epl/views.py:2719
+msgid "Merci !"
+msgstr "Vielen Dank !"
+
+#: epl/views.py:2922 epl/views.py:3250 epl/views.py:3617 epl/views.py:3792
+msgid "Autre bibliothèque impliquée"
+msgstr "Andere teilnehmende Bibliothek"
+
+#: epl/views.py:2990 epl/views_csv.py:74
+msgid "motif d'exclusion"
+msgstr "Ausschlussgrund"
+
+#: epl/views.py:2992 epl/views_csv.py:160
+msgid "oui"
+msgstr "Ja"
+
+#: epl/views.py:2992 epl/views_csv.py:162
+msgid "non"
+msgstr "Nein"
+
+#: epl/views.py:3791
+msgid ""
+"Rang des collections de la bibliothèque mentionnée dans l'entête de cette "
+"page"
+msgstr "Rang der Sammlung für die oben genannte Bibliothek"
+
+#: epl/views.py:4135
+msgid "Pas d'enregistrement correspondant"
+msgstr ""
+
+#: epl/views.py:4139 epl/views_csv.py:76
+msgid "statut"
+msgstr "Status"
+
+#: epl/views.py:4174
+#, fuzzy
+#| msgid "Phase d'instruction"
+msgid "Pas d'instruction correspondante"
+msgstr "Anweisung Phase"
+
+#: epl/views.py:4279
+msgid "Bibliothèques impliquées (opérateur 'ou')"
+msgstr "Teilnehmende Bibliotheken (*or* Operator)"
+
+#: epl/views.py:4280
+msgid "Phase d'instruction"
+msgstr "Anweisung Phase"
+
+#: epl/views_csv.py:73
+msgid "requêté"
+msgstr "angefragt"
+
+#: epl/views_csv.py:73
+msgid "rcr"
+msgstr "lid"
+
+#: epl/views_csv.py:74 epl/views_pdf.py:80 epl/views_pdf.py:218
+#: epl/views_pdf.py:358 epl/views_pdf.py:498 epl/views_pdf.py:638
+#: epl/views_pdf.py:778
+msgid "commentaire"
+msgstr "Kommentar"
+
+#: epl/views_csv.py:75
+msgid "période de publication"
+msgstr "Ersch.-verlauf"
+
+#: epl/views_csv.py:104
+msgid "(Aucun enregistrement)"
+msgstr "(keine Aufzeichnungen)"
+
+#: epl/views_csv.py:106
+msgid "(ATTENTION : LISTE INCOMPLETE)"
+msgstr "(ACHTUNG: UNVOLLSTÄNDIGE LISTE)"
+
+#: epl/views_csv.py:108
+msgid "(Liste complète)"
+msgstr "(Diese Liste ist vollständig)"
+
+#: epl/views_csv.py:131
+#, fuzzy
+#| msgid "Sélection de la ligne à modifier"
+msgid "horodatage de l'extraction : "
+msgstr "Auswahl der Zeile zu bearbeiten"
+
+#: epl/views_csv.py:133
+msgid "centralid"
+msgstr ""
+
+#: epl/views_csv.py:133
+msgid "bdd"
+msgstr ""
+
+#: epl/views_csv.py:133
+msgid "bddid"
+msgstr ""
+
+#: epl/views_csv.py:133
+#, fuzzy
+#| msgid "(Aucun enregistrement)"
+msgid "date d'enregistrement"
+msgstr "(keine Aufzeichnungen)"
+
+#: epl/views_csv.py:134
+msgid "dernier login"
+msgstr ""
+
+#: epl/views_csv.py:134
+msgid "email"
+msgstr ""
+
+#: epl/views_csv.py:134
+msgid "super admin"
+msgstr ""
+
+#: epl/views_csv.py:134
+#, fuzzy
+#| msgid "Menu général"
+msgid "admin général"
+msgstr "Allgemeines Menü"
+
+#: epl/views_csv.py:135
+#, fuzzy
+#| msgid "Ce ppn est absent du projet"
+msgid "admin projet"
+msgstr "Dieser SID fehlt im Projekt"
+
+#: epl/views_csv.py:135
+msgid "checker"
+msgstr ""
+
+#: epl/views_csv.py:135
+msgid "contact bib (hors checker)"
+msgstr ""
+
+#: epl/views_csv.py:136
+msgid "autorisé"
+msgstr ""
+
+#: epl/views_csv.py:136
+msgid "mode privé activé"
+msgstr ""
+
+#: epl/views_pdf.py:49 epl/views_pdf.py:187 epl/views_pdf.py:327
+#: epl/views_pdf.py:467 epl/views_pdf.py:607 epl/views_pdf.py:747
+msgid "Collection"
+msgstr "Sammlung"
+
+#: epl/views_pdf.py:64 epl/views_pdf.py:202 epl/views_pdf.py:342
+#: epl/views_pdf.py:482 epl/views_pdf.py:622 epl/views_pdf.py:762
+msgid "historique de la publication"
+msgstr "Ersch.-verlauf"
+
+#: epl/views_pdf.py:80 epl/views_pdf.py:218 epl/views_pdf.py:358
+#: epl/views_pdf.py:498 epl/views_pdf.py:638 epl/views_pdf.py:778
+msgid "info"
+msgstr "info"
+
+#: epl/views_pdf.py:88 epl/views_pdf.py:226 epl/views_pdf.py:366
+#: epl/views_pdf.py:506 epl/views_pdf.py:646 epl/views_pdf.py:786
+msgid "a pris part"
+msgstr "hat mitgemacht"
+
+#: epl/views_pdf.py:103 epl/views_pdf.py:241 epl/views_pdf.py:381
+#: epl/views_pdf.py:521 epl/views_pdf.py:661 epl/views_pdf.py:801
+msgid "relié ?"
+msgstr "verbunden ?"
+
+#: epl/views_pdf.py:103 epl/views_pdf.py:241 epl/views_pdf.py:381
+#: epl/views_pdf.py:521 epl/views_pdf.py:661 epl/views_pdf.py:801
+msgid "bib. remédiée"
+msgstr "verbesserte Bibliothek"
+
+#: epl/views_pdf.py:103 epl/views_pdf.py:241 epl/views_pdf.py:381
+#: epl/views_pdf.py:521 epl/views_pdf.py:661 epl/views_pdf.py:801
+msgid "segment"
+msgstr "Segment"
+
+#: epl/views_pdf.py:103 epl/views_pdf.py:241 epl/views_pdf.py:381
+#: epl/views_pdf.py:521 epl/views_pdf.py:661 epl/views_pdf.py:801
+msgid "exception"
+msgstr "Ausnahme"
+
+#: epl/views_pdf.py:103 epl/views_pdf.py:241 epl/views_pdf.py:381
+#: epl/views_pdf.py:521 epl/views_pdf.py:661 epl/views_pdf.py:801
+msgid "améliorable"
+msgstr "erweiterbar"
+
+#: mysite/settings.py:133
+msgid "Français"
+msgstr ""
+
+#: mysite/settings.py:134
+msgid "English"
+msgstr ""
+
+#: mysite/settings.py:135
+msgid "Deutsch"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Vider le formulaire ci-dessous"
+#~ msgid "Vider les formulaires ci-dessous"
+#~ msgstr "Leeren Sie das folgende Formular"
+
+#, fuzzy
+#~| msgid "Retour à l'instruction"
+#~ msgid "Rétroactif (instructions)"
+#~ msgstr "Zurück zum Ausfüllen"
+
+#~ msgid "Tableau de bord"
+#~ msgstr "Dashboard"
+
+#~| msgid "éléments non reliés"
+#~ msgid "du début des non reliés"
+#~ msgstr "Nicht verbundene elemente"
+
+#~| msgid "Réinitialiser"
+#~ msgid "Réinitialisation"
+#~ msgstr "Zurücksetzen"
+
+#~ msgid "Ressources incomplètement ou pas traitées"
+#~ msgstr "Zeitschriften deren Anweisung ist nicht vollständig"
+
+#~ msgid ""
+#~ "Une anomalie a été constatée au cours de l'instruction de la résultante"
+#~ msgstr "Anomalie festgestellt"
+
+#~ msgid "Instruction des éléments non reliés de la collection"
+#~ msgstr "Die Anweisung der nicht verbundenen Elemente wird ausgeführt"
+
+#~ msgid "Instruction des éléments non reliés de votre collection"
+#~ msgstr "Die Anweisung der nicht verbundenen Elemente wird ausgeführt"
+
+#~ msgid "Instruction des éléments reliés de la collection"
+#~ msgstr "Die Anweisung der verbundenen Elemente wird ausgeführt"
+
+#~ msgid "Instruction des éléments reliés de votre collection"
+#~ msgstr "Die Anweisung der verbundenen Elemente wird ausgeführt"
+
+#~ msgid "Modification du rang de votre collection"
+#~ msgstr "Ändern des Ranges Ihrer Sammlung"
+
+#~ msgid "Concurrence rang 1"
+#~ msgstr "Wettbewerb auf Rang 1"
+
+#~ msgid "Ressource non candidate du fait d'exclusion"
+#~ msgstr "Nicht kandidierende Ressource aufgrund von Ausschluss"
+
+#~ msgid "Vous devez positionner votre collection"
+#~ msgstr "Sie müssen Ihre Sammlung ein Rang geben"
+
+#~ msgid "Votre collection est déjà positionnée ; modification encore possible"
+#~ msgstr "Ihre Sammlung ist bereits positioniert. Änderung noch möglich"
+
+#~ msgid "Absence de rang 1"
+#~ msgstr "Kein Rang 1"
+
+#~ msgid "Vérification finale"
+#~ msgstr "Letzter Check"
+
+#~ msgid "Abonnement aux listes de diffusion eplouribousse"
+#~ msgstr "Abonnement zur Eplouribousse-Mailinglisten"
+
+#~ msgid "Informations importantes uniquement : Mises à jour de sécurité etc."
+#~ msgstr "Nur wichtige Informationen: Sicherheitsupdates usw."
+
+#~ msgid "Toutes informations concernant l'application"
+#~ msgstr "Alle Informationen"
+
+#~ msgid "Revenir à la liste"
+#~ msgstr "Zurück zur Liste"
+
+#~ msgid ""
+#~ "Le statut est passé à 6 pour les enregistrements des bibliothèques "
+#~ "participant à la résultante de la ressource citée en objet ; une "
+#~ "intervention dans la base de données est attendue de votre part. Merci !"
+#~ msgstr ""
+#~ "Der Status wurde für die Datensätze der Bibliotheken, die am Ergebnis der "
+#~ "im Betreff genannten Zeitschrift beteiligt sind, auf 6 geändert. Ein "
+#~ "Eingriff in die Datenbank wird von Ihnen erwartet. Vielen Dank"
+
+#~ msgid "Formulaire de contact"
+#~ msgstr "Kontakt Formular"
+
+#~ msgid "Dernier positionnement (session en cours)"
+#~ msgstr "Neuester Rang (Aktuelle Sitzung)"
+
+#~ msgid "Poursuivre l'instruction"
+#~ msgstr "Setzen Sie die Anweisung fort"
+
+#~ msgid "Menu"
+#~ msgstr "Menü"
+
+#~ msgid "ressources à instruire"
+#~ msgstr "Zetischriften zum anweisen"
+
+#~ msgid "Menu [instructions]"
+#~ msgstr "Ausfüllen Menü"
+
+#~ msgid "reliés autre rang"
+#~ msgstr "verbundene Form, anderer rang"
+
+#~ msgid "non reliés autre rang"
+#~ msgstr "nicht verbundene Form, anderer rang "
+
+#~ msgid "Liste des ressources à instruire"
+#~ msgstr "zu anweisende Zeitschriften"
+
+#~ msgid "forme reliée, rang autre que 1"
+#~ msgstr "verbundene Form, nicht 1er rang "
+
+#~ msgid "forme non reliée, rang 1"
+#~ msgstr "nicht verbundene Form, rang 1"
+
+#~ msgid "forme non reliée, rang autre que 1"
+#~ msgstr "Nicht verbundene Form, nicht 1er rang"
+
+#~ msgid "collections dont le positionnement peut encore être modifié"
+#~ msgstr "Sammlung, die auf die Positionierung warten"
+
+#~ msgid "Le positionnement n'est plus possible"
+#~ msgstr "Rang nehmen ist nicht mehr möglich"
+
+#~ msgid ""
+#~ "Les instructions ont déjà commencé ou la ressource n'est plus candidate"
+#~ msgstr "Rang nehmen ist nicht mehr möglich"
+
+#~ msgid "Ce n'est pas à votre tour d'instruire la fiche"
+#~ msgstr "Sie sind nicht an der Reihe, diese Aktion zu machen"
+
+#~ msgid "La fiche n'est pas encore éditable"
+#~ msgstr "Die Aktion ist noch nicht möglich"
+
+#~ msgid ""
+#~ "La fiche est déjà complètement instruite et ne peut plus être modifiée"
+#~ msgstr "Schon vollständig, kann nicht geändert werden"
+
+#~ msgid "Dans ce dernier cas, voir : "
+#~ msgstr "Im letzteren Fall siehe:"
+
+#~ msgid "Votre rattachement apparaît en rouge"
+#~ msgstr "Anhänge Ihrer Bibliothek wird rot angezeigt"
+
+#~ msgid ""
+#~ "Cliquez sur le lien [identifiant] pour savoir à quelle bibliothèque celui-"
+#~ "ci correspond"
+#~ msgstr ""
+#~ "Klicken Sie auf den Link [Bezeichner], um herauszufinden, welcher "
+#~ "Bibliothek diese entspricht"
+
+#~ msgid ""
+#~ "Ressources éditables pour lesquelles votre collection est la collection "
+#~ "mère"
+#~ msgstr ""
+#~ "Bearbeitbare Zeitschriften, für die Ihre Sammlung die Muttersammlung ist"
+
+#~ msgid "Ressources éditables pour lesquelles votre collection n'est pas mère"
+#~ msgstr ""
+#~ "Bearbeitbare Zeitschriften, für die Ihre Sammlung die Muttersammlung "
+#~ "nicht ist"
+
+#~ msgid "collections en attente de positionnement"
+#~ msgstr "Sammlung, die auf die Positionierung warten"
+
+#~ msgid "Collection <u>mère</u>"
+#~ msgstr "<u>Mutter</u> Sammlung"
+
+#~ msgid "Collection <u>non mère</u>"
+#~ msgstr "<u>Nicht</u> Mutter Sammlung"
+
+#~ msgid "Retour à la dernière liste affichée"
+#~ msgstr "Zurück zur letzten angezeigten Liste"
+
+#~ msgid "Recherche unitaire"
+#~ msgstr "Einheitensuche"
+
+#~ msgid "fonctionnalité bêta"
+#~ msgstr "Beta Funktionalität"
+
+#~ msgid " <=== Donnée invalide "
+#~ msgstr " <=== Ungültige Daten "
+
+#~ msgid "Les dernières lignes validées sont mises en évidence"
+#~ msgstr "Die zuletzt bestätigte Zeile wird hervorgehoben"
+
+#~ msgid ""
+#~ " <=== Vous ne pouvez supprimer une instruction que pour votre collection "
+#~ "et pour la forme courante "
+#~ msgstr ""
+#~ " <=== Sie können eine Anweisung nur für Ihre Sammlung und für die "
+#~ "aktuelle Form löschen "
+
+#~ msgid "Reclamation"
+#~ msgstr "Ausnahme"
+
+#~ msgid "Comments"
+#~ msgstr "Kommentar"
+
+#~ msgid ""
+#~ "Seule la fonctionnalité *instruction* est disponible pour le contrôleur "
+#~ "(Reculez d'une page dans votre navigateur et choisissez *instruction*)"
+#~ msgstr ""
+#~ "Für den Kontrolleur steht nur die Funktion * Ausfüllen * zur Verfügung "
+#~ "(Gehen Sie eine Seite in Ihrem Browser zurück und wählen Sie * Ausfüllen "
+#~ "*)"
+
+#~ msgid "Respectez l'ordre chronologique du champ 'Segment'"
+#~ msgstr "Beachten Sie die chronologische Reihenfolge des Felds 'Segment'"
+
+#~ msgid "Suite ininterrompue chronologiquement"
+#~ msgstr "Chronologisch fortgesetzt"
+
+#~ msgid "Retour à la liste générale des positionnements"
+#~ msgstr "Zurück zum [rang nehmen]"
+
+#~ msgid "Retour à la liste des ressources éditables"
+#~ msgstr "Zurück zur Liste der bearbeitbaren Zeitschriften"

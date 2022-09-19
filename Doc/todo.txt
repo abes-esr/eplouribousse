@@ -1,0 +1,11 @@
+Améliorations :
+--------------------------------------------------------------------------------------------------
+- Uniformisation de l'orthographe (majuscules/minuscules etc.)
+- i18n à améliorer
+- Amélioration du manuel et des instructions pour le déploiement
+--------------------------------------------------------------------------------------------------
+- Lisibilité et assainissement du code
+- Ergonomie
+- Enrichissement des commentaires du code
+--------------------------------------------------------------------------------------------------
+

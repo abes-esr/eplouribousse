@@ -1,0 +1,141 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+      <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+
+    </div>
+
+    <div id="content">
+      <h2>{% trans "Administration d'une ligne d'instruction" %} :  {{ name }}</h2>
+    <p><b>{% trans "Titre" %} :</b> {{ d.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> {{ d.sid }} / <b>issn :</b> {{ d.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ d.pubhist }}</p>
+
+
+    <p><center><font color= #FF0000 >{% trans "Attention : Instructions et statuts des rattachements sont dépendants ; n'oubliez pas de les administrer complémentairement" %}.</font></center></p>
+
+      <table border="1">
+
+         <thead>
+
+             <td>{% trans "Ligne" %}</td>
+             <td>{% trans "Bibliothèque" %}</td>
+             <td>{% trans "Forme reliée" %}</td>
+             <td>{% trans "Bibliothèque remédiée" %}</td>
+             <td>{% trans "Segment" %}</td>
+             <td>{% trans "Exceptions" %}</td>
+             <td>{% trans "Eléments améliorables" %}</td>
+
+         </thead>
+
+         <tbody>
+           {% for elmt in instrlist %}
+              {% if elmt.id == instrid %}
+          <tr>
+              <td><center><font color= #FF0000 >{{ elmt.line }}</font></center></td>
+              <td><font color= #FF0000 >{{ elmt.name }}</font></td>
+              <td><font color= #FF0000 >{{ elmt.bound }}</font></td>
+              <td><font color= #FF0000 >{{ elmt.oname }}</font></td>
+              <td><font color= #FF0000 >{{ elmt.descr }}</font></td>
+              <td><font color= #FF0000 >{{ elmt.exc }}</font></td>
+              <td><font color= #FF0000 >{{ elmt.degr }}</font></td>
+
+          </tr>
+
+              {% else %}
+          <tr>
+              <td><center>{{ elmt.line }}</center></td>
+              <td>{{ elmt.name }}</td>
+              <td>{{ elmt.bound }}</td>
+              <td>{{ elmt.oname }}</td>
+              <td>{{ elmt.descr }}</td>
+              <td>{{ elmt.exc }}</td>
+              <td>{{ elmt.degr }}</td>
+
+          </tr>
+              {% endif %}
+            {% endfor %}
+         </tbody>
+        </table>
+      <p>{% trans "Modifiez (action irrémédiable)" %} :</p>
+        <table>
+         <thead>
+
+             <td>{% trans "A placer sous la ligne (actuelle)" %}</td>
+             <td>{% trans "Bibliothèque" %}</td>
+             <td>{% trans "Forme reliée" %}</td>
+             <td>{% trans "Bibliothèque remédiée" %}</td>
+             <td>{% trans "Segment" %}</td>
+             <td>{% trans "Exceptions" %}</td>
+             <td>{% trans "Eléments améliorables" %}</td>
+
+         </thead>
+         <tbody>
+           <form method="post">{% csrf_token %}
+             <tr>
+                 <td><center>{{ f.line }}</center></td>
+                 <td>{{ name }}</td>
+                 <td>{{ f.bound }}</td>
+                 {% if name == "checker" %}
+                 <td></td>
+                 {% else %}
+                 <td>{{ f.oname }}</td>
+                 {% endif %}
+                 <td>{{ f.descr }}</td>
+                 <td>{{ f.exc }}</td>
+                 <td>{{ f.degr }}</td>
+
+             </tr>
+         </tbody>
+
+
+      </table>
+
+
+      <p><center>{% trans "ou cochez la case suivante et validez pour supprimer la ligne (action irrémédiable)" %} : {{ modeform.suppr }}</center></p>
+      <p><center>{% trans "et/ou cochez la case suivante et validez pour ajouter la ligne telle que renseignée" %} : {{ modeform.ajo }}</center></p>
+      <p><input type="submit" value="{% trans "Valider" %}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ bib.lid }}">{% trans "Annuler" %}</a></b></button></p>
+
+        </form>
+        </div>
+
+        <div id="credits">
+            <p>Service des bibliothèques de l'Université de Strasbourg · <a target="_blank" href="/./default/about">{% trans "A propos" %}</a> . <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · <a target="_blank" href="/default/webmaster">{% trans "Administrateur du site" %}</a>{% endif %}</p>
+
+<p>eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
+<p>Version : {{ version }}</p>
+
+        </div>
+
+    </body>
+
+</html>

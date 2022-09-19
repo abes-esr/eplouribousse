@@ -1,0 +1,56 @@
+Version 0.1 (Let it be)                     2018.12.19
+Version 0.2 (Santiano)                      2019.03.25
+Version 0.3 (Hey Jude)                      2019.09.01
+Version 0.4 (Софья Фёдоровна Ростопчина)    2019.12.01
+
+Version 1.0 (Chavanatte)                    2020.01.15
+Version 1.1 (Basina)                        2020.04.15
+Version 1.2 (Chrodechilde)                  2020.05.05
+Version 1.3 (~Ultrogothe)                   beta
+Version 1.4 (Ingonde)                       2020.05.24
+Version 1.5 (~Chunsine)                     beta
+Version 1.6 (Gondioque)                     2020.07.01
+Version 1.7 (~Arégonde)                     beta
+Version 1.8 (Radegonde)                     2020.09.02
+Version 1.9 (~Walderade)                    beta
+Version 1.10 (Ingeberge)                    2020.09.24
+Version 1.11 (~Merofledis)                  beta
+Version 1.12 (Audovera)                     2020.10.14
+Version 1.13 (~Galswinthe)                  beta
+Version 1.14 (Fredegunda)                   2020.12.11
+Version 1.15 (~Haldetrude)                  beta
+Version 1.16 (Bertrude)                     2021.01.05
+Version 1.17 (~Sichilde)                    beta
+Version 1.18 (Gomatrude)                    2021.02.01
+Version 1.19 (~Nantechilde)                 beta
+Version 1.20 (Wulfégonde)                   2021.03.23
+Version 1.21 (~Berchilde)                   beta
+
+Version 2.00 (Chimnechilde)                 2021.07.09
+Version 2.01 (~Bathilde)                    beta
+Version 2.02 (Bilichilde)                   2021.10.21
+Version 2.03 (~Chrothildis)                 beta
+Version 2.04 (Bertrada)                     2021.11.02
+Version 2.05 (~Himiltrude)                  beta
+Version 2.06 (Desiderata)                   2022.01.07
+Version 2.07 (~Hildegarde)                  beta
+Version 2.08 (Fastrada)                     2022.09.19
+Version 2.09 (~Luitgard)                    beta
+Version 2.10 (Irmingard)                    à venir
+Version 2.11 (~Judith)                      beta
+
+(Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)
+
+Dernières nouveautés (* = important) :
+
+* export des principales listes au format csv
+* instruction renseignée automatiquement quand l'instructeur passe son tour
+* possibilité de s'abonner à des listes pour être tenu au courant
+* routage de retour aux listes
+* alertes possibles non seulement pour les instructions mais aussi pour le positionnement, les arbitrages et les résultantes
+* ajout du mode d'édition privé
+* mise à jour du manuel utilisateur
+* distribution de l'amdinistration de projet en modules élémentaires simples
+
+Version 2 : Version multi-projets (beta tant qu'elle n'est pas testée grandeur nature ...)
+
