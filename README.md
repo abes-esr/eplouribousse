@@ -1,5 +1,3 @@
-More comfortable in english ? Go to README_en.md
-
 # AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques.
 
 Gagnez de l'espace en éliminant vos doublons, offrez une meilleure lisibilité de vos ressources en reconstituant pour chacune d'elles une collection unique la plus intègre possible résultant de l'agrégation des éléments épars disponibles dans vos bibliothèques.
@@ -73,7 +71,7 @@ Les objectifs principaux de la phase beta test sont les suivants :
 
 Les établissements candidats bêta testeurs bénéficieront d’une formation gratuite en ligne (utilisateurs et administrateurs), d’une assistance complète en ligne au peuplement de leur base de données, de conseils lors de la mise en place de la base de données sur un serveur de leur choix, d’une assistance à distance aux utilisateurs et, si l’établissement le souhaite et dans la mesure du possible, de la reprise du travail déjà réalisé lors du passage à la version finale.
 
-Visitez l'instance de bêta test : https://sbu-eplouribousse.unistra.fr/
+Visitez l'instance de bêta test : https://sbu-eplouribousse.unistra.fr/ (à venir)
 
 Vous avez un projet de dédoublonnement de revues papier dans votre établissement ; profitez-en pour vous porter candidat. Vous n’avez pas de projet précis mais la participation au test vous intéresse, contactez-nous (voir contact au bas de cette page).
 
@@ -84,5 +82,5 @@ eplouribousse utilise des données sous licence ouverte etalab fournies par l'Ag
 
 # Contact :
 
-Indiqué en https://github.com/GGre/eplouribounistra/blob/master/contact.txt
+Indiqué en https://github.com/GGre/eplouribounistra/blob/master/Doc/contact.txt
 
