@@ -67,6 +67,8 @@ h2 {
 
 #content p {
     text-align: left;
+    padding: 0;
+    line-height: 1;
 }
 
 #content ul {
