@@ -41,7 +41,7 @@
 
           <h2>{{ libname }} - {% trans "Instructions" %} - {% trans "non reliés, rang 1" %}</h2>
 
-          <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ l }}/37/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ {% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/37/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ {% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
 
           <p></p>
           <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>

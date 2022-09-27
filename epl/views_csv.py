@@ -16,7 +16,7 @@ def simple_csv(request, bdd, lid, xlid, recset, what, length):
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
     fea =""
-    parsed =recset.split("<ItemRecord: ")
+    
     size =int(length)
 
     if what =="10":
@@ -77,8 +77,13 @@ def simple_csv(request, bdd, lid, xlid, recset, what, length):
 
 
     c =1
-    for e in parsed[1:]:
-        sid =e[0:9]
+    setrec =''.join(recset[1:-1])
+    tresec = setrec.replace("'", "")
+    rectes = tresec.replace(' ', '')
+    parsed =rectes.split(',')
+            
+    for e in parsed:
+        sid =e
         i =ItemRecord.objects.using(bdd).get(sid =sid, lid =lid)
         set =ItemRecord.objects.using(bdd).filter(sid =sid)
         writer.writerow([c, "x", sid, i.issn, lid, i.rank, i.excl, \

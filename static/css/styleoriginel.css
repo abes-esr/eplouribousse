@@ -13,14 +13,14 @@ body {
     width: 100%;
     background-color: #ffffff;
     font-family: "Unistra B", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.22222;
     color: #000000;
 }
 
 select {
     font-family: "Unistra B", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.22222;
     color: #000000;
 }
@@ -40,28 +40,28 @@ a:hover {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 30px;
     color: #ff1d44;
     font-weight: bold;
     text-align: center;
     margin: 0 auto;
     padding-top: 5px;
-    max-width: 90%;
+    max-width: 80%;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 30px;
     color: #ff1d44;
     font-weight: bold;
     text-align: center;
     margin: 0 auto;
     padding: 0;
-    max-width: 90%;
+    max-width: 80%;
 }
 
 #content {
     background-color: #ffffff;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -79,7 +79,7 @@ h2 {
     border-width: 2px;
     background-color: #ffffff;
     font-family: "Unistra B", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     color: #ff1d44;
     padding-left: 1%;
     padding-right: 1%;
@@ -88,7 +88,7 @@ h2 {
 #content input[type="submit"]:hover {
     background-color: #ff1d44;
     font-family: "Unistra B", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #ffffff;
     padding-left: 1%;
@@ -117,8 +117,8 @@ h2 {
 }
 
 #credits p {
-    font-size: 10px;
-    width: 90%;
+    font-size: 12px;
+    width: 80%;
     color: #ffffff;
     text-align: center;
     margin: 0 auto;
@@ -228,7 +228,7 @@ form table, th, td {
   position: sticky;
   top: 0;
   left: 0;
-  width: 90%;
+  width: 80%;
   background: #ffffff;
   margin: 0 auto;
 }

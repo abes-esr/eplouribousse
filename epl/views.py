@@ -29,6 +29,7 @@ from django.contrib import messages
 
 from .decorators import *
 
+
 lastrked =None
 webmaster =""
 try:
@@ -2849,6 +2850,8 @@ def ranktotake(request, bdd, lid, sort):
         if len(itemlist) > 1:
             resslist.append(e)
     l = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -2864,7 +2867,8 @@ def ranktotake(request, bdd, lid, sort):
 
     return render(request, 'epl/to_rank_list.html', { 'resslist' : resslist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
-    'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
+    'lastrked' : lastrked, 'version' : version, 'sort' : sort, \
+    'webmaster' : webmaster, 'bdd' : bdd, 'sidlist' : sidlist,})
 
 @edmode1
 def modifranklist(request, bdd, lid, sort):
@@ -2896,6 +2900,8 @@ def modifranklist(request, bdd, lid, sort):
         # elif len(list(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(status =0))) ==0:
         #     resslist.append(e)
     l = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -2909,7 +2915,7 @@ def modifranklist(request, bdd, lid, sort):
     except:
         lastrked =None
 
-    return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, \
+    return render(request, 'epl/modifrklist.html', { 'resslist' : resslist, 'sidlist' : sidlist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'nlib' : nlib, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
@@ -2964,6 +2970,8 @@ def xranktotake(request, bdd, lid, xlid, sort):
         if len(itemlist) > 1 and list(ItemRecord.objects.using(bdd).filter(sid = e.sid, lid = xlid).exclude(rank =0)):
             resslist.append(e)
     l = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -2976,7 +2984,7 @@ def xranktotake(request, bdd, lid, xlid, sort):
     except:
         lastrked =None
 
-    return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, \
+    return render(request, 'epl/xto_rank_list.html', { 'resslist' : resslist, 'sidlist' : sidlist, \
     'lid' : lid, 'libname' : libname, 'l' : l, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
@@ -3047,6 +3055,7 @@ def excllist(request, bdd):
             excl_list =ItemRecord.objects.using(bdd).filter(lid =lid, rank =0).order_by(sort)
 
         length =len(excl_list)
+        sidlist = [ir.sid for ir in excl_list]
 
     return render(request, 'epl/excl.html', locals())
 
@@ -3078,6 +3087,7 @@ def faulty(request, bdd):
         faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6).order_by(sort)
 
         length =len(faulty_list)
+        sidlist = [ir.sid for ir in faulty_list]
 
     return render(request, 'epl/faulty.html', locals())
 
@@ -3128,6 +3138,8 @@ def arbitration(request, bdd, lid, sort):
         resslist = sorted(resslist, key=serial_title)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3142,7 +3154,7 @@ def arbitration(request, bdd, lid, sort):
         lastrked =None
 
     return render(request, 'epl/arbitration.html', { 'resslist' : resslist, \
-    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'sidlist' : sidlist, \
     'lastrked' : lastrked, 'version' : version, 'nlib' : nlib, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 @edmode1
@@ -3177,6 +3189,8 @@ def arbrk1(request, bdd, lid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3189,7 +3203,7 @@ def arbrk1(request, bdd, lid, sort):
         lastrked =None
 
     return render(request, 'epl/arbrk1.html', { 'resslist' : resslist, \
-    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'sidlist' : sidlist, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 @edmode1
@@ -3226,6 +3240,8 @@ def arbnork1(request, bdd, lid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3238,7 +3254,7 @@ def arbnork1(request, bdd, lid, sort):
         lastrked =None
 
     return render(request, 'epl/arbnork1.html', { 'resslist' : resslist, \
-    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, \
+    'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'sidlist' : sidlist, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
 @edmode4
@@ -3315,6 +3331,8 @@ def xarbitration(request, bdd, lid, xlid, sort):
         resslist = sorted(l, key=serial_title)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in l]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3327,7 +3345,7 @@ def xarbitration(request, bdd, lid, xlid, sort):
     except:
         lastrked =None
 
-    return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, \
+    return render(request, 'epl/xarbitration.html', { 'resslist' : resslist, 'sidlist' : sidlist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'xlid' : xlid, 'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'webmaster' : webmaster, 'bdd' : bdd, })
 
@@ -3363,6 +3381,8 @@ def x1arb(request, bdd, lid, xlid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3375,7 +3395,7 @@ def x1arb(request, bdd, lid, xlid, sort):
     except:
         lastrked =None
 
-    return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, \
+    return render(request, 'epl/x1arbitration.html', { 'resslist' : resslist, 'sidlist' : sidlist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
@@ -3407,12 +3427,16 @@ def x0arb(request, bdd, lid, xlid, sort):
 
     for e in reclist:
         sid = e.sid
-        if len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
+        if ItemRecord.objects.using(bdd).filter(sid =sid, lid =xlid) and \
+        ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid) and \
+        len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
         len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)) ==0 and \
         len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3425,7 +3449,7 @@ def x0arb(request, bdd, lid, xlid, sort):
     except:
         lastrked =None
 
-    return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, \
+    return render(request, 'epl/x0arbitration.html', { 'resslist' : resslist, 'sidlist' : sidlist, \
     'lid' : lid, 'libname' : libname, 'size' : size, 'k' : k, 'xlibname' : xlibname, \
     'lastrked' : lastrked, 'version' : version, 'sort' : sort, 'xlid' : xlid, 'webmaster' : webmaster, 'bdd' : bdd, })
 
@@ -3469,6 +3493,8 @@ def instrtodo(request, bdd, lid, sort):
         l = sorted(l, key=serial_title)
 
     size = len(l)
+    
+    sidlist = [ir.sid for ir in l]
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3505,6 +3531,8 @@ def instroneb(request, bdd, lid, sort):
         return do
 
     size = len(l)
+    
+    sidlist = [ir.sid for ir in l]
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3538,6 +3566,8 @@ def instrotherb(request, bdd, lid, sort):
         return do
 
     size = len(l)
+    
+    sidlist = [ir.sid for ir in l]
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3570,6 +3600,8 @@ def instronenotb(request, bdd, lid, sort):
         return do
 
     size = len(l)
+    
+    sidlist = [ir.sid for ir in l]
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3602,6 +3634,8 @@ def instrothernotb(request, bdd, lid, sort):
         return do
 
     size = len(l)
+    
+    sidlist = [ir.sid for ir in l]
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3664,6 +3698,8 @@ def xinstrlist(request, bdd, lid, xlid, sort):
             l.append(e)
 
     size = len(l)
+    
+    sidlist = [ir.sid for ir in l]
 
     return render(request, 'epl/xto_instr_list.html', locals())
 
@@ -3699,6 +3735,8 @@ def tobeedited(request, bdd, lid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3737,6 +3775,8 @@ def mothered(request, bdd, lid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3775,6 +3815,8 @@ def notmothered(request, bdd, lid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
@@ -3847,6 +3889,8 @@ def xmothered(request, bdd, lid, xlid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     name = Library.objects.using(bdd).get(lid =lid).name
     xname = Library.objects.using(bdd).get(lid =xlid).name
@@ -3881,6 +3925,8 @@ def xnotmothered(request, bdd, lid, xlid, sort):
             resslist.append(e)
 
     size = len(resslist)
+    
+    sidlist = [ir.sid for ir in resslist]
 
     name = Library.objects.using(bdd).get(lid =lid).name
     xname = Library.objects.using(bdd).get(lid =xlid).name

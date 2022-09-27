@@ -46,7 +46,7 @@
 
 
                       {% if l == 1 %}
-                      <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ excl_list }}/50/{{ length }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }} ~ {% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+                      <p>{% if length > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/50/{{ length }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ length }} ~ {% trans "Pour plus d'information, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
                       <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 
         <HR>

@@ -34,7 +34,7 @@
 
 
 
-                <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ resslist }}/20/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}
+                <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/20/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}
                   {% if nlib > 2 %}
                     ~  <a href="/{{ bdd }}/arbfilter/{{ lid }}">{% trans "Restreindre la liste aux arbitrages avec une autre bibliothèque" %}</a></p>
                   {% else %}

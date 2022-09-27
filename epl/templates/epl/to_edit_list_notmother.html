@@ -31,7 +31,7 @@
           <h2>{{ libname }} - {% trans "Collection non mère" %} - {% trans "Résultantes" %}</h2>
 
 
-          <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ resslist }}/42/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ <a target="_blank" href="/{{ bdd }}/ednotmotherpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a> ~ {% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/42/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ <a target="_blank" href="/{{ bdd }}/ednotmotherpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a> ~ {% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
           <p></p>
           <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
 

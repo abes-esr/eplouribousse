@@ -33,7 +33,7 @@
                 <h2>{{ libname }} - {% trans "Arbitrages (Concurrence sur le rang 1)" %}</h2>
                 <!-- <div id="content"> -->
 
-                <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ resslist }}/24/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
+                <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/24/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
 
                 <p></p>
 

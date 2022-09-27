@@ -35,7 +35,7 @@
 
                 <h2>{{ libname }} (& {{ xlibname }}) - {% trans "Arbitrages" %}</h2>
 
-                <p><button><b><a href="/{{ bdd }}/csv/{{ lid }}/{{ xlid }}/{{ resslist }}/21/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ <b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
+                <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/{{ xlid }}/{{ sidlist }}/21/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
 
                 <p>[<b><font color= #a7a7a7 >1</font></b> : <a href="/{{ bdd }}/arb1list/{{ lid }}/{{ xlid }}/title">{% trans "Concurrence sur le rang 1" %}</a>] ~ [<b><font color= #a7a7a7 >ø</font></b> : <a href="/{{ bdd }}/arb0list/{{ lid }}/{{ xlid }}/title">{% trans "Rang 1 non revendiqué" %}</a>]</p>
 

@@ -11,17 +11,17 @@ html {
 
 body {
     width: 100%;
-    background-color: #ffffff;
+    background-color: #D9D2E9;
     font-family: "Unistra B", sans-serif;
-    font-size: 16px;
-    line-height: 1.22222;
+    font-size: 14px;
+    line-height: 1;
     color: #000000;
 }
 
 select {
     font-family: "Unistra B", sans-serif;
-    font-size: 16px;
-    line-height: 1.22222;
+    font-size: 14px;
+    line-height: 1;
     color: #000000;
 }
 
@@ -32,7 +32,7 @@ select {
 }
 
 a {
-    color: #ff1d44;
+    color: #c90076;
 }
 
 a:hover {
@@ -41,7 +41,7 @@ a:hover {
 
 h1 {
     font-size: 20px;
-    color: #ff1d44;
+    color: #c90076;
     font-weight: bold;
     text-align: center;
     margin: 0 auto;
@@ -51,7 +51,7 @@ h1 {
 
 h2 {
     font-size: 20px;
-    color: #ff1d44;
+    color: #c90076;
     font-weight: bold;
     text-align: center;
     margin: 0 auto;
@@ -60,7 +60,7 @@ h2 {
 }
 
 #content {
-    background-color: #ffffff;
+    background-color: #D9D2E9;
     width: 90%;
     margin: 0 auto;
 }
@@ -74,23 +74,23 @@ h2 {
 }
 
 #content input[type="submit"] {
-    border-color: #ff1d44;
+    border-color: #c90076;
     border-style: solid;
     border-width: 2px;
-    background-color: #ffffff;
+    background-color: #D9D2E9;
     font-family: "Unistra B", sans-serif;
     font-size: 16px;
-    color: #ff1d44;
+    color: #c90076;
     padding-left: 1%;
     padding-right: 1%;
 }
 
 #content input[type="submit"]:hover {
-    background-color: #ff1d44;
+    background-color: #c90076;
     font-family: "Unistra B", sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #ffffff;
+    color: #D9D2E9;
     padding-left: 1%;
     padding-right: 1%;
 }
@@ -100,11 +100,11 @@ h2 {
     padding-bottom: 5px;
     background-color: #f1f1f2;
     text-align: center;
-    color: #ff1d44;
+    color: #c90076;
 }
 
 #footer a {
-    color: #ff1d44;
+    color: #c90076;
 }
 
 #credits {
@@ -117,9 +117,9 @@ h2 {
 }
 
 #credits p {
-    font-size: 10px;
-    width: 90%;
-    color: #ffffff;
+    font-size: 12px;
+    width: 80%;
+    color: #D9D2E9;
     text-align: center;
     margin: 0 auto;
 }
@@ -131,11 +131,11 @@ table {
 }
 
 thead {
-    background-color: #ff1d44;
+    background-color: #c90076;
 }
 
 th {
-    color: #ffffff;
+    color: #D9D2E9;
     text-align: center;
     vertical-align: middle;
 }
@@ -153,14 +153,14 @@ form table {
 
 form thead {
     background-color: #f1f1f2;
-    /* color: #ffffff; */
+    /* color: #D9D2E9; */
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
 }
 
 form th {
-    color: #ffffff;
+    color: #D9D2E9;
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
@@ -172,25 +172,25 @@ form table, th, td {
 }
 
 #menucontextuel {
-    color: #ff1d44;
+    color: #c90076;
     text-align: center;
 }
 
 #menucontextuel a {
-    color: #ff1d44;
+    color: #c90076;
 }
 
 #menugeneral {
-    color: #ff1d44;
+    color: #c90076;
     text-align: center;
 }
 
 #menugeneral a {
-    color: #ff1d44;
+    color: #c90076;
 }
 
 #credits a {
-    color: #ffffff;
+    color: #D9D2E9;
 }
 
 #highlight {
@@ -198,11 +198,11 @@ form table, th, td {
     padding-bottom: 5px;
     background-color: #f1f1f2;
     /* text-align: center; */
-    /* color: #ff1d44; */
+    /* color: #c90076; */
 }
 
 #highlight a {
-    color: #ff1d44;
+    color: #c90076;
 }
 
 /* [STICKY MENU] */
@@ -212,7 +212,7 @@ form table, th, td {
   top: 0;
   left: 0;
   /* width: 0 auto; */
-  background: #ff1d44;
+  background: #c90076;
   margin: 0 auto;
 }
 
@@ -229,6 +229,6 @@ form table, th, td {
   top: 0;
   left: 0;
   width: 90%;
-  background: #ffffff;
+  background: #D9D2E9;
   margin: 0 auto;
 }
