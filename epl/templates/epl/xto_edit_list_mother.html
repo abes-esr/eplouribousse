@@ -30,20 +30,18 @@
           {% endif %}
           <h2>{{ name }} (& {{ xname }}) - {% trans "Collection mère" %} - {% trans "Résultantes" %}</h2>
 
-          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/{{ xlid }}/{{ sidlist }}/43/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ <a target="_blank" href="/{{ bdd }}/edmotherpdf/{{ lid }}/{{ xlid }}">{% trans "tout exporter en pdf" %}</a> ~ {% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
-          <p></p>
-          <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-
-        <p>{% trans "Pour éditer, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
-
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/{{ xlid }}/{{ sidlist }}/43/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ <a target="_blank" href="/{{ bdd }}/edmotherpdf/{{ lid }}/{{ xlid }}">{% trans "tout exporter en pdf" %}</a> 
+          ~ 
             {% if sort == 'title' %}
-            <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
-             / <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+            ({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>
+             / <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)
              {% elif sort == 'cn' %}
-             <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)</p>
+             ({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/sid">{% trans "ppn" %}</a>)
               {% elif sort == 'sid' %}
-              <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)</p>
-            {% endif %}
+              ({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/edmotherlist/{{ lid }}/{{ xlid }}/cn">{% trans "cote et titre" %}</a>)
+            {% endif %}          
+          </p>
+
         <HR>
       </div>
 

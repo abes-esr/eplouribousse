@@ -12,7 +12,7 @@ from django.core.files.storage import FileSystemStorage
 
 from django.utils.translation import ugettext as _
 
-from .decorators import edmode4, edmode5, edmode7
+from .decorators import edmode4, edmode5, edmode7, edmode8
 
 styles = getSampleStyleSheet()
 
@@ -555,7 +555,7 @@ def notmotherpdf(request, bdd, lid):
 
     return response
 
-@edmode7
+@edmode8
 def xmotherpdf(request, bdd, lid, xlid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -695,7 +695,7 @@ def xmotherpdf(request, bdd, lid, xlid):
 
     return response
 
-@edmode7
+@edmode8
 def xnotmotherpdf(request, bdd, lid, xlid):
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
