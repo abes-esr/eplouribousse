@@ -4,3 +4,9 @@ from .base import *
 # ~ DEBUG = True
 DEBUG = False
 
+# ~ Messages backend (sortie des messages):
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'localhost'
+
+EMAIL_PORT = 25
