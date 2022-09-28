@@ -42,22 +42,18 @@
           <h2>{{ libname }} - {% trans "Instructions" %} - {% trans "non reliés, autres rangs" %}</h2>
 
 
-          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/38/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ {% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.</p>
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/38/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} 
+          ~ 
 
-          <p></p>
-          <p>{% trans "Pour chercher une occurrence dans cette liste, veuillez utiliser la fonctionnalité de recherche du navigateur." %}</p>
-          <p>{% trans "Pour instruire, cliquez sur le lien [Identifiant de la ressource]" %}.
-            <br />
-            {% trans "Pour une simple édition de la fiche de situation courante, cliquez sur la petite paire de lunettes : 0^0" %}
-            </p>
               {% if sort == 'title' %}
-              <p>({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/notbdnot1/{{ lid }}/cn">{% trans "cote et titre" %}</a>
-               / <a href="/{{ bdd }}/notbdnot1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+              ({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/notbdnot1/{{ lid }}/cn">{% trans "cote et titre" %}</a>
+               / <a href="/{{ bdd }}/notbdnot1/{{ lid }}/sid">{% trans "ppn" %}</a>)
                {% elif sort == 'cn' %}
-               <p>({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/notbdnot1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/notbdnot1/{{ lid }}/sid">{% trans "ppn" %}</a>)</p>
+               ({% trans "Classement par" %} {% trans "cote" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/notbdnot1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/notbdnot1/{{ lid }}/sid">{% trans "ppn" %}</a>)
                 {% elif sort == 'sid' %}
-                <p>({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/notbdnot1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/notbdnot1/{{ lid }}/cn">{% trans "cote et titre" %}</a>)</p>
+                ({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/notbdnot1/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/notbdnot1/{{ lid }}/cn">{% trans "cote et titre" %}</a>)
               {% endif %}
+		   </p>
         <HR>
       </div>
 

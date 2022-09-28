@@ -3316,11 +3316,12 @@ def xarbitration(request, bdd, lid, xlid, sort):
 
     for e in ItemRecord.objects.using(bdd).filter(lid =lid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
         sid = e.sid
-        if len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
+        if ItemRecord.objects.using(bdd).filter(sid =sid, lid =xlid) and \
+        ItemRecord.objects.using(bdd).filter(sid =sid, lid =lid) and \
+        len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
         len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)) ==0 and \
         len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
-            if ItemRecord.objects.using(bdd).filter(sid =sid, lid = xlid, status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99):
-                resslistb.append(e)
+            resslistb.append(e)
 
     l = resslista + resslistb
 
