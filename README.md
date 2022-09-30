@@ -82,8 +82,8 @@ eplouribousse utilise des données sous licence ouverte etalab fournies par l'Ag
 
 # Licence :
 
-eplouribousse est sous licence BSD 3-Clause Clear.
-eplouribousse is licensed under the terms of the BSD 3-Clause Clear License.
+- eplouribousse est sous licence BSD 3-Clause Clear.
+- eplouribousse is licensed under the terms of the BSD 3-Clause Clear License.
 
 # Contact :
 
