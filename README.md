@@ -80,6 +80,11 @@ Vous avez un projet de dédoublonnement de revues papier dans votre établisseme
 
 eplouribousse utilise des données sous licence ouverte etalab fournies par l'Agence bibliographique de l’Enseignement supérieur.
 
+# Licence :
+
+eplouribousse est sous licence BSD 3-Clause Clear.
+eplouribousse is licensed under the terms of the BSD 3-Clause Clear License.
+
 # Contact :
 
 Indiqué en https://github.com/GGre/eplouribounistra/blob/master/Doc/contact.txt
