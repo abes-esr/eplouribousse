@@ -1,8 +1,8 @@
 epl_version ="v2.08.3 (Fastrada)"
 date_version ="October 4, 2022"
 # Mise au niveau de :
-epl_version ="v2.09.3 (~Luitgard)"
-date_version ="October 4, 2022"
+#epl_version ="v2.09.3 (~Luitgard)"
+#date_version ="October 4, 2022"
 
 
 from django.shortcuts import render
@@ -1170,10 +1170,9 @@ def contact(request):
             message1 = subject1 + " :\n" + "\n" + body
             message2 = _("Votre message a bien été envoyé au développeur de l'application qui y répondra prochainement")\
              + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" + \
-             "Rappel de l'objet de votre message" + " : " + subject2 + \
-             "\n" + _("Rappel de votre message") + " :\n" + \
-              _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
-              "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
+            _("Rappel de votre message") + " :\n" + \
+              _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + "\n" + \
+                _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
             dest1 = ["eplouribousse@gmail.com"]
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
