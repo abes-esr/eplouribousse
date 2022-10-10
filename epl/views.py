@@ -1,8 +1,8 @@
-epl_version ="v2.08.3 (Fastrada)"
-date_version ="October 4, 2022"
+epl_version ="v2.08.4 (Fastrada)"
+date_version ="October 10, 2022"
 # Mise au niveau de :
-#epl_version ="v2.09.3 (~Luitgard)"
-#date_version ="October 4, 2022"
+#epl_version ="v2.09.4 (~Luitgard)"
+#date_version ="October 10, 2022"
 
 
 from django.shortcuts import render
@@ -1139,7 +1139,9 @@ def about(request):
     k =logstatus(request)
     version =epl_version
     date =date_version
-    host = str(request.get_host())
+#    host = str(request.get_host())
+    uname =os.uname()
+    
     return render(request, 'epl/about.html', locals())
 
 
