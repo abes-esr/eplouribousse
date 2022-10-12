@@ -1139,8 +1139,11 @@ def about(request):
     k =logstatus(request)
     version =epl_version
     date =date_version
-#    host = str(request.get_host())
-    uname =os.uname()
+    host = str(request.get_host())
+    platform = os.uname()[0]
+    noyau = os.uname()[2]
+    distri = os.uname()[3]
+    archi = os.uname()[4]
     
     return render(request, 'epl/about.html', locals())
 

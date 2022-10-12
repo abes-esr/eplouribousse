@@ -36,7 +36,10 @@
 <!--            <p>Serveur : {{ host }}</p>-->
 
 
-          <p>Développée avec : Django, Python 3, ReportLab open-source, HTML5, CSS3.</p>
+          Passionément réalisée avec <div id="logo"><img src="{% static "pictures/django.png" %}" alt="django" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/Python.png" %}" alt="Python" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/reportlab.svg" %}" alt="ReportLab" height="30%" width="30%"/></div>
+              <p>Gracieusement hébergée sur <b>{{ host }}</b> ({{ platform }} {{ noyau }}, {{ distri }}, {{ archi }})
+              
+              et infailliblement servie grâce à <div id="logo"><img src="{% static "pictures/Nginx.png" %}" alt="Nginx" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/Gunicorn.png" %}" alt="Gunicorn" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/supervisor.gif" %}" alt="supervisor" height="30%" width="30%"/></div></p>
           <p>Code en accès libre sur le <a target="_blank" href="https://git.unistra.fr/gressot/yellow"> GitLab</a> de l'Université de Strasbourg et sur les miroirs suivants :</p>
           <p>
             <a target="_blank" href="https://github.com/abes-esr/eplouribousse">GitHub</a> de l'Abes
@@ -49,7 +52,7 @@
           <p><a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse-newsletter">{% trans "Me tenir au courant" %}</a> · <a target="_blank" href="https://groupes.renater.fr/sympa/info/eplouribousse">{% trans "Forum des utilisateurs" %}</a> · <a target="_blank" href="https://bugs.launchpad.net/eplouribousse">{% trans "Suivi des bugs" %}</a>{% if webmaster != "" %} · Contacter l'<a target="_blank" href="/default/webmaster">{% trans "administrateur" %}</a>  du site{% endif %} . <a target="_blank" href="{% static 'doc/confidentialite.pdf' %}">{% trans "Confidentialité" %}</a></p>
           <p>Crédits : eplouribousse utilise des données sous <a target="_blank" href="http://www.abes.fr/Media/Fichiers/Footer/Presentation-de-l-ABES/licence-Etalab-francais">licence etalab</a> fournies par l'<a target="_blank" href="https://abes.fr/l-abes/presentation/">Abes</a>.</p>
           <p>Copyright (C) 2018-{% now 'Y' %} : G. Gressot, Service des bibliothèques de l'Université de Strasbourg.</p>
-        <p>Instance : {{ uname }}</p></center>
+            </center>
 
 
     </body>
