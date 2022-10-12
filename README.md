@@ -67,7 +67,7 @@ Les objectifs principaux de la phase beta test sont les suivants :
 -	Corriger d’éventuels défauts majeurs de l’interface utilisateur
 -	Observer l’effet d’une montée en charge de la volumétrie des projets supportés par une seule instance (en théorie, une instance peut admettre jusqu’à 100 projets i.e. 100 bases de données)
 
-Vous êtes curieux : visitez l'instance de bêta test : https://sbu-eplouribousse.unistra.fr/
+Vous êtes curieux : visitez l'instance de beta test : https://sbu-eplouribousse.unistra.fr/
 
 Vous avez un projet de dédoublonnement de revues papier dans votre établissement : contactez-nous (voir au bas de cette page).
 
