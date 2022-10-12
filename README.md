@@ -46,7 +46,7 @@ https://seafile.unistra.fr/f/c2e9ec44798f490087f7/
 
 # Plus d'info :
 
-Voir le manuel de l'appli dans le dossier Doc
+Voir le manuel de l'appli : https://git.unistra.fr/gressot/yellow/-/blob/master/static/doc/User_Documentation.pdf
 
 Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas à visionner complètement) : 
 01. Hypothèses et définitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/
@@ -58,22 +58,18 @@ Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas �
 
 # Comment profiter d'eplouribousse ?
 
-La version 2 d’eplouribousse a été développée dans l’idée d’affranchir les établissements porteurs de projet de toute opération de déploiement d’une instance propre. Les établissements n’ont plus qu’à mettre à disposition leur base de données projet sur un serveur de leur choix et d’en autoriser l’accès en écriture à l’instance dont leur projet dépend.
+La version 2 d’eplouribousse a été développée dans l’idée d’affranchir les établissements porteurs de projet de toute opération de déploiement d’une instance propre. Les établissements n’ont plus qu’à mettre à disposition leur base de données projet.
 
-N’ayant pas encore subi l’épreuve d’une mise en production en situation réelle, cette version doit être considérée comme une version en bêta test fermée telle que définie dans l’article Wikipedia « version d’un logiciel » : « version dans laquelle les personnes intéressées par le produit doivent s'inscrire au préalable ou sont contactées par les concepteurs du produit testé qui sélectionnent les candidatures. »
-
-(Pour l’instant, la version stable est la version 1, mais son déploiement s’est avéré délicat, ce qui a été la raison principale du développement de la version 2).
+N’ayant pas encore subi l’épreuve d’une mise en production en situation réelle, cette version doit être considérée comme une version en beta test fermée telle que définie dans l’article Wikipedia « version d’un logiciel » : « version dans laquelle les personnes intéressées par le produit doivent s'inscrire au préalable ou sont contactées par les concepteurs du produit testé qui sélectionnent les candidatures. »
 
 Les objectifs principaux de la phase beta test sont les suivants :
 -	Mettre en évidence d’éventuels bogues
 -	Corriger d’éventuels défauts majeurs de l’interface utilisateur
 -	Observer l’effet d’une montée en charge de la volumétrie des projets supportés par une seule instance (en théorie, une instance peut admettre jusqu’à 100 projets i.e. 100 bases de données)
 
-Les établissements candidats bêta testeurs bénéficieront d’une formation gratuite en ligne (utilisateurs et administrateurs), d’une assistance complète en ligne au peuplement de leur base de données, de conseils lors de la mise en place de la base de données sur un serveur de leur choix, d’une assistance à distance aux utilisateurs et, si l’établissement le souhaite et dans la mesure du possible, de la reprise du travail déjà réalisé lors du passage à la version finale.
+Vous êtes curieux : visitez l'instance de bêta test : https://sbu-eplouribousse.unistra.fr/
 
-Visitez l'instance de bêta test : https://sbu-eplouribousse.unistra.fr/ (à venir)
-
-Vous avez un projet de dédoublonnement de revues papier dans votre établissement ; profitez-en pour vous porter candidat. Vous n’avez pas de projet précis mais la participation au test vous intéresse, contactez-nous (voir contact au bas de cette page).
+Vous avez un projet de dédoublonnement de revues papier dans votre établissement : contactez-nous (voir au bas de cette page).
 
 
 # Crédits :
