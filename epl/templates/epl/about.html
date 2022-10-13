@@ -32,14 +32,26 @@
           <center>
             <p>*** eplouribousse est une application web destinée à faciliter la gestion du dédoublonnement des périodiques dans les bibliothèques ***</p>
             <p>Licence : <a target="_blank" href="https://git.unistra.fr/gressot/yellow/-/blob/master/License.txt">BSD 3-Clause Clear License</a></p>
-            <p>Version : {{ version }} - Date : {{ date }}</p>
+            <p>Version : {{ version }} ({{ date }})</p>
+            <p>Hôte : <b>{{ host }}</b> ({{ platform }} {{ noyau }}, {{ distri }}, {{ archi }})</p>
 <!--            <p>Serveur : {{ host }}</p>-->
 
 
-          Passionément réalisée avec <div id="logo"><img src="{% static "pictures/django.png" %}" alt="django" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/Python.png" %}" alt="Python" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/reportlab.svg" %}" alt="ReportLab" height="30%" width="30%"/></div>
-              <p>Gracieusement hébergée sur <b>{{ host }}</b> ({{ platform }} {{ noyau }}, {{ distri }}, {{ archi }})
+<!--          Réalisée et mise à votre service grâce à :-->
+              <div id="logo">
+              <img src="{% static "pictures/Ubuntu.png" %}" alt="Ubuntu" height="30%" width="30%"/> &nbsp; 
+              <img src="{% static "pictures/reportlab.svg" %}" alt="ReportLab" height="30%" width="30%"/> &nbsp; 
+<!--              <img src="{% static "pictures/django.png" %}" alt="django" height="30%" width="30%"/> &nbsp; -->
+              <img src="{% static "pictures/django.png" %}" alt="django" height="30%" width="30%"/> &nbsp; 
+              <img src="{% static "pictures/Python.png" %}" alt="Python" height="30%" width="30%"/> &nbsp; 
+              <img src="{% static "pictures/Tux.png" %}" alt="Tux" height="10%" width="10%"/> &nbsp; 
+              <img src="{% static "pictures/Nginx.png" %}" alt="Nginx" height="30%" width="30%"/> &nbsp; 
+              <img src="{% static "pictures/Gunicorn.png" %}" alt="Gunicorn" height="30%" width="30%"/> &nbsp; 
+              <img src="{% static "pictures/supervisor.gif" %}" alt="supervisor" height="30%" width="30%"/>
+              </div>
               
-              et infailliblement servie grâce à <div id="logo"><img src="{% static "pictures/Nginx.png" %}" alt="Nginx" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/Gunicorn.png" %}" alt="Gunicorn" height="30%" width="30%"/> &nbsp; <img src="{% static "pictures/supervisor.gif" %}" alt="supervisor" height="30%" width="30%"/></div></p>
+              
+<!--              <p>Reverse proxy : <div id="logo"><img src="{% static "pictures/Nginx.png" %}" alt="Nginx" height="30%" width="30%"/> &nbsp; Serveur WSGI : <img src="{% static "pictures/Gunicorn.png" %}" alt="Gunicorn" height="30%" width="30%"/> &nbsp; Contrôle de processus : <img src="{% static "pictures/supervisor.gif" %}" alt="supervisor" height="30%" width="30%"/></div></p>-->
           <p>Code en accès libre sur le <a target="_blank" href="https://git.unistra.fr/gressot/yellow"> GitLab</a> de l'Université de Strasbourg et sur les miroirs suivants :</p>
           <p>
             <a target="_blank" href="https://github.com/abes-esr/eplouribousse">GitHub</a> de l'Abes
