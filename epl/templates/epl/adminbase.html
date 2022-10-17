@@ -79,12 +79,12 @@
      </tr>
     <tr>
           <td>{% trans "Second contact" %}</td>
-          <td>{% if l.0.contact_bis != None %} {{ l.0.contact_bis }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
+          <td>{% if l.0.contact_bis != None %} {{ l.0.contact_bis }} {% else %} {% trans "" %} {% endif %}</td>
           <td>{% if l.2 != None %} {{ l.2.username }} {% endif %}</td>
     </tr>
     <tr>
           <td>{% trans "Troisième contact" %}</td>
-          <td>{% if l.0.contact_ter != None %} {{ l.0.contact_ter }} {% else %} ({% trans "Vacant" %}) {% endif %}</td>
+          <td>{% if l.0.contact_ter != None %} {{ l.0.contact_ter }} {% else %} {% trans "" %} {% endif %}</td>
           <td>{% if l.3 != None %} {{ l.3.username }} {% endif %}</td>
     </tr>
 
