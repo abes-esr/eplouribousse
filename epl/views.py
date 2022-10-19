@@ -1270,7 +1270,7 @@ def projmstr(request, bdd):
         subject2 = form.cleaned_data['object']
         body = form.cleaned_data['content']
         if recipient ==recipient_confirm:
-            subject2 = "[eplouribousse]" + " - " + subject2
+            subject2 = "[eplouribousse" + " @" + bdd + "]" + " - " + subject2
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
             message2 = _("Votre message a bien été envoyé à l'administrateur du projet qui y répondra prochainement")\
