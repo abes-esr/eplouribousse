@@ -5,5 +5,4 @@ from .base import *
 DEBUG = False
 
 # Messages backend (sortie des messages):
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
