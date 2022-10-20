@@ -1,8 +1,8 @@
-epl_version ="v2.08.5 (Fastrada)"
-date_version ="October 19, 2022"
+epl_version ="v2.08.6 (Fastrada)"
+date_version ="October 20, 2022"
 # Mise au niveau de :
-#epl_version ="v2.09.5 (~Luitgard)"
-#date_version ="October 19, 2022"
+#epl_version ="v2.09.6 (~Luitgard)"
+#date_version ="October 20, 2022"
 
 
 from django.shortcuts import render
@@ -66,7 +66,7 @@ def selectbdd(request):
             if suffix[0] =="@":
                 db =suffix[1:3]
                 u_name =Utilisateur.objects.using(db).get(username =request.user.username)
-                return HttpResponseRedirect(db)
+                return home(request, db)
         except:
             a =1
 
@@ -1122,7 +1122,7 @@ def globadm(request):
 
     #contrôle d'accès ici
     if not request.user.is_staff:
-        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à l'administration générale"))
         return selectbdd(request)
 
     k =logstatus(request)

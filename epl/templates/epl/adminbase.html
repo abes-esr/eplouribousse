@@ -41,7 +41,7 @@
       {% if messages %}
       <ul class="messages">
           {% for message in messages %}
-          <center><font color= #0000FF ><p>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p></font></center>
+          <center><font color= #0000FF ><p>{{ message }}</p></font></center>
           {% endfor %}
       </ul>
       {% endif %}

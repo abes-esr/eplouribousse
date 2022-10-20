@@ -5,4 +5,4 @@ from .base import *
 DEBUG = False
 
 # Messages backend (sortie des messages):
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
