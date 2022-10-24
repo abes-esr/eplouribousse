@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views, views_pdf, views_csv
+from . import views, views_pdf, views_csv, views_license
 
 urlpatterns = [
     path('', views.selectbdd, name='bddselect'),
@@ -14,8 +14,10 @@ urlpatterns = [
     path('<str:bdd>/instrtrs_adm', views.instrtrs_adm, name='instructors administration'),
     path('<str:bdd>/authusrs_adm', views.authusrs_adm, name='authorized users administration'),
 
+    path('default/password_reset/', views.password_reset_request, name='password_reset'),
     path('default/globadm', views.globadm, name='global administration'),
     path('default/about', views.about, name='about'),
+    path('default/license', views_license.license, name='license'),
     path('default/contact', views.contact, name='contact'),
     path('default/webmaster', views.webmstr, name='webmaster'),
     path('<str:bdd>/projectmaster', views.projmstr, name='projectmaster'),

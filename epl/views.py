@@ -1,17 +1,17 @@
 epl_version ="v2.08.6 (Fastrada)"
 date_version ="October 20, 2022"
 # Mise au niveau de :
-epl_version ="v2.09.6 (~Luitgard)"
-date_version ="October 20, 2022"
+#epl_version ="v2.09.6 (~Luitgard)"
+#date_version ="October 20, 2022"
 
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import *
 
 from .forms import *
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 
 from django.db.models.functions import Now
 
@@ -29,6 +29,13 @@ import os
 from django.contrib import messages
 
 from .decorators import *
+
+from django.contrib.auth.forms import PasswordResetForm
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 
 
 lastrked =None
@@ -4454,3 +4461,34 @@ def xckall(request, bdd, coll_set):
     size = len(l)
 
     return render(request, 'epl/xckall.html', locals())
+
+
+def password_reset_request(request):
+	if request.method == "POST":
+		password_reset_form = PasswordResetForm(request.POST)
+		if password_reset_form.is_valid():
+			data = password_reset_form.cleaned_data['email']
+			associated_users = User.objects.filter(Q(email=data))
+			if associated_users.exists():
+				for user in associated_users:
+					subject = "Demande d'assignation d'un mot de passe"
+					email_template_name = "registration/password_reset_email.html"
+					from_email = replymail
+					c = {
+					"email":user.email,
+					'domain': str(request.get_host()),
+					'site_name': str(request.get_host()),
+					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
+					"user": user,
+					'token': default_token_generator.make_token(user),
+					'protocol': 'http',
+					}
+					email = render_to_string(email_template_name, c)
+					try:
+						send_mail(subject, email, replymail , [user.email], fail_silently=False)
+					except BadHeaderError:
+						return HttpResponse("Erreur d'entête rencontrée.")
+				return redirect ("/accounts/password_reset/done/")
+	password_reset_form = PasswordResetForm()
+	return render(request=request, template_name="registration/password_reset_form.html", context={"password_reset_form":password_reset_form})
+
