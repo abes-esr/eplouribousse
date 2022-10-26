@@ -1,12 +1,12 @@
 # Une BD en 7 vignettes pour comprendre :
 
-![Screenshot](static/pictures/Diapositive1.PNG, resize : 50%)
-![Screenshot](static/pictures/Diapositive2.PNG)
-![Screenshot](static/pictures/Diapositive3.PNG)
-![Screenshot](static/pictures/Diapositive4.PNG)
-![Screenshot](static/pictures/Diapositive5.PNG)
-![Screenshot](static/pictures/Diapositive6.PNG)
-![Screenshot](static/pictures/Diapositive7.PNG)
+![1](static/pictures/Diapositive1.PNG)
+![2](static/pictures/Diapositive2.PNG)
+![3](static/pictures/Diapositive3.PNG)
+![4](static/pictures/Diapositive4.PNG)
+![5](static/pictures/Diapositive5.PNG)
+![6](static/pictures/Diapositive6.PNG)
+![7](static/pictures/Diapositive7.PNG)
 
 
 # AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques :
