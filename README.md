@@ -61,6 +61,11 @@ Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas �
 05. Administration du site : https://seafile.unistra.fr/f/d3f6a23f94804dfabddd/
 06. Crédits : https://seafile.unistra.fr/f/579d874730604579b073/
 
+# Peut-on tester eplouribousse ?
+
+Oui ; il suffit d'en faire la demande au contact indiqué en https://github.com/GGre/eplouribounistra/blob/master/Doc/contact.txt
+Vous serez informé des conditions d'utilisation et invité à donner votre consentement aux règles RGPD du site eplouribousse ; un compte vous sera alors ouvert pour participer à l'un des 5 salons de test par exemple celui-ci que vous pouvez déjà visitez pour voir à quoi ça ressemble : https://sbu-eplouribousse.unistra.fr/12
+
 # Comment profiter d'eplouribousse ?
 
 La version 2 d’eplouribousse a été développée dans l’idée d’affranchir les établissements porteurs de projet de toute opération de déploiement d’une instance propre. Les établissements n’ont plus qu’à mettre à disposition leur base de données projet.
