@@ -1,12 +1,12 @@
 # Une BD pour comprendre :
 
-![Screenshot](Diapositive1.PNG)
-![Screenshot](Diapositive2.PNG)
-![Screenshot](Diapositive3.PNG)
-![Screenshot](Diapositive4.PNG)
-![Screenshot](Diapositive5.PNG)
-![Screenshot](Diapositive6.PNG)
-![Screenshot](Diapositive7.PNG)
+![Screenshot](static/pictures/Diapositive1.PNG)
+![Screenshot](static/pictures/Diapositive2.PNG)
+![Screenshot](static/pictures/Diapositive3.PNG)
+![Screenshot](static/pictures/Diapositive4.PNG)
+![Screenshot](static/pictures/Diapositive5.PNG)
+![Screenshot](static/pictures/Diapositive6.PNG)
+![Screenshot](static/pictures/Diapositive7.PNG)
 
 
 # AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques :
