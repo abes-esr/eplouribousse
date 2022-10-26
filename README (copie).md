@@ -1,15 +1,4 @@
-# Une BD pour comprendre :
-
-![Screenshot](Diapositive1.PNG)
-![Screenshot](Diapositive2.PNG)
-![Screenshot](Diapositive3.PNG)
-![Screenshot](Diapositive4.PNG)
-![Screenshot](Diapositive5.PNG)
-![Screenshot](Diapositive6.PNG)
-![Screenshot](Diapositive7.PNG)
-
-
-# AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques :
+# AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques.
 
 Gagnez de l'espace en éliminant vos doublons, offrez une meilleure lisibilité de vos ressources en reconstituant pour chacune d'elles une collection unique la plus intègre possible résultant de l'agrégation des éléments épars disponibles dans vos bibliothèques.
 
@@ -48,6 +37,12 @@ Voir une illustration : https://seafile.unistra.fr/f/163d60a568e2482092e3/
 # Démo :
 
 https://seafile.unistra.fr/f/c2e9ec44798f490087f7/
+
+# Autres services :
+
+* Outil de suivi des bugs (Launchpad) : https://bugs.launchpad.net/eplouribousse
+* La newsletter eplouribousse (liste Renater) : https://groupes.renater.fr/sympa/info/eplouribousse-newsletter
+* Forum des utilisateurs (liste Renater) : https://groupes.renater.fr/sympa/info/eplouribousse
 
 # Plus d'info :
 
