@@ -1,6 +1,6 @@
-# Une BD pour comprendre :
+# Une BD en 7 vignettes pour comprendre :
 
-![Screenshot](static/pictures/Diapositive1.PNG)
+![Screenshot](static/pictures/Diapositive1.PNG, resize : 50%)
 ![Screenshot](static/pictures/Diapositive2.PNG)
 ![Screenshot](static/pictures/Diapositive3.PNG)
 ![Screenshot](static/pictures/Diapositive4.PNG)
