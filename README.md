@@ -63,8 +63,9 @@ Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas �
 
 # Peut-on tester eplouribousse ?
 
-Oui ; il suffit d'en faire la demande au contact indiqué en https://github.com/GGre/eplouribounistra/blob/master/Doc/contact.txt
-Vous serez informé des conditions d'utilisation et invité à donner votre consentement aux règles RGPD du site eplouribousse ; un compte vous sera alors ouvert pour participer à l'un des 5 salons de test par exemple celui-ci que vous pouvez déjà visitez pour voir à quoi ça ressemble : https://sbu-eplouribousse.unistra.fr/12
+- Oui ; il suffit d'en faire la demande au contact indiqué en https://github.com/GGre/eplouribounistra/blob/master/Doc/contact.txt
+- Vous serez informé des conditions d'utilisation et invité à donner votre consentement aux règles RGPD du site eplouribousse
+- Un compte vous sera alors ouvert pour participer à l'un des 5 salons de test par exemple celui-ci que vous pouvez déjà visiter pour voir à quoi ça ressemble : https://sbu-eplouribousse.unistra.fr/12
 
 # Comment profiter d'eplouribousse ?
 
