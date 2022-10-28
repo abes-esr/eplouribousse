@@ -1,8 +1,8 @@
 epl_version ="v2.08.8 (Fastrada)"
 date_version ="October 28, 2022"
 # Mise au niveau de :
-epl_version ="v2.09.8 (~Luitgard)"
-date_version ="October 28, 2022"
+#epl_version ="v2.09.8 (~Luitgard)"
+#date_version ="October 28, 2022"
 
 
 from django.shortcuts import render, redirect
