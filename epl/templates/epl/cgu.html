@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+
+    </head>
+
+
+    <body>
+
+        <div id="content">
+            <h1>Conditions générales d’utilisation d’eplouribousse</h1>
+            <p></p>
+            <li>Domaine d’application : </li>
+                <p>Les présentes conditions générales s’appliquent au site {{ site_name }}</p>
+            <li>Objet :</li>
+                <p>eplouribousse est une application web offrant un cadre de travail pratique et sécurisé (voir ci-dessous) destiné à faciliter le dédoublonnement des revues au format papier (ou de toute autre collection d’objets, cf. ci-dessous)
+                    <br>
+                    <br>
+                    L’application eplouribousse propose une méthode de dédoublonnement des revues au format papier (ou de toute autre collection à laquelle une telle méthode pourrait être appliquée en adaptant le lexique au type d’objet considéré)
+                    <br><br>
+                    Par cadre de travail sécurisé, on entend d'une part que le site dispose d'un certificat garantissant une connexion chiffrée (adresse en https) et que d'autre part le système d'authentification est fiable ; c'est celui du cadre de travail Django  : <i>"Par défaut, Django utilise l’algorithme <a target="_blank" href="https://fr.wikipedia.org/wiki/PBKDF2">PBKDF2</a> avec une fonction de hachage SHA256, un mécanisme d’étirement de mot de passe recommandé par le <a target="_blank" href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf">NIST</a>. Cela devrait suffire pour la plupart des utilisateurs : c’est un algorithme bien sécurisé et exigeant d’énormes quantités de puissance de calcul pour être cassé."</i>
+                </p>
+            <li>Responsabilité :</li>
+                <p>Elles découlent du type de licence sous laquelle le logiciel est livré (<a target="_blank" href="/default/license">BSD 3-Clause Clear License</a>) : En gros et en bref, aucune responsabilité n’est engagée de la part de la partie mettant le site à disposition des utilisateurs, sauf celles relevant des règles de confidentialité.</p>
+            <li>Utilisation :</li>
+                <p>Elle suppose que l’utilisateur a consenti aux présentes conditions d’utilisation même s'il ne l'a pas fait de manière formelle ; celles-ci incluent le consentement aux <a target="_blank" href="/default/confidentialite">règles de confidentialité</a> du site.</p>
+            <li>Durée de maintien du site  :</li>
+                <p>L’hébergeur du site met bénévolement le site à disposition des utilisateurs dans un esprit de service public ; il s’efforcera de le maintenir mais sans engagement de responsabilité. Le service peut être arrêté provisoirement ou définitivement à tout moment sans préavis et sans justification. En cas d’arrêt définitif et dans la mesure où il en dispose encore, l’hébergeur s’engage à restituer aux utilisateurs l’ensemble des données fournies y compris en cours d’utilisation du site et à en effacer ensuite toute trace sur le serveur.</p>
+            <li>Désaccords éventuels :</li>
+                <p>Compte tenu des restrictions de responsabilité, il ne saurait être question de recours à une quelconque instance juridictionnelle sauf en cas d’infraction aux règles de confidentialité. Les désaccords éventuels se règleront à l’amiable directement entre l’utilisateur (personne morale ou physique) et le responsable du site (voir règles de confidentialité). En cas de désaccord persistant et qui, compte tenu des restrictions précédentes, ne devraient concerner que les règles de confidentialité, on se référera aux recours prévus dans celles-ci.</p>
+(Fin des CGU)
+            <p>Dernière mise à jour : 31 octobre 2022</p>
+        </div>
+
+    </body>
+
+</html>

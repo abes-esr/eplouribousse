@@ -1,8 +1,8 @@
-epl_version ="v2.08.8 (Fastrada)"
-date_version ="October 28, 2022"
+epl_version ="v2.08.9 (Fastrada)"
+date_version ="October 31, 2022"
 # Mise au niveau de :
-epl_version ="v2.09.8 (~Luitgard)"
-date_version ="October 28, 2022"
+#epl_version ="v2.09.9 (~Luitgard)"
+#date_version ="October 31, 2022"
 
 
 from django.shortcuts import render, redirect
@@ -4492,3 +4492,14 @@ def password_reset_request(request):
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="registration/password_reset_form.html", context={"password_reset_form":password_reset_form})
 
+
+def cgu(request):
+    
+    site_name = str(request.get_host())
+    
+    return render(request, 'epl/cgu.html', locals())
+
+
+def confidentialite(request):
+    
+    return render(request, 'epl/confidentialite.html', locals())
