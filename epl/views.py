@@ -1,8 +1,8 @@
-epl_version ="v2.08.10 (Fastrada)"
-date_version ="October 31, 2022"
+epl_version ="v2.08.11 (Fastrada)"
+date_version ="November 2, 2022"
 # Mise au niveau de :
-epl_version ="v2.09.10 (~Luitgard)"
-date_version ="October 31, 2022"
+#epl_version ="v2.09.11 (~Luitgard)"
+#date_version ="November 2, 2022"
 
 
 from django.shortcuts import render, redirect
@@ -39,17 +39,8 @@ from django.utils.encoding import force_bytes
 
 
 lastrked =None
-webmaster =""
-try:
-    webmaster = ReplyMail.objects.all().order_by('pk')[1].sendermail
-    zz =1
-except:
-    pass
-
-try:
-    replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail
-except:
-    replymail =BddAdmin.objects.all().order_by('pk')[0].contact
+webmaster =ReplyMail.objects.all().order_by('pk')[1].sendermail
+replymail =ReplyMail.objects.all().order_by('pk')[0].sendermail # = no-reply mail
 
 def serial_title(e):
     """sorting by title"""
