@@ -1,8 +1,8 @@
 epl_version ="v2.08.12 (Fastrada)"
 date_version ="November 3, 2022"
 # Mise au niveau de :
-epl_version ="v2.09.12 (~Luitgard)"
-date_version ="November 3, 2022"
+#epl_version ="v2.09.12 (~Luitgard)"
+#date_version ="November 3, 2022"
 
 
 from django.shortcuts import render, redirect
@@ -1746,6 +1746,15 @@ def reinit(request, bdd, sid):
 
     k =logstatus(request)
     version =epl_version
+    suffixe = "@" + str(bdd)
+
+    #Authentication control :
+    if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     info =""
 
@@ -1816,10 +1825,15 @@ def takerank(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
+    suffixe = "@" + str(bdd)
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     #Control (takerank only if still possible ; status still ==0 for all attached libraries ;
     #or status ==1 but no instruction yet ; lid not "999999999")
@@ -1997,9 +2011,15 @@ def addinstr(request, bdd, sid, lid):
     else:
         q ="x"
 
+    suffixe = "@" + str(bdd)
+
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     do = notintime(request, bdd, sid, lid)
 
@@ -2141,10 +2161,15 @@ def selinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
+    suffixe = "@" + str(bdd)
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     do = notintime(request, bdd, sid, lid)
 
@@ -2269,9 +2294,15 @@ def modinstr(request, bdd, sid, lid, linetomodify):
     #Library data :
     lib = Library.objects.using(bdd).get(lid = lid)
 
+    suffixe = "@" + str(bdd)
+
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     do = notintime(request, bdd, sid, lid)
 
@@ -2423,10 +2454,15 @@ def delinstr(request, bdd, sid, lid):
 
     k =logstatus(request)
     version =epl_version
+    suffixe = "@" + str(bdd)
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     do = notintime(request, bdd, sid, lid)
 
@@ -2545,11 +2581,11 @@ def endinstr(request, bdd, sid, lid):
 
     #Authentication control :
     if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
-        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
     if not request.user.username[-3:] ==suffixe:
-        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
-        return home(request, bdd)
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
 
     #Control (endinstr only if it's up to the considered library == same conditions as for addinstr)
     try:
