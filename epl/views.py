@@ -1,8 +1,8 @@
-epl_version ="v2.08.12 (Fastrada)"
-date_version ="November 3, 2022"
+epl_version ="v2.10.0 (Judith)"
+date_version ="January 11, 2023"
 # Mise au niveau de :
-epl_version ="v2.09.12 (~Luitgard)"
-date_version ="November 3, 2022"
+#epl_version ="v2.11.0 (~Irmingard)"
+#date_version ="January 11, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -566,51 +566,52 @@ def lib_adm(request, bdd):
                 if formlibct.cleaned_data['suppr'] ==True:
                     compteura =0
                     if formlibct.cleaned_data['contactnbr'] =='2':
-                        try:
-                            for u in Library.objects.using(bdd).all():
-                                if u.contact ==lib.contact_bis:
-                                    compteura +=1
-                                if u.contact_bis ==lib.contact_bis:
-                                    compteura +=1
-                                if u.contact_ter ==lib.contact_bis:
-                                    compteura +=1
-                            for v in BddAdmin.objects.using(bdd).all():
-                                if v.contact ==lib.contact_bis:
-                                    compteura +=1
-                            if compteura ==1:
-                                user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username)
-                                uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis)
-                                user.delete()
-                                uter.delete()
+                        for u in Library.objects.using(bdd).all():
+                            if u.contact ==lib.contact_bis:
+                                compteura +=1
+                            if u.contact_bis ==lib.contact_bis:
+                                compteura +=1
+                            if u.contact_ter ==lib.contact_bis:
+                                compteura +=1
+                        for v in BddAdmin.objects.using(bdd).all():
+                            if v.contact ==lib.contact_bis:
+                                compteura +=1
+                        if compteura ==1:
+                            user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username)
+                            uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis)
+                            user.delete()
+                            uter.delete()
+                        if lib.contact_bis ==None:
+                            messages.info(request, _("Suppression impossible : Le contact était déjà vacant."))
+                        else:
                             lib.contact_bis =None
                             lib.save(using =bdd)
                             messages.info(request, _('Contact supprimé avec succès'))
-                        except:
-                            messages.info(request, _("(Le contact était déjà vacant)"))
 
                     compteurb =0
                     if formlibct.cleaned_data['contactnbr'] =='3':
-                        try:
-                            for u in Library.objects.using(bdd).all():
-                                if u.contact ==lib.contact_ter:
-                                    compteurb +=1
-                                if u.contact_bis ==lib.contact_ter:
-                                    compteurb +=1
-                                if u.contact_ter ==lib.contact_ter:
-                                    compteurb +=1
-                            for v in BddAdmin.objects.using(bdd).all():
-                                if v.contact ==lib.contact_ter:
-                                    compteurb +=1
-                            if compteurb ==1:
-                                user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter).username)
-                                uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter)
-                                user.delete()
-                                uter.delete()
+                        for u in Library.objects.using(bdd).all():
+                            if u.contact ==lib.contact_ter:
+                                compteurb +=1
+                            if u.contact_bis ==lib.contact_ter:
+                                compteurb +=1
+                            if u.contact_ter ==lib.contact_ter:
+                                compteurb +=1
+                        for v in BddAdmin.objects.using(bdd).all():
+                            if v.contact ==lib.contact_ter:
+                                compteurb +=1
+                        if compteurb ==1:
+                            user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter).username)
+                            uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter)
+                            user.delete()
+                            uter.delete()
+                        if lib.contact_ter ==None:
+                            messages.info(request, _("Suppression impossible : Le contact était déjà vacant."))
+                        else:
                             lib.contact_ter =None
                             lib.save(using =bdd)
                             messages.info(request, _('Contact supprimé avec succès'))
-                        except:
-                            messages.info(request, _("(Le contact était déjà vacant)"))
+
                         # return HttpResponseRedirect(url)
                     if formlibct.cleaned_data['contactnbr'] =='1':
                         messages.info(request, _('Le contact principal ne peut pas être supprimé'))
@@ -645,7 +646,11 @@ def lib_adm(request, bdd):
                                 else:
                                     try:
                                         user =User.objects.create_user(username =formlibct.cleaned_data['ident'], email =formlibct.cleaned_data['contact'], password ="glass onion")
-                                        uter =Utilisateur(username =formlibct.cleaned_data['ident'], mail =formlibct.cleaned_data['contact'])
+                                        uter =Utilisateur(username =formlibct.cleaned_data['ident'], mail =formlibct.cleaned_data['contact'], \
+                                                          rkg =Proj_setting.objects.using(bdd)[0].rkg, \
+                                                          arb =Proj_setting.objects.using(bdd)[0].arb, \
+                                                          ins =Proj_setting.objects.using(bdd)[0].ins, \
+                                                          edi =Proj_setting.objects.using(bdd)[0].edi)
                                         uter.save(using =bdd)
                                         if formlibct.cleaned_data['contactnbr'] =='1':
                                             lib.contact =formlibct.cleaned_data['contact']
@@ -656,7 +661,22 @@ def lib_adm(request, bdd):
                                         if formlibct.cleaned_data['contactnbr'] =='3':
                                             lib.contact_ter =formlibct.cleaned_data['contact']
                                             lib.save(using =bdd)
-                                        messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé)"))
+                                        messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé ; les instructions complémentaires lui ont été automatiquement envoyées par mail.)"))
+                                        host = str(request.get_host())
+                                        subject_a = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+                                        ")" + _(" > Création du mot de passe")
+                                        message_a = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur.") + \
+                                        "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
+                                        "http://" + host + "/default/password_reset/"
+                                        subject_b = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+                                        ")" + _(" > Infos complémentaires")
+                                        message_b = _("Ce message complète le précédent relatif à la création de votre mot de passe.") + \
+                                        "\n" + _("Pour connaître le réglage des alertes par mail au niveau du projet et éventuellement les restreindre à votre niveau :") + \
+                                        "\n" + "http://" + host + "/" + bdd + "/alerts_user" + \
+                                        "\n" + _("Vous pouvez ignorer ce message si vous vous en remettez aux alertes activées au niveau du projet (recommandé).")
+                                        dest = [uter.mail]
+                                        send_mail(subject_a, message_a, replymail, dest, fail_silently=True, )
+                                        send_mail(subject_b, message_b, replymail, dest, fail_silently=True, )                
                                     except:
                                         messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
         except:
@@ -701,7 +721,7 @@ def alerts_adm(request, bdd):
     url ="/" + bdd + "/alerts_adm"
     private =Proj_setting.objects.using(bdd)[0].prv
 
-    # gestion des alertes (début)
+    # gestion des alertes et du mode (début)
     current_alerts =[] #initialzing
     if Proj_setting.objects.using(bdd)[0].rkg:
         current_alerts.append(_("positionnement"))
@@ -749,20 +769,44 @@ def alerts_adm(request, bdd):
         newprojset =Proj_setting()
         if "rkg" in settinglist:
             newprojset.rkg =1
+            for e in Utilisateur.objects.using(bdd).all():
+                e.rkg =1
+                e.save(using =bdd)
         else:
             newprojset.rkg =0
+            for e in Utilisateur.objects.using(bdd).all():
+                e.rkg =0
+                e.save(using =bdd)
         if "arb" in settinglist:
             newprojset.arb =1
+            for e in Utilisateur.objects.using(bdd).all():
+                e.arb =1
+                e.save(using =bdd)
         else:
             newprojset.arb =0
+            for e in Utilisateur.objects.using(bdd).all():
+                e.arb =0
+                e.save(using =bdd)
         if "ins" in settinglist:
             newprojset.ins =1
+            for e in Utilisateur.objects.using(bdd).all():
+                e.ins =1
+                e.save(using =bdd)
         else:
             newprojset.ins =0
+            for e in Utilisateur.objects.using(bdd).all():
+                e.ins =0
+                e.save(using =bdd)
         if "edi" in settinglist:
             newprojset.edi =1
+            for e in Utilisateur.objects.using(bdd).all():
+                e.edi =1
+                e.save(using =bdd)
         else:
             newprojset.edi =0
+            for e in Utilisateur.objects.using(bdd).all():
+                e.edi =0
+                e.save(using =bdd)
         if "prv" in settinglist:
             newprojset.prv =1
         else:
@@ -771,8 +815,23 @@ def alerts_adm(request, bdd):
         projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
         oldprojset =Proj_setting.objects.using(bdd).get(pk = projsetlist[0].pk)
         oldprojset.delete(using =bdd)
-        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès"))
-    # gestion des alertes (fin)
+        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès."))
+        messages.info(request, _("Les utilisateurs recevront un message d'information circonstancié"))
+        
+        # (message)
+        host = str(request.get_host())
+        subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+        ")" + _(" > Modification des réglages")
+        message = _("(Ce message ne concerne que les instructeurs = correspondants dans les bibliothèques et checkers)") + \
+        "\n" + _("Les réglages du projet ont été réinitialisés par l'administrateur.") + "\n" + \
+        _("Vous pouvez ignorer ce message si vous vous en remettez aux alertes activées au niveau du projet (recommandé)") + "\n" + \
+        _("Sinon, pour voir les alertes activées et éventuellement en supprimer à votre niveau : ") + "\n" + \
+        "http://" + host + "/" + bdd + "/alerts_user"        
+        for e in Utilisateur.objects.using(bdd).all():
+            dest = [e.mail]
+            send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+    # gestion des alertes et du mode (fin)
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
@@ -780,6 +839,99 @@ def alerts_adm(request, bdd):
         return HttpResponseRedirect(url)
 
     return render(request, 'epl/admzalerts.html', locals())
+
+
+@login_required
+def alerts_user(request, bdd):
+
+    #contrôle d'accès ici
+    suffixe = "@" + str(bdd)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+    if not len(Utilisateur.objects.using(bdd).filter(mail =request.user.email)):
+        messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à la page que vous demandiez"))
+        return home(request, bdd)
+
+    k =logstatus(request)
+    version =epl_version
+    url ="/" + bdd + "/alerts_user"
+    private =Proj_setting.objects.using(bdd)[0].prv
+
+    # gestion des alertes au niveau de l'utilisateur (début)
+    current_alerts =[] #initialzing
+    SETTING_CHOICES = ()
+    if Proj_setting.objects.using(bdd)[0].rkg:
+        current_alerts.append(_("positionnement"))
+        SETTING_CHOICES += (
+        ('rkg', _("Alertes positionnement")),
+        )
+    if Proj_setting.objects.using(bdd)[0].arb:
+        current_alerts.append(_("arbitrages"))
+        SETTING_CHOICES += (
+        ('arb', _("Alertes arbitrages")),
+        )
+    if Proj_setting.objects.using(bdd)[0].ins:
+        current_alerts.append(_("instructions"))
+        SETTING_CHOICES += (
+        ('ins', _("Alertes instructions")),
+        )
+    if Proj_setting.objects.using(bdd)[0].edi:
+        current_alerts.append(_("résultantes"))
+        SETTING_CHOICES += (
+        ('edi', _("Alertes résultantes")),
+        )
+    if len(current_alerts):
+        al =1
+    else:
+        al =0
+
+    actu =[]
+    projsetlist =Proj_setting.objects.using(bdd).all().order_by('pk')
+    if Utilisateur.objects.using(bdd).get(username =request.user.username).rkg:
+        actu.append('rkg')
+    if Utilisateur.objects.using(bdd).get(username =request.user.username).arb:
+        actu.append('arb')
+    if Utilisateur.objects.using(bdd).get(username =request.user.username).ins:
+        actu.append('ins')
+    if Utilisateur.objects.using(bdd).get(username =request.user.username).edi:
+        actu.append('edi')
+
+    class ProjoSettings(forms.Form):
+        projsett = forms.MultipleChoiceField(required = False, widget=forms.CheckboxSelectMultiple(), choices=SETTING_CHOICES, initial =actu, label =_("Activez ou désactivez vos propres réglages courants selon vos souhaits"))
+
+    projosetform = ProjoSettings(request.POST or None)
+    if projosetform.is_valid():
+        settinglist =projosetform.cleaned_data['projsett']
+        u =Utilisateur.objects.using(bdd).get(username =request.user.username)
+#        newprojset =Proj_setting()
+        if "rkg" in settinglist:
+            u.rkg =1
+        else:
+            u.rkg =0
+        if "arb" in settinglist:
+            u.arb =1
+        else:
+            u.arb =0
+        if "ins" in settinglist:
+            u.ins =1
+        else:
+            u.ins =0
+        if "edi" in settinglist:
+            u.edi =1
+        else:
+            u.edi =0
+        u.save(using =bdd)
+
+        messages.info(request, _("Les alertes et le type d'accès ont été reconfigurés avec succès"))
+    # gestion des alertes au niveau de l'utilisateur (fin)
+
+    project = Project.objects.using(bdd).all().order_by('pk')[0].name
+
+    if request.method =="POST":
+        return HttpResponseRedirect(url)
+
+    return render(request, 'epl/alerts_user.html', locals())
 
 
 @login_required
@@ -847,12 +999,24 @@ def admins_adm(request, bdd):
                             messages.info(request, _("Echec : L'identifiant doit se terminer en {}".format(suffixe)))
                         else:
                             try:
-                                uter =Utilisateur(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'])
+                                uter =Utilisateur(username =projajadmform.cleaned_data['identajadm'], mail =projajadmform.cleaned_data['contactajadm'], \
+                                                  rkg =Proj_setting.objects.using(bdd)[0].rkg, \
+                                                  arb =Proj_setting.objects.using(bdd)[0].arb, \
+                                                  ins =Proj_setting.objects.using(bdd)[0].ins, \
+                                                  edi =Proj_setting.objects.using(bdd)[0].edi)
                                 user =User.objects.create_user(username =projajadmform.cleaned_data['identajadm'], email =projajadmform.cleaned_data['contactajadm'], password ="glass onion")
                                 uter.save(using =bdd)
                                 newadm =BddAdmin(contact =projajadmform.cleaned_data['contactajadm'])
                                 newadm.save(using =bdd)
-                                messages.info(request, _("Administrateur ajouté avec succès (un nouvel utilisateur a été créé)"))
+                                host = str(request.get_host())
+                                subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+                                ")" + _(" > Création du mot de passe")
+                                message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur (administrateur du projet).") + \
+                                "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
+                                "http://" + host + "/default/password_reset/"
+                                dest = [uter.mail]
+                                send_mail(subject, message, replymail, dest, fail_silently=True, )
+                                messages.info(request, _("Administrateur ajouté avec succès (un nouvel utilisateur a été créé ; les instructions complémentaires lui ont été automatiquement envoyées par mail.)"))
                             except:
                                 messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
 
@@ -1749,7 +1913,10 @@ def reinit(request, bdd, sid):
     suffixe = "@" + str(bdd)
 
     #Authentication control :
-    if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
+    adminslist =[]
+    for b in BddAdmin.objects.using(bdd).all():
+        adminslist.append(b.contact)
+    if not request.user.email in adminslist:
         messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
         return logout_view(request)
     if not request.user.username[-3:] ==suffixe:
@@ -1760,62 +1927,60 @@ def reinit(request, bdd, sid):
 
     ressource =ItemRecord.objects.using(bdd).get(sid =sid, rank =1)
 
-    umail, uname = request.user.email, request.user.username
+    y = Flag()
+    form = CheckForm(request.POST or None, instance =y)
 
-    flag =0
-
-    for u in BddAdmin.objects.using(bdd).all():
-        if (u.contact, u.name) ==(umail, uname):
-            flag =1
-
-    if flag ==1:
-        y = Flag()
-        form = CheckForm(request.POST or None, instance =y)
-
-        if form.is_valid():
-            if y.flag:
-                if Instruction.objects.using(bdd).filter(sid =sid, bound =" "):
-                    for instr in Instruction.objects.using(bdd).filter(sid =sid).exclude(bound ="x"):
-                        instr.delete(using=bdd)
-                    for item in ItemRecord.objects.using(bdd).filter(sid =sid):
-                        if item.rank ==1:
-                            item.status =3
-                            item.save(using=bdd)
-                        else:
-                            item.status =2
-                            item.save(using=bdd)
-                else:
-                    for instr in Instruction.objects.using(bdd).filter(sid =sid):
-                        instr.delete(using=bdd)
-                    for item in ItemRecord.objects.using(bdd).filter(sid =sid):
-                        if item.rank ==1:
-                            item.status =1
-                            item.save(using=bdd)
-                        else:
-                            item.status =0
-                            item.save(using=bdd)
-                if Proj_setting.objects.using(bdd).all()[0].ins:
-                    #Message data :
-                    nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
-                    nextlib =Library.objects.using(bdd).get(lid =nextlid)
-                    subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
-                    host = str(request.get_host())
-                    message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
-                    " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
-                    "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
-                    dest = [nextlib.contact]
-                    if nextlib.contact_bis:
+    if form.is_valid():
+        if y.flag:
+            if Instruction.objects.using(bdd).filter(sid =sid, bound =" "):
+                for instr in Instruction.objects.using(bdd).filter(sid =sid).exclude(bound ="x"):
+                    instr.delete(using=bdd)
+                for item in ItemRecord.objects.using(bdd).filter(sid =sid):
+                    if item.rank ==1:
+                        item.status =3
+                        item.save(using=bdd)
+                    else:
+                        item.status =2
+                        item.save(using=bdd)
+            else:
+                for instr in Instruction.objects.using(bdd).filter(sid =sid):
+                    instr.delete(using=bdd)
+                for item in ItemRecord.objects.using(bdd).filter(sid =sid):
+                    if item.rank ==1:
+                        item.status =1
+                        item.save(using=bdd)
+                    else:
+                        item.status =0
+                        item.save(using=bdd)
+            if Proj_setting.objects.using(bdd).all()[0].ins:
+                #Message data :
+                nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
+                nextlib =Library.objects.using(bdd).get(lid =nextlid)
+                subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
+                "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                dest =[]
+                if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
+                    dest.append(nextlib.contact)
+                try:
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
                         dest.append(nextlib.contact_bis)
-                    if nextlib.contact_ter:
+                except:
+                    st =1 #bidon pour passer
+                try:
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
                         dest.append(nextlib.contact_ter)
+                except:
+                    st =1 #bidon pour passer
+                if len(dest):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
-                return current_status(request, bdd, sid, "999999999")
-            else:
-                info =_("Vous n'avez pas coché !")
 
-    else:
-        return notintime(request, bdd, sid, lid)
+            return current_status(request, bdd, sid, "999999999")
+        else:
+            info =_("Vous n'avez pas coché !")
 
     return render(request, 'epl/reinit.html', locals())
 
@@ -1904,21 +2069,40 @@ def takerank(request, bdd, sid, lid):
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                     " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
-                    dest = [nextlib.contact]
-                    if nextlib.contact_bis:
-                        dest.append(nextlib.contact_bis)
-                    if nextlib.contact_ter:
-                        dest.append(nextlib.contact_ter)
-                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+                    dest =[]
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
+                        dest.append(nextlib.contact)
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
+                            dest.append(nextlib.contact_bis)
+                    except:
+                        st =1 #bidon pour passer
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
+                            dest.append(nextlib.contact_ter)
+                    except:
+                        st =1 #bidon pour passer
+                    if len(dest):
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             #Début codage alerte positionnement ou arbitrage
 
             if Proj_setting.objects.using(bdd).all()[0].rkg and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)):
                 for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid, rank =99):
                     dest =[]
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact).rkg:
+                        dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis).rkg:
+                            dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                    except:
+                        st =1 #bidon pour passer
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter).rkg:
+                            dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    except:
+                        st =1 #bidon pour passer
+
                     #Message data :
                     subject = "eplouribousse / positionnement : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
                     host = str(request.get_host())
@@ -1926,7 +2110,8 @@ def takerank(request, bdd, sid, lid):
                     str(sid) + " : rang " + str(i.rank) + " --> "  + Library.objects.using(bdd).get(lid =lid).name + \
                     "\n" + "Pour plus de détails et pour positionner votre collection" + \
                     " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
-                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+                    if len(dest):
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
 
 
             if Proj_setting.objects.using(bdd).all()[0].arb and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
@@ -1934,30 +2119,50 @@ def takerank(request, bdd, sid, lid):
             len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
                 for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid):
                     dest =[]
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact).arb:
+                        dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis).arb:
+                            dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                    except:
+                        st =1 #bidon pour passer
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter).arb:
+                            dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    except:
+                        st =1 #bidon pour passer
                     #Message data :
                     subject = "eplouribousse / arbitrage (type 0) : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
                     host = str(request.get_host())
                     message = _("Un nouvel arbitrage de type 0 a été repéré pour le ppn ") + str(sid) + \
                     "\n" + "Pour plus de détails ou pour modifier le rang de votre collection" + \
                     " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
-                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+                    if len(dest):
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             if Proj_setting.objects.using(bdd).all()[0].arb and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) >1:
                 for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid, rank =1):
                     dest =[]
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
-                    dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact).arb:
+                        dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis).arb:
+                            dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                    except:
+                        st =1 #bidon pour passer
+                    try:
+                        if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter).arb:
+                            dest.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+                    except:
+                        st =1 #bidon pour passer
                     #Message data :
                     subject = "eplouribousse / arbitrage (type 1) : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
                     host = str(request.get_host())
                     message = _("Un nouvel arbitrage de type 1 a été repéré pour le ppn ") + str(sid) + \
                     "\n" + "Pour plus de détails ou pour modifier le rang de votre collection" + \
                     " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
-                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+                    if len(dest):
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             #Fin codage alerte positionnement ou arbitrage
             #renvoi vers la liste adéquate en cas de recours au lien envoyé dans les alertes mail
@@ -2716,12 +2921,21 @@ def endinstr(request, bdd, sid, lid):
                         host = str(request.get_host())
                         message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                         " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
-                        dest = [nextlib.contact]
-                        if nextlib.contact_bis:
-                            dest.append(nextlib.contact_bis)
-                        if nextlib.contact_ter:
-                            dest.append(nextlib.contact_ter)
-                        send_mail(subject, message, replymail, dest, fail_silently=True, )
+                        dest =[]
+                        if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
+                            dest.append(nextlib.contact)
+                        try:
+                            if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
+                                dest.append(nextlib.contact_bis)
+                        except:
+                            st =1 #bidon pour passer
+                        try:
+                            if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
+                                dest.append(nextlib.contact_ter)
+                        except:
+                            st =1 #bidon pour passer
+                        if len(dest):
+                            send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             if len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==2:
                 for e in ItemRecord.objects.using(bdd).filter(sid =sid, status =4):
@@ -2735,12 +2949,21 @@ def endinstr(request, bdd, sid, lid):
                         host = str(request.get_host())
                         message = _("La résultante est désormais disponible pour le ppn ") + str(sid) +\
                         " :\n" + "http://" + host + "/" + bdd + "/ed/" + str(sid) + '/' + str(librelmt.lid)
-                        dest = [librelmt.contact]
-                        if librelmt.contact_bis:
-                            dest.append(librelmt.contact_bis)
-                        if librelmt.contact_ter:
-                            dest.append(librelmt.contact_ter)
-                        send_mail(subject, message, replymail, dest, fail_silently=True, )
+                        dest =[]
+                        if Utilisateur.objects.using(bdd).get(mail =librelmt.contact).edi:
+                            dest.append(librelmt.contact)
+                        try:
+                            if Utilisateur.objects.using(bdd).get(mail =librelmt.contact_bis).edi:
+                                dest.append(librelmt.contact_bis)
+                        except:
+                            st =1 #bidon pour passer
+                        try:
+                            if Utilisateur.objects.using(bdd).get(mail =librelmt.contact_ter).edi:
+                                dest.append(librelmt.contact_ter)
+                        except:
+                            st =1 #bidon pour passer
+                        if len(dest):
+                            send_mail(subject, message, replymail, dest, fail_silently=True, )
                 # envoi de l'alerte le cas échéant (fin)
 
             #renvoi vers la liste adéquate en cas de recours au lien envoyé dans les alertes mail
@@ -2832,12 +3055,21 @@ def endinstr(request, bdd, sid, lid):
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                 " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
-                dest = [nextlib.contact]
-                if nextlib.contact_bis:
-                    dest.append(nextlib.contact_bis)
-                if nextlib.contact_ter:
-                    dest.append(nextlib.contact_ter)
-                send_mail(subject, message, replymail, dest, fail_silently=True, )
+                dest =[]
+                if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
+                    dest.append(nextlib.contact)
+                try:
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
+                        dest.append(nextlib.contact_bis)
+                except:
+                    st =1 #bidon pour passer
+                try:
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
+                        dest.append(nextlib.contact_ter)
+                except:
+                    st =1 #bidon pour passer
+                if len(dest):
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             try:
                 newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]

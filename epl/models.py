@@ -162,6 +162,11 @@ class Utilisateur(models.Model):
     """Model for users"""
     username = models.CharField('username', max_length=30, unique =True, blank=False) #Attention : Unique
     mail = models.EmailField('user email', unique =True, blank=False) #Attention : Unique
+    """Model for user alerts settings."""
+    rkg = models.BooleanField('mail when ranking')
+    arb = models.BooleanField('mail when arbitration')
+    ins = models.BooleanField('mail when instruction')
+    edi = models.BooleanField('mail when edition')
     def __str__(self):
         info = self.mail + ' | ' + self.username
         return info

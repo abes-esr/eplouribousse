@@ -20,7 +20,7 @@
       <nav id="sticky-menu">
           <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
           <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
-          <a href="/{{ bdd }}/search">{% trans "Recherche (bêta)" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche" %}</a>
           <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
       </nav>
@@ -122,8 +122,8 @@
 <HR>
 
   <p><a href="/{{ bdd }}/alerts_adm">{% trans "Gestion des alertes et du type d'accès" %}</a></p>
-  <p>{% trans "Alertes activées" %} : {% if al == 1 %} {% for almt in current_alerts %} <b>{{ almt }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% endfor %}{% else %} <b>{% trans "aucune" %}</b> {% endif %}<br />{% trans "Mode édition restreint (usagers autorisés)" %} : <b>{{ priv_mode }}</b></p>
-
+  <p>{% trans "Alertes activées" %} : {% if al == 1 %} {% for almt in current_alerts %} <b>{{ almt }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% endfor %}{% else %} <b>{% trans "aucune" %}</b> {% endif %}<br /></p>
+    <p>{% trans "Mode édition restreint (usagers autorisés)" %} : <b>{{ priv_mode }}</b></p>
 
 <HR>
 

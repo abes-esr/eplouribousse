@@ -36,8 +36,8 @@ Version 2.06 (Desiderata)                   2022.01.07
 Version 2.07 (~Hildegarde)                  beta
 Version 2.08 (Fastrada)                     2022.09.19
 Version 2.09 (~Luitgard)                    beta
-Version 2.10 (Irmingard)                    à venir
-Version 2.11 (~Judith)                      beta
+Version 2.10 (Judith)                       2023.01.11
+Version 2.11 (~Irmingard)                   beta
 
 (Next names following https://fr.wikipedia.org/wiki/Liste_des_reines_et_imp%C3%A9ratrices_de_France from Basina)
 
@@ -51,6 +51,7 @@ Dernières nouveautés (* = important) :
 * ajout du mode d'édition privé
 * mise à jour du manuel utilisateur
 * distribution de l'amdinistration de projet en modules élémentaires simples
+* Judith : paramétrage des alertes à 2 niveaux (projet > utilisateurs)
 
 Version 2 : Version multi-projets (beta tant qu'elle n'est pas testée grandeur nature ...)
 

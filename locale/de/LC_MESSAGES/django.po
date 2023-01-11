@@ -358,7 +358,7 @@ msgstr "Aufsicht"
 #: epl/templates/epl/xto_edit_list_notmother.html:20
 #: epl/templates/epl/xto_instr_list.html:21
 #: epl/templates/epl/xto_rank_list.html:21
-msgid "Recherche (bêta)"
+msgid "Recherche"
 msgstr "Suche (Beta)"
 
 #: epl/templates/epl/addinstruction.html:24 epl/templates/epl/adminbase.html:24

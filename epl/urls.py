@@ -10,6 +10,7 @@ urlpatterns = [
     path('<str:bdd>/projinfos_adm', views.projinfos_adm, name='project infos administration'),
     path('<str:bdd>/lib_adm', views.lib_adm, name='libraries (i.e. collections) infos administration'),
     path('<str:bdd>/alerts_adm', views.alerts_adm, name='alerts administration'),
+    path('<str:bdd>/alerts_user', views.alerts_user, name='user alerts administration'),
     path('<str:bdd>/admins_adm', views.admins_adm, name='administrators administration'),
     path('<str:bdd>/instrtrs_adm', views.instrtrs_adm, name='instructors administration'),
     path('<str:bdd>/authusrs_adm', views.authusrs_adm, name='authorized users administration'),
