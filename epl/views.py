@@ -1,8 +1,8 @@
-epl_version ="v2.10.0 (Judith)"
-date_version ="January 11, 2023"
+epl_version ="v2.10.1 (Judith)"
+date_version ="January 12, 2023"
 # Mise au niveau de :
-#epl_version ="v2.11.0 (~Irmingard)"
-#date_version ="January 11, 2023"
+#epl_version ="v2.11.1 (~Irmingard)"
+#date_version ="January 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -57,6 +57,26 @@ def selectbdd(request):
 
     k =logstatus(request)
     version =epl_version
+    
+#########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
+    """Suppression (de la base de données principale) des users inutilisés dans les projets"""
+    for j in User.objects.all():
+        suffix =j.username[-3:]
+        db =suffix[1:3]
+        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+            j.delete()
+
+    """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
+    et non seulement pour celle considérée dans la présente vue !"""
+    for i in [n for n in range(100)]:
+        if os.path.isfile('{:02d}.db'.format(i)):
+            for j in Utilisateur.objects.using('{:02d}'.format(i)).all():
+                try:
+                    usr =User.objects.get(username =j.username)
+                except:
+                    nwuser =User(is_superuser =0, username =j.username, email =j.mail, is_staff =0, is_active =1)
+                    nwuser.save()
+####################################################(fin)###########################################################
   
     if request.user.is_authenticated:
         try:
@@ -128,46 +148,25 @@ def home(request, bdd):
 
     k =logstatus(request)
     version =epl_version
+#########################(Cette partie est reproduite dans les vues 'selectbdd' et 'globadm')#######################
+    """Suppression (de la base de données principale) des users inutilisés dans les projets"""
+    for j in User.objects.all():
+        suffix =j.username[-3:]
+        db =suffix[1:3]
+        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+            j.delete()
 
-    #Vérification que tous les utilisateurs sont bien enregistrés
-    email_list =[]
-    for lib in Library.objects.using(bdd).all():
-        if lib.contact and lib.contact not in email_list:
-            email_list.append(lib.contact)
-        if lib.contact_bis and lib.contact_bis not in email_list:
-            email_list.append(lib.contact_bis)
-        if lib.contact_ter and lib.contact_ter not in email_list:
-            email_list.append(lib.contact_ter)
-    for adm in BddAdmin.objects.using(bdd).all():
-        if adm.contact not in email_list:
-            email_list.append(adm.contact)
-    utermail_list =[]
-    for uter in Utilisateur.objects.using(bdd).all():
-        utermail_list.append(uter.mail)
-
-    diffa =set(email_list) - set(utermail_list)
-    # diffb =set(utermail_list) - set(email_list)
-    if diffa !=set():
-        messages.info(request, _("Anomalie détectée. Pas d'utilisateur associé aux mails suivants : ") + str(diffa) + ". " + "Veuillez alerter l'administrateur")
-
-    # if diffb != set():
-    #     messages.info(request, _("Anomalie détectée. Les utilisateurs dont les mails suivent sont inutilisés : ") + str(diffb) + ". " + "Veuillez alerter l'administrateur")
-
-    #La partie de code ci-dessous est reproduite dans la vue adminbase(request, bdd) = Synchronisation de la base locale (utilisateurs) avec la base générale (users)
-    for e in Utilisateur.objects.using(bdd).all():#1/2 création d'éventuels nouveaux users dans la base générale
-        try:
-            user =User.objects.get(username =e.username)
-        except:
-            user =User.objects.create_user(username =e.username, email =e.mail, password ="glass onion")
-
-    #2/2 (see upper, this order is important)
-    suffixe = "@" + str(bdd)
-    for j in User.objects.all(): #Suppression d'users pour lesquels l'utilisateur a été supprimé de la base locale
-        if j.username[-3:] ==suffixe:
-            try:
-                utilisateur =Utilisateur.objects.using(bdd).get(username =j.username)
-            except:
-                j.delete() #suppression dans la bdd générale
+    """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
+    et non seulement pour celle considérée dans la présente vue !"""
+    for i in [n for n in range(100)]:
+        if os.path.isfile('{:02d}.db'.format(i)):
+            for j in Utilisateur.objects.using('{:02d}'.format(i)).all():
+                try:
+                    usr =User.objects.get(username =j.username)
+                except:
+                    nwuser =User(is_superuser =0, username =j.username, email =j.mail, is_staff =0, is_active =1)
+                    nwuser.save()
+####################################################(fin)###########################################################
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
 
@@ -1286,6 +1285,26 @@ def globadm(request):
     if not request.user.is_staff:
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à l'administration générale"))
         return selectbdd(request)
+    
+#########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
+    """Suppression (de la base de données principale) des users inutilisés dans les projets"""
+    for j in User.objects.all():
+        suffix =j.username[-3:]
+        db =suffix[1:3]
+        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+            j.delete()
+
+    """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
+    et non seulement pour celle considérée dans la présente vue !"""
+    for i in [n for n in range(100)]:
+        if os.path.isfile('{:02d}.db'.format(i)):
+            for j in Utilisateur.objects.using('{:02d}'.format(i)).all():
+                try:
+                    usr =User.objects.get(username =j.username)
+                except:
+                    nwuser =User(is_superuser =0, username =j.username, email =j.mail, is_staff =0, is_active =1)
+                    nwuser.save()
+####################################################(fin)###########################################################
 
     k =logstatus(request)
     version =epl_version
