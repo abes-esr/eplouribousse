@@ -1,8 +1,8 @@
-epl_version ="v2.10.1 (Judith)"
+epl_version ="v2.10.2 (Judith)"
 date_version ="January 12, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.1 (~Irmingard)"
-date_version ="January 12, 2023"
+#epl_version ="v2.11.2 (~Irmingard)"
+#date_version ="January 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -52,6 +52,33 @@ def coll_cn(e):
     """sorting by cn, title"""
     return (e.cn, e.title)
 
+############################################
+
+def user_suppr(request, bdd, login):
+    """Mail d'info lors de la suppression d'un compte"""
+    host = str(request.get_host())
+    subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+    ")" + _(" > Suppression d'un compte")
+    message = _("Le compte {} à été fermé".format(login)) + \
+    "\n" + _("Cela peut faire suite à un changement de compte ou à une demande de suppression pure et simple.") \
+    + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné.") + "\n" + \
+    _("Merci d'avoir utilisé epouribousse !")
+    dest =[User.objects.get(username =login).email]
+    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+def user_supproj(request, login):
+    """Mail d'info lors de la suppression d'un compte"""
+    host = str(request.get_host())
+    subject = _("eplouribousse : ") + _("Suppression d'un compte")
+    message = _("Le compte {} à été fermé".format(login)) + \
+    "\n" + _("Cela fait normalement suite à la suppression du projet auquel ce compte était associé.") \
+    + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné.") + "\n" + \
+    _("Merci d'avoir utilisé epouribousse !")
+    dest =[User.objects.get(username =login).email]
+    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+############################################
+
 
 def selectbdd(request):
 
@@ -64,6 +91,7 @@ def selectbdd(request):
         suffix =j.username[-3:]
         db =suffix[1:3]
         if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+            user_supproj(request, j.username)
             j.delete()
 
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
@@ -154,6 +182,7 @@ def home(request, bdd):
         suffix =j.username[-3:]
         db =suffix[1:3]
         if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+            user_suppr(request, bdd, j.username)
             j.delete()
 
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
@@ -1038,6 +1067,7 @@ def admins_adm(request, bdd):
             if compteurc ==1:
                 user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm']).username)
                 uter =Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm'])
+                user_suppr(request, bdd, Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm']).username)
                 user.delete()
                 uter.delete()
             suppradm.delete(using =bdd)
@@ -1247,6 +1277,7 @@ def authusrs_adm(request, bdd):
     if othussupprform.is_valid():
         user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth']).username)
         uter =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth'])
+        user_suppr(request, bdd, Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth']).username)
         user.delete()
         uter.delete()
         messages.info(request, _('Utilisateur supprimé avec succès'))
@@ -1286,12 +1317,13 @@ def globadm(request):
         messages.info(request, _("Vous avez été renvoyé à cette page parce que vous n'avez pas les droits d'accès à l'administration générale"))
         return selectbdd(request)
     
-#########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
+#########################(Cette partie est reproduite de la même vue dans 'home' et 'selectbdd')######################
     """Suppression (de la base de données principale) des users inutilisés dans les projets"""
     for j in User.objects.all():
         suffix =j.username[-3:]
         db =suffix[1:3]
         if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+            user_supproj(request, j.username)
             j.delete()
 
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
