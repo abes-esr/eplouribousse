@@ -1,8 +1,8 @@
-epl_version ="v2.10.2 (Judith)"
-date_version ="January 12, 2023"
+epl_version ="v2.10.3 (Judith)"
+date_version ="January 16, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.2 (~Irmingard)"
-date_version ="January 12, 2023"
+#epl_version ="v2.11.3 (~Irmingard)"
+#date_version ="January 16, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -77,6 +77,28 @@ def user_supproj(request, login):
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
+def usermail_mod(request, bdd, login, mail):
+    """Mail d'info lors de la modification d'un compte (email)"""
+    host = str(request.get_host())
+    subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+    ")" + _(" > Modification de votre email")
+    message = _("L'adresse mail associée à l'identifiant {} à été modifiée.".format(login)) + "\n" + \
+    _("(Vous recevez le présent message à votre nouvelle adresse.)")
+    dest =[mail]
+    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+def userid_mod(request, bdd, login, mail):
+    """Mail d'info lors de la modification d'un compte (identifiant)"""
+    host = str(request.get_host())
+    subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+    ")" + _(" > Modification de votre identifiant")
+    message = _("L'identifiant associé à l'adresse {} à été modifié.".format(mail)) + "\n" + \
+    _("Votre nouvel identifiant est : {}".format(login)) + "\n" + \
+    _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné.") + "\n" + \
+    _("Merci d'avoir utilisé epouribousse !")
+    dest =[User.objects.get(username =login).email]
+    send_mail(subject, message, replymail, dest, fail_silently=True, )
+
 ############################################
 
 
@@ -86,7 +108,7 @@ def selectbdd(request):
     version =epl_version
     
 #########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
-    """Suppression (de la base de données principale) des users inutilisés dans les projets"""
+    """Suppression (de la base de données principale) des users associés à des projets supprimés."""
     for j in User.objects.all():
         suffix =j.username[-3:]
         db =suffix[1:3]
@@ -1154,6 +1176,7 @@ def instrtrs_adm(request, bdd):
                                 user.username =utermodform.cleaned_data['newuterid']
                                 uter.save(using =bdd)
                                 user.save()
+                                userid_mod(request, bdd, uter.username, uter.mail)
                                 messages.info(request, _("L'identifiant de l'utilisateur a été modifié avec succès"))
                             except:
                                 messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
@@ -1176,6 +1199,7 @@ def instrtrs_adm(request, bdd):
                                 adm.save(using =bdd)
                             uter.save(using =bdd)
                             user.save()
+                            usermail_mod(request, bdd, uter.username, uter.mail)
                             messages.info(request, _("L'email de l'utilisateur a été modifié avec succès"))
                         except:
                             pass

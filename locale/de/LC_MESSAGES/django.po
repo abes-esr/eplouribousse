@@ -1015,7 +1015,7 @@ msgstr ""
 #: epl/templates/epl/adminbase.html:121 epl/templates/epl/admzinstrtrs.html:56
 #, fuzzy
 #| msgid "administrateur"
-msgid "Gestion des instructeurs"
+msgid "Gestion des utilisateurs"
 msgstr "Webmaster"
 
 #: epl/templates/epl/adminbase.html:124 epl/templates/epl/admzalerts.html:56
