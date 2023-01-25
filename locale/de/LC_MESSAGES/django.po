@@ -229,7 +229,7 @@ msgstr "Benutzerforum"
 #: epl/templates/epl/xto_edit_list_notmother.html:70
 #: epl/templates/epl/xto_instr_list.html:94
 #: epl/templates/epl/xto_rank_list.html:85
-msgid "Suivi des bugs"
+msgid "Tickets"
 msgstr "Bug-Tracking"
 
 #: epl/templates/epl/about.html:49
