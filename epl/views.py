@@ -683,7 +683,7 @@ def lib_adm(request, bdd):
                             if formlibct.cleaned_data['contactnbr'] =='3':
                                 lib.contact_ter =formlibct.cleaned_data['contact']
                                 lib.save(using =bdd)
-                                messages.info(request, _("Modification effectuée avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
+                            messages.info(request, _("Modification effectuée avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
                                 # return HttpResponseRedirect(url)
                         except:#utilisateur absent de la base
                             if len(Utilisateur.objects.using(bdd).filter(username =formlibct.cleaned_data['ident'])):
