@@ -720,7 +720,7 @@ def lib_adm(request, bdd):
                                         "http://" + host + "/default/password_reset/"
                                         subject_b = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                                         ")" + _(" > Infos complémentaires")
-                                        message_b = _("Ce message complète le précédent relatif à la création de votre mot de passe.") + \
+                                        message_b = _("Ce message en complète un autre relatif à la création de votre mot de passe.") + \
                                         "\n" + _("Pour connaître le réglage des alertes par mail au niveau du projet et éventuellement les restreindre à votre niveau :") + \
                                         "\n" + "http://" + host + "/" + bdd + "/alerts_user" + \
                                         "\n" + _("Vous pouvez ignorer ce message si vous vous en remettez aux alertes activées au niveau du projet (recommandé).")
