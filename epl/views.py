@@ -1,8 +1,8 @@
-epl_version ="v2.10.5 (Judith)"
+epl_version ="v2.10.6 (Judith)"
 date_version ="March 08, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.5 (~Irmingard)"
-date_version ="March 08, 2023"
+#epl_version ="v2.11.6 (~Irmingard)"
+#date_version ="March 08, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -198,6 +198,27 @@ def home(request, bdd):
 
     k =logstatus(request)
     version =epl_version
+    
+    """
+    Suppression (dans la base de données du projet) des utilisateurs "inutiles"
+    """
+    # me servir d'une partie de code déjà écrite par ailleurs ...
+    if Proj_setting.objects.using(bdd)[0].prv ==0:
+        u_list =[]
+        for u_libmt in Library.objects.using(bdd).all():
+            if u_libmt.contact not in u_list:
+                u_list.append(u_libmt.contact)
+            if u_libmt.contact_bis not in u_list:
+                u_list.append(u_libmt.contact_bis)
+            if u_libmt.contact_ter not in u_list:
+                u_list.append(u_libmt.contact_ter)
+        for adm_lmt in BddAdmin.objects.using(bdd).all():
+            if adm_lmt.contact not in u_list:
+                u_list.append(adm_lmt.contact)
+        for ulmt in Utilisateur.objects.using(bdd).all():
+            if ulmt.mail not in u_list:
+                ulmt.delete(using =bdd)
+            
 #########################(Cette partie est reproduite dans les vues 'selectbdd' et 'globadm')#######################
     """Suppression (de la base de données principale) des users inutilisés dans les projets"""
     for j in User.objects.all():
