@@ -108,13 +108,14 @@ def selectbdd(request):
     version =epl_version
     
 #########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
-    """Suppression (de la base de données principale) des users associés à des projets supprimés."""
-    for j in User.objects.all():
-        suffix =j.username[-3:]
-        db =suffix[1:3]
-        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
-            user_supproj(request, j.username)
-            j.delete()
+    """Cette partie est désormais traitée dans la vue 'home'"""
+#    for j in User.objects.all():
+#        suffix =j.username[-3:]
+#        db =suffix[1:3]
+#        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+#            user_supproj(request, j.username)
+#            j.delete()
+
 
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
     et non seulement pour celle considérée dans la présente vue !"""
@@ -200,7 +201,7 @@ def home(request, bdd):
     version =epl_version
     
     """
-    Suppression (dans la base de données du projet) des utilisateurs "inutiles"
+    Suppression (dans la base de données du projet et dans la bdd centrale) des utilisateurs "inutiles"
     """
     # me servir d'une partie de code déjà écrite par ailleurs ...
     if Proj_setting.objects.using(bdd)[0].prv ==0:
@@ -218,15 +219,18 @@ def home(request, bdd):
         for ulmt in Utilisateur.objects.using(bdd).all():
             if ulmt.mail not in u_list:
                 ulmt.delete(using =bdd)
+                if not User.objects.get(username =ulmt.username).is_superuser:
+                    User.objects.get(username =ulmt.username).delete()
+                
             
 #########################(Cette partie est reproduite dans les vues 'selectbdd' et 'globadm')#######################
-    """Suppression (de la base de données principale) des users inutilisés dans les projets"""
-    for j in User.objects.all():
-        suffix =j.username[-3:]
-        db =suffix[1:3]
-        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
-            user_suppr(request, bdd, j.username)
-            j.delete()
+    """Cette partie est désormais traitée dans la vue 'home'"""
+#    for j in User.objects.all():
+#        suffix =j.username[-3:]
+#        db =suffix[1:3]
+#        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+#            user_suppr(request, bdd, j.username)
+#            j.delete()
 
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
     et non seulement pour celle considérée dans la présente vue !"""
@@ -1364,13 +1368,13 @@ def globadm(request):
         return selectbdd(request)
     
 #########################(Cette partie est reproduite de la même vue dans 'home' et 'selectbdd')######################
-    """Suppression (de la base de données principale) des users inutilisés dans les projets"""
-    for j in User.objects.all():
-        suffix =j.username[-3:]
-        db =suffix[1:3]
-        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
-            user_supproj(request, j.username)
-            j.delete()
+    """Cette partie est désormais traitée dans la vue 'home'"""
+#    for j in User.objects.all():
+#        suffix =j.username[-3:]
+#        db =suffix[1:3]
+#        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
+#            user_supproj(request, j.username)
+#            j.delete()
 
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
     et non seulement pour celle considérée dans la présente vue !"""
