@@ -203,24 +203,35 @@ def home(request, bdd):
     """
     Suppression (dans la base de données du projet et dans la bdd centrale) des utilisateurs "inutiles"
     """
-    # me servir d'une partie de code déjà écrite par ailleurs ...
-    if Proj_setting.objects.using(bdd)[0].prv ==0:
-        u_list =[]
-        for u_libmt in Library.objects.using(bdd).all():
-            if u_libmt.contact not in u_list:
-                u_list.append(u_libmt.contact)
-            if u_libmt.contact_bis not in u_list:
-                u_list.append(u_libmt.contact_bis)
-            if u_libmt.contact_ter not in u_list:
-                u_list.append(u_libmt.contact_ter)
-        for adm_lmt in BddAdmin.objects.using(bdd).all():
-            if adm_lmt.contact not in u_list:
-                u_list.append(adm_lmt.contact)
-        for ulmt in Utilisateur.objects.using(bdd).all():
-            if ulmt.mail not in u_list:
-                ulmt.delete(using =bdd)
-                if not User.objects.get(username =ulmt.username).is_superuser:
-                    User.objects.get(username =ulmt.username).delete()
+    
+    """
+        Suppression dans la base de données du projet : "
+    """
+    
+    u_list =[]
+    for u_libmt in Library.objects.using(bdd).all():
+        if u_libmt.contact not in u_list:
+            u_list.append(u_libmt.contact)
+        if u_libmt.contact_bis not in u_list:
+            u_list.append(u_libmt.contact_bis)
+        if u_libmt.contact_ter not in u_list:
+            u_list.append(u_libmt.contact_ter)
+    for adm_lmt in BddAdmin.objects.using(bdd).all():
+        if adm_lmt.contact not in u_list:
+            u_list.append(adm_lmt.contact)
+    for ulmt in Utilisateur.objects.using(bdd).all():
+        if ulmt.mail not in u_list and Proj_setting.objects.using(bdd)[0].prv ==0:
+            ulmt.delete(using =bdd)
+            if not User.objects.get(username =ulmt.username).is_superuser:
+                User.objects.get(username =ulmt.username).delete()
+                
+    """
+        Suppression dans la base de données centrale : "
+    """
+    for j in User.objects.all():
+        if j.username[-2:] ==bdd and not Utilisateur.objects.using(bdd).filter(username =j.username):
+            if not User.objects.get(username =j.username).is_superuser:
+                j.delete()
                 
             
 #########################(Cette partie est reproduite dans les vues 'selectbdd' et 'globadm')#######################
