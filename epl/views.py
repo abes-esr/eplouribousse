@@ -1,8 +1,8 @@
-epl_version ="v2.10.6 (Judith)"
-date_version ="March 08, 2023"
+epl_version ="v2.10.7 (Judith)"
+date_version ="March 09, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.6 (~Irmingard)"
-date_version ="March 08, 2023"
+#epl_version ="v2.11.7 (~Irmingard)"
+#date_version ="March 09, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -744,7 +744,8 @@ def lib_adm(request, bdd):
                                         message_b = _("Ce message en complète un autre relatif à la création de votre mot de passe.") + \
                                         "\n" + _("Pour connaître le réglage des alertes par mail au niveau du projet et éventuellement les restreindre à votre niveau :") + \
                                         "\n" + "http://" + host + "/" + bdd + "/alerts_user" + \
-                                        "\n" + _("Vous pouvez ignorer ce message si vous vous en remettez aux alertes activées au niveau du projet (recommandé).")
+                                        "\n" + _("Vous pouvez ignorer ce message si vous vous en remettez aux alertes activées au niveau du projet (recommandé).") + \
+                                        "\n" + _("Notez que dans tous les cas, vous devez d'abord créer votre mot de passe (voir autre message).")
                                         dest = [uter.mail]
                                         send_mail(subject_a, message_a, replymail, dest, fail_silently=True, )
                                         send_mail(subject_b, message_b, replymail, dest, fail_silently=True, )                
