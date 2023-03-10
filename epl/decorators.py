@@ -10,6 +10,9 @@ from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib import messages
 
+import os.path
+from django.http import HttpResponseRedirect
+
 def edmode1(func):
     """
     Authentification requise si le mode consultation privée est activé.
@@ -51,6 +54,18 @@ def edmode3(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
+        
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
