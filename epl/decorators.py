@@ -18,6 +18,17 @@ def edmode1(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, lid, sort):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -36,6 +47,17 @@ def edmode2(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, lid, xlid, sort):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -65,7 +87,6 @@ def edmode3(func):
         """
         fin de la vérification
         """
-        
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -84,6 +105,17 @@ def edmode4(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, lid):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -102,6 +134,17 @@ def edmode5(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, sid, lid):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -120,6 +163,17 @@ def edmode6(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, coll_set):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -138,6 +192,17 @@ def edmode7(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, lid, xlid, recset, what, length):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
@@ -156,6 +221,17 @@ def edmode8(func):
     Authentification requise si le mode consultation privée est activé.
     """
     def mod_func(request, bdd, lid, xlid):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
         suffixe = "@" + str(bdd)
         if Proj_setting.objects.using(bdd)[0].prv:
             if request.user.username and request.user.username[-3:] ==suffixe:
