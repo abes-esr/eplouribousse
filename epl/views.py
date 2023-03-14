@@ -1,8 +1,8 @@
-epl_version ="v2.10.9 (Judith)"
-date_version ="March 13, 2023"
+epl_version ="v2.10.10 (Judith)"
+date_version ="March 14, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.9 (~Irmingard)"
-date_version ="March 13, 2023"
+#epl_version ="v2.11.10 (~Irmingard)"
+#date_version ="March 14, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2199,7 +2199,8 @@ def takerank(request, bdd, sid, lid):
 
             #Début codage alerte positionnement ou arbitrage
 
-            if Proj_setting.objects.using(bdd).all()[0].rkg and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)):
+            if Proj_setting.objects.using(bdd).all()[0].rkg and len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)) and not \
+            ItemRecord.objects.using(bdd).get(sid =sid, lid =lid).rank ==0:
                 for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid, rank =99):
                     dest =[]
                     if Utilisateur.objects.using(bdd).get(mail =Library.objects.using(bdd).get(lid =itelmt.lid).contact).rkg:
