@@ -1,8 +1,8 @@
-epl_version ="v2.10.16 (Judith)"
+epl_version ="v2.10.17 (Judith)"
 date_version ="March 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.16 (~Irmingard)"
-date_version ="March 27, 2023"
+#epl_version ="v2.11.17 (~Irmingard)"
+#date_version ="March 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2143,13 +2143,25 @@ def takerank(request, bdd, sid, lid):
                     to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
 
     to.remove(request.user.email)
-    if len(to) ==1 and not "@" in str(to[0]):
+    if len(to) ==0:
         k =0
+    else:
+        for t in to:
+            if not "@" in str(t):
+                to.remove(t)
+        if len(to) ==0:
+            k =0
+        else:
+            k =1
     cc.remove(request.user.email)
-    
-    for mailmt in to:
-        if mailmt in cc:
-            cc.remove(mailmt)
+    if len(cc):
+        for c in cc:
+            if not "@" in str(c):
+                cc.remove(c)
+    if k ==1 and len(cc):
+        for mailmt in to:
+            if mailmt in cc:
+                cc.remove(mailmt)
 
     # For position form :
     i = ItemRecord.objects.using(bdd).get(sid = sid, lid = lid)

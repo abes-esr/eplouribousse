@@ -105,7 +105,7 @@
           
           {% if k != 0 %}
           ou <a href="
-              mailto: {% for e in to %}{% if '@' in e %}{{ e }},{% endif %}{% endfor %}?cc={% for e in cc %}{% if '@' in e %}{{ e }},{% endif %}{% endfor %}&subject={{ sbjct }}&body=Expliquez ici l'objet de la mise en discussion du positionnement pour le ppn {{ sid }}">échanger</a>
+              mailto: {% for e in to %}{{ e }},{% endfor %}?cc={% for e in cc %}{{ e }},{% endfor %}&subject={{ sbjct }}&body=Expliquez ici l'objet de la mise en discussion du positionnement pour le ppn {{ sid }}">échanger</a>
           {% endif %}
           </p>
       <p>{{ f.comm }} <input type="Submit" value="{% trans "Valider" %}"></p>
