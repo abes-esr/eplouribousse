@@ -1,8 +1,8 @@
-epl_version ="v2.10.18 (Judith)"
+epl_version ="v2.10.19 (Judith)"
 date_version ="March 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.18 (~Irmingard)"
-date_version ="March 27, 2023"
+#epl_version ="v2.11.19 (~Irmingard)"
+#date_version ="March 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2145,9 +2145,10 @@ def takerank(request, bdd, sid, lid):
     to.remove(request.user.email)
     if None in to:
         to.remove(None)
-    if len(to):
+    try:
+        test =to[0]
         signal =1
-    else:
+    except:
         signal =0
     cc.remove(request.user.email)
     if None in cc:
