@@ -84,7 +84,7 @@
               <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
               {% endif %}
               {% else %}
-              <li>{% trans "Exclusion" %} : <font color= #3498db  >{{ elmt.0.excl}}</font></li>
+              <li>{% trans "Exclusion" %} : <font color= #3498db  >{{ elmt.0.excl }}</font></li>
                 {% if elmt.0.comm != '' %}
                 <li>{% trans "Commentaire" %} : <font color= #3498db  >{{ elmt.0.comm }}</font></li>
                 {% endif %}
@@ -101,7 +101,13 @@
       <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ f.excl }}</p>
       <p>{% trans "Sinon, rang de votre collection" %} : {{ f.rank }}</p>
       <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}
-        <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a></p>
+        <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a> 
+          
+          {% if k != 0 %}
+          ou <a href="
+              mailto: {% for e in to %}{% if '@' in e %}{{ e }},{% endif %}{% endfor %}?cc={% for e in cc %}{% if '@' in e %}{{ e }},{% endif %}{% endfor %}&subject={{ sbjct }}&body=Expliquez ici l'objet de la mise en discussion du positionnement pour le ppn {{ sid }}">échanger</a>
+          {% endif %}
+          </p>
       <p>{{ f.comm }} <input type="Submit" value="{% trans "Valider" %}"></p>
       {% csrf_token %}
       </form>

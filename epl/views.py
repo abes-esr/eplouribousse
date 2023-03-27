@@ -1,8 +1,8 @@
-epl_version ="v2.10.15 (Judith)"
-date_version ="March 21, 2023"
+epl_version ="v2.10.16 (Judith)"
+date_version ="March 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.15 (~Irmingard)"
-date_version ="March 21, 2023"
+#epl_version ="v2.11.16 (~Irmingard)"
+#date_version ="March 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2121,6 +2121,35 @@ def takerank(request, bdd, sid, lid):
         return notintime(request, bdd, sid, lid)
     elif lid =="999999999":
         return notintime(request, bdd, sid, lid)
+    
+    #Ouvrir un message pour discuter le positionnement :
+    sbjct ="[eplouribousse - " + Project.objects.using(bdd).all()[0].name + " (" + bdd + ") " + "] " + sid + " : Positionnement à discuter."
+    to, cc =[request.user.email], [request.user.email]
+    if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
+        for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
+            if Library.objects.using(bdd).get(lid =itelmt.lid).lid ==lid:
+                if Library.objects.using(bdd).get(lid =itelmt.lid).contact not in cc:
+                    cc.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis not in cc:
+                    cc.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter not in cc:
+                    cc.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+            else:
+                if Library.objects.using(bdd).get(lid =itelmt.lid).contact not in to:
+                    to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
+                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis not in to:
+                    to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
+                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter not in to:
+                    to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
+
+    to.remove(request.user.email)
+    if len(to) ==1 and not "@" in str(to[0]):
+        k =0
+    cc.remove(request.user.email)
+    
+    for mailmt in to:
+        if mailmt in cc:
+            cc.remove(mailmt)
 
     # For position form :
     i = ItemRecord.objects.using(bdd).get(sid = sid, lid = lid)
