@@ -1,8 +1,8 @@
-epl_version ="v2.10.17 (Judith)"
+epl_version ="v2.10.18 (Judith)"
 date_version ="March 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.17 (~Irmingard)"
-date_version ="March 27, 2023"
+#epl_version ="v2.11.18 (~Irmingard)"
+#date_version ="March 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2143,22 +2143,16 @@ def takerank(request, bdd, sid, lid):
                     to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
 
     to.remove(request.user.email)
-    if len(to) ==0:
-        k =0
+    if None in to:
+        to.remove(None)
+    if len(to):
+        signal =1
     else:
-        for t in to:
-            if not "@" in str(t):
-                to.remove(t)
-        if len(to) ==0:
-            k =0
-        else:
-            k =1
+        signal =0
     cc.remove(request.user.email)
-    if len(cc):
-        for c in cc:
-            if not "@" in str(c):
-                cc.remove(c)
-    if k ==1 and len(cc):
+    if None in cc:
+        cc.remove(None)
+    if signal and len(cc):
         for mailmt in to:
             if mailmt in cc:
                 cc.remove(mailmt)

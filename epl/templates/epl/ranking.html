@@ -103,7 +103,7 @@
       <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}
         <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a> 
           
-          {% if k != 0 %}
+          {% if signal != 0 %}
           ou <a href="
               mailto: {% for e in to %}{{ e }},{% endfor %}?cc={% for e in cc %}{{ e }},{% endfor %}&subject={{ sbjct }}&body=Expliquez ici l'objet de la mise en discussion du positionnement pour le ppn {{ sid }}">échanger</a>
           {% endif %}
