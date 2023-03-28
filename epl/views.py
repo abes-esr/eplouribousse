@@ -1,8 +1,8 @@
-epl_version ="v2.10.19 (Judith)"
-date_version ="March 27, 2023"
+epl_version ="v2.10.20 (Judith)"
+date_version ="March 28, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.19 (~Irmingard)"
-date_version ="March 27, 2023"
+#epl_version ="v2.11.20 (~Irmingard)"
+#date_version ="March 28, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2128,35 +2128,31 @@ def takerank(request, bdd, sid, lid):
     if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1:
         for itelmt in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
             if Library.objects.using(bdd).get(lid =itelmt.lid).lid ==lid:
-                if Library.objects.using(bdd).get(lid =itelmt.lid).contact not in cc:
+                if "@" in str(Library.objects.using(bdd).get(lid =itelmt.lid).contact) and Library.objects.using(bdd).get(lid =itelmt.lid).contact not in cc:
                     cc.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
-                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis not in cc:
+                if "@" in str(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis) and Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis not in cc:
                     cc.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
-                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter not in cc:
+                if "@" in str(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter) and Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter not in cc:
                     cc.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
             else:
-                if Library.objects.using(bdd).get(lid =itelmt.lid).contact not in to:
+                if "@" in str(Library.objects.using(bdd).get(lid =itelmt.lid).contact) and Library.objects.using(bdd).get(lid =itelmt.lid).contact not in to:
                     to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact)
-                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis not in to:
+                if "@" in str(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis) and Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis not in to:
                     to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_bis)
-                if Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter not in to:
+                if "@" in str(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter) and Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter not in to:
                     to.append(Library.objects.using(bdd).get(lid =itelmt.lid).contact_ter)
 
     to.remove(request.user.email)
-    if None in to:
-        to.remove(None)
-    try:
-        test =to[0]
-        signal =1
-    except:
-        signal =0
     cc.remove(request.user.email)
-    if None in cc:
-        cc.remove(None)
-    if signal and len(cc):
+    if to:
+        signal =1
+    else:
+        signal =0
+    if signal ==1 and len(cc) >0:
         for mailmt in to:
             if mailmt in cc:
                 cc.remove(mailmt)
+    #(fin du codage pour le message servant à discuter le positionnement)
 
     # For position form :
     i = ItemRecord.objects.using(bdd).get(sid = sid, lid = lid)
