@@ -1,8 +1,8 @@
-epl_version ="v2.10.20 (Judith)"
+epl_version ="v2.10.21 (Judith)"
 date_version ="March 28, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.20 (~Irmingard)"
-date_version ="March 28, 2023"
+#epl_version ="v2.11.21 (~Irmingard)"
+#date_version ="March 28, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -750,7 +750,7 @@ def lib_adm(request, bdd):
                                         messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé ; les instructions complémentaires lui ont été automatiquement envoyées par mail.)"))
                                         host = str(request.get_host())
                                         subject_a = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
-                                        ")" + _(" > Création du mot de passe")
+                                        ")" + _(" > Création de votre mot de passe")
                                         message_a = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur.") + \
                                         "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
                                         "http://" + host + "/default/password_reset/"
@@ -1097,7 +1097,7 @@ def admins_adm(request, bdd):
                                 newadm.save(using =bdd)
                                 host = str(request.get_host())
                                 subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
-                                ")" + _(" > Création du mot de passe")
+                                ")" + _(" > Création de votre mot de passe")
                                 message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur (administrateur du projet).") + \
                                 "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
                                 "http://" + host + "/default/password_reset/"
