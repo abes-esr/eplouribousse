@@ -1,8 +1,8 @@
-epl_version ="v2.10.21 (Judith)"
-date_version ="March 28, 2023"
+epl_version ="v2.10.22 (Judith)"
+date_version ="March 31, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.21 (~Irmingard)"
-date_version ="March 28, 2023"
+#epl_version ="v2.11.22 (~Irmingard)"
+#date_version ="March 31, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -646,6 +646,9 @@ def lib_adm(request, bdd):
                     # return HttpResponseRedirect(url)
 
     if formlibct.is_valid():
+        if not formlibct.cleaned_data['contact'] == formlibct.cleaned_data['contact'].lower():
+            messages.info(request, _("échec : l'adresse mail doit être indiquée entièrement en minuscules."))
+            return render(request, 'epl/admzlib.html', locals())
         try:
             if Library.objects.using(bdd).get(name =formlibct.cleaned_data['name']) in Library.objects.using(bdd).all():
                 lib = Library.objects.using(bdd).get(name =formlibct.cleaned_data['name'])
@@ -1064,6 +1067,9 @@ def admins_adm(request, bdd):
     projsuppradmform =ProjadmSupprForm(request.POST or None)
 
     if projajadmform.is_valid():
+        if not projajadmform.cleaned_data['contactajadm'] == projajadmform.cleaned_data['contactajadm'].lower():
+            messages.info(request, _("échec : l'adresse mail doit être indiquée entièrement en minuscules."))
+            return render(request, 'epl/admzadmins.html', locals()) 
         try:
             newadm =BddAdmin.objects.using(bdd).get(contact =projajadmform.cleaned_data['contactajadm'])
             messages.info(request, _("(Administrateur déjà enregistré)"))
@@ -1191,8 +1197,12 @@ def instrtrs_adm(request, bdd):
     utermodform =UtModForm(request.POST or None)
 
     if utermodform.is_valid():
+        if not utermodform.cleaned_data['newutermail'] == utermodform.cleaned_data['newutermail'].lower():
+            messages.info(request, _("échec : l'adresse mail doit être indiquée entièrement en minuscules."))
+            return render(request, 'epl/admzinstrtrs.html', locals())
         if utermodform.cleaned_data['newuterid'] and utermodform.cleaned_data['newutermail']:
             messages.info(request, _("Echec : Ne complétez qu'un des arguments à la fois"))
+            return render(request, 'epl/admzinstrtrs.html', locals())
         else:
             try:
                 uter =Utilisateur.objects.using(bdd).get(mail =utermodform.cleaned_data['newutermail'])
@@ -1316,6 +1326,9 @@ def authusrs_adm(request, bdd):
     othussupprform =OthUsSupprForm(request.POST or None)
 
     if othusajform.is_valid():
+        if not othusajform.cleaned_data['contactajoth'] == othusajform.cleaned_data['contactajoth'].lower():
+            messages.info(request, _("échec : l'adresse mail doit être indiquée entièrement en minuscules."))
+            return render(request, 'epl/admzauthusrs.html', locals())
         try:
             newothus =Utilisateur.objects.using(bdd).get(contact =othusajform.cleaned_data['contactajoth'])
             messages.info(request, _("(Utilisateur déjà enregistré avec des droits suffisants)"))
