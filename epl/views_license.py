@@ -3,8 +3,6 @@ from django.http import HttpResponse
 
 def license(request):
     text = """
-    The Clear BSD License<BR>
-    <BR>
     Copyright (c) 2022 Georges GRESSOT<BR>
     All rights reserved.<BR>
     <BR>
