@@ -77,7 +77,7 @@
         </table>
       {% endif %}
 
-        <p><form method="post">{% csrf_token %}{% trans "Ajouter un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email {{ othusajform.contactajoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ othusajform.identajoth }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+        <p><form method="post">{% csrf_token %}{% trans "Ajouter un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email ({% trans "<u>tout en minuscules</u>" %}) {{ othusajform.contactajoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Identifiant" %} {{ othusajform.identajoth }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
       {% if ft != 0 %}
         <p><form method="post">{% csrf_token %}{% trans "Supprimer un utilisateur" %} : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ othussupprform.contactsuoth }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "êtes-vous sûr ?" %}  {{ othussupprform.supproth }} <input type="submit" value="{% trans "Supprimer" %}"></form><p>

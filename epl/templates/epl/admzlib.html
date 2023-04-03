@@ -99,7 +99,7 @@
 
 <p><form method="post"> {% csrf_token %}{{ formlibct.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ formlibct.contactnbr }}
 &nbsp;&nbsp;&nbsp;&nbsp; {% trans "Supprimer" %} {{ formlibct.suppr }}<br />
-{% trans "ou modifier (ou créer) la paire email / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
+{% trans "ou modifier (ou créer) la paire email (<u>tout en minuscules</u>) / identifiant pour le contact choisi" %} {{ formlibct.contact }} / {{ formlibct.ident }}
 <input type="submit" value="{% trans "Valider" %}"> </form></p>
 
 

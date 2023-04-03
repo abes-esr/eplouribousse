@@ -54,7 +54,7 @@
       <div id="content">
 
   <p><b>{% trans "Gestion des utilisateurs" %} ({{ sizeuters }}) :</b></p>
-<p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+<p><form method="post">{% csrf_token %}{{ utermodform.uterxy }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "Modifier l'email (<u>tout en minuscules</u>)" %} {{ utermodform.newutermail }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou l'identifiant" %} {{ utermodform.newuterid }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
 
         </div>
