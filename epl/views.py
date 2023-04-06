@@ -1,8 +1,8 @@
-epl_version ="v2.10.23 (Judith)"
-date_version ="April 3, 2023"
+epl_version ="v2.10.24 (Judith)"
+date_version ="April 6, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.23 (~Irmingard)"
-date_version ="April 3, 2023"
+#epl_version ="v2.11.24 (~Irmingard)"
+#date_version ="April 6, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -3422,10 +3422,10 @@ def excllist(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-
-    EXCLUSION_CHOICES = ('', ''),
-    for e in Exclusion.objects.using(bdd).all().order_by('label'):
-        EXCLUSION_CHOICES += (e.label, e.label),
+    
+    EXCLUSION_CHOICES = ('Tous', _('Tous')),
+    for e in list(ItemRecord.objects.using(bdd).filter(rank =0).exclude(excl ="Autre (Commenter)").values_list('excl', flat =True).distinct()):
+        EXCLUSION_CHOICES += (e, e),
     EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
 
     l =0
@@ -3436,7 +3436,7 @@ def excllist(request, bdd):
 
     sortch = ('title',_('titre')), ('excl',_("motif d'exclusion")), ('cn',_('cote et titre')), ('sid',_('ppn')),
 
-    stillmodch = ('',''), ('oui',_('oui')), ('non',_('non')),
+    stillmodch = ('Peu importe',_('Peu importe')), ('oui',_('oui')), ('non',_('non')),
 
     class Lib_Form(forms.Form):
         lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch, label =_("Votre bibliothèque"))
@@ -3454,7 +3454,7 @@ def excllist(request, bdd):
         lid = Library.objects.using(bdd).get(name =lib).lid
         name = lib
 
-        if exclreason and stillmod:
+        if exclreason !='Tous' and stillmod != 'Peu importe':
             excl_list = []
             if stillmod =="oui":
                 for elmt in ItemRecord.objects.using(bdd).filter(lid =lid, rank =0, excl =exclreason).order_by(sort):
@@ -3466,9 +3466,9 @@ def excllist(request, bdd):
                     if Instruction.objects.using(bdd).filter(sid =elmt.sid):
                         if not elmt in excl_list:
                             excl_list.append(elmt)
-        elif exclreason and not stillmod:
+        elif exclreason !='Tous' and stillmod == 'Peu importe':
             excl_list =ItemRecord.objects.using(bdd).filter(lid =lid, rank =0, excl =exclreason).order_by(sort)
-        elif stillmod and not exclreason:
+        elif stillmod != 'Peu importe' and exclreason =='Tous':
             excl_list = []
             if stillmod =="oui":
                 for elmt in ItemRecord.objects.using(bdd).filter(lid =lid, rank =0).order_by(sort):
@@ -3480,7 +3480,7 @@ def excllist(request, bdd):
                     if Instruction.objects.using(bdd).filter(sid =elmt.sid):
                         if not elmt in excl_list:
                             excl_list.append(elmt)
-        elif not stillmod and not exclreason:
+        elif stillmod == 'Peu importe' and exclreason =='Tous':
             excl_list =ItemRecord.objects.using(bdd).filter(lid =lid, rank =0).order_by(sort)
 
         length =len(excl_list)
