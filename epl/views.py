@@ -1,8 +1,8 @@
-epl_version ="v2.10.24 (Judith)"
-date_version ="April 6, 2023"
+epl_version ="v2.10.25 (Judith)"
+date_version ="April 11, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.24 (~Irmingard)"
-date_version ="April 6, 2023"
+#epl_version ="v2.11.25 (~Irmingard)"
+#date_version ="April 11, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -4629,6 +4629,41 @@ def statadmin(request, bdd, id):
         stat = form.cleaned_data['stat']
         itemrec.status =stat
         itemrec.save(using=bdd)
+        ###############
+        if Proj_setting.objects.using(bdd).all()[0].ins:
+            #Message data :
+            try:
+                nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid
+                flag =1
+            except: # i.e. status =3
+                try:
+                    nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid
+                    flag =1
+                except: # i.e. status neither 1 or 3 (it may happen, at least temporarily)
+                    flag =0
+            if flag ==1:                
+                nextlib =Library.objects.using(bdd).get(lid =nextlid)
+                subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                host = str(request.get_host())
+                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
+                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
+                "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                dest =[]
+                if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
+                    dest.append(nextlib.contact)
+                try:
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
+                        dest.append(nextlib.contact_bis)
+                except:
+                    st =1 #bidon pour passer
+                try:
+                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
+                        dest.append(nextlib.contact_ter)
+                except:
+                    st =1 #bidon pour passer
+                if len(dest):
+                    send_mail(subject, message, replymail, dest, fail_silently=True, )
+        ###############
         return current_status(request, bdd, sid, bib.lid)
 
     return render(request, 'epl/statadmin.html', locals())
