@@ -1,8 +1,8 @@
-epl_version ="v2.10.25 (Judith)"
-date_version ="April 11, 2023"
+epl_version ="v2.10.26 (Judith)"
+date_version ="April 12, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.25 (~Irmingard)"
-date_version ="April 11, 2023"
+#epl_version ="v2.11.26 (~Irmingard)"
+#date_version ="April 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -107,6 +107,8 @@ def selectbdd(request):
     k =logstatus(request)
     version =epl_version
     
+    BDD_CHOICES =('',_('Sélectionnez votre projet')),
+    
 #########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
     """Cette partie est désormais traitée dans la vue 'home'"""
 #    for j in User.objects.all():
@@ -117,8 +119,9 @@ def selectbdd(request):
 #            j.delete()
 
 
-    """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
-    et non seulement pour celle considérée dans la présente vue !"""
+    """
+    Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets !
+    """
     for i in [n for n in range(100)]:
         if os.path.isfile('{:02d}.db'.format(i)):
             for j in Utilisateur.objects.using('{:02d}'.format(i)).all():
@@ -127,6 +130,11 @@ def selectbdd(request):
                 except:
                     nwuser =User(is_superuser =0, username =j.username, email =j.mail, is_staff =0, is_active =1)
                     nwuser.save()
+            try:
+                p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
+                BDD_CHOICES += ('{:02d}'.format(i), '{:02d}'.format(i) + " - " + p),
+            except:
+                pass
 ####################################################(fin)###########################################################
   
     if request.user.is_authenticated:
@@ -138,16 +146,6 @@ def selectbdd(request):
                 return home(request, db)
         except:
             a =1
-
-    BDD_CHOICES =('',_('Sélectionnez votre projet')),
-
-    for i in [n for n in range(100)]:
-        if os.path.isfile('{:02d}.db'.format(i)):
-            try:
-                p = Project.objects.using('{:02d}'.format(i)).all().order_by('pk')[0].name
-                BDD_CHOICES += ('{:02d}'.format(i), '{:02d}'.format(i) + " - " + p),
-            except:
-                pass
 
     if len(BDD_CHOICES) ==2:
         return HttpResponseRedirect(BDD_CHOICES[1][0])
@@ -172,13 +170,6 @@ def selectbdd(request):
     totcand =0
     for bdd in BDD_CHOICES[1:]:
         librnbr +=len(Library.objects.using(bdd[0]).all())
-        itemrecnbr +=len(ItemRecord.objects.using(bdd[0]).all())
-        instrnbr +=len(Instruction.objects.using(bdd[0]).all())
-        cand =[]
-        for e in ItemRecord.objects.using(bdd[0]).all():
-            if len(ItemRecord.objects.using(bdd[0]).filter(sid =e.sid)) >1 and not e.sid in cand:
-                cand.append(e.sid)
-        totcand +=len(cand)
 
     librnbr =librnbr - projnbr #checkers are not libraries ! (one checker per project)
 
@@ -301,7 +292,6 @@ def home(request, bdd):
     usernbr =len(Utilisateur.objects.using(bdd).all())
     librnbr =len(Library.objects.using(bdd).all()) -1  #checkers are not libraries ! (one checker per project)
     itemrecnbr =len(ItemRecord.objects.using(bdd).all())
-    instrnbr =len(Instruction.objects.using(bdd).all())
     cand =[]
     for e in ItemRecord.objects.using(bdd).all():
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
@@ -1400,8 +1390,9 @@ def globadm(request):
 #            user_supproj(request, j.username)
 #            j.delete()
 
-    """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
-    et non seulement pour celle considérée dans la présente vue !"""
+    """
+    Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets !
+    """
     for i in [n for n in range(100)]:
         if os.path.isfile('{:02d}.db'.format(i)):
             for j in Utilisateur.objects.using('{:02d}'.format(i)).all():

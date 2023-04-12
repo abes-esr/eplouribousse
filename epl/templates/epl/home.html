@@ -53,8 +53,9 @@
           </form>
         </div>
 
-        <p><center><code>{% trans "Bibliothèques" %} : {{ librnbr }} - {% trans "Utilisateurs" %} : {{ usernbr }} -
-          {% trans "Rattachements" %} : {{ itemrecnbr }} - {% trans "Ressources candidates" %} : {{ totcand }} - {% trans "Instructions" %} : {{ instrnbr }}</code><center></p>
+        <p><center><code>
+            {{ librnbr }} {% trans "bibliothèques" %} - {{ usernbr }} {% trans "utilisateurs" %} - {{ itemrecnbr }} {% trans "rattachements" %} - {{ totcand }} {% trans "ressources candidates" %}
+        </code><center></p>
 
         <div id="footer">
 
