@@ -172,15 +172,14 @@
                <td>{% trans "Nom du projet" %}</td>
                <td>{{ project }}</td>
          </tr>
-         <tr>
-               <td>{% trans "Résumé" %}</td>
-               <td>{{ abstract }}</td>
-         </tr>
         <tr>
               <td>{% trans "Date d'extraction de la base" %}</td>
               <td>{{ extractdate }}</td>
         </tr>
-
+         <tr>
+               <td>{% trans "Liste de diffusion" %}</td>
+                <td>---{% for e in list_diff %} {% if not e == "" %} {{ e }} --- {% endif %} {% endfor %}</td>
+         </tr>
        </tbody>
 
     </table>

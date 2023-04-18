@@ -15,7 +15,7 @@ class Proj_setting(models.Model):
 class Project(models.Model):
     """Model for project."""
     name = models.CharField('project code name', max_length=30, blank =True)
-    descr = models.CharField('description', max_length=300, blank =True)
+    descr = models.CharField('mailing list', max_length=300, blank =True)
     date = models.CharField('database date' , max_length=50, blank =True)
     def __str__(self):
         info = self.date + ' | ' + self.name + ' | ' + self.descr

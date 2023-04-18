@@ -1,8 +1,8 @@
-epl_version ="v2.10.26 (Judith)"
-date_version ="April 12, 2023"
+epl_version ="v2.10.27 (Judith)"
+date_version ="April 17, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.26 (~Irmingard)"
-date_version ="April 12, 2023"
+#epl_version ="v2.11.27 (~Irmingard)"
+#date_version ="April 17, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -247,6 +247,7 @@ def home(request, bdd):
 ####################################################(fin)###########################################################
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    to = Project.objects.using(bdd).all().order_by('pk')[0].descr.split(", ")
 
     LIBRARY_CHOICES = ('', 'Choisissez votre bibliothèque'),('checker','checker'),
     if Library.objects.using(bdd).all().exclude(name ='checker'):
@@ -343,7 +344,8 @@ def adminbase(request, bdd):
     EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
     exclnbr =len(EXCLUSION_CHOICES) -1
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
-    abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
+    list_diff =Project.objects.using(bdd).all().order_by('pk')[0].descr.split(", ")
+    list_diff.sort()
     extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
 
     #Stuff about libraries
@@ -494,37 +496,24 @@ def projinfos_adm(request, bdd):
     k =logstatus(request)
     version =epl_version
     url ="/" + bdd + "/projinfos_adm"
-    private =Proj_setting.objects.using(bdd)[0].prv
-
+        
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
-    abstract =Project.objects.using(bdd).all().order_by('pk')[0].descr
     extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
 
     #Stuff about project
     class ProjNameForm(forms.Form):
         projname = forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=30, label =_("project code name"))
-    class ProjDescrForm(forms.Form):
-        projdescr =forms.CharField(required =True, widget=forms.Textarea(attrs={'rows':1, 'cols':50},), max_length=300, label =_("project description"))
-    class ProjDateForm(forms.Form):
-        projdate =forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '50'}), max_length=50, label =_("database extraction date"))
     projnamform = ProjNameForm(request.POST or None)
-    projdescform = ProjDescrForm(request.POST or None)
-    projdateform = ProjDateForm(request.POST or None)
-
     if projnamform.is_valid():
         prj =Project.objects.using(bdd).all().order_by('pk')[0]
         prj.name =projnamform.cleaned_data['projname']
         prj.save(using =bdd)
         messages.info(request, _("Le nom du projet a été modifié avec succès"))
         # return HttpResponseRedirect(url)
-
-    if projdescform.is_valid():
-        prj =Project.objects.using(bdd).all().order_by('pk')[0]
-        prj.descr =projdescform.cleaned_data['projdescr']
-        prj.save(using =bdd)
-        messages.info(request, _("Le résumé du projet a été modifié avec succès"))
-        # return HttpResponseRedirect(url)
-
+        
+    class ProjDateForm(forms.Form):
+        projdate =forms.CharField(required =True, widget=forms.TextInput(attrs={'size': '30'}), max_length=50, label =_("database extraction date"))
+    projdateform = ProjDateForm(request.POST or None)
     if projdateform.is_valid():
         prj =Project.objects.using(bdd).all().order_by('pk')[0]
         prj.date =projdateform.cleaned_data['projdate']
@@ -532,6 +521,68 @@ def projinfos_adm(request, bdd):
         messages.info(request, _("La date d'extraction de la base a été modifiée avec succès"))
         # return HttpResponseRedirect(url)
 
+    prj =Project.objects.using(bdd).all().order_by('pk')[0]
+    baselist =[em.mail for em in Utilisateur.objects.using(bdd).all()]
+    diff_list =prj.descr.split(", ")
+    diff_list.sort()
+    c =0
+    for t in baselist:
+        if t not in diff_list:
+            c +=1
+    if c:
+        prj.descr =""
+        diff_list =baselist
+        for elmt in diff_list:
+            prj.descr += elmt + ", "        
+        prj.save(using =bdd)        
+
+    class DiffAjForm(forms.Form):
+        aj_email = forms.EmailField(required =True, label ='email')
+    projajemail = DiffAjForm(request.POST or None)
+    if projajemail.is_valid():
+        prj =Project.objects.using(bdd).all().order_by('pk')[0]
+        prj.descr +=", " + projajemail.cleaned_data['aj_email']
+        if projajemail.cleaned_data['aj_email'] not in diff_list:
+            prj.save(using =bdd)
+            host = str(request.get_host())
+            subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+            ")" + _(" > Ajout à la liste de diffusion")
+            message = _("Votre email vient d'être ajouté à la liste de diffusion.") + "\n" + \
+            _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+            "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
+            dest =[projajemail.cleaned_data['aj_email']]
+            send_mail(subject, message, replymail, dest, fail_silently=True, )
+            messages.info(request, _("Un message d'information a été envoyé à cet email (pour info d'ajout)."))
+        else:
+            messages.info(request, _("Ce mail est déjà dans la liste."))
+
+    SUPP_CHOICES = ("",""),
+    for f in diff_list:
+        if f not in baselist and not f =="":
+            SUPP_CHOICES +=(f, f),
+    class SupprForm(forms.Form):
+        suppremail = forms.ChoiceField(required = True, widget=forms.Select, choices=SUPP_CHOICES, label =_("email"))
+        supprconfirm = forms.BooleanField(required=True)
+    suppremail = SupprForm(request.POST or None)
+    if suppremail.is_valid():
+        diff_list.remove(suppremail.cleaned_data['suppremail'])
+        prj.descr =""
+        for elmt in diff_list:
+            prj.descr += elmt + ", "        
+        prj.save(using =bdd)
+        host = str(request.get_host())
+        subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+        ")" + _(" > Suppression de la liste de diffusion")
+        message = _("Votre email vient d'être supprimé de la liste de diffusion.") + "\n" + \
+        _("Cette suppression fait normalement suite à une demande de votre part.") + "\n" + \
+        _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+        "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
+        dest =[suppremail.cleaned_data['suppremail']]
+        send_mail(subject, message, replymail, dest, fail_silently=True, )
+        messages.info(request, _("Un message d'information a été envoyé à cet email (pour info de suppression)."))
+    else:
+        pass
+#
     if request.method =="POST":
         return HttpResponseRedirect(url)
 
@@ -1334,7 +1385,17 @@ def authusrs_adm(request, bdd):
                         uter =Utilisateur(username =othusajform.cleaned_data['identajoth'], mail =othusajform.cleaned_data['contactajoth'])
                         user =User.objects.create_user(username =othusajform.cleaned_data['identajoth'], email =othusajform.cleaned_data['contactajoth'], password ="glass onion")
                         uter.save(using =bdd)
-                        messages.info(request, _("Utilisateur créé avec succès"))
+                        ####
+                        host = str(request.get_host())
+                        subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
+                        ")" + _(" > Création de votre mot de passe")
+                        message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur autorisé.") + \
+                        "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
+                        "http://" + host + "/default/password_reset/"
+                        dest = [uter.mail]
+                        send_mail(subject, message, replymail, dest, fail_silently=True, )
+                        ####
+                        messages.info(request, _("Utilisateur créé avec succès ; un message vient de lui être envoyé pour la création de son mot de passe."))
                     except:
                         messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
 
@@ -1529,7 +1590,8 @@ def projmstr(request, bdd):
 
     class ContactForm(forms.Form):
         object_list = (("Signalement d'une anomalie", _("Signalement d'une anomalie")), \
-        ("Modification des infos projet (nom, résumé, date d'extraction)", _("Modification des infos projet (nom, résumé, date d'extraction)")), \
+        ("M'ajouter à la liste de diffusion", _("M'ajouter à la liste de diffusion")), \
+        ("Me supprimer de la liste de diffusion", _("Me supprimer de la liste de diffusion")), \
         ("Ajout, modification ou suppression de motifs d'exclusion", _("Ajout, modification ou suppression de motifs d'exclusion")),\
          ("Ajout, modification ou suppression de correspondants d'une bibliothèque", _("Ajout, modification ou suppression de correspondants d'une bibliothèque")), \
          ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), \

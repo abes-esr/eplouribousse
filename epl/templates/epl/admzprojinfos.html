@@ -71,11 +71,7 @@
                <td>{{ project }}</td>
                <td><form method="post">{% csrf_token %}{{ projnamform.projname }} <input type="submit" value="{% trans "Valider" %}"></form></td>
          </tr>
-         <tr>
-               <td>{% trans "Résumé" %}</td>
-               <td>{{ abstract }}</td>
-               <td><form method="post">{% csrf_token %}{{ projdescform.projdescr }} <input type="submit" value="{% trans "Valider" %}"></form></td>
-         </tr>
+
         <tr>
               <td>{% trans "Date d'extraction de la base" %}</td>
               <td>{{ extractdate }}</td>
@@ -85,10 +81,15 @@
        </tbody>
 
     </table>
+<HR>
 
+              <p>{% trans "Liste de diffusion actuelle (ordre alphabétique)" %} : ---{% for e in diff_list %} {% if not e == "" %} {{ e }} --- {% endif %} {% endfor %}</p>
+<HR>
+              <p><form method="post">{% csrf_token %}{% trans "Ajouter un mail" %} {{ projajemail.aj_email }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 
+        <p><form method="post">{% csrf_token %}{% trans "Supprimer un mail" %} {{ suppremail.suppremail }} {% trans "Confirmer" %} {{ suppremail.supprconfirm }} <input type="submit" value="{% trans "Valider" %}"></form></p>
+    <p>{% trans "(Les mails des utilisateurs disposant d'un identifiant ne peuvent pas être supprimés)" %}</p>
         </div>
-
 
 </body>
 
