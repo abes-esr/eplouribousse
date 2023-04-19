@@ -931,7 +931,7 @@ msgstr "Administration"
 #: epl/templates/epl/adminbase.html:51 epl/templates/epl/admzexcl.html:55
 #, fuzzy
 #| msgid "motif d'exclusion"
-msgid "Gestion des motifs d'exlusion"
+msgid "Gestion des motifs d'exclusion"
 msgstr "Ausschlussgrund"
 
 #: epl/templates/epl/adminbase.html:52 epl/templates/epl/admzexcl.html:56

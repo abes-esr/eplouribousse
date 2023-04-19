@@ -1,8 +1,8 @@
-epl_version ="v2.10.27 (Judith)"
-date_version ="April 17, 2023"
+epl_version ="v2.10.28 (Judith)"
+date_version ="April 19, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.27 (~Irmingard)"
-date_version ="April 17, 2023"
+#epl_version ="v2.11.28 (~Irmingard)"
+#date_version ="April 19, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -61,8 +61,9 @@ def user_suppr(request, bdd, login):
     ")" + _(" > Suppression d'un compte")
     message = _("Le compte {} à été fermé".format(login)) + \
     "\n" + _("Cela peut faire suite à un changement de compte ou à une demande de suppression pure et simple.") \
-    + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné.") + "\n" + \
-    _("Merci d'avoir utilisé epouribousse !")
+    + " " + _("Votre email a été supprimé de la liste de diffusion.") \
+    + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+    "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
@@ -71,9 +72,8 @@ def user_supproj(request, login):
     host = str(request.get_host())
     subject = _("eplouribousse : ") + _("Suppression d'un compte")
     message = _("Le compte {} à été fermé".format(login)) + \
-    "\n" + _("Cela fait normalement suite à la suppression du projet auquel ce compte était associé.") \
-    + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné.") + "\n" + \
-    _("Merci d'avoir utilisé epouribousse !")
+    "\n" + _("Cela fait normalement suite à la suppression du projet auquel était associé votre compte.") \
+    + "\n" + _("Merci d'avoir utilisé eplouribousse !")
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
@@ -82,7 +82,7 @@ def usermail_mod(request, bdd, login, mail):
     host = str(request.get_host())
     subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
     ")" + _(" > Modification de votre email")
-    message = _("L'adresse mail associée à l'identifiant {} à été modifiée.".format(login)) + "\n" + \
+    message = _("L'adresse mail associée à l'identifiant {} à été modifiée et la liste de diffusion a été mise à jour.".format(login)) + "\n" + \
     _("(Vous recevez le présent message à votre nouvelle adresse.)")
     dest =[mail]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
@@ -94,10 +94,33 @@ def userid_mod(request, bdd, login, mail):
     ")" + _(" > Modification de votre identifiant")
     message = _("L'identifiant associé à l'adresse {} à été modifié.".format(mail)) + "\n" + \
     _("Votre nouvel identifiant est : {}".format(login)) + "\n" + \
-    _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné.") + "\n" + \
-    _("Merci d'avoir utilisé epouribousse !")
+    _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+    "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+def diffajupdate(request, bdd, mel):
+    prj = Project.objects.using(bdd).all().order_by('pk')[0]
+    list_diff =prj.descr.split(", ")
+    if mel not in list_diff:
+        list_diff.append(mel)
+    list_diff.sort()
+    prj.descr =""
+    for elmt in list_diff:
+        if elmt:
+            prj.descr += elmt + ", "
+    prj.save(using =bdd)
+
+def diffsupupdate(request, bdd, mel):
+    prj = Project.objects.using(bdd).all().order_by('pk')[0]
+    list_diff =prj.descr.split(", ")
+    if mel in list_diff:
+        list_diff.remove(mel)
+    prj.descr =""
+    for elmt in list_diff:
+        if elmt:
+            prj.descr += elmt + ", "
+    prj.save(using =bdd)
 
 ############################################
 
@@ -419,7 +442,7 @@ def excl_adm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    url ="/" + bdd + "/excl_adm"
+    url ="/" + bdd + "/adminbase"
     private =Proj_setting.objects.using(bdd)[0].prv
 
 
@@ -495,7 +518,7 @@ def projinfos_adm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    url ="/" + bdd + "/projinfos_adm"
+    url ="/" + bdd + "/adminbase"
         
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
     extractdate =Project.objects.using(bdd).all().order_by('pk')[0].date
@@ -525,24 +548,27 @@ def projinfos_adm(request, bdd):
     baselist =[em.mail for em in Utilisateur.objects.using(bdd).all()]
     diff_list =prj.descr.split(", ")
     diff_list.sort()
-    c =0
     for t in baselist:
         if t not in diff_list:
-            c +=1
-    if c:
-        prj.descr =""
-        diff_list =baselist
-        for elmt in diff_list:
+            diff_list.append(t)
+    diff_list.sort()
+    prj.descr =""
+    for elmt in diff_list:
+        if elmt:
             prj.descr += elmt + ", "        
-        prj.save(using =bdd)        
+    prj.save(using =bdd)
 
     class DiffAjForm(forms.Form):
         aj_email = forms.EmailField(required =True, label ='email')
     projajemail = DiffAjForm(request.POST or None)
     if projajemail.is_valid():
         prj =Project.objects.using(bdd).all().order_by('pk')[0]
-        prj.descr +=", " + projajemail.cleaned_data['aj_email']
         if projajemail.cleaned_data['aj_email'] not in diff_list:
+            diff_list.append(projajemail.cleaned_data['aj_email'])
+            diff_list.sort()
+            prj.descr =""
+            for elmt in diff_list:
+                prj.descr +=", " + elmt
             prj.save(using =bdd)
             host = str(request.get_host())
             subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
@@ -581,8 +607,14 @@ def projinfos_adm(request, bdd):
         send_mail(subject, message, replymail, dest, fail_silently=True, )
         messages.info(request, _("Un message d'information a été envoyé à cet email (pour info de suppression)."))
     else:
-        pass
-#
+        for elmt in diff_list:
+            if not "@" in elmt and not "." in elmt:
+                diff_list.remove(elmt)
+        prj.descr =""
+        for elmt in diff_list:
+            prj.descr += elmt + ", "        
+        prj.save(using =bdd)  
+
     if request.method =="POST":
         return HttpResponseRedirect(url)
 
@@ -603,7 +635,7 @@ def lib_adm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    url ="/" + bdd + "/lib_adm"
+    url ="/" + bdd + "/adminbase"
     private =Proj_setting.objects.using(bdd)[0].prv
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -709,6 +741,8 @@ def lib_adm(request, bdd):
                         if compteura ==1:
                             user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username)
                             uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis)
+                            user_suppr(request, bdd, User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_bis).username))
+                            diffsupupdate(request, bdd, lib.contact_bis)
                             user.delete()
                             uter.delete()
                         if lib.contact_bis ==None:
@@ -733,6 +767,8 @@ def lib_adm(request, bdd):
                         if compteurb ==1:
                             user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter).username)
                             uter =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter)
+                            user_suppr(request, bdd, User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =lib.contact_ter).username))
+                            diffsupupdate(request, bdd, lib.contact_ter)
                             user.delete()
                             uter.delete()
                         if lib.contact_ter ==None:
@@ -791,11 +827,12 @@ def lib_adm(request, bdd):
                                         if formlibct.cleaned_data['contactnbr'] =='3':
                                             lib.contact_ter =formlibct.cleaned_data['contact']
                                             lib.save(using =bdd)
-                                        messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé ; les instructions complémentaires lui ont été automatiquement envoyées par mail.)"))
+                                        messages.info(request, _("Modification effectuée avec succès (un nouvel utilisateur a été créé et ajouté la liste de diffusion ; les instructions complémentaires lui ont été automatiquement envoyées par mail.)"))
                                         host = str(request.get_host())
                                         subject_a = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                                         ")" + _(" > Création de votre mot de passe")
                                         message_a = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur.") + \
+                                        "\n" + _("Votre email a été ajouté à la liste de diffusion du projet.") + \
                                         "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
                                         "http://" + host + "/default/password_reset/"
                                         subject_b = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
@@ -807,7 +844,8 @@ def lib_adm(request, bdd):
                                         "\n" + _("Notez que dans tous les cas, vous devez d'abord créer votre mot de passe (voir autre message).")
                                         dest = [uter.mail]
                                         send_mail(subject_a, message_a, replymail, dest, fail_silently=True, )
-                                        send_mail(subject_b, message_b, replymail, dest, fail_silently=True, )                
+                                        send_mail(subject_b, message_b, replymail, dest, fail_silently=True, )
+                                        diffajupdate(request, bdd, uter.mail)
                                     except:
                                         messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
         except:
@@ -849,7 +887,8 @@ def alerts_adm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    url ="/" + bdd + "/alerts_adm"
+#    url ="/" + bdd + "/alerts_adm"
+    url ="/" + bdd + "/adminbase"
     private =Proj_setting.objects.using(bdd)[0].prv
 
     # gestion des alertes et du mode (début)
@@ -953,14 +992,19 @@ def alerts_adm(request, bdd):
         host = str(request.get_host())
         subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
         ")" + _(" > Modification des réglages")
-        message = _("(Ce message ne concerne que les instructeurs = correspondants dans les bibliothèques et checkers)") + \
-        "\n" + _("Les réglages du projet ont été réinitialisés par l'administrateur.") + "\n" + \
+        message = _("Les réglages du projet ont été réinitialisés par l'administrateur.") + "\n" + \
         _("Vous pouvez ignorer ce message si vous vous en remettez aux alertes activées au niveau du projet (recommandé)") + "\n" + \
         _("Sinon, pour voir les alertes activées et éventuellement en supprimer à votre niveau : ") + "\n" + \
-        "http://" + host + "/" + bdd + "/alerts_user"        
-        for e in Utilisateur.objects.using(bdd).all():
-            dest = [e.mail]
-            send_mail(subject, message, replymail, dest, fail_silently=True, )
+        "http://" + host + "/" + bdd + "/alerts_user"
+        dest =[]
+        for libmt in Library.objects.using(bdd).all():
+            if libmt.contact and libmt.contact not in dest:
+                dest.append(libmt.contact)
+            if libmt.contact_bis and libmt.contact_bis not in dest:
+                dest.append(libmt.contact_bis)
+            if libmt.contact_ter and libmt.contact_ter not in dest:
+                dest.append(libmt.contact_ter)
+        send_mail(subject, message, replymail, dest, fail_silently=True, )
 
     # gestion des alertes et du mode (fin)
 
@@ -986,7 +1030,7 @@ def alerts_user(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    url ="/" + bdd + "/alerts_user"
+    url ="/" + bdd
     private =Proj_setting.objects.using(bdd)[0].prv
 
     # gestion des alertes au niveau de l'utilisateur (début)
@@ -1079,7 +1123,7 @@ def admins_adm(request, bdd):
 
     k =logstatus(request)
     version =epl_version
-    url ="/" + bdd + "/admins_adm"
+    url ="/" + bdd + "/adminbase"
     private =Proj_setting.objects.using(bdd)[0].prv
 
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
@@ -1142,11 +1186,13 @@ def admins_adm(request, bdd):
                                 uter.save(using =bdd)
                                 newadm =BddAdmin(contact =projajadmform.cleaned_data['contactajadm'])
                                 newadm.save(using =bdd)
+                                diffajupdate(request, bdd, projajadmform.cleaned_data['contactajadm'])
                                 host = str(request.get_host())
                                 subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                                 ")" + _(" > Création de votre mot de passe")
                                 message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur (administrateur du projet).") + \
-                                "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
+                                "\n" + _("Votre email a été ajouté à la liste de diffusion du projet") + "\n" + \
+                                _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
                                 "http://" + host + "/default/password_reset/"
                                 dest = [uter.mail]
                                 send_mail(subject, message, replymail, dest, fail_silently=True, )
@@ -1174,6 +1220,7 @@ def admins_adm(request, bdd):
                 user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm']).username)
                 uter =Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm'])
                 user_suppr(request, bdd, Utilisateur.objects.using(bdd).get(mail =projsuppradmform.cleaned_data['contactsuadm']).username)
+                diffsupupdate(request, bdd, projsuppradmform.cleaned_data['contactsuadm'])
                 user.delete()
                 uter.delete()
             suppradm.delete(using =bdd)
@@ -1203,6 +1250,12 @@ def admins_adm(request, bdd):
 
 @login_required
 def instrtrs_adm(request, bdd):
+    
+    """
+    -------------------------------------------------------------------------------------------
+    !!!! En fait, il s'agit de tous les utilisateurs et non pas seulement des instructeurs. !!!!
+    -------------------------------------------------------------------------------------------
+    """
 
     #contrôle d'accès ici
     suffixe = "@" + str(bdd)
@@ -1287,6 +1340,10 @@ def instrtrs_adm(request, bdd):
                                 adm.save(using =bdd)
                             uter.save(using =bdd)
                             user.save()
+                            #
+                            diffsupupdate(request, bdd, utermodform.cleaned_data['uterxy'])
+                            diffajupdate(request, bdd, utermodform.cleaned_data['newutermail'])
+                            #
                             usermail_mod(request, bdd, uter.username, uter.mail)
                             messages.info(request, _("L'email de l'utilisateur a été modifié avec succès"))
                         except:
@@ -1385,17 +1442,18 @@ def authusrs_adm(request, bdd):
                         uter =Utilisateur(username =othusajform.cleaned_data['identajoth'], mail =othusajform.cleaned_data['contactajoth'])
                         user =User.objects.create_user(username =othusajform.cleaned_data['identajoth'], email =othusajform.cleaned_data['contactajoth'], password ="glass onion")
                         uter.save(using =bdd)
-                        ####
+                        diffajupdate(request, bdd, othusajform.cleaned_data['contactajoth'])
                         host = str(request.get_host())
                         subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                         ")" + _(" > Création de votre mot de passe")
                         message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur autorisé.") + \
+                        "\n" + _("Votre email est intégré à la liste de diffusion du projet.") + \
                         "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
                         "http://" + host + "/default/password_reset/"
                         dest = [uter.mail]
                         send_mail(subject, message, replymail, dest, fail_silently=True, )
                         ####
-                        messages.info(request, _("Utilisateur créé avec succès ; un message vient de lui être envoyé pour la création de son mot de passe."))
+                        messages.info(request, _("Utilisateur créé avec succès ; un message vient de lui être envoyé pour la création de son mot de passe. Son email est intégré à la liste de diffusion."))
                     except:
                         messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
 
@@ -1403,8 +1461,10 @@ def authusrs_adm(request, bdd):
         user =User.objects.get(username =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth']).username)
         uter =Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth'])
         user_suppr(request, bdd, Utilisateur.objects.using(bdd).get(mail =othussupprform.cleaned_data['contactsuoth']).username)
+        diffsupupdate(request, bdd, othussupprform.cleaned_data['contactsuoth'])
         user.delete()
         uter.delete()
+
         messages.info(request, _('Utilisateur supprimé avec succès'))
     # Fin de stuff about other authorized users
 
