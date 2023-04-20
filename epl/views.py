@@ -1,8 +1,8 @@
-epl_version ="v2.10.28 (Judith)"
-date_version ="April 19, 2023"
+epl_version ="v2.10.29 (Judith)"
+date_version ="April 20, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.28 (~Irmingard)"
-date_version ="April 19, 2023"
+#epl_version ="v2.11.29 (~Irmingard)"
+#date_version ="April 20, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -60,20 +60,10 @@ def user_suppr(request, bdd, login):
     subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
     ")" + _(" > Suppression d'un compte")
     message = _("Le compte {} à été fermé".format(login)) + \
-    "\n" + _("Cela peut faire suite à un changement de compte ou à une demande de suppression pure et simple.") \
+    "\n" + _("Cela peut faire suite à un changement du compte ou à son inutilité ou encore à une demande de suppression pure et simple.") \
     + " " + _("Votre email a été supprimé de la liste de diffusion.") \
     + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
     "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
-    dest =[User.objects.get(username =login).email]
-    send_mail(subject, message, replymail, dest, fail_silently=True, )
-
-def user_supproj(request, login):
-    """Mail d'info lors de la suppression d'un compte"""
-    host = str(request.get_host())
-    subject = _("eplouribousse : ") + _("Suppression d'un compte")
-    message = _("Le compte {} à été fermé".format(login)) + \
-    "\n" + _("Cela fait normalement suite à la suppression du projet auquel était associé votre compte.") \
-    + "\n" + _("Merci d'avoir utilisé eplouribousse !")
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
@@ -133,15 +123,6 @@ def selectbdd(request):
     BDD_CHOICES =('',_('Sélectionnez votre projet')),
     
 #########################(Cette partie est reproduite de la même vue dans 'home' et 'globadm')######################
-    """Cette partie est désormais traitée dans la vue 'home'"""
-#    for j in User.objects.all():
-#        suffix =j.username[-3:]
-#        db =suffix[1:3]
-#        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
-#            user_supproj(request, j.username)
-#            j.delete()
-
-
     """
     Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets !
     """
@@ -249,14 +230,6 @@ def home(request, bdd):
                 
             
 #########################(Cette partie est reproduite dans les vues 'selectbdd' et 'globadm')#######################
-    """Cette partie est désormais traitée dans la vue 'home'"""
-#    for j in User.objects.all():
-#        suffix =j.username[-3:]
-#        db =suffix[1:3]
-#        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
-#            user_suppr(request, bdd, j.username)
-#            j.delete()
-
     """Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets
     et non seulement pour celle considérée dans la présente vue !"""
     for i in [n for n in range(100)]:
@@ -413,7 +386,7 @@ def adminbase(request, bdd):
     #Début stuff about other authorized users
     otherauthtuple =('', "Sélectionnez l'utilisateur"),
     ft =0
-    # for elmt in User.objects.all():
+
     for elmt in Utilisateur.objects.using(bdd).all():
         if not BddAdmin.objects.using(bdd).filter(contact =elmt.mail) and not \
         Library.objects.using(bdd).filter(contact =elmt.mail) and not \
@@ -799,7 +772,7 @@ def lib_adm(request, bdd):
                             if formlibct.cleaned_data['contactnbr'] =='3':
                                 lib.contact_ter =formlibct.cleaned_data['contact']
                                 lib.save(using =bdd)
-                            messages.info(request, _("Modification effectuée avec succès (réemploi d'un utilisateur déjà présent dans la base)"))
+                            messages.info(request, _("Modification effectuée avec succès (réemploi d'un utilisateur déjà présent dans la base : {} )".format(uter.username)))
                                 # return HttpResponseRedirect(url)
                         except:#utilisateur absent de la base
                             if len(Utilisateur.objects.using(bdd).filter(username =formlibct.cleaned_data['ident'])):
@@ -850,6 +823,30 @@ def lib_adm(request, bdd):
                                         messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
         except:
             pass
+
+    
+    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (début) :
+    if not private:
+        mailist =[]
+        for lib in Library.objects.using(bdd).all():
+            if lib.contact not in mailist:
+                mailist.append(lib.contact)
+            if lib.contact_bis and lib.contact_bis not in mailist:
+                mailist.append(lib.contact_bis)
+            if lib.contact_ter and lib.contact_ter not in mailist:
+                mailist.append(lib.contact_ter)
+        for adm in BddAdmin.objects.using(bdd).all():
+            if adm.contact not in mailist:
+                mailist.append(adm.contact)
+        for utmt in Utilisateur.objects.using(bdd).all():
+            if utmt.mail not in mailist:
+                user_suppr(request, bdd, utmt.username)
+                diffsupupdate(request, bdd, utmt.mail)
+                messages.info(request, _("Le compte {} a été supprimé et la liste de diffusion mise à jour en conséquence.".format(utmt.username)))
+                messages.info(request, _("L'utilisateur {} n'avait plus aucun rôle dans le projet.".format(utmt.username)))
+                utmt.delete(using =bdd)
+                User.objects.get(username =utmt.username).delete()
+    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (fin) :
 
     if request.method =="POST":
         return HttpResponseRedirect(url)
@@ -1249,11 +1246,11 @@ def admins_adm(request, bdd):
 
 
 @login_required
-def instrtrs_adm(request, bdd):
+def uters_adm(request, bdd):
     
     """
     -------------------------------------------------------------------------------------------
-    !!!! En fait, il s'agit de tous les utilisateurs et non pas seulement des instructeurs. !!!!
+    Gestion des utilisateurs.
     -------------------------------------------------------------------------------------------
     """
 
@@ -1370,7 +1367,7 @@ def instrtrs_adm(request, bdd):
                 except:
                     j.delete() #suppression dans la bdd générale
 
-    return render(request, 'epl/admzinstrtrs.html', locals())
+    return render(request, 'epl/admzuters.html', locals())
 
 
 @login_required
@@ -1395,7 +1392,7 @@ def authusrs_adm(request, bdd):
     #Début stuff about other authorized users
     otherauthtuple =('', "Sélectionnez l'utilisateur"),
     ft =0
-    # for elmt in User.objects.all():
+
     for elmt in Utilisateur.objects.using(bdd).all():
         if not BddAdmin.objects.using(bdd).filter(contact =elmt.mail) and not \
         Library.objects.using(bdd).filter(contact =elmt.mail) and not \
@@ -1503,14 +1500,6 @@ def globadm(request):
         return selectbdd(request)
     
 #########################(Cette partie est reproduite de la même vue dans 'home' et 'selectbdd')######################
-    """Cette partie est désormais traitée dans la vue 'home'"""
-#    for j in User.objects.all():
-#        suffix =j.username[-3:]
-#        db =suffix[1:3]
-#        if not os.path.isfile('{}.db'.format(db)) and not j.is_superuser:
-#            user_supproj(request, j.username)
-#            j.delete()
-
     """
     Création (dans la base de données principale) des users non encore enregistrés pour toutes les bases projets !
     """
