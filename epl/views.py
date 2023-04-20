@@ -1,8 +1,8 @@
-epl_version ="v2.10.31 (Judith)"
+epl_version ="v2.10.32 (Judith)"
 date_version ="April 20, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.31 (~Irmingard)"
-date_version ="April 20, 2023"
+#epl_version ="v2.11.32 (~Irmingard)"
+#date_version ="April 20, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -63,7 +63,7 @@ def user_suppr(request, bdd, login):
     "\n" + _("Cela peut faire suite à un changement du compte ou à son inutilité ou encore à une demande de suppression pure et simple.") \
     + " " + _("Votre email a été supprimé de la liste de diffusion.") \
     + "\n" + _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
-    "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
+    "http://" + host + "/" + bdd + "/projectmaster" + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
@@ -73,7 +73,7 @@ def usermail_mod(request, bdd, login, mail):
     subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
     ")" + _(" > Modification de votre email")
     message = _("L'adresse mail associée à l'identifiant {} à été modifiée et la liste de diffusion a été mise à jour.".format(login)) + "\n" + \
-    _("(Vous recevez le présent message à votre nouvelle adresse.)")
+    _("(Vous recevez le présent message à votre nouvelle adresse.)") + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
     dest =[mail]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
@@ -83,9 +83,9 @@ def userid_mod(request, bdd, login, mail):
     subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
     ")" + _(" > Modification de votre identifiant")
     message = _("L'identifiant associé à l'adresse {} à été modifié.".format(mail)) + "\n" + \
-    _("Votre nouvel identifiant est : {}".format(login)) + "\n" + \
+    _("Votre nouvel identifiant est : {}.".format(login)) + "\n" + _("(Votre mot de passe reste inchangé)") + "\n" + "\n" + \
     _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
-    "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
+    "http://" + host + "/" + bdd + "/projectmaster" + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
     dest =[User.objects.get(username =login).email]
     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
@@ -397,6 +397,29 @@ def adminbase(request, bdd):
                 ft +=1
     sizeotherus =ft
     otherauthtup =otherauthtuple[1:]
+    
+    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (début) :
+    if not private:
+        mailist =[]
+        for lib in Library.objects.using(bdd).all():
+            if lib.contact not in mailist:
+                mailist.append(lib.contact)
+            if lib.contact_bis and lib.contact_bis not in mailist:
+                mailist.append(lib.contact_bis)
+            if lib.contact_ter and lib.contact_ter not in mailist:
+                mailist.append(lib.contact_ter)
+        for adm in BddAdmin.objects.using(bdd).all():
+            if adm.contact not in mailist:
+                mailist.append(adm.contact)
+        for utmt in Utilisateur.objects.using(bdd).all():
+            if utmt.mail not in mailist:
+                user_suppr(request, bdd, utmt.username)
+                diffsupupdate(request, bdd, utmt.mail)
+                messages.info(request, _("Le compte {} a été supprimé et la liste de diffusion mise à jour en conséquence.".format(utmt.username)))
+                messages.info(request, _("L'utilisateur {} n'avait plus aucun rôle dans le projet.".format(utmt.username)))
+                utmt.delete(using =bdd)
+                User.objects.get(username =utmt.username).delete()
+    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (fin) :
 
     return render(request, 'epl/adminbase.html', locals())
 
@@ -547,8 +570,11 @@ def projinfos_adm(request, bdd):
             subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
             ")" + _(" > Ajout à la liste de diffusion")
             message = _("Votre email vient d'être ajouté à la liste de diffusion.") + "\n" + \
+            _("L'utilisation du site suppose que vous consentez aux règles de confidentialité et aux conditions générales d'utilisation :") + \
+            "\n" + "http://" + host + "/default/cgu" + "\n" + "http://" + host + "/default/confidentialite" + "\n" + "\n" + \
             _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
-            "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
+            "http://" + host + "/" + bdd + "/projectmaster" + "\n" + "\n" + \
+            _("Merci d'utiliser eplouribousse !")
             dest =[projajemail.cleaned_data['aj_email']]
             send_mail(subject, message, replymail, dest, fail_silently=True, )
             messages.info(request, _("Un message d'information a été envoyé à cet email (pour info d'ajout)."))
@@ -575,7 +601,7 @@ def projinfos_adm(request, bdd):
         message = _("Votre email vient d'être supprimé de la liste de diffusion.") + "\n" + \
         _("Cette suppression fait normalement suite à une demande de votre part.") + "\n" + \
         _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
-        "http://" + host + "/" + bdd + "/projectmaster" + "\n" + _("Merci d'utiliser eplouribousse !")
+        "http://" + host + "/" + bdd + "/projectmaster" + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
         dest =[suppremail.cleaned_data['suppremail']]
         send_mail(subject, message, replymail, dest, fail_silently=True, )
         messages.info(request, _("Un message d'information a été envoyé à cet email (pour info de suppression)."))
@@ -804,10 +830,14 @@ def lib_adm(request, bdd):
                                         host = str(request.get_host())
                                         subject_a = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                                         ")" + _(" > Création de votre mot de passe")
-                                        message_a = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur.") + \
+                                        message_a = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur sous l'identifiant : {}".format(formlibct.cleaned_data['ident'])) + \
                                         "\n" + _("Votre email a été ajouté à la liste de diffusion du projet.") + \
                                         "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
-                                        "http://" + host + "/default/password_reset/"
+                                        "http://" + host + "/default/password_reset/" +  "\n" + "\n" + \
+                                        _("L'utilisation du site suppose que vous consentez aux règles de confidentialité et aux conditions générales d'utilisation :") \
+                                        + "\n" + "http://" + host + "/default/cgu" + "\n" + "http://" + host + "/default/confidentialite" + "\n" + "\n" + \
+                                        _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+                                        "http://" + host + "/" + bdd + "/projectmaster" + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
                                         subject_b = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                                         ")" + _(" > Infos complémentaires")
                                         message_b = _("Ce message en complète un autre relatif à la création de votre mot de passe.") + \
@@ -823,30 +853,6 @@ def lib_adm(request, bdd):
                                         messages.info(request, _("L'identifiant ne respecte pas le format prescrit"))
         except:
             pass
-
-    
-    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (début) :
-    if not private:
-        mailist =[]
-        for lib in Library.objects.using(bdd).all():
-            if lib.contact not in mailist:
-                mailist.append(lib.contact)
-            if lib.contact_bis and lib.contact_bis not in mailist:
-                mailist.append(lib.contact_bis)
-            if lib.contact_ter and lib.contact_ter not in mailist:
-                mailist.append(lib.contact_ter)
-        for adm in BddAdmin.objects.using(bdd).all():
-            if adm.contact not in mailist:
-                mailist.append(adm.contact)
-        for utmt in Utilisateur.objects.using(bdd).all():
-            if utmt.mail not in mailist:
-                user_suppr(request, bdd, utmt.username)
-                diffsupupdate(request, bdd, utmt.mail)
-                messages.info(request, _("Le compte {} a été supprimé et la liste de diffusion mise à jour en conséquence.".format(utmt.username)))
-                messages.info(request, _("L'utilisateur {} n'avait plus aucun rôle dans le projet.".format(utmt.username)))
-                utmt.delete(using =bdd)
-                User.objects.get(username =utmt.username).delete()
-    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (fin) :
 
     if request.method =="POST":
         return HttpResponseRedirect(url)
@@ -1187,10 +1193,14 @@ def admins_adm(request, bdd):
                                 host = str(request.get_host())
                                 subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                                 ")" + _(" > Création de votre mot de passe")
-                                message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur (administrateur du projet).") + \
+                                message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur (administrateur du projet) sous l'identifiant : {}".format(projajadmform.cleaned_data['identajadm'])) + \
                                 "\n" + _("Votre email a été ajouté à la liste de diffusion du projet") + "\n" + \
                                 _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
-                                "http://" + host + "/default/password_reset/"
+                                "http://" + host + "/default/password_reset/" + "\n" + "\n" + \
+                                _("L'utilisation du site suppose que vous consentez aux règles de confidentialité et aux conditions générales d'utilisation :") + \
+                                "\n" + "http://" + host + "/default/cgu/" + "\n" + "http://" + host + "/default/confidentialite/" + "\n" + "\n" + \
+                                _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+                                "http://" + host + bdd + "/projectmaster" + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
                                 dest = [uter.mail]
                                 send_mail(subject, message, replymail, dest, fail_silently=True, )
                                 messages.info(request, _("Administrateur ajouté avec succès (un nouvel utilisateur a été créé ; les instructions complémentaires lui ont été automatiquement envoyées par mail.)"))
@@ -1443,13 +1453,16 @@ def authusrs_adm(request, bdd):
                         host = str(request.get_host())
                         subject = _("eplouribousse (Projet : ") + Project.objects.using(bdd).all().order_by('pk')[0].name + \
                         ")" + _(" > Création de votre mot de passe")
-                        message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur autorisé.") + \
+                        message = _("Le responsable de projet vient de vous enregistrer comme nouvel utilisateur autorisé sous l'identifiant : {}".format(othusajform.cleaned_data['identajoth'])) + \
                         "\n" + _("Votre email est intégré à la liste de diffusion du projet.") + \
                         "\n" + _("Pour finaliser votre enregistrement, veuillez créer votre mot de passe :") + "\n" + \
-                        "http://" + host + "/default/password_reset/"
+                        "http://" + host + "/default/password_reset/" + "\n" + "\n" + \
+                        _("L'utilisation du site suppose que vous consentez aux règles de confidentialité et aux conditions générales d'utilisation :") + \
+                        "\n" + "http://" + host + "/default/cgu/" + "\n" + "http://" + host + "/default/confidentialite/" + "\n" + "\n" + \
+                        _("Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le responsable de projet concerné :") + "\n" + \
+                        "http://" + host + bdd + "/projectmaster" + "\n" + "\n" + _("Merci d'utiliser eplouribousse !")
                         dest = [uter.mail]
                         send_mail(subject, message, replymail, dest, fail_silently=True, )
-                        ####
                         messages.info(request, _("Utilisateur créé avec succès ; un message vient de lui être envoyé pour la création de son mot de passe. Son email est intégré à la liste de diffusion."))
                     except:
                         messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
@@ -1646,11 +1659,12 @@ def projmstr(request, bdd):
          ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), \
          ("Ajout, modification ou suppression d'utilisateurs", _("Ajout, modification ou suppression d'utilisateurs")), \
          ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), \
+        ("Signaler un manquement aux règles de confidentialité", _("Signaler un manquement aux règles de confidentialité")), \
          ("Autre", _("Autre")))
         object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
         email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
         email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-        content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+        content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles.")}), label =_("Votre message"))
 
     form = ContactForm(request.POST or None)
     if form.is_valid():
@@ -1663,10 +1677,9 @@ def projmstr(request, bdd):
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
             message2 = _("Votre message a bien été envoyé à l'administrateur du projet qui y répondra prochainement")\
-             + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" \
-             + _("Rappel de votre message") + " :\n" + \
-             _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
-             "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
+             + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" + _("Rappel de votre message") + " :\n" + \
+                _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
+                "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
             send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
