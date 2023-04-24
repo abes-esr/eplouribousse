@@ -14,6 +14,7 @@ urlpatterns = [
     path('<str:bdd>/admins_adm', views.admins_adm, name='administrators administration'),
     path('<str:bdd>/uters_adm', views.uters_adm, name='users administration'),
     path('<str:bdd>/authusrs_adm', views.authusrs_adm, name='authorized users administration'),
+    path('<str:bdd>/diffusion', views.diffusion, name='mail to diffusion list'),
 
     path('default/password_reset/', views.password_reset_request, name='password_reset'),
     path('default/globadm', views.globadm, name='global administration'),

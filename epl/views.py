@@ -1,8 +1,8 @@
-epl_version ="v2.10.32 (Judith)"
-date_version ="April 20, 2023"
+epl_version ="v2.10.33 (Judith)"
+date_version ="April 24, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.32 (~Irmingard)"
-date_version ="April 20, 2023"
+#epl_version ="v2.11.33 (~Irmingard)"
+#date_version ="April 24, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5070,3 +5070,46 @@ def cgu(request):
 def confidentialite(request):
     
     return render(request, 'epl/confidentialite.html', locals())
+
+################################################################################################""""""
+def diffusion(request, bdd):
+    
+    prj = Project.objects.using(bdd).all().order_by('pk')[0]
+    list_diff =prj.descr.split(", ")
+    k =logstatus(request)
+    if k:
+        class DiffusionForm(forms.Form):
+            subject = forms.CharField(required=True, label ="Objet")
+            message = forms.CharField(widget=forms.Textarea, required=True, label ="Message")
+    else:
+        class DiffusionForm(forms.Form):
+            from_email = forms.EmailField(required=True, label ="Votre email")
+            subject = forms.CharField(required=True, label ="Objet")
+            message = forms.CharField(widget=forms.Textarea, required=True, label ="Message")
+
+    if request.method == "GET":
+        form = DiffusionForm()
+    else:
+        form = DiffusionForm(request.POST)
+        if form.is_valid():
+            if k:
+                from_email = request.user.email
+                subject = form.cleaned_data["subject"]
+                message = form.cleaned_data['message']
+            else:
+                from_email = form.cleaned_data["from_email"]
+                subject = form.cleaned_data["subject"]
+                message = form.cleaned_data['message']
+            if from_email not in list_diff:
+                list_diff.append(from_email)
+                messages.info(request, _("(Pour info : votre email ne fait pas partie de la liste de diffusion)"))
+            try:
+                send_mail(subject, message, from_email, list_diff)
+            except BadHeaderError:
+                return HttpResponse("Invalid header found.")
+            messages.info(request, _("Votre message a bien été transmis à la liste de diffusion du projet : {}".format(prj.name)))
+            if not k:
+                messages.info(request, _("(Vous le recevrez également)"))
+            return redirect("/./" + bdd)
+    return render(request, "epl/diffusion.html", locals())
+################################################################################################""""""
