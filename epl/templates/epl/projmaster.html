@@ -29,22 +29,26 @@
         <!-- (User : Anonymous) -->
         {% endif %}
         </div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <p></p>
         <h2>{% trans "Contacter l'administration du projet" %} : {{ project }}</h2>
         <div id="content">
 
 
 <p></p>
-          <form method="post">
-            <p>{% trans "Objet" %} : {{ form.object }}</p>
-            <p>{% trans "Votre adresse mail de contact" %} : {{ form.email }}</p>
-            <p><b>{{ info }}</b></p>
-            <p>{% trans "Confirmation de l'adresse mail" %} : {{ form.email_confirm }}</p>
-            <p>{% trans "Votre message" %} : </p>
-            <p>{{ form.content }}</p>
+        <form method="post">
             {% csrf_token %}
-            <p><input type="submit" value="{% trans "Valider" %}"></p>
-          </form>
+            {{ form.as_p }}
+            <div class="form-actions">
+              <button type="submit">Envoyer</button>
+            </div>
+        </form>
         </div>
 
 

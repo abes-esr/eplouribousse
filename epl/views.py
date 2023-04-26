@@ -37,6 +37,10 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 
+import random
+alphalist = [_("zéro"), _("un"), _("deux"), _("trois"), _("cinq"), _("six"), _("huit"), _("treize"), _("vingt-et-un"), _("vingt-quatre"), _("vingt-huit"), _("trente-quatre"), _("cinquante-cinq"), _("quatre-vingt-neuf"), _("cent-vingt"), _("cent-quarante-quatre"), _("deux-cent-trente-trois"), _("trois-cent-soixante-dix-sept"), _("quatre-cent-quatre-vingt-seize"), _("six-cent-dix"), _("sept-cent-vingt"), _("neuf-cent-quatre-vingt-sept"), _("neuf-cent-quatre-vingt-dix-neuf")]
+numberlist = ["0", "1", "2", "3", "5", "6", "8", "13", "21", "24", "28", "34", "55", "89", "120", "144", "233", "377", "496", "610", "720", "987", "999"]
+# bornes (0 et 999) + nombres de Fibonacci + nombres parfaits + factorielles d'entiers
 
 lastrked =None
 webmaster =ReplyMail.objects.all().order_by('pk')[1].sendermail
@@ -551,7 +555,7 @@ def projinfos_adm(request, bdd):
     prj.descr =""
     for elmt in diff_list:
         if elmt:
-            prj.descr += elmt + ", "        
+            prj.descr += elmt + ", "
     prj.save(using =bdd)
 
     class DiffAjForm(forms.Form):
@@ -1549,29 +1553,60 @@ def about(request):
     return render(request, 'epl/about.html', locals())
 
 
-def contact(request):
+def contactdev(request):
 
     k =logstatus(request)
     version =epl_version
     date =date_version
     host = str(request.get_host())
+    url = "contactdev"
 
-    class ContactForm(forms.Form):
-        object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
-         ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
-        object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
-        email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
-        email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-        content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+    global inletters, innumbers
+    if request.method == "GET":
+        chlist = range(len(numberlist))
+        aleatindice = random.choices(chlist, k=1)[0]
+        inletters = alphalist[aleatindice]
+        innumbers = numberlist[aleatindice]
+    else:#(POST)
+        pass
+    
+    if k:
+        class ContactForm(forms.Form):
+            object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+             ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+            objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
+    else:
+        class ContactForm(forms.Form):
+            object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+             ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+            objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+            email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+            email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
 
     form = ContactForm(request.POST or None)
     if form.is_valid():
-        recipient = form.cleaned_data['email']
-        recipient_confirm = form.cleaned_data['email_confirm']
-        subject2 = form.cleaned_data['object']
-        body = form.cleaned_data['content']
-        if recipient ==recipient_confirm:
-            subject2 = "[eplouribousse]" + " - " + subject2
+        if not form.cleaned_data["captcha"] == innumbers or not form.cleaned_data["captcha"] == innumbers:
+            messages.info(request, _("Le nombre saisi était erroné"))
+            return HttpResponseRedirect(url)
+        else:
+            if k:
+                recipient = request.user.email
+                dest2 = [request.user.email]
+            else:
+                recipient = form.cleaned_data['email']
+                recipient_confirm = form.cleaned_data['email_confirm']
+                if not recipient ==recipient_confirm:
+                    messages.info(request, _("échec de l'envoi : les emails n'étaient pas identiques"))
+                    return HttpResponseRedirect(url)
+                else:
+                    dest2 = [recipient]
+            objet2 = form.cleaned_data['objet']
+            body = form.cleaned_data['content']
+            subject2 = "[eplouribousse]" + " - " + objet2
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
             message2 = _("Votre message a bien été envoyé au développeur de l'application qui y répondra prochainement")\
@@ -1584,15 +1619,8 @@ def contact(request):
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
             send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
             return render(request, 'epl/confirmation.html', locals())
-        else:
-            info =_("Attention : Les adresses doivent être identiques") + "."
-    else:
-        if request.method =="POST":
-            info =_("Vérifier que les adresses sont correctes") + "."
 
-    return render(request, 'epl/contact.html', locals())
-
-
+    return render(request, 'epl/contactdev.html', locals())
 
 
 def webmstr(request):
@@ -1601,40 +1629,65 @@ def webmstr(request):
     version =epl_version
     date =date_version
     host = str(request.get_host())
+    url = "webmaster"
 
-    class ContactForm(forms.Form):
-        object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
-         ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
-        object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
-        email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
-        email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-        content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
-
+    global inletters, innumbers
+    if request.method == "GET":
+        chlist = range(len(numberlist))
+        aleatindice = random.choices(chlist, k=1)[0]
+        inletters = alphalist[aleatindice]
+        innumbers = numberlist[aleatindice]
+    else:#(POST)
+        pass
+    
+    if k:
+        class ContactForm(forms.Form):
+            object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+             ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+            objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
+    else:
+        class ContactForm(forms.Form):
+            object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
+             ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
+            objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+            email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+            email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
+            
     form = ContactForm(request.POST or None)
     if form.is_valid():
-        recipient = form.cleaned_data['email']
-        recipient_confirm = form.cleaned_data['email_confirm']
-        subject2 = form.cleaned_data['object']
-        body = form.cleaned_data['content']
-        if recipient ==recipient_confirm:
-            subject2 = "[eplouribousse]" + " - " + subject2
+        if not form.cleaned_data["captcha"] == innumbers or not form.cleaned_data["captcha"] == innumbers:
+            messages.info(request, _("Le nombre saisi était erroné"))
+            return redirect(url)
+        else:
+            if k:
+                recipient = request.user.email
+                dest2 = [request.user.email]
+            else:
+                recipient = form.cleaned_data['email']
+                recipient_confirm = form.cleaned_data['email_confirm']
+                if not recipient ==recipient_confirm:
+                    messages.info(request, _("échec de l'envoi : les emails n'étaient pas identiques"))
+                    return HttpResponseRedirect(url)
+                else:
+                    dest2 = [recipient]
+            objet2 = form.cleaned_data['objet']
+            body = form.cleaned_data['content']
+            subject2 = "[eplouribousse]" + " - " + objet2
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
-            message2 = _("Votre message a bien été envoyé au webmaster qui y répondra prochainement")\
-             + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" \
-             + _("Rappel de votre message") + " :\n" + \
-             _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
-             "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
+            message2 = _("Votre message a bien été envoyé au webmaster qui y répondra prochainement") + \
+            ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" \
+             + _("Rappel de votre message") + " :\n" + _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
+            "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
             dest1 = [webmaster]
             dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
             send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
             return render(request, 'epl/confirmation.html', locals())
-        else:
-            info =_("Attention : Les adresses doivent être identiques") + "."
-    else:
-        if request.method =="POST":
-            info =_("Vérifier que les adresses sont correctes") + "."
 
     return render(request, 'epl/webmaster.html', locals())
 
@@ -1646,49 +1699,73 @@ def projmstr(request, bdd):
     date =date_version
     host = str(request.get_host())
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
+    url = "/" + bdd + "/projectmaster"
     dest1 =[]
     for bddadm in BddAdmin.objects.using(bdd).all():
         dest1.append(bddadm.contact)
 
-    class ContactForm(forms.Form):
-        object_list = (("Signalement d'une anomalie", _("Signalement d'une anomalie")), \
-        ("M'ajouter à la liste de diffusion", _("M'ajouter à la liste de diffusion")), \
-        ("Me supprimer de la liste de diffusion", _("Me supprimer de la liste de diffusion")), \
-        ("Ajout, modification ou suppression de motifs d'exclusion", _("Ajout, modification ou suppression de motifs d'exclusion")),\
-         ("Ajout, modification ou suppression de correspondants d'une bibliothèque", _("Ajout, modification ou suppression de correspondants d'une bibliothèque")), \
-         ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), \
-         ("Ajout, modification ou suppression d'utilisateurs", _("Ajout, modification ou suppression d'utilisateurs")), \
-         ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), \
-        ("Signaler un manquement aux règles de confidentialité", _("Signaler un manquement aux règles de confidentialité")), \
-         ("Autre", _("Autre")))
-        object = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
-        email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
-        email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-        content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles.")}), label =_("Votre message"))
+    global inletters, innumbers
+    if request.method == "GET":
+        chlist = range(len(numberlist))
+        aleatindice = random.choices(chlist, k=1)[0]
+        inletters = alphalist[aleatindice]
+        innumbers = numberlist[aleatindice]
+    else:#(POST)
+        pass
+    
+    if k:
+        class ContactForm(forms.Form):
+            object_list = (("Signalement d'une anomalie", _("Signalement d'une anomalie")), ("Ajout, modification ou suppression de motifs d'exclusion", _("Ajout, modification ou suppression de motifs d'exclusion")), ("Ajout, modification ou suppression de correspondants d'une bibliothèque", _("Ajout, modification ou suppression de correspondants d'une bibliothèque")), ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), ("Ajout, modification ou suppression d'utilisateurs", _("Ajout, modification ou suppression d'utilisateurs")), ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), ("Signaler un manquement aux règles de confidentialité", _("Signaler un manquement aux règles de confidentialité")), ("Autre", _("Autre")))
+            objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles.")}), label =_("Votre message"))
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
+    else:
+        class ContactForm(forms.Form):
+            object_list = (("Signalement d'une anomalie", _("Signalement d'une anomalie")), \
+            ("M'ajouter à la liste de diffusion", _("M'ajouter à la liste de diffusion")), \
+            ("Me supprimer de la liste de diffusion", _("Me supprimer de la liste de diffusion")), \
+            ("Ajout, modification ou suppression de motifs d'exclusion", _("Ajout, modification ou suppression de motifs d'exclusion")),\
+             ("Ajout, modification ou suppression de correspondants d'une bibliothèque", _("Ajout, modification ou suppression de correspondants d'une bibliothèque")), \
+             ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), \
+             ("Ajout, modification ou suppression d'utilisateurs", _("Ajout, modification ou suppression d'utilisateurs")), \
+             ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), \
+            ("Signaler un manquement aux règles de confidentialité", _("Signaler un manquement aux règles de confidentialité")), \
+             ("Autre", _("Autre")))
+            objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
+            email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
+            email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles.")}), label =_("Votre message"))
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
 
     form = ContactForm(request.POST or None)
     if form.is_valid():
-        recipient = form.cleaned_data['email']
-        recipient_confirm = form.cleaned_data['email_confirm']
-        subject2 = form.cleaned_data['object']
-        body = form.cleaned_data['content']
-        if recipient ==recipient_confirm:
-            subject2 = "[eplouribousse" + " @" + bdd + "]" + " - " + subject2
+        if not form.cleaned_data["captcha"] == innumbers or not form.cleaned_data["captcha"] == innumbers:
+            messages.info(request, _("Le nombre saisi était erroné"))
+            return redirect(url)
+        else:
+            if k:
+                dest2 =[request.user.email]
+                recipient = request.user.email
+            else:
+                recipient = form.cleaned_data['email']
+                recipient_confirm = form.cleaned_data['email_confirm']
+                if not recipient ==recipient_confirm:
+                    messages.info(request, _("échec de l'envoi : les emails n'étaient pas identiques"))
+                    return HttpResponseRedirect(url)
+                else:
+                    dest2 = [recipient]
+            objet2 = form.cleaned_data['objet']
+            body = form.cleaned_data['content']
+            subject2 = "[eplouribousse" + " @" + bdd + "]" + " - " + objet2
             subject1 = subject2 + " - " + version + " - " + host
             message1 = subject1 + " :\n" + "\n" + body
             message2 = _("Votre message a bien été envoyé à l'administrateur du projet qui y répondra prochainement")\
              + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" + _("Rappel de votre message") + " :\n" + \
                 _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
                 "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
-            dest2 = [recipient]
             send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
             send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
             return render(request, 'epl/confirmation.html', locals())
-        else:
-            info =_("Attention : Les adresses doivent être identiques") + "."
-    else:
-        if request.method =="POST":
-            info =_("Vérifier que les adresses sont correctes") + "."
 
     return render(request, 'epl/projmaster.html', locals())
 
@@ -5076,40 +5153,68 @@ def diffusion(request, bdd):
     
     prj = Project.objects.using(bdd).all().order_by('pk')[0]
     list_diff =prj.descr.split(", ")
+    try:
+        list_diff.remove("")
+    except:
+        pass
     k =logstatus(request)
+    flag =0
+    
+    global inletters, innumbers
+    if request.method == "GET":
+        chlist = range(len(numberlist))
+        aleatindice = random.choices(chlist, k=1)[0]
+        inletters = alphalist[aleatindice]
+        innumbers = numberlist[aleatindice]
+    else:#(POST)
+        pass
+
     if k:
         class DiffusionForm(forms.Form):
             subject = forms.CharField(required=True, label ="Objet")
             message = forms.CharField(widget=forms.Textarea, required=True, label ="Message")
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class DiffusionForm(forms.Form):
             from_email = forms.EmailField(required=True, label ="Votre email")
             subject = forms.CharField(required=True, label ="Objet")
             message = forms.CharField(widget=forms.Textarea, required=True, label ="Message")
-
+            captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     if request.method == "GET":
         form = DiffusionForm()
     else:
         form = DiffusionForm(request.POST)
         if form.is_valid():
-            if k:
-                from_email = request.user.email
-                subject = form.cleaned_data["subject"]
-                message = form.cleaned_data['message']
+            if not form.cleaned_data["captcha"] == innumbers or not form.cleaned_data["captcha"] == innumbers:
+                messages.info(request, _("Le nombre saisi était erroné"))
+                return redirect("/./" + bdd +"/diffusion")
             else:
-                from_email = form.cleaned_data["from_email"]
-                subject = form.cleaned_data["subject"]
-                message = form.cleaned_data['message']
-            if from_email not in list_diff:
-                list_diff.append(from_email)
-                messages.info(request, _("(Pour info : votre email ne fait pas partie de la liste de diffusion)"))
-            try:
-                send_mail(subject, message, from_email, list_diff)
-            except BadHeaderError:
-                return HttpResponse("Invalid header found.")
-            messages.info(request, _("Votre message a bien été transmis à la liste de diffusion du projet : {}".format(prj.name)))
-            if not k:
-                messages.info(request, _("(Vous le recevrez également)"))
-            return redirect("/./" + bdd)
+                if k:
+                    from_email = request.user.email
+                    subject = form.cleaned_data["subject"]
+                    message = form.cleaned_data['message']
+                else:
+                    from_email = form.cleaned_data["from_email"]
+                    subject = form.cleaned_data["subject"]
+                    message = form.cleaned_data['message']
+                    if from_email not in list_diff:
+                        flag =1
+                        list_diff.append(from_email)
+                        list_diff.sort()
+                        try:
+                            list_diff.remove("")
+                        except:
+                            pass
+                try:
+                    send_mail(subject, message, from_email, list_diff)
+                except BadHeaderError:
+                    return HttpResponse("Invalid header found.")
+                messages.info(request, _("Votre message a bien été transmis à la liste de diffusion du projet [{}]".format(prj.name)))
+                if not k:
+                    messages.info(request, _("Vous le recevrez également"))
+                    if flag:
+                        messages.info(request, _("(Pour info : votre email ne figure pas dans la liste de diffusion --> 'Contact du projet' pour demander l'ajout.)"))
+                return redirect("/./" + bdd)
+
     return render(request, "epl/diffusion.html", locals())
 ################################################################################################""""""

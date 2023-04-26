@@ -29,6 +29,13 @@
         <!-- (User : Anonymous) -->
         {% endif %}
         </div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <p></p>
         <h2>{% trans "Envoi d'un message à la liste de diffusion du projet" %}</h2>
         <div id="content">
