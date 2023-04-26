@@ -25,7 +25,6 @@ urlpatterns = [
     path('default/contactdev', views.contactdev, name='contact du développeur'),
     path('default/webmaster', views.webmstr, name='webmaster'),
     path('<str:bdd>/projectmaster', views.projmstr, name='projectmaster'),
-    path('default/confirmation', views.confirm, name='confirmation'),
     path('<str:bdd>/router/<str:lid>', views.router, name='route to the right list'),
     path('default/lang', views.lang, name='language'),
     path('default/disconnect', views.logout_view, name='disconnection'),

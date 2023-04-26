@@ -1,8 +1,8 @@
-epl_version ="v2.10.33 (Judith)"
-date_version ="April 24, 2023"
+epl_version ="v2.10.34 (Judith)"
+date_version ="April 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.33 (~Irmingard)"
-date_version ="April 24, 2023"
+#epl_version ="v2.11.34 (~Irmingard)"
+#date_version ="April 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -11,7 +11,7 @@ from .models import *
 
 from .forms import *
 
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail, BadHeaderError, EmailMessage
 
 from django.db.models.functions import Now
 
@@ -1616,9 +1616,12 @@ def contactdev(request):
                 _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
             dest1 = ["eplouribousse@gmail.com"]
             dest2 = [recipient]
-            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
-            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
-            return render(request, 'epl/confirmation.html', locals())
+            email1 = EmailMessage(subject1, message1, recipient, [], dest1,)
+            email2 = EmailMessage(subject2, message2, replymail, [], dest2,)
+            email1.send(fail_silently=False)
+            email2.send(fail_silently=False)
+            messages.info(request, _("Votre message a bien été envoyé. Un message de confirmation vient de vous être adressé à l'email indiqué."))
+            return HttpResponseRedirect("/")
 
     return render(request, 'epl/contactdev.html', locals())
 
@@ -1685,9 +1688,12 @@ def webmstr(request):
             "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
             dest1 = [webmaster]
             dest2 = [recipient]
-            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
-            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
-            return render(request, 'epl/confirmation.html', locals())
+            email1 = EmailMessage(subject1, message1, recipient, [], dest1,)
+            email2 = EmailMessage(subject2, message2, replymail, [], dest2,)
+            email1.send(fail_silently=False)
+            email2.send(fail_silently=False)
+            messages.info(request, _("Votre message a bien été envoyé. Un message de confirmation vient de vous être adressé à l'email indiqué."))
+            return HttpResponseRedirect("/")
 
     return render(request, 'epl/webmaster.html', locals())
 
@@ -1763,19 +1769,15 @@ def projmstr(request, bdd):
              + ".\n" + _("Ne répondez pas au présent mail s'il vous plaît") + ".\n" + _("Rappel de votre message") + " :\n" + \
                 _("***** Début *****") + "\n" + _("Objet") +  " : " + subject2 + \
                 "\n" + _("Corps") + " : " + "\n" + body + "\n" + _("*****  Fin  *****")
-            send_mail(subject1, message1, recipient, dest1, fail_silently=True, )
-            send_mail(subject2, message2, replymail, dest2, fail_silently=True, )
-            return render(request, 'epl/confirmation.html', locals())
+            email1 = EmailMessage(subject1, message1, recipient, [], dest1,)
+            email2 = EmailMessage(subject2, message2, replymail, [], dest2,)
+            email1.send(fail_silently=False)
+            email2.send(fail_silently=False)
+            messages.info(request, _("Votre message a bien été envoyé. Un message de confirmation vient de vous être adressé à l'email indiqué."))
+            return HttpResponseRedirect("/" + bdd)
 
     return render(request, 'epl/projmaster.html', locals())
 
-
-def confirm(request):
-
-    k =logstatus(request)
-    version =epl_version
-
-    return render(request, 'epl/confirmation.html', locals())
 
 @edmode4
 def router(request, bdd, lid):
@@ -5206,7 +5208,12 @@ def diffusion(request, bdd):
                         except:
                             pass
                 try:
-                    send_mail(subject, message, from_email, list_diff)
+                    email = EmailMessage(
+                    subject,
+                    message,
+                    from_email,
+                    [], list_diff,)
+                    email.send(fail_silently=False)
                 except BadHeaderError:
                     return HttpResponse("Invalid header found.")
                 messages.info(request, _("Votre message a bien été transmis à la liste de diffusion du projet [{}]".format(prj.name)))
@@ -5217,4 +5224,5 @@ def diffusion(request, bdd):
                 return redirect("/./" + bdd)
 
     return render(request, "epl/diffusion.html", locals())
+
 ################################################################################################""""""
