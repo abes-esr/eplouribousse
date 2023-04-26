@@ -1,8 +1,8 @@
 epl_version ="v2.10.34 (Judith)"
 date_version ="April 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.34 (~Irmingard)"
-date_version ="April 26, 2023"
+#epl_version ="v2.11.34 (~Irmingard)"
+#date_version ="April 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -1621,6 +1621,7 @@ def contactdev(request):
             email1.send(fail_silently=False)
             email2.send(fail_silently=False)
             messages.info(request, _("Votre message a bien été envoyé. Un message de confirmation vient de vous être adressé à l'email indiqué."))
+            messages.info(request, _("Pour des raisons de sécurité et de confidentialité, les destinataires sont en copie cachée."))
             return HttpResponseRedirect("/")
 
     return render(request, 'epl/contactdev.html', locals())
@@ -1693,6 +1694,7 @@ def webmstr(request):
             email1.send(fail_silently=False)
             email2.send(fail_silently=False)
             messages.info(request, _("Votre message a bien été envoyé. Un message de confirmation vient de vous être adressé à l'email indiqué."))
+            messages.info(request, _("Pour des raisons de sécurité et de confidentialité, les destinataires sont en copie cachée."))
             return HttpResponseRedirect("/")
 
     return render(request, 'epl/webmaster.html', locals())
@@ -1774,6 +1776,7 @@ def projmstr(request, bdd):
             email1.send(fail_silently=False)
             email2.send(fail_silently=False)
             messages.info(request, _("Votre message a bien été envoyé. Un message de confirmation vient de vous être adressé à l'email indiqué."))
+            messages.info(request, _("Pour des raisons de sécurité et de confidentialité, les destinataires sont en copie cachée."))
             return HttpResponseRedirect("/" + bdd)
 
     return render(request, 'epl/projmaster.html', locals())
@@ -5221,6 +5224,7 @@ def diffusion(request, bdd):
                     messages.info(request, _("Vous le recevrez également"))
                     if flag:
                         messages.info(request, _("(Pour info : votre email ne figure pas dans la liste de diffusion --> 'Contact du projet' pour demander l'ajout.)"))
+                messages.info(request, _("Pour des raisons de sécurité et de confidentialité, les destinataires sont en copie cachée."))
                 return redirect("/./" + bdd)
 
     return render(request, "epl/diffusion.html", locals())
