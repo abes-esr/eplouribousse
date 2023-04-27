@@ -1,8 +1,8 @@
-epl_version ="v2.10.34 (Judith)"
-date_version ="April 26, 2023"
+epl_version ="v2.10.35 (Judith)"
+date_version ="April 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.34 (~Irmingard)"
-date_version ="April 26, 2023"
+#epl_version ="v2.11.35 (~Irmingard)"
+#date_version ="April 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5156,6 +5156,7 @@ def confidentialite(request):
 ################################################################################################""""""
 def diffusion(request, bdd):
     
+    link = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion"    
     prj = Project.objects.using(bdd).all().order_by('pk')[0]
     list_diff =prj.descr.split(", ")
     try:
@@ -5211,6 +5212,11 @@ def diffusion(request, bdd):
                         except:
                             pass
                 try:
+                    message += "\n" + "\n" + \
+                    "----------------------------------------------------------------------------------------" + "\n" + \
+                    _("Vous aussi, envoyez vos messages avec : http://sbu-eplouribousse.unistra.fr/01/diffusion") + "\n" + \
+                    _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
+                    "----------------------------------------------------------------------------------------"
                     email = EmailMessage(
                     subject,
                     message,
