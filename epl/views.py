@@ -1,8 +1,8 @@
-epl_version ="v2.10.35 (Judith)"
+epl_version ="v2.10.36 (Judith)"
 date_version ="April 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.35 (~Irmingard)"
-date_version ="April 27, 2023"
+#epl_version ="v2.11.36 (~Irmingard)"
+#date_version ="April 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -1575,7 +1575,7 @@ def contactdev(request):
             object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
              ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
             objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
-            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles."), 'rows': 16, 'cols' : 120}), label =_("Votre message"))
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class ContactForm(forms.Form):
@@ -1584,7 +1584,7 @@ def contactdev(request):
             objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
             email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
             email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles."), 'rows': 16, 'cols' : 120}), label =_("Votre message"))
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
 
     form = ContactForm(request.POST or None)
@@ -1649,7 +1649,7 @@ def webmstr(request):
             object_list = (("Demande d'information", _("Demande d'information")), ("Bug", _("Bug")),\
              ("Réclamation", _("Réclamation")), ("Suggestion", _("Suggestion")), ("Avis", _("Avis")),  ("Autre", _("Autre")))
             objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
-            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles."), 'rows': 16, 'cols' : 120}), label =_("Votre message"))
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class ContactForm(forms.Form):
@@ -1658,7 +1658,7 @@ def webmstr(request):
             objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
             email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
             email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-            content = forms.CharField(required=True, widget=forms.Textarea, label =_("Votre message"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles."), 'rows': 16, 'cols' : 120}), label =_("Votre message"))
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
             
     form = ContactForm(request.POST or None)
@@ -1725,7 +1725,7 @@ def projmstr(request, bdd):
         class ContactForm(forms.Form):
             object_list = (("Signalement d'une anomalie", _("Signalement d'une anomalie")), ("Ajout, modification ou suppression de motifs d'exclusion", _("Ajout, modification ou suppression de motifs d'exclusion")), ("Ajout, modification ou suppression de correspondants d'une bibliothèque", _("Ajout, modification ou suppression de correspondants d'une bibliothèque")), ("Ajout, modification ou suppression d'administrateurs", _("Ajout, modification ou suppression d'administrateurs")), ("Ajout, modification ou suppression d'utilisateurs", _("Ajout, modification ou suppression d'utilisateurs")), ("Info d'un des administrateurs du projet à ses co-administrateurs", _("Info d'un des administrateurs du projet à ses co-administrateurs")), ("Signaler un manquement aux règles de confidentialité", _("Signaler un manquement aux règles de confidentialité")), ("Autre", _("Autre")))
             objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
-            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles.")}), label =_("Votre message"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles."), 'rows': 16, 'cols' : 120}), label =_("Votre message"))
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class ContactForm(forms.Form):
@@ -1742,7 +1742,7 @@ def projmstr(request, bdd):
             objet = forms.ChoiceField(required = True, widget=forms.Select, choices=object_list, label =_("Objet"))
             email = forms.EmailField(required = True, label =_("Votre adresse mail de contact"))
             email_confirm =forms.EmailField(required = True, label =_("Confirmation de l'adresse mail"))
-            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles.")}), label =_("Votre message"))
+            content = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': _("Donnez ici toutes les informations utiles."), 'rows': 16, 'cols' : 120}), label =_("Votre message"))
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
 
     form = ContactForm(request.POST or None)
@@ -5177,14 +5177,14 @@ def diffusion(request, bdd):
 
     if k:
         class DiffusionForm(forms.Form):
-            subject = forms.CharField(required=True, label ="Objet")
-            message = forms.CharField(widget=forms.Textarea, required=True, label ="Message")
+            subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '75'}), label ="Objet")
+            message = forms.CharField(widget=forms.Textarea(attrs={'rows': 16, 'cols' : 120}), required=True, label ="Message")
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class DiffusionForm(forms.Form):
             from_email = forms.EmailField(required=True, label ="Votre email")
-            subject = forms.CharField(required=True, label ="Objet")
-            message = forms.CharField(widget=forms.Textarea, required=True, label ="Message")
+            subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '75'}), label ="Objet")
+            message = forms.CharField(widget=forms.Textarea(attrs={'rows': 16, 'cols' : 120}), required=True, label ="Message")
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     if request.method == "GET":
         form = DiffusionForm()
@@ -5217,6 +5217,7 @@ def diffusion(request, bdd):
                     _("Vous aussi, envoyez vos messages avec : http://sbu-eplouribousse.unistra.fr/01/diffusion") + "\n" + \
                     _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
                     "----------------------------------------------------------------------------------------"
+                    subject = "eplouribousse - [{}] : ".format(prj.name) + subject
                     email = EmailMessage(
                     subject,
                     message,
