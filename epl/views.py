@@ -37,6 +37,9 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 
+from django.utils.encoding import iri_to_uri
+from urllib.parse import quote
+
 import random
 alphalist = [_("zéro"), _("un"), _("deux"), _("trois"), _("cinq"), _("six"), _("huit"), _("treize"), _("vingt-et-un"), _("vingt-quatre"), _("vingt-huit"), _("trente-quatre"), _("cinquante-cinq"), _("quatre-vingt-neuf"), _("cent-vingt"), _("cent-quarante-quatre"), _("deux-cent-trente-trois"), _("trois-cent-soixante-dix-sept"), _("quatre-cent-quatre-vingt-seize"), _("six-cent-dix"), _("sept-cent-vingt"), _("neuf-cent-quatre-vingt-sept"), _("neuf-cent-quatre-vingt-dix-neuf")]
 numberlist = ["0", "1", "2", "3", "5", "6", "8", "13", "21", "24", "28", "34", "55", "89", "120", "144", "233", "377", "496", "610", "720", "987", "999"]
@@ -5161,12 +5164,15 @@ def confidentialite(request):
     return render(request, 'epl/confidentialite.html', locals())
 
 ################################################################################################""""""
-def diffusion(request, bdd, smthng):
+def diffusion(request, bdd, smthng, origcontent):
     
-    link = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion/" + smthng
+    link = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion/" + smthng + "/" + origcontent
     lien = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion/"
     if smthng =="~":
         smthng =""
+        origcontent =""
+    begin = "\n\n\n\n-*- Message d'origine ci-après -*-\n\n"
+
     prj = Project.objects.using(bdd).all().order_by('pk')[0]
     list_diff =prj.descr.split(", ")
     try:
@@ -5188,13 +5194,13 @@ def diffusion(request, bdd, smthng):
     if k:
         class DiffusionForm(forms.Form):
             subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '40'}), initial =smthng, label ="Objet")
-            message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Vous pouvez dimensionner ce cadre à partir de son coin inférieur droit."}), required=True, label ="Message")
+            message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Vous pouvez dimensionner ce cadre à partir de son coin inférieur droit."}), required=True, initial =origcontent, label ="Message")
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class DiffusionForm(forms.Form):
             from_email = forms.EmailField(required=True, label ="Votre email")
             subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '40'}), initial =smthng, label ="Objet")
-            message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Vous pouvez dimensionner ce cadre à partir de son coin inférieur droit."}), required=True, label ="Message")
+            message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Vous pouvez dimensionner ce cadre à partir de son coin inférieur droit."}), required=True, initial =origcontent, label ="Message")
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
             
     if request.method == "GET":
@@ -5223,12 +5229,18 @@ def diffusion(request, bdd, smthng):
                         except:
                             pass
                 try:
+#                    message += "\n" + "\n" + \
+#                    "----------------------------------------------------------------------------------------" + "\n" + \
+#                    _("Pour répondre à ce message : ") + lien + "Re:%20" + form.cleaned_data["subject"].replace(" ", "%20") + "\n" + \
+#                    _("(NB : le message d'origine ne sera pas cité)") + "\n" + "\n" + \
+#                    _("Pour un nouveau message : ") + lien + "~"  + "\n" + \
+#                    "----------------------------------------------------------------------------------------" + "\n" + \
+#                    _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
+#                    "----------------------------------------------------------------------------------------"
                     message += "\n" + "\n" + \
                     "----------------------------------------------------------------------------------------" + "\n" + \
-                    _("Pour répondre à ce message : ") + lien + "Re:%20" + form.cleaned_data["subject"].replace(" ", "%20") + "\n" + \
-                    _("(NB : le message d'origine ne sera pas cité)") + "\n" + "\n" + \
-                    _("Pour un nouveau message : ") + lien + "~"  + "\n" + \
-                    "----------------------------------------------------------------------------------------" + "\n" + \
+                    _("Pour répondre à ce message : ") + lien + "Re:%20" + iri_to_uri(quote(form.cleaned_data["subject"])) + "/" + iri_to_uri(quote(begin)) + iri_to_uri(quote(form.cleaned_data["message"].replace("/","|"))) + "\n" + "\n" + \
+                    _("Pour un nouveau message : ") + lien + "~/~"  + "\n" + \
                     _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
                     "----------------------------------------------------------------------------------------"
                     subject = "eplouribousse - [{}] : ".format(prj.name) + subject
