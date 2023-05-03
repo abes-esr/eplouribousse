@@ -1,8 +1,8 @@
-epl_version ="v2.10.39 (Judith)"
-date_version ="May 2, 2023"
+epl_version ="v2.10.40 (Judith)"
+date_version ="May 3, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.39 (~Irmingard)"
-date_version ="May 2, 2023"
+#epl_version ="v2.11.40 (~Irmingard)"
+#date_version ="May 3, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5229,14 +5229,6 @@ def diffusion(request, bdd, smthng, origcontent):
                         except:
                             pass
                 try:
-#                    message += "\n" + "\n" + \
-#                    "----------------------------------------------------------------------------------------" + "\n" + \
-#                    _("Pour répondre à ce message : ") + lien + "Re:%20" + form.cleaned_data["subject"].replace(" ", "%20") + "\n" + \
-#                    _("(NB : le message d'origine ne sera pas cité)") + "\n" + "\n" + \
-#                    _("Pour un nouveau message : ") + lien + "~"  + "\n" + \
-#                    "----------------------------------------------------------------------------------------" + "\n" + \
-#                    _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
-#                    "----------------------------------------------------------------------------------------"
                     message += "\n" + "\n" + \
                     "----------------------------------------------------------------------------------------" + "\n" + \
                     _("Pour répondre à ce message : ") + lien + "Re:%20" + iri_to_uri(quote(form.cleaned_data["subject"])) + "/" + iri_to_uri(quote(begin)) + iri_to_uri(quote(form.cleaned_data["message"].replace("/","|"))) + "\n" + "\n" + \
