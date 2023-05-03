@@ -1,8 +1,8 @@
-epl_version ="v2.10.40 (Judith)"
+epl_version ="v2.10.41 (Judith)"
 date_version ="May 3, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.40 (~Irmingard)"
-date_version ="May 3, 2023"
+#epl_version ="v2.11.41 (~Irmingard)"
+#date_version ="May 3, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5171,7 +5171,8 @@ def diffusion(request, bdd, smthng, origcontent):
     if smthng =="~":
         smthng =""
         origcontent =""
-    begin = "\n\n\n\n-*- Message d'origine ci-après -*-\n\n"
+    else:
+        origcontent ="\n\n\n\n=== Message d'origine ci-après ===\n\n" + origcontent
 
     prj = Project.objects.using(bdd).all().order_by('pk')[0]
     list_diff =prj.descr.split(", ")
@@ -5231,7 +5232,7 @@ def diffusion(request, bdd, smthng, origcontent):
                 try:
                     message += "\n" + "\n" + \
                     "----------------------------------------------------------------------------------------" + "\n" + \
-                    _("Pour répondre à ce message : ") + lien + "Re:%20" + iri_to_uri(quote(form.cleaned_data["subject"])) + "/" + iri_to_uri(quote(begin)) + iri_to_uri(quote(form.cleaned_data["message"].replace("/","|"))) + "\n" + "\n" + \
+                    _("Pour répondre à ce message : ") + lien + "Re:%20" + iri_to_uri(quote(form.cleaned_data["subject"])) + "/" + iri_to_uri(quote(form.cleaned_data["message"].replace("/","|"))) + "\n" + "\n" + \
                     _("Pour un nouveau message : ") + lien + "~/~"  + "\n" + \
                     _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
                     "----------------------------------------------------------------------------------------"
