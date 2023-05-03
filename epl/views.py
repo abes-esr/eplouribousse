@@ -1,8 +1,8 @@
-epl_version ="v2.10.38 (Judith)"
-date_version ="April 27, 2023"
+epl_version ="v2.10.39 (Judith)"
+date_version ="May 2, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.38 (~Irmingard)"
-date_version ="April 27, 2023"
+#epl_version ="v2.11.39 (~Irmingard)"
+#date_version ="May 2, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -198,6 +198,7 @@ def home(request, bdd):
 
     k =logstatus(request)
     version =epl_version
+    asanemptychain ="~"
     
     """
     Suppression (dans la base de données du projet et dans la bdd centrale) des utilisateurs "inutiles"
@@ -1949,6 +1950,7 @@ def indicators(request, bdd):
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==2 and not e.sid in dupl:
             dupl.append(e.sid)
     dupl = len(dupl)
+    percentdupl = round(100*dupl/cand)
 
     #triplets :
     tripl =[]
@@ -1956,6 +1958,7 @@ def indicators(request, bdd):
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==3 and not e.sid in tripl:
             tripl.append(e.sid)
     tripl = len(tripl)
+    percenttripl = round(100*tripl/cand)
 
     #quadruplets :
     qudrpl =[]
@@ -1963,6 +1966,10 @@ def indicators(request, bdd):
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==4 and not e.sid in qudrpl:
             qudrpl.append(e.sid)
     qudrpl = len(qudrpl)
+    percentqudrpl = round(100*qudrpl/cand)
+    
+    pluspl =cand - (dupl + tripl + qudrpl)
+    percentpluspl = round(100*pluspl/cand)
 
     #Unicas :
     isol =[]
@@ -5154,9 +5161,12 @@ def confidentialite(request):
     return render(request, 'epl/confidentialite.html', locals())
 
 ################################################################################################""""""
-def diffusion(request, bdd):
+def diffusion(request, bdd, smthng):
     
-    link = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion"    
+    link = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion/" + smthng
+    lien = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion/"
+    if smthng =="~":
+        smthng =""
     prj = Project.objects.using(bdd).all().order_by('pk')[0]
     list_diff =prj.descr.split(", ")
     try:
@@ -5177,23 +5187,24 @@ def diffusion(request, bdd):
 
     if k:
         class DiffusionForm(forms.Form):
-            subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '40'}), label ="Objet")
+            subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '40'}), initial =smthng, label ="Objet")
             message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Vous pouvez dimensionner ce cadre à partir de son coin inférieur droit."}), required=True, label ="Message")
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
     else:
         class DiffusionForm(forms.Form):
             from_email = forms.EmailField(required=True, label ="Votre email")
-            subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '40'}), label ="Objet")
+            subject = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '40'}), initial =smthng, label ="Objet")
             message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Vous pouvez dimensionner ce cadre à partir de son coin inférieur droit."}), required=True, label ="Message")
             captcha = forms.CharField(required=True, widget=forms.TextInput(attrs={'size': '3'}), max_length=3, label =_("Prouvez que vous n'êtes pas un robot ; écrivez le nombre *** {} *** en chiffres").format(inletters))
+            
     if request.method == "GET":
         form = DiffusionForm()
     else:
-        form = DiffusionForm(request.POST)
+        form = DiffusionForm(request.POST, request.FILES)
         if form.is_valid():
             if not form.cleaned_data["captcha"] == innumbers or not form.cleaned_data["captcha"] == innumbers:
                 messages.info(request, _("Le nombre saisi était erroné"))
-                return redirect("/./" + bdd +"/diffusion")
+                return redirect(link)
             else:
                 if k:
                     from_email = request.user.email
@@ -5214,7 +5225,10 @@ def diffusion(request, bdd):
                 try:
                     message += "\n" + "\n" + \
                     "----------------------------------------------------------------------------------------" + "\n" + \
-                    _("Vous aussi, envoyez vos messages avec : http://sbu-eplouribousse.unistra.fr/01/diffusion") + "\n" + \
+                    _("Pour répondre à ce message : ") + lien + "Re:%20" + form.cleaned_data["subject"].replace(" ", "%20") + "\n" + \
+                    _("(NB : le message d'origine ne sera pas cité)") + "\n" + "\n" + \
+                    _("Pour un nouveau message : ") + lien + "~"  + "\n" + \
+                    "----------------------------------------------------------------------------------------" + "\n" + \
                     _("(Destinataires en copie cachée pour des raisons de sécurité et de confidentialité)") + "\n" + \
                     "----------------------------------------------------------------------------------------"
                     subject = "eplouribousse - [{}] : ".format(prj.name) + subject
@@ -5222,7 +5236,7 @@ def diffusion(request, bdd):
                     subject,
                     message,
                     from_email,
-                    [], list_diff,)
+                    [], list_diff)
                     email.send(fail_silently=False)
                 except BadHeaderError:
                     return HttpResponse("Invalid header found.")

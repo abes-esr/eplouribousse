@@ -80,18 +80,24 @@
     {% if nlib > 3 %}
     <tr>
           <td>{% trans "dont doublons stricts" %}</td>
-          <td><center>{{ dupl }}</center></td>
+          <td><center>{{ dupl }} ({{ percentdupl }} %)</center></td>
     </tr>
     <tr>
           <td>{% trans "dont triplons" %}</td>
-          <td><center>{{ tripl }}</center></td>
+          <td><center>{{ tripl }} ({{ percenttripl }} %)</center></td>
     </tr>
     {% endif %}
     {% if nlib > 4 %}
     <!-- 4 and not 3, since the checker is another library -->
     <tr>
           <td>{% trans "dont quadruplons" %}</td>
-          <td><center>{{ qudrpl }}</center></td>
+          <td><center>{{ qudrpl }} ({{ percentqudrpl }} %)</center></td>
+    </tr>
+    {% endif %}
+    {% if nlib > 5 %}
+    <tr>
+         <td>{% trans "dont autres multiplons supérieurs" %}</td>
+         <td><center>{{ pluspl }} ({{ percentpluspl }} %)</center></td>
     </tr>
     {% endif %}
     <tr>
