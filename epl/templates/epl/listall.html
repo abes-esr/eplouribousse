@@ -1,0 +1,84 @@
+{% load i18n %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
+
+
+    </head>
+    <div id="sticky-section">
+      <nav id="sticky-menu">
+          <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
+          <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
+          <a href="/{{ bdd }}/search">{% trans "Recherche" %}</a>
+          <a target="_blank" href="{% static 'doc/User_Documentation.pdf' %}">{% trans "Manuel de l'utilisateur" %}</a>
+          <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
+          <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
+      </nav>
+          {% if k != 0 %}
+          <p style="text-align:right;"><b><font color= #017a04 >@ </font></b>{{ k }} (<a href="/./default/disconnect">{% trans "Déconnexion" %}</a>)</p>
+          {% else %}
+          <p style="text-align:right;"><a href="/./accounts/login/">{% trans "M'authentifier" %}</a></p>
+          <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
+          <!-- (User : Anonymous) -->
+          {% endif %}
+          <h2>{{ libname }} - {% trans "Tous les candidats d'origine" %}</h2>
+
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/{{ code }}/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ <a href="/{{ bdd }}/listallfilter/{{ lid }}/{{ sort }}">{% trans "Croiser avec une autre bibliothèque" %}</a> ~ 
+          
+            {% if sort == 'status' %}
+            ({% trans "Classement par" %} {% trans "statut" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/listall/{{ lid }}/title">{% trans "titre" %}</a>
+             / <a href="/{{ bdd }}/listall/{{ lid }}/cn">{% trans "cote et titre" %}</a> / <a href="/{{ bdd }}/listall/{{ lid }}/sid">{% trans "ppn" %}</a>)
+            {% elif sort == 'title' %}
+            ({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/listall/{{ lid }}/status">{% trans "statut" %}</a>
+             / <a href="/{{ bdd }}/listall/{{ lid }}/cn">{% trans "cote et titre" %}</a> / <a href="/{{ bdd }}/listall/{{ lid }}/sid">{% trans "ppn" %}</a>)
+            {% elif sort == 'cn' %}
+            ({% trans "Classement par" %} {% trans "cote et titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/listall/{{ lid }}/status">{% trans "statut" %}</a>
+             / <a href="/{{ bdd }}/listall/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/listall/{{ lid }}/sid">{% trans "ppn" %}</a>)
+            {% elif sort == 'sid' %}
+            ({% trans "Classement par" %} {% trans "cote et titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/listall/{{ lid }}/status">{% trans "statut" %}</a>
+             / <a href="/{{ bdd }}/listall/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/listall/{{ lid }}/sid">{% trans "ppn" %}</a>)
+            {% endif %}
+          </p>
+
+        <HR>
+      </div>
+
+    <body>
+      <div id="content">
+      <ul>
+
+       {% for elmt in resslist %}
+       <p></p>
+          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.sid }}</li>
+          <li><b>{% trans "Statut" %} :</b> {{ elmt.status }}
+          {% if elmt.status == 0 %}
+          <b>{% trans "-->" %} </b><a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "En savoir +" %}</a></li>
+          {% elif elmt.status == 1 or elmt.status == 3 %}
+          <b>{% trans "-->" %} </b><a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{% trans "Instruction" %}</a></li>
+          {% elif elmt.status == 2 or elmt.status == 4 %}
+          <b>{% trans "-->" %}</b> <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "Instruction en cours" %}</a></li>
+        {% elif elmt.status == 5 %}
+          <b>{% trans "-->" %} </b> <a href="/{{ bdd }}/ed/{{ elmt.sid }}/{{ lid }}">{% trans "Edition" %}</a></li>
+        {% elif elmt.status == 6 %}
+          <b>{% trans "-->" %} :</b> <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "Anomalie constatée" %}</a></li>
+          {% endif %}
+            <HR>
+       {% endfor %}
+
+      </ul>
+        </div>
+
+
+    </body>
+
+</html>

@@ -110,10 +110,11 @@ class Instruction(models.Model):
 
 #Feature choices :
 FEATURE_CHOICES = (
-    ('ranking', _("1. Positionnement")),
-    ('arbitration', _("2. Arbitrages")),
-    ('instrtodo', _("3. Instruction")),
-    ('edition', _("4. Résultantes")),
+    ('10', _("1. Positionnement")),
+    ('20', _("2. Arbitrages")),
+    ('30', _("3. Instruction")),
+    ('40', _("4. Résultantes")),
+    ('70', _("5. Tout")),
 )
 
 

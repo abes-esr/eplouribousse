@@ -47,6 +47,9 @@ urlpatterns = [
     path('<str:bdd>/rklist/<str:lid>/<str:xlid>/<str:sort>', views.xranktotake, name='xto be ranked list'),
     path('<str:bdd>/excl', views.excllist, name='exclusions'),
     path('<str:bdd>/faulty', views.faulty, name='faulty'),
+    path('<str:bdd>/listall/<str:lid>/<str:sort>', views.listall, name='all'),
+    path('<str:bdd>/listallfilter/<str:lid>/<str:sort>', views.filter_listall, name='filter for listall'),
+    path('<str:bdd>/listall/<str:lid>/<str:xlid>/<str:sort>', views.xlistall, name='all crossed'),
 
     path('<str:bdd>/arb/<str:lid>/<str:sort>', views.arbitration, name='arbitration'),
     path('<str:bdd>/arbrk1_list/<str:lid>/<str:sort>', views.arbrk1, name='arbitration rank 1'),

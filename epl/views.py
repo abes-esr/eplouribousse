@@ -1,8 +1,8 @@
-epl_version ="v2.10.41 (Judith)"
-date_version ="May 3, 2023"
+epl_version ="v2.10.42 (Judith)"
+date_version ="May 8, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.41 (~Irmingard)"
-date_version ="May 3, 2023"
+#epl_version ="v2.11.42 (~Irmingard)"
+#date_version ="May 8, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -119,6 +119,24 @@ def diffsupupdate(request, bdd, mel):
             prj.descr += elmt + ", "
     prj.save(using =bdd)
 
+def newestfeat(request, bdd, libname, feature):
+    try:
+        newestfeature = Feature.objects.using(bdd).get(libname = libname)
+        newestfeature.feaname = feature
+        newestfeature.save(using=bdd)
+    except:
+        newestfeature =Feature(libname =libname, feaname =feature)
+        newestfeature.save(using=bdd)
+
+def xnewestfeat(request, bdd, libname, feature, xlid):
+    try:
+        newestfeature = Feature.objects.using(bdd).get(libname = libname)
+        newestfeature.feaname = feature + "$" + str(xlid)
+        newestfeature.save(using=bdd)
+    except:
+        fea =feature + "$" + str(xlid)
+        newestfeature =Feature(libname =libname, feaname =fea)
+        newestfeature.save(using=bdd)
 ############################################
 
 
@@ -275,23 +293,25 @@ def home(request, bdd):
     if form.is_valid():
         lid = Library.objects.using(bdd).get(name =i.libname).lid
         feature =i.feaname
-        if not Feature.objects.using(bdd).filter(feaname =feature, libname =i.libname):
-            i.save(using=bdd)
+        libname =i.libname
+        newestfeat(request, bdd, libname, feature)
 
         if lid =="999999999":
-            if feature =='instrtodo':
+            if feature =='30':
                 return instrtodo(request, bdd, lid, 'title')
             else:
                 return checkinstr(request, bdd)
         else:
-            if feature =='ranking':
+            if feature =='10':
                 return ranktotake(request, bdd, lid, 'title')
-            elif feature =='arbitration':
+            elif feature =='20':
                 return arbitration(request, bdd, lid, 'title')
-            elif feature =='instrtodo':
+            elif feature =='30':
                 return instrtodo(request, bdd, lid, 'title')
-            elif feature =='edition':
+            elif feature =='40':
                 return tobeedited(request, bdd, lid, 'title')
+            elif feature =='70':
+                return listall(request, bdd, lid, 'status')
 
     #abstract :
     usernbr =len(Utilisateur.objects.using(bdd).all())
@@ -1788,11 +1808,9 @@ def projmstr(request, bdd):
 
 @edmode4
 def router(request, bdd, lid):
-
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        return home(request, bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+    
+    if Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name):
+        newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
         key =newestfeature.feaname.split('$')
         if key[0] =="10":
             return ranktotake(request, bdd, lid, 'title')
@@ -1840,6 +1858,16 @@ def router(request, bdd, lid):
             return xmothered(request, bdd, lid, key[1], 'title')
         elif key[0] =="44":
             return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="50":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="60":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="70":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="71":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+    else:
+        return homme(request, bdd)
 
     return render(request, 'epl/router.html', locals())
 
@@ -2532,7 +2560,7 @@ def takerank(request, bdd, sid, lid):
             #Fin codage alerte positionnement ou arbitrage
             #renvoi vers la liste adéquate en cas de recours au lien envoyé dans les alertes mail
             try:
-                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
                 key =newestfeature.feaname.split('$')
                 if key[0] in ["10", "11", "12", "20", "21", "22", "23", "24", "25"]:
                     return router(request, bdd, lid)
@@ -3333,7 +3361,7 @@ def endinstr(request, bdd, sid, lid):
 
             #renvoi vers la liste adéquate en cas de recours au lien envoyé dans les alertes mail
             try:
-                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
                 key =newestfeature.feaname.split('$')
                 if key[0] in ["30", "31", "32", "33", "34", "35", "36", "37", "38"]:
                     return router(request, bdd, lid)
@@ -3363,7 +3391,7 @@ def endinstr(request, bdd, sid, lid):
             send_mail(subject, message, exp, dest, fail_silently=True, )
 
             try:
-                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
                 key =newestfeature.feaname.split('$')
                 if key[0] in ["30", "31", "32", "33", "34", "35", "36", "37", "38"]:
                     return router(request, bdd, lid)
@@ -3437,7 +3465,7 @@ def endinstr(request, bdd, sid, lid):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
 
             try:
-                newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
+                newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
                 key =newestfeature.feaname.split('$')
                 if key[0] in ["30", "31", "32", "33", "34", "35", "36", "37", "38"]:
                     return router(request, bdd, lid)
@@ -3468,15 +3496,10 @@ def ranktotake(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="10"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="10"
-        newestfeature.save(using=bdd)
+    #Library name :
+    libname = Library.objects.using(bdd).get(lid =lid).name
+    
+    newestfeat(request, bdd, libname, "10")
 
     reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid, rank = 99).order_by(sort))
 
@@ -3488,9 +3511,6 @@ def ranktotake(request, bdd, lid, sort):
     l = len(resslist)
     
     sidlist = [ir.sid for ir in resslist]
-
-    #Library name :
-    libname = Library.objects.using(bdd).get(lid =lid).name
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
@@ -3512,16 +3532,6 @@ def modifranklist(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="12"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="12"
-        newestfeature.save(using=bdd)
-
     reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).exclude(rank = 99)\
     .exclude(status =2).exclude(status =3).exclude(status =4).\
     exclude(status =5).exclude(status =6).order_by(sort))
@@ -3541,7 +3551,8 @@ def modifranklist(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
-
+    newestfeat(request, bdd, libname, "12")
+    
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
     try:
@@ -3587,16 +3598,6 @@ def xranktotake(request, bdd, lid, xlid, sort):
     k =logstatus(request)
     version =epl_version
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="11$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="11$" + str(xlid)
-        newestfeature.save(using=bdd)
-
     #Getting ressources whose this lid must but has not yet taken rank :
     reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid, rank = 99).order_by(sort))
 
@@ -3612,6 +3613,7 @@ def xranktotake(request, bdd, lid, xlid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, libname, "11", xlid)
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
@@ -3733,16 +3735,6 @@ def arbitration(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="20"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="20"
-        newestfeature.save(using=bdd)
-
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -3779,6 +3771,7 @@ def arbitration(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "20")
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
@@ -3798,16 +3791,6 @@ def arbrk1(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="24"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="24"
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -3830,6 +3813,7 @@ def arbrk1(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "24")
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
@@ -3847,16 +3831,6 @@ def arbnork1(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="25"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="25"
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -3881,6 +3855,7 @@ def arbnork1(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "25")
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
@@ -3925,16 +3900,6 @@ def xarbitration(request, bdd, lid, xlid, sort):
     k =logstatus(request)
     version =epl_version
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="21$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="21$" + str(xlid)
-        newestfeature.save(using=bdd)
-
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
     #(even if other libraries have not yet taken rank)
@@ -3974,6 +3939,7 @@ def xarbitration(request, bdd, lid, xlid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, libname, "21", xlid)
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
@@ -3991,16 +3957,6 @@ def x1arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="22$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="22$" + str(xlid)
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -4024,6 +3980,7 @@ def x1arb(request, bdd, lid, xlid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, libname, "22", xlid)
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
@@ -4041,16 +3998,6 @@ def x0arb(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="23$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="23$" + str(xlid)
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose at \
     #least 2 libraries, including the considered one, took rank =1 \
@@ -4078,6 +4025,7 @@ def x0arb(request, bdd, lid, xlid, sort):
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, libname, "23", xlid)
 
     try:
         lastrked =ItemRecord.objects.using(bdd).get(lid =lid, last =1)
@@ -4095,16 +4043,6 @@ def instrtodo(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="30"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="30"
-        newestfeature.save(using=bdd)
 
     if lid !="999999999":
         l = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(status =0).exclude(status =2).\
@@ -4135,6 +4073,7 @@ def instrtodo(request, bdd, lid, sort):
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "30")
 
     nlib = len(Library.objects.using(bdd).exclude(lid ="999999999"))
 
@@ -4147,16 +4086,6 @@ def instroneb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="35"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="35"
-        newestfeature.save(using=bdd)
 
     if lid !="999999999":
         l = list(ItemRecord.objects.using(bdd).filter(lid =lid, rank =1).exclude(status =0).exclude(status =2).exclude(status =3)\
@@ -4173,6 +4102,7 @@ def instroneb(request, bdd, lid, sort):
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "35")
 
     return render(request, 'epl/instrtodobd1.html', locals())
 
@@ -4181,16 +4111,6 @@ def instrotherb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="36"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="36"
-        newestfeature.save(using=bdd)
 
     if lid !="999999999":
         l = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =1).\
@@ -4208,6 +4128,7 @@ def instrotherb(request, bdd, lid, sort):
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "36")
 
     return render(request, 'epl/instrtodobdnot1.html', locals())
 
@@ -4216,16 +4137,6 @@ def instronenotb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="37"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="37"
-        newestfeature.save(using=bdd)
 
     if lid !="999999999":
         l = list(ItemRecord.objects.using(bdd).filter(lid =lid, rank =1).exclude(status =0).\
@@ -4242,6 +4153,7 @@ def instronenotb(request, bdd, lid, sort):
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "37")
 
     return render(request, 'epl/instrtodonotbd1.html', locals())
 
@@ -4250,16 +4162,6 @@ def instrothernotb(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="38"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="38"
-        newestfeature.save(using=bdd)
 
     if lid !="999999999":
         l = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =1).exclude(status =0).\
@@ -4276,6 +4178,7 @@ def instrothernotb(request, bdd, lid, sort):
 
     #Getting library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "38")
 
     return render(request, 'epl/instrtodonotbdnot1.html', locals())
 
@@ -4313,18 +4216,9 @@ def xinstrlist(request, bdd, lid, xlid, sort):
     if lid =="999999999":
         return notintime(request, bdd, "-?-", lid)
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="31$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="31$" + str(xlid)
-        newestfeature.save(using=bdd)
-
     name = Library.objects.using(bdd).get(lid =lid).name
     xname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, name, "31", xlid)
 
     lprov = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(status =0).exclude(status =2).\
     exclude(status =4).exclude(status =5).exclude(status =6).order_by(sort))
@@ -4345,16 +4239,6 @@ def tobeedited(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="40"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="40"
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -4377,6 +4261,7 @@ def tobeedited(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "40")
 
     return render(request, 'epl/to_edit_list.html', locals())
 
@@ -4385,16 +4270,6 @@ def mothered(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="41"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="41"
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -4417,6 +4292,7 @@ def mothered(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "41")
 
     return render(request, 'epl/to_edit_list_mother.html', locals())
 
@@ -4425,16 +4301,6 @@ def notmothered(request, bdd, lid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="42"
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="42"
-        newestfeature.save(using=bdd)
 
     #For the lid identified library, getting ressources whose the resulting \
     #collection has been entirely completed and may consequently be edited.
@@ -4457,6 +4323,7 @@ def notmothered(request, bdd, lid, sort):
 
     #Library name :
     libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "42")
 
     return render(request, 'epl/to_edit_list_notmother.html', locals())
 
@@ -4504,16 +4371,6 @@ def xmothered(request, bdd, lid, xlid, sort):
     k =logstatus(request)
     version =epl_version
 
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="43$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="43$" + str(xlid)
-        newestfeature.save(using=bdd)
-
     l = list(ItemRecord.objects.using(bdd).filter(lid =lid, rank =1).order_by(sort))
 
     #Initializing a list of ressources to edit :
@@ -4531,6 +4388,7 @@ def xmothered(request, bdd, lid, xlid, sort):
 
     name = Library.objects.using(bdd).get(lid =lid).name
     xname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, name, "43", xlid)
 
     return render(request, 'epl/xto_edit_list_mother.html', locals())
 
@@ -4539,16 +4397,6 @@ def xnotmothered(request, bdd, lid, xlid, sort):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="44$" + str(xlid)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(lid =lid).name).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="44$" + str(xlid)
-        newestfeature.save(using=bdd)
 
     l = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =1).exclude(rank =0).exclude(rank =99).order_by(sort))
 
@@ -4567,6 +4415,7 @@ def xnotmothered(request, bdd, lid, xlid, sort):
 
     name = Library.objects.using(bdd).get(lid =lid).name
     xname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, name, "44", xlid)
 
     return render(request, 'epl/xto_edit_list_notmother.html', locals())
 
@@ -4847,7 +4696,11 @@ def statadmin(request, bdd, id):
                     nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid
                     flag =1
                 except: # i.e. status neither 1 or 3 (it may happen, at least temporarily)
-                    flag =0
+                    if ItemRecord.objects.using(bdd).all().exclude(status =0).exclude(status =1).exclude(status =3).exclude(status =5).exclude(status =6):#status = 2 or 4
+                        nextlid ="999999999"
+                        flag =1
+                    else:
+                        flag =0
             if flag ==1:                
                 nextlib =Library.objects.using(bdd).get(lid =nextlid)
                 subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
@@ -5026,16 +4879,8 @@ def xckbd(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="32$" + str(coll_set)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="32$" + str(coll_set)
-        newestfeature.save(using=bdd)
+        
+    xnewestfeat(request, bdd, "checker", "32", coll_set)
 
     l = []
 
@@ -5057,16 +4902,8 @@ def xcknbd(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="33$" + str(coll_set)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="33$" + str(coll_set)
-        newestfeature.save(using=bdd)
+    
+    xnewestfeat(request, bdd, "checker", "33", coll_set)
 
     l = []
 
@@ -5088,16 +4925,8 @@ def xckall(request, bdd, coll_set):
 
     k =logstatus(request)
     version =epl_version
-
-    newestfeature =Feature()
-    if not Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition"):
-        newestfeature.libname =Library.objects.using(bdd).get(lid =lid).name
-        newestfeature.feaname ="34$" + str(coll_set)
-        newestfeature.save(using=bdd)
-    else:
-        newestfeature =Feature.objects.using(bdd).filter(libname =Library.objects.using(bdd).get(name ="checker")).exclude(feaname = "ranking").exclude(feaname ="arbitration").exclude(feaname ="instrtodo").exclude(feaname ="edition")[0]
-        newestfeature.feaname ="34$" + str(coll_set)
-        newestfeature.save(using=bdd)
+    
+    xnewestfeat(request, bdd, "checker", "34", coll_set)
 
     l = []
 
@@ -5163,7 +4992,7 @@ def confidentialite(request):
     
     return render(request, 'epl/confidentialite.html', locals())
 
-################################################################################################""""""
+################################################################################################
 def diffusion(request, bdd, smthng, origcontent):
     
     link = "http://" + str(request.get_host()) + "/" + bdd + "/diffusion/" + smthng + "/" + origcontent
@@ -5255,4 +5084,82 @@ def diffusion(request, bdd, smthng, origcontent):
 
     return render(request, "epl/diffusion.html", locals())
 
-################################################################################################""""""
+################################################################################################
+
+@edmode1
+def listall(request, bdd, lid, sort):
+
+    k =logstatus(request)
+    version =epl_version
+    code ="70"
+    
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort))
+    resslist, sidlist = [], []
+    for e in reclist:
+        if ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(lid =lid):
+            resslist.append(e)
+            sidlist.append(e.sid)
+            
+    size = len(resslist)
+
+    libname = Library.objects.using(bdd).get(lid =lid).name
+    newestfeat(request, bdd, libname, "70")
+
+    return render(request, 'epl/listall.html', locals())
+
+
+@edmode1
+def filter_listall(request, bdd, lid, sort):
+
+    k =logstatus(request)
+    version =epl_version
+
+    "Filter list all"
+
+    libname = (Library.objects.using(bdd).get(lid =lid)).name
+    libch = ('',''),
+    if Library.objects.using(bdd).all().exclude(lid ="999999999").exclude(lid =lid):
+        for l in Library.objects.using(bdd).all().exclude(lid ="999999999").exclude(lid =lid).order_by('name'):
+            libch += (l.name, l.name),
+
+    class LibForm(forms.Form):
+        name = forms.ChoiceField(required = False, widget=forms.Select, choices=libch, label =_("Croiser avec"))
+
+    if request.method =="GET":
+        form = LibForm()
+    else:
+        form = LibForm(request.POST or None)
+        if form.is_valid():
+            xlib = form.cleaned_data['name']
+            if xlib:
+                xlid = Library.objects.using(bdd).get(name =form.cleaned_data['name']).lid
+                return xlistall(request, bdd, lid, xlid, sort)
+            else:
+                return listall(request, bdd, lid, sort)
+        else:
+            return HttpResponse("Invalid form")
+
+    return render(request, 'epl/filter_listall.html', locals())
+
+
+@edmode2
+def xlistall(request, bdd, lid, xlid, sort):
+
+    k =logstatus(request)
+    version =epl_version
+    code ="71"
+    
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort))
+    resslist, sidlist = [], []
+    for e in reclist:
+        if ItemRecord.objects.using(bdd).filter(lid =xlid, sid = e.sid).exclude(lid =lid):
+            resslist.append(e)
+            sidlist.append(e.sid)
+            
+    size = len(resslist)
+
+    libname = Library.objects.using(bdd).get(lid =lid).name
+    xlibname = Library.objects.using(bdd).get(lid =xlid).name
+    xnewestfeat(request, bdd, libname, "71", xlid)
+
+    return render(request, 'epl/xlistall.html', locals())
