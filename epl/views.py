@@ -1,8 +1,8 @@
-epl_version ="v2.10.43 (Judith)"
-date_version ="May 11, 2023"
+epl_version ="v2.10.44 (Judith)"
+date_version ="May 12, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.43 (~Irmingard)"
-date_version ="May 11, 2023"
+#epl_version ="v2.11.44 (~Irmingard)"
+#date_version ="May 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -4746,11 +4746,20 @@ def instradmin(request, bdd, id):
     instru =Instruction.objects.using(bdd).get(id =instrid)
     sid =instru.sid
     name =instru.name
+    lid = Library.objects.using(bdd).get(name =name).lid
+    
+    LIBRARY_CHOICES = ('checker', 'checker'),
+    REM_CHOICES =('',''),
+    for itlmt in ItemRecord.objects.using(bdd).filter(sid =sid):
+        if not itlmt.excl:
+            l = Library.objects.using(bdd).get(lid = itlmt.lid)
+            LIBRARY_CHOICES += (l.name, l.name),
+            if not l.lid ==lid:
+                REM_CHOICES += (l.name, l.name),
 
     try:
         d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =instrid).sid)[0]
         bib =Library.objects.using(bdd).get(lid =d.lid)
-
     except:
         return HttpResponse(_("Pas d'instruction correspondante"))
 
@@ -4758,14 +4767,11 @@ def instradmin(request, bdd, id):
 
     class InstructionForm(forms.ModelForm):
         class Meta:
-            REM_CHOICES =('',''),
-            if Library.objects.using(bdd).all().exclude(name ='checker'):
-                for l in Library.objects.using(bdd).all().exclude(name ='checker').exclude(name =Instruction.objects.using(bdd).get(id =id).name).order_by('name'):
-                    REM_CHOICES += (l.name, l.name),
             model = Instruction
-            fields =('line', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
+            fields =('line', 'name', 'bound', 'oname', 'descr', 'exc', 'degr', 'time')
             # exclude = ('sid', 'name', 'bound',)
             widgets = {
+                'name' : forms.Select(choices=LIBRARY_CHOICES, attrs={'title': _("Intitulé")}),
                 'bound' : forms.Select(choices=(('',''),('x','x'),)),
                 'oname' : forms.Select(choices=REM_CHOICES, attrs={'title': _("Intitulé de la bibliothèque ayant précédemment déclaré une 'exception' ou un 'améliorable'")}),
                 'descr' : forms.TextInput(attrs={'placeholder': _("1990(2)-1998(12) par ex."), 'title': _("Suite ininterrompue chronologiquement ; le n° de ligne est à déterminer selon l'ordre chronologique de ce champ")}),
@@ -4775,10 +4781,10 @@ def instradmin(request, bdd, id):
                 _("éléments dégradés (un volume relié dégradé peut être remplacé par les fascicules correspondants en bon état)")}),
             }
 
-    i =Instruction(sid =sid, name =bib.name)
+    i =Instruction(sid =sid)
     f = InstructionForm(request.POST or None, instance =i, initial = {
     'line' : Instruction.objects.using(bdd).get(id =instrid).line -1,
-    # 'name' : Instruction.objects.using(bdd).get(id =id).name,
+    'name' : Instruction.objects.using(bdd).get(id =id).name,
     'bound' : Instruction.objects.using(bdd).get(id =instrid).bound,
     'oname' : Instruction.objects.using(bdd).get(id =instrid).oname,
     'descr' : Instruction.objects.using(bdd).get(id =instrid).descr,
@@ -4797,17 +4803,8 @@ def instradmin(request, bdd, id):
         aj = modeform.cleaned_data['ajo']
         i.time =Now()
         if (sup, aj) ==(False, False):
-            instru.line =i.line +1
-            instru.bound =i.bound
-            instru.oname =i.oname
-            if name =="checker":
-                instru.descr =i.time
-            else:
-                instru.descr =i.descr
-            instru.exc =i.exc
-            instru.degr =i.degr
-            instru.time =i.time
-            instru.save(using=bdd)
+            messages.info(request, _("(Aucune modification n'a été effectuée car vous n'avez rien coché)"))
+            return current_status(request, bdd, d.sid, bib.lid)
         elif (sup, aj) ==(True, True):
             instru.delete(using=bdd)
             i.save(using=bdd)

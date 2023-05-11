@@ -117,7 +117,7 @@
            <form method="post">{% csrf_token %}
              <tr>
                  <td><center>{{ f.line }}</center></td>
-                 <td>{{ name }}</td>
+                 <td>{{ f.name }}</td>
                  <td>{{ f.bound }}</td>
                  {% if name == "checker" %}
                  <td></td>
