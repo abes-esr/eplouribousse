@@ -1,8 +1,8 @@
-epl_version ="v2.10.45 (Judith)"
-date_version ="May 12, 2023"
+epl_version ="v2.10.46 (Judith)"
+date_version ="May 15, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.45 (~Irmingard)"
-date_version ="May 12, 2023"
+#epl_version ="v2.11.46 (~Irmingard)"
+#date_version ="May 15, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -4675,10 +4675,18 @@ def statadmin(request, bdd, id):
         sid =itemrec.sid
     except:
         return HttpResponse(_("Pas d'enregistrement correspondant"))
+    
+    ctrl =0
+    try:
+        ctrl = Instruction.objects.using(bdd).get(sid = sid, name ='checker')
+        STAT_CHOICES = ((4, 4), (3, 3),)
+        ctrl =2
+    except:
+        STAT_CHOICES = ((2, 2), (0, 0), (1, 1),)
+        ctrl =1
 
     class ItemRecordStatusForm(forms.Form):
-        stat = forms.ChoiceField(required = True, widget=forms.Select, choices= ((6, 6), (5, 5), \
-        (4, 4), (3, 3), (2, 2), (1, 1), (0, 0),), initial = itemrec.status, label =_("statut"))
+        stat = forms.ChoiceField(required = True, widget=forms.Select, choices= STAT_CHOICES, initial = itemrec.status, label =_("statut"))
 
     form = ItemRecordStatusForm(request.POST or None)
     if request.method =="POST" and form.is_valid():
@@ -4707,7 +4715,8 @@ def statadmin(request, bdd, id):
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
                 " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
-                "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)") + \
+                "\n" + "Dans de rares cas, en raison de l'ordre de correction des statuts non strictement respecté, le lien ci-dessus aboutira à une page signalant une 'Tentative d'intervention non autorisée' ; vous pourrez alors ignorer le présent message."
                 dest =[]
                 if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
                     dest.append(nextlib.contact)
@@ -4748,14 +4757,14 @@ def instradmin(request, bdd, id):
     name =instru.name
     lid = Library.objects.using(bdd).get(name =name).lid
     
-    LIBRARY_CHOICES = ('checker', 'checker'),
+    LIBRARY_CHOICES = ('', ''),
     REM_CHOICES =('',''),
     for itlmt in ItemRecord.objects.using(bdd).filter(sid =sid):
         if not itlmt.excl:
             l = Library.objects.using(bdd).get(lid = itlmt.lid)
             LIBRARY_CHOICES += (l.name, l.name),
-            if not l.lid ==lid:
-                REM_CHOICES += (l.name, l.name),
+            REM_CHOICES += (l.name, l.name),
+    LIBRARY_CHOICES = LIBRARY_CHOICES[1:]
 
     try:
         d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =instrid).sid)[0]

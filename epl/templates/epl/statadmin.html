@@ -51,14 +51,19 @@
     <div id="content">
         <h2>{% trans "Administration du statut d'un enregistrement" %} : {{ bib.name }}</h2>
 
-      <p><b>{% trans "Titre" %} :</b> {{ d.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> {{ d.sid }} / <b>issn :</b> {{ d.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ d.pubhist }}
+      <p><b>{% trans "Titre" %} :</b> {{ itemrec.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> {{ itemrec.sid }} / <b>issn :</b> {{ itemrec.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ itemrec.pubhist }}
         <p><center><font color= #FF0000 >{% trans "Attention : Instructions et statuts des rattachements sont dépendants ; n'oubliez pas de les administrer complémentairement" %}.</font></center></p>
+        {% if ctrl == 1 %}
+        <p><center><font color= #FF0000 >{% trans "A ce stade, les statuts doivent être modifiés en les passant dans cet ordre : 2, 0, 1" %}.</font></center></p>
+        {% elif ctrl == 2 %}
+        <p><center><font color= #FF0000 >{% trans "A ce stade, les statuts doivent être modifiés en les passant dans cet ordre : 4, 3" %}.</font></center></p>
+        {% endif %}
 
         <form method="post">{% csrf_token %}
 
           <p><center>{% trans "Modifiez" %} : {{ form.stat }}</center></p>
 
-          <p><input type="submit" value="{% trans "Valider" %}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ bib.lid }}">{% trans "Annuler" %}</a></b></button></p>
+          <p><input type="submit" value="{% trans "Valider" %}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ bib.lid }}">{% trans "Revenir à la fiche statut" %}</a></b></button></p>
 
         </form>
         </div>
