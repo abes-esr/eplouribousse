@@ -1,8 +1,8 @@
-epl_version ="v2.10.46 (Judith)"
+epl_version ="v2.10.47 (Judith)"
 date_version ="May 15, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.46 (~Irmingard)"
-date_version ="May 15, 2023"
+#epl_version ="v2.11.47 (~Irmingard)"
+#date_version ="May 15, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -4704,7 +4704,7 @@ def statadmin(request, bdd, id):
                     nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid
                     flag =1
                 except: # i.e. status neither 1 or 3 (it may happen, at least temporarily)
-                    if ItemRecord.objects.using(bdd).all().exclude(status =0).exclude(status =1).exclude(status =3).exclude(status =5).exclude(status =6):#status = 2 or 4
+                    if len(ItemRecord.objects.using(bdd).all().exclude(status =0).exclude(status =1).exclude(status =3).exclude(status =5).exclude(status =6)) and not len(ItemRecord.objects.using(bdd).filter(status =6)):#status = 2 or 4
                         nextlid ="999999999"
                         flag =1
                     else:
