@@ -55,9 +55,8 @@
       <p><b>{% trans "Ressource concernée" %} :</b> {{ title }} (<b>identifiant :</b> {{ sid }})</p>
 
       <p>{% trans "Vous avez été redirigé ici parce que l'action que vous souhaitez réaliser n'est pas autorisée" %}.</p>
-      {% if lid != "999999999" %}
+
       <p>==> <a href="/{{ bdd }}/current_status/{{ sid }}/{{ lid }}">{% trans "fiche de situation" %}</a></p>
-      {% endif %}
         </div>
 
 
