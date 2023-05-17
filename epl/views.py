@@ -1,8 +1,8 @@
-epl_version ="v2.10.50 (Judith)"
+epl_version ="v2.10.51 (Judith)"
 date_version ="May 17, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.50 (~Irmingard)"
-date_version ="May 17, 2023"
+#epl_version ="v2.11.51 (~Irmingard)"
+#date_version ="May 17, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -4679,10 +4679,10 @@ def statadmin(request, bdd, id):
     ctrl =0
     try:
         ctrl = Instruction.objects.using(bdd).get(sid = sid, name ='checker')
-        STAT_CHOICES = ((4, 4), (3, 3),)
+        STAT_CHOICES = ((6, 6), (4, 4), (3, 3),)
         ctrl =2
     except:
-        STAT_CHOICES = ((2, 2), (0, 0), (1, 1),)
+        STAT_CHOICES = ((6, 6), (2, 2), (0, 0), (1, 1),)
         ctrl =1
 
     class ItemRecordStatusForm(forms.Form):
