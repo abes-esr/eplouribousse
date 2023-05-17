@@ -1,8 +1,8 @@
-epl_version ="v2.10.49 (Judith)"
-date_version ="May 16, 2023"
+epl_version ="v2.10.50 (Judith)"
+date_version ="May 17, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.49 (~Irmingard)"
-date_version ="May 16, 2023"
+#epl_version ="v2.11.50 (~Irmingard)"
+#date_version ="May 17, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -4757,14 +4757,13 @@ def instradmin(request, bdd, id):
     name =instru.name
     lid = Library.objects.using(bdd).get(name =name).lid
     
-    LIBRARY_CHOICES = ('', ''),
+    LIBRARY_CHOICES = ('checker', 'checker'),
     REM_CHOICES =('',''),
     for itlmt in ItemRecord.objects.using(bdd).filter(sid =sid):
         if not itlmt.excl:
             l = Library.objects.using(bdd).get(lid = itlmt.lid)
             LIBRARY_CHOICES += (l.name, l.name),
             REM_CHOICES += (l.name, l.name),
-    LIBRARY_CHOICES = LIBRARY_CHOICES[1:]
 
     try:
         d =ItemRecord.objects.using(bdd).filter(sid =Instruction.objects.using(bdd).get(id =instrid).sid)[0]
