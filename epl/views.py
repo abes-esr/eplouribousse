@@ -1,8 +1,8 @@
-epl_version ="v2.10.51 (Judith)"
-date_version ="May 17, 2023"
+epl_version ="v2.10.52 (Judith)"
+date_version ="May 19, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.51 (~Irmingard)"
-date_version ="May 17, 2023"
+#epl_version ="v2.11.52 (~Irmingard)"
+#date_version ="May 19, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2728,13 +2728,29 @@ def addinstr(request, bdd, sid, lid):
 
         #Renumbering instruction lines :
         try:
-            instr = Instruction.objects.using(bdd).filter(sid = sid).order_by('line', 'pk')
-            j, l =0, 1
-            while j <= len(instr):
-                instr[j].line = l
-                instr[j].save(using=bdd)
-                j +=1
+            instr = Instruction.objects.using(bdd).filter(sid = sid).exclude(name = 'checker').exclude(descr =_("-- Néant --")).order_by('line', 'pk')
+            l =1
+            try:
+                instrck = Instruction.objects.using(bdd).get(sid = sid, name ='checker', bound ="x")
+                instrck.line =l
+                instrck.save(using=bdd)
                 l +=1
+            except:
+                pass
+            try:
+                for instrlmt in Instruction.objects.using(bdd).filter(sid = sid, descr =_("-- Néant --")).order_by("bound"):
+                    instrlmt.line = l
+                    instrlmt.save(using=bdd)
+                    l +=1
+            except:
+                pass
+            try:
+                for instrlmt in instr:
+                    instrlmt.line = l
+                    instrlmt.save(using=bdd)
+                    l +=1
+            except:
+                pass
         except:
             pass
         instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
@@ -4677,14 +4693,13 @@ def statadmin(request, bdd, id):
         return HttpResponse(_("Pas d'enregistrement correspondant"))
     
     ctrl =0
-    try:
-        ctrl = Instruction.objects.using(bdd).get(sid = sid, name ='checker')
-        STAT_CHOICES = ((6, 6), (4, 4), (3, 3),)
-        ctrl =2
-    except:
+    if len(Instruction.objects.using(bdd).filter(sid = sid, name ='checker')):
+            STAT_CHOICES = ((6, 6), (4, 4), (3, 3),)
+            ctrl =2
+    else:
         STAT_CHOICES = ((6, 6), (2, 2), (0, 0), (1, 1),)
         ctrl =1
-
+        
     class ItemRecordStatusForm(forms.Form):
         stat = forms.ChoiceField(required = True, widget=forms.Select, choices= STAT_CHOICES, initial = itemrec.status, label =_("statut"))
 
@@ -4699,16 +4714,19 @@ def statadmin(request, bdd, id):
             try:
                 nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid
                 flag =1
-            except: # i.e. status =3
+            except: # i.e. status !=1
                 try:
                     nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid
                     flag =1
-                except: # i.e. status neither 1 or 3 (it may happen, at least temporarily)
-                    if len(ItemRecord.objects.using(bdd).all().exclude(status =0).exclude(status =1).exclude(status =3).exclude(status =5).exclude(status =6)) and not len(ItemRecord.objects.using(bdd).filter(status =6)):#status = 2 or 4
-                        nextlid ="999999999"
-                        flag =1
-                    else:
-                        flag =0
+                except:
+                    try:
+                        if len(ItemRecord.objects.using(bdd).all().exclude(status =0).exclude(status =1).exclude(status =3).exclude(status =5).exclude(status =6)) >=0 and len(ItemRecord.objects.using(bdd).filter(status =6)) ==0:#status = 2 or 4
+                            nextlid ="999999999"
+                            flag =1
+                        else:
+                            flag =0
+                    except:
+                        pass
             if flag ==1:                
                 nextlib =Library.objects.using(bdd).get(lid =nextlid)
                 subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
