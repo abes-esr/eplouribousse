@@ -1,8 +1,8 @@
-epl_version ="v2.10.52 (Judith)"
-date_version ="May 19, 2023"
+epl_version ="v2.10.53 (Judith)"
+date_version ="May 23, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.52 (~Irmingard)"
-date_version ="May 19, 2023"
+#epl_version ="v2.11.53 (~Irmingard)"
+#date_version ="May 23, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5119,7 +5119,7 @@ def listall(request, bdd, lid, sort):
     version =epl_version
     code ="70"
     
-    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort))
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "rank", "excl"))
     resslist, sidlist = [], []
     for e in reclist:
         if ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(lid =lid):
@@ -5175,7 +5175,7 @@ def xlistall(request, bdd, lid, xlid, sort):
     version =epl_version
     code ="71"
     
-    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort))
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "rank", "excl"))
     resslist, sidlist = [], []
     for e in reclist:
         if ItemRecord.objects.using(bdd).filter(lid =xlid, sid = e.sid).exclude(lid =lid):

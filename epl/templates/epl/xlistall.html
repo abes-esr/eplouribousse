@@ -78,7 +78,11 @@
           <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.sid }}</li>
           <li><b>{% trans "Statut" %} :</b> {{ elmt.status }}
           {% if elmt.status == 0 %}
-          <b>{% trans "-->" %} </b><a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "En savoir +" %}</a></li>
+              {% if elmt.excl != "" %}
+                <b>{% trans "-->" %} </b>{% trans "Collection exclue" %} / {{ elmt.excl }} / {{ elmt.comm }} <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "0^0" %}</a></li>
+              {% else %}
+                <b>{% trans "-->" %} </b><a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "En savoir +" %}</a></li>
+              {% endif %}
           {% elif elmt.status == 1 or elmt.status == 3 %}
           <b>{% trans "-->" %} </b><a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{% trans "Instruction" %}</a></li>
           {% elif elmt.status == 2 or elmt.status == 4 %}
