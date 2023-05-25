@@ -1,8 +1,8 @@
-epl_version ="v2.10.54 (Judith)"
-date_version ="May 24, 2023"
+epl_version ="v2.10.55 (Judith)"
+date_version ="May 25, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.54 (~Irmingard)"
-date_version ="May 24, 2023"
+#epl_version ="v2.11.55 (~Irmingard)"
+#date_version ="May 25, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2068,7 +2068,7 @@ def indicators(request, bdd):
             libch += (l.name, l.name),
 
     class LibForm(forms.Form):
-        name = forms.ChoiceField(required = False, widget=forms.Select, choices=libch, label =_("Filtrer avec une collection"))
+        name = forms.ChoiceField(required = False, widget=forms.Select, choices=libch, label =_("Filtrer avec les collections d'une bibliothèque"))
 
     if request.method =="GET":
         form = LibForm()
