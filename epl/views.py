@@ -1,8 +1,8 @@
-epl_version ="v2.10.53 (Judith)"
-date_version ="May 23, 2023"
+epl_version ="v2.10.54 (Judith)"
+date_version ="May 24, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.53 (~Irmingard)"
-date_version ="May 23, 2023"
+#epl_version ="v2.11.54 (~Irmingard)"
+#date_version ="May 24, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -1931,9 +1931,9 @@ def indicators(request, bdd):
 
     #Exclusions details
     dict ={}
-    EXCLUSION_CHOICES = ('', ''),
-    for e in Exclusion.objects.using(bdd).all().order_by('label'):
-        EXCLUSION_CHOICES += (e.label, e.label),
+    EXCLUSION_CHOICES = ('', _('')),
+    for e in list(ItemRecord.objects.using(bdd).filter(rank =0).exclude(excl ="Autre (Commenter)").values_list('excl', flat =True).distinct()):
+        EXCLUSION_CHOICES += (e, e),
     EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
     for e in EXCLUSION_CHOICES:
         exclusion =str(e[0])
@@ -2061,8 +2061,228 @@ def indicators(request, bdd):
 
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
+    
+    libch = ('',''),
+    if Library.objects.using(bdd).all().exclude(lid ="999999999"):
+        for l in Library.objects.using(bdd).all().exclude(lid ="999999999").order_by('name'):
+            libch += (l.name, l.name),
+
+    class LibForm(forms.Form):
+        name = forms.ChoiceField(required = False, widget=forms.Select, choices=libch, label =_("Filtrer avec une collection"))
+
+    if request.method =="GET":
+        form = LibForm()
+    else:
+        form = LibForm(request.POST or None)
+        if form.is_valid():
+            lib = form.cleaned_data['name']
+            if lib:
+                lid = Library.objects.using(bdd).get(name =form.cleaned_data['name']).lid
+                return indicators_x(request, bdd, lid)
+            else:
+                pass
+        else:
+            return HttpResponse("Invalid form")
 
     return render(request, 'epl/indicators.html', locals())
+
+
+@edmode4
+def indicators_x(request, bdd, lid):
+
+    k =logstatus(request)
+    version =epl_version
+    
+    libname = Library.objects.using(bdd).get(lid =lid).name
+
+    #Indicators within a collection :
+    collection =ItemRecord.objects.using(bdd).filter(lid = lid)
+    #Number of rankings (exclusions included) :
+    rkall =0
+    #Number of rankings (exclusions excluded) :
+    rkright =0
+    #Number of exclusions (collections) :
+    exclus =0
+    #Exclusions details :
+    dict ={}
+    #Collections involved in arbitration for claiming 1st rank and number of serials concerned :
+    c1st, s1st =0,[]
+    #Collections involved in arbitration for 1st rank not claimed by any of the libraries :
+    cnone, snone =0,[]
+    #Number of collections :
+    coll =0
+    #Number of descarded ressources for exclusion reason :
+    discard =[]
+    #Number of ressources whose instruction of bound elements may begin :
+    bdmaybeg =0
+    #Number of ressources whose bound elements are currently instructed  :
+    bdonway =0
+    #Number of ressources whose instruction of not bound elements may begin :
+    notbdmaybeg =0
+    #Number of ressources whose not bound elements are currently instructed  :
+    notbdonway =0
+    #Number of ressources completely instructed :
+    fullinstr =0
+    #Number of failing sheets :
+    fail =0
+    #Number of instructions :
+    instr =0
+    #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
+    stocomp =[]
+    #Number of potential candidates :
+    cand =[]
+    #from which strict duplicates :
+    dupl =[]
+    #triplets :
+    tripl =[]
+    #quadruplets :
+    qudrpl =[]
+    #Unicas :
+    isol =[]
+    
+    #number of libraries :
+    nlib = len(Library.objects.using(bdd).all())
+
+    EXCLUSION_CHOICES = ('', _('')),
+    for e in list(ItemRecord.objects.using(bdd).filter(rank =0).exclude(excl ="Autre (Commenter)").values_list('excl', flat =True).distinct()):
+        EXCLUSION_CHOICES += (e, e),
+    EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
+    dict ={}
+    for e in EXCLUSION_CHOICES[1:]:
+        value =0
+        exclusion =str(e[0])
+        for clmt in collection:
+            if ItemRecord.objects.using(bdd).filter(excl =e[0]):
+                value +=len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, excl =e[0]))
+            if value !=0:
+                dict[exclusion] =value
+
+#    try:
+    #Candidates and types
+    for e in ItemRecord.objects.using(bdd).all():
+        try:
+            itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =e.sid)
+            #Number of potential candidates :
+            if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
+                cand.append(e.sid)
+            #from which strict duplicates :
+            if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==2 and not e.sid in dupl:
+                dupl.append(e.sid)
+            #triplets :
+            if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==3 and not e.sid in tripl:
+                tripl.append(e.sid)
+            #quadruplets :
+            if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==4 and not e.sid in qudrpl:
+                qudrpl.append(e.sid)
+            #Unicas :
+            if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==1 and not e.sid in isol:
+                isol.append(e.sid)
+        except:
+            pass
+    #Collections involved in arbitration for claiming 1st rank and number of serials concerned
+    for i in ItemRecord.objects.using(bdd).filter(rank =1, status =0):
+        try:
+            itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
+            if len(ItemRecord.objects.using(bdd).filter(rank =1, sid =i.sid)) >1:
+                c1st +=1
+                if i.sid not in s1st:
+                    s1st.append(i.sid)
+        except:
+            pass
+    #Collections involved in arbitration for 1st rank not claimed by any of the libraries
+    for i in ItemRecord.objects.using(bdd).exclude(rank =0).exclude(rank =1).exclude(rank =99):
+        try:
+            itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =1)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1:
+                cnone +=1
+                if i.sid not in snone:
+                    snone.append(i.sid)
+        except:
+            pass
+    #Number of descarded ressources for exclusion reason :
+    for i in ItemRecord.objects.using(bdd).filter(rank =0):
+        try:
+            itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) ==1 and not i.sid in discard:
+                discard.append(i.sid)
+        except:
+            pass
+    #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
+    for i in ItemRecord.objects.using(bdd).filter(rank =99):
+        try:
+            itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and not i.sid in stocomp:
+                stocomp.append(i.sid)
+        except:
+            pass
+    
+    cand = len(cand)
+    dupl = len(dupl)
+    percentdupl = round(100*dupl/cand)
+    tripl = len(tripl)
+    percenttripl = round(100*tripl/cand)
+    qudrpl = len(qudrpl)
+    percentqudrpl = round(100*qudrpl/cand)
+    isol = len(isol)
+    s1st = len(s1st)
+    snone = len(snone)
+    discard = len(discard)
+    stocomp = len(stocomp)
+
+    for clmt in collection:
+
+        #Number of rankings (exclusions included) :
+        rkall += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid).exclude(rank =99))
+
+        #Number of rankings (exclusions excluded) :
+        rkright += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid).exclude(rank =99).exclude(rank =0))
+
+        #Number of exclusions (collections) :
+        exclus += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0))
+
+        #Number of collections :
+        coll += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid))
+
+        #Number of ressources whose instruction of bound elements may begin :
+        bdmaybeg += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =1, status =1))
+
+        #Number of ressources whose bound elements are currently instructed  :
+        bdonway += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =1, status =2))
+
+        #Number of ressources whose instruction of not bound elements may begin :
+        notbdmaybeg += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =1, status =3))
+
+        #Number of ressources whose not bound elements are currently instructed  :
+        notbdonway += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =1, status =4))
+
+        #Number of ressources completely instructed :
+        fullinstr += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =1, status =5))
+
+        #Number of failing sheets :
+        fail += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, status =6, rank =1))
+
+        #Number of instructions :
+        instr += len(Instruction.objects.using(bdd).filter(sid = clmt.sid, ))
+
+    #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
+    incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
+
+    ctotal = c1st + cnone
+    stotal = s1st + snone
+    pluspl =cand - (dupl + tripl + qudrpl)
+    percentpluspl = round(100*pluspl/cand)
+    #candidate collections :
+    candcoll =coll - isol
+    #Number of real candidates (collections)
+    realcandcoll =candcoll - (exclus + discard)
+    #Number of real candidates (ressources)
+    realcand =stocomp + incomp + fullinstr
+    #Absolute achievement :
+    absolute_real = round(10000*(fullinstr + discard)/cand)/100
+    #Relative achievement :
+    relative_real = round(10000*fullinstr/realcand)/100
+
+    return render(request, 'epl/indicators_x.html', locals())
 
 @edmode3
 def search(request, bdd):

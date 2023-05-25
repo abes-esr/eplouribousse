@@ -46,6 +46,8 @@
               {% endif %}
               <!-- <h2>{% trans "Supervision" %}</h2> -->
                 <!-- <div id="content"> -->
+                <h2>{% trans "Synthèse filtrée avec la collection" %} : {{ libname }}</h2>
+
 
           </div>
 
@@ -53,16 +55,6 @@
 
 
 	        <div id="content">
-
-
-          <form method="post">
-
-              {% csrf_token %}
-
-              <ul>{{ form.as_p }} <input type="submit" value="{% trans "Valider" %}"></ul>
-
-
-          </form>
 
 
 <table border="1">

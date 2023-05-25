@@ -30,6 +30,7 @@ urlpatterns = [
     path('default/disconnect', views.logout_view, name='disconnection'),
     path('<str:bdd>/timeout/<str:sid>/<str:lid>', views.notintime, name='not in time'),
     path('<str:bdd>/dashboard', views.indicators, name='indicators'),
+    path('<str:bdd>/dashboard_x', views.indicators_x, name='indicators_x'),
     path('<str:bdd>/search', views.search, name='searching a serial'),
     path('<str:bdd>/reinit/<str:sid>', views.reinit, name='reinitialisation'),
 
