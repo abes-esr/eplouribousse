@@ -76,7 +76,9 @@
           <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.sid }}</li>
           <li><b>{% trans "Statut" %} :</b> {{ elmt.status }}
           {% if elmt.status == 0 %}
-              {% if elmt.excl != "" %}
+              {% if elmt.rank == 99 %}
+                <b>{% trans "-->" %} </b> <a href="/{{ bdd }}/rk/{{ elmt.sid }}/{{ lid }}">{% trans "Positionnement de votre collection" %}</a></li>
+              {% elif elmt.excl != "" %}
                 <b>{% trans "-->" %} </b>{% trans "Collection exclue" %} / {{ elmt.excl }} / {{ elmt.comm }} <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "0^0" %}</a></li>
               {% else %}
                 <b>{% trans "-->" %} </b><a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "En savoir +" %}</a></li>

@@ -1,8 +1,8 @@
-epl_version ="v2.10.55 (Judith)"
-date_version ="May 25, 2023"
+epl_version ="v2.10.56 (Judith)"
+date_version ="May 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.55 (~Irmingard)"
-date_version ="May 25, 2023"
+#epl_version ="v2.11.56 (~Irmingard)"
+#date_version ="May 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -1809,65 +1809,70 @@ def projmstr(request, bdd):
 @edmode4
 def router(request, bdd, lid):
     
-    if Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name):
-        newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
-        key =newestfeature.feaname.split('$')
-        if key[0] =="10":
-            return ranktotake(request, bdd, lid, 'title')
-        elif key[0] =="11":
-            return xranktotake(request, bdd, lid, key[1], 'title')
-        elif key[0] =="12":
-            return modifranklist(request, bdd, lid, 'title')
-        elif key[0] =="20":
-            return arbitration(request, bdd, lid, 'title')
-        elif key[0] =="21":
-            return xarbitration(request, bdd, lid, key[1], 'title')
-        elif key[0] =="22":
-            return x1arb(request, bdd, lid, key[1], 'title')
-        elif key[0] =="23":
-            return x0arb(request, bdd, lid, key[1], 'title')
-        elif key[0] =="24":
-            return arbrk1(request, bdd, lid, 'title')
-        elif key[0] =="25":
-            return arbnork1(request, bdd, lid, 'title')
-        elif key[0] =="30":
-            return instrtodo(request, bdd, lid, 'title')
-        elif key[0] =="31":
-            return xinstrlist(request, bdd, lid, key[1], 'title')
-        elif key[0] =="32":
-            return xckbd(request, bdd, eval(key[1]))
-        elif key[0] =="33":
-            return xcknbd(request, bdd, eval(key[1]))
-        elif key[0] =="34":
-            return xckall(request, bdd, eval(key[1]))
-        elif key[0] =="35":
-            return instroneb(request, bdd, lid, 'title')
-        elif key[0] =="36":
-            return instrotherb(request, bdd, lid, 'title')
-        elif key[0] =="37":
-            return instronenotb(request, bdd, lid, 'title')
-        elif key[0] =="38":
-            return instrothernotb(request, bdd, lid, 'title')
-        elif key[0] =="40":
-            return tobeedited(request, bdd, lid, 'title')
-        elif key[0] =="41":
-            return mothered(request, bdd, lid, 'title')
-        elif key[0] =="42":
-            return notmothered(request, bdd, lid, 'title')
-        elif key[0] =="43":
-            return xmothered(request, bdd, lid, key[1], 'title')
-        elif key[0] =="44":
-            return xnotmothered(request, bdd, lid, key[1], 'title')
-        elif key[0] =="50":
-            return xnotmothered(request, bdd, lid, key[1], 'title')
-        elif key[0] =="60":
-            return xnotmothered(request, bdd, lid, key[1], 'title')
-        elif key[0] =="70":
-            return xnotmothered(request, bdd, lid, key[1], 'title')
-        elif key[0] =="71":
-            return xnotmothered(request, bdd, lid, key[1], 'title')
-    else:
-        return homme(request, bdd)
+    try:
+        if Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name):
+            newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
+            key =newestfeature.feaname.split('$')
+            if key[0] =="10":
+                return ranktotake(request, bdd, lid, 'title')
+            elif key[0] =="11":
+                return xranktotake(request, bdd, lid, key[1], 'title')
+            elif key[0] =="12":
+                return modifranklist(request, bdd, lid, 'title')
+            elif key[0] =="20":
+                return arbitration(request, bdd, lid, 'title')
+            elif key[0] =="21":
+                return xarbitration(request, bdd, lid, key[1], 'title')
+            elif key[0] =="22":
+                return x1arb(request, bdd, lid, key[1], 'title')
+            elif key[0] =="23":
+                return x0arb(request, bdd, lid, key[1], 'title')
+            elif key[0] =="24":
+                return arbrk1(request, bdd, lid, 'title')
+            elif key[0] =="25":
+                return arbnork1(request, bdd, lid, 'title')
+            elif key[0] =="30":
+                return instrtodo(request, bdd, lid, 'title')
+            elif key[0] =="31":
+                return xinstrlist(request, bdd, lid, key[1], 'title')
+            elif key[0] =="32":
+                return xckbd(request, bdd, eval(key[1]))
+            elif key[0] =="33":
+                return xcknbd(request, bdd, eval(key[1]))
+            elif key[0] =="34":
+                return xckall(request, bdd, eval(key[1]))
+            elif key[0] =="35":
+                return instroneb(request, bdd, lid, 'title')
+            elif key[0] =="36":
+                return instrotherb(request, bdd, lid, 'title')
+            elif key[0] =="37":
+                return instronenotb(request, bdd, lid, 'title')
+            elif key[0] =="38":
+                return instrothernotb(request, bdd, lid, 'title')
+            elif key[0] =="40":
+                return tobeedited(request, bdd, lid, 'title')
+            elif key[0] =="41":
+                return mothered(request, bdd, lid, 'title')
+            elif key[0] =="42":
+                return notmothered(request, bdd, lid, 'title')
+            elif key[0] =="43":
+                return xmothered(request, bdd, lid, key[1], 'title')
+            elif key[0] =="44":
+                return xnotmothered(request, bdd, lid, key[1], 'title')
+            elif key[0] =="50":
+                return xnotmothered(request, bdd, lid, key[1], 'title')
+            elif key[0] =="60":
+                return xnotmothered(request, bdd, lid, key[1], 'title')
+            elif key[0] =="70":
+                return xnotmothered(request, bdd, lid, key[1], 'title')
+            elif key[0] =="71":
+                return xnotmothered(request, bdd, lid, key[1], 'title')
+            else:
+                messages.info(request, _("Il n'y avait pas de liste à laquelle retourner."))
+                return homme(request, bdd)
+    except:
+        messages.info(request, _("Il n'y avait pas de liste à laquelle retourner."))
+        return home(request, bdd)
 
     return render(request, 'epl/router.html', locals())
 
@@ -4939,8 +4944,8 @@ def statadmin(request, bdd, id):
                     nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid
                     flag =1
                 except:
-                    try:
-                        if len(ItemRecord.objects.using(bdd).all().exclude(status =0).exclude(status =1).exclude(status =3).exclude(status =5).exclude(status =6)) >=0 and len(ItemRecord.objects.using(bdd).filter(status =6)) ==0:#status = 2 or 4
+                    try:#status = 2 or 4
+                        if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) == len(ItemRecord.objects.using(bdd).filter(sid =sid, status =2)) or len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) == len(ItemRecord.objects.using(bdd).filter(sid =sid, status =4)):
                             nextlid ="999999999"
                             flag =1
                         else:
@@ -5339,7 +5344,7 @@ def listall(request, bdd, lid, sort):
     version =epl_version
     code ="70"
     
-    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "rank", "excl"))
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "-rank", "excl"))
     resslist, sidlist = [], []
     for e in reclist:
         if ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(lid =lid):
@@ -5395,7 +5400,7 @@ def xlistall(request, bdd, lid, xlid, sort):
     version =epl_version
     code ="71"
     
-    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "rank", "excl"))
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "-rank", "excl"))
     resslist, sidlist = [], []
     for e in reclist:
         if ItemRecord.objects.using(bdd).filter(lid =xlid, sid = e.sid).exclude(lid =lid):
