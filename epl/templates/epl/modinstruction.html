@@ -51,7 +51,7 @@
 
                 <h2>{{ library.name }} - {% trans "Modification d'une ligne d'instruction" %}</h2>
 
-                  <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+                  <p><b>{% trans "Titre" %} :</b> {{ ressource.title|truncatewords:80 }} / <b>{% trans "Identifiant de la ressource" %} :</b> <a href="https://www.sudoc.fr/{{ sid }}" target="_blank">
                     {{ ressource.sid }}</a> / <b>issn :</b> {{ ressource.issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ ressource.pubhist }} / <b>{% trans "Ordre de traitement" %} :</b>
                       {% for elmt in librarylist %}
                           {{ elmt.name }} |

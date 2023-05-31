@@ -1,8 +1,8 @@
-epl_version ="v2.10.57 (Judith)"
-date_version ="May 26, 2023"
+epl_version ="v2.10.58 (Judith)"
+date_version ="May 30, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.57 (~Irmingard)"
-date_version ="May 26, 2023"
+#epl_version ="v2.11.58 (~Irmingard)"
+#date_version ="May 30, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5343,15 +5343,129 @@ def listall(request, bdd, lid, sort):
     k =logstatus(request)
     version =epl_version
     code ="70"
+
+##########################
+    cases_list =[
+    (_("Ressource écartée par exclusion"), _("En savoir +")),#0 (status =0)
+    (_("Ressource écartée par exclusion"), _("Reconsidérer l'exclusion de ma collection",)),#1 (status =0)
+    (_("Positionnement non réalisé"), _("Positionner ma collection")),#2 (status =0)
+    (_("Positionnement modifiable"), _("Revoir le positionnement de ma collection (si besoin)")),#3 (status =0)
+    (_("Arbitrage de type 1"), _("En savoir +")),#4 (status =0)
+    (_("Arbitrage de type 1"), _("Reconsidérer le positionnement de ma collection")),#5 (status =0)
+    (_("Arbitrage de type 0"), _("Reconsidérer le positionnement de ma collection")),#6 (status =0)
+    (_("Instruction des éléments reliés en cours dans une bibliothèque vous précédant"), _("En savoir +")),#7 (status =0)
+    (_("A vous d'instruire"), _("Instruire les éléments reliés")),#8 (status =1)
+    (_("Instruction des éléments reliés en cours (vous avez déjà instruit)"), _("En savoir +")),#9 (status =2)
+    (_("A vous d'instruire"), _("Instruire les éléments non reliés")),#10 (status 3)
+    (_("Instruction des éléments non reliés en cours (vous avez déjà instruit)"), _("En savoir +")),#11 (status =4)
+    (_("La ressource est complètement instruite"), _("Editer la résultante")),#12 (status =5)
+    (_("Anomalie constatée"), _("En savoir +")),#13 (status =6)
+    (_("Résultante à laquelle vous ne participez pas, ou autres cas"), _("En savoir +")),#14 (status =0)
+    ]
     
-    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "-rank", "excl"))
-    resslist, sidlist = [], []
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "rank", "excl"))
+    resslist, case, action, sidlist = [], [], [], []
     for e in reclist:
         if ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(lid =lid):
-            resslist.append(e)
-            sidlist.append(e.sid)
-            
-    size = len(resslist)
+            if ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==0:
+                if len(ItemRecord.objects.using(bdd).filter(sid = e.sid)) - len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =0)) <=1:
+                    if ItemRecord.objects.using(bdd).get(sid = e.sid, lid = lid).rank !=0:#0
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[0][0])
+                            action.append(cases_list[0][1])
+                            sidlist.append(e.sid)
+                    elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid = lid).rank ==0:#1
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[1][0])
+                            action.append(cases_list[1][1])
+                            sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =1)) >1:
+                    if ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).rank ==1:
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[5][0])
+                            action.append(cases_list[5][1])
+                            sidlist.append(e.sid)
+                    else:
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[4][0])
+                            action.append(cases_list[4][1])
+                            sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(rank =0)) >=1 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =1)) ==0:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[6][0])
+                        action.append(cases_list[6][1])
+                        sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid, status =1)) ==1:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[7][0])
+                        action.append(cases_list[7][1])
+                        sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid, lid =lid, rank =99)) ==1:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[2][0])
+                        sidlist.append(e.sid)
+                        action.append(cases_list[2][1])                                                                                                     
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid, lid =lid, rank =99)) ==0 and len(Instruction.objects.using(bdd).filter(sid = e.sid)) ==0:#Peu importe si tous les positionnements sont réalisés ou non.
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[3][0])
+                        action.append(cases_list[3][1])
+                        sidlist.append(e.sid)
+                else:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[14][0])
+                        action.append(cases_list[14][1])
+                        sidlist.append(e.sid)                    
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==1:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[8][0])
+                    action.append(cases_list[8][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==2:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[9][0])
+                    action.append(cases_list[9][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==3:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[10][0])
+                    action.append(cases_list[10][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==4:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[11][0])
+                    action.append(cases_list[11][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==5:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[12][0])
+                    action.append(cases_list[12][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==6:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[13][0])
+                    action.append(cases_list[13][1])
+                    sidlist.append(e.sid)
+    total_list, i = [], 0
+    while i <len(sidlist):
+        total_list.append((resslist[i], case[i], action[i]))
+        i +=1
+##########################
+    size = len(sidlist)
 
     libname = Library.objects.using(bdd).get(lid =lid).name
     newestfeat(request, bdd, libname, "70")
@@ -5399,15 +5513,130 @@ def xlistall(request, bdd, lid, xlid, sort):
     k =logstatus(request)
     version =epl_version
     code ="71"
+
+##########################
+    cases_list =[
+    (_("Ressource écartée par exclusion"), _("En savoir +")),#0 (status =0)
+    (_("Ressource écartée par exclusion"), _("Reconsidérer l'exclusion de ma collection",)),#1 (status =0)
+    (_("Positionnement non réalisé"), _("Positionner ma collection")),#2 (status =0)
+    (_("Positionnement modifiable"), _("Revoir le positionnement de ma collection (si besoin)")),#3 (status =0)
+    (_("Arbitrage de type 1"), _("En savoir +")),#4 (status =0)
+    (_("Arbitrage de type 1"), _("Reconsidérer le positionnement de ma collection")),#5 (status =0)
+    (_("Arbitrage de type 0"), _("Reconsidérer le positionnement de ma collection")),#6 (status =0)
+    (_("Instruction des éléments reliés en cours dans une bibliothèque vous précédant"), _("En savoir +")),#7 (status =0)
+    (_("A vous d'instruire"), _("Instruire les éléments reliés")),#8 (status =1)
+    (_("Instruction des éléments reliés en cours (vous avez déjà instruit)"), _("En savoir +")),#9 (status =2)
+    (_("A vous d'instruire"), _("Instruire les éléments non reliés")),#10 (status 3)
+    (_("Instruction des éléments non reliés en cours (vous avez déjà instruit)"), _("En savoir +")),#11 (status =4)
+    (_("La ressource est complètement instruite"), _("Editer la résultante")),#12 (status =5)
+    (_("Anomalie constatée"), _("En savoir +")),#13 (status =6)
+    (_("Résultante à laquelle vous ne participez pas, ou autres cas"), _("En savoir +")),#14 (status =0)
+    ]
     
-    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "-rank", "excl"))
-    resslist, sidlist = [], []
+    reclist = list(ItemRecord.objects.using(bdd).filter(lid = lid).order_by(sort, "rank", "excl"))
+    resslist, case, action, sidlist = [], [], [], []
     for e in reclist:
-        if ItemRecord.objects.using(bdd).filter(lid =xlid, sid = e.sid).exclude(lid =lid):
-            resslist.append(e)
-            sidlist.append(e.sid)
+        if ItemRecord.objects.using(bdd).filter(lid = xlid, sid = e.sid).exclude(lid =lid):
+            if ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==0:
+                if len(ItemRecord.objects.using(bdd).filter(sid = e.sid)) - len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =0)) <=1:
+                    if ItemRecord.objects.using(bdd).get(sid = e.sid, lid = lid).rank !=0:#0
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[0][0])
+                            action.append(cases_list[0][1])
+                            sidlist.append(e.sid)
+                    elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid = lid).rank ==0:#1
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[1][0])
+                            action.append(cases_list[1][1])
+                            sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =1)) >1:
+                    if ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).rank ==1:
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[5][0])
+                            action.append(cases_list[5][1])
+                            sidlist.append(e.sid)
+                    else:
+                        if e.sid not in sidlist:
+                            resslist.append(e)
+                            case.append(cases_list[4][0])
+                            action.append(cases_list[4][1])
+                            sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(rank =0)) >=1 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid, rank =1)) ==0:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[6][0])
+                        action.append(cases_list[6][1])
+                        sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid, status =1)) ==1:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[7][0])
+                        action.append(cases_list[7][1])
+                        sidlist.append(e.sid)
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid, lid =lid, rank =99)) ==1:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[2][0])
+                        sidlist.append(e.sid)
+                        action.append(cases_list[2][1])                                                                                                     
+                elif len(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid = e.sid, lid =lid, rank =99)) ==0 and len(Instruction.objects.using(bdd).filter(sid = e.sid)) ==0:#Peu importe si tous les positionnements sont réalisés ou non.
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[3][0])
+                        action.append(cases_list[3][1])
+                        sidlist.append(e.sid)
+                else:
+                    if e.sid not in sidlist:
+                        resslist.append(e)
+                        case.append(cases_list[14][0])
+                        action.append(cases_list[14][1])
+                        sidlist.append(e.sid)                    
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==1:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[8][0])
+                    action.append(cases_list[8][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==2:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[9][0])
+                    action.append(cases_list[9][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==3:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[10][0])
+                    action.append(cases_list[10][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==4:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[11][0])
+                    action.append(cases_list[11][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==5:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[12][0])
+                    action.append(cases_list[12][1])
+                    sidlist.append(e.sid)
+            elif ItemRecord.objects.using(bdd).get(sid = e.sid, lid =lid).status ==6:
+                if e.sid not in sidlist:
+                    resslist.append(e)
+                    case.append(cases_list[13][0])
+                    action.append(cases_list[13][1])
+                    sidlist.append(e.sid)
+    total_list, i = [], 0
+    while i <len(sidlist):
+        total_list.append((resslist[i], case[i], action[i]))
+        i +=1
+##########################
             
-    size = len(resslist)
+    size = len(sidlist)
 
     libname = Library.objects.using(bdd).get(lid =lid).name
     xlibname = Library.objects.using(bdd).get(lid =xlid).name

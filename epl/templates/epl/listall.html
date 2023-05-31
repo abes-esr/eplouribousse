@@ -69,27 +69,44 @@
       <div id="content">
       <ul>
 
-       {% for elmt in resslist %}
+       {% for elmt in total_list %}
        <p></p>
-          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
-          <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.sid }}</li>
-          <li><b>{% trans "Statut" %} :</b> {{ elmt.status }}
-          {% if elmt.status == 0 %}
-              {% if elmt.excl != "" %}
-                <b>{% trans "-->" %} </b>{% trans "Collection exclue" %} / {{ elmt.excl }} / {{ elmt.comm }} <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "0^0" %}</a></li>
-              {% else %}
-                <b>{% trans "-->" %} </b><a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "En savoir +" %}</a></li>
+          <li><b>{% trans "Titre" %} :</b> {{ elmt.0.title }}</li>
+          <li><b>{% trans "Cote" %} :</b> {{ elmt.0.cn }}</li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.0.sid }}</li>
+          <li><b>{% trans "Statut" %} :</b> {{ elmt.0.status }} > {{ elmt.1 }} >
+              {% if elmt.2 == cases_list.0.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.0.1 }}</a></li>
+              {% elif elmt.2 == cases_list.1.1 %}
+              <a href="/{{ bdd }}/rk/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.1.1 }}</a></li>
+              {% elif elmt.2 == cases_list.2.1 %}
+              <a href="/{{ bdd }}/rk/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.2.1 }}</a></li>
+              {% elif elmt.2 == cases_list.3.1 %}
+              <a href="/{{ bdd }}/rk/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.3.1 }}</a></li>
+              {% elif elmt.2 == cases_list.4.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.4.1 }}</a></li>
+              {% elif elmt.2 == cases_list.5.1 %}
+              <a href="/{{ bdd }}/rk/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.5.1 }}</a></li>
+              {% elif elmt.2 == cases_list.6.1 %}
+              <a href="/{{ bdd }}/rk/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.6.1 }}</a></li>
+              {% elif elmt.2 == cases_list.7.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.7.1 }}</a></li>
+              {% elif elmt.2 == cases_list.8.1 %}
+              <a href="/{{ bdd }}/add/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.8.1 }}</a></li>
+              {% elif elmt.2 == cases_list.9.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.9.1 }}</a></li>
+              {% elif elmt.2 == cases_list.10.1 %}
+              <a href="/{{ bdd }}/add/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.10.1 }}</a></li>
+              {% elif elmt.2 == cases_list.11.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.11.1 }}</a></li>
+              {% elif elmt.2 == cases_list.12.1 %}
+              <a href="/{{ bdd }}/ed/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.12.1 }}</a></li>
+              {% elif elmt.2 == cases_list.13.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.13.1 }}</a></li>
+              {% elif elmt.2 == cases_list.14.1 %}
+              <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.14.1 }}</a></li>
               {% endif %}
-          {% elif elmt.status == 1 or elmt.status == 3 %}
-          <b>{% trans "-->" %} </b><a href="/{{ bdd }}/add/{{ elmt.sid }}/{{ lid }}">{% trans "Instruction" %}</a></li>
-          {% elif elmt.status == 2 or elmt.status == 4 %}
-          <b>{% trans "-->" %}</b> <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "Instruction en cours" %}</a></li>
-        {% elif elmt.status == 5 %}
-          <b>{% trans "-->" %} </b> <a href="/{{ bdd }}/ed/{{ elmt.sid }}/{{ lid }}">{% trans "Edition" %}</a></li>
-        {% elif elmt.status == 6 %}
-          <b>{% trans "-->" %} :</b> <a href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">{% trans "Anomalie constatée" %}</a></li>
-          {% endif %}
+
             <HR>
        {% endfor %}
 

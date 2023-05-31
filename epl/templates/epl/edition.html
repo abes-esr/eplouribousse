@@ -53,7 +53,7 @@
           <h2>{{ name }} - {% trans "Edition" %}</h2>
 
           <p><b>{% trans "Titre" %} :</b> {{ title|truncatewords:80 }}</p>
-          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="http://www.sudoc.fr/{{ sid }}" target="_blank">
+          <p><b>{% trans "Identifiant de la ressource" %} :</b> <a href="https://www.sudoc.fr/{{ sid }}" target="_blank">
             {{ sid }}</a> / <b>issn :</b> {{ issn }} / <b>{% trans "Historique de la publication" %} :</b> {{ pubhist }}{% if itrec.cn != "" %} / <b>{% trans "Cote" %} :</b> {{ itrec.cn }} {% endif %}</p>
 
 
