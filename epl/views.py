@@ -1,8 +1,8 @@
-epl_version ="v2.10.59 (Judith)"
-date_version ="May 31, 2023"
+epl_version ="v2.10.60 (Judith)"
+date_version ="June 1, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.59 (~Irmingard)"
-date_version ="May 31, 2023"
+#epl_version ="v2.11.60 (~Irmingard)"
+#date_version ="June 1, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -426,7 +426,7 @@ def adminbase(request, bdd):
     sizeotherus =ft
     otherauthtup =otherauthtuple[1:]
     
-    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (début) :
+    # Suppression des utilisateurs orphelins (n'ayant plus aucun rôle) quand le projet est en mode public (début) :
     if not private:
         mailist =[]
         for lib in Library.objects.using(bdd).all():
@@ -447,7 +447,7 @@ def adminbase(request, bdd):
                 messages.info(request, _("L'utilisateur {} n'avait plus aucun rôle dans le projet.".format(utmt.username)))
                 utmt.delete(using =bdd)
                 User.objects.get(username =utmt.username).delete()
-    # Suppression des utilisateurs oprhelins (n'ayant plus aucun rôle) quand le projet est en mode public (fin) :
+    # Suppression des utilisateurs orphelins (n'ayant plus aucun rôle) quand le projet est en mode public (fin) :
 
     return render(request, 'epl/adminbase.html', locals())
 
@@ -5653,3 +5653,11 @@ def xlistall(request, bdd, lid, xlid, sort):
     xnewestfeat(request, bdd, libname, "71", xlid)
 
     return render(request, 'epl/xlistall.html', locals())
+
+def license(request):
+    
+    """
+    License
+    """
+
+    return render(request, 'epl/license.html', locals())

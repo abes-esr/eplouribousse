@@ -1,8 +1,40 @@
-from django.http import HttpResponse
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//webomat.unistra.fr/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '134']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
+        <meta charset="utf-8" />
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './favicon.ico' %}">
 
 
-def license(request):
-    text = """
+
+    </head>
+
+
+    <body>
+
+        <div id="content">
+
     Copyright (c) 2022 Georges GRESSOT<BR>
     All rights reserved.<BR>
     <BR>
@@ -29,5 +61,9 @@ def license(request):
     IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
-    """
-    return HttpResponse(text)
+        
+        </div>
+
+    </body>
+
+</html>
