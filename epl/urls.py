@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views, views_pdf, views_csv, views_license
+from . import views, views_pdf, views_csv
 
 urlpatterns = [
     path('', views.selectbdd, name='bddselect'),
