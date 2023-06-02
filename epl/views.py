@@ -1,8 +1,8 @@
-epl_version ="v2.10.61 (Judith)"
-date_version ="June 1, 2023"
+epl_version ="v2.10.62 (Judith)"
+date_version ="June 2, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.61 (~Irmingard)"
-date_version ="June 1, 2023"
+#epl_version ="v2.11.62 (~Irmingard)"
+#date_version ="June 2, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2051,7 +2051,7 @@ def indicators(request, bdd):
     #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
     incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
 
-    #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
+    #Ressources pour lesquelles le positionnement doit être complété (cas d'arbitrages inclus)
     stocomp =[]
     for i in ItemRecord.objects.using(bdd).filter(rank =99):
         if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and not i.sid in stocomp:
@@ -2132,7 +2132,7 @@ def indicators_x(request, bdd, lid):
     fail =0
     #Number of instructions :
     instr =0
-    #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
+    #Ressources pour lesquelles le positionnement doit être complété (cas d'arbitrages inclus)
     stocomp =[]
     #Number of potential candidates :
     cand =[]
