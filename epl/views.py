@@ -1,8 +1,8 @@
-epl_version ="v2.10.62 (Judith)"
-date_version ="June 2, 2023"
+epl_version ="v2.10.63 (Judith)"
+date_version ="June 5, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.62 (~Irmingard)"
-date_version ="June 2, 2023"
+#epl_version ="v2.11.63 (~Irmingard)"
+#date_version ="June 5, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -39,6 +39,35 @@ from django.utils.encoding import force_bytes
 
 from django.utils.encoding import iri_to_uri
 from urllib.parse import quote
+
+## Following is for graphics (made blinffolded from : https://youtu.be/jrT6NiM46jk)
+#import matplotlib.pyplot as plt
+#import numpy as np
+#import base64
+#from io import BytesIO
+#
+#def get_graph():
+#    buffer = BytesIO()
+#    plt.savefig(buffer, format ='png')
+#    buffer.seek(0)
+#    image_png =buffer.getvalue()
+#    graph = base64.b64encode(image_png)
+#    graph.decode('utf-8')
+#    buffer.close()
+#    return graph
+#
+#def get_plot(x, y):
+#    plt.switch_backend('AGG')
+#    plt.figure(figsize=(8,5))
+#    plt.title('titre du graphique')
+#    plt.plot(x, y)
+#    plt.xticks(rotation=45)
+#    plt.xlabel('intitulé axe abscisses')
+#    plt.ylabel('intitulé axe ordonnées')
+#    plt.tight_layout()
+#    graph = get_graph()
+#    return graph
+## end of stuff for graphics 
 
 import random
 alphalist = [_("zéro"), _("un"), _("deux"), _("trois"), _("cinq"), _("six"), _("huit"), _("treize"), _("vingt-et-un"), _("vingt-quatre"), _("vingt-huit"), _("trente-quatre"), _("cinquante-cinq"), _("quatre-vingt-neuf"), _("cent-vingt"), _("cent-quarante-quatre"), _("deux-cent-trente-trois"), _("trois-cent-soixante-dix-sept"), _("quatre-cent-quatre-vingt-seize"), _("six-cent-dix"), _("sept-cent-vingt"), _("neuf-cent-quatre-vingt-sept"), _("neuf-cent-quatre-vingt-dix-neuf")]
