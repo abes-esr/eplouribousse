@@ -1,8 +1,8 @@
-epl_version ="v2.10.63 (Judith)"
-date_version ="June 5, 2023"
+epl_version ="v2.10.64 (Judith)"
+date_version ="June 8, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.63 (~Irmingard)"
-date_version ="June 5, 2023"
+#epl_version ="v2.11.64 (~Irmingard)"
+#date_version ="June 8, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -40,34 +40,52 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import iri_to_uri
 from urllib.parse import quote
 
-## Following is for graphics (made blinffolded from : https://youtu.be/jrT6NiM46jk)
-#import matplotlib.pyplot as plt
-#import numpy as np
-#import base64
-#from io import BytesIO
-#
-#def get_graph():
-#    buffer = BytesIO()
-#    plt.savefig(buffer, format ='png')
-#    buffer.seek(0)
-#    image_png =buffer.getvalue()
-#    graph = base64.b64encode(image_png)
-#    graph.decode('utf-8')
-#    buffer.close()
-#    return graph
-#
-#def get_plot(x, y):
-#    plt.switch_backend('AGG')
-#    plt.figure(figsize=(8,5))
-#    plt.title('titre du graphique')
-#    plt.plot(x, y)
-#    plt.xticks(rotation=45)
-#    plt.xlabel('intitulé axe abscisses')
-#    plt.ylabel('intitulé axe ordonnées')
-#    plt.tight_layout()
-#    graph = get_graph()
-#    return graph
-## end of stuff for graphics 
+## Following is for graphics (made blinffolded from : https://youtu.be/jrT6NiM46jk amended with https://medium.com/@mdhv.kothari99/matplotlib-into-django-template-5def2e159997 for working)
+import matplotlib.pyplot as plt
+import numpy as np
+import urllib, base64
+from io import BytesIO
+
+def get_graph():
+    buffer = BytesIO()
+    plt.savefig(buffer, format ='png')
+    buffer.seek(0)
+    image_png =buffer.getvalue()
+    graph = urllib.parse.quote(base64.b64encode(image_png))
+    buffer.close()
+    return graph
+
+def get_plot(x, y, titre, absc, ordo):
+    plt.switch_backend('AGG')
+    plt.figure(figsize=(3, 3))
+    plt.plot(x, y, color ="red")
+    plt.xticks(rotation=45)
+    plt.title(titre)
+    plt.xlabel(absc)
+    plt.ylabel(ordo)
+    plt.tight_layout()
+    graph = get_graph()
+    return graph
+
+def get_pie(x, titre, **kwargs):
+    plt.switch_backend('AGG')
+    plt.figure(figsize=(8, 5))
+    plt.pie(x, **kwargs)
+    plt.title(titre)
+    plt.tight_layout()
+    graph = get_graph()
+    return graph
+
+def get_bar(x, y, titre, **kwargs):
+    plt.switch_backend('AGG')
+    plt.figure(figsize=(10, 2))
+    plt.bar(x, y, 2, **kwargs)
+    plt.title(titre)
+    plt.tight_layout()
+    graph = get_graph()
+    return graph
+# end of stuff for graphics 
+
 
 import random
 alphalist = [_("zéro"), _("un"), _("deux"), _("trois"), _("cinq"), _("six"), _("huit"), _("treize"), _("vingt-et-un"), _("vingt-quatre"), _("vingt-huit"), _("trente-quatre"), _("cinquante-cinq"), _("quatre-vingt-neuf"), _("cent-vingt"), _("cent-quarante-quatre"), _("deux-cent-trente-trois"), _("trois-cent-soixante-dix-sept"), _("quatre-cent-quatre-vingt-seize"), _("six-cent-dix"), _("sept-cent-vingt"), _("neuf-cent-quatre-vingt-sept"), _("neuf-cent-quatre-vingt-dix-neuf")]
@@ -2095,6 +2113,26 @@ def indicators(request, bdd):
 
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
+
+    x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
+    uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
+    
+    gh = fullinstr + discard
+    x2 =[gh, cand]
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("ress. instruites ou écartées") + " ({})".format(gh), _("candidats au départ") + " ({})".format(cand)])
+    
+    x3 =[fullinstr, realcand]
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("ress. instruites") + " ({})".format(fullinstr), _("candidats effectifs") + " ({})".format(realcand)])
+
+    x4 =[dupl, tripl, qudrpl, pluspl]
+    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
+    
+    qs =Library.objects.using(bdd).all().exclude(name ="checker").order_by("name")
+    x5, y5 =["checker"], [len(Instruction.objects.using(bdd).filter(name ="checker"))]
+    for libmt in qs:
+        x5.append(libmt.name)
+        y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
+    uri5 =get_pie(y5, _("instructions"), labels =["{} ({})".format(e, len(Instruction.objects.using(bdd).filter(name =e))) for e in x5])
     
     libch = ('',''),
     if Library.objects.using(bdd).all().exclude(lid ="999999999"):
@@ -2315,6 +2353,26 @@ def indicators_x(request, bdd, lid):
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
+    
+    x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
+    uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
+    
+    gh = fullinstr + discard
+    x2 =[gh, cand]
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("ress. instruites ou écartées") + " ({})".format(gh), _("candidats au départ") + " ({})".format(cand)])
+    
+    x3 =[fullinstr, realcand]
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("ress. instruites") + " ({})".format(fullinstr), _("candidats effectifs") + " ({})".format(realcand)])
+
+    x4 =[dupl, tripl, qudrpl, pluspl]
+    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
+    
+    qs =Library.objects.using(bdd).all().exclude(name ="checker").order_by("name")
+    x5, y5 =["checker"], [len(Instruction.objects.using(bdd).filter(name ="checker"))]
+    for libmt in qs:
+        x5.append(libmt.name)
+        y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
+    uri5 =get_pie(y5, _("instructions"), labels =["{} ({})".format(e, len(Instruction.objects.using(bdd).filter(name =e))) for e in x5])
 
     return render(request, 'epl/indicators_x.html', locals())
 
