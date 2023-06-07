@@ -1,8 +1,8 @@
-epl_version ="v2.10.65 (Judith)"
+epl_version ="v2.10.66 (Judith)"
 date_version ="June 8, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.65 (~Irmingard)"
-date_version ="June 8, 2023"
+#epl_version ="v2.11.66 (~Irmingard)"
+#date_version ="June 8, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2373,11 +2373,13 @@ def indicators_x(request, bdd, lid):
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
     gh = fullinstr + discard
-    x2 =[gh, cand]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("ress. instruites ou écartées") + " ({})".format(gh), _("candidats au départ") + " ({})".format(cand)])
+    gi = cand - gh
+    x2 =[gh, gi]
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
     
-    x3 =[fullinstr, realcand]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("ress. instruites") + " ({})".format(fullinstr), _("candidats effectifs") + " ({})".format(realcand)])
+    gj = realcand - fullinstr
+    x3 =[fullinstr, gj]
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruites") + " ({})".format(fullinstr), _("reste") + " ({})".format(gj)])
 
     x4 =[dupl, tripl, qudrpl, pluspl]
     uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
@@ -2387,7 +2389,7 @@ def indicators_x(request, bdd, lid):
     for libmt in qs:
         x5.append(libmt.name)
         y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
-    uri5 =get_pie(y5, _("instructions"), labels =["{} ({})".format(e, len(Instruction.objects.using(bdd).filter(name =e))) for e in x5])
+    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
 
     return render(request, 'epl/indicators_x.html', locals())
 
