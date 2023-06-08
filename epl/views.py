@@ -1,8 +1,8 @@
-epl_version ="v2.10.66 (Judith)"
+epl_version ="v2.10.67 (Judith)"
 date_version ="June 8, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.66 (~Irmingard)"
-date_version ="June 8, 2023"
+#epl_version ="v2.11.67 (~Irmingard)"
+#date_version ="June 8, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -60,6 +60,7 @@ def get_plot(x, y, titre, absc, ordo):
     plt.figure(figsize=(3, 3))
     plt.plot(x, y, color ="red")
     plt.xticks(rotation=45)
+    plt.ymin(0)
     plt.title(titre)
     plt.xlabel(absc)
     plt.ylabel(ordo)
