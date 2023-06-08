@@ -1,8 +1,8 @@
-epl_version ="v2.10.68 (Judith)"
+epl_version ="v2.10.69 (Judith)"
 date_version ="June 8, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.68 (~Irmingard)"
-date_version ="June 8, 2023"
+#epl_version ="v2.11.69 (~Irmingard)"
+#date_version ="June 8, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2143,13 +2143,25 @@ def indicators(request, bdd):
     x4 =[dupl, tripl, qudrpl, pluspl]
     uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
     
-    qs =Library.objects.using(bdd).all().exclude(name ="checker").order_by("name")
-    x5, y5 =["checker"], [len(Instruction.objects.using(bdd).filter(name ="checker"))]
+    qs =[Library.objects.using(bdd).get(name ="checker")]
+    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
+        qs.append(l)
+    x5, y5 =[], []
     for libmt in qs:
         x5.append(libmt.name)
         y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
-    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
-    
+#    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
+    uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
+
+    qs =[Library.objects.using(bdd).get(name ="checker")]
+    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
+        qs.append(l)
+    x6, y6 =[], []
+    for libmt in qs:
+        x6.append(libmt.name)
+        y6.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) + list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+    uri6 =get_scatter(x6, y6, _(""), _(""), _("fiches en attente d'instr."))
+
     libch = ('',''),
     if Library.objects.using(bdd).all().exclude(lid ="999999999"):
         for l in Library.objects.using(bdd).all().exclude(lid ="999999999").order_by('name'):
@@ -2385,12 +2397,24 @@ def indicators_x(request, bdd, lid):
     x4 =[dupl, tripl, qudrpl, pluspl]
     uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
     
-    qs =Library.objects.using(bdd).all().exclude(name ="checker").order_by("name")
-    x5, y5 =["checker"], [len(Instruction.objects.using(bdd).filter(name ="checker"))]
+    qs =[Library.objects.using(bdd).get(name ="checker")]
+    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
+        qs.append(l)
+    x5, y5 =[], []
     for libmt in qs:
         x5.append(libmt.name)
         y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
-    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
+#    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
+    uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
+
+    qs =[Library.objects.using(bdd).get(name ="checker")]
+    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
+        qs.append(l)
+    x6, y6 =[], []
+    for libmt in qs:
+        x6.append(libmt.name)
+        y6.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) + list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+    uri6 =get_scatter(x6, y6, _(""), _(""), _("fiches en attente d'instr."))
 
     return render(request, 'epl/indicators_x.html', locals())
 
