@@ -1,8 +1,8 @@
-epl_version ="v2.10.70 (Judith)"
-date_version ="June 9, 2023"
+epl_version ="v2.10.71 (Judith)"
+date_version ="June 12, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.70 (~Irmingard)"
-date_version ="June 9, 2023"
+#epl_version ="v2.11.71 (~Irmingard)"
+#date_version ="June 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2151,7 +2151,10 @@ def indicators(request, bdd):
         x5.append(libmt.name)
         y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
 #    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
-    uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
+    try:
+        uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
+    except: # (division by zero)
+        pass
 
     qs =[Library.objects.using(bdd).get(name ="checker")]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -5799,3 +5802,22 @@ def license(request):
     """
 
     return render(request, 'epl/license.html', locals())
+
+
+#############################
+# HIC DESINIT LABOR GEORGII #
+#           ____            #
+#           |  |            #
+#       ~~~~~~~?~~~~        #
+#         ( @  @ )          #
+#           .\/.            #
+#           <~~>            #
+#          __[]__           #
+#         |  []   |         #
+#         |  []   |         #
+#         t  [ ]  j         #
+#            [  ]           #
+#           [    ]          #
+#           [    ]___       #
+#       ==__[               #
+#############################
