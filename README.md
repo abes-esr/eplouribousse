@@ -1,14 +1,3 @@
-# Une BD en 7 vignettes pour comprendre :
-
-![1](static/pictures/Diapositive1.PNG)
-![2](static/pictures/Diapositive2.PNG)
-![3](static/pictures/Diapositive3.PNG)
-![4](static/pictures/Diapositive4.PNG)
-![5](static/pictures/Diapositive5.PNG)
-![6](static/pictures/Diapositive6.PNG)
-![7](static/pictures/Diapositive7.PNG)
-
-
 # AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques :
 
 Gagnez de l'espace en éliminant vos doublons, offrez une meilleure lisibilité de vos ressources en reconstituant pour chacune d'elles une collection unique la plus intègre possible résultant de l'agrégation des éléments épars disponibles dans vos bibliothèques.
