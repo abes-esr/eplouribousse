@@ -142,10 +142,22 @@ th {
     vertical-align: middle;
 }
 
+
 table, th, td {
     border: 1px solid black;
     vertical-align: middle;
 }
+
+
+tr:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+tr:hover {
+    background-color:#BCD2E5;
+
+}
+
 
 form table {
     width: 100%;
@@ -234,3 +246,4 @@ form table, th, td {
   background: #ffffff;
   margin: 0 auto;
 }
+
