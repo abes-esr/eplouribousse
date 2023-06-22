@@ -1,0 +1,39 @@
+Présentation générale
+=====================
+
+De quoi parle-t-on ?
+--------------------
+
+Sans attendre d’être confrontés à la saturation des espaces de stockage, les bibliothécaires ont à se préoccuper de la bonne gestion de ces espaces. Le désherbage des collections fait partie de cette bonne gestion, au premier chef le désherbage des doublons.  A cet égard, les bibliothécaires savent que le désherbage des périodiques est bien plus « efficace » que le désherbage d’autres types de documents imprimés.
+
+eplouribousse a été conçue pour aider les bibliothécaires à instruire le dédoublonnement des périodiques dans un ensemble de bibliothèques.
+
+Un petit mot tout d’abord concernant le nom de cette application : C’est la forme franchouillarde du tout début de l’expression latine E PLVRIBVS VNVM dont la traduction littérale serait « De plusieurs, un ». C’est précisément ce que cette application permet de réaliser : il s’agit, pour toute revue candidate au dédoublonnement, de reconstituer une seule et unique collection aussi complète et reliée que possible à partir des éléments épars dont disposent les bibliothèques participant à l’opération.
+
+Le moteur de l’application est conçu pour desservir jusqu’à 100 projets dont chacun est supporté par une base de données nommée sur le modèle ##.db où ## est une suite de deux chiffres (i.e. de 00.db à 99.db dites bases projet par opposition à la base centrale eplouribousse.db qui sert quant à elle à l’authentification des utilisateurs et aux données communes) L’accès aux bases de données se fait par un lien de renvoi (C’est ce lien qui doit être nommé selon le modèle ##.db ; le nom de la cible est libre) ; l’accès par le moteur doit être autorisé pour chacune d’elles.
+
+.. image:: _static/100.png
+   
+L’authentification n’est strictement requise que dans les cas où une modification des données projets peut résulter de l’appel à une page ; elle n’est exigée pour les simples éditions que dans le cas où l’administrateur du projet le spécifie dans le module d’administration ; s’il ne l’a pas fait, la consultation est ouverte à tous).
+
+
+Principes
+---------
+
+Nous partons de l’hypothèse de politique documentaire suivante : Les bibliothèques participantes reconstituent et conservent une collection unique, dite collection résultante, constituée sur la base de la collection mère la plus importante détenue par l’une des bibliothèques. La résultante sera la plus complète et la plus reliée possible, mais sans comparaison de la qualité des reliures entre elles, l’idée sous-jacente étant que la reliure garantit normalement l’absence de lacunes dans les volumes reliés. Le risque de conserver des éléments reliés de moindre qualité est à relativiser car la collection mère est généralement la mieux reliée. Il peut arriver que des volumes aient été mal reliés et qu’ils puissent être avantageusement remplacés par des fascicules non reliés couvrant la période équivalente. Ces cas peuvent être couramment traités dans l’application eplouribousse.
+
+eplouribousse ne nous épargne pas l’examen des collections ; elle nous permet en revanche de préparer la recomposition de la collection résultante à partir de cet examen réalisé en temps voulu dans les bibliothèques impliquées.
+
+On aura reconnu là deux actions consécutives : D’abord, les bibliothèques possédant des éléments susceptibles de participer à la collection résultante doivent se positionner, au premier rang dans le cas de la bibliothèque possédant la collection la plus importante (= collection mère). A ce stade, il est également possible de déclarer ne pas faire participer la collection détenue par une bibliothèque à la reconstitution d’une collection résultante qui concurrencera donc la collection exclue. Les motifs de non-participation dépendent des situations ; signalons ici à titre d’exemple le cas d’une collection de dépôt légal.
+
+Nous venons de donner la définition de ce qu’est un candidat au dédoublonnement et cette définition est triviale : Est candidate au dédoublonnement toute publication dont des éléments sont possédés par au moins deux bibliothèques participantes.
+
+Une précision importante est indispensable ici : Par publication, on entend, l’unité identifiée par un identifiant unique (Serial Identifier) qui ne correspond pas toujours, et même généralement pas, à la collection entendue au sens des bibliothèques participantes (et généralement rangées sous une même cote de classement) Le risque de partitionnement des collections au sens des bibliothèques existe donc et doit être assumé si l’on veut mettre en œuvre la présente méthode. Cette manière de procéder n’est pas un choix parmi d’autre possibilités, c’est la seule possibilité, du moins la seule viable à moyenne ou grande échelle (On s’en convaincra en considérant qu’une collection au sens des bibliothèques peut ne pas être la même d’une bibliothèque à une autre, or il faut absolument s’entendre sur la définition de ce qu’on veut dédoublonner).
+
+
+Aspects juridiques (Réutilisation des données)
+----------------------------------------------
+
+Les données de la base doivent être réglementairement exploitables. Les données sources sont récupérées du Sudoc ; sauf indication contraire, elles sont librement réutilisables (Licence Etalab)
+
+Pour toute autre instance d’eplouribousse, il conviendra de s’assurer que la réutilisation du jeu de données est réglementaire.

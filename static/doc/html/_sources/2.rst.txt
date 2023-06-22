@@ -1,0 +1,32 @@
+Pages d'accueil
+===============
+
+
+Page d'accueil générale
+-----------------------
+
+Les nouveaux projets sont détectés automatiquement lors de l’appel à la page d’accueil générale. S’il n’y a qu’un seul projet ; l’application pointe directement sur celui-ci. Sinon, une page permet de choisir le projet sur lequel on s’apprête à travailler (classement par numéro de projet) :
+
+.. image:: _static/selectbdd.png
+
+Lorsque la liste de choix est longue, il est possible d’accéder à l’élément souhaité de cette liste en tapant le numéro du projet.
+
+
+Page d'accueil d'un projet
+--------------------------
+
+.. image:: _static/accueil_projet.png
+
+Le nom du projet est mentionné.
+
+On accède à l’ensemble des fonctionnalités de l’application à partir de cette page : Positionnement, arbitrage, instruction, édition et 'tout'. Des contrôles sont effectués pour empêcher toute action hors-délai (Par exemple en cliquant sur un lien reçu précédemment ou en recourant à la flèche retour à la page précédente des navigateurs).
+
+Des liens sont disponibles vers un outil de recherche (par ppn et bibliothèque), un tableau d’indicateurs de suivis (supervision), le présent manuel, le module de changement de votre mot de passe, le module d’administration (réservé aux ayant-droits) et le module de changement de langue.
+
+C’est à ce niveau que sont calculés les éventuels nouveaux utilisateurs et qu’un contrôle est effectué afin de détecter d’éventuelles anomalies (utilisateurs non utilisés ou au contraire utilisateurs non enregistrés alors que leur email est utilisé) Ces anomalies sont signalées par un message d’alerte de couleur bleue.
+
+Un lien « liste de diffusion » ouvrir un formulaire permettant d’adresser le message à l’ensemble de la liste de diffusion du projet. Le message sera adressé à l’ensemble de la liste + éventuellement à l’utilisateur courant même si son email ne figure pas dans la liste de diffusion.
+
+La liste de diffusion est gérée par le responsable de projet à l’aide du module prévu (voir plus loin)
+
+La demande d’ajout ou de suppression à la liste de diffusion se fait par la page de contact du responsable de projet. Les utilisateurs identifiés sont inscrits d’office et ne peuvent pas être supprimés de la liste de diffusion.

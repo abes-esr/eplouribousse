@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Administration &#8212; Documentation eplouribousse 2</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Langues" href="6.html" />
+    <link rel="prev" title="Suivi de projet" href="4.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="administration">
+<h1>Administration<a class="headerlink" href="#administration" title="Lien permanent vers cette rubrique">¶</a></h1>
+<section id="reglages-des-bases-de-donnees-important">
+<h2>Réglages des bases de données (important)<a class="headerlink" href="#reglages-des-bases-de-donnees-important" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>La population des bases de données doit être réalisées à l’aide d’un utilitaire de manipulation de bases de données (nous recommandons DB Browser for SQLite, simple et efficace permettant l’import de tables complètes à partir de fichiers csv : <a class="reference external" href="https://sqlitebrowser.org/">https://sqlitebrowser.org/</a> )</p>
+<p>La base de données principale (eplouribousse.db ne contient qu’une table propre à l’application (epl_replymail) (Les autres tables sont celles de Django)</p>
+<p>Les tables propres à chaque projet sont situées dans les bases projets ; il y en a 9 : epl_bddadmin, epl_exclusion, epl_feature, epl_instruction, epl_itemrecord, epl_library, epl_proj_setting, epl_project, epl_utilisateur. Toutes ces tables, à l’exclusion de epl_feature (qui est une table système) peuvent être gérées à partir de l’interface d’administration du projet par les administrateurs de projet.</p>
+<p>Il est conseillé de tout renseigner à 1 l’enregistrement unique de la table  epl_proj_setting.</p>
+<p>Pour la mise en place de cette base, un exemplaire est fourni qui peut servir à élaborer votre propre base ; cet exemplaire est disponible à la racine du dépôt et porte le nom ##.txt (## est à remplacer par le numéro à deux chiffres de votre projet et .txt est à remplacer par .db)</p>
+<dl class="simple">
+<dt>Lors de la mise en place de la base de données projet, voici ce à quoi il faut penser :</dt><dd><ul class="simple">
+<li><p>Pour la table des rattachements, dans le champs « période de publication » supprimer tout ce qui est superflu (seules les dates de début et de fin sont pertinentes)</p></li>
+<li><p>Les motifs d’exclusion dans la table « epl_exclusion » (l’exclusion « autre (commenter) » ne doit pas à être renseignée ; elle est prévue dans le code)</p></li>
+<li><p>Renseigner le nom du projet dans la table « epl_project ». Laisser vide le champ ‘descr’ : La liste s’initialisera automatiquement lorsqu’un administrateur cliquera sur le lien « gestion des données du projet ».</p></li>
+<li><p>Renseigner la table « epl_bddadmin » avec le nom et le mail du ou des administrateurs de la base de données</p></li>
+<li><p>Renseigner les bibliothèques participantes dans « epl_library »</p></li>
+<li><p>Renseigner la table utilisateurs qui doit recenser l’ensemble des correspondants dans les bibliothèques (y compris ‘checker’) l’ensemble des administrateurs ; attention : le mail, comme l’identifiant doivent être uniques tous les deux, autrement dit, si un même utilisateur a différents rôles dans un même projet, il ne doit être enregistré qu’une seule fois avec un seul couple (mail, identifiant) et c’est son rôle le plus permissif qui prévaudra. L’identifiant doit en outre avoir pour suffixe &#64;## où ## est le code à deux chiffres correspondant au numéro de la base projet.</p></li>
+</ul>
+</dd>
+<dt>S’agissant de la base de données principale (eplouribousse.db) :</dt><dd><ul class="simple">
+<li><p>Indiquer une adresse mail de type no-reply&#64; et une adresse de webmaster i.e. administrateur du site : Respectivement en premier et deuxième enregistrements de la table « epl_replymail ».</p></li>
+<li><dl class="simple">
+<dt>Le(s) seul(s) enregistrement(s) nécessaire(s) au départ pour la table « user » est/sont celui/ceux du/des «superuser » (statut is_superuser =1) Pour le reste la base de donnée principale se peuple et synchronise automatiquement lors de la création de nouveaux utilisateurs (vues admins_adm  et lib_adm)ou lors de l’accès à l’une des trois pages suivantes :</dt><dd><ul>
+<li><p>page d’accueil générale (vue selectbdd)</p></li>
+<li><p>page d’accueil de n’importe quel projet (vue home)</p></li>
+<li><p>page d’administration générale (vue globadm)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cas de rattachements multiples : Diverses solutions permettent de prendre en compte facilement et efficacement de ce cas de figure ; l’une d’elles consiste à regrouper les arguments de chacun des champs suivants : Cote, état de collection et lacunes en séparant clairement les arguments à chaque fois. Exemple tiré d’une situation réelle (projet Arts Strasbourg → La Bnu présentait quelques rattachements en double) :
+Titre : Aachener Kunstblatter
+Identifiant de la ressource : 03963115X / issn : 05150612
+Historique de la publication : 1906- 9999
+• Bnu
+• Cote : BH.16.37 || BH.501.883
+• Etat de collection : BH.16.37 : vol. 1 (1906) -vol. 10 (1916) || BH.501.883 : vol. 17 (1958) - vol. 18 (1959) ; vol. 26 (1962) ; vol. 34 (1967) - vol. 38 (1969) ; vol. 47 (1976/77) [Lacunes]
+• Lacunes : BH.16.37 : || BH.501.883 : vol. 37 (1968) Dans ce cas, le séparateur || a été utilisé pour distinguer les arguments relatifs aux deux collections. Les lignes d’instructions devront mentionner clairement quelle collection est concernée (cote) Une autre solution consiste à créer autant de bibliothèques alternatives en plus de celle de base (674821001,  674821001a,  674821001b etc.) accueillant chacune un multiple de collection. L’utilisation du lien periscope n’en est pas affectée du moins tant que la collection rattachée au RCR de base n’est pas exclue  (vérification faite au 14 mars 2023) Cette solution est à privilégier dès lors que la bibliothèque peut posséder plus de deux rattachements à un même ppn.</p>
+</div>
+</section>
+<section id="utilisateurs-et-groupes">
+<h2>Utilisateurs et groupes<a class="headerlink" href="#utilisateurs-et-groupes" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Il y a 4 types d’utilisateurs :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Extérieurs : Donne droit à toute édition simple (Toutefois l’enregistrement préalable de l’utilisateur et son authentification sont nécessaires si le mode d’édition privé est activé ; ce qui n’est pas le cas si ce mode est désactivé)</p></li>
+<li><p>Utilisateurs principaux (dont le validateur = « checker » n’est qu’un cas particulier, reconnu par son nom dans le code) = Contacts dans les bibliothèques : Authentification requise pour travailler à l’instruction des résultantes. Il peut y avoir jusqu’à trois contacts par bibliothèque (idem pour checker) <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> Cette possibilité peut être exploitée de diverses manières utiles pour répartir le travail, par exemple entre libre-accès et magasin ou selon la parité du dernier chiffre du ppn (si 2 contacts) ou multiple de trois, pair et autre (si 3 contacts) …</p></li>
+<li><p>Administrateurs de la base de données du projet (ou par ellipse administrateur de projet) : authentification requise ; donne droit à administrer l’ensemble des données de la base de données du projet. Le nombre d’administrateur n’est pas limité ; le partage du travail pourra être scindé entre deux administrateurs dont l’un pourra par exemple s’occuper des données du données et paramètres du projet à l’exception des corrections d’instructions et l’autre du reste (cf. point suivant pour le détail des rôles)</p></li>
+<li><p>Administrateur du site (authentification requise) : Donne droit à lire, voire modifier les données communes dans la base principale (eplouribousse.db) : Le mail du webmaster <a class="footnote-reference brackets" href="#f2" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>  figure dans le second enregistrement de la table epl_replymail de la base principale (eplouribousse.db) après le mail générique de type noreply&#64;</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="role-de-ladministrateur-general-de-linstance-webmaster">
+<h2>Rôle de l’administrateur général de l’instance (webmaster)<a class="headerlink" href="#role-de-ladministrateur-general-de-linstance-webmaster" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Il renseigne l’adresse générique de type replymail&#64; et l’adresse du gestionnaire de site (pour transmette le flambeau à un autre le cas échéant)</p>
+<p>L’administrateur général peut obtenir une extraction csv générale de l’ensemble des utilisateurs, ceci à des fins de vérification et de contacts éventuels avec ceux-ci.</p>
+<img alt="_images/global_adm.png" src="_images/global_adm.png" />
+</section>
+<section id="roles-des-administrateurs-de-projet-administrateurs-de-la-base-de-donnees-du-projet">
+<h2>Rôles des administrateurs de projet (= administrateurs de la base de données du projet)<a class="headerlink" href="#roles-des-administrateurs-de-projet-administrateurs-de-la-base-de-donnees-du-projet" title="Lien permanent vers cette rubrique">¶</a></h2>
+<dl class="simple">
+<dt>C’est d’eux que relèvent :</dt><dd><ul class="simple">
+<li><p>la gestion des réglages du projet : Exclusions, bibliothèques, administrateurs, utilisateurs, alertes, mode d’édition, intitulé, résumé, date d’extraction</p></li>
+<li><p>la correction des enregistrements (instructions et rattachements) liés à un défaut signalé par le ‘checker’</p></li>
+</ul>
+</dd>
+</dl>
+<p>Ces deux rôles pourront éventuellement être partagés entre deux administrateurs <a class="footnote-reference brackets" href="#f3" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<p>Détaillons ces deux rôles :</p>
+</section>
+<section id="gestion-des-reglages-du-projet">
+<h2>Gestion des réglages du projet<a class="headerlink" href="#gestion-des-reglages-du-projet" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>L’accès à l’administration des paramètres du projet se fait à partir du lien ad-hoc situé en page d’accueil du projet : Les fonctionnalités sont évidentes et ne nécessitent pas d’explications particulières.</p>
+<p>Deux choses à détailler toutefois : Les différents cas d’alerte, l’activation du mode d’édition privé:</p>
+<ul class="simple">
+<li><p>Les différentes alertes (table epl_proj_setting) :</p></li>
+</ul>
+<p>Les alertes sont paramétrables à deux niveaux :</p>
+<blockquote>
+<div><ul>
+<li><p>au niveau du projet par l’administrateur du projet : ce réglage est un réglage cadre pour le niveau suivant (niveau utilisateur, voir ci-après). Un nouveau réglage <a class="footnote-reference brackets" href="#f4" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> au niveau du projet réinitialise les réglages éventuels modifiés précédemment au niveau des utilisateurs eux-mêmes. Recommandation : activez l’ensemble des alertes à ce niveau.</p></li>
+<li><p>au niveau de l’utilisateur : ces modifications par l’utilisateur lui-même ne sont possibles que dans le cadre défini au niveau précédent (autrement dit, l’utilisateur peut décocher une alerte prédéfinie au niveau du projet ou restaurer celle-ci s’il l’avait précédemment décochée. Le choix offert n’autorise pas d’activer une alerte non activée au niveau du projet)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Positionnement : si l’alerte correspondante est activée, les instructeurs des bibliothèques n’ayant pas encore positionné leur collection recevront une alerte chaque fois qu’un positionnement sera pris pour une autre collection de même ppn, exclusions non comprises. Cela peut donc survenir plusieurs fois (cas de triplons et plus).</p></li>
+<li><p>Arbitrage : si l’alerte correspondante est activée, les instructeurs des bibliothèques concernées recevront une alerte chaque fois qu’un arbitrage sera relevé à l’occasion d’un nouveau positionnement (cela peut donc survenir plusieurs fois) ; les instructeurs de toutes les bibliothèques, y compris de celles dont la collection a éventuellement été exclue dans le cas où aucune bibliothèque n’a positionné sa collection au rang 1 ; les instructeurs des bibliothèques  ayant positionné leur collection au rang 1 dans le cas ou ce rang est revendiqué plusieurs fois.</p></li>
+<li><p>Instruction : si l’alerte correspondante est activée, les instructeurs reçoivent une alerte leur indiquant que leur tour est venu d’instruire la collection résultante.</p></li>
+<li><p>Résultante : lorsqu’une fiche est complète et si l’alerte correspondante est activée, les instructeurs des bibliothèques ayant contribué à la résultante reçoivent un avis leur indiquant que la fiche de résultante est disponible.</p></li>
+</ul>
+<p>NB : Dans chaque cas, un lien cliquable renvoie directement l’instructeur à l’action considérée.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Mode d’édition : Si le mode d’édition restreint est activé, l’administrateur de la base projet doit renseigner les utilisateurs autorisés.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Attention : Le passage du mode d’édition restreint (= privé) au mode d’édition public occasionne la suppression des utilisateurs autorisés n’ayant aucun rôle actif (instructeurs ou administrateurs).</p>
+</div>
+</section>
+<section id="correction-des-enregistrements-instructions-et-rattachements">
+<h2>Correction des enregistrements (instructions et rattachements)<a class="headerlink" href="#correction-des-enregistrements-instructions-et-rattachements" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Le ou les administrateurs de la base sont alertés par mail automatiquement quand une incohérence est signalée dans la fiche d’instruction.</p>
+<p>L’administrateur de la base devra modifier les enregistrements incriminés depuis la page de type (host)/current_status/ppn/rcr accessible  en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) :</p>
+<p>Pour une ressource considérée (un sid) il repérera les enregistrements instructions concernés, identifiera l’anomalie et effectuera les corrections nécessaires en suivant récursivement le traitement.</p>
+<p>Ceci fait, il lui sera possible d’attribuer les nouveaux statuts aux enregistrements de rattachement (modèle : ItemRecord) et les passera de statut =6 à statut = 0, 1, 2, 3 ou 4 selon les considérations suivantes :</p>
+<p>S’il n’y a pas encore d’instruction admin, les statuts possibles ne peuvent être que 0, 1 ou 2.</p>
+<p>S’il y a déjà une ligne d’instruction admin, les statuts possibles ne peuvent être que 2, 3 ou 4.</p>
+<blockquote>
+<div><p>0 : état initial (ce n’est pas encore au tour de la bibliothèque d’instruire)
+1 : éléments reliés à instruire
+2 : éléments reliés instruits
+3 : éléments non reliés à instruire
+4 : éléments non reliés instruits</p>
+</div></blockquote>
+<p>Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord) Cet état passe à 6. L’administrateur peut faire les corrections à mesure, ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées.</p>
+<p>Pour information, le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.</p>
+<p>L’application ne propose que les statuts potentiels correspondant à la phase en cours. Il faut procéder dans l’ordre suivant : Modifier ou supprimer les lignes incriminées, modifier les statuts ensuite dans l’ordre suivant : 2, 0, 1 lors de la 1ère phase ; 4, 3 lors de la deuxième phase. Procéder dans un autre ordre pourrait avoir pour effet de générer un message indiquant faussement le tour d’instruire venu (ce n’est pas une cause de dysfonctionnement mais cela peut être gênant)</p>
+<p><strong>En cas de doute, le plus simple est encore de réinitialiser la fiche (retour au début de la phase courante avec calcul automatique des statuts)</strong></p>
+<p><strong>Ce travail de correction est facilité si l’administrateur de la base projet passe par l’outil de supervision ou par l’outil de recherche croisée :</strong></p>
+<img alt="_images/corr_adm.png" src="_images/corr_adm.png" />
+</section>
+<section id="controles">
+<h2>Contrôles<a class="headerlink" href="#controles" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Les actions intempestives appelées directement par l’url sont rejetées.</p>
+</section>
+<section id="securite">
+<h2>Sécurité<a class="headerlink" href="#securite" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Toutes les actions impliquant des manipulations de données dans la base sont soumises à authentification.</p>
+</section>
+<section id="authentification">
+<h2>Authentification<a class="headerlink" href="#authentification" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>La création du mot de passe s’effectue en cliquant sur le lien de gestion du mot de passe situé en page d’accueil. Idem en cas de perte ou de modification.</p>
+<p>Django fournit un système de stockage de mots de passe à la fois souple et puissant (PBKDF2 par défaut) :
+<a class="reference external" href="https://docs.djangoproject.com/en/2.2/topics/auth/passwords/">https://docs.djangoproject.com/en/2.2/topics/auth/passwords/</a></p>
+<p>L’authentification est requise automatiquement pour toute action sensible (modifications des données de la base) Un contrôle est effectué sur l’adresse mail (l’email de l’utilisateur et l’email du correspondant pour la bibliothèque doivent être les mêmes) <strong>Lorsque le contrôle est négatif, l’utilisateur est réorienté vers la page d’accueil générale.</strong></p>
+<p>En dehors de cela, l’authentification n’est pas nécessaire ; elle est toutefois possible : Dans ce cas, l’utilisateur aboutira directement à la page d’accueil du projet correspondant à son identifiant  (Si l’utilisateur est un administrateur, il restera sur la page courante).</p>
+<p><strong>Dans le cas où le mode privé est activé, l’authentification est nécessaire dans tous les cas, même pour accéder à la paged’accueil.</strong></p>
+</section>
+<section id="confidentialite">
+<h2>Confidentialité<a class="headerlink" href="#confidentialite" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Les conditions générales d’utilisation et les règles de confidentialité sont disponibles sur le site lui-même (en pied de page)</p>
+<p>Les messages envoyés aux utilisateurs par l’application, lors de la création de compte ou de l’intégration à la liste de diffusion, y renvoient systématiquement.</p>
+<p>Les messages saisis à l’aide des formulaires sont protégés contre les robots par un Captcha « ultralight » ; en cas d’éventuelle attaque à partir de ces formulaires, le robot malveillant ne pourra pas s’approprier la liste des destinataires, ceux-ci étant systématiquement mis en copie cachée.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Au-delà de trois correspondants par bibliothèque, utiliser une liste de diffusion.</p>
+</aside>
+<aside class="footnote brackets" id="f2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Dans le cas où on souhaite avoir plusieurs webmasters, renseigner une liste de diffusion.</p>
+</aside>
+<aside class="footnote brackets" id="f3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Les messages envoyés aux administrateurs du projet le sont sans distinction de ces deux rôles (il s’agit d’un partage non géré dans le code).</p>
+</aside>
+<aside class="footnote brackets" id="f4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>La modification du mode d’édition (privé/publique) aura le même effet.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">eplouribousse</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="0.html">Préambule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.html">Présentation générale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.html">Pages d’accueil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.html">Fonctionnalités</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.html">Suivi de projet</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Administration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reglages-des-bases-de-donnees-important">Réglages des bases de données (important)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilisateurs-et-groupes">Utilisateurs et groupes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#role-de-ladministrateur-general-de-linstance-webmaster">Rôle de l’administrateur général de l’instance (webmaster)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roles-des-administrateurs-de-projet-administrateurs-de-la-base-de-donnees-du-projet">Rôles des administrateurs de projet (= administrateurs de la base de données du projet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gestion-des-reglages-du-projet">Gestion des réglages du projet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#correction-des-enregistrements-instructions-et-rattachements">Correction des enregistrements (instructions et rattachements)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#controles">Contrôles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#securite">Sécurité</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authentification">Authentification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#confidentialite">Confidentialité</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6.html">Langues</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="4.html" title="Chapitre précédent">Suivi de projet</a></li>
+      <li>Next: <a href="6.html" title="Chapitre suivant">Langues</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Georges G.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/5.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

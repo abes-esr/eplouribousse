@@ -1,0 +1,35 @@
+Positionnement
+==============
+
+Cette étape est nécessaire avant toute autre. Ce n’est qu’une fois toutes les bibliothèques positionnées que les fonctionnalités suivantes deviennent pertinentes.
+
+Accès : A partir de la page d’accueil, sélectionnez votre bibliothèque et ‘Positionnement’ puis validez.
+
+Résultat : Liste des ressources en attente du positionnement pour la bibliothèque sélectionnée :
+
+.. image:: _static/pos_list.png
+
+Il est possible de restreindre aux doublons avec une autre bibliothèque. Il est possible d’obtenir la liste des ressources dont le positionnement est encore modifiable (la condition est que l’instruction n’ait pas encore débuté)
+
+Cliquez sur le lien (ppn) pour accéder au formulaire de saisie du rang de votre collection.
+
+A l’état initial, le positionnement indiqué est 99 ; vous pouvez choisir d’exclure votre collection pour l’un des motifs de la liste déroulante (Cette liste peut être modifiée par l’administrateur de la base projet (voir plus loin) ; la valeur « Autre (Commenter) » n’a pas à être indiquée ; elle est automatique). 	Sinon, vous devez vous positionner dans une échelle de 1 à 4 : 1 si vous possédez la collection la plus importante et que cette collection est ressentie comme étant celle à laquelle viendront s’agréger les éléments d’autres collections pour l’améliorer ou l’enrichir (collection mère). 4 si vous avez très peu d’éléments pour la collection. 2 et 3 pour des situations intermédiaires. L’ordre d’instruction des fiches suivra l’ordre de positionnement ; à rang égal, i.e. 2, 3 ou 4 (le rang 1 doit être unique) l’ordre d’instruction entre bibliothèques est arbitraire (En fait, il suit l’ordre de la clef primaire des rattachements (Primary key ou pk)).
+
+
+Toutes les informations utiles et disponibles concernant les autres rattachements sont indiquées.
+
+A ce stade, le lien cliquable (ppn) renvoie à la notice Sudoc qui pourra servir à vérifier les numéros précis de début et de fin de publication ainsi que les filiations.
+
+Un lien vers l’outil Périscope permet de visualiser et comparer les états de collection.
+
+Il est également possible d’ouvrir une discussion par mail = lien « échanger » (utilisation parcimonieuse conseillée) : Les destinataires principaux et ceux en copie pour info (les autres instructeurs de la même bibliothèque ; dans le cas où un instructeur opère pour plusieurs bibliothèques, il sera mis en destinataire principal mais non pas en copie) sont calculés automatiquement, de même que l’objet : ceux-ci ne doivent donc pas être modifiés (La mention portée dans le corps du message peut être supprimée quant à elle).
+
+Vous pouvez laisser un commentaire dans l’un ou l’autre des cas précédemment mentionnés (notez que vous pouvez élargir la fenêtre de saisie du commentaire en actionnant le coin en bas à droite).
+
+.. image:: _static/pos_sheet.png
+
+NB : La connexion est nécessaire pour indiquer le rang d’une collection ; un témoin de connexion apparaît en haut à gauche (avec possibilité de se déconnecter) La connexion est requise pour toutes les autres actions cruciales (i.e modifiant l’état de la base de donnée locale ou/et centrale) : Instruction, annulation d’une ligne d’instruction, déclaration de fin d’instruction.
+
+Après validation, le retour à la liste est automatique ; celle-ci rappelle le dernier positionnement effectué (au cours d’une même session, rien sinon) Il est possible d’accéder par simple clic à une liste des collections pour lesquelles le positionnement est encore modifiable (Le rang n’est plus modifiable à partir du moment où une instruction a déjà été validée).
+
+Dès lors que l’ensemble des bibliothèques s’est positionné, un message est automatiquement adressé au(x) correspondant(s) concerné(s)  avec un lien direct pour débuter l’instruction (sous réserve que cette alerte ait bien été activée). Cette alerte est envoyée en temps voulu aux correspondants suivants.

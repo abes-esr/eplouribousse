@@ -1,0 +1,81 @@
+Instruction
+===========
+
+Saisie
+------
+
+L’instruction d’une résultante devient possible dès lors que toutes les bibliothèques rattachées se sont positionnées pour la ressource considérée.
+
+Accès : Dans la page d’accueil, sélectionnez votre bibliothèque,  ‘Instruction’ et validez. 
+
+Résultat : Liste des ressources pour lesquelles vous pouvez débuter l’instruction de la résultante :
+
+.. image:: _static/instr_list.png
+
+Il est possible de restreindre la liste obtenue de diverses manières.
+
+Manière d’instruire la résultante : Commencez par signaler les éléments reliés de votre collection par segments continus (aux exceptions et éléments améliorables près que vous signalerez le cas échéant dans les cases de saisie prévues) ou par éléments uniques. Indiquez la ligne au-dessous de laquelle vous souhaitez insérer la nouvelle ligne (ordre logique : chronologique ou par numéro)
+
+Il peut arriver que les bords d’un segment relié se recouvrent du fait que les volumes ne comprennent pas les mêmes fascicules d’une collection contributrice à une autre. Dans, ces cas il peut-être préférable de considérer ces bords comme défectueux s’ils peuvent être remplacés les fascicules couvrant la période dans l’idée de les relier à terme. Ceci est un problème délicat dont la solution relève de la politique de conservation. 
+
+Le n° de ligne et le segment sont à renseigner obligatoirement.
+
+La dernière ligne instruite est intégrée et mise en évidence :
+
+.. image:: _static/instr_form.png
+
+Dans le cas où vous n’avez pas de contribution à porter pour la résultante, vous pouvez directement indiquer que vous avez fini, cocher et valider. Une ligne portant la mention « Néant » sera automatiquement enregistrée et une alerte vous spécifiera que votre collection n’améliore pas la résultante pour la forme considérée.
+
+La suppression ou la modification d’une ligne n’est possible que pour le compte de sa propre collection et pour l’état en cours d’instruction (relié ou non) Les lignes pouvant être supprimées ou modifiées sont distinguées des lignes ne pouvant pas l’être :
+
+.. image:: _static/instr_suppr.png
+
+Le cas échéant, un message alerte que la ligne indiquée ne peut pas être supprimée.
+
+Une fois tous les éléments reliés saisis, indiquez que vous avez fini en cliquant sur le lien prévu à cet effet, puis confirmez en cochant et validant après avoir bien pris soin de vérifier l’exactitude des instructions :
+
+.. image:: _static/instr_end.png
+
+Le contact [#f1]_ de la bibliothèque suivante recevra automatiquement un message l’avertissant que son tour est venu d’instruire. L’instruction se fait en deux cycles, le premier pour les éléments reliés, le second pour les éléments non reliés. A la fin de chaque cycle, le vérificateur porte son visa ou invalide la fiche. Dans ce dernier cas, l’administrateur de la base de données sera informé :
+
+.. image:: _static/instr_checker.png
+
+Ordre d’amélioration
+--------------------
+
+L'ordre de qualité décroissante des éléments concourant à la collection résultante est le suivant :
+
+**Relié en bon état > Non relié en bon état > Relié améliorable >Non relié mauvais état > (Rien)**
+
+
+Remédiation
+-----------
+
+Lorsqu’une bibliothèque complète quelque chose qui a été précédemment porté par une autre bibliothèque en exception ou en élément améliorable, **et seulement dans ces cas**, il faut indiquer le nom de cette autre bibliothèque dans la case de saisie prévue à cet effet :
+
+.. image:: _static/instr_rem.png
+
+Ceci assure une édition optimale des résultats le moment venu (cf. édition) Cette règle est facultative lors de la phase d’instruction des éléments non-reliés pour les éléments précédemment déclarés en « Exceptions » (mais pas pour les « Eléments améliorables »)
+
+
+    .. note:: Par « exception » on entend exception pour la forme considérée (reliée ou non-reliée) Ce n’est donc pas forcément une véritable lacune à la phase d’instruction des éléments reliés.
+    .. note:: Par améliorable, on peut entendre soit des éléments dégradés, soit des éléments dont on sait qu’une autre bibliothèque participante possède des éléments en meilleur état. Normalement, ce dernier cas est rare, la bibliothèque revendiquant la collection-mère possédant généralement la meilleure collection. Par volumes reliés améliorable, on entend des volumes mal reliés que l’on a avantage à remplacer par l’équivalent non relié en bon état (par exemple lorsque la reliure a compromis l’intégrité du contenu).
+
+Rôle du 'checker'
+-----------------
+
+Contrairement aux instructeurs les vérificateurs ne sont pas en mesure de vérifier physiquement la collection. Leur rôle se limite aux vérifications suivantes (ce sont d’ailleurs celles dont doivent aussi s’assurer les instructeurs avant de valider leurs instructions) :
+
+            #. Les instructions couvrent des périodes n’outrepassant pas la période de publication du ppn.
+            #. Les instructions ne comportent pas de segments interrompus (champ ‘segment’).
+            #. Les éléments portés en exception ou améliorables font bien partie du segment décrit dans le champ ‘segment’ de la ligne considérée.
+            #. Les instructions sont bien ordonnées (ordre chronologique de publication).
+            #. Les instructions ne se chevauchent pas
+                .. note:: Il peut arriver que les bords d’un segment relié se recouvrent du fait que les volumes ne comprennent pas les mêmes fascicules d’une collection contributrice à une autre. Dans, ces cas il peut-être préférable de considérer ces bords comme défectueux s’ils peuvent être remplacés les fascicules couvrant la période dans l’idée de les relier à terme. Ceci est un problème délicat dont la solution relève de la politique de conservation.
+            #. Le champ ‘Bibliothèque remédiée’ a été correctement utilisé (doit correspondre à la bibliothèque ayant précédemment porté l’élément en ‘exception’ ou en ‘améliorable’)
+            #. L’ensemble des lignes est lisible (cohérence de la formulation provenant des différents instructeurs)
+
+.. rubric:: Footnotes 
+
+.. [#f1] Ou les contacts (jusqu’à trois par bibliothèque). De même, il peut y avoir jusqu’à trois contrôleurs (checkers)
+

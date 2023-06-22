@@ -1,0 +1,14 @@
+Fonctionnalités
+===============
+
+Dans l’ordre de traitement, les fonctionnalités sont les suivantes :
+
+.. toctree::
+    3_1
+    3_2
+    3_3
+    3_4
+
+Ces fonctionnalités s’appliquent au niveau de chacune des publications ; il n’est donc pas nécessaire (même si cela est possible) d’attendre que les bibliothèques se soient positionnées sur l’ensemble des candidats pour débuter l’arbitrage ou les instructions, ou d’attendre que toutes les publications aient été complètement instruites pour débuter l’édition de la résultante de l’une d’entre elles. Autrement dit, il est possible de traiter de bout en bout chaque publication individuellement en laissant toutes les autres en suspens.
+
+.. image:: _static/scheme.png

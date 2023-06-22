@@ -1,0 +1,172 @@
+Administration
+==============
+
+Réglages des bases de données (important)
+-----------------------------------------
+
+La population des bases de données doit être réalisées à l’aide d’un utilitaire de manipulation de bases de données (nous recommandons DB Browser for SQLite, simple et efficace permettant l’import de tables complètes à partir de fichiers csv : https://sqlitebrowser.org/ )
+
+La base de données principale (eplouribousse.db ne contient qu’une table propre à l’application (epl_replymail) (Les autres tables sont celles de Django)
+
+Les tables propres à chaque projet sont situées dans les bases projets ; il y en a 9 : epl_bddadmin, epl_exclusion, epl_feature, epl_instruction, epl_itemrecord, epl_library, epl_proj_setting, epl_project, epl_utilisateur. Toutes ces tables, à l’exclusion de epl_feature (qui est une table système) peuvent être gérées à partir de l’interface d’administration du projet par les administrateurs de projet.
+
+Il est conseillé de tout renseigner à 1 l’enregistrement unique de la table  epl_proj_setting.
+
+Pour la mise en place de cette base, un exemplaire est fourni qui peut servir à élaborer votre propre base ; cet exemplaire est disponible à la racine du dépôt et porte le nom ##.txt (## est à remplacer par le numéro à deux chiffres de votre projet et .txt est à remplacer par .db)
+
+Lors de la mise en place de la base de données projet, voici ce à quoi il faut penser :
+    * Pour la table des rattachements, dans le champs « période de publication » supprimer tout ce qui est superflu (seules les dates de début et de fin sont pertinentes)
+    * Les motifs d’exclusion dans la table « epl_exclusion » (l’exclusion « autre (commenter) » ne doit pas à être renseignée ; elle est prévue dans le code)
+    * Renseigner le nom du projet dans la table « epl_project ». Laisser vide le champ ‘descr’ : La liste s’initialisera automatiquement lorsqu’un administrateur cliquera sur le lien « gestion des données du projet ».
+    * Renseigner la table « epl_bddadmin » avec le nom et le mail du ou des administrateurs de la base de données
+    * Renseigner les bibliothèques participantes dans « epl_library »
+    * Renseigner la table utilisateurs qui doit recenser l’ensemble des correspondants dans les bibliothèques (y compris ‘checker’) l’ensemble des administrateurs ; attention : le mail, comme l’identifiant doivent être uniques tous les deux, autrement dit, si un même utilisateur a différents rôles dans un même projet, il ne doit être enregistré qu’une seule fois avec un seul couple (mail, identifiant) et c’est son rôle le plus permissif qui prévaudra. L’identifiant doit en outre avoir pour suffixe @## où ## est le code à deux chiffres correspondant au numéro de la base projet.
+      
+S’agissant de la base de données principale (eplouribousse.db) :
+    * Indiquer une adresse mail de type no-reply@ et une adresse de webmaster i.e. administrateur du site : Respectivement en premier et deuxième enregistrements de la table « epl_replymail ».
+    * Le(s) seul(s) enregistrement(s) nécessaire(s) au départ pour la table « user » est/sont celui/ceux du/des «superuser » (statut is_superuser =1) Pour le reste la base de donnée principale se peuple et synchronise automatiquement lors de la création de nouveaux utilisateurs (vues admins_adm  et lib_adm)ou lors de l’accès à l’une des trois pages suivantes :
+        * page d’accueil générale (vue selectbdd)
+        * page d’accueil de n’importe quel projet (vue home)
+        * page d’administration générale (vue globadm)
+
+.. note:: Cas de rattachements multiples : Diverses solutions permettent de prendre en compte facilement et efficacement de ce cas de figure ; l’une d’elles consiste à regrouper les arguments de chacun des champs suivants : Cote, état de collection et lacunes en séparant clairement les arguments à chaque fois. Exemple tiré d’une situation réelle (projet Arts Strasbourg → La Bnu présentait quelques rattachements en double) :
+    Titre : Aachener Kunstblatter
+    Identifiant de la ressource : 03963115X / issn : 05150612
+    Historique de la publication : 1906- 9999
+    • Bnu 
+    • Cote : BH.16.37 || BH.501.883 
+    • Etat de collection : BH.16.37 : vol. 1 (1906) -vol. 10 (1916) || BH.501.883 : vol. 17 (1958) - vol. 18 (1959) ; vol. 26 (1962) ; vol. 34 (1967) - vol. 38 (1969) ; vol. 47 (1976/77) [Lacunes] 
+    • Lacunes : BH.16.37 : || BH.501.883 : vol. 37 (1968) Dans ce cas, le séparateur || a été utilisé pour distinguer les arguments relatifs aux deux collections. Les lignes d’instructions devront mentionner clairement quelle collection est concernée (cote) Une autre solution consiste à créer autant de bibliothèques alternatives en plus de celle de base (674821001,  674821001a,  674821001b etc.) accueillant chacune un multiple de collection. L’utilisation du lien periscope n’en est pas affectée du moins tant que la collection rattachée au RCR de base n’est pas exclue  (vérification faite au 14 mars 2023) Cette solution est à privilégier dès lors que la bibliothèque peut posséder plus de deux rattachements à un même ppn.
+
+Utilisateurs et groupes
+-----------------------
+
+Il y a 4 types d’utilisateurs :
+
+    * Extérieurs : Donne droit à toute édition simple (Toutefois l’enregistrement préalable de l’utilisateur et son authentification sont nécessaires si le mode d’édition privé est activé ; ce qui n’est pas le cas si ce mode est désactivé)  
+    * Utilisateurs principaux (dont le validateur = « checker » n’est qu’un cas particulier, reconnu par son nom dans le code) = Contacts dans les bibliothèques : Authentification requise pour travailler à l’instruction des résultantes. Il peut y avoir jusqu’à trois contacts par bibliothèque (idem pour checker) [#f1]_ Cette possibilité peut être exploitée de diverses manières utiles pour répartir le travail, par exemple entre libre-accès et magasin ou selon la parité du dernier chiffre du ppn (si 2 contacts) ou multiple de trois, pair et autre (si 3 contacts) ... 
+    * Administrateurs de la base de données du projet (ou par ellipse administrateur de projet) : authentification requise ; donne droit à administrer l’ensemble des données de la base de données du projet. Le nombre d’administrateur n’est pas limité ; le partage du travail pourra être scindé entre deux administrateurs dont l’un pourra par exemple s’occuper des données du données et paramètres du projet à l’exception des corrections d’instructions et l’autre du reste (cf. point suivant pour le détail des rôles)
+    * Administrateur du site (authentification requise) : Donne droit à lire, voire modifier les données communes dans la base principale (eplouribousse.db) : Le mail du webmaster [#f2]_  figure dans le second enregistrement de la table epl_replymail de la base principale (eplouribousse.db) après le mail générique de type noreply@
+
+Rôle de l’administrateur général de l’instance (webmaster)
+----------------------------------------------------------
+
+Il renseigne l’adresse générique de type replymail@ et l’adresse du gestionnaire de site (pour transmette le flambeau à un autre le cas échéant)
+
+L’administrateur général peut obtenir une extraction csv générale de l’ensemble des utilisateurs, ceci à des fins de vérification et de contacts éventuels avec ceux-ci.
+
+.. image:: _static/global_adm.png
+
+Rôles des administrateurs de projet (= administrateurs de la base de données du projet)
+---------------------------------------------------------------------------------------
+
+C’est d’eux que relèvent :
+    * la gestion des réglages du projet : Exclusions, bibliothèques, administrateurs, utilisateurs, alertes, mode d’édition, intitulé, résumé, date d’extraction
+    * la correction des enregistrements (instructions et rattachements) liés à un défaut signalé par le ‘checker’
+      
+Ces deux rôles pourront éventuellement être partagés entre deux administrateurs [#f3]_ 
+      
+Détaillons ces deux rôles :
+
+Gestion des réglages du projet
+------------------------------
+
+L’accès à l’administration des paramètres du projet se fait à partir du lien ad-hoc situé en page d’accueil du projet : Les fonctionnalités sont évidentes et ne nécessitent pas d’explications particulières.
+
+Deux choses à détailler toutefois : Les différents cas d’alerte, l’activation du mode d’édition privé:
+
+* Les différentes alertes (table epl_proj_setting) :
+
+Les alertes sont paramétrables à deux niveaux :
+
+       * au niveau du projet par l’administrateur du projet : ce réglage est un réglage cadre pour le niveau suivant (niveau utilisateur, voir ci-après). Un nouveau réglage [#f4]_ au niveau du projet réinitialise les réglages éventuels modifiés précédemment au niveau des utilisateurs eux-mêmes. Recommandation : activez l’ensemble des alertes à ce niveau.
+
+       * au niveau de l’utilisateur : ces modifications par l’utilisateur lui-même ne sont possibles que dans le cadre défini au niveau précédent (autrement dit, l’utilisateur peut décocher une alerte prédéfinie au niveau du projet ou restaurer celle-ci s’il l’avait précédemment décochée. Le choix offert n’autorise pas d’activer une alerte non activée au niveau du projet)
+
+           * Positionnement : si l’alerte correspondante est activée, les instructeurs des bibliothèques n’ayant pas encore positionné leur collection recevront une alerte chaque fois qu’un positionnement sera pris pour une autre collection de même ppn, exclusions non comprises. Cela peut donc survenir plusieurs fois (cas de triplons et plus).
+
+           * Arbitrage : si l’alerte correspondante est activée, les instructeurs des bibliothèques concernées recevront une alerte chaque fois qu’un arbitrage sera relevé à l’occasion d’un nouveau positionnement (cela peut donc survenir plusieurs fois) ; les instructeurs de toutes les bibliothèques, y compris de celles dont la collection a éventuellement été exclue dans le cas où aucune bibliothèque n’a positionné sa collection au rang 1 ; les instructeurs des bibliothèques  ayant positionné leur collection au rang 1 dans le cas ou ce rang est revendiqué plusieurs fois.
+
+           * Instruction : si l’alerte correspondante est activée, les instructeurs reçoivent une alerte leur indiquant que leur tour est venu d’instruire la collection résultante.
+
+           * Résultante : lorsqu’une fiche est complète et si l’alerte correspondante est activée, les instructeurs des bibliothèques ayant contribué à la résultante reçoivent un avis leur indiquant que la fiche de résultante est disponible.
+
+           NB : Dans chaque cas, un lien cliquable renvoie directement l’instructeur à l’action considérée.
+
+* Mode d’édition : Si le mode d’édition restreint est activé, l’administrateur de la base projet doit renseigner les utilisateurs autorisés.
+
+.. warning:: Attention : Le passage du mode d’édition restreint (= privé) au mode d’édition public occasionne la suppression des utilisateurs autorisés n’ayant aucun rôle actif (instructeurs ou administrateurs).
+
+
+Correction des enregistrements (instructions et rattachements)
+--------------------------------------------------------------
+
+Le ou les administrateurs de la base sont alertés par mail automatiquement quand une incohérence est signalée dans la fiche d’instruction.
+
+L’administrateur de la base devra modifier les enregistrements incriminés depuis la page de type (host)/current_status/ppn/rcr accessible  en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) :
+
+Pour une ressource considérée (un sid) il repérera les enregistrements instructions concernés, identifiera l’anomalie et effectuera les corrections nécessaires en suivant récursivement le traitement.
+
+Ceci fait, il lui sera possible d’attribuer les nouveaux statuts aux enregistrements de rattachement (modèle : ItemRecord) et les passera de statut =6 à statut = 0, 1, 2, 3 ou 4 selon les considérations suivantes :
+
+S’il n’y a pas encore d’instruction admin, les statuts possibles ne peuvent être que 0, 1 ou 2.
+
+S’il y a déjà une ligne d’instruction admin, les statuts possibles ne peuvent être que 2, 3 ou 4.
+
+      0 : état initial (ce n’est pas encore au tour de la bibliothèque d’instruire)
+      1 : éléments reliés à instruire
+      2 : éléments reliés instruits
+      3 : éléments non reliés à instruire
+      4 : éléments non reliés instruits
+
+Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord) Cet état passe à 6. L’administrateur peut faire les corrections à mesure, ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées.
+
+Pour information, le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.
+
+L’application ne propose que les statuts potentiels correspondant à la phase en cours. Il faut procéder dans l’ordre suivant : Modifier ou supprimer les lignes incriminées, modifier les statuts ensuite dans l’ordre suivant : 2, 0, 1 lors de la 1ère phase ; 4, 3 lors de la deuxième phase. Procéder dans un autre ordre pourrait avoir pour effet de générer un message indiquant faussement le tour d’instruire venu (ce n’est pas une cause de dysfonctionnement mais cela peut être gênant)
+
+
+**En cas de doute, le plus simple est encore de réinitialiser la fiche (retour au début de la phase courante avec calcul automatique des statuts)**
+
+**Ce travail de correction est facilité si l’administrateur de la base projet passe par l’outil de supervision ou par l’outil de recherche croisée :**
+
+.. image:: _static/corr_adm.png
+
+Contrôles
+---------
+
+Les actions intempestives appelées directement par l’url sont rejetées.
+
+Sécurité
+--------
+
+Toutes les actions impliquant des manipulations de données dans la base sont soumises à authentification.
+
+Authentification
+----------------
+
+La création du mot de passe s’effectue en cliquant sur le lien de gestion du mot de passe situé en page d’accueil. Idem en cas de perte ou de modification.
+
+Django fournit un système de stockage de mots de passe à la fois souple et puissant (PBKDF2 par défaut) :
+https://docs.djangoproject.com/en/2.2/topics/auth/passwords/
+
+L’authentification est requise automatiquement pour toute action sensible (modifications des données de la base) Un contrôle est effectué sur l’adresse mail (l’email de l’utilisateur et l’email du correspondant pour la bibliothèque doivent être les mêmes) **Lorsque le contrôle est négatif, l’utilisateur est réorienté vers la page d’accueil générale.**
+
+En dehors de cela, l’authentification n’est pas nécessaire ; elle est toutefois possible : Dans ce cas, l’utilisateur aboutira directement à la page d’accueil du projet correspondant à son identifiant  (Si l’utilisateur est un administrateur, il restera sur la page courante).
+
+**Dans le cas où le mode privé est activé, l’authentification est nécessaire dans tous les cas, même pour accéder à la paged’accueil.**
+
+Confidentialité
+---------------
+
+Les conditions générales d’utilisation et les règles de confidentialité sont disponibles sur le site lui-même (en pied de page)
+
+Les messages envoyés aux utilisateurs par l’application, lors de la création de compte ou de l’intégration à la liste de diffusion, y renvoient systématiquement.
+
+Les messages saisis à l’aide des formulaires sont protégés contre les robots par un Captcha « ultralight » ; en cas d’éventuelle attaque à partir de ces formulaires, le robot malveillant ne pourra pas s’approprier la liste des destinataires, ceux-ci étant systématiquement mis en copie cachée.
+
+
+.. [#f1] Au-delà de trois correspondants par bibliothèque, utiliser une liste de diffusion.
+.. [#f2] Dans le cas où on souhaite avoir plusieurs webmasters, renseigner une liste de diffusion.
+.. [#f3] Les messages envoyés aux administrateurs du projet le sont sans distinction de ces deux rôles (il s’agit d’un partage non géré dans le code).
+.. [#f4] La modification du mode d’édition (privé/publique) aura le même effet.

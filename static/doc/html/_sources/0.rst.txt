@@ -1,0 +1,23 @@
+Préambule
+=========
+
+Origine
+-------
+eplouribousse est une application web destinée à faciliter le dédoublonnement des périodiques. Elle a été développée et est couramment mise en oeuvre à l'Université de Strasbourg. 
+
+
+Que contient ce guide ?
+-----------------------
+
+Ce guide s’adresse aux utilisateurs de l’application eplouribousse. Il comprend une présentation générale : Architecture de l’application, méthode et principes mise en œuvre, fonctionnalités et manière de les utiliser.
+
+Les copies d’écran peuvent ne pas correspondre totalement à la dernière version que vous utilisez couramment, mais cela est sans conséquence.
+
+
+Entraide
+--------
+
+Au sein d'un projet particulier, pensez à utiliser la liste de diffusion (accessible depuis la page d'accueil du projet)
+
+Pour une entraide plus large, non liée à un projet particulier, pensez à utiliser le `forum d'entraide des utilisateurs <https://groupes.renater.fr/sympa/info/eplouribousse>`_
+

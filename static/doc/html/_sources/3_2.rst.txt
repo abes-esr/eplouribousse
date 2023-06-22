@@ -1,0 +1,17 @@
+Arbitrage
+=========
+
+L’arbitrage est nécessaire dans deux cas :
+
+    • Deux bibliothèques revendiquent la première position
+    • Toutes les bibliothèques ont pris position pour la ressource considérée, mais aucune n’a revendiqué la première position.
+
+Accès : Dans la page d’accueil, sélectionnez votre bibliothèque et ‘Arbitrage’ puis validez.
+
+Résultat : Liste des ressources dans l’une des situations d’arbitrage indiquées ci-dessus (les deux cas de figure sont bien identifiés : Concurrence pour la collection mère, absence de revendication du rang 1) :
+
+.. image:: _static/arb.png
+
+Action attendue : Révision du positionnement. Le cas échéant, cliquez sur le lien (ppn) pour appeler votre fiche de positionnement.
+
+Il est possible de filtrer la liste obtenue aux arbitrages avec une autre bibliothèque.

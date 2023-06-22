@@ -1,0 +1,12 @@
+Langues
+=======
+
+L’application utilise gettext pour la traduction dans d’autres langues. Le français est la langue d’origine.
+
+Deux autres langues sont proposées actuellement à titre expérimental ; l’anglais et l’allemand (mais de manière incomplète)
+
+L’extension à d’autres langues est assez simple puisqu’il repose sur la fourniture de fichiers classiques d’extension .po facilement compréhensibles par les traducteurs. Ces fichiers sont compilés par une simple ligne de commande (fichiers binaires en .mo)
+
+Le changement de langue est accessible à partir d’un lien en page d’accueil.
+
+    .. note:: Toute aide pour la traduction sera la bienvenue.

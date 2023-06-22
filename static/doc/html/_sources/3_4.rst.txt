@@ -1,0 +1,34 @@
+Edition
+=======
+
+L’édition des résultantes n’est possible que pour les ressources complètement instruites.
+
+Accès : Depuis la page d’accueil, sélectionnez la bibliothèque et la fonction ‘Edition’ puis validez.
+
+Liste des résultantes
+---------------------
+
+Dans un premier temps, vous obtenez la liste des ressources qui peuvent être éditées (les ressources pour lesquelles la bibliothèque sélectionnée détient la collection mère sont identifiées par un astérisque) :
+
+.. image:: _static/ed_list.png
+
+Filtre
+------
+	
+Il est possible de filtrer la liste obtenue par collection mère ou pas et/ou en indiquant une autre collection participante et la nature (mère ou pas) de la collection considérée :
+
+.. image:: _static/ed_filt.png
+
+Présentation des fiches
+-----------------------
+
+Les lignes impliquant votre bibliothèque sont mises en évidence (d’où l’importance de bien indiquer le nom de la bibliothèque dans la fenêtre de saisie comme indiqué plus haut lors de l’instruction) :
+	
+.. image:: _static/ed_sheet.png	
+
+Export au format pdf
+--------------------
+
+L’édition de rapports soignés au format pdf est proposée, pour l’ensemble des ressources d’une liste ou par ressource sélectionnée ; dans ce dernier cas, cliquez sur la ressource dont vous souhaitez éditer la résultante.
+
+.. image:: _static/ed_sheet_pdf.png

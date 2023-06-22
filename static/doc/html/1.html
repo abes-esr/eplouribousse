@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Présentation générale &#8212; Documentation eplouribousse 2</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Pages d’accueil" href="2.html" />
+    <link rel="prev" title="Préambule" href="0.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="presentation-generale">
+<h1>Présentation générale<a class="headerlink" href="#presentation-generale" title="Lien permanent vers cette rubrique">¶</a></h1>
+<section id="de-quoi-parle-t-on">
+<h2>De quoi parle-t-on ?<a class="headerlink" href="#de-quoi-parle-t-on" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Sans attendre d’être confrontés à la saturation des espaces de stockage, les bibliothécaires ont à se préoccuper de la bonne gestion de ces espaces. Le désherbage des collections fait partie de cette bonne gestion, au premier chef le désherbage des doublons.  A cet égard, les bibliothécaires savent que le désherbage des périodiques est bien plus « efficace » que le désherbage d’autres types de documents imprimés.</p>
+<p>eplouribousse a été conçue pour aider les bibliothécaires à instruire le dédoublonnement des périodiques dans un ensemble de bibliothèques.</p>
+<p>Un petit mot tout d’abord concernant le nom de cette application : C’est la forme franchouillarde du tout début de l’expression latine E PLVRIBVS VNVM dont la traduction littérale serait « De plusieurs, un ». C’est précisément ce que cette application permet de réaliser : il s’agit, pour toute revue candidate au dédoublonnement, de reconstituer une seule et unique collection aussi complète et reliée que possible à partir des éléments épars dont disposent les bibliothèques participant à l’opération.</p>
+<p>Le moteur de l’application est conçu pour desservir jusqu’à 100 projets dont chacun est supporté par une base de données nommée sur le modèle ##.db où ## est une suite de deux chiffres (i.e. de 00.db à 99.db dites bases projet par opposition à la base centrale eplouribousse.db qui sert quant à elle à l’authentification des utilisateurs et aux données communes) L’accès aux bases de données se fait par un lien de renvoi (C’est ce lien qui doit être nommé selon le modèle ##.db ; le nom de la cible est libre) ; l’accès par le moteur doit être autorisé pour chacune d’elles.</p>
+<img alt="_images/100.png" src="_images/100.png" />
+<p>L’authentification n’est strictement requise que dans les cas où une modification des données projets peut résulter de l’appel à une page ; elle n’est exigée pour les simples éditions que dans le cas où l’administrateur du projet le spécifie dans le module d’administration ; s’il ne l’a pas fait, la consultation est ouverte à tous).</p>
+</section>
+<section id="principes">
+<h2>Principes<a class="headerlink" href="#principes" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Nous partons de l’hypothèse de politique documentaire suivante : Les bibliothèques participantes reconstituent et conservent une collection unique, dite collection résultante, constituée sur la base de la collection mère la plus importante détenue par l’une des bibliothèques. La résultante sera la plus complète et la plus reliée possible, mais sans comparaison de la qualité des reliures entre elles, l’idée sous-jacente étant que la reliure garantit normalement l’absence de lacunes dans les volumes reliés. Le risque de conserver des éléments reliés de moindre qualité est à relativiser car la collection mère est généralement la mieux reliée. Il peut arriver que des volumes aient été mal reliés et qu’ils puissent être avantageusement remplacés par des fascicules non reliés couvrant la période équivalente. Ces cas peuvent être couramment traités dans l’application eplouribousse.</p>
+<p>eplouribousse ne nous épargne pas l’examen des collections ; elle nous permet en revanche de préparer la recomposition de la collection résultante à partir de cet examen réalisé en temps voulu dans les bibliothèques impliquées.</p>
+<p>On aura reconnu là deux actions consécutives : D’abord, les bibliothèques possédant des éléments susceptibles de participer à la collection résultante doivent se positionner, au premier rang dans le cas de la bibliothèque possédant la collection la plus importante (= collection mère). A ce stade, il est également possible de déclarer ne pas faire participer la collection détenue par une bibliothèque à la reconstitution d’une collection résultante qui concurrencera donc la collection exclue. Les motifs de non-participation dépendent des situations ; signalons ici à titre d’exemple le cas d’une collection de dépôt légal.</p>
+<p>Nous venons de donner la définition de ce qu’est un candidat au dédoublonnement et cette définition est triviale : Est candidate au dédoublonnement toute publication dont des éléments sont possédés par au moins deux bibliothèques participantes.</p>
+<p>Une précision importante est indispensable ici : Par publication, on entend, l’unité identifiée par un identifiant unique (Serial Identifier) qui ne correspond pas toujours, et même généralement pas, à la collection entendue au sens des bibliothèques participantes (et généralement rangées sous une même cote de classement) Le risque de partitionnement des collections au sens des bibliothèques existe donc et doit être assumé si l’on veut mettre en œuvre la présente méthode. Cette manière de procéder n’est pas un choix parmi d’autre possibilités, c’est la seule possibilité, du moins la seule viable à moyenne ou grande échelle (On s’en convaincra en considérant qu’une collection au sens des bibliothèques peut ne pas être la même d’une bibliothèque à une autre, or il faut absolument s’entendre sur la définition de ce qu’on veut dédoublonner).</p>
+</section>
+<section id="aspects-juridiques-reutilisation-des-donnees">
+<h2>Aspects juridiques (Réutilisation des données)<a class="headerlink" href="#aspects-juridiques-reutilisation-des-donnees" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Les données de la base doivent être réglementairement exploitables. Les données sources sont récupérées du Sudoc ; sauf indication contraire, elles sont librement réutilisables (Licence Etalab)</p>
+<p>Pour toute autre instance d’eplouribousse, il conviendra de s’assurer que la réutilisation du jeu de données est réglementaire.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">eplouribousse</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="0.html">Préambule</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Présentation générale</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#de-quoi-parle-t-on">De quoi parle-t-on ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#principes">Principes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aspects-juridiques-reutilisation-des-donnees">Aspects juridiques (Réutilisation des données)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2.html">Pages d’accueil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.html">Fonctionnalités</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.html">Cas de rattachements multiples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.html">Page d’accueil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Rôle des vérificateurs (checker)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">« Tout »</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Recherche dans les listes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Module de recherche croisée</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Indicateurs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Contrôles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Sécurité</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Authentification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Confidentialité</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Utilisateurs et groupes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Rôles des administrateurs de projet (= administrateurs de la base de données du projet)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Rôle de l’administrateur général de l’instance (webmaster)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Réglages des bases de données (important)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Langues</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="0.html" title="Chapitre précédent">Préambule</a></li>
+      <li>Next: <a href="2.html" title="Chapitre suivant">Pages d’accueil</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Georges G.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/1.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

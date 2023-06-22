@@ -1,0 +1,36 @@
+.. eplouribousse documentation master file, created by
+   sphinx-quickstart on Thu Jun 15 11:24:39 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Documentation d'eplouribousse
+=============================
+
+
+**eplouribousse** *[eˈpluːrɪbʊs]* est une application web pour faciliter le dédoublonnement de revues entre un ensemble de bibliothèques.
+
+Jetez un coup d'oeil au `site strasbourgeois <https://sbu-eplouribousse.unistra.fr/>`_ pour vous faire une idée.
+
+Sommaire
+--------
+
+.. toctree::
+
+   0
+   1
+   2
+   3
+   4
+   5
+   6
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+
+Recherche par mots
+==================
+
+:ref:`search`

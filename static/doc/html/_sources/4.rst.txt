@@ -1,0 +1,81 @@
+Suivi de projet
+===============
+
+La fonctionnalité "tout"
+------------------------
+
+Cette fonction permet d’obtenir à tout instant la liste complète des candidats au dédoublement tel qu’à l’origine du projet, candidats écartés compris, alors que les précédentes donnent l’encours pour la fonction considérée exclusivement.
+
+Cette liste propose les informations et les possibilités d’action courantes au moment de l’édition.
+
+
+Recherche dans les listes
+-------------------------
+
+Il peut être utile de rechercher une occurrence dans les listes obtenues (ressources en attente de positionnement, ressources dont l’instruction peut débuter, ressources dont la résultante peut être éditée) en recherchant par cote, par ppn, éléments du titre etc.
+
+Pour cela, il faut utiliser la fonction de recherche du navigateur.
+
+Par défaut, les listes sont affichées dans l’ordre alphabétique du titre ; il est possible de les afficher selon l’un ou l’autre des ordres permis (sauf pour les listes spécifiquement dédiées au vérificateur = Ordre alphabétique).
+
+Fonctionnalité de retour à la dernière liste utilisée :
+
+Lors du retour à la dernière liste, c’est l’ordre alphabétique du titre qui prévaut.
+
+L’appel à la dernière liste fonctionne sur contrôle de l’adresse IP du client ; si un autre client s’est connecté dans l’entre temps, l’appel aboutit à la page d’accueil.
+
+La liste des collections écartées par exclusion est accessible depuis l’outil de supervision.
+
+Les principales listes sont exportables au format csv sous un nom de type : ##_typedeliste_rcr_autrercr.csv (où ## est le numéro de la base projet, un nombre à deux chiffres entre 00 et 99)
+
+24 listes types sont disponibles :
+
+.. csv-table:: listes types disponibles 
+   :header: « typedeliste », signification 
+   :widths: 20, 70
+
+    rk, Positionnements
+    xrk, Positionnements (avec une autre collection)
+    mrk, Positionnements modifiables
+    arb, Arbitrages
+    xarb, Arbitrages (avec une autre collection)
+    arb1, Arbitrages (rang 1)
+    arb0, Arbitrages (faute de rang 1)
+    x1arb, Arbitrages (rang 1 avec une autre collection)
+    x0arb, Arbitrages (faute de rang 1 avec une autre collection)
+    instr, Instructions
+    xinstr, Instructions (avec une autre collection)
+    instr1b, Instructions (rang 1 cycle des reliés)
+    instrxb, Instructions (rang ≠ 1 cycle des reliés)
+    instr1nb, Instructions (rang 1 cycle des non reliés)
+    instrxnb, Instructions (rang ≠ 1 cycle des non reliés)
+    res, Résultantes éditables
+    resm, Résultantes éditables (collection mère)
+    resnm, Résultantes éditables (collection non mère)
+    xmoth, Résultantes éditables (collection mère avec une autre collection)
+    xnomoth, Résultantes éditables (collection non mère avec une autre collection)
+    excl, Collections exclues
+    faulty, Fiches erronnées
+    all (avec None), Tous les candidats originels
+    all (sans None), Tous les candidats originels croisés entre deux bibliothèques
+
+
+Il peut arriver que la liste ne puisse être calculée entièrement ; cette information est clairement indiquée en fin de fichier : (ATTENTION : LISTE INCOMPLETE)
+
+Si la requête est trop volumineuse, le serveur retournera un code d’erreur.
+
+
+Recherche croisée
+-----------------
+
+Lien « recherche » disponible dans le bandeau d’entête. Permet de connaître la situation d’une ressource (ppn) pour une bibliothèque donnée avec rebond possible sur les actions possibles ou attendues.
+
+
+Tableau de bord
+---------------
+
+Un tableau de bord est disponible depuis la page d’accueil. La lecture des indicateurs est évidente.
+
+Il est possible de filtrer ce tableau sur une collection particulière.
+
+
