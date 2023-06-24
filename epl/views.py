@@ -1,8 +1,8 @@
-epl_version ="v2.10.72 (Judith)"
-date_version ="June 22, 2023"
+epl_version ="v2.10.73 (Judith)"
+date_version ="June 24, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.72 (~Irmingard)"
-date_version ="June 22, 2023"
+#epl_version ="v2.11.73 (~Irmingard)"
+#date_version ="June 24, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2156,10 +2156,22 @@ def indicators(request, bdd):
     except: # (division by zero)
         pass
 
-    qs =[Library.objects.using(bdd).get(name ="checker")]
+#    qs =[Library.objects.using(bdd).get(name ="checker")]
+    check2, check4 =0, 0
+    sid2, sid4 =[], []
+    for it in ItemRecord.objects.using(bdd).filter(status =2):
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not it.sid in sid2:
+            check2 +=1
+            sid2.append(it.sid)
+    for it in ItemRecord.objects.using(bdd).filter(status =4):
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid4:
+            check4 +=1
+            sid4.append(it.sid)
+    check = check2 + check4
+    qs =[]
+    x6, y6 =["admin", "checker"], [fail, check]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
         qs.append(l)
-    x6, y6 =[], []
     for libmt in qs:
         x6.append(libmt.name)
         y6.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) + list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
