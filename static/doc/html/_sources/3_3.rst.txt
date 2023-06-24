@@ -71,7 +71,7 @@ Contrairement aux instructeurs les vérificateurs ne sont pas en mesure de véri
             #. Les éléments portés en exception ou améliorables font bien partie du segment décrit dans le champ ‘segment’ de la ligne considérée.
             #. Les instructions sont bien ordonnées (ordre chronologique de publication).
             #. Les instructions ne se chevauchent pas
-                .. note:: Il peut arriver que les bords d’un segment relié se recouvrent du fait que les volumes ne comprennent pas les mêmes fascicules d’une collection contributrice à une autre. Dans, ces cas il peut-être préférable de considérer ces bords comme défectueux s’ils peuvent être remplacés les fascicules couvrant la période dans l’idée de les relier à terme. Ceci est un problème délicat dont la solution relève de la politique de conservation.
+                .. note:: Il peut arriver que les bords d’un segment relié se recouvrent du fait que les volumes ne comprennent pas les mêmes fascicules d’une collection contributrice à une autre. Dans ces cas il peut-être préférable de considérer ces bords comme défectueux s’ils peuvent être remplacés par les fascicules couvrant la période (dans l’idée de les relier à terme). Ceci est un problème délicat dont la solution relève de la politique de conservation.
             #. Le champ ‘Bibliothèque remédiée’ a été correctement utilisé (doit correspondre à la bibliothèque ayant précédemment porté l’élément en ‘exception’ ou en ‘améliorable’)
             #. L’ensemble des lignes est lisible (cohérence de la formulation provenant des différents instructeurs)
 

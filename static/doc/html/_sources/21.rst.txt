@@ -1,2 +1,0 @@
-Rôles des administrateurs de projet (= administrateurs de la base de données du projet)
-=======================================================================================

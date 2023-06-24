@@ -1,8 +1,8 @@
-epl_version ="v2.10.74 (Judith)"
+epl_version ="v2.10.75 (Judith)"
 date_version ="June 24, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.74 (~Irmingard)"
-date_version ="June 24, 2023"
+#epl_version ="v2.11.75 (~Irmingard)"
+#date_version ="June 24, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2161,7 +2161,7 @@ def indicators(request, bdd):
         if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2:
             sid2.append(it.sid)
     for it in ItemRecord.objects.using(bdd).filter(status =4):
-        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =5)) and not it.sid in sid4:
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid4:
             sid4.append(it.sid)
     check = len(sid2) + len(sid4)
     qs =[]
