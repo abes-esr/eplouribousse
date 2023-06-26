@@ -1,8 +1,8 @@
-epl_version ="v2.10.78 (Judith)"
+epl_version ="v2.10.79 (Judith)"
 date_version ="June 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.78 (~Irmingard)"
-date_version ="June 26, 2023"
+#epl_version ="v2.11.79 (~Irmingard)"
+#date_version ="June 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2139,7 +2139,7 @@ def indicators(request, bdd):
     gj = round(10000*fullinstr/realcand)/100
     gk = 100 - gj
     x3=[gj, gk]
-    uri3 = get_pie(x3, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gj), _("reste / départ") + " ({} %)".format(gk)])
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({} %)".format(gj), _("à instruire") + " ({} %)".format(gk)])
 
 
     x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
@@ -2418,7 +2418,7 @@ def indicators_x(request, bdd, lid):
     gj = round(10000*fullinstr/realcand)/100
     gk = 100 - gj
     x3=[gj, gk]
-    uri3 = get_pie(x3, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gj), _("reste / départ") + " ({} %)".format(gk)])
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({} %)".format(gj), _("à instruire") + " ({} %)".format(gk)])
 
     x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
     uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({} %)".format(percentdupl), _("triplons") + " ({} %)".format(percenttripl), _("quadruplons") + " ({} %)".format(percentqudrpl), _("plus") + " ({} %)".format(percentpluspl)])
