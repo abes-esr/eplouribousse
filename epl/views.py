@@ -1,8 +1,8 @@
 epl_version ="v2.10.77 (Judith)"
 date_version ="June 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.77 (~Irmingard)"
-date_version ="June 26, 2023"
+#epl_version ="v2.11.77 (~Irmingard)"
+#date_version ="June 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2359,8 +2359,7 @@ def indicators_x(request, bdd, lid):
         rkright += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid).exclude(rank =99).exclude(rank =0))
 
         #Number of exclusions (collections) :
-        if len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid)) - len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0)) ==1:
-            exclus += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0))
+        exclus += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0))
 
         #Number of collections :
         coll += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid))
