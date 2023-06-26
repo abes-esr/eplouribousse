@@ -1,8 +1,8 @@
-epl_version ="v2.10.76 (Judith)"
+epl_version ="v2.10.77 (Judith)"
 date_version ="June 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.76 (~Irmingard)"
-date_version ="June 26, 2023"
+#epl_version ="v2.11.77 (~Irmingard)"
+#date_version ="June 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2320,11 +2320,11 @@ def indicators_x(request, bdd, lid):
                     snone.append(i.sid)
         except:
             pass
+
     #Number of descarded ressources for exclusion reason :
-    for i in ItemRecord.objects.using(bdd).filter(rank =0):
+    for i in collection:
         try:
-            itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
-            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) ==1 and not i.sid in discard:
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid)) - len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)) ==0 and not i.sid in discard:
                 discard.append(i.sid)
         except:
             pass
