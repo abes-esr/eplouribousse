@@ -1,8 +1,8 @@
-epl_version ="v2.10.75 (Judith)"
-date_version ="June 24, 2023"
+epl_version ="v2.10.76 (Judith)"
+date_version ="June 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.75 (~Irmingard)"
-date_version ="June 24, 2023"
+#epl_version ="v2.11.76 (~Irmingard)"
+#date_version ="June 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2120,7 +2120,7 @@ def indicators(request, bdd):
     stocomp = len(stocomp)
 
     #Number of real candidates (ressources)
-    realcand =stocomp + incomp + fullinstr
+    realcand =cand - discard
 
     #Absolute achievement :
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
@@ -2131,17 +2131,18 @@ def indicators(request, bdd):
     x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
-    gh = fullinstr + discard
-    gi = cand - gh
+    gh = round(10000*(fullinstr + discard)/cand)/100
+    gi = 100 - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gh), _("reste / départ") + " ({} %)".format(gi)])
     
-    gj = realcand - fullinstr
-    x3 =[fullinstr, gj]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruites") + " ({})".format(fullinstr), _("reste") + " ({})".format(gj)])
+    gj = round(100 - (10000*fullinstr/realcand)/100)
+    gk = 100 - gj
+    x3 =[gk, gj]
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruites") + " ({} %)".format(gj), _("reste") + " ({} %)".format(gk)])
 
-    x4 =[dupl, tripl, qudrpl, pluspl]
-    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
+    x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
+    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({} %)".format(percentdupl), _("triplons") + " ({} %)".format(percenttripl), _("quadruplons") + " ({} %)".format(percentqudrpl), _("plus") + " ({} %)".format(percentpluspl)])
     
     qs =[Library.objects.using(bdd).get(name ="checker")]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -2216,7 +2217,7 @@ def indicators_x(request, bdd, lid):
     libname = Library.objects.using(bdd).get(lid =lid).name
 
     #Indicators within a collection :
-    collection =ItemRecord.objects.using(bdd).filter(lid = lid)
+    collection =ItemRecord.objects.using(bdd).filter(lid = lid).exclude(rank =0)
     #Number of rankings (exclusions included) :
     rkall =0
     #Number of rankings (exclusions excluded) :
@@ -2346,7 +2347,7 @@ def indicators_x(request, bdd, lid):
     isol = len(isol)
     s1st = len(s1st)
     snone = len(snone)
-    discard = len(discard)
+    discard = len(discard) + len(ItemRecord.objects.using(bdd).filter(lid = lid, rank =0))
     stocomp = len(stocomp)
 
     for clmt in collection:
@@ -2358,7 +2359,8 @@ def indicators_x(request, bdd, lid):
         rkright += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid).exclude(rank =99).exclude(rank =0))
 
         #Number of exclusions (collections) :
-        exclus += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0))
+        if len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid)) - len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0)) ==1:
+            exclus += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =0))
 
         #Number of collections :
         coll += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid))
@@ -2383,9 +2385,12 @@ def indicators_x(request, bdd, lid):
 
         #Number of instructions :
         instr += len(Instruction.objects.using(bdd).filter(sid = clmt.sid, ))
+        
 
     #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
     incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
+    
+    exclus += len(ItemRecord.objects.using(bdd).filter(lid = lid, rank =0))
 
     ctotal = c1st + cnone
     stotal = s1st + snone
@@ -2396,7 +2401,7 @@ def indicators_x(request, bdd, lid):
     #Number of real candidates (collections)
     realcandcoll =candcoll - (exclus + discard)
     #Number of real candidates (ressources)
-    realcand =stocomp + incomp + fullinstr
+    realcand = cand - discard
     #Absolute achievement :
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
     #Relative achievement :
@@ -2405,17 +2410,18 @@ def indicators_x(request, bdd, lid):
     x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
-    gh = fullinstr + discard
-    gi = cand - gh
+    gh = round(10000*(fullinstr + discard)/cand)/100
+    gi = 100 - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gh), _("reste / départ") + " ({} %)".format(gi)])
     
-    gj = realcand - fullinstr
-    x3 =[fullinstr, gj]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruites") + " ({})".format(fullinstr), _("reste") + " ({})".format(gj)])
+    gj = round(100 - (10000*fullinstr/realcand)/100)
+    gk = 100 - gj
+    x3 =[gk, gj]
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruites") + " ({} %)".format(gj), _("reste") + " ({} %)".format(gk)])
 
-    x4 =[dupl, tripl, qudrpl, pluspl]
-    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
+    x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
+    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({} %)".format(percentdupl), _("triplons") + " ({} %)".format(percenttripl), _("quadruplons") + " ({} %)".format(percentqudrpl), _("plus") + " ({} %)".format(percentpluspl)])
     
 #    qs =[Library.objects.using(bdd).get(name ="checker")]
 #    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
