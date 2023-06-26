@@ -1,8 +1,8 @@
-epl_version ="v2.10.79 (Judith)"
+epl_version ="v2.10.80 (Judith)"
 date_version ="June 26, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.79 (~Irmingard)"
-date_version ="June 26, 2023"
+#epl_version ="v2.11.80 (~Irmingard)"
+#date_version ="June 26, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2132,12 +2132,12 @@ def indicators(request, bdd):
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
     gh = round(10000*(fullinstr + discard)/cand)/100
-    gi = 100 - gh
+    gi = round(100 - gh, 2)
     x2 =[gh, gi]
     uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gh), _("reste / départ") + " ({} %)".format(gi)])
     
     gj = round(10000*fullinstr/realcand)/100
-    gk = 100 - gj
+    gk = round(100 - gj, 2)
     x3=[gj, gk]
     uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({} %)".format(gj), _("à instruire") + " ({} %)".format(gk)])
 
@@ -2411,12 +2411,12 @@ def indicators_x(request, bdd, lid):
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
     gh = round(10000*(fullinstr + discard)/cand)/100
-    gi = 100 - gh
+    gi = round(100 - gh, 2)
     x2 =[gh, gi]
     uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gh), _("reste / départ") + " ({} %)".format(gi)])
     
     gj = round(10000*fullinstr/realcand)/100
-    gk = 100 - gj
+    gk = round(100 - gj, 2)
     x3=[gj, gk]
     uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({} %)".format(gj), _("à instruire") + " ({} %)".format(gk)])
 
