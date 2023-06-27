@@ -1,8 +1,8 @@
-epl_version ="v2.10.80 (Judith)"
-date_version ="June 26, 2023"
+epl_version ="v2.10.81 (Judith)"
+date_version ="June 27, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.80 (~Irmingard)"
-date_version ="June 26, 2023"
+#epl_version ="v2.11.81 (~Irmingard)"
+#date_version ="June 27, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5085,7 +5085,13 @@ def statadmin(request, bdd, id):
 
     form = ItemRecordStatusForm(request.POST or None)
     if request.method =="POST" and form.is_valid():
-        stat = form.cleaned_data['stat']
+        stat = int(form.cleaned_data['stat'])
+        if stat ==1 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =1)):
+            messages.info(request, _("échec : le satut 1 est déjà attribué à un autre enregistrement."))
+            return current_status(request, bdd, sid, "999999999")
+        if stat ==3 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =3)):
+            messages.info(request, _("échec : le satut 3 est déjà attribué à un autre enregistrement."))
+            return current_status(request, bdd, sid, "999999999")
         itemrec.status =stat
         itemrec.save(using=bdd)
         ###############
@@ -5131,7 +5137,7 @@ def statadmin(request, bdd, id):
                 if len(dest):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
         ###############
-        return current_status(request, bdd, sid, bib.lid)
+        return current_status(request, bdd, sid, "999999999")
 
     return render(request, 'epl/statadmin.html', locals())
 
