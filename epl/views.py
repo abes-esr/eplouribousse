@@ -1,8 +1,8 @@
-epl_version ="v2.10.81 (Judith)"
-date_version ="June 27, 2023"
+epl_version ="v2.10.82 (Judith)"
+date_version ="June 28, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.81 (~Irmingard)"
-date_version ="June 27, 2023"
+#epl_version ="v2.11.82 (~Irmingard)"
+#date_version ="June 28, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -78,6 +78,20 @@ def get_scatter(x, y, titre, absc, ordo):
     plt.xlabel(absc)
     plt.ylabel(ordo)
     plt.tight_layout()
+    graph = get_graph()
+    return graph
+
+def multipleplot(x, y1, y3, y13, titre1, titre3, titre13, absc, ordo, titre):
+    # Note that even in the OO-style, we use `.pyplot.figure` to create the Figure.
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.scatter(x, y1, label=titre1)  # Plot some data on the axes.
+    ax.scatter(x, y3, label=titre3)  # Plot more data on the axes...
+    ax.scatter(x, y13, label=titre13)  # ... and some more.
+    ax.set_xlabel(absc)  # Add an x-label to the axes.
+    ax.set_ylabel(ordo)  # Add a y-label to the axes.
+    ax.set_title(titre)  # Add a title to the axes.
+    ax.legend()  # Add a legend.
+    ax.grid(True)
     graph = get_graph()
     return graph
 
@@ -2036,43 +2050,34 @@ def indicators(request, bdd):
 
     #Number of potential candidates :
     cand =[]
+    dupl =[]
+    tripl =[]
+    qudrpl =[]
+    isol =[]
     for e in ItemRecord.objects.using(bdd).all():
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
             cand.append(e.sid)
-    cand = len(cand)
-
-    #from which strict duplicates :
-    dupl =[]
-    for e in ItemRecord.objects.using(bdd).all():
+        #from which strict duplicates :
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==2 and not e.sid in dupl:
             dupl.append(e.sid)
-    dupl = len(dupl)
-    percentdupl = round(100*dupl/cand)
-
-    #triplets :
-    tripl =[]
-    for e in ItemRecord.objects.using(bdd).all():
+        #triplets :
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==3 and not e.sid in tripl:
             tripl.append(e.sid)
-    tripl = len(tripl)
-    percenttripl = round(100*tripl/cand)
-
-    #quadruplets :
-    qudrpl =[]
-    for e in ItemRecord.objects.using(bdd).all():
+        #quadruplets :
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==4 and not e.sid in qudrpl:
             qudrpl.append(e.sid)
-    qudrpl = len(qudrpl)
-    percentqudrpl = round(100*qudrpl/cand)
-    
-    pluspl =cand - (dupl + tripl + qudrpl)
-    percentpluspl = round(100*pluspl/cand)
-
-    #Unicas :
-    isol =[]
-    for e in ItemRecord.objects.using(bdd).all():
+        #Unicas :
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==1 and not e.sid in isol:
             isol.append(e.sid)
+    cand = len(cand)
+    dupl = len(dupl)
+    percentdupl = round(100*dupl/cand)
+    tripl = len(tripl)
+    percenttripl = round(100*tripl/cand)
+    qudrpl = len(qudrpl)
+    percentqudrpl = round(100*qudrpl/cand)
+    pluspl =cand - (dupl + tripl + qudrpl)
+    percentpluspl = round(100*pluspl/cand)
     isol = len(isol)
 
     #candidate collections :
@@ -2104,7 +2109,13 @@ def indicators(request, bdd):
     fullinstr = len(ItemRecord.objects.using(bdd).filter(rank =1, status =5))
 
     #Number of failing sheets :
-    fail = len(ItemRecord.objects.using(bdd).filter(status =6, rank =1))
+    fail1, fail2 =0, 0
+    for i in ItemRecord.objects.using(bdd).filter(status =6, rank =1):
+        if len(Instruction.objects.using(bdd).filter(sid = i.sid, name = "checker")):
+            fail2 +=1
+        else:
+            fail1 +=1
+    fail = fail1 + fail2
 
     #Number of instructions :
     instr = len(Instruction.objects.using(bdd).all())
@@ -2158,6 +2169,23 @@ def indicators(request, bdd):
     except: # (division by zero)
         pass
 
+#    sid2, sid4 =[], []
+#    for it in ItemRecord.objects.using(bdd).filter(status =2):
+#        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2:
+#            sid2.append(it.sid)
+#    for it in ItemRecord.objects.using(bdd).filter(status =4):
+#        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid4:
+#            sid4.append(it.sid)
+#    check = len(sid2) + len(sid4)
+#    qs =[]
+#    x6, y6 =["admin", "checker"], [fail, check]
+#    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
+#        qs.append(l)
+#    for libmt in qs:
+#        x6.append(libmt.name)
+#        y6.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) + list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+#    uri6 =get_scatter(x6, y6, _(""), _(""), _("fiches en attente d'instr."))
+
     sid2, sid4 =[], []
     for it in ItemRecord.objects.using(bdd).filter(status =2):
         if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2:
@@ -2167,13 +2195,15 @@ def indicators(request, bdd):
             sid4.append(it.sid)
     check = len(sid2) + len(sid4)
     qs =[]
-    x6, y6 =["admin", "checker"], [fail, check]
+    x6, y61, y63, y613 =["admin", "checker"], [fail1, len(sid2)], [fail2, len(sid4)], [fail, check] 
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
         qs.append(l)
     for libmt in qs:
         x6.append(libmt.name)
-        y6.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) + list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
-    uri6 =get_scatter(x6, y6, _(""), _(""), _("fiches en attente d'instr."))
+        y61.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))))
+        y63.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+        y613.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))) + len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("instructions à faire") )
 
     qs =[]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -2246,7 +2276,7 @@ def indicators_x(request, bdd, lid):
     #Number of ressources completely instructed :
     fullinstr =0
     #Number of failing sheets :
-    fail =0
+    fail1, fail2 =0, 0
     #Number of instructions :
     instr =0
     #Ressources pour lesquelles le positionnement doit être complété (cas d'arbitrages inclus)
@@ -2381,11 +2411,15 @@ def indicators_x(request, bdd, lid):
         fullinstr += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, rank =1, status =5))
 
         #Number of failing sheets :
-        fail += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, status =6, rank =1))
+        if Instruction.objects.using(bdd).filter(sid = clmt.sid, bound ="x"):
+            fail1 += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, status =6, rank =1))
+        else:
+            fail2 += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, status =6, rank =1))
 
         #Number of instructions :
         instr += len(Instruction.objects.using(bdd).filter(sid = clmt.sid, ))
-        
+    
+    fail = fail1 + fail2
 
     #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
     incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
@@ -2423,24 +2457,24 @@ def indicators_x(request, bdd, lid):
     x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
     uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({} %)".format(percentdupl), _("triplons") + " ({} %)".format(percenttripl), _("quadruplons") + " ({} %)".format(percentqudrpl), _("plus") + " ({} %)".format(percentpluspl)])
     
-#    qs =[Library.objects.using(bdd).get(name ="checker")]
-#    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
-#        qs.append(l)
-#    x5, y5 =[], []
-#    for libmt in qs:
-#        x5.append(libmt.name)
-#        y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
-##    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
-#    uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
-#
-#    qs =[Library.objects.using(bdd).get(name ="checker")]
-#    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
-#        qs.append(l)
-#    x6, y6 =[], []
-#    for libmt in qs:
-#        x6.append(libmt.name)
-#        y6.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) + list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
-#    uri6 =get_scatter(x6, y6, _(""), _(""), _("fiches en attente d'instr."))
+    sid2, sid4 =[], []
+    for it in ItemRecord.objects.using(bdd).filter(status =2):
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2:
+            sid2.append(it.sid)
+    for it in ItemRecord.objects.using(bdd).filter(status =4):
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid4:
+            sid4.append(it.sid)
+    check = len(sid2) + len(sid4)
+    qs =[]
+    x6, y61, y63, y613 =["admin", "checker"], [fail1, len(sid2)], [fail2, len(sid4)], [fail, check] 
+    for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
+        qs.append(l)
+    for libmt in qs:
+        x6.append(libmt.name)
+        y61.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))))
+        y63.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+        y613.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))) + len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("instructions à faire") )
 
     return render(request, 'epl/indicators_x.html', locals())
 
@@ -5091,6 +5125,12 @@ def statadmin(request, bdd, id):
             return current_status(request, bdd, sid, "999999999")
         if stat ==3 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =3)):
             messages.info(request, _("échec : le satut 3 est déjà attribué à un autre enregistrement."))
+            return current_status(request, bdd, sid, "999999999")
+        if stat ==2 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name, bound = "x")):
+            messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
+            return current_status(request, bdd, sid, "999999999")
+        if stat ==4 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name, bound =" ")):
+            messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
             return current_status(request, bdd, sid, "999999999")
         itemrec.status =stat
         itemrec.save(using=bdd)
