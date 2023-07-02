@@ -1,8 +1,8 @@
-epl_version ="v2.10.82 (Judith)"
-date_version ="June 28, 2023"
+epl_version ="v2.10.83 (Judith)"
+date_version ="July 2, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.82 (~Irmingard)"
-date_version ="June 28, 2023"
+#epl_version ="v2.11.83 (~Irmingard)"
+#date_version ="July 2, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -416,6 +416,10 @@ def adminbase(request, bdd):
     version =epl_version
     url ="/" + bdd + "/adminbase"
     private =Proj_setting.objects.using(bdd)[0].prv
+    
+    # gestion des fiches erronnées
+    faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6)
+    faulty =len(faulty_list)
 
     # gestion des alertes (début)
     current_alerts =[] #initialzing
@@ -3001,10 +3005,19 @@ def takerank(request, bdd, sid, lid):
     # Library data :
     lib = Library.objects.using(bdd).get(lid = lid)
 
-    periscope = "https://periscope.sudoc.fr/?ppnviewed=" + str(sid) + "&orderby=SORT_BY_PCP&collectionStatus=&tree="
+#    periscope = "https://periscope.sudoc.fr/?ppnviewed=" + str(sid) + "&orderby=SORT_BY_PCP&collectionStatus=&tree="
+#    for i in r_itemlist[:-1]:
+#        periscope = periscope + i.lid + "%2C"
+#    periscope = periscope + r_itemlist[-1].lid
+    periscope = "https://periscope.sudoc.fr/Recherche"
+    rcrlst, sidlst =[], [sid]
     for i in r_itemlist[:-1]:
-        periscope = periscope + i.lid + "%2C"
-    periscope = periscope + r_itemlist[-1].lid
+        rcrlst.append(i.lid)
+    json ="""
+    {"criteres":[{"type":"CriterionPpn","bloc_operator":"OU","ppn":
+    """ + str(sidlst) + """},{"type":"CriterionRcr","bloc_operator":"ET","rcr":""" + str(rcrlst) + ""","rcr_operator":["OU","OU","OU","OU","OU"]}],"tri":[],"facettes":[{"zone":"DOCUMENT_TYPE"},{"zone":"support_type"},{"zone":"country"},{"zone":"language"}],"filtresFacettes":[{"zone":"document_type","valeurs":[]},{"zone":"support_type","valeurs":[]},{"zone":"country","valeurs":[]},{"zone":"language","valeurs":[]}]}    
+    """
+
 
     return render(request, 'epl/ranking.html', locals())
 
