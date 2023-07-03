@@ -115,7 +115,7 @@
       <p>{% trans "Le cas échéant, motif d'exclusion" %} : {{ f.excl }}</p>
       <p>{% trans "Sinon, rang de votre collection" %} : {{ f.rank }}</p>
       <p>{% trans "Choisissez 1 pour la collection mère ; 2, 3 ou 4 selon l'importance de votre collection ou d'autres raisons ..." %}
-<!--        <a href="https://periscope.sudoc.fr/Recherche" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a> copier/coller l'équation json suivante : {{ json }}-->
+        <a href="{{ periscope }}" title= "Outil de comparaison des collections de périodiques (mis à disposition par l'Abes)" target="_blank">Périscope</a></p>
           
           {% if not signal == 0 %}
           ou <a href="
