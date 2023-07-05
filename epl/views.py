@@ -1,8 +1,8 @@
-epl_version ="v2.10.84 (Judith)"
-date_version ="July 3, 2023"
+epl_version ="v2.10.85 (Judith)"
+date_version ="July 6, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.84 (~Irmingard)"
-date_version ="July 3, 2023"
+#epl_version ="v2.11.85 (~Irmingard)"
+#date_version ="July 6, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2463,10 +2463,10 @@ def indicators_x(request, bdd, lid):
     
     sid2, sid4 =[], []
     for it in ItemRecord.objects.using(bdd).filter(status =2):
-        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2:
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2 and len(ItemRecord.objects.using(bdd).filter(sid =it.sid, lid = lid).exclude(rank =0)):
             sid2.append(it.sid)
     for it in ItemRecord.objects.using(bdd).filter(status =4):
-        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid4:
+        if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid4 and len(ItemRecord.objects.using(bdd).filter(sid =it.sid, lid = lid).exclude(rank =0)):
             sid4.append(it.sid)
     check = len(sid2) + len(sid4)
     qs =[]
@@ -2475,9 +2475,17 @@ def indicators_x(request, bdd, lid):
         qs.append(l)
     for libmt in qs:
         x6.append(libmt.name)
-        y61.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))))
-        y63.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
-        y613.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))) + len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
+        igrec61, igrec63, igrec613 = 0, 0, 0
+        for kl in ItemRecord.objects.using(bdd).filter(lid = lid).exclude(rank =0):
+            if len(ItemRecord.objects.using(bdd).filter(sid = kl.sid, lid =libmt.lid, status =1)):
+                igrec61 +=1
+                igrec613 +=1
+            if len(ItemRecord.objects.using(bdd).filter(sid = kl.sid, lid =libmt.lid, status =3)):
+                igrec63 +=1
+                igrec613 +=1
+        y61.append(igrec61)
+        y63.append(igrec63)
+        y613.append(igrec613)
     uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("instructions à faire") )
 
     return render(request, 'epl/indicators_x.html', locals())
