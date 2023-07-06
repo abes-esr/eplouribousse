@@ -1,8 +1,8 @@
-epl_version ="v2.10.86 (Judith)"
+epl_version ="v2.10.87 (Judith)"
 date_version ="July 6, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.86 (~Irmingard)"
-date_version ="July 6, 2023"
+#epl_version ="v2.11.87 (~Irmingard)"
+#date_version ="July 6, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5143,7 +5143,7 @@ def statadmin(request, bdd, id):
         if stat ==2 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name, bound = "x")):
             messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
             return current_status(request, bdd, sid, "999999999")
-        if stat ==4 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name, bound =" ")):
+        if stat ==4 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name).exclude(bound ="x")):
             messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
             return current_status(request, bdd, sid, "999999999")
         itemrec.status =stat
