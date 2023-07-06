@@ -152,12 +152,6 @@ PHASE_CHOICES = (
     ('bound', _("Reliés")),
     ('not bound', _("Non reliés")),
 )
-#
-#class ReplyMail(models.Model):
-#    """Model for general sender : No-reply or webmaster"""
-#    sendermail = models.EmailField('email')
-#    def __str__(self):
-#        return self.sendermail
 
 class Utilisateur(models.Model):
     """Model for users"""
