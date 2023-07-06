@@ -1,13 +1,15 @@
-epl_version ="v2.10.85 (Judith)"
+epl_version ="v2.10.86 (Judith)"
 date_version ="July 6, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.85 (~Irmingard)"
-date_version ="July 6, 2023"
+#epl_version ="v2.11.86 (~Irmingard)"
+#date_version ="July 6, 2023"
 
 
 from django.shortcuts import render, redirect
 
 from .models import *
+
+from .proj_models import *
 
 from .forms import *
 

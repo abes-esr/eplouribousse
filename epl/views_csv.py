@@ -1,6 +1,7 @@
 import csv
 from django.http import HttpResponse
 from .models import *
+from .proj_models import *
 from django.utils.translation import ugettext as _
 import os
 from django.contrib.auth.models import User

@@ -3,6 +3,7 @@ Ici se trouvent les décorateurs que j'ai créés.
 """
 
 from .models import *
+from .proj_models import *
 from django.utils.translation import ugettext as _
 
 #ce que j'ajoute :

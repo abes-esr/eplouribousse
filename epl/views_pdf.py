@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .models import *
+from .proj_models import *
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, landscape

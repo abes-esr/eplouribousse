@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import *
+from .proj_models import *
 
 from django.utils.translation import ugettext_lazy as _
 
