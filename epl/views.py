@@ -1,8 +1,8 @@
-epl_version ="v2.10.88 (Judith)"
+epl_version ="v2.10.89 (Judith)"
 date_version ="July 7, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.88 (~Irmingard)"
-date_version ="July 7, 2023"
+#epl_version ="v2.11.89 (~Irmingard)"
+#date_version ="July 7, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2315,7 +2315,6 @@ def indicators_x(request, bdd, lid):
             if value !=0:
                 dict[exclusion] =value
 
-#    try:
     #Candidates and types
     for e in ItemRecord.objects.using(bdd).all():
         try:
@@ -2370,7 +2369,7 @@ def indicators_x(request, bdd, lid):
     for i in ItemRecord.objects.using(bdd).filter(rank =99):
         try:
             itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
-            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and not i.sid in stocomp:
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)) and len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and not i.sid in stocomp:
                 stocomp.append(i.sid)
         except:
             pass
