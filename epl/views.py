@@ -1,8 +1,8 @@
-epl_version ="v2.10.89 (Judith)"
-date_version ="July 7, 2023"
+epl_version ="v2.10.90 (Judith)"
+date_version ="July 8, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.89 (~Irmingard)"
-date_version ="July 7, 2023"
+#epl_version ="v2.11.90 (~Irmingard)"
+#date_version ="July 8, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2036,7 +2036,7 @@ def indicators(request, bdd):
                 s1st.append(i.sid)
     s1st = len(s1st)
 
-    #Collections involved in arbitration for 1st rank not claimed by any of the libraries
+    #Collections and ressources involved in arbitration for 1st rank not claimed by any of the libraries
     cnone, snone =0,[]
     for i in ItemRecord.objects.using(bdd).exclude(rank =0).exclude(rank =1).exclude(rank =99):
         if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and \
@@ -2047,7 +2047,7 @@ def indicators(request, bdd):
                 snone.append(i.sid)
     snone = len(snone)
 
-    #Collections involved in arbitration for any of the two reasons and number of serials concerned
+    #Collections and ressources involved in arbitration for any of the two reasons and number of serials concerned
     ctotal = c1st + cnone
     stotal = s1st + snone
 
@@ -2209,7 +2209,7 @@ def indicators(request, bdd):
         y61.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))))
         y63.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
         y613.append(len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1))) + len(list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3))))
-    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("instructions à faire") )
+    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("fiches à traiter") )
 
     qs =[]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -2254,7 +2254,7 @@ def indicators_x(request, bdd, lid):
     libname = Library.objects.using(bdd).get(lid =lid).name
 
     #Indicators within a collection :
-    collection =ItemRecord.objects.using(bdd).filter(lid = lid).exclude(rank =0)
+    collection =ItemRecord.objects.using(bdd).filter(lid = lid)
     #Number of rankings (exclusions included) :
     rkall =0
     #Number of rankings (exclusions excluded) :
@@ -2263,9 +2263,9 @@ def indicators_x(request, bdd, lid):
     exclus =0
     #Exclusions details :
     dict ={}
-    #Collections involved in arbitration for claiming 1st rank and number of serials concerned :
+    #Collections and ressources involved in arbitration for claiming 1st rank and number of serials concerned :
     c1st, s1st =0,[]
-    #Collections involved in arbitration for 1st rank not claimed by any of the libraries :
+    #Collections and ressources involved in arbitration for 1st rank not claimed by any of the libraries :
     cnone, snone =0,[]
     #Number of collections :
     coll =0
@@ -2336,21 +2336,21 @@ def indicators_x(request, bdd, lid):
                 isol.append(e.sid)
         except:
             pass
-    #Collections involved in arbitration for claiming 1st rank and number of serials concerned
+    #Collections and ressources involved in arbitration for claiming 1st rank and number of serials concerned
     for i in ItemRecord.objects.using(bdd).filter(rank =1, status =0):
         try:
             itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
-            if len(ItemRecord.objects.using(bdd).filter(rank =1, sid =i.sid)) >1:
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)) and len(ItemRecord.objects.using(bdd).filter(rank =1, sid =i.sid)) >1:
                 c1st +=1
                 if i.sid not in s1st:
                     s1st.append(i.sid)
         except:
             pass
-    #Collections involved in arbitration for 1st rank not claimed by any of the libraries
+    #Collections and ressources involved in arbitration for 1st rank not claimed by any of the libraries
     for i in ItemRecord.objects.using(bdd).exclude(rank =0).exclude(rank =1).exclude(rank =99):
         try:
             itctrl =ItemRecord.objects.using(bdd).get(lid =lid, sid =i.sid)
-            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =1)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1:
+            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)) and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =1)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1:
                 cnone +=1
                 if i.sid not in snone:
                     snone.append(i.sid)
@@ -2359,11 +2359,10 @@ def indicators_x(request, bdd, lid):
 
     #Number of descarded ressources for exclusion reason :
     for i in collection:
-        try:
-            if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid)) - len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)) ==0 and not i.sid in discard:
-                discard.append(i.sid)
-        except:
-            pass
+        if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid = lid, rank =0)) and i.sid not in discard:
+            discard.append(i.sid)
+        elif len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) == len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid = lid)) and i.sid not in discard:
+            discard.append(i.sid)
 
     #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
     for i in ItemRecord.objects.using(bdd).filter(rank =99):
@@ -2384,7 +2383,7 @@ def indicators_x(request, bdd, lid):
     isol = len(isol)
     s1st = len(s1st)
     snone = len(snone)
-    discard = len(discard) + len(ItemRecord.objects.using(bdd).filter(lid = lid, rank =0))
+    discard = len(discard)
     stocomp = len(stocomp)
 
     for clmt in collection:
@@ -2488,7 +2487,7 @@ def indicators_x(request, bdd, lid):
         y61.append(igrec61)
         y63.append(igrec63)
         y613.append(igrec613)
-    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("instructions à faire") )
+    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _("bib."), _("nbr"), _("fiches à traiter") )
 
     return render(request, 'epl/indicators_x.html', locals())
 
