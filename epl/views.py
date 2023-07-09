@@ -1,8 +1,8 @@
-epl_version ="v2.10.90 (Judith)"
-date_version ="July 8, 2023"
+epl_version ="v2.10.91 (Judith)"
+date_version ="July 10, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.90 (~Irmingard)"
-date_version ="July 8, 2023"
+#epl_version ="v2.11.91 (~Irmingard)"
+#date_version ="July 10, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2094,10 +2094,13 @@ def indicators(request, bdd):
     for i in ItemRecord.objects.using(bdd).filter(rank =0):
         if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) ==1 and not i.sid in discard:
             discard.append(i.sid)
-    discard = len(discard)
-
+    realcandcoll, sidlist =0, []
     #Number of real candidates (collections)
-    realcandcoll =candcoll - (exclus + discard)
+    for r in ItemRecord.objects.using(bdd).all():
+        if r.sid not in sidlist and r.sid not in discard:
+            sidlist.append(r.sid)
+            realcandcoll +=len(ItemRecord.objects.using(bdd).filter(sid =r.sid).exclude(rank =0))
+    discard = len(discard)
 
     #Number of ressources whose instruction of bound elements may begin :
     bdmaybeg = len(ItemRecord.objects.using(bdd).filter(rank =1, status =1))
@@ -2297,6 +2300,8 @@ def indicators_x(request, bdd, lid):
     qudrpl =[]
     #Unicas :
     isol =[]
+    #Number of real candidates (collections)
+    realcandcoll =0
     
     #number of libraries :
     nlib = len(Library.objects.using(bdd).all())
@@ -2364,6 +2369,11 @@ def indicators_x(request, bdd, lid):
         elif len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) == len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid = lid)) and i.sid not in discard:
             discard.append(i.sid)
 
+    #Number of real candidates (collections)
+    for i in collection:
+        if i.sid not in discard:
+            realcandcoll +=len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0))
+
     #Ressources pour lesquelles le positionnement doit être complété (hors arbitrage)
     for i in ItemRecord.objects.using(bdd).filter(rank =99):
         try:
@@ -2422,14 +2432,12 @@ def indicators_x(request, bdd, lid):
             fail2 += len(ItemRecord.objects.using(bdd).filter(sid = clmt.sid, status =6, rank =1))
 
         #Number of instructions :
-        instr += len(Instruction.objects.using(bdd).filter(sid = clmt.sid, ))
+        instr += len(Instruction.objects.using(bdd).filter(sid = clmt.sid, ))        
     
     fail = fail1 + fail2
 
     #Fiches incomplètement instruites, défectueuses ou dont le traitement peut débuter mais n'a pas débuté
     incomp = bdmaybeg + bdonway + notbdmaybeg + notbdonway + fail
-    
-    exclus += len(ItemRecord.objects.using(bdd).filter(lid = lid, rank =0))
 
     ctotal = c1st + cnone
     stotal = s1st + snone
@@ -2437,8 +2445,6 @@ def indicators_x(request, bdd, lid):
     percentpluspl = round(100*pluspl/cand)
     #candidate collections :
     candcoll =coll - isol
-    #Number of real candidates (collections)
-    realcandcoll =candcoll - (exclus + discard)
     #Number of real candidates (ressources)
     realcand = cand - discard
     #Absolute achievement :
