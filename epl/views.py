@@ -1,8 +1,8 @@
-epl_version ="v2.10.91 (Judith)"
-date_version ="July 10, 2023"
+epl_version ="v2.11.92 (Judith)"
+date_version ="August 29, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.91 (~Irmingard)"
-date_version ="July 10, 2023"
+#epl_version ="v2.11.92 (~Irmingard)"
+#date_version ="August 29, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5140,10 +5140,10 @@ def statadmin(request, bdd, id):
     if request.method =="POST" and form.is_valid():
         stat = int(form.cleaned_data['stat'])
         if stat ==1 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =1)):
-            messages.info(request, _("échec : le satut 1 est déjà attribué à un autre enregistrement."))
+            messages.info(request, _("échec : le satut 1 est déjà attribué à un autre enregistrement (pensez à utiliser le statut 6 temporairement)"))
             return current_status(request, bdd, sid, "999999999")
         if stat ==3 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =3)):
-            messages.info(request, _("échec : le satut 3 est déjà attribué à un autre enregistrement."))
+            messages.info(request, _("échec : le satut 3 est déjà attribué à un autre enregistrement (pensez à utiliser le statut 6 temporairement)"))
             return current_status(request, bdd, sid, "999999999")
         if stat ==2 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name, bound = "x")):
             messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
@@ -5196,7 +5196,71 @@ def statadmin(request, bdd, id):
                 if len(dest):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
         ###############
-        return current_status(request, bdd, sid, "999999999")
+        try:
+            return current_status(request, bdd, sid, "999999999")
+        except:
+            messages.info(request, _("Suite à une action inattendue, les statuts ont été récupérés ou recalculés (modifiez si besoin)"))
+            itemlist = list(ItemRecord.objects.using(bdd).filter(sid = sid).exclude(rank =0).order_by("rank", 'pk'))
+            # Libraries are ordered by 'rank' and secondary by 'pk'
+            
+            if len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==0:
+                i =0
+                while i < len(itemlist):
+                    j =i +1
+                    if j < len(itemlist):
+                        if len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name)) and len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name)):
+                            itemlist[i].status =2
+                            itemlist[i].save(using=bdd)
+                        elif len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name)) and not len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name)):
+                            itemlist[i].status =1
+                            itemlist[i].save(using=bdd)
+                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
+                        else:
+                            itemlist[i].status =0
+                            itemlist[i].save(using=bdd)
+                    else:#i.e. for the last itemrecord
+                        if itemlist[-2].status ==2:
+                            itemlist[-1].status =1 #(par prudence)
+                            itemlist[-1].save(using=bdd)
+                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
+                        if itemlist[-2].status ==1:
+                            itemlist[-1].status =0
+                            itemlist[-1].save(using=bdd)
+                    i +=1
+            elif len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==1:
+                messages.info(request, _("(Notez que le cycle des reliés a déjà été validé)"))
+                i =0
+                while i < len(itemlist):
+                    j =i +1
+                    if j < len(itemlist):
+                        if len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name).exclude(bound ="x")) and len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name).exclude(bound ="x")):
+                            itemlist[i].status =4
+                            itemlist[i].save(using=bdd)
+                        elif len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name).exclude(bound ="x")) and not len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name).exclude(bound ="x")):
+                            itemlist[i].status =3
+                            itemlist[i].save(using=bdd)
+                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
+                        else:
+                            itemlist[i].status =2
+                            itemlist[i].save(using=bdd)
+                    else:#i.e. for the last itemrecord
+                        if itemlist[-2].status ==4:
+                            itemlist[-1].status =3 #(par prudence)
+                            itemlist[-1].save(using=bdd)
+                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
+                        if itemlist[-2].status ==3:
+                            itemlist[-1].status =2
+                            itemlist[-1].save(using=bdd)
+                    i +=1
+            else: #==2
+                messages.info(request, _("(Notez que le cycle des non-reliés a déjà été validé)"))
+                for i in itemlist:
+                    i.status =5
+                    i.save(using=bdd)
+            try:
+                return current_status(request, bdd, sid, "999999999")
+            except: # Normalement, cela ne devrait jamais survenir
+                return HttpResponse(_("Une erreur est survenue : contacez le développeur svp en lui indiquant le code d'erreur suivant : 123456789"))
 
     return render(request, 'epl/statadmin.html', locals())
 

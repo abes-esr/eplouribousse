@@ -55,10 +55,10 @@
         <p><center><font color= #FF0000 >{% trans "Attention : Instructions et statuts des rattachements sont dépendants ; n'oubliez pas de les administrer complémentairement" %}.</font></center></p>
         {% if ctrl == 1 %}
         <p><center><font color= #FF0000 >{% trans "A ce stade, les statuts doivent être modifiés en les passant dans cet ordre : 2, 0, 1" %}.</font></center></p>
-        <p><center><font color= #FF0000 >{% trans "(Le statut 1 ne peut être attribué qu'à un seul enregistrement)" %}.</font></center></p>
+        <p><center><font color= #FF0000 >{% trans "(Le statut 1 ne peut être attribué qu'à un seul enregistrement : pensez à utiliser le statut 6 temporairement)" %}.</font></center></p>
         {% elif ctrl == 2 %}
         <p><center><font color= #FF0000 >{% trans "A ce stade, les statuts doivent être modifiés en les passant dans cet ordre : 4, 3" %}.</font></center></p>
-        <p><center><font color= #FF0000 >{% trans "(Le statut 3 ne peut être attribué qu'à un seul enregistrement)" %}.</font></center></p>
+        <p><center><font color= #FF0000 >{% trans "(Le statut 3 ne peut être attribué qu'à un seul enregistrement : pensez à utiliser le statut 6 temporairement)" %}.</font></center></p>
         {% endif %}
 
         <form method="post">{% csrf_token %}
