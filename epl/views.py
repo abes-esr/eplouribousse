@@ -1,8 +1,8 @@
-epl_version ="v2.11.92 (Judith)"
-date_version ="August 29, 2023"
+epl_version ="v2.11.94 (Judith)"
+date_version ="August 30, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.92 (~Irmingard)"
-date_version ="August 29, 2023"
+#epl_version ="v2.11.95 (~Irmingard)"
+#date_version ="August 30, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -5259,8 +5259,12 @@ def statadmin(request, bdd, id):
                     i.save(using=bdd)
             try:
                 return current_status(request, bdd, sid, "999999999")
-            except: # Normalement, cela ne devrait jamais survenir
-                return HttpResponse(_("Une erreur est survenue : contacez le développeur svp en lui indiquant le code d'erreur suivant : 123456789"))
+            except:
+                messages.info(request, _("Vérifiez que la fiche ne présente pas de défaut d'instruction (en attendant, tous les statuts ont été passés à 6)"))
+                for i in itemlist:
+                    i.status =6
+                    i.save(using=bdd)
+                return current_status(request, bdd, sid, "999999999")
 
     return render(request, 'epl/statadmin.html', locals())
 
