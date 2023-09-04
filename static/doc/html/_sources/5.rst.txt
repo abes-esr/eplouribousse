@@ -103,34 +103,34 @@ Correction des enregistrements (instructions et rattachements)
 
 Le ou les administrateurs de la base sont alertés par mail automatiquement quand une incohérence est signalée dans la fiche d’instruction.
 
-L’administrateur de la base devra modifier les enregistrements incriminés depuis la page de type (host)/current_status/ppn/rcr accessible  en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) :
+L’administrateur de la base devra modifier les instructions incriminées depuis la page de type (host)/current_status/ppn/rcr accessible en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) ; il peut le faire de deux façons :
 
-Pour une ressource considérée (un sid) il repérera les enregistrements instructions concernés, identifiera l’anomalie et effectuera les corrections nécessaires en suivant récursivement le traitement.
+* Il corrige lui-même les instructions (par le lien d'enregistrement) en suivant récursivement le traitement puis il attribue le tour à la bonne bibliothèque (bouton "Attribuer le tour") Dans ce cas, l'application réalise les contrôles nécessaires et signale les éventuelles défauts à corriger avant de recalculer les statuts.
+* Dans certains cas, il vaut mieux carrément réinitialiser la fiche en début de cycle courant (bouton "Réinitialiser la fiche") Dans ce cas, l'application supprime les instructions du cycle en cours et recalcule les statuts.
 
-Ceci fait, il lui sera possible d’attribuer les nouveaux statuts aux enregistrements de rattachement (modèle : ItemRecord) et les passera de statut =6 à statut = 0, 1, 2, 3 ou 4 selon les considérations suivantes :
+Les boutons "Attribuer le tour" et "Réinitialiser la fiche" n'apparaissent que si les statuts sont à 6 (comme il se doit).
 
-S’il n’y a pas encore d’instruction admin, les statuts possibles ne peuvent être que 0, 1 ou 2.
+Dans les deux cas, vous êtes toujours redirigés vers la fiche de situation courante, ce qui vous permet de vérifier que tout a été correctement traité.
 
-S’il y a déjà une ligne d’instruction admin, les statuts possibles ne peuvent être que 2, 3 ou 4.
+.. image:: _static/corr_adm.png
 
-      0 : état initial (ce n’est pas encore au tour de la bibliothèque d’instruire)
-      1 : éléments reliés à instruire
-      2 : éléments reliés instruits
-      3 : éléments non reliés à instruire
-      4 : éléments non reliés instruits
+Pour une bonne lecture de la fiche de situation, il faut savoir que :
+
+* S’il n’y a pas encore d’instruction "checker", les statuts possibles ne peuvent être que 0, 1 ou 2.
+
+* S’il y a déjà une ligne d’instruction "checker", les statuts possibles ne peuvent être que 2, 3, 4, 5 ou 6.
+
+      * 0 : état initial (ce n’est pas encore au tour de la bibliothèque d’instruire)
+      * 1 : éléments reliés à instruire
+      * 2 : éléments reliés instruits
+      * 3 : éléments non reliés à instruire
+      * 4 : éléments non reliés instruits
+      * 5 : fiche complète correctement instruite (tous les enregistrements ont le statut 5)
+      * 6 : fiche erronée (tous les enregistrements ont le statut 6)
 
 Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord) Cet état passe à 6. L’administrateur peut faire les corrections à mesure, ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées.
 
-Pour information, le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.
-
-L’application ne propose que les statuts potentiels correspondant à la phase en cours. Il faut procéder dans l’ordre suivant : Modifier ou supprimer les lignes incriminées, modifier les statuts ensuite dans l’ordre suivant : 2, 0, 1 lors de la 1ère phase ; 4, 3 lors de la deuxième phase. Procéder dans un autre ordre pourrait avoir pour effet de générer un message indiquant faussement le tour d’instruire venu (ce n’est pas une cause de dysfonctionnement mais cela peut être gênant)
-
-
-**En cas de doute, le plus simple est encore de réinitialiser la fiche (retour au début de la phase courante avec calcul automatique des statuts)**
-
-**Ce travail de correction est facilité si l’administrateur de la base projet passe par l’outil de supervision ou par l’outil de recherche croisée :**
-
-.. image:: _static/corr_adm.png
+Le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.
 
 Contrôles
 ---------
@@ -154,7 +154,7 @@ L’authentification est requise automatiquement pour toute action sensible (mod
 
 En dehors de cela, l’authentification n’est pas nécessaire ; elle est toutefois possible : Dans ce cas, l’utilisateur aboutira directement à la page d’accueil du projet correspondant à son identifiant  (Si l’utilisateur est un administrateur, il restera sur la page courante).
 
-**Dans le cas où le mode privé est activé, l’authentification est nécessaire dans tous les cas, même pour accéder à la paged’accueil.**
+**Dans le cas où le mode privé est activé, l’authentification est nécessaire dans tous les cas, même pour accéder à la page d’accueil.**
 
 Confidentialité
 ---------------

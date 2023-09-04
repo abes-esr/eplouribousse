@@ -1,8 +1,8 @@
-epl_version ="v2.11.94 (Judith)"
-date_version ="August 30, 2023"
+epl_version ="v2.11.96 (Judith)"
+date_version ="September 4, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.95 (~Irmingard)"
-date_version ="August 30, 2023"
+#epl_version ="v2.11.97 (~Irmingard)"
+#date_version ="September 4, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -2690,7 +2690,7 @@ def search(request, bdd):
                 pklastone =0
 
             #Attachements :
-            attchmt =ItemRecord.objects.using(bdd).filter(sid =sid).order_by('-status')
+            attchmt =ItemRecord.objects.using(bdd).filter(sid =sid).order_by('rank')
             attlist = [(Library.objects.using(bdd).get(lid =element.lid).name, element) for element in attchmt]
 
             rklist = ItemRecord.objects.using(bdd).filter(sid =sid).order_by('rank', 'lid')
@@ -5093,7 +5093,7 @@ def current_status(request, bdd, sid, lid):
         pklastone =0
 
     #Attachements :
-    attchmt =ItemRecord.objects.using(bdd).filter(sid =sid).order_by('-status')
+    attchmt =ItemRecord.objects.using(bdd).filter(sid =sid).order_by("rank")
     attlist = [(Library.objects.using(bdd).get(lid =element.lid).name, element) for element in attchmt]
 
     rklist = ItemRecord.objects.using(bdd).filter(sid =sid).order_by('rank', 'lid')
@@ -5103,7 +5103,7 @@ def current_status(request, bdd, sid, lid):
 
 
 @login_required
-def statadmin(request, bdd, id):
+def statadmin(request, bdd, sid):
 
     #contrôle ici
     suffixe = "@" + str(bdd)
@@ -5116,157 +5116,167 @@ def statadmin(request, bdd, id):
 
     k =logstatus(request)
     version =epl_version
-    itemid =int(id)
-
-    try:
-        itemrec =ItemRecord.objects.using(bdd).get(id =itemid)
-        bib =Library.objects.using(bdd).get(lid =itemrec.lid)
-        sid =itemrec.sid
-    except:
-        return HttpResponse(_("Pas d'enregistrement correspondant"))
     
-    ctrl =0
-    if len(Instruction.objects.using(bdd).filter(sid = sid, name ='checker')):
-            STAT_CHOICES = ((6, 6), (4, 4), (3, 3),)
-            ctrl =2
-    else:
-        STAT_CHOICES = ((6, 6), (2, 2), (0, 0), (1, 1),)
-        ctrl =1
-        
-    class ItemRecordStatusForm(forms.Form):
-        stat = forms.ChoiceField(required = True, widget=forms.Select, choices= STAT_CHOICES, initial = itemrec.status, label =_("statut"))
+    itemrec =ItemRecord.objects.using(bdd).get(sid =sid, rank =1)
+    
+    #Ressource data :
+    itemlist = ItemRecord.objects.using(bdd).filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
+    # Library list ordered as in instruction order
+    liblist = []
+    for e in itemlist:
+        liblist.append(Library.objects.using(bdd).get(lid = e.lid))
+    liblist.append(Library.objects.using(bdd).get(name = 'checker'))    
+    LIBRARYTEMP_CHOICES = ('temp', 'temp'),
+    for liblmt in liblist:
+        LIBRARYTEMP_CHOICES += (liblmt.name, liblmt.name),
+    LIBRARY_CHOICES = LIBRARYTEMP_CHOICES[1:]
+    
+    class LibTurnForm(forms.Form):
+        name = forms.ChoiceField(required = True, widget=forms.Select, choices=LIBRARY_CHOICES, label =_(""))
 
-    form = ItemRecordStatusForm(request.POST or None)
+    form = LibTurnForm(request.POST or None)
     if request.method =="POST" and form.is_valid():
-        stat = int(form.cleaned_data['stat'])
-        if stat ==1 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =1)):
-            messages.info(request, _("échec : le satut 1 est déjà attribué à un autre enregistrement (pensez à utiliser le statut 6 temporairement)"))
-            return current_status(request, bdd, sid, "999999999")
-        if stat ==3 and len(ItemRecord.objects.using(bdd).filter(sid =sid, status =3)):
-            messages.info(request, _("échec : le satut 3 est déjà attribué à un autre enregistrement (pensez à utiliser le statut 6 temporairement)"))
-            return current_status(request, bdd, sid, "999999999")
-        if stat ==2 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name, bound = "x")):
-            messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
-            return current_status(request, bdd, sid, "999999999")
-        if stat ==4 and not len(Instruction.objects.using(bdd).filter(sid =sid, name = bib.name).exclude(bound ="x")):
-            messages.info(request, _("échec : vérifiez qu'il ne manque pas d'instruction(s) pour {}".format(bib.name)))
-            return current_status(request, bdd, sid, "999999999")
-        itemrec.status =stat
-        itemrec.save(using=bdd)
-        ###############
-        if Proj_setting.objects.using(bdd).all()[0].ins:
-            #Message data :
-            try:
-                nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =1).lid
-                flag =1
-            except: # i.e. status !=1
-                try:
-                    nextlid =ItemRecord.objects.using(bdd).get(sid =sid, status =3).lid
-                    flag =1
-                except:
-                    try:#status = 2 or 4
-                        if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) == len(ItemRecord.objects.using(bdd).filter(sid =sid, status =2)) or len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) == len(ItemRecord.objects.using(bdd).filter(sid =sid, status =4)):
-                            nextlid ="999999999"
-                            flag =1
-                        else:
-                            flag =0
-                    except:
+        name = form.cleaned_data['name']
+        #Controls first !
+        if len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==1:
+            m =0
+            for lib in liblist:
+                if lib.name ==name:#status 3
+                    m =1
+                    if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound ="x")) ==0:
+                            messages.info(request, _("échec : vérifiez qu'il y a au moins une instruction avec des éléments reliés pour : {}".format(lib.name)))
+                            return current_status(request, bdd, sid, "999999999")
+                else:
+                    if m ==0:#status 4
+                        if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name).exclude(bound ="x")) ==0:
+                            messages.info(request, _("échec : vérifiez qu'il y a au moins une instruction avec des éléments non reliés pour : {}".format(lib.name)))
+                            return current_status(request, bdd, sid, "999999999")
+                        elif len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound ="x")) ==0:
+                            messages.info(request, _("échec : vérifiez qu'il y a au moins une instruction avec des éléments reliés pour : {}".format(lib.name)))
+                            return current_status(request, bdd, sid, "999999999")
+                    else:#status 2
+                        if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound ="x")) ==0:
+                            messages.info(request, _("échec : vérifiez qu'il y a au moins une instruction avec des éléments reliés pour : {}".format(lib.name)))
+                            return current_status(request, bdd, sid, "999999999")
+                        if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name).exclude(bound ="x")):
+                            messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments non reliés pour : {}".format(lib.name)))
+                            return current_status(request, bdd, sid, "999999999")
+        if len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==0:
+            if len(Instruction.objects.using(bdd).filter(sid =sid).exclude(bound ="x")):
+                messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments non reliés"))
+            else:
+                m =0
+                for lib in liblist:
+                    if lib.name ==name:#status 1
+                        m =1
+                        if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name).exclude(bound ="x")):
+                            messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments non reliés pour : {}".format(lib.name)))
+                            return current_status(request, bdd, sid, "999999999")
+                    else:
+                        if m ==0:#status 2
+                            if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound ="x")) ==0:
+                                messages.info(request, _("échec : vérifiez qu'il y a au moins une instruction avec des éléments reliés pour : {}".format(lib.name)))
+                                return current_status(request, bdd, sid, "999999999")
+                            if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name).exclude(bound ="x")):
+                                messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments non reliés pour : {}".format(lib.name)))
+                                return current_status(request, bdd, sid, "999999999")
+                        else:#status 0
+                            if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name, bound ="x")):
+                                messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments reliés pour : {}".format(lib.name)))
+                                return current_status(request, bdd, sid, "999999999")
+                            if len(Instruction.objects.using(bdd).filter(sid =sid, name =lib.name).exclude(bound ="x")):
+                                messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments non reliés pour : {}".format(lib.name)))
+                                return current_status(request, bdd, sid, "999999999")
+        #Then status modification if all controls are ok :                    
+        if len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==1:
+            m =0
+            for lib in liblist:
+                if lib.name ==name:
+                    m =1
+                    try:
+                        it = ItemRecord.objects.using(bdd).get(sid =sid, lid =Library.objects.using(bdd).get(name =lib.name).lid)
+                        it.status =3
+                        it.save(using=bdd)
+                    except:#(checker)
                         pass
-            if flag ==1:                
-                nextlib =Library.objects.using(bdd).get(lid =nextlid)
-                subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
-                host = str(request.get_host())
-                message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
-                " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
-                "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)") + \
-                "\n" + "Dans de rares cas, en raison de l'ordre de correction des statuts non strictement respecté, le lien ci-dessus aboutira à une page signalant une 'Tentative d'intervention non autorisée' ; vous pourrez alors ignorer le présent message."
-                dest =[]
-                if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
-                    dest.append(nextlib.contact)
-                try:
-                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
-                        dest.append(nextlib.contact_bis)
-                except:
-                    st =1 #bidon pour passer
-                try:
-                    if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
-                        dest.append(nextlib.contact_ter)
-                except:
-                    st =1 #bidon pour passer
-                if len(dest):
-                    send_mail(subject, message, replymail, dest, fail_silently=True, )
-        ###############
-        try:
-            return current_status(request, bdd, sid, "999999999")
-        except:
-            messages.info(request, _("Suite à une action inattendue, les statuts ont été récupérés ou recalculés (modifiez si besoin)"))
-            itemlist = list(ItemRecord.objects.using(bdd).filter(sid = sid).exclude(rank =0).order_by("rank", 'pk'))
-            # Libraries are ordered by 'rank' and secondary by 'pk'
-            
-            if len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==0:
-                i =0
-                while i < len(itemlist):
-                    j =i +1
-                    if j < len(itemlist):
-                        if len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name)) and len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name)):
-                            itemlist[i].status =2
-                            itemlist[i].save(using=bdd)
-                        elif len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name)) and not len(Instruction.objects.using(bdd).filter(sid =sid, bound ="x", name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name)):
-                            itemlist[i].status =1
-                            itemlist[i].save(using=bdd)
-                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
+                else:
+                    if m ==0:
+                        try:
+                            it = ItemRecord.objects.using(bdd).get(sid =sid, lid =Library.objects.using(bdd).get(name =lib.name).lid)
+                            it.status =4
+                            it.save(using=bdd)
+                        except:#(checker)
+                            pass
+                    else:
+                        try:
+                            it = ItemRecord.objects.using(bdd).get(sid =sid, lid =Library.objects.using(bdd).get(name =lib.name).lid)
+                            it.status =2
+                            it.save(using=bdd)
+                        except:#(checker)
+                            pass
+        if len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==0:
+            if len(Instruction.objects.using(bdd).filter(sid =sid).exclude(bound ="x")):
+                messages.info(request, _("échec : vérifiez qu'il n'y a aucune instruction avec des éléments non reliés"))
+            else:
+                m =0
+                for lib in liblist:
+                    if lib.name ==name:
+                        m =1
+                        try:
+                            it = ItemRecord.objects.using(bdd).get(sid =sid, lid =Library.objects.using(bdd).get(name =lib.name).lid)
+                            it.status =1
+                            it.save(using=bdd)
+                        except:#(checker)
+                            pass
+                    else:
+                        if m ==0:
+                            try:
+                                it = ItemRecord.objects.using(bdd).get(sid =sid, lid =Library.objects.using(bdd).get(name =lib.name).lid)
+                                it.status =2
+                                it.save(using=bdd)
+                            except:#(checker)
+                                pass
                         else:
-                            itemlist[i].status =0
-                            itemlist[i].save(using=bdd)
-                    else:#i.e. for the last itemrecord
-                        if itemlist[-2].status ==2:
-                            itemlist[-1].status =1 #(par prudence)
-                            itemlist[-1].save(using=bdd)
-                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
-                        if itemlist[-2].status ==1:
-                            itemlist[-1].status =0
-                            itemlist[-1].save(using=bdd)
-                    i +=1
-            elif len(Instruction.objects.using(bdd).filter(sid =sid, name ="checker")) ==1:
-                messages.info(request, _("(Notez que le cycle des reliés a déjà été validé)"))
-                i =0
-                while i < len(itemlist):
-                    j =i +1
-                    if j < len(itemlist):
-                        if len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name).exclude(bound ="x")) and len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name).exclude(bound ="x")):
-                            itemlist[i].status =4
-                            itemlist[i].save(using=bdd)
-                        elif len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[i].lid).name).exclude(bound ="x")) and not len(Instruction.objects.using(bdd).filter(sid =sid, name =Library.objects.using(bdd).get(lid =itemlist[j].lid).name).exclude(bound ="x")):
-                            itemlist[i].status =3
-                            itemlist[i].save(using=bdd)
-                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
-                        else:
-                            itemlist[i].status =2
-                            itemlist[i].save(using=bdd)
-                    else:#i.e. for the last itemrecord
-                        if itemlist[-2].status ==4:
-                            itemlist[-1].status =3 #(par prudence)
-                            itemlist[-1].save(using=bdd)
-                            messages.info(request, _("Il vous appartient d'informer la bibliothèque à qui est venu le tour d'instruire"))
-                        if itemlist[-2].status ==3:
-                            itemlist[-1].status =2
-                            itemlist[-1].save(using=bdd)
-                    i +=1
-            else: #==2
-                messages.info(request, _("(Notez que le cycle des non-reliés a déjà été validé)"))
-                for i in itemlist:
-                    i.status =5
-                    i.save(using=bdd)
+                            try:
+                                it = ItemRecord.objects.using(bdd).get(sid =sid, lid =Library.objects.using(bdd).get(name =lib.name).lid)
+                                it.status =0
+                                it.save(using=bdd)
+                            except:#(checker)
+                                pass
+        
+        messages.info(request, _("(Les statuts ont été calculés automatiqument)"))
+        messages.info(request, _("Un message a été envoyé aux instructeurs de - {} - pour les informer que leur tour est venu d'instruire cette fiche".format(name)))
+        if Proj_setting.objects.using(bdd).all()[0].ins:
+            nextlib =Library.objects.using(bdd).get(name =name)
+            nextlid = nextlib.lid
+            message_end = _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)") + "\n" + _("(Il est possible qu'il vous ait attribué le tour pour simple vérification ; dans ce cas, vous n'aurez plus qu'à indiquer que vous avez fini pour la phase courante)")
+            if nextlid =="999999999":
+                message_end = _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")            
+            subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+            host = str(request.get_host())
+            message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
+            " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
+            "\n" + message_end
+            dest =[]
+            if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
+                dest.append(nextlib.contact)
             try:
-                return current_status(request, bdd, sid, "999999999")
+                if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_bis).ins:
+                    dest.append(nextlib.contact_bis)
             except:
-                messages.info(request, _("Vérifiez que la fiche ne présente pas de défaut d'instruction (en attendant, tous les statuts ont été passés à 6)"))
-                for i in itemlist:
-                    i.status =6
-                    i.save(using=bdd)
-                return current_status(request, bdd, sid, "999999999")
+                st =1 #bidon pour passer
+            try:
+                if Utilisateur.objects.using(bdd).get(mail =nextlib.contact_ter).ins:
+                    dest.append(nextlib.contact_ter)
+            except:
+                st =1 #bidon pour passer
+            if len(dest):
+                send_mail(subject, message, replymail, dest, fail_silently=True, )
+
+        return current_status(request, bdd, sid, "999999999")
 
     return render(request, 'epl/statadmin.html', locals())
+
 
 @login_required
 def instradmin(request, bdd, id):

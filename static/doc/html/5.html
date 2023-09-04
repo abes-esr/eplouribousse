@@ -157,24 +157,33 @@ Historique de la publication : 1906- 9999
 <section id="correction-des-enregistrements-instructions-et-rattachements">
 <h2>Correction des enregistrements (instructions et rattachements)<a class="headerlink" href="#correction-des-enregistrements-instructions-et-rattachements" title="Lien permanent vers cette rubrique">¶</a></h2>
 <p>Le ou les administrateurs de la base sont alertés par mail automatiquement quand une incohérence est signalée dans la fiche d’instruction.</p>
-<p>L’administrateur de la base devra modifier les enregistrements incriminés depuis la page de type (host)/current_status/ppn/rcr accessible  en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) :</p>
-<p>Pour une ressource considérée (un sid) il repérera les enregistrements instructions concernés, identifiera l’anomalie et effectuera les corrections nécessaires en suivant récursivement le traitement.</p>
-<p>Ceci fait, il lui sera possible d’attribuer les nouveaux statuts aux enregistrements de rattachement (modèle : ItemRecord) et les passera de statut =6 à statut = 0, 1, 2, 3 ou 4 selon les considérations suivantes :</p>
-<p>S’il n’y a pas encore d’instruction admin, les statuts possibles ne peuvent être que 0, 1 ou 2.</p>
-<p>S’il y a déjà une ligne d’instruction admin, les statuts possibles ne peuvent être que 2, 3 ou 4.</p>
-<blockquote>
-<div><p>0 : état initial (ce n’est pas encore au tour de la bibliothèque d’instruire)
-1 : éléments reliés à instruire
-2 : éléments reliés instruits
-3 : éléments non reliés à instruire
-4 : éléments non reliés instruits</p>
-</div></blockquote>
-<p>Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord) Cet état passe à 6. L’administrateur peut faire les corrections à mesure, ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées.</p>
-<p>Pour information, le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.</p>
-<p>L’application ne propose que les statuts potentiels correspondant à la phase en cours. Il faut procéder dans l’ordre suivant : Modifier ou supprimer les lignes incriminées, modifier les statuts ensuite dans l’ordre suivant : 2, 0, 1 lors de la 1ère phase ; 4, 3 lors de la deuxième phase. Procéder dans un autre ordre pourrait avoir pour effet de générer un message indiquant faussement le tour d’instruire venu (ce n’est pas une cause de dysfonctionnement mais cela peut être gênant)</p>
-<p><strong>En cas de doute, le plus simple est encore de réinitialiser la fiche (retour au début de la phase courante avec calcul automatique des statuts)</strong></p>
-<p><strong>Ce travail de correction est facilité si l’administrateur de la base projet passe par l’outil de supervision ou par l’outil de recherche croisée :</strong></p>
+<p>L’administrateur de la base devra modifier les instructions incriminées depuis la page de type (host)/current_status/ppn/rcr accessible en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) ; il peut le faire de deux façons :</p>
+<ul class="simple">
+<li><p>Il corrige lui-même les instructions (par le lien d’enregistrement) en suivant récursivement le traitement puis il attribue le tour à la bonne bibliothèque (bouton « Attribuer le tour ») Dans ce cas, l’application réalise les contrôles nécessaires et signale les éventuelles défauts à corriger avant de recalculer les statuts.</p></li>
+<li><p>Dans certains cas, il vaut mieux carrément réinitialiser la fiche en début de cycle courant (bouton « Réinitialiser la fiche ») Dans ce cas, l’application supprime les instructions du cycle en cours et recalcule les statuts.</p></li>
+</ul>
+<p>Les boutons « Attribuer le tour » et « Réinitialiser la fiche » n’apparaissent que si les statuts sont à 6 (comme il se doit).</p>
+<p>Dans les deux cas, vous êtes toujours redirigés vers la fiche de situation courante, ce qui vous permet de vérifier que tout a été correctement traité.</p>
 <img alt="_images/corr_adm.png" src="_images/corr_adm.png" />
+<p>Pour une bonne lecture de la fiche de situation, il faut savoir que :</p>
+<ul>
+<li><p>S’il n’y a pas encore d’instruction « checker », les statuts possibles ne peuvent être que 0, 1 ou 2.</p></li>
+<li><p>S’il y a déjà une ligne d’instruction « checker », les statuts possibles ne peuvent être que 2, 3, 4, 5 ou 6.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>0 : état initial (ce n’est pas encore au tour de la bibliothèque d’instruire)</p></li>
+<li><p>1 : éléments reliés à instruire</p></li>
+<li><p>2 : éléments reliés instruits</p></li>
+<li><p>3 : éléments non reliés à instruire</p></li>
+<li><p>4 : éléments non reliés instruits</p></li>
+<li><p>5 : fiche complète correctement instruite (tous les enregistrements ont le statut 5)</p></li>
+<li><p>6 : fiche erronée (tous les enregistrements ont le statut 6)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord) Cet état passe à 6. L’administrateur peut faire les corrections à mesure, ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées.</p>
+<p>Le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.</p>
 </section>
 <section id="controles">
 <h2>Contrôles<a class="headerlink" href="#controles" title="Lien permanent vers cette rubrique">¶</a></h2>
@@ -191,7 +200,7 @@ Historique de la publication : 1906- 9999
 <a class="reference external" href="https://docs.djangoproject.com/en/2.2/topics/auth/passwords/">https://docs.djangoproject.com/en/2.2/topics/auth/passwords/</a></p>
 <p>L’authentification est requise automatiquement pour toute action sensible (modifications des données de la base) Un contrôle est effectué sur l’adresse mail (l’email de l’utilisateur et l’email du correspondant pour la bibliothèque doivent être les mêmes) <strong>Lorsque le contrôle est négatif, l’utilisateur est réorienté vers la page d’accueil générale.</strong></p>
 <p>En dehors de cela, l’authentification n’est pas nécessaire ; elle est toutefois possible : Dans ce cas, l’utilisateur aboutira directement à la page d’accueil du projet correspondant à son identifiant  (Si l’utilisateur est un administrateur, il restera sur la page courante).</p>
-<p><strong>Dans le cas où le mode privé est activé, l’authentification est nécessaire dans tous les cas, même pour accéder à la paged’accueil.</strong></p>
+<p><strong>Dans le cas où le mode privé est activé, l’authentification est nécessaire dans tous les cas, même pour accéder à la page d’accueil.</strong></p>
 </section>
 <section id="confidentialite">
 <h2>Confidentialité<a class="headerlink" href="#confidentialite" title="Lien permanent vers cette rubrique">¶</a></h2>

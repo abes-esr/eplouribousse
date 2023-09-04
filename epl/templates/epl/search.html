@@ -172,10 +172,9 @@
 
 
     {% if higher_status == 6 %}
-      <center><button><b><a href="/{{ bdd }}/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
+      <center><button><b><a href="/{{ bdd }}/statadmin/{{ sid }}">{% trans "Attribuer le tour" %}</a></b></button> &nbsp;&nbsp;&nbsp;ou&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
       <center>({% trans "Réservé" %})</center>
     {% endif %}
-
 
 
 <table border="1">
@@ -184,7 +183,6 @@
 
        <th>{% trans "Bibliothèque" %}</th>
        <th>{% trans "Statut" %}</th>
-       <th>{% trans "Administration" %}</th>
 
    </thead>
 
@@ -194,14 +192,12 @@
     <tr>
         <td>{{ elmt.0 }}</td>
         <td>{{ elmt.1.status }}</td>
-        <!-- <td><a target="_blank" href="/admin/epl/itemrecord/{{ elmt.1.id }}/change/">{{ elmt.1.id }}</a></td> -->
-        <td><a href="/{{ bdd }}/statadmin/{{ elmt.1.id }}">{{ elmt.1.id }}</a></td>
     </tr>
      {% endfor %}
    </tbody>
 
 </table>
-<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></button></center>
+<center><button onclick="javascript:location.reload();">{% trans "Actualiser" %}</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/current_status/{{ sid }}/{{ lid }}">{% trans "Fiche de situation" %}</a></b></center>
   {% if size > 0 %}
 <table border="1">
 
@@ -231,7 +227,6 @@
          <td><font color= #3364ff >{{ elmt.exc}}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
          <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
-         <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% else %}
     <tr>
@@ -243,7 +238,6 @@
         <td>{{ elmt.exc}}</td>
         <td>{{ elmt.degr }}</td>
         <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
-        <!-- <td><a target="_blank" href="/admin/epl/instruction/{{ elmt.id }}/change/">{{ elmt.id }}</a></td> -->
     </tr>
         {% endif %}
      {% endfor %}
