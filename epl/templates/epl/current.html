@@ -151,6 +151,8 @@
     {% if higher_status == 6 %}
       <center><button><b><a href="/{{ bdd }}/statadmin/{{ sid }}">{% trans "Attribuer le tour" %}</a></b></button> &nbsp;&nbsp;&nbsp;ou&nbsp;&nbsp;&nbsp; <button><b><a href="/{{ bdd }}/reinit/{{ sid }}">{% trans "Réinitialiser la fiche" %}</a></b></button></center>
       <center>({% trans "Réservé" %})</center>
+    {% elif higher_status != 6 %}
+      <center><button><b><a href="/{{ bdd }}/statadmin/{{ sid }}">{% trans "Attribuer le tour" %}</a></b></button></center>        
     {% endif %}
 
 
