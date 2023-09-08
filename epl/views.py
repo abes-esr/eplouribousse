@@ -1,8 +1,8 @@
-epl_version ="v2.11.98 (Judith)"
-date_version ="September 6, 2023"
+epl_version ="v2.11.100 (Judith)"
+date_version ="September 08, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.99 (~Irmingard)"
-date_version ="September 6, 2023"
+#epl_version ="v2.11.101 (~Irmingard)"
+#date_version ="September 08, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -47,6 +47,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import urllib, base64
 from io import BytesIO
+from matplotlib.ticker import MaxNLocator
 
 def get_graph():
     buffer = BytesIO()
@@ -94,6 +95,7 @@ def multipleplot(x, y1, y3, y13, titre1, titre3, titre13, absc, ordo, titre):
     ax.set_title(titre)  # Add a title to the axes.
     ax.legend()  # Add a legend.
     ax.grid(True)
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
     graph = get_graph()
     return graph
 
