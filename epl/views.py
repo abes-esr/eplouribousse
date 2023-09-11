@@ -1,8 +1,8 @@
-epl_version ="v2.11.100 (Judith)"
-date_version ="September 08, 2023"
+epl_version ="v2.11.102 (Judith)"
+date_version ="September 12, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.101 (~Irmingard)"
-date_version ="September 08, 2023"
+#epl_version ="v2.11.103 (~Irmingard)"
+#date_version ="September 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -102,7 +102,7 @@ def multipleplot(x, y1, y3, y13, titre1, titre3, titre13, absc, ordo, titre):
 def get_pie(x, titre, **kwargs):
     plt.switch_backend('AGG')
     plt.figure(figsize=(8, 5))
-    plt.pie(x, **kwargs)
+    plt.pie(x, autopct='%1.1f%%' , **kwargs)
     plt.title(titre)
     plt.tight_layout()
     graph = get_graph()
@@ -2153,19 +2153,19 @@ def indicators(request, bdd):
     x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
-    gh = round(10000*(fullinstr + discard)/cand)/100
-    gi = round(100 - gh, 2)
+    gh = fullinstr + discard
+    gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gh), _("reste / départ") + " ({} %)".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
     
-    gj = round(10000*fullinstr/realcand)/100
-    gk = round(100 - gj, 2)
-    x3=[gj, gk]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({} %)".format(gj), _("à instruire") + " ({} %)".format(gk)])
+    gj = fullinstr
+    gk = realcand - fullinstr
+    x3=[fullinstr, realcand - fullinstr]
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({})".format(gj), _("à instruire") + " ({})".format(gk)])
 
 
-    x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
-    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({} %)".format(percentdupl), _("triplons") + " ({} %)".format(percenttripl), _("quadruplons") + " ({} %)".format(percentqudrpl), _("plus") + " ({} %)".format(percentpluspl)])
+    x4 =[dupl, tripl, qudrpl, pluspl]
+    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
     
     qs =[Library.objects.using(bdd).get(name ="checker")]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -2176,7 +2176,8 @@ def indicators(request, bdd):
         y5.append(len(Instruction.objects.using(bdd).filter(name =libmt.name)))
 #    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
     try:
-        uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
+#        uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
+        uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({})".format(len(Instruction.objects.using(bdd).filter(name =e.name))) for e in qs])
     except: # (division by zero)
         pass
 
@@ -2457,18 +2458,18 @@ def indicators_x(request, bdd, lid):
     x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
     uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
     
-    gh = round(10000*(fullinstr + discard)/cand)/100
-    gi = round(100 - gh, 2)
+    gh = fullinstr + discard
+    gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({} %)".format(gh), _("reste / départ") + " ({} %)".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
     
-    gj = round(10000*fullinstr/realcand)/100
-    gk = round(100 - gj, 2)
+    gj = fullinstr
+    gk = realcand - gj
     x3=[gj, gk]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({} %)".format(gj), _("à instruire") + " ({} %)".format(gk)])
+    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({})".format(gj), _("à instruire") + " ({})".format(gk)])
 
-    x4 =[percentdupl, percenttripl, percentqudrpl, percentpluspl]
-    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({} %)".format(percentdupl), _("triplons") + " ({} %)".format(percenttripl), _("quadruplons") + " ({} %)".format(percentqudrpl), _("plus") + " ({} %)".format(percentpluspl)])
+    x4 =[dupl, tripl, qudrpl, pluspl]
+    uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
     
     sid2, sid4 =[], []
     for it in ItemRecord.objects.using(bdd).filter(status =2):
