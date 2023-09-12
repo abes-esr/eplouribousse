@@ -1,8 +1,8 @@
-epl_version ="v2.11.102 (Judith)"
+epl_version ="v2.11.104 (Judith)"
 date_version ="September 12, 2023"
 # Mise au niveau de :
-epl_version ="v2.11.103 (~Irmingard)"
-date_version ="September 12, 2023"
+#epl_version ="v2.11.105 (~Irmingard)"
+#date_version ="September 12, 2023"
 
 
 from django.shortcuts import render, redirect
@@ -102,7 +102,8 @@ def multipleplot(x, y1, y3, y13, titre1, titre3, titre13, absc, ordo, titre):
 def get_pie(x, titre, **kwargs):
     plt.switch_backend('AGG')
     plt.figure(figsize=(8, 5))
-    plt.pie(x, autopct='%1.1f%%' , **kwargs)
+    plt.pie(x, autopct='%1.1f%%')
+    plt.legend(fontsize = 'small', bbox_to_anchor=(1, 0, 0.5, 1), **kwargs)
     plt.title(titre)
     plt.tight_layout()
     graph = get_graph()
@@ -2150,13 +2151,13 @@ def indicators(request, bdd):
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
 
-    x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
-    uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
+    x1 =[stocomp, stotal, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
+    uri1 = get_pie(x1, _("ressources"), labels =[_("posit° incomplet (hors arb.)") + " ({})".format(stocomp), _("impliquées dans un arbitrage") + " ({})".format(stotal), _("écartées par excl. de coll.") + " ({})".format(discard), _("instr°. reliés pouvant débuter") + " ({})".format(bdmaybeg), _("instr° reliés en cours") + " ({})".format(bdonway), _("instr° reliés achevée") + " ({})".format(notbdmaybeg), _("instr° non reliés en cours") + " ({})".format(notbdonway), _("instr° achevée") + " ({})".format(fullinstr), _("fiches erronées") + " ({})".format(fail)])
     
     gh = fullinstr + discard
     gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("à instruire") + " ({})".format(gi)])
     
     gj = fullinstr
     gk = realcand - fullinstr
@@ -2455,13 +2456,13 @@ def indicators_x(request, bdd, lid):
     #Relative achievement :
     relative_real = round(10000*fullinstr/realcand)/100
     
-    x1 =[stocomp, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
-    uri1 = get_pie(x1, _("ressources"), labels =[_("positionnement") + " ({})".format(stocomp), _("exclues") + " ({})".format(discard), _("prêtes") + " ({})".format(bdmaybeg), _("instr. reliés") + " ({})".format(bdonway), _("instr. reliés achevée") + " ({})".format(notbdmaybeg), _("instr. non reliés") + " ({})".format(notbdonway), _("instr. achevée") + " ({})".format(fullinstr), _("erronées") + " ({})".format(fail)])
+    x1 =[stocomp, stotal, discard, bdmaybeg, bdonway, notbdmaybeg, notbdonway, fullinstr, fail]
+    uri1 = get_pie(x1, _("ressources"), labels =[_("posit° incomplet (hors arb.)") + " ({})".format(stocomp), _("impliquées dans un arbitrage") + " ({})".format(stotal), _("écartées par excl. de coll.") + " ({})".format(discard), _("instr°. reliés pouvant débuter") + " ({})".format(bdmaybeg), _("instr° reliés en cours") + " ({})".format(bdonway), _("instr° reliés achevée") + " ({})".format(notbdmaybeg), _("instr° non reliés en cours") + " ({})".format(notbdonway), _("instr° achevée") + " ({})".format(fullinstr), _("fiches erronées") + " ({})".format(fail)])
     
     gh = fullinstr + discard
     gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("reste / départ") + " ({})".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("à instruire") + " ({})".format(gi)])
     
     gj = fullinstr
     gk = realcand - gj
