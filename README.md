@@ -40,15 +40,7 @@ https://seafile.unistra.fr/f/c2e9ec44798f490087f7/
 
 # Plus d'info :
 
-Voir le manuel de l'appli : https://git.unistra.fr/gressot/yellow/-/blob/master/static/doc/User_Documentation.pdf
-
-Visionner les vidéos de présentation (à télécharger si vous n'arrivez pas à visionner complètement) : 
-01. Hypothèses et définitions : https://seafile.unistra.fr/f/dd5b8a16b1a5440389e5/
-02. Méthode : https://seafile.unistra.fr/f/590ba4359f3e4b73b60e/
-03. Préparation de la base de données : https://seafile.unistra.fr/f/9581ffba08f24e849b08/
-04. Exemple d'un traitement de bout en bout : https://seafile.unistra.fr/f/b87faa2857ee42bab57f/
-05. Administration du site : https://seafile.unistra.fr/f/d3f6a23f94804dfabddd/
-06. Crédits : https://seafile.unistra.fr/f/579d874730604579b073/
+Voir le manuel de l'appli : https://sbu-eplouribousse.unistra.fr/static/doc/html/index.html
 
 # Peut-on tester eplouribousse ?
 
