@@ -77,3 +77,7 @@ eplouribousse utilise des données sous licence ouverte etalab fournies par l'Ag
 
 Indiqué en https://github.com/GGre/eplouribounistra/blob/master/Doc/contact.txt
 
+# eplouribousse lauréat du programme de coopération Abes
+
+__eplouribousse est lauréat du programme de coopération de l'Abes : Une version entièrement refondue de l'application sera proposée à l'automne 2025.__
+
