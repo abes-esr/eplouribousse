@@ -1,8 +1,8 @@
-epl_version ="v2.11.106 (Judith)"
+epl_version ="v2.11.108 (Judith)"
 date_version ="March 27, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.107 (~Irmingard)"
-date_version ="March 27, 2024"
+#epl_version ="v2.11.109 (~Irmingard)"
+#date_version ="March 27, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -5818,8 +5818,8 @@ def xlistall(request, bdd, lid, xlid, sort):
 
 ##########################
     cases_list =[
-    (_("Ressource écartée par exclusion"), _("En savoir +")),#0 (status =0)
-    (_("Ressource écartée par exclusion"), _("Reconsidérer l'exclusion de ma collection",)),#1 (status =0)
+    (_("Ressource écartée par exclusion d'une autre collection"), _("En savoir +")),#0 (status =0)
+    (_("Ressource écartée par exclusion de votre collection"), _("Reconsidérer l'exclusion de ma collection",)),#1 (status =0)
     (_("Positionnement à réaliser"), _("Positionner ma collection")),#2 (status =0)
     (_("Positionnement modifiable"), _("Revoir le positionnement de ma collection (si besoin)")),#3 (status =0)
     (_("Arbitrage de type 1"), _("En savoir +")),#4 (status =0)

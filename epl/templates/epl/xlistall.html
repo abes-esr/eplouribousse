@@ -74,7 +74,10 @@
           <li><b>{% trans "Titre" %} :</b> {{ elmt.0.title }}</li>
           <li><b>{% trans "Cote" %} :</b> {{ elmt.0.cn }}</li>
           <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.0.sid }}</li>
-          <li><b>{% trans "Statut" %} :</b> {{ elmt.0.status }} > {{ elmt.1 }} >
+          <li><b>{% trans "Statut" %} :</b> {{ elmt.0.status }} > {{ elmt.1 }}
+              {% if elmt.0.excl != "" %}
+                > {% trans "Exclusion" %} = {{ elmt.0.excl }}
+              {% endif %}>
               {% if elmt.2 == cases_list.0.1 %}
               <a href="/{{ bdd }}/current_status/{{ elmt.0.sid }}/{{ lid }}">{{ cases_list.0.1 }}</a></li>
               {% elif elmt.2 == cases_list.1.1 %}
