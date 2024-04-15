@@ -24,7 +24,7 @@ La dernière ligne instruite est intégrée et mise en évidence :
 
 .. image:: _static/instr_form.png
 
-Dans le cas où vous n’avez pas de contribution à porter pour la résultante, vous pouvez directement indiquer que vous avez fini, cocher et valider. Une ligne portant la mention « Néant » sera automatiquement enregistrée et une alerte vous spécifiera que votre collection n’améliore pas la résultante pour la forme considérée.
+**Dans le cas où vous n’avez pas de contribution à porter pour la résultante, vous pouvez directement indiquer que vous avez fini, cocher et valider ; c'est la solution recommandée. Une ligne portant la mention « Néant » sera automatiquement enregistrée et une alerte vous spécifiera que votre collection n’améliore pas la résultante pour la forme considérée.**
 
 La suppression ou la modification d’une ligne n’est possible que pour le compte de sa propre collection et pour l’état en cours d’instruction (relié ou non) Les lignes pouvant être supprimées ou modifiées sont distinguées des lignes ne pouvant pas l’être :
 

@@ -28,7 +28,7 @@ La liste des collections écartées par exclusion est accessible depuis l’outi
 
 Les principales listes sont exportables au format csv sous un nom de type : ##_typedeliste_rcr_autrercr.csv (où ## est le numéro de la base projet, un nombre à deux chiffres entre 00 et 99)
 
-24 listes types sont disponibles :
+26 listes types sont disponibles :
 
 .. csv-table:: listes types disponibles 
    :header: « typedeliste », signification 
@@ -58,6 +58,8 @@ Les principales listes sont exportables au format csv sous un nom de type : ##_
     faulty, Fiches erronnées
     all (avec None), Tous les candidats originels
     all (sans None), Tous les candidats originels croisés entre deux bibliothèques
+    cross (avec None), Résultats d'une recherche multicritères sans croisement
+    cross (sans None), Résultats d'une recherche multicritères croisée avec une autre bibliothèque
 
 
 Il peut arriver que la liste ne puisse être calculée entièrement ; cette information est clairement indiquée en fin de fichier : (ATTENTION : LISTE INCOMPLETE)
@@ -65,10 +67,10 @@ Il peut arriver que la liste ne puisse être calculée entièrement ; cette inf
 Si la requête est trop volumineuse, le serveur retournera un code d’erreur.
 
 
-Recherche croisée
------------------
+Recherche multicritère
+----------------------
 
-Lien « recherche » disponible dans le bandeau d’entête. Permet de connaître la situation d’une ressource (ppn) pour une bibliothèque donnée avec rebond possible sur les actions possibles ou attendues.
+Le lien « recherche » donne accès à un formulaire permettant une recherche multicritères avancée.
 
 
 Tableau de bord

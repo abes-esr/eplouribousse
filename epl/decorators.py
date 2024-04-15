@@ -244,3 +244,32 @@ def edmode8(func):
             return func(request, bdd, lid, xlid)
 
     return mod_func
+
+
+def edmode9(func):
+    """
+    Authentification requise si le mode consultation privée est activé.
+    """
+    def mod_func(request, bdd, lid, xlid, recset, sort):
+        """
+        Vérification de l'existence du projet (crucial) :
+        """
+        if os.path.isfile("{}.db".format(bdd)):
+            a =1 # just to continue
+        else:
+            messages.info(request, _("Veuillez choisir parmi les projets disponibles."))
+            return HttpResponseRedirect(".")
+        """
+        fin de la vérification
+        """
+        suffixe = "@" + str(bdd)
+        if Proj_setting.objects.using(bdd)[0].prv:
+            if request.user.username and request.user.username[-3:] ==suffixe:
+                return func(request, bdd, lid, xlid, recset, sort)
+            else:
+                messages.info(request, _("Votre projet est en mode d'édition privé ; vous devez d'abord vous connecter."))
+                return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+        else:
+            return func(request, bdd, lid, xlid, recset, sort)
+
+    return mod_func

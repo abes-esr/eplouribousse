@@ -27,7 +27,6 @@
 
 
     </head>
-
     <div id="sticky-section">
       <nav id="sticky-menu">
           <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
@@ -44,35 +43,38 @@
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
           {% endif %}
-          <h2>{% trans "Contrôle final" %}</h2>
-          <h2>{{ coll_set }} (ou)</h2>
+          <h2>{{ libname }} - {% trans "Liste des résultats de votre recherche" %}</h2>
 
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/{{ xlid }}/{{ sidlist }}/{{ code }}/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}
+          
 
-
-          <p><b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}</p>
+            {% if sort == 'title' %}
+            ({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : 
+             <a href="/{{ bdd }}/gen_search_results/{{ lid }}/{{ xlid }}/{{ sidset }}/cn">{% trans "cote et titre" %}</a> / <a href="/{{ bdd }}/gen_search_results/{{ lid }}/{{ xlid }}/{{ sidset }}/sid">{% trans "ppn" %}</a>)
+            {% elif sort == 'cn' %}
+            ({% trans "Classement par" %} {% trans "cote et titre" %}, {% trans "reclasser par" %} :
+              <a href="/{{ bdd }}/gen_search_results/{{ lid }}/{{ xlid }}/{{ sidset }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/gen_search_results/{{ lid }}/{{ xlid }}/{{ sidset }}/sid">{% trans "ppn" %}</a>)
+            {% elif sort == 'sid' %}
+              ({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} :
+              <a href="/{{ bdd }}/gen_search_results/{{ lid }}/{{ xlid }}/{{ sidset }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/gen_search_results/{{ lid }}/{{ xlid }}/{{ sidset }}/cn">{% trans "cote et titre" %}</a>)
+            {% endif %}
+          </p>
 
         <HR>
       </div>
 
     <body>
-
-        <div id="content">
+      <div id="content">
       <ul>
-
-      {% for elmt in l %}
-
-            <!-- <HR> -->
-      <p></p>
-
-            <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
-            <!-- <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li> -->
-            <li><b>{% trans "Identifiant de la ressource" %} :</b> <a href="/{{ bdd }}/add/{{ elmt.sid }}/999999999">{{ elmt.sid }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/999999999">0^0</a></li>
-           <HR>
-      {% endfor %}
-
+       {% for elmt in results_set %}
+       <p></p>
+          <li><b>{% trans "Titre" %} :</b> {{ elmt.title }}</li>
+          <li><b>{% trans "Cote" %} :</b> {{ elmt.cn }}</li>
+          <li><b>{% trans "Identifiant de la ressource" %} :</b> {{ elmt.sid }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/{{ bdd }}/current_status/{{ elmt.sid }}/{{ lid }}">0^0</a></li>
+            <HR>
+       {% endfor %}
 
       </ul>
-
         </div>
 
 

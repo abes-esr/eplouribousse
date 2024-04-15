@@ -1,7 +1,7 @@
-epl_version ="v2.11.108 (Judith)"
+epl_version ="v2.11.110 (Judith)"
 date_version ="March 27, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.109 (~Irmingard)"
+epl_version ="v2.11.111 (~Irmingard)"
 date_version ="March 27, 2024"
 
 
@@ -2462,12 +2462,12 @@ def indicators_x(request, bdd, lid):
     gh = fullinstr + discard
     gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("à instruire") + " ({})".format(gi)])
+#    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("à instruire") + " ({})".format(gi)])
     
     gj = fullinstr
     gk = realcand - gj
     x3=[gj, gk]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({})".format(gj), _("à instruire") + " ({})".format(gk)])
+#    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({})".format(gj), _("à instruire") + " ({})".format(gk)])
 
     x4 =[dupl, tripl, qudrpl, pluspl]
     uri4 = get_pie(x4, _("ressources"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
@@ -2701,6 +2701,382 @@ def search(request, bdd):
             ranklist = [(element, Library.objects.using(bdd).get(lid =element.lid).name) for element in rklist]
 
     return render(request, 'epl/search.html', locals())
+
+@edmode3
+def general_search(request, bdd):
+
+    k =logstatus(request)
+    version =epl_version
+    
+    libch1 = ('', ''),
+    for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+        libch1 += (l.name, l.name),
+        
+    libch2 = ('nix', _('')),
+    for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+        libch2 += (l.name, l.name),
+        
+    mothch = ('nix', _('')), ('not', _("Pas la vôtre (et peut-être aucune autre)")), ('othan', _('Une autre que la vôtre')),
+    for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
+        mothch += (l.name, l.name),
+
+    EXCLUSION_CHOICES =\
+    ('nix', _('')),\
+    ('none', _("**Pas d'exclusion**")),\
+    ('anyone', _("**N'importe quelle exclusion**")),    
+    for e in list(ItemRecord.objects.using(bdd).filter(rank =0).exclude(excl ="Autre (Commenter)").values_list('excl', flat =True).distinct()):
+        EXCLUSION_CHOICES += (e, e),
+    for e in Exclusion.objects.using(bdd).all().order_by('label'):
+        if (e.label, e.label) not in EXCLUSION_CHOICES:
+            EXCLUSION_CHOICES += (e.label, e.label),
+    EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
+    
+    STATUS_CHOICES =\
+    ('a', _('')),\
+    ('b', _('Ressources écartées par exclusion')),\
+    ('c', _('Positionnement incomplet')),\
+    ('d', _('Positionnement modifiable')),\
+    ('e', _('Positionnement non modifiable')),\
+    ('f', _('Le repositionnement de votre collection en 1 lèverait un arbitrage de type 0')),\
+    ('g', _('Votre collection est impliquée dans un arbitrage de type 1')),\
+    ('h', _('Instruction des reliés à débuter ou en cours dans une des bibliothèques')),\
+    ('i', _('Instruction des non reliés à débuter ou en cours dans une des bibliothèques')),\
+    ('j', _('Instruction achevée')),\
+    ('k', _('Anomalie relevée')),\
+
+    class SearchForm(forms.Form):
+        lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch1, label =_("Votre bibliothèque"))
+        sid = forms.CharField(required = False, label =_("PPN"))
+        issn = forms.CharField(required = False, label =_("ISSN"))
+        title_wrd1 = forms.CharField(required = False, label =_("Mot du titre"))
+        title_wrd2 = forms.CharField(required = False, label =_("Autre mot du titre"))
+        xlib = forms.ChoiceField(required = False, widget=forms.Select, choices=libch2, label =_("Autre bibliothèque"))
+        mother = forms.ChoiceField(required = False, widget=forms.Select, choices=mothch, label =_("Collection mère"))
+        statut = forms.ChoiceField(required = False, widget=forms.Select, choices=STATUS_CHOICES, label =_("Statut dans votre bibliothèque"))
+        lib_excl = forms.ChoiceField(required = False, widget=forms.Select, choices=EXCLUSION_CHOICES, label =_("Motif d'exclusion dans votre bibliothèque"))
+        xlib_excl = forms.ChoiceField(required = False, widget=forms.Select, choices=EXCLUSION_CHOICES, label =_("Le cas échéant, motif d'exclusion dans l'autre bibliothèque"))
+
+    form = SearchForm(request.POST or None)
+    if form.is_valid():
+        lib = form.cleaned_data['lib']
+        sid = form.cleaned_data['sid']
+        issn = form.cleaned_data['issn']
+        title_wrd1 = form.cleaned_data['title_wrd1']
+        title_wrd2 = form.cleaned_data['title_wrd2']
+        xlib = form.cleaned_data['xlib']
+        mother = form.cleaned_data['mother']
+        statut = form.cleaned_data['statut']
+        lib_excl = form.cleaned_data['lib_excl']
+        xlib_excl = form.cleaned_data['xlib_excl']
+        
+        lid = Library.objects.using(bdd).get(name =lib).lid
+
+        sid_set = {"sid"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            sid_set.add(i.sid)
+        issn_set = {"issn"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            issn_set.add(i.sid)
+        lib_set = {"lib"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            lib_set.add(i.sid)
+        xlib_set = {"xlib"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            xlib_set.add(i.sid)
+        lib_excl_set = {"lib_excl"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            lib_excl_set.add(i.sid)
+        xlib_excl_set = {"xlib_excl"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            xlib_excl_set.add(i.sid)
+        tlib_excl_set = {"tlib_excl"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            tlib_excl_set.add(i.sid)
+        mother_set = {"mother"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            mother_set.add(i.sid)
+        title_wrd1_set = {"title_wrd1"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            title_wrd1_set.add(i.sid)
+        title_wrd2_set = {"title_wrd2"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            title_wrd2_set.add(i.sid)
+        statut_set = {"statut"}
+        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+            statut_set.add(i.sid)
+        gen_set = {"gen"}
+        
+        if sid:
+            try:
+                sid_set ={ItemRecord.objects.using(bdd).get(lid =lid, sid =sid).sid}
+            except:
+                sid_set ={"sid"}
+                messages.info(request, _("Pas de réponse pour ce ppn"))
+        
+        if issn:
+            try:
+                issn_set ={ItemRecord.objects.using(bdd).get(lid =lid, issn =issn).sid}
+            except:
+                issn_set ={"issn"}
+                messages.info(request, _("Pas de réponse pour cet issn (essayez avec et sans tiret)"))
+
+        if title_wrd1:
+            title_wrd1_set ={"title_wrd1"}
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+                if title_wrd1 in i.title.split():
+                    title_wrd1_set.add(i.sid)
+            if title_wrd1_set =={"title_wrd1"}:
+                messages.info(request, _("""Pas de réponse pour le mot "{}" """).format(title_wrd1))
+
+        if title_wrd2:
+            title_wrd2_set ={"title_wrd2"}
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+                if title_wrd2 in i.title.split():
+                    title_wrd2_set.add(i.sid)
+            if title_wrd2_set =={"title_wrd2"}:
+                messages.info(request, _("""Pas de réponse pour le mot "{}" """).format(title_wrd2))    
+        
+        if xlib !="nix":
+            xlid =Library.objects.using(bdd).get(name =xlib).lid
+            xlib_set ={"xlib"}
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid):
+                if ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =xlid):
+                    xlib_set.add(i.sid)
+            if xlib_set =={"xlib"}:
+                messages.info(request, _("Le croisement avec cette bibliothèque ne ramène aucun résultat"))
+                    
+        if mother =="nix":
+            pass
+        else:
+            mother_set ={"mother"}
+            if mother =="not":
+                for i in ItemRecord.objects.using(bdd).all():
+                    if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid, rank =1)) ==0:
+                        mother_set.add(i.sid)
+            elif mother =="othan":
+                for i in ItemRecord.objects.using(bdd).all():
+                    if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =1)) ==1 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid, rank =1)) ==0:
+                        mother_set.add(i.sid)
+            else:
+                for i in ItemRecord.objects.using(bdd).all():
+                    if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =1)) ==1 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =Library.objects.using(bdd).get(name =mother).lid, rank =1)) ==1:
+                        mother_set.add(i.sid)            
+            if mother_set =={"mother"}:
+                messages.info(request, _("La collection mère sélectionnée ne ramène aucun résultat"))
+                
+        if statut =="a":#--Indifférent--
+            pass
+        else:
+            statut_set ={"statut"}
+            if statut =="b":#Ressources écartées par exclusion
+                discard =[]
+                for i in ItemRecord.objects.using(bdd).filter(rank =0):
+                    if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) ==1 and not i.sid in discard:
+                        discard.append(i.sid)
+                for s in discard:
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
+                    except:
+                        pass
+
+            if statut =="c":#Positionnement incomplet
+                resslist = []
+                reclist = list(ItemRecord.objects.using(bdd).filter(rank =99))
+                for e in reclist:
+                    sid = e.sid
+                    if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1 and not sid in resslist:
+                        resslist.append(e)
+                sidlist = [ir.sid for ir in resslist]
+                for s in sidlist:
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
+                    except:
+                        pass
+                    
+            if statut =="d":#Positionnement modifiable
+                resslist = []
+                reclist = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =99))
+                for e in reclist:
+                    sid = e.sid
+                    if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1 and not Instruction.objects.using(bdd).filter(sid =sid) and not sid in resslist:
+                        resslist.append(e)
+                sidlist = [ir.sid for ir in resslist]
+                for s in sidlist:
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
+                    except:
+                        pass
+
+            if statut =="e":#Positionnement non modifiable
+                resslist = []
+                reclist = list(ItemRecord.objects.using(bdd).exclude(rank =99))
+                for e in reclist:
+                    sid = e.sid
+                    if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1 and Instruction.objects.using(bdd).filter(sid =sid) and not sid in resslist:
+                        resslist.append(e)
+                sidlist = [ir.sid for ir in resslist]
+                for s in sidlist:
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
+                    except:
+                        pass
+
+            if statut =="f":#Le repositionnement de votre collection en 1 lèverait un arbitrage de type 0
+                resslist = []
+                reclist = list(ItemRecord.objects.using(bdd).filter(status =0).exclude(rank =1).exclude(rank =0).exclude(rank =99))
+                for e in reclist:
+                    sid = e.sid
+                    if len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) ==0 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =99)) ==0 and \
+                    len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1 and not sid in resslist:
+                        resslist.append(e)
+                sidlist = [ir.sid for ir in resslist]
+                for s in sidlist:
+                    try:
+                        if ItemRecord.objects.using(bdd).get(sid =s, lid =lid).rank in [0, 2, 3, 4]:
+                            statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
+                    except:
+                        pass
+
+            if statut =="g":#Votre collection est impliquée dans un arbitrage de type 1
+                resslist = []
+                reclist = list(ItemRecord.objects.using(bdd).filter(rank = 1, status =0))
+                for e in reclist:
+                    sid = e.sid
+                    if len(ItemRecord.objects.using(bdd).filter(sid =sid, rank =1)) >1 and not sid in resslist:
+                        resslist.append(e)
+                sidlist = [ir.sid for ir in resslist]
+                for s in sidlist:
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid, rank =1).sid)
+                    except:
+                        pass
+
+            if statut =="h":#Instruction des reliés à débuter ou en cours dans une des bibliothèques
+                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =1):
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                    except:
+                        pass
+                    
+            if statut =="i":#Instruction des non reliés à débuter ou en cours dans une des bibliothèques
+                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =3):
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                    except:
+                        pass
+
+            if statut =="j":#Instruction achevée
+                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =5):
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                    except:
+                        pass
+
+            if statut =="k":#Anomalie relevée
+                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =6):
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                    except:
+                        pass
+                        
+            if statut_set =={"statut"}:
+                messages.info(request, _("Le statut sélectionné ne ramène aucun résultat"))
+                
+        if lib_excl =="nix":
+            pass
+        else:
+            lib_excl_set ={"lib_excl"}
+            if lib_excl =="none":
+                for i in ItemRecord.objects.using(bdd).filter(lid =lid, excl =""):
+                    lib_excl_set.add(i.sid)
+            elif lib_excl =="anyone":
+                for i in ItemRecord.objects.using(bdd).filter(lid =lid, rank =0):
+                    lib_excl_set.add(i.sid)
+            else:
+                for i in ItemRecord.objects.using(bdd).filter(lid =lid, excl =lib_excl):
+                    lib_excl_set.add(i.sid)
+        if lib_excl_set =={"lib_excl"}:
+            messages.info(request, _("Le motif d'exclusion choisi pour votre bibliothèque ne ramène aucun résultat"))
+            
+        if xlib_excl !="nix":
+            if xlib =="nix":
+                messages.info(request, _("Vous n'avez pas indiqué l'autre bibliothèque"))
+                return render(request, 'epl/gen_search.html', locals())
+            else:
+                xlid =Library.objects.using(bdd).get(name =xlib).lid
+                if xlib_excl =="nix":
+                    pass
+                else:
+                    xlib_excl_set ={"xlib_excl"}
+                    if xlib_excl =="none":
+                        for i in ItemRecord.objects.using(bdd).filter(lid =xlid).exclude(rank =0):
+                            xlib_excl_set.add(i.sid)
+                    elif xlib_excl =="anyone":
+                        for i in ItemRecord.objects.using(bdd).filter(lid =xlid, rank =0):
+                            xlib_excl_set.add(i.sid)
+                    else:
+                        for i in ItemRecord.objects.using(bdd).filter(lid =xlid, excl =xlib_excl):
+                            xlib_excl_set.add(i.sid)
+                    if xlib_excl_set =={"xlib_excl"}:
+                        messages.info(request, _("Le motif d'exclusion choisi pour l'autre bibliothèque ne ramène aucun résultat"))
+                            
+        gen_set = sid_set & issn_set & title_wrd1_set & \
+        title_wrd2_set & xlib_set & mother_set & statut_set & \
+        lib_excl_set & xlib_excl_set
+        
+        try:
+            test = Library.objects.using(bdd).get(name =lib)
+            test = 1
+        except:
+            test = 0
+            
+        size = len(gen_set)
+        
+        if size ==0:
+            messages.info(request, _("La recherche ne produit aucun résultat"))
+        elif size ==1:
+            sid =list(gen_set)[0]
+            messages.info(request, _("(Résultat unique de votre recherche)"))
+            return current_status(request, bdd, sid, lid)
+        else:
+            pass
+        
+        if xlib =="nix":
+            xlid ="None"
+        
+    return render(request, 'epl/gen_search.html', locals())
+
+
+@edmode9
+def cross_list(request, bdd, lid, xlid, recset, sort):
+    
+    libname = Library.objects.using(bdd).get(lid =lid).name
+
+    sidlist =list(eval(recset[1:-1]))
+    
+    sidset =set(sidlist)
+    
+    results_set =ItemRecord.objects.using(bdd).filter(sid__in=sidlist, lid =lid).order_by(sort) 
+    size =len(results_set)
+    
+    if xlid =="None":
+        code ="80"
+        newestfeat(request, bdd, libname, "80")        
+    else:
+        code ="81"
+        xnewestfeat(request, bdd, libname, "81", xlid)
+
+    return render(request, 'epl/gen_search_results.html', locals())
+
 
 @login_required
 def reinit(request, bdd, sid):
@@ -3993,11 +4369,7 @@ def modifranklist(request, bdd, lid, sort):
     for e in reclist:
         if not len(list(Instruction.objects.using(bdd).filter(sid = e.sid))):
             resslist.append(e)
-            # Voici ce qu'il y avait auparavant comme traitement :
-        # if len(list(ItemRecord.objects.using(bdd).filter(sid = e.sid, status =1))) and not len(list(Instruction.objects.using(bdd).filter(sid = e.sid))):
-        #     resslist.append(e)
-        # elif len(list(ItemRecord.objects.using(bdd).filter(sid = e.sid).exclude(status =0))) ==0:
-        #     resslist.append(e)
+
     l = len(resslist)
     
     sidlist = [ir.sid for ir in resslist]

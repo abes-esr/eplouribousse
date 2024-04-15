@@ -66,6 +66,8 @@ def simple_csv(request, bdd, lid, xlid, recset, what, length):
         fea ="faulty"
     elif what =="70" or what =="71":
         fea ="all"
+    elif what =="80" or what =="81":
+        fea ="cross"    
 
     filename = bdd + '_' + fea + '_' + lid + '_' + xlid + '.csv'
     # Create the HttpResponse object with the appropriate CSV header.

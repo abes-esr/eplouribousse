@@ -64,7 +64,7 @@
 <p>L’appel à la dernière liste fonctionne sur contrôle de l’adresse IP du client ; si un autre client s’est connecté dans l’entre temps, l’appel aboutit à la page d’accueil.</p>
 <p>La liste des collections écartées par exclusion est accessible depuis l’outil de supervision.</p>
 <p>Les principales listes sont exportables au format csv sous un nom de type : ##_typedeliste_rcr_autrercr.csv (où ## est le numéro de la base projet, un nombre à deux chiffres entre 00 et 99)</p>
-<p>24 listes types sont disponibles :</p>
+<p>26 listes types sont disponibles :</p>
 <table class="docutils align-default" id="id1">
 <caption><span class="caption-text">listes types disponibles</span><a class="headerlink" href="#id1" title="Lien permanent vers ce tableau">¶</a></caption>
 <colgroup>
@@ -149,14 +149,20 @@
 <tr class="row-odd"><td><p>all (sans None)</p></td>
 <td><p>Tous les candidats originels croisés entre deux bibliothèques</p></td>
 </tr>
+<tr class="row-even"><td><p>cross (avec None)</p></td>
+<td><p>Résultats d’une recherche multicritères sans croisement</p></td>
+</tr>
+<tr class="row-odd"><td><p>cross (sans None)</p></td>
+<td><p>Résultats d’une recherche multicritères croisée avec une autre bibliothèque</p></td>
+</tr>
 </tbody>
 </table>
 <p>Il peut arriver que la liste ne puisse être calculée entièrement ; cette information est clairement indiquée en fin de fichier : (ATTENTION : LISTE INCOMPLETE)</p>
 <p>Si la requête est trop volumineuse, le serveur retournera un code d’erreur.</p>
 </section>
-<section id="recherche-croisee">
-<h2>Recherche croisée<a class="headerlink" href="#recherche-croisee" title="Lien permanent vers cette rubrique">¶</a></h2>
-<p>Lien « recherche » disponible dans le bandeau d’entête. Permet de connaître la situation d’une ressource (ppn) pour une bibliothèque donnée avec rebond possible sur les actions possibles ou attendues.</p>
+<section id="recherche-multicritere">
+<h2>Recherche multicritère<a class="headerlink" href="#recherche-multicritere" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Le lien « recherche » donne accès à un formulaire permettant une recherche multicritères avancée.</p>
 </section>
 <section id="tableau-de-bord">
 <h2>Tableau de bord<a class="headerlink" href="#tableau-de-bord" title="Lien permanent vers cette rubrique">¶</a></h2>
@@ -190,7 +196,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Suivi de projet</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#la-fonctionnalite-tout">La fonctionnalité « tout »</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#recherche-dans-les-listes">Recherche dans les listes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#recherche-croisee">Recherche croisée</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recherche-multicritere">Recherche multicritère</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tableau-de-bord">Tableau de bord</a></li>
 </ul>
 </li>

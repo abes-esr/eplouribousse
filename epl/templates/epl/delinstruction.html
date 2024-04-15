@@ -32,7 +32,7 @@
       <nav id="sticky-menu">
           <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
           <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
-          <a href="/{{ bdd }}/search">{% trans "Recherche" %}</a>
+          <a href="/{{ bdd }}/gen_search">{% trans "Recherche" %}</a>
           <a target="_blank" href="{% static 'doc/html/index.html' %}">{% trans "Manuel de l'utilisateur" %}</a>
           <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
@@ -91,7 +91,7 @@
                <td><center><font color= #2ba121 >{{ elmt.bound }}</font></center></td>
                <td><font color= #2ba121 >{{ elmt.oname }}</font></td>
                <td><font color= #2ba121 >{{ elmt.descr }}</font></td>
-               <td><font color= #2ba121 >{{ elmt.exc}}</font></td>
+               <td><font color= #2ba121 >{{ elmt.exc }}</font></td>
                <td><font color= #2ba121 >{{ elmt.degr }}</font></td>
           </tr>
               {% else %}
@@ -101,7 +101,7 @@
               <td><center><font color= #e32111 >{{ elmt.bound }}</font></center></td>
               <td><font color= #e32111 >{{ elmt.oname }}</font></td>
               <td><font color= #e32111 >{{ elmt.descr }}</font></td>
-              <td><font color= #e32111 >{{ elmt.exc}}</font></td>
+              <td><font color= #e32111 >{{ elmt.exc }}</font></td>
               <td><font color= #e32111 >{{ elmt.degr }}</font></td>
 
           </tr>

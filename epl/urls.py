@@ -32,6 +32,8 @@ urlpatterns = [
     path('<str:bdd>/dashboard', views.indicators, name='indicators'),
     path('<str:bdd>/dashboard/<str:lid>', views.indicators_x, name='indicators_x'),
     path('<str:bdd>/search', views.search, name='searching a serial'),
+    path('<str:bdd>/gen_search', views.general_search, name='multicriteria searching'),
+    path('<str:bdd>/gen_search_results/<str:lid>/<str:xlid>/<path:recset>/<str:sort>', views.cross_list, name='results list to multicriteria search'),
     path('<str:bdd>/reinit/<str:sid>', views.reinit, name='reinitialisation'),
 
     path('<str:bdd>/rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),

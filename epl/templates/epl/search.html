@@ -34,7 +34,7 @@
       <nav id="sticky-menu">
           <a href="/{{ bdd }}">{% trans "Accueil" %}</a>
           <a href="/{{ bdd }}/dashboard">{% trans "Supervision" %}</a>
-          <!-- <a href="/{{ bdd }}/search">{% trans "Recherche" %}</a> -->
+          <!-- <a href="/{{ bdd }}/gen_search">{% trans "Recherche" %}</a> -->
           <a target="_blank" href="{% static 'doc/html/index.html' %}">{% trans "Manuel de l'utilisateur" %}</a>
           <a target="_blank" href="/./{{ bdd }}/projectmaster">{% trans "Contact du projet" %}</a>
           <a target="_blank" href="/./default/about">{% trans "A propos" %}</a>
@@ -224,7 +224,7 @@
          <td><center><font color= #3364ff >{{ elmt.bound }}</font></center></td>
          <td><font color= #3364ff >{{ elmt.oname }}</font></td>
          <td><font color= #3364ff >{{ elmt.descr }}</font></td>
-         <td><font color= #3364ff >{{ elmt.exc}}</font></td>
+         <td><font color= #3364ff >{{ elmt.exc }}</font></td>
          <td><font color= #3364ff >{{ elmt.degr }}</font></td>
          <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
     </tr>
@@ -235,7 +235,7 @@
         <td><center>{{ elmt.bound }}</center></td>
         <td>{{ elmt.oname }}</td>
         <td>{{ elmt.descr }}</td>
-        <td>{{ elmt.exc}}</td>
+        <td>{{ elmt.exc }}</td>
         <td>{{ elmt.degr }}</td>
         <td><a href="/{{ bdd }}/instradmin/{{ elmt.id }}">{{ elmt.id }}</a></td>
     </tr>
