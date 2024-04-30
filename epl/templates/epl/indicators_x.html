@@ -47,8 +47,6 @@
               <!-- <h2>{% trans "Supervision" %}</h2> -->
                 <!-- <div id="content"> -->
                 <h2>{% trans "Synthèse filtrée avec les collections de la bibliothèque" %} : {{ libname }}</h2>
-
-
           </div>
 
 <body>
@@ -82,7 +80,7 @@
           <td><center>{{ coll }}</center></td>
     </tr>
     <tr>
-          <td>{% trans "Unicas" %}</td>
+          <td>{% trans "Unicas au départ" %}</td>
           <td><center>{{ isol }}</center></td>
     </tr>
     <tr>
@@ -92,30 +90,6 @@
     <tr>
           <td>{% trans "Ressources candidates au départ" %}</td>
           <td><center>{{ cand }}</center></td>
-    </tr>
-    {% if nlib > 3 %}
-    <tr>
-          <td>{% trans "dont doublons stricts" %}</td>
-          <td><center>{{ dupl }} ({{ percentdupl }} %)</center></td>
-    </tr>
-    <tr>
-          <td>{% trans "dont triplons" %}</td>
-          <td><center>{{ tripl }} ({{ percenttripl }} %)</center></td>
-    </tr>
-    {% endif %}
-    {% if nlib > 4 %}
-    <!-- 4 and not 3, since the checker is another library -->
-    <tr>
-          <td>{% trans "dont quadruplons" %}</td>
-          <td><center>{{ qudrpl }} ({{ percentqudrpl }} %)</center></td>
-    </tr>
-    {% endif %}
-    {% if nlib > 5 %}
-    <tr>
-         <td>{% trans "dont autres multiplons supérieurs" %}</td>
-         <td><center>{{ pluspl }} ({{ percentpluspl }} %)</center></td>
-    </tr>
-    {% endif %}
     <tr>
          <td>{% trans "Collections positionnées (exclusions incluses)" %}</td>
          <td><center>{{ rkall }}</center></td>
@@ -133,17 +107,22 @@
     {% for e, v in dict.items %}
            {% if e == "Autre (Commenter)" %}
          <tr>
-           <td>{% trans "dont : " %} {% trans "Autre (Commenter)" %}</td>
+           <td>  - {% trans "dont : " %} {% trans "Autre (Commenter)" %}</td>
            <td><center>{{ v }}</center></td>
          </tr>
            {% else %}
          <tr>
-         <td>{% trans "dont : " %} {{ e }}</td>
+         <td>  - {% trans "dont : " %} {{ e }}</td>
          <td><center>{{ v }}</center></td>
          </tr>
            {% endif %}
-    {% endfor %}</p>
+    {% endfor %}
 
+    <tr>
+         <td>{% trans "Unicas effectifs" %}</td>
+         <td><center>{{ realisol }}</center></td>
+    </tr>
+       
     <tr>
          <td>{% trans "Ressources écartées par exclusion de collection" %}</td>
          <td><center>{{ discard }}</center></td>
@@ -156,18 +135,38 @@
 
     <tr>
          <td>{% trans "Ressources effectivement candidates" %}</td>
-         <td><center>{{ realcand }}</center></td>
+         <td><center>{{ realcandress }}</center></td>
+    </tr>
+
+    {% if nlib > 3 %}
+    <tr>
+          <td>  - {% trans "dont doublons stricts" %}</td>
+          <td><center>{{ dupl }} ({{ percentdupl }} %)</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources pour lesquelles le positionnement est à compléter (hors arbitrages)" %}</td>
+          <td>  - {% trans "dont triplons" %}</td>
+          <td><center>{{ tripl }} ({{ percenttripl }} %)</center></td>
+    </tr>
+    {% endif %}
+    {% if nlib > 4 %}
+    <!-- 4 and not 3, since the checker is another library -->
+    <tr>
+          <td>  - {% trans "dont quadruplons" %}</td>
+          <td><center>{{ qudrpl }} ({{ percentqudrpl }} %)</center></td>
+    </tr>
+    {% endif %}
+    {% if nlib > 5 %}
+    <tr>
+         <td>  - {% trans "dont autres multiplons supérieurs" %}</td>
+         <td><center>{{ pluspl }} ({{ percentpluspl }} %)</center></td>
+    </tr>
+    {% endif %}
+    <tr>
+         <td>{% trans "Ressources pour lesquelles le positionnement doit être complété" %}</td>
          <td><center>{{ stocomp }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Collections impliquées dans un arbitrage quelconque" %}</td>
-         <td><center>{{ ctotal }}</center></td>
-    </tr>
-    <tr>
-         <td>{% trans "Collections impliquées dans un arbitrage de 1ère place" %}</td>
+         <td>{% trans "Collections de rang 1 impliquées dans un arbitrage de 1ère place" %}</td>
          <td><center>{{ c1st }}</center></td>
     </tr>
     <tr>
@@ -175,39 +174,31 @@
          <td><center>{{ cnone }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources impliquées dans un arbitrage quelconque" %}</td>
+         <td>{% trans "Ressources concernées par un arbitrage quelconque" %}</td>
          <td><center>{{ stotal }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources impliquées dans un arbitrage de 1ère place" %}</td>
+         <td>  - {% trans "dont ressources concernées par un arbitrage de 1ère place" %}</td>
          <td><center>{{ s1st }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources impliquées dans un arbitrage faute de 1ère place" %}</td>
+         <td>  - {% trans "dont ressources concernées par un arbitrage faute de 1ère place" %}</td>
          <td><center>{{ snone }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources dont l'instruction des éléments reliés peut débuter" %}</td>
-         <td><center>{{ bdmaybeg }}</center></td>
+         <td>{% trans "Ressources dont l'instruction des éléments reliés est en cours ou peut débuter" %}</td>
+         <td><center>{{ bd }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources dont l'instruction des éléments reliés est en cours" %}</td>
-         <td><center>{{ bdonway }}</center></td>
-    </tr>
-    <tr>
-         <td>{% trans "Ressources dont l'instruction des éléments non reliés peut débuter" %}</td>
-         <td><center>{{ notbdmaybeg }}</center></td>
-    </tr>
-    <tr>
-         <td>{% trans "Ressources dont l'instruction des éléments non reliés est en cours" %}</td>
-         <td><center>{{ notbdonway }}</center></td>
+         <td>{% trans "Ressources dont l'instruction des éléments non reliés est en cours ou peut débuter" %}</td>
+         <td><center>{{ notbd }}</center></td>
     </tr>
     <tr>
          <td>{% trans "Ressources complètement instruites" %}</td>
          <td><center>{{ fullinstr }}</center></td>
     </tr>
     <tr>
-         <td>{% trans "Ressources dont l'instruction est incomplète, défectueuse ou n'a pas débuté (alors qu'elle le peut)" %}</td>
+         <td>{% trans "Ressources dont l'instruction peut être complétée" %}</td>
          <td><center>{{ incomp }}</center></td>
     </tr>
     <tr>
@@ -224,17 +215,21 @@
 </table>
     <img src="data:image/png;base64,{{ uri1|safe }} "/>
     <HR>
+    <img src="data:image/png;base64,{{ urix1|safe }} "/>
+    <HR>
     <img src="data:image/png;base64,{{ uri2|safe }} "/>
     <HR>
     <img src="data:image/png;base64,{{ uri3|safe }} "/>
     <HR>
     <img src="data:image/png;base64,{{ uri4|safe }} "/>
-<!--
     <HR>
+    {% if uri5 %}
     <img src="data:image/png;base64,{{ uri5|safe }} "/>
--->
     <HR>
+    {% endif %}
     <img src="data:image/png;base64,{{ uri6|safe }} "/>
+    <HR>
+    <img src="data:image/png;base64,{{ uri7|safe }} "/>
 
   </div>
 
