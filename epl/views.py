@@ -1,8 +1,8 @@
-epl_version ="v2.11.112 (Judith)"
-date_version ="April 30, 2024"
+epl_version ="v2.11.114 (Judith)"
+date_version ="May 02, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.113 (~Irmingard)"
-date_version ="April 30, 2024"
+#epl_version ="v2.11.115 (~Irmingard)"
+#date_version ="May 02, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -2115,10 +2115,10 @@ def indicators(request, bdd):
     discard = len(discard)
 
     #Number of ressources whose instruction of bound elements may begin or is ongoing :
-    bd = len(ItemRecord.objects.using(bdd).filter(rank =1, status =1))
+    bd = len(ItemRecord.objects.using(bdd).filter(rank =1).exclude(status =0).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6))#status in [1,2]
 
     #Number of ressources whose instruction of not bound elements may begin or is ongoing :
-    notbd = len(ItemRecord.objects.using(bdd).filter(rank =1, status =3))
+    notbd = len(ItemRecord.objects.using(bdd).filter(rank =1).exclude(status =0).exclude(status =1).exclude(status =2).exclude(status =5).exclude(status =6))#status in [3,4]
 
     #Number of ressources completely instructed :
     fullinstr = len(ItemRecord.objects.using(bdd).filter(rank =1, status =5))
@@ -2141,12 +2141,8 @@ def indicators(request, bdd):
     #Number of real candidates (ressources)
     realcand =cand - discard# (=realcandress)
 
-    #Positionnement
-    stocomp =[]
-    for i in ItemRecord.objects.using(bdd).filter(rank =99):
-        if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and not i.sid in stocomp:
-            stocomp.append(i.sid)
-    stocomp = len(stocomp)
+    #Ressource pour lesquelles au moins un positionnement n'a jamais encore été pris
+    stocomp =realcandress - (fullinstr + incomp + fail + stotal)
     
     #Absolute achievement :
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
@@ -2267,7 +2263,7 @@ def indicators_x(request, bdd, lid):
     exclus = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =0)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
 
     #Number of collections :
-    coll = len([item for item in list(ItemRecord.objects.using(bdd).all()) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
+    coll = len([item for item in list(ItemRecord.objects.using(bdd).all()) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)])
 
     #number of libraries :
     nlib = len(Library.objects.using(bdd).all())
@@ -2287,7 +2283,7 @@ def indicators_x(request, bdd, lid):
     #Collections involved in arbitration for claiming 1st rank and number of serials concerned
     c1st, s1st =0,[]
     for i in ItemRecord.objects.using(bdd).filter(rank =1, status =0):
-        if len(ItemRecord.objects.using(bdd).filter(rank =1, sid =i.sid)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)) :
+        if len(ItemRecord.objects.using(bdd).filter(rank =1, sid =i.sid)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)):
             c1st +=1
             if i.sid not in s1st:
                 s1st.append(i.sid)
@@ -2298,7 +2294,7 @@ def indicators_x(request, bdd, lid):
     for i in ItemRecord.objects.using(bdd).exclude(rank =0).exclude(rank =1).exclude(rank =99):
         if len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =99)) ==0 and \
         len(ItemRecord.objects.using(bdd).filter(sid =i.sid, rank =1)) ==0 and \
-        len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)) :
+        len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)) :
             cnone +=1
             if i.sid not in snone:
                 snone.append(i.sid)
@@ -2318,16 +2314,16 @@ def indicators_x(request, bdd, lid):
     for e in ItemRecord.objects.using(bdd).all():
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid)) and not e.sid in cand:
             cand.append(e.sid)
-        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid)) and not e.sid in realcandress:
+        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid).exclude(rank =0)) and not e.sid in realcandress:
             realcandress.append(e.sid)
         #from which strict duplicates :
-        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) ==2 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid)) and not e.sid in dupl:
+        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) ==2 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid).exclude(rank =0)) and not e.sid in dupl:
             dupl.append(e.sid)
         #triplets :
-        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) ==3 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid)) and not e.sid in tripl:
+        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) ==3 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid).exclude(rank =0)) and not e.sid in tripl:
             tripl.append(e.sid)
         #quadruplets :
-        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) ==4 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid)) and not e.sid in qudrpl:
+        if len(ItemRecord.objects.using(bdd).filter(sid =e.sid).exclude(rank =0)) ==4 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid).exclude(rank =0)) and not e.sid in qudrpl:
             qudrpl.append(e.sid)
         #Unicas :
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) ==1 and len(ItemRecord.objects.using(bdd).filter(sid =e.sid, lid =lid)) and not e.sid in isol:
@@ -2362,42 +2358,38 @@ def indicators_x(request, bdd, lid):
     for r in ItemRecord.objects.using(bdd).all():
         if r.sid not in sidlist and r.sid not in discard:
             sidlist.append(r.sid)
-            realcandcoll +=len([item for item in list(ItemRecord.objects.using(bdd).filter(sid =r.sid).exclude(rank =0)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
+            realcandcoll +=len([item for item in list(ItemRecord.objects.using(bdd).filter(sid =r.sid).exclude(rank =0)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)])
     discard = len(discard)
 
     #Number of ressources whose instruction of bound elements may begin or is ongoing :
-    bd = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =1, status =1)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
+    bd = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =1).exclude(status =0).exclude(status =3).exclude(status =4).exclude(status =5).exclude(status =6)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)])
 
     #Number of ressources whose instruction of not bound elements may begin or is ongoing :
-    notbd = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =1, status =3)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
+    notbd = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =1).exclude(status =0).exclude(status =1).exclude(status =2).exclude(status =5).exclude(status =6)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)])
 
     #Number of ressources completely instructed :
-    fullinstr = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =1, status =5)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
+    fullinstr = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =1, status =5)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)])
 
     #Number of failing sheets :
     fail1, fail2 =0, 0
     for i in ItemRecord.objects.using(bdd).filter(status =6, rank =1):
-        if len(Instruction.objects.using(bdd).filter(sid = i.sid, name = "checker")) and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)):
+        if len(Instruction.objects.using(bdd).filter(sid = i.sid, name = "checker")) and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)):
             fail2 +=1
-        elif not len(Instruction.objects.using(bdd).filter(sid = i.sid, name = "checker")) and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)):
+        elif not len(Instruction.objects.using(bdd).filter(sid = i.sid, name = "checker")) and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid).exclude(rank =0)):
             fail1 +=1
     fail = fail1 + fail2
 
     #Number of instructions :
-    instr = len([instr for instr in list(Instruction.objects.using(bdd).all()) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =instr.sid)])
+    instr = len([instr for instr in list(Instruction.objects.using(bdd).all()) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =instr.sid).exclude(rank =0)])
 
     #Fiches dont l'instruction peut être complétée
     incomp = bd + notbd
 
-    #Number of real candidates (ressources)
-    realcand =cand - discard# (=realcandress)
-
-    #Positionnement
-    stocomp =[]
-    for i in ItemRecord.objects.using(bdd).filter(rank =99):
-        if len(ItemRecord.objects.using(bdd).filter(sid =i.sid).exclude(rank =0)) >1 and len(ItemRecord.objects.using(bdd).filter(sid =i.sid, lid =lid)) and not i.sid in stocomp:
-            stocomp.append(i.sid)
-    stocomp = len(stocomp)
+#    #Number of real candidates (ressources)
+#    realcand =cand - discard# (=realcandress)
+    
+    #Ressource pour lesquelles au moins un positionnement n'a jamais encore été pris
+    stocomp =realcandress - (fullinstr + incomp + fail + stotal)
     
     #Absolute achievement :
     absolute_real = round(10000*(fullinstr + discard)/cand)/100
@@ -2409,7 +2401,7 @@ def indicators_x(request, bdd, lid):
     uri1 = get_pie(x1, _("Ressources candidates au départ"), labels =[_("positionnement") + " ({})".format(stocomp), _("arbitrages") + " ({})".format(stotal), _("écartées par excl. de coll.") + " ({})".format(discard), _("instr° reliés") + " ({})".format(bd), _("instr° non reliés") + " ({})".format(notbd), _("instr° achevée") + " ({})".format(fullinstr), _("fiches erronées") + " ({})".format(fail)])
     
     xx1 =[stocomp, stotal, bd, notbd, fullinstr, fail]
-    urix1 = get_pie(xx1, _("Ressources effectivement candidates"), labels =[_("positionnement") + " ({})".format(stocomp), _("arbitrages") + " ({})".format(stotal), _("instr° reliés") + " ({})".format(bd), _("instr° non reliés") + " ({})".format(notbd), _("instr° achevée") + " ({})".format(fullinstr), _("fiches erronées") + " ({})".format(fail)])
+    urix1 = get_pie(xx1, _("Ressources effectivement candidates (*)"), labels =[_("positionnement") + " ({})".format(stocomp), _("arbitrages") + " ({})".format(stotal), _("instr° reliés") + " ({})".format(bd), _("instr° non reliés") + " ({})".format(notbd), _("instr° achevée") + " ({})".format(fullinstr), _("fiches erronées") + " ({})".format(fail)])
     
     gh = fullinstr + discard
     gi = cand - gh
@@ -2419,11 +2411,11 @@ def indicators_x(request, bdd, lid):
     gj = fullinstr
     gk = realcandress - fullinstr
     x3=[gj, gk]
-    uri3 = get_pie(x3, "Avancement relatif", labels =[_("instruit") + " ({})".format(gj), _("à instruire") + " ({})".format(gk)])
+    uri3 = get_pie(x3, "Avancement relatif (*)", labels =[_("instruit") + " ({})".format(gj), _("à instruire") + " ({})".format(gk)])
 
 
     x4 =[dupl, tripl, qudrpl, pluspl]
-    uri4 = get_pie(x4, _("Ressources effectivement candidates"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
+    uri4 = get_pie(x4, _("Ressources effectivement candidates (*)"), labels =[_("doublons") + " ({})".format(dupl), _("triplons") + " ({})".format(tripl), _("quadruplons") + " ({})".format(qudrpl), _("plus") + " ({})".format(pluspl)])
     
     qs =[Library.objects.using(bdd).get(name ="checker")]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -2431,16 +2423,16 @@ def indicators_x(request, bdd, lid):
     x5, y5 =[], []
     for libmt in qs:
         x5.append(libmt.name)
-        y5.append(len([instr for instr in list(Instruction.objects.using(bdd).filter(name =libmt.name)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =instr.sid)]))
+        y5.append(len([instr for instr in list(Instruction.objects.using(bdd).filter(name =libmt.name)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =instr.sid).exclude(rank =0)]))
         
         
 #    uri5 =get_scatter(x5, y5, _(""), _(""), _("nbr d'instr."))
     try:
 #        uri5 =get_pie(y5, _("nbr d'instr."), labels =[e.name + " ({}%)".format(round(10000*len(Instruction.objects.using(bdd).filter(name =e.name))/len(Instruction.objects.using(bdd).all()))/100) for e in qs])
-        uri5 =get_pie(y5, _("Instructions réalisées (lignes)"), labels =[e.name + " ({})".format(len([instr for instr in list(Instruction.objects.using(bdd).filter(name =e.name)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =instr.sid)])) for e in qs])
+        uri5 =get_pie(y5, _("Instructions réalisées (lignes) (*)"), labels =[e.name + " ({})".format(len([instr for instr in list(Instruction.objects.using(bdd).filter(name =e.name)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =instr.sid).exclude(rank =0)])) for e in qs])
     except: # (division by zero)
         pass
-
+    
     sid2, sid4 =[], []
     for it in ItemRecord.objects.using(bdd).filter(status =2):
         if not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =1)) and not len(ItemRecord.objects.using(bdd).filter(sid =it.sid, status =3)) and not it.sid in sid2:
@@ -2455,10 +2447,10 @@ def indicators_x(request, bdd, lid):
         qs.append(l)
     for libmt in qs:
         x6.append(libmt.name)
-        y61.append(len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)]))        
-        y63.append(len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)]))
-        y613.append(len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)]) + len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)]))
-    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _(""), _(""), _("Fiches à traiter") )
+        y61.append(len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)]))        
+        y63.append(len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)]))
+        y613.append(len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =1)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)]) + len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, status =3)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)]))
+    uri6 =multipleplot(x6, y61, y63, y613, _("reliés"), _("non reliés"), _("total"), _(""), _(""), _("Fiches à traiter (*)") )
 
     qs =[]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
@@ -2468,12 +2460,12 @@ def indicators_x(request, bdd, lid):
         x7.append(libmt.name)
         pos, nopos =0, 0
         for item in ItemRecord.objects.using(bdd).filter(lid =libmt.lid):
-            if not item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1 and ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid):
+            if not item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1 and ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0):
                 pos +=1
-            elif item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1 and ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid):
+            elif item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1 and ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0):
                 nopos +=1
         y7.append(round(10000*pos/(pos + nopos)/100))
-    uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements"))
+    uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements (*)"))
 
     return render(request, 'epl/indicators_x.html', locals())
 
