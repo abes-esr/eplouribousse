@@ -1,8 +1,8 @@
-epl_version ="v2.11.114 (Judith)"
-date_version ="May 02, 2024"
+epl_version ="v2.11.118 (Judith)"
+date_version ="May 13, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.115 (~Irmingard)"
-date_version ="May 02, 2024"
+#epl_version ="v2.11.119 (~Irmingard)"
+#date_version ="May 13, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -2263,7 +2263,7 @@ def indicators_x(request, bdd, lid):
     exclus = len([item for item in list(ItemRecord.objects.using(bdd).filter(rank =0)) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
 
     #Number of collections :
-    coll = len([item for item in list(ItemRecord.objects.using(bdd).all()) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0)])
+    coll = len([item for item in list(ItemRecord.objects.using(bdd).all()) if ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid)])
 
     #number of libraries :
     nlib = len(Library.objects.using(bdd).all())
@@ -2455,16 +2455,23 @@ def indicators_x(request, bdd, lid):
     qs =[]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
         qs.append(l)
-    x7, y7 =[], []
+    x7, y7, libabs, flag, nopostotal =[], [], [], 0, 0
     for libmt in qs:
         x7.append(libmt.name)
-        pos, nopos =0, 0
-        for item in ItemRecord.objects.using(bdd).filter(lid =libmt.lid):
-            if not item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1 and ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0):
-                pos +=1
-            elif item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1 and ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0):
-                nopos +=1
-        y7.append(round(10000*pos/(pos + nopos)/100))
+
+        pos =len([item for item in list(ItemRecord.objects.using(bdd).filter(lid=libmt.lid).exclude(rank =99)) if len(ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0))])
+#        if len(ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0))
+        
+        nopos =len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, rank =99)) if len(ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0))])
+        
+        nopostotal +=nopos
+        
+        if pos + nopos:
+            y7.append(round(10000*pos/(pos + nopos)/100))
+        else:
+            flag =1
+            libabs.append(libmt.name)
+            y7.append(np.nan)
     uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements (*)"))
 
     return render(request, 'epl/indicators_x.html', locals())
