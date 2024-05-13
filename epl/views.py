@@ -1,8 +1,8 @@
-epl_version ="v2.11.118 (Judith)"
+epl_version ="v2.11.120 (Judith)"
 date_version ="May 13, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.119 (~Irmingard)"
-date_version ="May 13, 2024"
+#epl_version ="v2.11.121 (~Irmingard)"
+#date_version ="May 13, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -3289,7 +3289,7 @@ def takerank(request, bdd, sid, lid):
                     host = str(request.get_host())
                     message = _("Un nouveau positionnement a été enregistré pour le ppn ") + \
                     str(sid) + " : rang " + str(i.rank) + " --> "  + Library.objects.using(bdd).get(lid =lid).name + \
-                    "\n" + "Pour plus de détails et pour positionner votre collection" + \
+                    "\n" + "Pour plus de détails et pour positionner ou repositionner votre collection" + \
                     " :\n" + "http://" + host + "/" + bdd + "/rk/" + str(sid) + '/' + str(itelmt.lid)
                     if len(dest):
                         send_mail(subject, message, replymail, dest, fail_silently=True, )
