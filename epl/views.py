@@ -1,8 +1,8 @@
-epl_version ="v2.11.120 (Judith)"
-date_version ="May 13, 2024"
+epl_version ="v2.11.122 (Judith)"
+date_version ="May 14, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.121 (~Irmingard)"
-date_version ="May 13, 2024"
+#epl_version ="v2.11.123 (~Irmingard)"
+#date_version ="May 14, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -2206,7 +2206,8 @@ def indicators(request, bdd):
     qs =[]
     for l in Library.objects.using(bdd).all().exclude(name ="checker").order_by("name"):
         qs.append(l)
-    x7, y7 =[], []
+
+    x7, y7, libabs, flag, nopostotal =[], [], [], 0, 0
     for libmt in qs:
         x7.append(libmt.name)
         pos, nopos =0, 0
@@ -2215,7 +2216,15 @@ def indicators(request, bdd):
                 pos +=1
             elif item.rank ==99 and len(ItemRecord.objects.using(bdd).filter(sid =item.sid).exclude(rank =0)) >1:
                 nopos +=1
-        y7.append(round(10000*pos/(pos + nopos)/100))
+        nopostotal +=nopos
+        
+        if pos + nopos:
+            y7.append(round(100*pos/(pos + nopos)))
+        else:
+            flag =1
+            libabs.append(libmt.name)
+            y7.append(np.nan)
+        
     uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements"))
 
     libch = ('',''),
@@ -2460,14 +2469,13 @@ def indicators_x(request, bdd, lid):
         x7.append(libmt.name)
 
         pos =len([item for item in list(ItemRecord.objects.using(bdd).filter(lid=libmt.lid).exclude(rank =99)) if len(ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0))])
-#        if len(ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0))
         
         nopos =len([item for item in list(ItemRecord.objects.using(bdd).filter(lid =libmt.lid, rank =99)) if len(ItemRecord.objects.using(bdd).filter(lid =lid, sid =item.sid).exclude(rank =0))])
         
         nopostotal +=nopos
         
         if pos + nopos:
-            y7.append(round(10000*pos/(pos + nopos)/100))
+            y7.append(round(100*pos/(pos + nopos)))
         else:
             flag =1
             libabs.append(libmt.name)
@@ -2727,7 +2735,7 @@ def general_search(request, bdd):
         title_wrd2 = forms.CharField(required = False, label =_("Autre mot du titre"))
         xlib = forms.ChoiceField(required = False, widget=forms.Select, choices=libch2, label =_("Autre bibliothèque"))
         mother = forms.ChoiceField(required = False, widget=forms.Select, choices=mothch, label =_("Collection mère"))
-        statut = forms.ChoiceField(required = False, widget=forms.Select, choices=STATUS_CHOICES, label =_("Statut dans votre bibliothèque"))
+        statut = forms.ChoiceField(required = False, widget=forms.Select, choices=STATUS_CHOICES, label =_("Statut courant"))
         lib_excl = forms.ChoiceField(required = False, widget=forms.Select, choices=EXCLUSION_CHOICES, label =_("Motif d'exclusion dans votre bibliothèque"))
         xlib_excl = forms.ChoiceField(required = False, widget=forms.Select, choices=EXCLUSION_CHOICES, label =_("Le cas échéant, motif d'exclusion dans l'autre bibliothèque"))
 

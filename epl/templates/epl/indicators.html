@@ -171,6 +171,10 @@
     </tr>
     {% endif %}
     <tr>
+         <td>{% trans "Collections restant à positionner" %}</td>
+         <td><center>{{ nopostotal }}</center></td>
+    </tr>
+    <tr>
          <td>{% trans "Ressource pour lesquelles au moins un positionnement n'a jamais encore été pris" %}</td>
          <td><center>{{ stocomp }}</center></td>
     </tr>
@@ -239,6 +243,13 @@
     <img src="data:image/png;base64,{{ uri6|safe }} "/>
     <HR>
     <img src="data:image/png;base64,{{ uri7|safe }} "/>
+        {% if flag == 1 %}
+        <p style="text-align:center;">{% trans "Pas de doublons effectifs pour" %}            
+            {% for l in libabs %}
+                : {{ l }}
+            {% endfor %}.
+        </p>
+        {% endif %}
   </div>
 
 </body>
