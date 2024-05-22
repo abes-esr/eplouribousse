@@ -1,8 +1,8 @@
-epl_version ="v2.11.122 (Judith)"
+epl_version ="v2.11.124 (Judith)"
 date_version ="May 14, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.123 (~Irmingard)"
-date_version ="May 14, 2024"
+#epl_version ="v2.11.125 (~Irmingard)"
+#date_version ="May 14, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -41,6 +41,9 @@ from django.utils.encoding import force_bytes
 
 from django.utils.encoding import iri_to_uri
 from urllib.parse import quote
+
+import datetime
+import csv
 
 ## Following is for graphics (made blinffolded from : https://youtu.be/jrT6NiM46jk amended with https://medium.com/@mdhv.kothari99/matplotlib-into-django-template-5def2e159997 for working)
 import matplotlib.pyplot as plt
@@ -1894,66 +1897,74 @@ def projmstr(request, bdd):
 def router(request, bdd, lid):
     
     try:
-        if Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name):
-            newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
-            key =newestfeature.feaname.split('$')
-            if key[0] =="10":
-                return ranktotake(request, bdd, lid, 'title')
-            elif key[0] =="11":
-                return xranktotake(request, bdd, lid, key[1], 'title')
-            elif key[0] =="12":
-                return modifranklist(request, bdd, lid, 'title')
-            elif key[0] =="20":
-                return arbitration(request, bdd, lid, 'title')
-            elif key[0] =="21":
-                return xarbitration(request, bdd, lid, key[1], 'title')
-            elif key[0] =="22":
-                return x1arb(request, bdd, lid, key[1], 'title')
-            elif key[0] =="23":
-                return x0arb(request, bdd, lid, key[1], 'title')
-            elif key[0] =="24":
-                return arbrk1(request, bdd, lid, 'title')
-            elif key[0] =="25":
-                return arbnork1(request, bdd, lid, 'title')
-            elif key[0] =="30":
-                return instrtodo(request, bdd, lid, 'title')
-            elif key[0] =="31":
-                return xinstrlist(request, bdd, lid, key[1], 'title')
-            elif key[0] =="32":
-                return xckbd(request, bdd, eval(key[1]))
-            elif key[0] =="33":
-                return xcknbd(request, bdd, eval(key[1]))
-            elif key[0] =="34":
-                return xckall(request, bdd, eval(key[1]))
-            elif key[0] =="35":
-                return instroneb(request, bdd, lid, 'title')
-            elif key[0] =="36":
-                return instrotherb(request, bdd, lid, 'title')
-            elif key[0] =="37":
-                return instronenotb(request, bdd, lid, 'title')
-            elif key[0] =="38":
-                return instrothernotb(request, bdd, lid, 'title')
-            elif key[0] =="40":
-                return tobeedited(request, bdd, lid, 'title')
-            elif key[0] =="41":
-                return mothered(request, bdd, lid, 'title')
-            elif key[0] =="42":
-                return notmothered(request, bdd, lid, 'title')
-            elif key[0] =="43":
-                return xmothered(request, bdd, lid, key[1], 'title')
-            elif key[0] =="44":
-                return xnotmothered(request, bdd, lid, key[1], 'title')
-            elif key[0] =="50":
-                return xnotmothered(request, bdd, lid, key[1], 'title')
-            elif key[0] =="60":
-                return xnotmothered(request, bdd, lid, key[1], 'title')
-            elif key[0] =="70":
-                return xnotmothered(request, bdd, lid, key[1], 'title')
-            elif key[0] =="71":
-                return xnotmothered(request, bdd, lid, key[1], 'title')
-            else:
-                messages.info(request, _("Il n'y avait pas de liste à laquelle retourner."))
-                return homme(request, bdd)
+        newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
+        key =newestfeature.feaname.split('$')
+        if key[0] =="10":
+            return ranktotake(request, bdd, lid, 'title')
+        elif key[0] =="11":
+            return xranktotake(request, bdd, lid, key[1], 'title')
+        elif key[0] =="12":
+            return modifranklist(request, bdd, lid, 'title')
+        elif key[0] =="20":
+            return arbitration(request, bdd, lid, 'title')
+        elif key[0] =="21":
+            return xarbitration(request, bdd, lid, key[1], 'title')
+        elif key[0] =="22":
+            return x1arb(request, bdd, lid, key[1], 'title')
+        elif key[0] =="23":
+            return x0arb(request, bdd, lid, key[1], 'title')
+        elif key[0] =="24":
+            return arbrk1(request, bdd, lid, 'title')
+        elif key[0] =="25":
+            return arbnork1(request, bdd, lid, 'title')
+        elif key[0] =="30":
+            return instrtodo(request, bdd, lid, 'title')
+        elif key[0] =="31":
+            return xinstrlist(request, bdd, lid, key[1], 'title')
+        elif key[0] =="32":
+            return xckbd(request, bdd, eval(key[1]))
+        elif key[0] =="33":
+            return xcknbd(request, bdd, eval(key[1]))
+        elif key[0] =="34":
+            return xckall(request, bdd, eval(key[1]))
+        elif key[0] =="35":
+            return instroneb(request, bdd, lid, 'title')
+        elif key[0] =="36":
+            return instrotherb(request, bdd, lid, 'title')
+        elif key[0] =="37":
+            return instronenotb(request, bdd, lid, 'title')
+        elif key[0] =="38":
+            return instrothernotb(request, bdd, lid, 'title')
+        elif key[0] =="40":
+            return tobeedited(request, bdd, lid, 'title')
+        elif key[0] =="41":
+            return mothered(request, bdd, lid, 'title')
+        elif key[0] =="42":
+            return notmothered(request, bdd, lid, 'title')
+        elif key[0] =="43":
+            return xmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="44":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="50":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="60":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="70":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="71":
+            return xnotmothered(request, bdd, lid, key[1], 'title')
+        elif key[0] =="80":
+            messages.info(request, _("La dernière liste affichée n'est plus accessible."))
+            return home(request, bdd)
+        elif key[0] =="81":
+            messages.info(request, _("La dernière liste affichée n'est plus accessible."))
+            return home(request, bdd)
+        elif key[0] =="82":
+            messages.info(request, _("La dernière liste affichée n'est plus accessible."))
+            return home(request, bdd)
+        else:
+            messages.info(request, _("Il n'y avait pas de liste à laquelle retourner."))
+            return home(request, bdd)
     except:
         messages.info(request, _("Il n'y avait pas de liste à laquelle retourner."))
         return home(request, bdd)
@@ -3029,6 +3040,7 @@ def general_search(request, bdd):
         elif size ==1:
             sid =list(gen_set)[0]
             messages.info(request, _("(Résultat unique de votre recherche)"))
+            newestfeat(request, bdd, lib, "81")
             return current_status(request, bdd, sid, lid)
         else:
             pass
@@ -3052,11 +3064,9 @@ def cross_list(request, bdd, lid, xlid, recset, sort):
     size =len(results_set)
     
     if xlid =="None":
-        code ="80"
         newestfeat(request, bdd, libname, "80")        
     else:
-        code ="81"
-        xnewestfeat(request, bdd, libname, "81", xlid)
+        xnewestfeat(request, bdd, libname, "82", xlid)
 
     return render(request, 'epl/gen_search_results.html', locals())
 
@@ -4081,14 +4091,44 @@ def endinstr(request, bdd, sid, lid):
     y = Flag()
     z = CheckForm(request.POST or None, instance =y)
 
-    t = Check()
-    u = AdminCheckForm(request.POST or None, instance =t)
+#    t = Check()
+#    u = AdminCheckForm(request.POST or None, instance =t)
+    
+    ###########################################################
+    class Control_Form(forms.Form):
+        visa = forms.BooleanField(required=False, initial =True, label ="Visa ok")
+        outrepasse = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un dépassement de la période de publication (saisie libre)")}), initial ="", label ="Dépassement")
+        segment_interr = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un segment interrompu (saisie libre)")}), initial ="", label ="Discontinuité")
+        exc_am_notinseg = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par une exception ou un améliorable hors segment (saisie libre)")}), initial ="", label ="Hors segment")
+        ordre_defaillant = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes non ordonnée chronologiquement (saisie libre)")}), initial ="", label ="Ordre défectueux")
+        chevauchement = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un chevauchement (saisie libre)")}), initial ="", label ="Chevauchement")
+        bib_rem_incorrect = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut d'utilisation de la collection remédiée (saisie libre)")}), initial ="", label ="Défaut remédiation")
+        formulation_risk = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut risqué de la formulation (saisie libre)")}), initial ="", label ="Formulation risquée")
+        autre = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '120', 'title': _("Saisie libre jusqu'à 120 caractères")}), initial ="", label ="Autre (à préciser)")
+
+    ctrl_form = Control_Form(request.POST or None)
+    galf =2#valeur en Post ou en None
+    if request.method =="POST" and ctrl_form.is_valid():
+        galf =1#valeur initiale en Post
+        visa = ctrl_form.cleaned_data['visa']
+        outrepasse = ctrl_form.cleaned_data['outrepasse']
+        segment_interr = ctrl_form.cleaned_data['segment_interr']
+        exc_am_notinseg = ctrl_form.cleaned_data['exc_am_notinseg']
+        ordre_defaillant = ctrl_form.cleaned_data['ordre_defaillant']
+        chevauchement = ctrl_form.cleaned_data['chevauchement']
+        bib_rem_incorrect = ctrl_form.cleaned_data['bib_rem_incorrect']
+        formulation_risk = ctrl_form.cleaned_data['formulation_risk']
+        autre = ctrl_form.cleaned_data['autre']
+        if visa ==False or outrepasse !="" or segment_interr !="" or exc_am_notinseg !="" or ordre_defaillant !="" or chevauchement !="" or bib_rem_incorrect !="" or formulation_risk !="" or autre !="":
+            galf =0#valeur en Post si la fiche n'est pas validable en l'état
+
+    ###########################################################
 
 
     if lid =="999999999":
         nextlib = liblist[0]
         nextlid = nextlib.lid
-        if u.is_valid() and t.checkin =="Visa":
+        if galf ==1:
             checkerinstruction = Instruction(sid =sid, name ="checker")
             checkerinstruction.line =0
             if len(Instruction.objects.using(bdd).filter(sid =sid, name ='checker')) ==0:
@@ -4182,25 +4222,68 @@ def endinstr(request, bdd, sid, lid):
             except:
                 return instrtodo(request, bdd, lid, 'title')
 
-        elif u.is_valid() and t.checkin =="Notify": #In this case BDD administrator will be informed of errors in the instructions.
+        elif galf ==0:
+            #In this case BDD administrator will be informed of errors in the instructions.
             # Change all ItemRecords status (except those with rank =0) for the considered sid to status =6
             for e in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
                 e.status =6
                 e.save(using=bdd)
 
             #Message data to the BDD administrator(s):
-            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "status = 6"
+            rapport =""
+            if visa ==False:
+                rapport += "Visa non OK\n"
+            if outrepasse !="":
+                rapport += "Période de publication dépassée : {} --> ligne(s) : {}\n".format(ItemRecord.objects.using(bdd).get(sid =sid, rank =1).pubhist, outrepasse)
+            if segment_interr !="":
+                rapport += "Segment discontinu --> ligne(s) : {}\n".format(segment_interr)
+            if exc_am_notinseg !="":
+                rapport += "Exception ou améliorable hors segment --> ligne(s) : {}\n".format(exc_am_notinseg)
+            if ordre_defaillant !="":
+                rapport += "Ordre chronologique non respecté --> ligne(s) : {}\n".format(ordre_defaillant)
+            if chevauchement !="":
+                rapport += "Chevauchement de segments --> ligne(s) : {}\n".format(chevauchement)
+            if bib_rem_incorrect !="":
+                rapport += "'bib.remédiée' incorrect --> ligne(s) : {}\n".format(bib_rem_incorrect)
+            if formulation_risk !="":
+                rapport += "Formulation hétérogène prêtant à confusion --> ligne(s) : {}\n".format(formulation_risk)
+            if autre !="":
+                rapport += "Autre : {}\n".format(autre)
+    
+            fiche =";;;;Horodatage : {};;;\n".format(datetime.datetime.now().strftime('%y-%m-%d %a %H:%M:%S'))
+            fiche +="Ligne;Bibliothèque;Forme reliée;Bibliothèque remédiée;Segment;Exceptions;Eléments améliorables;Horodatage\n"
+            for ins in Instruction.objects.using(bdd).filter(sid =sid):
+                fiche +="{};{};{};{};{};{};{};{}\n".format(ins.line, ins.name, ins.bound, ins.oname, ins.descr, ins.exc, ins.degr, ins.time)
+            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "fiche défectueuse"
             host = str(request.get_host())
-            message = _("Fiche défectueuse signalée par le contrôleur pour le ppn ") + str(sid) +\
-            "\n" + _("Une intervention est attendue de la part d'un des administrateurs de la base") +\
-            " :\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
-            "\n" + _("Merci !")
+            message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
+            "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris l'expéditeur à l'origine du rapport d'anomalie suivant :") +\
+            "\n" + rapport + "\n" + "(cf. fichier joint)" + "\n" + "\n" + "En cas de doute pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/index.html" + "\n" + "ou contactez l'équipe projet."
+            
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
             for d in destprov:
                 dest.append(d.contact)
             exp = request.user.email
-            send_mail(subject, message, exp, dest, fail_silently=True, )
+            cc_list =[]
+            for itr in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
+                if Library.objects.using(bdd).get(lid =itr.lid).contact and Library.objects.using(bdd).get(lid =itr.lid).contact not in cc_list:
+                    cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact)
+                if Library.objects.using(bdd).get(lid =itr.lid).contact_bis and Library.objects.using(bdd).get(lid =itr.lid).contact_bis not in cc_list:
+                    cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
+                if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in cc_list:
+                    cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
+            email = EmailMessage(
+            subject,
+            message,
+            exp,
+            to =dest,
+            cc =cc_list,
+            )
+            email.attach(sid +".csv", fiche)
+            email.send(fail_silently=False)
+            
+            messages.info(request, _("Un rapport circonstancié a été envoyé aux administrateurs du projet (pour correction) et en copie pour information aux correspondants des bibliothèques contributrices et aux contrôleurs, y compris à vous-même."))
 
             try:
                 newestfeature =Feature.objects.using(bdd).get(libname =Library.objects.using(bdd).get(lid =lid).name)
@@ -4299,8 +4382,8 @@ def endinstr(request, bdd, sid, lid):
     return render(request, 'epl/endinstruction.html', { 'ressource' : ress, \
     'library' : lib, 'instructions' : instrlist , 'librarylist' : \
     liblist, 'remedied_lib_list' : remliblist, 'sid' : sid, 'stage' : bd, 'info' : info, \
-    'lid' : lid, 'checkform' : z, 'checkerform' : u, 'expected' : expected, 'k' : k, \
-    'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer, 'bdd' : bdd, })
+    'lid' : lid, 'checkform' : z, 'expected' : expected, 'k' : k, \
+    'version' : version, 'itrec' : itrec, 'webmaster' : webmaster, 'answer' : answer, 'bdd' : bdd, 'ctrl' : ctrl_form, 'galf' : galf })
 
 @edmode1
 def ranktotake(request, bdd, lid, sort):

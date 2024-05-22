@@ -135,11 +135,11 @@ class BddAdmin(models.Model):
 #Checking choices :
 CHECKING_CHOICES = (('Visa', _("Visa OK (La fiche est conforme)")), ('Notify', _("Anomalie (L'administrateur de la base sera informé)")),)
 
-class Check(models.Model):
-    """Model for checker checking"""
-    checkin = models.CharField(_('Visa de conformité'), max_length=120, default ="Visa", blank=False, choices =CHECKING_CHOICES)
-    def __str__(self):
-        return self.checkin
+#class Check(models.Model):
+#    """Model for checker checking"""
+#    checkin = models.CharField(_('Visa de conformité'), max_length=120, default ="Visa", blank=False, choices =CHECKING_CHOICES)
+#    def __str__(self):
+#        return self.checkin
 
 class Flag(models.Model):
     """Model for checking"""

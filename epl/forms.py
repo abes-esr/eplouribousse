@@ -72,13 +72,13 @@ class CheckForm(forms.ModelForm):
         fields = ('flag',)
 
 
-class AdminCheckForm(forms.ModelForm):
-    class Meta:
-        model = Check
-        fields = ('checkin',)
-        widgets = {
-            'checkin' : forms.RadioSelect(choices=CHECKING_CHOICES,),
-        }
+#class AdminCheckForm(forms.ModelForm):
+#    class Meta:
+#        model = Check
+#        fields = ('checkin',)
+#        widgets = {
+#            'checkin' : forms.RadioSelect(choices=CHECKING_CHOICES,),
+#        }
 
 
 # class InstructionCheckerFilter(forms.Form):

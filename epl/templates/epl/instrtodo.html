@@ -43,6 +43,14 @@
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
           {% endif %}
+        
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
           <h2>{{ libname }} - {% trans "Instructions" %} - {% trans "toutes formes, tous rangs" %}</h2>
 
           <p>{% if lid != "999999999" %}{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/30/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}{% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}

@@ -36,7 +36,7 @@ Une fois tous les éléments reliés saisis, indiquez que vous avez fini en cliq
 
 .. image:: _static/instr_end.png
 
-Le contact [#f1]_ de la bibliothèque suivante recevra automatiquement un message l’avertissant que son tour est venu d’instruire. L’instruction se fait en deux cycles, le premier pour les éléments reliés, le second pour les éléments non reliés. A la fin de chaque cycle, le vérificateur porte son visa ou invalide la fiche. Dans ce dernier cas, l’administrateur de la base de données sera informé :
+Le contact [#f1]_ de la bibliothèque suivante recevra automatiquement un message l’avertissant que son tour est venu d’instruire. L’instruction se fait en deux cycles, le premier pour les éléments reliés, le second pour les éléments non reliés. A la fin de chaque cycle, le vérificateur porte son visa ou invalide la fiche. Dans ce dernier cas, il peut préciser les anomalies constatées : un rapport circonstancié sera envoyé par mail à l’administrateur pour intervention et en copie pour information aux instructeurs des bibliothèques concernées ainsi qu'aux vérificateurs, y compris l'expéditeur :
 
 .. image:: _static/instr_checker.png
 

@@ -121,9 +121,11 @@
     </div>
         {% if lid == '999999999' %}
         <div id="content">
+            <p><i>{% trans "Validez directement si ok, sinon indiquez les n° de lignes défectueuses dans la ou les fenêtres de saisie appropriées puis validez." %}</i></p>
           <form method="post">{% csrf_token %}
           <div>
-          <p>{{ checkerform }}</p>
+<!--          <p>{{ checkerform }}</p>-->
+          <p>{{ ctrl.as_ul }}</p>              
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
           </form>
