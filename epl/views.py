@@ -1,8 +1,8 @@
-epl_version ="v2.11.124 (Judith)"
-date_version ="May 14, 2024"
+epl_version ="v2.11.126 (Judith)"
+date_version ="May 22, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.125 (~Irmingard)"
-date_version ="May 14, 2024"
+#epl_version ="v2.11.127 (~Irmingard)"
+#date_version ="May 22, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -4232,23 +4232,23 @@ def endinstr(request, bdd, sid, lid):
             #Message data to the BDD administrator(s):
             rapport =""
             if visa ==False:
-                rapport += "Visa non OK\n"
+                rapport += "- Visa non OK\n"
             if outrepasse !="":
-                rapport += "Période de publication dépassée : {} --> ligne(s) : {}\n".format(ItemRecord.objects.using(bdd).get(sid =sid, rank =1).pubhist, outrepasse)
+                rapport += "- Période de publication dépassée : {} --> ligne(s) : {}\n".format(ItemRecord.objects.using(bdd).get(sid =sid, rank =1).pubhist, outrepasse)
             if segment_interr !="":
-                rapport += "Segment discontinu --> ligne(s) : {}\n".format(segment_interr)
+                rapport += "- Segment discontinu --> ligne(s) : {}\n".format(segment_interr)
             if exc_am_notinseg !="":
-                rapport += "Exception ou améliorable hors segment --> ligne(s) : {}\n".format(exc_am_notinseg)
+                rapport += "- Exception ou améliorable hors segment --> ligne(s) : {}\n".format(exc_am_notinseg)
             if ordre_defaillant !="":
-                rapport += "Ordre chronologique non respecté --> ligne(s) : {}\n".format(ordre_defaillant)
+                rapport += "- Ordre chronologique non respecté --> ligne(s) : {}\n".format(ordre_defaillant)
             if chevauchement !="":
-                rapport += "Chevauchement de segments --> ligne(s) : {}\n".format(chevauchement)
+                rapport += "- Chevauchement de segments --> ligne(s) : {}\n".format(chevauchement)
             if bib_rem_incorrect !="":
-                rapport += "'bib.remédiée' incorrect --> ligne(s) : {}\n".format(bib_rem_incorrect)
+                rapport += "- 'bib.remédiée' incorrect --> ligne(s) : {}\n".format(bib_rem_incorrect)
             if formulation_risk !="":
-                rapport += "Formulation hétérogène prêtant à confusion --> ligne(s) : {}\n".format(formulation_risk)
+                rapport += "- Formulation hétérogène prêtant à confusion --> ligne(s) : {}\n".format(formulation_risk)
             if autre !="":
-                rapport += "Autre : {}\n".format(autre)
+                rapport += "- Autre : {}\n".format(autre)
     
             fiche =";;;;Horodatage : {};;;\n".format(datetime.datetime.now().strftime('%y-%m-%d %a %H:%M:%S'))
             fiche +="Ligne;Bibliothèque;Forme reliée;Bibliothèque remédiée;Segment;Exceptions;Eléments améliorables;Horodatage\n"
@@ -4258,7 +4258,7 @@ def endinstr(request, bdd, sid, lid):
             host = str(request.get_host())
             message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris l'expéditeur à l'origine du rapport d'anomalie suivant :") +\
-            "\n" + rapport + "\n" + "(cf. fichier joint)" + "\n" + "\n" + "En cas de doute pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/index.html" + "\n" + "ou contactez l'équipe projet."
+            "\n" + rapport + "(cf. fichier joint)" + "\n" + "*** Notez que la fiche pourra repasser si nécessaire. ***" + "\n" + "\n" + "En cas de doute pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/index.html" + "\n" + "ou contactez l'équipe projet."
             
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
@@ -4273,6 +4273,15 @@ def endinstr(request, bdd, sid, lid):
                     cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
                 if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in cc_list:
                     cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
+            if Library.objects.using(bdd).get(lid ="999999999").contact not in cc_list:
+                cc_list.append(Library.objects.using(bdd).get(lid ="999999999").contact)
+            if Library.objects.using(bdd).get(lid ="999999999").contact_bis not in cc_list:
+                cc_list.append(Library.objects.using(bdd).get(lid ="999999999").contact_bis)
+            if Library.objects.using(bdd).get(lid ="999999999").contact_ter not in cc_list:
+                cc_list.append(Library.objects.using(bdd).get(lid ="999999999").contact_ter)
+            for em in cc_list:
+                if em in dest:
+                    cc_list.remove(em)
             email = EmailMessage(
             subject,
             message,
