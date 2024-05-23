@@ -1,8 +1,8 @@
-epl_version ="v2.11.126 (Judith)"
-date_version ="May 22, 2024"
+epl_version ="v2.11.128 (Judith)"
+date_version ="May 23, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.127 (~Irmingard)"
-date_version ="May 22, 2024"
+#epl_version ="v2.11.129 (~Irmingard)"
+#date_version ="May 23, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -4250,15 +4250,16 @@ def endinstr(request, bdd, sid, lid):
             if autre !="":
                 rapport += "- Autre : {}\n".format(autre)
     
-            fiche =";;;;Horodatage : {};;;\n".format(datetime.datetime.now().strftime('%y-%m-%d %a %H:%M:%S'))
+            fiche =";;;;;;;{}\n".format(datetime.datetime.now().strftime('%y-%m-%d %a %H:%M:%S'))
+            fiche +=";;;;;;;\n"        
             fiche +="Ligne;Bibliothèque;Forme reliée;Bibliothèque remédiée;Segment;Exceptions;Eléments améliorables;Horodatage\n"
-            for ins in Instruction.objects.using(bdd).filter(sid =sid):
+            for ins in Instruction.objects.using(bdd).filter(sid =sid).order_by('line'):
                 fiche +="{};{};{};{};{};{};{};{}\n".format(ins.line, ins.name, ins.bound, ins.oname, ins.descr, ins.exc, ins.degr, ins.time)
             subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "fiche défectueuse"
             host = str(request.get_host())
             message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris l'expéditeur à l'origine du rapport d'anomalie suivant :") +\
-            "\n" + rapport + "(cf. fichier joint)" + "\n" + "*** Notez que la fiche pourra repasser si nécessaire. ***" + "\n" + "\n" + "En cas de doute pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/index.html" + "\n" + "ou contactez l'équipe projet."
+            "\n" + rapport + "(cf. fichier joint)" + "\n" + "*** Selon la nature des corrections à apporter la fiche pourra refaire un cycle partiel ou total. ***" + "\n" + "\n" + "En cas de doute sur la façon de renseigner les lignes d'instruction pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/3_3.html" + "\n" + "ou contactez l'équipe projet."
             
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
