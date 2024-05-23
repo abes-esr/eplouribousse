@@ -1,8 +1,8 @@
-epl_version ="v2.11.128 (Judith)"
-date_version ="May 23, 2024"
+epl_version ="v2.11.130 (Judith)"
+date_version ="May 24, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.129 (~Irmingard)"
-date_version ="May 23, 2024"
+#epl_version ="v2.11.131 (~Irmingard)"
+#date_version ="May 24, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -3126,7 +3126,7 @@ def reinit(request, bdd, sid):
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
                 " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
-                "\n" + _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")
+                "\n" + _("(Ce message fait suite à une correction apportée par un administrateur projet)")
                 dest =[]
                 if Utilisateur.objects.using(bdd).get(mail =nextlib.contact).ins:
                     dest.append(nextlib.contact)
@@ -3142,7 +3142,23 @@ def reinit(request, bdd, sid):
                     st =1 #bidon pour passer
                 if len(dest):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
-
+                    
+            #*********************
+            to_list, cc_list =[], [BddAdmin.objects.using(bdd).get(contact =request.user.email).contact]
+            for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
+                to_list.append(bdadm.contact)
+    #        BddAdmin.objects.using(bdd).filter(contact =request.user.email))
+            body ="La correction de la fiche a été réalisée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
+            email = EmailMessage(
+                "eplouribousse / admin : {} / {}".format(bdd, sid),
+                body,
+                replymail,
+                to =to_list,
+                cc =cc_list,
+                )
+            email.send(fail_silently=False)
+            messages.info(request, _("Un message a été envoyé à vos co-administrateurs de projet pour information (vous le recevrez en copie)"))
+            #*********************
 
             return current_status(request, bdd, sid, "999999999")
         else:
@@ -4232,7 +4248,7 @@ def endinstr(request, bdd, sid, lid):
             #Message data to the BDD administrator(s):
             rapport =""
             if visa ==False:
-                rapport += "- Visa non OK\n"
+                rapport += "(Visa non OK)\n"
             if outrepasse !="":
                 rapport += "- Période de publication dépassée : {} --> ligne(s) : {}\n".format(ItemRecord.objects.using(bdd).get(sid =sid, rank =1).pubhist, outrepasse)
             if segment_interr !="":
@@ -5701,9 +5717,9 @@ def statadmin(request, bdd, sid):
         if Proj_setting.objects.using(bdd).all()[0].ins:
             nextlib =Library.objects.using(bdd).get(name =name)
             nextlid = nextlib.lid
-            message_end = _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)") + "\n" + _("(Il est possible qu'il vous ait attribué le tour pour simple vérification ; dans ce cas, vous n'aurez plus qu'à indiquer que vous avez fini pour la phase courante)")
+            message_end = _("(Ce message fait suite à une correction apportée par un administrateur projet)") + "\n" + _("(Il est possible qu'il vous ait attribué le tour pour simple vérification ; dans ce cas, vous n'aurez plus qu'à indiquer que vous avez fini pour la phase courante)")
             if nextlid =="999999999":
-                message_end = _("(Ce message fait suite à une correction apportée par l'administrateur de la base de données)")            
+                message_end = _("(Ce message fait suite à une correction apportée par un administrateur projet)") + "\n" + _("(Normalement, vous n'avez plus qu'à valider)")            
             subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
@@ -5724,6 +5740,23 @@ def statadmin(request, bdd, sid):
                 st =1 #bidon pour passer
             if len(dest):
                 send_mail(subject, message, replymail, dest, fail_silently=True, )
+        
+        #*********************
+        to_list, cc_list =[], [BddAdmin.objects.using(bdd).get(contact =request.user.email).contact]
+        for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
+            to_list.append(bdadm.contact)
+#        BddAdmin.objects.using(bdd).filter(contact =request.user.email))
+        body ="La correction de la fiche a été réalisée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
+        email = EmailMessage(
+            "eplouribousse / admin : {} / {}".format(bdd, sid),
+            body,
+            replymail,
+            to =to_list,
+            cc =cc_list,
+            )
+        email.send(fail_silently=False)
+        messages.info(request, _("Un message a été envoyé à vos co-administrateurs de projet pour information (vous le recevrez en copie)"))
+        #*********************
 
         return current_status(request, bdd, sid, "999999999")
 
