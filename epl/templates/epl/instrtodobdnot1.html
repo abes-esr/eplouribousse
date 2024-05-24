@@ -54,6 +54,13 @@
           <!-- (User : Anonymous) -->
           {% endif %}
 
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
           <h2>{{ libname }} - {% trans "Instructions" %} - {% trans "forme reliée, autres rangs" %}</h2>
 

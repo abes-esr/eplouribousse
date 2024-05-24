@@ -43,6 +43,15 @@
           <!-- <b><font color= #ff0004 >(User : Anonymous)</font></b> -->
           <!-- (User : Anonymous) -->
           {% endif %}
+        
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <center><font color= #0000FF ><p>{{ message }}</p></font></center>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
           <h2>{% trans "Contrôle à mi-chemin" %}</h2>
           <h2>{{ coll_set }} (ou)</h2>
 
