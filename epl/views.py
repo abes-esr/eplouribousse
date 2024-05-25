@@ -1,8 +1,8 @@
-epl_version ="v2.11.132 (Judith)"
-date_version ="May 24, 2024"
+epl_version ="v2.11.134 (Judith)"
+date_version ="May 25, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.133 (~Irmingard)"
-date_version ="May 24, 2024"
+#epl_version ="v2.11.135 (~Irmingard)"
+#date_version ="May 25, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -4110,17 +4110,17 @@ def endinstr(request, bdd, sid, lid):
 #    t = Check()
 #    u = AdminCheckForm(request.POST or None, instance =t)
     
-    ###########################################################
+    ###########################################################    
     class Control_Form(forms.Form):
         visa = forms.BooleanField(required=False, initial =True, label ="Visa ok")
-        outrepasse = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un dépassement de la période de publication (saisie libre)")}), initial ="", label ="Dépassement")
-        segment_interr = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un segment interrompu (saisie libre)")}), initial ="", label ="Discontinuité")
-        exc_am_notinseg = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par une exception ou un améliorable hors segment (saisie libre)")}), initial ="", label ="Hors segment")
-        ordre_defaillant = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes non ordonnée chronologiquement (saisie libre)")}), initial ="", label ="Ordre défectueux")
-        chevauchement = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un chevauchement (saisie libre)")}), initial ="", label ="Chevauchement")
-        bib_rem_incorrect = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut d'utilisation de la collection remédiée (saisie libre)")}), initial ="", label ="Défaut remédiation")
-        formulation_risk = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut risqué de la formulation (saisie libre)")}), initial ="", label ="Formulation risquée")
-        autre = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '120', 'title': _("Saisie libre jusqu'à 120 caractères")}), initial ="", label ="Autre (à préciser)")
+        outrepasse = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un dépassement de la période de publication (saisie libre)")}), initial ="", label =_("Période de publication dépassée ({})".format(ItemRecord.objects.using(bdd).get(sid = sid, rank =1).pubhist)))
+        segment_interr = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un segment interrompu (saisie libre)")}), initial ="", label =_("Segment discontinu"))
+        exc_am_notinseg = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par une exception ou un améliorable hors segment (saisie libre)")}), initial ="", label =_("Exception ou améliorable hors segment"))
+        ordre_defaillant = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes non ordonnée chronologiquement (saisie libre)")}), initial ="", label =_("Ordre chronologique non respecté"))
+        chevauchement = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un chevauchement (saisie libre)")}), initial ="", label =_("Chevauchement de segments"))
+        bib_rem_incorrect = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut d'utilisation de la collection remédiée (saisie libre)")}), initial ="", label =_("Mauvaise utilisation de 'Bibliothèque remédiée'"))
+        formulation_risk = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut risqué de la formulation (saisie libre)")}), initial ="", label =_("Formulation hétérogène prêtant à confusion"))
+        autre = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '120', 'title': _("Saisie libre jusqu'à 120 caractères"), 'placeholder': _("Erreur de saisie à la ligne unetelle par exemple")}), initial ="", label =_("Autre (à préciser)"))
 
     ctrl_form = Control_Form(request.POST or None)
     galf =2#valeur en Post ou en None
@@ -4260,7 +4260,7 @@ def endinstr(request, bdd, sid, lid):
             if chevauchement !="":
                 rapport += "- Chevauchement de segments --> ligne(s) : {}\n".format(chevauchement)
             if bib_rem_incorrect !="":
-                rapport += "- 'bib.remédiée' incorrect --> ligne(s) : {}\n".format(bib_rem_incorrect)
+                rapport += "- Mauvaise utilisation de 'Bibliothèque remédiée' --> ligne(s) : {}\n".format(bib_rem_incorrect)
             if formulation_risk !="":
                 rapport += "- Formulation hétérogène prêtant à confusion --> ligne(s) : {}\n".format(formulation_risk)
             if autre !="":
