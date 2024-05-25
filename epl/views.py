@@ -1,8 +1,8 @@
-epl_version ="v2.11.134 (Judith)"
+epl_version ="v2.11.136 (Judith)"
 date_version ="May 25, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.135 (~Irmingard)"
-date_version ="May 25, 2024"
+#epl_version ="v2.11.137 (~Irmingard)"
+#date_version ="May 25, 2024"
 
 
 from django.shortcuts import render, redirect
@@ -4120,7 +4120,7 @@ def endinstr(request, bdd, sid, lid):
         chevauchement = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un chevauchement (saisie libre)")}), initial ="", label =_("Chevauchement de segments"))
         bib_rem_incorrect = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut d'utilisation de la collection remédiée (saisie libre)")}), initial ="", label =_("Mauvaise utilisation de 'Bibliothèque remédiée'"))
         formulation_risk = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut risqué de la formulation (saisie libre)")}), initial ="", label =_("Formulation hétérogène prêtant à confusion"))
-        autre = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '120', 'title': _("Saisie libre jusqu'à 120 caractères"), 'placeholder': _("Erreur de saisie à la ligne unetelle par exemple")}), initial ="", label =_("Autre (à préciser)"))
+        autre = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '120', 'title': _("Saisie libre jusqu'à 120 caractères"), 'placeholder': _("Par exemple : Faute de frappe à la ligne 'tant', champ 'untel'")}), initial ="", label =_("Autre (à préciser)"))
 
     ctrl_form = Control_Form(request.POST or None)
     galf =2#valeur en Post ou en None
