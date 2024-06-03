@@ -1,8 +1,8 @@
-epl_version ="v2.11.138 (Judith)"
-date_version ="May 30, 2024"
+epl_version ="v2.11.140 (Judith)"
+date_version ="June 03, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.139 (~Irmingard)"
-date_version ="May 30, 2024"
+#epl_version ="v2.11.141 (~Irmingard)"
+#date_version ="June 03, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -3147,11 +3147,12 @@ def reinit(request, bdd, sid):
             for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
                 to_list.append(bdadm.contact)
     #        BddAdmin.objects.using(bdd).filter(contact =request.user.email))
-            body ="La correction de la fiche a été réalisée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
+            body ="La fiche a été corrigée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
             email = EmailMessage(
                 "eplouribousse / admin : {} / {}".format(bdd, sid),
                 body,
                 replymail,
+                reply_to =[request.user.email],
                 to =to_list,
                 cc =cc_list,
                 )
@@ -4271,17 +4272,16 @@ def endinstr(request, bdd, sid, lid):
             fiche +=";;;;;;;\n"
             for ins in Instruction.objects.using(bdd).filter(sid =sid).order_by('line'):
                 fiche +="""{};"{}";{};"{}";"{}";"{}";"{}";{}\n""".format(ins.line, ins.name, ins.bound, ins.oname, ins.descr, ins.exc, ins.degr, ins.time)
-            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "fiche défectueuse"
+            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "Rapport d'anomalie"
             host = str(request.get_host())
             message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
-            "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris l'expéditeur à l'origine du rapport d'anomalie suivant :") +\
-            "\n" + rapport + "cf. fichier joint (*)" + "\n" + "*** Selon la nature des corrections à apporter la fiche pourra refaire un cycle partiel ou total. ***" + "\n" + "\n" + "En cas de doute sur la façon de renseigner les lignes d'instruction pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/3_3.html" + "\n" + "ou contactez l'équipe projet." + "\n" + "\n" + "(*)Options d'ouverture dans un tableur --> ligne d'entête = oui --> séparateurs = tabulation et ; --> identificateur de texte = \""
+            "\n" + "\n" + _("Contrôleur à l'origine du rapport d'anomalie : {} ({})".format(request.user.username,request.user.email)) + "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris le contrôleur à l'origine du rapport d'anomalie suivant :") +\
+            "\n" + rapport + "cf. fichier joint (*)" + "\n" + "*** Selon la nature des corrections à apporter, la fiche pourra refaire un cycle partiel ou total. ***" + "\n" + "\n" + "En cas de doute sur la façon de renseigner les lignes d'instruction pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/3_3.html" + "\n" + "ou contactez l'équipe projet." + "\n" + "\n" + "(*)Options d'ouverture dans un tableur --> ligne d'entête = oui --> séparateurs = tabulation et ; --> identificateur de texte = \""
             
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
             for d in destprov:
                 dest.append(d.contact)
-            exp = request.user.email
             cc_list =[]
             for itr in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
                 if Library.objects.using(bdd).get(lid =itr.lid).contact and Library.objects.using(bdd).get(lid =itr.lid).contact not in cc_list:
@@ -4302,7 +4302,8 @@ def endinstr(request, bdd, sid, lid):
             email = EmailMessage(
             subject,
             message,
-            exp,
+            replymail,
+            reply_to =[request.user.email],
             to =dest,
             cc =cc_list,
             )
@@ -5746,11 +5747,12 @@ def statadmin(request, bdd, sid):
         for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
             to_list.append(bdadm.contact)
 #        BddAdmin.objects.using(bdd).filter(contact =request.user.email))
-        body ="La correction de la fiche a été réalisée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
+        body ="La fiche a été corrigée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
         email = EmailMessage(
             "eplouribousse / admin : {} / {}".format(bdd, sid),
             body,
             replymail,
+            reply_to =[request.user.email],
             to =to_list,
             cc =cc_list,
             )
