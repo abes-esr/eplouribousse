@@ -1,8 +1,8 @@
-epl_version ="v2.11.142 (Judith)"
-date_version ="June 03, 2024"
+epl_version ="v2.11.144 (Judith)"
+date_version ="June 07, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.143 (~Irmingard)"
-date_version ="June 03, 2024"
+#epl_version ="v2.11.145 (~Irmingard)"
+#date_version ="June 07, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -2732,8 +2732,8 @@ def general_search(request, bdd):
     ('e', _('Positionnement non modifiable')),\
     ('f', _('Le repositionnement de votre collection en 1 lèverait un arbitrage de type 0')),\
     ('g', _('Votre collection est impliquée dans un arbitrage de type 1')),\
-    ('h', _('Instruction des reliés à débuter ou en cours dans une des bibliothèques')),\
-    ('i', _('Instruction des non reliés à débuter ou en cours dans une des bibliothèques')),\
+    ('h', _('Instruction des reliés à débuter ou incomplète')),\
+    ('i', _('Instruction des non reliés à débuter ou incomplète')),\
     ('j', _('Instruction achevée')),\
     ('k', _('Anomalie relevée')),\
 
@@ -2952,20 +2952,33 @@ def general_search(request, bdd):
                         statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid, rank =1).sid)
                     except:
                         pass
-
-            if statut =="h":#Instruction des reliés à débuter ou en cours dans une des bibliothèques
-                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =1):
-                    try:
-                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
-                    except:
-                        pass
                     
-            if statut =="i":#Instruction des non reliés à débuter ou en cours dans une des bibliothèques
-                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =3):
+        if statut =="h":#Instruction des reliés à débuter ou incomplète
+            for i in ItemRecord.objects.using(bdd).filter(rank =1, status =1):
+                try:
+                    statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                except:
+                    pass
+            for i in ItemRecord.objects.using(bdd).filter(rank =1, status =2):
+                if len(ItemRecord.objects.using(bdd).exclude(rank =0).filter(sid =i.sid)) == len(ItemRecord.objects.using(bdd).exclude(rank =0).filter(sid =i.sid, status =2)):
                     try:
-                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =i.sid, lid =lid).sid)
                     except:
                         pass
+                
+        if statut =="i":#Instruction des non reliés à débuter ou incomplète
+            for i in ItemRecord.objects.using(bdd).filter(rank =1, status =3):
+                try:
+                    statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                except:
+                    pass
+            for i in ItemRecord.objects.using(bdd).filter(rank =1, status =4):
+                if len(ItemRecord.objects.using(bdd).exclude(rank =0).filter(sid =i.sid)) == len(ItemRecord.objects.using(bdd).exclude(rank =0).filter(sid =i.sid, status =4)):
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =i.sid, lid =lid).sid)
+                    except:
+                        pass
+
 
             if statut =="j":#Instruction achevée
                 for i in ItemRecord.objects.using(bdd).filter(rank =1, status =5):
