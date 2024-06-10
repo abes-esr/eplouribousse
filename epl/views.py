@@ -1,8 +1,8 @@
-epl_version ="v2.11.146 (Judith)"
+epl_version ="v2.11.148 (Judith)"
 date_version ="June 10, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.147 (~Irmingard)"
-date_version ="June 10, 2024"
+#epl_version ="v2.11.149 (~Irmingard)"
+#date_version ="June 10, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -4654,10 +4654,12 @@ def faulty(request, bdd):
             name = lib
             faulty_list =ItemRecord.objects.using(bdd).filter(lid =lid, status =6).order_by(sort)
         else:
+            lid ="999999999"
             name = "-- Toutes bibliothèques --"
             faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6).order_by(sort)
             
     if request.method =="GET":
+        lid ="999999999"
         name = "-- Toutes bibliothèques --"
         faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6).order_by("title")
 
