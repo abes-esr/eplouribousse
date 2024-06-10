@@ -1,8 +1,8 @@
-epl_version ="v2.11.144 (Judith)"
-date_version ="June 07, 2024"
+epl_version ="v2.11.146 (Judith)"
+date_version ="June 10, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.145 (~Irmingard)"
-date_version ="June 07, 2024"
+#epl_version ="v2.11.147 (~Irmingard)"
+#date_version ="June 10, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -404,6 +404,11 @@ def home(request, bdd):
         if len(ItemRecord.objects.using(bdd).filter(sid =e.sid)) >1 and not e.sid in cand:
             cand.append(e.sid)
     totcand =len(cand)
+    
+    user_isadmin =0
+    if ItemRecord.objects.using(bdd).filter(status =6):
+        if request.user.email in [x.contact for x in list(BddAdmin.objects.using(bdd).all())]:
+            user_isadmin =1
 
     return render(request, 'epl/home.html', locals())
 
@@ -2782,9 +2787,6 @@ def general_search(request, bdd):
         xlib_excl_set = {"xlib_excl"}
         for i in ItemRecord.objects.using(bdd).filter(lid =lid):
             xlib_excl_set.add(i.sid)
-        tlib_excl_set = {"tlib_excl"}
-        for i in ItemRecord.objects.using(bdd).filter(lid =lid):
-            tlib_excl_set.add(i.sid)
         mother_set = {"mother"}
         for i in ItemRecord.objects.using(bdd).filter(lid =lid):
             mother_set.add(i.sid)
@@ -2819,7 +2821,7 @@ def general_search(request, bdd):
                 if title_wrd1 in i.title.split():
                     title_wrd1_set.add(i.sid)
             if title_wrd1_set =={"title_wrd1"}:
-                messages.info(request, _("""Pas de réponse pour le mot "{}" """).format(title_wrd1))
+                messages.info(request, _("""Le terme "{}" est trop restrictif""").format(title_wrd1))
 
         if title_wrd2:
             title_wrd2_set ={"title_wrd2"}
@@ -2827,7 +2829,7 @@ def general_search(request, bdd):
                 if title_wrd2 in i.title.split():
                     title_wrd2_set.add(i.sid)
             if title_wrd2_set =={"title_wrd2"}:
-                messages.info(request, _("""Pas de réponse pour le mot "{}" """).format(title_wrd2))    
+                messages.info(request, _("""Le terme "{}" est trop restrictif""").format(title_wrd2))    
         
         if xlib !="nix":
             xlid =Library.objects.using(bdd).get(name =xlib).lid
@@ -2980,22 +2982,16 @@ def general_search(request, bdd):
                         pass
 
 
-            if statut =="j":#Instruction achevée
-                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =5):
-                    try:
-                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
-                    except:
-                        pass
+        if statut =="j":#Instruction achevée
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid, status =5):
+                statut_set.add(i.sid)
 
-            if statut =="k":#Anomalie relevée
-                for i in ItemRecord.objects.using(bdd).filter(rank =1, status =6):
-                    try:
-                        statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
-                    except:
-                        pass
+        if statut =="k":#Anomalie relevée
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid, status =6):
+                statut_set.add(i.sid)
                         
-            if statut_set =={"statut"}:
-                messages.info(request, _("Le statut sélectionné ne ramène aucun résultat"))
+        if statut_set =={"statut"}:
+            messages.info(request, _("Le statut sélectionné ne ramène aucun résultat"))
                 
         if lib_excl =="nix":
             pass
@@ -4566,6 +4562,9 @@ def excllist(request, bdd):
     EXCLUSION_CHOICES = ('Tous', _('Tous')),
     for e in list(ItemRecord.objects.using(bdd).filter(rank =0).exclude(excl ="Autre (Commenter)").values_list('excl', flat =True).distinct()):
         EXCLUSION_CHOICES += (e, e),
+    for e in Exclusion.objects.using(bdd).all().order_by('label'):
+        if (e.label, e.label) not in EXCLUSION_CHOICES:
+            EXCLUSION_CHOICES += (e.label, e.label),
     EXCLUSION_CHOICES += ("Autre (Commenter)", _("Autre (Commenter)")),
 
     l =0
@@ -4636,27 +4635,34 @@ def faulty(request, bdd):
 
     l =0
 
-    libch = ('checker','checker'),
+    libch = ('all',_('-- Toutes bibliothèques --')),
     for l in Library.objects.using(bdd).all().exclude(name ='checker').order_by('name'):
         libch += (l.name, l.name),
 
     sortch =('title',_('titre')), ('cn',_('cote et titre')), ('sid',_('ppn')),
 
     class Lib_Form(forms.Form):
-        lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch, label =_("Votre bibliothèque"))
-        sortingby = forms.ChoiceField(required = True, widget=forms.Select, choices=sortch, label =_("Critère de tri"))
+        lib = forms.ChoiceField(required = True, widget=forms.Select, choices=libch, initial = "all", label =_("Bibliothèque"))
+        sortingby = forms.ChoiceField(required = True, widget=forms.Select, choices=sortch, initial = "title", label =_("Critère de tri"))
     form = Lib_Form(request.POST or None)
     if form.is_valid():
         l =1
         lib = form.cleaned_data['lib']
         sort = form.cleaned_data['sortingby']
-        lid = Library.objects.using(bdd).get(name =lib).lid
-        name = lib
+        if lib !="all":
+            lid = Library.objects.using(bdd).get(name =lib).lid
+            name = lib
+            faulty_list =ItemRecord.objects.using(bdd).filter(lid =lid, status =6).order_by(sort)
+        else:
+            name = "-- Toutes bibliothèques --"
+            faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6).order_by(sort)
+            
+    if request.method =="GET":
+        name = "-- Toutes bibliothèques --"
+        faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6).order_by("title")
 
-        faulty_list =ItemRecord.objects.using(bdd).filter(rank =1, status =6).order_by(sort)
-
-        length =len(faulty_list)
-        sidlist = [ir.sid for ir in faulty_list]
+    length =len(faulty_list)
+    sidlist = [ir.sid for ir in faulty_list]
 
     return render(request, 'epl/faulty.html', locals())
 

@@ -157,7 +157,7 @@ Historique de la publication : 1906- 9999
 <section id="correction-des-enregistrements-instructions-et-rattachements">
 <h2>Correction des enregistrements (instructions et rattachements)<a class="headerlink" href="#correction-des-enregistrements-instructions-et-rattachements" title="Lien permanent vers cette rubrique">¶</a></h2>
 <p>Le ou les administrateurs de la base sont alertés par mail automatiquement quand une incohérence est signalée dans la fiche d’instruction.</p>
-<p>L’administrateur de la base devra modifier les instructions incriminées depuis la page de type (host)/current_status/ppn/rcr accessible en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche croisée) ; il peut le faire de deux façons :</p>
+<p>L’administrateur de la base devra modifier les instructions incriminées depuis la page de type (host)/current_status/ppn/rcr accessible en tant que telle et également depuis plusieurs pages indiquant ce lien (indicateurs, recherche …) ; il peut le faire de deux façons :</p>
 <ul class="simple">
 <li><p>Il corrige lui-même les instructions (par le lien d’enregistrement) en suivant récursivement le traitement puis il attribue le tour à la bonne bibliothèque (bouton « Attribuer le tour ») Dans ce cas, l’application réalise les contrôles nécessaires et signale les éventuelles défauts à corriger avant de recalculer les statuts.</p></li>
 <li><p>Dans certains cas, il vaut mieux carrément réinitialiser la fiche en début de cycle courant (bouton « Réinitialiser la fiche ») Dans ce cas, l’application supprime les instructions du cycle en cours et recalcule les statuts.</p></li>
@@ -182,8 +182,15 @@ Historique de la publication : 1906- 9999
 </div></blockquote>
 </li>
 </ul>
-<p>Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord) Cet état passe à 6. L’administrateur peut faire les corrections à mesure, ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées.</p>
-<p>Le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés.</p>
+<p>(Le statut 5 est attribué à l’ensemble des enregistrements de rattachement dès visa de conformité à la fin du cycle d’instruction des éléments non reliés)</p>
+<p>Le signalement d’une anomalie à l’administrateur de la base a pour effet de modifier l’état de l’ensemble des enregistrements concernés (ItemRecord). Cet état passe à 6.</p>
+<p>Tout administrateur peut faire les corrections à mesure ou attendre qu’il y en ait un certain nombre à effectuer. Il est même possible de ne les traiter qu’en toute fin de processus, une fois toutes les autres fiches entièrement traitées. Pour ce faire, il n’est pas nécessaire d’avoir conservé l’ensemble des mails reçus ; la liste des fiches contenant des anomalies est toujours accessible depuis :</p>
+<ul class="simple">
+<li><p>la page d’accueil si l’on est identifié en tant d’administrateur (et si la liste n’est pas vide)</p></li>
+<li><p>la plateforme de gestion du projet</p></li>
+<li><p>le tableau synthétique général d’avancement (indicateurs)</p></li>
+<li><p>ou encore à partir de la page « Recherche » (recherche multicritères)</p></li>
+</ul>
 </section>
 <section id="controles">
 <h2>Contrôles<a class="headerlink" href="#controles" title="Lien permanent vers cette rubrique">¶</a></h2>
