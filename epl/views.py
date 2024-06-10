@@ -1,8 +1,8 @@
-epl_version ="v2.11.148 (Judith)"
-date_version ="June 10, 2024"
+epl_version ="v2.11.150 (Judith)"
+date_version ="June 11, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.149 (~Irmingard)"
-date_version ="June 10, 2024"
+#epl_version ="v2.11.151 (~Irmingard)"
+#date_version ="June 11, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -407,8 +407,11 @@ def home(request, bdd):
     
     user_isadmin =0
     if ItemRecord.objects.using(bdd).filter(status =6):
-        if request.user.email in [x.contact for x in list(BddAdmin.objects.using(bdd).all())]:
-            user_isadmin =1
+        try:
+            if request.user.email in [x.contact for x in list(BddAdmin.objects.using(bdd).all())]:
+                user_isadmin =1
+        except:
+            pass
 
     return render(request, 'epl/home.html', locals())
 
@@ -2174,7 +2177,7 @@ def indicators(request, bdd):
     gh = fullinstr + discard
     gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("à instruire") + " ({})".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à traiter") + " ({})".format(gh), _("pas traité") + " ({})".format(gi)])
     
     gj = fullinstr
     gk = realcandress - fullinstr
@@ -2430,7 +2433,7 @@ def indicators_x(request, bdd, lid):
     gh = fullinstr + discard
     gi = cand - gh
     x2 =[gh, gi]
-    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à instruire") + " ({})".format(gh), _("à instruire") + " ({})".format(gi)])
+    uri2 = get_pie(x2, "Avancement absolu", labels =[_("plus à traiter") + " ({})".format(gh), _("pas traité") + " ({})".format(gi)])
     
     gj = fullinstr
     gk = realcandress - fullinstr
