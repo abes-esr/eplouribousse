@@ -68,7 +68,9 @@
       </div>
       <div id="content">
       <p><a href="/{{ bdd }}/excl_adm">{% trans "Gestion des motifs d'exclusion" %}</a></p>
-<p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
+<p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in Exclusion_current %} {{ ex }} - {% endfor %} </p>
+<p>{% trans "Autre(s) précédemment utilisé(s)" %} ({{ prevexclnbr }}) : {% for exprev in Exclusion_previous %} {{ exprev }} - {% endfor %} </p>
+<p>{% trans "Non encore utilisé(s)" %} ({{ nytexclnbr }}) : {% for nyt in Exclusion_not_yet_used %} {{ nyt }} - {% endfor %} </p>
 
 <HR>
 
