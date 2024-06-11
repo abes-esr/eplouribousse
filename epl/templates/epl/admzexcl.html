@@ -67,7 +67,10 @@
       </div>
       <div id="content">
       <p><b>{% trans "Gestion des motifs d'exclusion" %} :</b></p>
-<p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in EXCLUSION_CHOICES %} {{ ex.0 }} - {% endfor %} </p>
+
+<p>{% trans "Motifs actuels" %} ({{ exclnbr }}) : {% for ex in Exclusion_current %} {{ ex }} - {% endfor %} </p>
+<p>{% trans "Autre(s) précédemment utilisé(s)" %} ({{ prevexclnbr }}) : {% for exprev in Exclusion_previous %} {{ exprev }} - {% endfor %} </p>
+<p>{% trans "Pas utilisé(s) actuellement" %} ({{ nusdexclnbr }}) : {% for nyt in Exclusion_not_used %} {{ nyt }} - {% endfor %} </p>
 <p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à ajouter" %} {{ exclform.exclusup }} <input type="submit" value="{% trans "Valider" %}"></form></p>
 <p><form method="post">{% csrf_token %}  {% trans "Le cas échéant, motif à modifier" %} {{ exclsupprform.exclreason }} &nbsp;&nbsp;&nbsp;&nbsp;
   {% trans "Nouvel intitulé" %}  {{ exclsupprform.exclmod }} &nbsp;&nbsp;&nbsp;&nbsp; {% trans "ou supprimer" %}{{ exclsupprform.suppr }} <input type="submit" value="{% trans "Valider" %}"> </form><p>

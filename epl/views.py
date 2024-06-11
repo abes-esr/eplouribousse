@@ -1,8 +1,8 @@
-epl_version ="v2.11.152 (Judith)"
-date_version ="June 11, 2024"
+epl_version ="v2.11.154 (Judith)"
+date_version ="June 12, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.153 (~Irmingard)"
-date_version ="June 11, 2024"
+#epl_version ="v2.11.155 (~Irmingard)"
+#date_version ="June 12, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -467,12 +467,12 @@ def adminbase(request, bdd):
     Exclusion_previous =[""]
     Exclusion_previous += [p for p in Exclusion_used if p not in Exclusion_current]
     
-    Exclusion_not_yet_used =[]
-    Exclusion_not_yet_used += [nyt for nyt in Exclusion_current if nyt not in Exclusion_used]
+    Exclusion_not_used =[]
+    Exclusion_not_used += [nyt for nyt in Exclusion_current if nyt not in Exclusion_used]
 
     exclnbr =len(Exclusion_current) -1
     prevexclnbr =len(Exclusion_previous) -1
-    nytexclnbr =len(Exclusion_not_yet_used) -1
+    nusdexclnbr =len(Exclusion_not_used) -1
     project = Project.objects.using(bdd).all().order_by('pk')[0].name
     list_diff =Project.objects.using(bdd).all().order_by('pk')[0].descr.split(", ")
     list_diff.sort()
@@ -574,6 +574,24 @@ def excl_adm(request, bdd):
     version =epl_version
     url ="/" + bdd + "/adminbase"
     private =Proj_setting.objects.using(bdd)[0].prv
+    
+    # infos sur les exclusions
+    Exclusion_current =[""]
+    for e in Exclusion.objects.using(bdd).all().order_by('label'):
+        Exclusion_current.append(e.label)
+    Exclusion_current.append(_("Autre (Commenter)"))
+    
+    Exclusion_used =list(ItemRecord.objects.using(bdd).filter(rank =0).order_by('excl').values_list('excl', flat =True).distinct())
+    
+    Exclusion_previous =[""]
+    Exclusion_previous += [p for p in Exclusion_used if p not in Exclusion_current]
+    
+    Exclusion_not_used =[]
+    Exclusion_not_used += [nyt for nyt in Exclusion_current if nyt not in Exclusion_used]
+
+    exclnbr =len(Exclusion_current) -1
+    prevexclnbr =len(Exclusion_previous) -1
+    nusdexclnbr =len(Exclusion_not_used) -1
 
 
     EXCLUSION_CHOICES = ('', ''),
