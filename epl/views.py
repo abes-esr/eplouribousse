@@ -1,8 +1,8 @@
-epl_version ="v2.11.154 (Judith)"
-date_version ="June 12, 2024"
+epl_version ="v2.11.156 (Judith)"
+date_version ="June 14, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.155 (~Irmingard)"
-date_version ="June 12, 2024"
+#epl_version ="v2.11.157 (~Irmingard)"
+#date_version ="June 14, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -4318,7 +4318,7 @@ def endinstr(request, bdd, sid, lid):
             host = str(request.get_host())
             message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + "\n" + _("Contrôleur à l'origine du rapport d'anomalie : {} ({})".format(request.user.username,request.user.email)) + "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris le contrôleur à l'origine du rapport d'anomalie suivant :") +\
-            "\n" + rapport + "cf. fichier joint (*)" + "\n" + "*** Selon la nature des corrections à apporter, la fiche pourra refaire un cycle partiel ou total. ***" + "\n" + "\n" + "En cas de doute sur la façon de renseigner les lignes d'instruction pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/3_3.html" + "\n" + "ou contactez l'équipe projet." + "\n" + "\n" + "(*)Options d'ouverture dans un tableur --> ligne d'entête = oui --> séparateurs = tabulation et ; --> identificateur de texte = \""
+            "\n" + "\n" + _("======== début ========") + "\n" + rapport + _("========= fin =========") + "\n" + "\n" + "cf. fichier joint (*)" + "\n" + "*** Selon la nature des corrections à apporter, la fiche pourra refaire un cycle partiel ou complet. ***" + "\n" + "\n" + "En cas de doute sur la façon de renseigner les lignes d'instruction pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/3_3.html" + "\n" + "ou contactez l'équipe projet." + "\n" + "\n" + "(*) : Options d'ouverture dans un tableur --> ligne d'entête = oui --> séparateurs = tabulation et ; --> identificateur de texte = \""
             
             destprov = BddAdmin.objects.using(bdd).all()
             dest =[]
