@@ -1,8 +1,8 @@
-epl_version ="v2.11.156 (Judith)"
-date_version ="June 14, 2024"
+epl_version ="v2.11.158 (Judith)"
+date_version ="June 17, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.157 (~Irmingard)"
-date_version ="June 14, 2024"
+#epl_version ="v2.11.159 (~Irmingard)"
+#date_version ="June 17, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -410,6 +410,11 @@ def home(request, bdd):
         try:
             if request.user.email in [x.contact for x in list(BddAdmin.objects.using(bdd).all())]:
                 user_isadmin =1
+                size = len(ItemRecord.objects.using(bdd).filter(status =6, rank =1))
+                if size ==1:
+                    logos =_("1 fiche")
+                else:
+                    logos =_("{} fiches").format(len(ItemRecord.objects.using(bdd).filter(status =6, rank =1)))
         except:
             pass
 
@@ -3163,7 +3168,7 @@ def reinit(request, bdd, sid):
                 #Message data :
                 nextlid =ItemRecord.objects.using(bdd).get(sid =sid, rank =1).lid
                 nextlib =Library.objects.using(bdd).get(lid =nextlid)
-                subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                subject = "eplouribousse / {} / {} / {} : instruction".format(bdd, sid, nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
                 " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
@@ -3188,10 +3193,9 @@ def reinit(request, bdd, sid):
             to_list, cc_list =[], [BddAdmin.objects.using(bdd).get(contact =request.user.email).contact]
             for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
                 to_list.append(bdadm.contact)
-    #        BddAdmin.objects.using(bdd).filter(contact =request.user.email))
-            body ="La fiche a été corrigée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
+            body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(La réinitialisation a été jugée nécessaire)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999  ".format(sid, request.user.username, request.user.email, host, bdd, sid)
             email = EmailMessage(
-                "eplouribousse / admin : {} / {}".format(bdd, sid),
+                "eplouribousse / {} / {} : anomalie traitée".format(bdd, sid),
                 body,
                 replymail,
                 reply_to =[request.user.email],
@@ -3321,7 +3325,7 @@ def takerank(request, bdd, sid, lid):
                     #Message data :
                     nextlib =Library.objects.using(bdd).get(lid =p.lid)
                     nextlid =nextlib.lid
-                    subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                    subject = "eplouribousse / {} / {} / {} : instruction".format(bdd, sid, nextlid)
                     host = str(request.get_host())
                     message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                     " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
@@ -3361,7 +3365,7 @@ def takerank(request, bdd, sid, lid):
                         st =1 #bidon pour passer
 
                     #Message data :
-                    subject = "eplouribousse / positionnement : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
+                    subject = "eplouribousse / {} / {} / {} : positionnement".format(bdd, sid, itelmt.lid)
                     host = str(request.get_host())
                     message = _("Un nouveau positionnement a été enregistré pour le ppn ") + \
                     str(sid) + " : rang " + str(i.rank) + " --> "  + Library.objects.using(bdd).get(lid =lid).name + \
@@ -3389,7 +3393,7 @@ def takerank(request, bdd, sid, lid):
                     except:
                         st =1 #bidon pour passer
                     #Message data :
-                    subject = "eplouribousse / arbitrage (type 0) : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
+                    subject = "eplouribousse / {} / {} / {} : arbitrage (type 0)".format(bdd, sid, itelmt.lid)
                     host = str(request.get_host())
                     message = _("Un nouvel arbitrage de type 0 a été repéré pour le ppn ") + str(sid) + \
                     "\n" + "Pour plus de détails ou pour modifier le rang de votre collection" + \
@@ -3413,7 +3417,7 @@ def takerank(request, bdd, sid, lid):
                     except:
                         st =1 #bidon pour passer
                     #Message data :
-                    subject = "eplouribousse / arbitrage (type 1) : " + bdd + " / " + str(sid) + " / " + str(itelmt.lid)
+                    subject = "eplouribousse / {} / {} / {} : arbitrage (type 1)".format(bdd, sid, itelmt.lid)
                     host = str(request.get_host())
                     message = _("Un nouvel arbitrage de type 1 a été repéré pour le ppn ") + str(sid) + \
                     "\n" + "Pour plus de détails ou pour modifier le rang de votre collection" + \
@@ -4220,7 +4224,7 @@ def endinstr(request, bdd, sid, lid):
                     j.save(using=bdd)
                     if Proj_setting.objects.using(bdd).all()[0].ins:
                         #Message data :
-                        subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                        subject = "eplouribousse / {} / {} / {} : instruction".format(bdd, sid, nextlid)
                         host = str(request.get_host())
                         message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                         " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
@@ -4248,7 +4252,7 @@ def endinstr(request, bdd, sid, lid):
                 if Proj_setting.objects.using(bdd).all()[0].edi:
                     for librelmt in liblistrict:
                         #Message data :
-                        subject = "eplouribousse / fiche : " + bdd + " / " + str(sid) + " / " + str(librelmt.lid)
+                        subject = "eplouribousse / {} / {} / {} : édition".format(bdd, sid, librelmt.lid)
                         host = str(request.get_host())
                         message = _("La résultante est désormais disponible pour le ppn ") + str(sid) +\
                         " :\n" + "http://" + host + "/" + bdd + "/ed/" + str(sid) + '/' + str(librelmt.lid)
@@ -4314,7 +4318,7 @@ def endinstr(request, bdd, sid, lid):
             fiche +=";;;;;;;\n"
             for ins in Instruction.objects.using(bdd).filter(sid =sid).order_by('line'):
                 fiche +="""{};"{}";{};"{}";"{}";"{}";"{}";{}\n""".format(ins.line, ins.name, ins.bound, ins.oname, ins.descr, ins.exc, ins.degr, ins.time)
-            subject = "eplouribousse : " + bdd + " / " + str(sid) + " / " + "Rapport d'anomalie"
+            subject = "eplouribousse / {} / {} : rapport d'anomalie".format(bdd, sid)
             host = str(request.get_host())
             message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + "\n" + _("Contrôleur à l'origine du rapport d'anomalie : {} ({})".format(request.user.username,request.user.email)) + "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris le contrôleur à l'origine du rapport d'anomalie suivant :") +\
@@ -4408,7 +4412,7 @@ def endinstr(request, bdd, sid, lid):
                         j.save(using=bdd)
             if Proj_setting.objects.using(bdd).all()[0].ins:
                 #Message data :
-                subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                subject = "eplouribousse / {} / {} / {} : instruction".format(bdd, sid, nextlid)
                 host = str(request.get_host())
                 message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) +\
                 " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid)
@@ -5774,8 +5778,8 @@ def statadmin(request, bdd, sid):
             nextlid = nextlib.lid
             message_end = _("(Ce message fait suite à une correction apportée par un administrateur projet)") + "\n" + _("(Il est possible qu'il vous ait attribué le tour pour simple vérification ; dans ce cas, vous n'aurez plus qu'à indiquer que vous avez fini pour la phase courante)")
             if nextlid =="999999999":
-                message_end = _("(Ce message fait suite à une correction apportée par un administrateur projet)") + "\n" + _("(Normalement, vous n'avez plus qu'à valider)")            
-            subject = "eplouribousse / instruction : " + bdd + " / " + str(sid) + " / " + str(nextlid)
+                message_end = _("(Ce message fait suite à une correction apportée par un administrateur projet)") + "\n" + _("(Normalement, vous n'avez plus qu'à valider)")          
+            subject = "eplouribousse / {} / {} / {} : instruction".format(bdd, sid, nextlid)
             host = str(request.get_host())
             message = _("Votre tour est venu d'instruire la fiche eplouribousse pour le ppn ") + str(sid) + \
             " :\n" + "http://" + host + "/" + bdd + "/add/" + str(sid) + '/' + str(nextlid) + \
@@ -5800,10 +5804,9 @@ def statadmin(request, bdd, sid):
         to_list, cc_list =[], [BddAdmin.objects.using(bdd).get(contact =request.user.email).contact]
         for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
             to_list.append(bdadm.contact)
-#        BddAdmin.objects.using(bdd).filter(contact =request.user.email))
-        body ="La fiche a été corrigée par {} ({}) ; le problème qui vous avait été signalé peut être considéré comme résolu.\nSituation actuelle :\nhttp://{}/{}/current_status/{}/999999999  ".format(request.user.username, request.user.email, host, bdd, sid)
+        body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(Pas de réinitialisation)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999  ".format(sid, request.user.username, request.user.email, host, bdd, sid)
         email = EmailMessage(
-            "eplouribousse / admin : {} / {}".format(bdd, sid),
+            "eplouribousse / {} / {} : anomalie traitée".format(bdd, sid),
             body,
             replymail,
             reply_to =[request.user.email],

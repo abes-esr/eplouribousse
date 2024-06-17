@@ -58,8 +58,8 @@
         <div id="content">
 
             {% if user_isadmin == 1 %}<str:bdd>
-                <p style="text-align:right;"><a href="/{{ bdd }}/faulty">{% trans "Liste des fiches fautives" %}</a> </p>
-                <p style="text-align:right;">(Vous êtes administrateur)</p>
+                <p style="text-align:right;">{% trans "Administration requise" %} : <a href="/{{ bdd }}/faulty">{{ logos }}</a> </p>
+                <p style="text-align:right;">({% trans "Vous êtes administrateur" %})</p>
             {% endif %}
 <p></p>
           <form method="post">
