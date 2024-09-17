@@ -1,8 +1,8 @@
-epl_version ="v2.11.160 (Judith)"
-date_version ="July 08, 2024"
+epl_version ="v2.11.162 (Judith)"
+date_version ="September 17, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.161 (~Irmingard)"
-date_version ="July 08, 2024"
+#epl_version ="v2.11.163 (~Irmingard)"
+#date_version ="September 17, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -2570,12 +2570,15 @@ def general_search(request, bdd):
     ('a', _('')),\
     ('b', _('Ressources écartées par exclusion')),\
     ('c', _('Positionnement incomplet')),\
+    ('cself', _('Positionnement pas encore pris dans votre bibliothèque')),\
     ('d', _('Positionnement modifiable')),\
     ('e', _('Positionnement non modifiable')),\
     ('f', _('Le repositionnement de votre collection en 1 lèverait un arbitrage de type 0')),\
     ('g', _('Votre collection est impliquée dans un arbitrage de type 1')),\
     ('h', _('Instruction des reliés à débuter ou incomplète')),\
+    ('hself', _('Instruction des reliés à réaliser dans votre bibliothèque')),\
     ('i', _('Instruction des non reliés à débuter ou incomplète')),\
+    ('iself', _('Instruction des non reliés à réaliser dans votre bibliothèque')),\
     ('j', _('Instruction achevée')),\
     ('k', _('Anomalie relevée')),\
 
@@ -2732,7 +2735,21 @@ def general_search(request, bdd):
                         statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
                     except:
                         pass
-                    
+
+            if statut =="cself":#Positionnement pas encore pris dans votre bibliothèque
+                resslist = []
+                reclist = list(ItemRecord.objects.using(bdd).filter(lid =lid, rank =99))
+                for e in reclist:
+                    sid = e.sid
+                    if len(ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0)) >1 and not sid in resslist:
+                        resslist.append(e)
+                sidlist = [ir.sid for ir in resslist]
+                for s in sidlist:
+                    try:
+                        statut_set.add(ItemRecord.objects.using(bdd).get(sid =s, lid =lid).sid)
+                    except:
+                        pass
+
             if statut =="d":#Positionnement modifiable
                 resslist = []
                 reclist = list(ItemRecord.objects.using(bdd).filter(lid =lid).exclude(rank =99))
@@ -2804,6 +2821,13 @@ def general_search(request, bdd):
                         statut_set.add(ItemRecord.objects.using(bdd).get(sid =i.sid, lid =lid).sid)
                     except:
                         pass
+                    
+        if statut =="hself":#Instruction des reliés à réaliser dans votre bibliothèque
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid, status =1):
+                try:
+                    statut_set.add(ItemRecord.objects.using(bdd).get(sid =i.sid, lid =lid).sid)
+                except:
+                    pass
                 
         if statut =="i":#Instruction des non reliés à débuter ou incomplète
             for i in ItemRecord.objects.using(bdd).filter(rank =1, status =3):
@@ -2817,7 +2841,13 @@ def general_search(request, bdd):
                         statut_set.add(ItemRecord.objects.using(bdd).get(sid =i.sid, lid =lid).sid)
                     except:
                         pass
-
+                
+        if statut =="iself":#Instruction des non reliés à réaliser dans votre bibliothèque
+            for i in ItemRecord.objects.using(bdd).filter(lid =lid, status =3):
+                try:
+                    statut_set.add(ItemRecord.objects.using(bdd).exclude(rank =0).get(sid =i.sid, lid =lid).sid)
+                except:
+                    pass
 
         if statut =="j":#Instruction achevée
             for i in ItemRecord.objects.using(bdd).filter(lid =lid, status =5):
