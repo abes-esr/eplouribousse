@@ -234,6 +234,11 @@
     {% endif %}
     <img src="data:image/png;base64,{{ uri6|safe }} "/>
     <HR>
+        <p>{% trans "Dernières instructions saisies (*) (jusqu'à concurrence de 10) --> Horodatage - PPN - (n° d'instruction) - Bibliothèque" %} :</p>
+            {% for instr in last_instr_list %}
+                <p> {{ instr.time }} - <a target="_blank" href="/{{ bdd }}/current_status/{{ instr.sid }}/999999999">{{ instr.sid }}</a> - ({{ instr.pk }}) - {{ instr.name }}</p>
+            {% endfor %}  
+    <HR>
     <img src="data:image/png;base64,{{ uri7|safe }} "/>
         {% if flag == 1 %}
         <p style="text-align:center;">{% trans "Pas de doublons effectifs pour" %}            

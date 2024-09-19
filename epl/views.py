@@ -1,8 +1,8 @@
-epl_version ="v2.11.162 (Judith)"
-date_version ="September 17, 2024"
+epl_version ="v2.11.164 (Judith)"
+date_version ="September 19, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.163 (~Irmingard)"
-date_version ="September 17, 2024"
+#epl_version ="v2.11.165 (~Irmingard)"
+#date_version ="September 19, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -2279,6 +2279,11 @@ def indicators(request, bdd):
             y7.append(np.nan)
         
     uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements"))
+    
+    if len(Instruction.objects.using(bdd).all()) >9:
+        last_instr =Instruction.objects.using(bdd).all().order_by('-pk')[0:10]
+    else:
+        last_instr =Instruction.objects.using(bdd).all().order_by('-pk')[0:len(Instruction.objects.using(bdd).all())]
 
     libch = ('',''),
     if Library.objects.using(bdd).all().exclude(lid ="999999999"):
@@ -2534,6 +2539,20 @@ def indicators_x(request, bdd, lid):
             libabs.append(libmt.name)
             y7.append(np.nan)
     uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements (*)"))
+    
+    last_instr_list =[]
+    compteur1, compteur2 =0,0
+    while compteur1 <10:
+        try:
+            if ItemRecord.objects.using(bdd).get(lid =lid, sid=Instruction.objects.using(bdd).all().order_by('-pk')[compteur2].sid) and len(ItemRecord.objects.using(bdd).filter(rank =0, lid =lid, sid=Instruction.objects.using(bdd).all().order_by('-pk')[compteur2].sid)) ==0:
+                last_instr_list.append(Instruction.objects.using(bdd).all().order_by('-pk')[compteur2])
+                compteur1 +=1
+                compteur2 +=1
+        except:
+            if compteur2 ==len(Instruction.objects.using(bdd).all()) -1:#Arrivé à ce point, il n'y a plus d'autres instructions à examiner ; on doit s'arrêter là.
+                return render(request, 'epl/indicators_x.html', locals())
+            else:
+                compteur2 +=1
 
     return render(request, 'epl/indicators_x.html', locals())
 
