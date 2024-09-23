@@ -242,10 +242,16 @@
     {% endif %}
     <img src="data:image/png;base64,{{ uri6|safe }} "/>
     <HR>
-        <p>{% trans "Dernières instructions saisies (jusqu'à concurrence de 10) --> Horodatage - PPN - (n° d'instruction) - Bibliothèque" %} :</p>
-            {% for instr in last_instr %}
-                <p> {{ instr.time }} - <a target="_blank" href="/{{ bdd }}/current_status/{{ instr.sid }}/999999999">{{ instr.sid }}</a> - ({{ instr.pk }}) - {{ instr.name }}</p>
-            {% endfor %}  
+        <p>{% trans "Fiches affectées par les plus récentes lignes d'instruction saisies (réponses obtenues en tenant compte des plus récentes lignes d'instructions jusqu'à concurrence de 10 si disponibles)" %} :</p>
+            {% if lg == 0 %}
+            <p>{% trans "Aucune ligne d'instruction n'a été saisie pour le moment." %}</p>
+            {% else %}
+                <p>{% trans "PPN - (n° de la dernière instruction : Horodatage) - Bibliothèque" %}</p>
+                {% for l in last %}
+                    <p><a target="_blank" href="/{{ bdd }}/current_status/{{ l.1.sid }}/999999999">{{ l.0.sid }}</a> - ({{ l.1.pk }} : {{ l.1.time }}) - {{ l.1.name }}</p>
+                {% endfor %}
+                <p>{{ lg }} {% trans "fiches" %} ({{ lh }} {% trans "instructions prises en compte" %})</p>
+            {% endif %}
     <HR>
     <img src="data:image/png;base64,{{ uri7|safe }} "/>
         {% if flag == 1 %}
