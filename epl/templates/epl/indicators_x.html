@@ -234,7 +234,7 @@
     {% endif %}
     <img src="data:image/png;base64,{{ uri6|safe }} "/>
     <HR>
-        <p>{% trans "(*) Fiches affectées par les plus récentes lignes d'instruction saisies (réponses obtenues en tenant compte des plus récentes lignes d'instructions <u>dans l'ensemble du projet</u> jusqu'à concurrence de 10 si disponibles)" %} :</p>
+        <p>{% trans "(*) Fiches affectées par les plus récentes lignes d'instruction saisies (réponses obtenues en tenant compte des plus récentes lignes d'instruction <u>dans l'ensemble du projet</u> jusqu'à concurrence de 10 si disponibles)" %} :</p>
             {% if lg == 0  and lh == 0 %}
             <p>{% trans "Aucune ligne d'instruction n'a été saisie pour le moment." %}</p>
             {% elif lg == 0  and lh > 0 %}

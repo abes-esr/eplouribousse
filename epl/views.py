@@ -1,8 +1,8 @@
-epl_version ="v2.11.166 (Judith)"
+epl_version ="v2.11.168 (Judith)"
 date_version ="September 23, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.167 (~Irmingard)"
-date_version ="September 23, 2024"
+#epl_version ="v2.11.169 (~Irmingard)"
+#date_version ="September 23, 2024"
 
 from django.shortcuts import render, redirect
 
