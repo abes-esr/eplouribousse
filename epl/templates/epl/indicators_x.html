@@ -242,7 +242,7 @@
             {% else %}
                 <p>{% trans "PPN - (n° de la dernière instruction : Horodatage) - Bibliothèque" %}</p>
                 {% for l in last %}
-                    <p><a target="_blank" href="/{{ bdd }}/current_status/{{ l.1.sid }}/999999999">{{ l.0.sid }}</a> - ({{ l.1.pk }} : {{ l.1.time }}) - {{ l.1.name }}</p>
+                    <p><a target="_blank" href="/{{ bdd }}/current_status/{{ l.1.sid }}/999999999">{{ l.0.sid }}</a> - ({{ l.1.pk }} : {{ l.1.time }} UTC) - {{ l.1.name }}</p>
                 {% endfor %}
                 <p>{{ lg }} {% trans "fiches" %} ({{ lh }} {% trans "instructions prises en compte" %})</p>
             {% endif %}
