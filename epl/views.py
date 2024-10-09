@@ -1,8 +1,8 @@
 epl_version ="v2.11.170 (Judith)"
-date_version ="September 24, 2024"
+date_version ="October 9, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.171 (~Irmingard)"
-date_version ="September 24, 2024"
+#epl_version ="v2.11.171 (~Irmingard)"
+#date_version ="October 9, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -408,7 +408,7 @@ def home(request, bdd):
     user_isadmin =0
     if ItemRecord.objects.using(bdd).filter(status =6):
         try:
-            if request.user.email in [x.contact for x in list(BddAdmin.objects.using(bdd).all())]:
+            if request.user.email in [x.contact for x in list(BddAdmin.objects.using(bdd).all())] and Utilisateur.objects.using(bdd).get(mail =request.user.email).username[-3:] =="@" + str(bdd):
                 user_isadmin =1
                 size = len(ItemRecord.objects.using(bdd).filter(status =6, rank =1))
                 if size ==1:
