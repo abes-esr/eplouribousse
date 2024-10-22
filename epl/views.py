@@ -1,8 +1,8 @@
-epl_version ="v2.11.172 (Judith)"
-date_version ="October 22, 2024"
+epl_version ="v2.11.174 (Judith)"
+date_version ="October 23, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.173 (~Irmingard)"
-date_version ="October 22, 2024"
+#epl_version ="v2.11.175 (~Irmingard)"
+#date_version ="October 23, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -2559,13 +2559,14 @@ def indicators_x(request, bdd, lid):
             y7.append(np.nan)
     uri7 =get_scatter(x7, y7, _(""), _(""), _("Positionnements réalisés en % des rattachements (*)"))
     
+
 ########################################
 #20/09/2024
     last_sid, last =[],[]
-    if len(Instruction.objects.using(bdd).all()) >9:
-        last_instr =Instruction.objects.using(bdd).all().order_by('-pk')[0:10]
+    if len([i for i in Instruction.objects.using(bdd).all().order_by('-pk') if ItemRecord.objects.using(bdd).filter(lid =lid, sid =i.sid).exclude(rank =99).exclude(rank =0)]) >9:
+        last_instr =[i for i in Instruction.objects.using(bdd).all().order_by('-pk') if ItemRecord.objects.using(bdd).filter(lid =lid, sid =i.sid).exclude(rank =99).exclude(rank =0)][0:10]
     else:
-        last_instr =Instruction.objects.using(bdd).all().order_by('-pk')[0:len(Instruction.objects.using(bdd).all())]
+        last_instr =[i for i in Instruction.objects.using(bdd).all().order_by('-pk') if ItemRecord.objects.using(bdd).filter(lid =lid, sid =i.sid).exclude(rank =99).exclude(rank =0)][0:len(Instruction.objects.using(bdd).all())]
     for inst in last_instr:
         if inst.sid not in last_sid and len(ItemRecord.objects.using(bdd).filter(lid =lid, sid=inst.sid)) and not len(ItemRecord.objects.using(bdd).filter(rank =0, lid =lid, sid=inst.sid)):
             last_sid.append(inst.sid)
@@ -2576,9 +2577,10 @@ def indicators_x(request, bdd, lid):
 ########################################
 #22/10/2024
     last_list =[]
+    r =1
     for library in Library.objects.using(bdd).all().order_by('name'):
         try:
-            sublist =[i for i in Instruction.objects.using(bdd).filter(name =library.name).order_by('-pk') if ItemRecord.objects.using(bdd).get(lid =lid, sid=i.sid).rank in [1, 2, 3, 4]]
+            sublist =[i for i in Instruction.objects.using(bdd).filter(name =library.name).order_by('-pk') if ItemRecord.objects.using(bdd).filter(lid =lid, sid =i.sid).exclude(rank =99).exclude(rank =0)]
             last_list.append((library.name,sublist[0]))
         except:
             last_list.append((library.name,"-"))

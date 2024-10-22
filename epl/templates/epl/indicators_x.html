@@ -234,7 +234,7 @@
     {% endif %}
     <img src="data:image/png;base64,{{ uri6|safe }} "/>
     <HR>
-        <p>{% trans "(*) Fiches affectées par les plus récentes lignes d'instruction saisies (réponses obtenues en tenant compte des plus récentes lignes d'instruction <u>dans l'ensemble du projet</u> jusqu'à concurrence de 10 si disponibles)" %} :</p>
+        <p>{% trans "(*) Fiches affectées par les plus récentes lignes d'instruction saisies (réponses obtenues en tenant compte des plus récentes lignes d'instruction jusqu'à concurrence de 10 si disponibles)" %} :</p>
             {% if lg == 0  and lh == 0 %}
             <p>{% trans "Aucune ligne d'instruction n'a été saisie pour le moment." %}</p>
             {% elif lg == 0  and lh > 0 %}
@@ -251,7 +251,7 @@
             {% for last in last_list %}
                 <p> 
                 {% if last.1 == "-" %}
-                    {% trans "Pas encore d'instruction pour la bibliothèque : " %}{{ last.0 }}
+                    {{ last.0 }} : {% trans "Pas encore d'instruction." %}
                 {% else %}
                     <a target="_blank" href="/{{ bdd }}/current_status/{{ last.1.sid }}/999999999">{{ last.1.sid }}</a> - ({{ last.1.pk }} - {{ last.1.time }} UTC) - {{ last.0 }}
                 {% endif %}
