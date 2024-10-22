@@ -1,8 +1,8 @@
-epl_version ="v2.11.170 (Judith)"
-date_version ="October 9, 2024"
+epl_version ="v2.11.172 (Judith)"
+date_version ="October 22, 2024"
 # Mise au niveau de :
-epl_version ="v2.11.171 (~Irmingard)"
-date_version ="October 9, 2024"
+#epl_version ="v2.11.173 (~Irmingard)"
+#date_version ="October 22, 2024"
 
 from django.shortcuts import render, redirect
 
@@ -2294,6 +2294,15 @@ def indicators(request, bdd):
     lg =len(last)
     lh =len(last_instr)
 ########################################
+########################################
+#22/10/2024
+    last_list =[]
+    for library in Library.objects.using(bdd).all().order_by('name'):
+        try:
+            last_list.append((library.name, Instruction.objects.using(bdd).filter(name =library.name).order_by('-pk')[0]))
+        except:
+            last_list.append((library.name,"-"))
+########################################
 
     libch = ('',''),
     if Library.objects.using(bdd).all().exclude(lid ="999999999"):
@@ -2563,6 +2572,16 @@ def indicators_x(request, bdd, lid):
             last.append(((ItemRecord.objects.using(bdd).get(rank =1, sid =inst.sid)),inst))
     lg =len(last)
     lh =len(last_instr)
+########################################
+########################################
+#22/10/2024
+    last_list =[]
+    for library in Library.objects.using(bdd).all().order_by('name'):
+        try:
+            sublist =[i for i in Instruction.objects.using(bdd).filter(name =library.name).order_by('-pk') if ItemRecord.objects.using(bdd).get(lid =lid, sid=i.sid).rank in [1, 2, 3, 4]]
+            last_list.append((library.name,sublist[0]))
+        except:
+            last_list.append((library.name,"-"))
 ########################################
 
     return render(request, 'epl/indicators_x.html', locals())

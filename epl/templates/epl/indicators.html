@@ -253,6 +253,17 @@
                 <p>{{ lg }} {% trans "fiches" %} ({{ lh }} {% trans "instructions prises en compte" %})</p>
             {% endif %}
     <HR>
+        <p>{% trans "Dernière instruction saisie par chacune des bibliothèques" %} :</p>
+            {% for last in last_list %}
+                <p> 
+                {% if last.1 == "-" %}
+                    {% trans "Pas encore d'instruction pour la bibliothèque : " %}{{ last.0 }}
+                {% else %}
+                    <a target="_blank" href="/{{ bdd }}/current_status/{{ last.1.sid }}/999999999">{{ last.1.sid }}</a> - ({{ last.1.pk }} - {{ last.1.time }} UTC) - {{ last.0 }}
+                {% endif %}
+                </p>
+            {% endfor %}
+    <HR>
     <img src="data:image/png;base64,{{ uri7|safe }} "/>
         {% if flag == 1 %}
         <p style="text-align:center;">{% trans "Pas de doublons effectifs pour" %}            
