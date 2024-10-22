@@ -251,7 +251,7 @@
             {% for last in last_list %}
                 <p> 
                 {% if last.1 == "-" %}
-                    {{ last.0 }} : {% trans "Pas encore d'instruction." %}
+                    {{ last.0 }} : {% trans "-" %}
                 {% else %}
                     <a target="_blank" href="/{{ bdd }}/current_status/{{ last.1.sid }}/999999999">{{ last.1.sid }}</a> - ({{ last.1.pk }} - {{ last.1.time }} UTC) - {{ last.0 }}
                 {% endif %}

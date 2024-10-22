@@ -54,7 +54,9 @@
 
 	        <div id="content">
 
-
+        {% if nlib > 3 %}
+<!--                (since 'checker' is considered as a library)-->
+<!--                (Formulaire uniquement si il y a plus de deux bibliothèques, 3 en incluant 'checker')-->
           <form method="post">
 
               {% csrf_token %}
@@ -63,7 +65,7 @@
 
 
           </form>
-                
+        {% endif %} 
 <table border="1">
 
    <thead>
@@ -257,7 +259,7 @@
             {% for last in last_list %}
                 <p> 
                 {% if last.1 == "-" %}
-                    {{ last.0 }} : {% trans "Pas encore d'instruction." %}
+                    {{ last.0 }} : {% trans "-" %}
                 {% else %}
                     <a target="_blank" href="/{{ bdd }}/current_status/{{ last.1.sid }}/999999999">{{ last.1.sid }}</a> - ({{ last.1.pk }} - {{ last.1.time }} UTC) - {{ last.0 }}
                 {% endif %}
