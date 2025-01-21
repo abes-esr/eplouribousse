@@ -15,6 +15,10 @@ Cliquez sur le lien (ppn) pour accéder au formulaire de saisie du rang de votre
 
 A l’état initial, le positionnement indiqué est 99 ; vous pouvez choisir d’exclure votre collection pour l’un des motifs de la liste déroulante (Cette liste peut être modifiée par l’administrateur de la base projet (voir plus loin) ; la valeur « Autre (Commenter) » n’a pas à être indiquée ; elle est automatique). 	Sinon, vous devez vous positionner dans une échelle de 1 à 4 : 1 si vous possédez la collection la plus importante et que cette collection est ressentie comme étant celle à laquelle viendront s’agréger les éléments d’autres collections pour l’améliorer ou l’enrichir (collection mère). 4 si vous avez très peu d’éléments pour la collection. 2 et 3 pour des situations intermédiaires. L’ordre d’instruction des fiches suivra l’ordre de positionnement ; à rang égal, i.e. 2, 3 ou 4 (le rang 1 doit être unique) l’ordre d’instruction entre bibliothèques est arbitraire (En fait, il suit l’ordre de la clef primaire des rattachements (Primary key ou pk)).
 
+    .. Note:: **La position 1 n'équivaut pas à la revendication de la conservation de la collection résultante.** C'est l'étendue de la collection qui doit être prise en considération. A étendue égale, on tiendra compte des proportions relatives d'éléments reliés (Le lien "échanger" sera utile.)
+
+    .. Note:: La question du lieu de conservation de la collection mère n'est pas réglée dans cette version d'eplouribousse. Elle devrait l'être dans une nouvelle version.
+
 
 Toutes les informations utiles et disponibles concernant les autres rattachements sont indiquées.
 
@@ -28,7 +32,7 @@ Vous pouvez laisser un commentaire dans l’un ou l’autre des cas précédemme
 
 .. image:: _static/pos_sheet.png
 
-NB : La connexion est nécessaire pour indiquer le rang d’une collection ; un témoin de connexion apparaît en haut à gauche (avec possibilité de se déconnecter) La connexion est requise pour toutes les autres actions cruciales (i.e modifiant l’état de la base de donnée locale ou/et centrale) : Instruction, annulation d’une ligne d’instruction, déclaration de fin d’instruction.
+L'authentification est nécessaire pour indiquer le rang d’une collection ; un témoin de connexion apparaît en haut à gauche (avec possibilité de se déconnecter) La connexion est requise pour toutes les autres actions cruciales (i.e modifiant l’état de la base de donnée locale ou/et centrale) : Instruction, annulation d’une ligne d’instruction, déclaration de fin d’instruction.
 
 Après validation, le retour à la liste est automatique ; celle-ci rappelle le dernier positionnement effectué (au cours d’une même session, rien sinon) Il est possible d’accéder par simple clic à une liste des collections pour lesquelles le positionnement est encore modifiable (Le rang n’est plus modifiable à partir du moment où une instruction a déjà été validée).
 

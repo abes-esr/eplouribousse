@@ -59,7 +59,8 @@ Ceci assure une édition optimale des résultats le moment venu (cf. édition) C
 
 
     .. note:: Par « exception » on entend exception pour la forme considérée (reliée ou non-reliée) Ce n’est donc pas forcément une véritable lacune à la phase d’instruction des éléments reliés.
-    .. note:: Par améliorable, on peut entendre soit des éléments dégradés, soit des éléments dont on sait qu’une autre bibliothèque participante possède des éléments en meilleur état. Normalement, ce dernier cas est rare, la bibliothèque revendiquant la collection-mère possédant généralement la meilleure collection. Par volumes reliés améliorable, on entend des volumes mal reliés que l’on a avantage à remplacer par l’équivalent non relié en bon état (par exemple lorsque la reliure a compromis l’intégrité du contenu).
+    .. note:: Par améliorable, on peut entendre soit des éléments dégradés, soit des éléments dont on sait qu’une autre bibliothèque participante possède des éléments en meilleur état. Normalement, ce dernier cas est rare, la bibliothèque revendiquant la collection-mère possédant généralement la meilleure collection.
+    .. note:: **Volumes reliés améliorables** : doit être considéré comme volume relié en mauvais état (= améliorable), tout volume relié dont l'état est tel qu'à défaut de son remplacement par le volume relié en bon état provenant d'une autre collection, on juge encore préférable qu'il soit remplacé par l'équivalent non relié en bon état provenant d'une autre collection.
 
 Rôle du 'checker'
 -----------------
