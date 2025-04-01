@@ -46,7 +46,9 @@
           <h2>{{ libname }} - {% trans "Collection non mère" %} - {% trans "Résultantes" %}</h2>
 
 
-          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/42/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }} ~ <a target="_blank" href="/{{ bdd }}/ednotmotherpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a> 
+          <p>{% if size > 0 %}<button><b><a href="/{{ bdd }}/csv/{{ lid }}/None/{{ sidlist }}/42/{{ size }}" title="(Avec les autres rattachements)">{% trans "liste csv" %}</a></b></button> ~ {% endif %}<b>{% trans "Nombre de ressources concernées" %} :</b> {{ size }}
+          {% if size > 0 %}
+          ~ <a target="_blank" href="/{{ bdd }}/ednotmotherpdf/{{ lid }}">{% trans "tout exporter en pdf" %}</a>
           ~
             {% if sort == 'title' %}
             ({% trans "Classement par" %} {% trans "titre" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/ednotmotherlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>
@@ -57,6 +59,7 @@
               ({% trans "Classement par" %} {% trans "ppn" %}, {% trans "reclasser par" %} : <a href="/{{ bdd }}/ednotmotherlist/{{ lid }}/title">{% trans "titre" %}</a> / <a href="/{{ bdd }}/ednotmotherlist/{{ lid }}/cn">{% trans "cote et titre" %}</a>)
             {% endif %}          
           </p>
+          {% endif %}
 
         <HR>
       </div>
