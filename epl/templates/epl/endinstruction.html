@@ -134,7 +134,7 @@
         <div id="content">
           <form method="post">{% csrf_token %}
           <div>
-          <p><b><font color= #017a04 >{{ info }}</font></b></p>
+
           <p><b><font color= #017a04 >{{ answer }}</font></b></p>
           <p>{% trans "Avant de valider, et en recourant si besoin au" %} <a href="https://sbu-eplouribousse.unistra.fr/static/doc/html/3_3.html" target="_blank">manuel</a>,
           {% trans "je vérifie que" %} :</p>
@@ -146,7 +146,8 @@
           <li>{% trans "Les instructions ne se chevauchent pas." %}</li>
           <li>{% trans "Le cas échéant, le champ ‘Bibliothèque remédiée’ a été correctement utilisé (doit correspondre à la bibliothèque ayant précédemment porté l’élément en ‘exception’ ou en ‘améliorable’)" %}</li>
           </ol>
-          <p>{% trans "En cochant, je reconnais avoir fait ces vérifications" %} : {{ checkform.flag }}</p>
+          <p>{% trans "En cochant, je confirme avoir fait ces vérifications" %} : {{ checkform.flag }}</p>
+          <p><b><font color= #017a04 >{{ info }}</font></b></p>
 
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
