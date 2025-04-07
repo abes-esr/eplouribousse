@@ -136,7 +136,18 @@
           <div>
           <p><b><font color= #017a04 >{{ info }}</font></b></p>
           <p><b><font color= #017a04 >{{ answer }}</font></b></p>
-          <p>{{ checkform.flag }} {% trans "J'ai bien vérifié avant de valider" %}</p>
+          <p>{% trans "Avant de valider, et en recourant si besoin au" %} <a href="https://sbu-eplouribousse.unistra.fr/static/doc/html/3_3.html" target="_blank">manuel</a>,
+          {% trans "je vérifie que" %} :</p>
+          <ol>
+          <li>{% trans "Les instructions n’outrepassent pas la période de publication du ppn" %} : <a href="https://www.sudoc.fr/{{ sid }}" target="_blank"><b>{{ ressource.pubhist }}</b></a></li>
+          <li>{% trans "Les instructions ne comportent pas de segments interrompus." %}</li>
+          <li>{% trans "Les éléments portés en exception ou améliorables font bien partie du segment décrit dans le champ ‘segment’ de la ligne considérée." %}</li>
+          <li>{% trans "Les instructions sont bien ordonnées (ordre chronologique de publication)." %}</li>
+          <li>{% trans "Les instructions ne se chevauchent pas." %}</li>
+          <li>{% trans "Le cas échéant, le champ ‘Bibliothèque remédiée’ a été correctement utilisé (doit correspondre à la bibliothèque ayant précédemment porté l’élément en ‘exception’ ou en ‘améliorable’)" %}</li>
+          </ol>
+          <p>{% trans "En cochant, je reconnais avoir fait ces vérifications" %} : {{ checkform.flag }}</p>
+
           <p><input type="submit" value="{% trans "Valider" %}"></p>
           </div>
           </form>
