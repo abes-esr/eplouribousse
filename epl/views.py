@@ -1,5 +1,5 @@
-epl_version ="v2.11.180 (Judith)"
-date_version ="April 7, 2025"
+epl_version ="v2.11.182 (Judith)"
+date_version ="April 11, 2025"
 # Mise au niveau de :
 # epl_version ="v2.11.181 (~Irmingard)"
 # date_version ="April 7, 2025"
@@ -4198,7 +4198,7 @@ def endinstr(request, bdd, sid, lid):
             fiche +=";;;;;;;\n"
             for ins in Instruction.objects.using(bdd).filter(sid =sid).order_by('line'):
                 fiche +="""{};"{}";{};"{}";"{}";"{}";"{}";{}\n""".format(ins.line, ins.name, ins.bound, ins.oname, ins.descr, ins.exc, ins.degr, ins.time)
-            subject = "eplouribousse / {} / {} : rapport d'anomalie".format(bdd, sid)
+            subject = "eplouribousse / {} / {} : rapport d'anomalie / contrôleur".format(bdd, sid)
             host = str(request.get_host())
             message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
             "\n" + "\n" + _("Contrôleur à l'origine du rapport d'anomalie : {} ({})".format(request.user.username,request.user.email)) + "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche et aux contrôleurs, y compris le contrôleur à l'origine du rapport d'anomalie suivant :") +\
@@ -6383,6 +6383,134 @@ def license(request):
     """
 
     return render(request, 'epl/license.html', locals())
+
+
+@login_required
+def ano(request, bdd, sid, lid):
+
+    k =logstatus(request)
+    version =epl_version
+    suffixe = "@" + str(bdd)
+
+    #Authentication control :
+    if not request.user.email in [Library.objects.using(bdd).get(lid =lid).contact, Library.objects.using(bdd).get(lid =lid).contact_bis, Library.objects.using(bdd).get(lid =lid).contact_ter]:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+    if not request.user.username[-3:] ==suffixe:
+        messages.info(request, _("Vous avez été déconnecté parce que votre identifiant ne vous autorisait pas à accéder à la page demandée"))
+        return logout_view(request)
+
+    #Ressource data :
+    itemlist = ItemRecord.objects.using(bdd).filter(sid = sid).exclude(rank =0).order_by("rank", 'pk')
+    ressource = itemlist[0]
+
+    # Library list ordered by 'rank' (except "checker" which must be the last one)
+    # to get from the precedent item list above :
+    liblist = []
+    liblistrict = []
+    for e in itemlist:
+        liblist.append(Library.objects.using(bdd).get(lid = e.lid))
+        liblistrict.append(Library.objects.using(bdd).get(lid = e.lid)) #is used later for mailing
+    liblist.append(Library.objects.using(bdd).get(name = 'checker'))
+
+    instrlist = Instruction.objects.using(bdd).filter(sid = sid).order_by('line')
+
+    ###########################################################
+    class Control_Form(forms.Form):
+        outrepasse = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un dépassement de la période de publication (saisie libre)")}), initial ="", label =_("Période de publication dépassée ({})".format(ItemRecord.objects.using(bdd).get(sid = sid, rank =1).pubhist)))
+        segment_interr = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un segment interrompu (saisie libre)")}), initial ="", label =_("Segment discontinu"))
+        exc_am_notinseg = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par une exception ou un améliorable hors segment (saisie libre)")}), initial ="", label =_("Exception ou améliorable hors segment"))
+        ordre_defaillant = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes non ordonnée chronologiquement (saisie libre)")}), initial ="", label =_("Ordre chronologique non respecté"))
+        chevauchement = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un chevauchement (saisie libre)")}), initial ="", label =_("Chevauchement de segments"))
+        bib_rem_incorrect = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut d'utilisation de la collection remédiée (saisie libre)")}), initial ="", label =_("Mauvaise utilisation de 'Bibliothèque remédiée'"))
+        formulation_risk = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '40', 'title': _("Lignes concernées par un défaut risqué de la formulation (saisie libre)")}), initial ="", label =_("Formulation hétérogène prêtant à confusion"))
+        autre = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': '120', 'title': _("Saisie libre jusqu'à 120 caractères"), 'placeholder': _("Par exemple : Faute de frappe à la ligne 'tant', champ 'untel'")}), initial ="", label =_("Autre (à préciser)"))
+
+    ctrl_form = Control_Form(request.POST or None)
+    galf =2#valeur en Post ou en None
+    if request.method =="POST" and ctrl_form.is_valid():
+        galf =1#valeur initiale en Post
+        outrepasse = ctrl_form.cleaned_data['outrepasse']
+        segment_interr = ctrl_form.cleaned_data['segment_interr']
+        exc_am_notinseg = ctrl_form.cleaned_data['exc_am_notinseg']
+        ordre_defaillant = ctrl_form.cleaned_data['ordre_defaillant']
+        chevauchement = ctrl_form.cleaned_data['chevauchement']
+        bib_rem_incorrect = ctrl_form.cleaned_data['bib_rem_incorrect']
+        formulation_risk = ctrl_form.cleaned_data['formulation_risk']
+        autre = ctrl_form.cleaned_data['autre']
+        if outrepasse !="" or segment_interr !="" or exc_am_notinseg !="" or ordre_defaillant !="" or chevauchement !="" or bib_rem_incorrect !="" or formulation_risk !="" or autre !="":
+            galf =0#valeur en Post si la fiche n'est pas validable en l'état
+
+    ###########################################################
+
+    if galf ==0:
+            #In this case BDD administrator will be informed of errors in the instructions.
+            # Change all ItemRecords status (except those with rank =0) for the considered sid to status =6
+        for e in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
+                e.status =6
+                e.save(using=bdd)
+
+        #Message data to the BDD administrator(s):
+        rapport =""
+        if outrepasse !="":
+            rapport += "- Période de publication dépassée : {} --> ligne(s) : {}\n".format(ItemRecord.objects.using(bdd).get(sid =sid, rank =1).pubhist, outrepasse)
+        if segment_interr !="":
+            rapport += "- Segment discontinu --> ligne(s) : {}\n".format(segment_interr)
+        if exc_am_notinseg !="":
+            rapport += "- Exception ou améliorable hors segment --> ligne(s) : {}\n".format(exc_am_notinseg)
+        if ordre_defaillant !="":
+            rapport += "- Ordre chronologique non respecté --> ligne(s) : {}\n".format(ordre_defaillant)
+        if chevauchement !="":
+            rapport += "- Chevauchement de segments --> ligne(s) : {}\n".format(chevauchement)
+        if bib_rem_incorrect !="":
+            rapport += "- Mauvaise utilisation de 'Bibliothèque remédiée' --> ligne(s) : {}\n".format(bib_rem_incorrect)
+        if formulation_risk !="":
+            rapport += "- Formulation hétérogène prêtant à confusion --> ligne(s) : {}\n".format(formulation_risk)
+        if autre !="":
+            rapport += "- Autre : {}\n".format(autre)
+
+        fiche ="Ligne;Bibliothèque;Forme reliée;Bibliothèque remédiée;Segment;Exceptions;Eléments améliorables;Horodatage\n"
+        fiche +=";;;;;;;\n"
+        fiche +=";;;;;;;{}\n".format(datetime.datetime.now().strftime('%y-%m-%d %a %H:%M:%S'))
+        fiche +=";;;;;;;\n"
+        for ins in Instruction.objects.using(bdd).filter(sid =sid).order_by('line'):
+            fiche +="""{};"{}";{};"{}";"{}";"{}";"{}";{}\n""".format(ins.line, ins.name, ins.bound, ins.oname, ins.descr, ins.exc, ins.degr, ins.time)
+        subject = "eplouribousse / {} / {} : rapport d'anomalie / instructeur".format(bdd, sid)
+        host = str(request.get_host())
+        message = _("Ce message est adressé aux administrateurs du projet pour intervention sur la fiche :") + "\n" + "http://" + host + "/" + bdd + "/current_status/" + str(sid) + '/' + str(lid) + \
+        "\n" + "\n" + _("Instructeur à l'origine du rapport d'anomalie : {} ({})".format(request.user.username,request.user.email)) + "\n" + "\n" + _("Copie pour information aux instructeurs des bibliothèques concernées par la fiche, y compris à l'instructeur à l'origine du rapport d'anomalie suivant :") +\
+        "\n" + "\n" + _("======== début ========") + "\n" + rapport + _("========= fin =========") + "\n" + "\n" + "cf. fichier joint (*)" + "\n" + "*** Selon la nature des corrections à apporter, la fiche pourra refaire un cycle partiel ou complet. ***" + "\n" + "\n" + "En cas de doute sur la façon de renseigner les lignes d'instruction pensez à consulter le manuel : " + "http://" + host + "/static/doc/html/3_3.html" + "\n" + "ou contactez l'équipe projet." + "\n" + "\n" + "(*) : Options d'ouverture dans un tableur --> ligne d'entête = oui --> séparateurs = tabulation et ; --> identificateur de texte = \""
+
+        destprov = BddAdmin.objects.using(bdd).all()
+        dest =[]
+        for d in destprov:
+            dest.append(d.contact)
+        cc_list =[]
+        for itr in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
+            if Library.objects.using(bdd).get(lid =itr.lid).contact and Library.objects.using(bdd).get(lid =itr.lid).contact not in cc_list:
+                cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact)
+            if Library.objects.using(bdd).get(lid =itr.lid).contact_bis and Library.objects.using(bdd).get(lid =itr.lid).contact_bis not in cc_list:
+                cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
+            if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in cc_list:
+                cc_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
+        for em in cc_list:
+            if em in dest:
+                cc_list.remove(em)
+        email = EmailMessage(
+        subject,
+        message,
+        replymail,
+        reply_to =[request.user.email],
+        to =dest,
+        cc =cc_list,
+        )
+        email.attach(sid +".csv", fiche)
+        email.send(fail_silently=False)
+
+        messages.info(request, _("Un rapport circonstancié a été envoyé aux administrateurs du projet (pour correction) et en copie pour information aux correspondants des bibliothèques contributrices, y compris à vous-même."))
+        return instrtodo(request, bdd, lid, 'title')
+
+    return render(request, 'epl/ano.html', locals())
 
 
 #############################

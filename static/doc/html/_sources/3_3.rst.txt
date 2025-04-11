@@ -62,6 +62,13 @@ Ceci assure une édition optimale des résultats le moment venu (cf. édition) C
     .. note:: Par améliorable, on peut entendre soit des éléments dégradés, soit des éléments dont on sait qu’une autre bibliothèque participante possède des éléments en meilleur état. Normalement, ce dernier cas est rare, la bibliothèque revendiquant la collection-mère possédant généralement la meilleure collection.
     .. note:: **Volumes reliés améliorables** : doit être considéré comme volume relié en mauvais état (= améliorable), tout volume relié dont l'état est tel qu'à défaut de son remplacement par le volume relié en bon état provenant d'une autre collection, on juge encore préférable qu'il soit remplacé par l'équivalent non relié en bon état provenant d'une autre collection.
 
+
+Anomalies constatées en cours d'instruction par un des instructeurs
+-------------------------------------------------------------------
+
+Si un instructeur constate une anomalie en cours d'instruction, il lui est possible de la signaler par le bouton "Signaler une anomalie". Une nouvelle fenêtre s'ouvrira alors lui permettant de préciser la nature de l'anomalie (ou des anomalies) selon la même grille d'analyse qui sert aux contrôleurs (voir § suivant)
+Après validation, un rapport est envoyé aux administrateurs pour intervention et en copie pour information aux instructeurs des bibliothèques concernées, y compris à l'instructeur à l'origine du signalement.
+
 Rôle du 'checker'
 -----------------
 

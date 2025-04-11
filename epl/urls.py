@@ -38,6 +38,7 @@ urlpatterns = [
     path('<str:bdd>/rk/<str:sid>/<str:lid>', views.takerank, name='ranking'),
 
     path('<str:bdd>/add/<str:sid>/<str:lid>', views.addinstr, name='add instruction'),
+    path('<str:bdd>/ano/<str:sid>/<str:lid>', views.ano, name='error reported by an instructor'),
     path('<str:bdd>/sel/<str:sid>/<str:lid>', views.selinstr, name='select instruction to modify'),
     path('<str:bdd>/mod/<str:sid>/<str:lid>/<int:linetomodify>', views.modinstr, name='modify instruction'),
     path('<str:bdd>/del/<str:sid>/<str:lid>', views.delinstr, name='delete instruction'),
