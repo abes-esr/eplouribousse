@@ -1,8 +1,9 @@
-epl_version ="v2.11.182 (Judith)"
-date_version ="April 11, 2025"
+epl_version ="v2.11.183 (Judith)"
+date_version ="July 22, 2025"
 # Mise au niveau de :
 # epl_version ="v2.11.181 (~Irmingard)"
 # date_version ="April 7, 2025"
+#ATTENTION : A partir de la version v2.11.183 (Judith) la version de dev n'est plus suivie.
 
 from django.shortcuts import render, redirect
 
@@ -44,7 +45,7 @@ from urllib.parse import quote
 import datetime
 import csv
 
-## Following is for graphics (made blinffolded from : https://youtu.be/jrT6NiM46jk amended with https://medium.com/@mdhv.kothari99/matplotlib-into-django-template-5def2e159997 for working)
+## Following is for graphics (made blindfolded from : https://youtu.be/jrT6NiM46jk amended with https://medium.com/@mdhv.kothari99/matplotlib-into-django-template-5def2e159997 for working)
 import matplotlib.pyplot as plt
 import numpy as np
 import urllib, base64
@@ -3070,21 +3071,29 @@ def reinit(request, bdd, sid):
                     send_mail(subject, message, replymail, dest, fail_silently=True, )
                     
             #*********************
-            to_list, cc_list =[], [BddAdmin.objects.using(bdd).get(contact =request.user.email).contact]
-            for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
+            #ticket #79 (début)
+            to_list =[]
+            for bdadm in BddAdmin.objects.using(bdd):
                 to_list.append(bdadm.contact)
-            body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(La réinitialisation a été jugée nécessaire)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999  ".format(sid, request.user.username, request.user.email, host, bdd, sid)
+            for itr in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
+                if Library.objects.using(bdd).get(lid =itr.lid).contact and Library.objects.using(bdd).get(lid =itr.lid).contact not in to_list:
+                    to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact)
+                if Library.objects.using(bdd).get(lid =itr.lid).contact_bis and Library.objects.using(bdd).get(lid =itr.lid).contact_bis not in to_list:
+                    to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
+                if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in to_list:
+                    to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
+            body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(La réinitialisation a été jugée nécessaire)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999\nEn cas de contestation du traitement réalisé, veuillez faire un 'répondre à tous' et préciser ce que vous contestez.".format(sid, request.user.username, request.user.email, host, bdd, sid)
             email = EmailMessage(
                 "eplouribousse / {} / {} : anomalie traitée".format(bdd, sid),
                 body,
-                replymail,
+                request.user.email,
                 reply_to =[request.user.email],
                 to =to_list,
-                cc =cc_list,
+                cc =[]
                 )
             email.send(fail_silently=False)
-            messages.info(request, _("Un message a été envoyé à vos co-administrateurs de projet pour information (vous le recevrez en copie)"))
-            #*********************
+            messages.info(request, _("Un message a été envoyé pour information à vos co-administrateurs de projet et à l'ensemble des instructeurs concernés (vous le recevrez également)"))
+            #ticket #79 (fin)
 
             return current_status(request, bdd, sid, "999999999")
         else:
@@ -5681,21 +5690,29 @@ def statadmin(request, bdd, sid):
                 send_mail(subject, message, replymail, dest, fail_silently=True, )
         
         #*********************
-        to_list, cc_list =[], [BddAdmin.objects.using(bdd).get(contact =request.user.email).contact]
-        for bdadm in BddAdmin.objects.using(bdd).exclude(contact =request.user.email):
+        #ticket #79 (début)
+        to_list =[]
+        for bdadm in BddAdmin.objects.using(bdd):
             to_list.append(bdadm.contact)
-        body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(Pas de réinitialisation)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999  ".format(sid, request.user.username, request.user.email, host, bdd, sid)
+        for itr in ItemRecord.objects.using(bdd).filter(sid =sid).exclude(rank =0):
+            if Library.objects.using(bdd).get(lid =itr.lid).contact and Library.objects.using(bdd).get(lid =itr.lid).contact not in to_list:
+                to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact)
+            if Library.objects.using(bdd).get(lid =itr.lid).contact_bis and Library.objects.using(bdd).get(lid =itr.lid).contact_bis not in to_list:
+                to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
+            if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in to_list:
+                to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
+        body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(Pas de réinitialisation)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999\nEn cas de contestation du traitement réalisé, veuillez faire un 'répondre à tous' et préciser ce que vous contestez.".format(sid, request.user.username, request.user.email, host, bdd, sid)
         email = EmailMessage(
             "eplouribousse / {} / {} : anomalie traitée".format(bdd, sid),
             body,
-            replymail,
+            request.user.email,
             reply_to =[request.user.email],
             to =to_list,
-            cc =cc_list,
+            cc =[],
             )
         email.send(fail_silently=False)
-        messages.info(request, _("Un message a été envoyé à vos co-administrateurs de projet pour information (vous le recevrez en copie)"))
-        #*********************
+        messages.info(request, _("Un message a été envoyé pour information à vos co-administrateurs de projet et à l'ensemble des instructeurs concernés (vous le recevrez également)"))
+        #ticket #79 (fin)
 
         return current_status(request, bdd, sid, "999999999")
 
