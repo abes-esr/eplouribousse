@@ -1,4 +1,4 @@
-epl_version ="v2.11.183 (Judith)"
+epl_version ="v2.11.184 (Judith)"
 date_version ="July 22, 2025"
 # Mise au niveau de :
 # epl_version ="v2.11.181 (~Irmingard)"
@@ -3082,7 +3082,7 @@ def reinit(request, bdd, sid):
                     to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
                 if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in to_list:
                     to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
-            body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(La réinitialisation a été jugée nécessaire)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999\nEn cas de contestation du traitement réalisé, veuillez faire un 'répondre à tous' et préciser ce que vous contestez.".format(sid, request.user.username, request.user.email, host, bdd, sid)
+            body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(La réinitialisation a été jugée nécessaire)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999\nEn cas de contestation du traitement réalisé, veuillez faire un 'Répondre à tous' et préciser ce que vous contestez.".format(sid, request.user.username, request.user.email, host, bdd, sid)
             email = EmailMessage(
                 "eplouribousse / {} / {} : anomalie traitée".format(bdd, sid),
                 body,
@@ -5701,7 +5701,7 @@ def statadmin(request, bdd, sid):
                 to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_bis)
             if Library.objects.using(bdd).get(lid =itr.lid).contact_ter and Library.objects.using(bdd).get(lid =itr.lid).contact_ter not in to_list:
                 to_list.append(Library.objects.using(bdd).get(lid =itr.lid).contact_ter)
-        body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(Pas de réinitialisation)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999\nEn cas de contestation du traitement réalisé, veuillez faire un 'répondre à tous' et préciser ce que vous contestez.".format(sid, request.user.username, request.user.email, host, bdd, sid)
+        body ="L'anomalie qui vous avait été signalée dans un précédent message (ppn : {}) a fait l'objet d'une intervention de la part de {} ({}).\n(Pas de réinitialisation)\nSituation actuelle pour info :\nhttp://{}/{}/current_status/{}/999999999\nEn cas de contestation du traitement réalisé, veuillez faire un 'Répondre à tous' et préciser ce que vous contestez.".format(sid, request.user.username, request.user.email, host, bdd, sid)
         email = EmailMessage(
             "eplouribousse / {} / {} : anomalie traitée".format(bdd, sid),
             body,
