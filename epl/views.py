@@ -1,5 +1,5 @@
-epl_version ="v2.11.184 (Judith)"
-date_version ="July 22, 2025"
+epl_version ="v2.11.185 (Judith)"
+date_version ="September 2, 2025"
 # Mise au niveau de :
 # epl_version ="v2.11.181 (~Irmingard)"
 # date_version ="April 7, 2025"
@@ -632,7 +632,7 @@ def excl_adm(request, bdd):
         op =Exclusion.objects.using(bdd).get(label =exclsupprform.cleaned_data['exclreason'])
         if exclsupprform.cleaned_data['suppr'] ==True:
             if len(ItemRecord.objects.using(bdd).filter(excl =exclsupprform.cleaned_data['exclreason'])):
-                messages.info(request, _('Suppression impossible : Cete exclusion a déjà servi (vous pouvez éventuellement modifier son intitulé)'))
+                messages.info(request, _("Suppression impossible : L'exclusion *** {} *** a déjà servi (vous pouvez éventuellement modifier son intitulé)").format(op))
             else:
                 op.delete(using =bdd)
                 messages.info(request, _('Exclusion supprimée avec succès'))
