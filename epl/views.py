@@ -1,9 +1,9 @@
-epl_version ="v2.11.185 (Judith)"
-date_version ="September 2, 2025"
+epl_version ="v2.11.186 (Judith)"
+date_version ="November 18, 2025"
 # Mise au niveau de :
 # epl_version ="v2.11.181 (~Irmingard)"
 # date_version ="April 7, 2025"
-#ATTENTION : A partir de la version v2.11.183 (Judith) la version de dev n'est plus suivie.
+#Attention : A partir de la version v2.11.183 (Judith) la version de dev n'est plus suivie.
 
 from django.shortcuts import render, redirect
 
@@ -1366,8 +1366,10 @@ def admins_adm(request, bdd):
                                 messages.info(request, _("Echec : L'identifiant ne respecte pas le format prescrit"))
 
     if projsuppradmform.is_valid():
-        if len(BddAdmin.objects.using(bdd).all()) ==1:
-            messages.info(request, _("Vous ne pouvez pas supprimer le dernier administrateur restant"))
+        # if len(BddAdmin.objects.using(bdd).all()) ==1:
+        #     messages.info(request, _("Vous ne pouvez pas supprimer le dernier administrateur restant"))
+        if request.user.email ==BddAdmin.objects.using(bdd).get(contact =projsuppradmform.cleaned_data['contactsuadm']).contact:
+            messages.info(request, _("ECHEC : Vous ne pouvez pas supprimer votre propre compte 'administrateur'"))
         else:
             suppradm =BddAdmin.objects.using(bdd).get(contact =projsuppradmform.cleaned_data['contactsuadm'])
             compteurc =0
