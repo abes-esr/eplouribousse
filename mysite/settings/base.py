@@ -162,4 +162,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ~ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Redirection après une authentification :
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/home'

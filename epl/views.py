@@ -1,5 +1,5 @@
-epl_version ="v2.11.186 (Judith)"
-date_version ="November 18, 2025"
+epl_version ="v2.11.187 (Judith)"
+date_version ="December 10, 2025"
 # Mise au niveau de :
 # epl_version ="v2.11.181 (~Irmingard)"
 # date_version ="April 7, 2025"
@@ -51,6 +51,12 @@ import numpy as np
 import urllib, base64
 from io import BytesIO
 from matplotlib.ticker import MaxNLocator
+
+def homepage(request):
+
+    """Homepage de la nouvelle application eplouribousse"""
+
+    return render(request, 'epl/homepage.html', locals())
 
 def get_graph():
     buffer = BytesIO()

@@ -3,7 +3,8 @@ from django.urls import path
 from . import views, views_pdf, views_csv
 
 urlpatterns = [
-    path('', views.selectbdd, name='bddselect'),
+    path('', views.homepage, name='homepage'),
+    path('home', views.selectbdd, name='bddselect'),
     path('<str:bdd>', views.home, name='project_home'),
     path('<str:bdd>/adminbase', views.adminbase, name='project administration'),
     path('<str:bdd>/excl_adm', views.excl_adm, name='exclusions administration'),
