@@ -1,3 +1,13 @@
+# Ce dépôt est archivé 
+
+Le code source maintenu de l'application Eplouribousse est disponible ici : 
+
+https://github.com/unistra/eplouribousse-front  
+
+https://github.com/unistra/eplouribousse-back  
+
+Le présent dépôt est conservé en tant qu'archive.
+
 # AppliWeb collaborative pour gérer le dédoublonnement des revues dans les bibliothèques :
 
 Gagnez de l'espace en éliminant vos doublons, offrez une meilleure lisibilité de vos ressources en reconstituant pour chacune d'elles une collection unique la plus intègre possible résultant de l'agrégation des éléments épars disponibles dans vos bibliothèques.
